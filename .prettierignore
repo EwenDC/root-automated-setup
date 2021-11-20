@@ -1,0 +1,14 @@
+# dependencies
+/node_modules
+/.yarn/*
+.pnp.*
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+/.husky
+/.vscode
