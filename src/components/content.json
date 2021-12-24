@@ -3,7 +3,7 @@
     "name": "Root: Base Game",
     "base": true,
     "decks": {
-      "root": {
+      "base": {
         "name": "Base"
       }
     },
@@ -87,13 +87,50 @@
         "vagabond": false
       }
     },
-    "hirelings": {}
+    "hirelings": {
+      "patrol": {
+        "factions": ["marquise"],
+        "promoted": {
+          "name": "Forest Patrol"
+        },
+        "demoted": {
+          "name": "Feline Physicians"
+        }
+      },
+      "dynasty": {
+        "factions": ["eyrie"],
+        "promoted": {
+          "name": "Last Dynasty"
+        },
+        "demoted": {
+          "name": "Bluebird Nobles"
+        }
+      },
+      "uprising": {
+        "factions": ["alliance"],
+        "promoted": {
+          "name": "Spring Uprising"
+        },
+        "demoted": {
+          "name": "Rabbit Scouts"
+        }
+      },
+      "outcast": {
+        "factions": ["vagabond", "vagabond2"],
+        "promoted": {
+          "name": "The Outcast"
+        },
+        "demoted": {
+          "name": "The Brigand"
+        }
+      }
+    }
   },
   "exilesDeck": {
     "name": "Root: The Exiles and Partisans Deck",
     "base": false,
     "decks": {
-      "exile": {
+      "exiles": {
         "name": "Exiles and Partisans"
       }
     }
@@ -111,16 +148,100 @@
   "riverfolkHirelings": {
     "name": "Root: The Riverfolk Hireling Pack",
     "base": false,
-    "hirelings": {}
+    "hirelings": {
+      "prophets": {
+        "factions": ["cult"],
+        "promoted": {
+          "name": "Warm Sun Prophets"
+        },
+        "demoted": {
+          "name": "Lizard Envoys"
+        }
+      },
+      "flotilla": {
+        "factions": ["riverfolk"],
+        "promoted": {
+          "name": "Riverfolk Flotilla"
+        },
+        "demoted": {
+          "name": "Otter Divers"
+        }
+      },
+      "bandits": {
+        "factions": [],
+        "promoted": {
+          "name": "Highway Bandits"
+        },
+        "demoted": {
+          "name": "Bandit Guilds"
+        }
+      }
+    }
   },
   "underworldHirelings": {
     "name": "Root: The Underworld Hireling Pack",
     "base": false,
-    "hirelings": {}
+    "hirelings": {
+      "expedition": {
+        "factions": ["duchy"],
+        "promoted": {
+          "name": "Sunward Expedition"
+        },
+        "demoted": {
+          "name": "Mole Artisans"
+        }
+      },
+      "spies": {
+        "factions": ["corvid"],
+        "promoted": {
+          "name": "Corvid Spies"
+        },
+        "demoted": {
+          "name": "Raven Guards"
+        }
+      },
+      "protector": {
+        "factions": [],
+        "promoted": {
+          "name": "Furious Protector"
+        },
+        "demoted": {
+          "name": "Bandit Guilds"
+        }
+      }
+    }
   },
   "marauderHirelings": {
     "name": "Root: The Marauder Hireling Pack",
     "base": false,
-    "hirelings": {}
+    "hirelings": {
+      "flamebearers": {
+        "factions": ["warlord"],
+        "promoted": {
+          "name": "Flame Bearers"
+        },
+        "demoted": {
+          "name": "Rat Ravagers"
+        }
+      },
+      "vaultkeepers": {
+        "factions": ["keepers"],
+        "promoted": {
+          "name": "Vault Keepers"
+        },
+        "demoted": {
+          "name": "Badger Bodyguards"
+        }
+      },
+      "band": {
+        "factions": [],
+        "promoted": {
+          "name": "Woodland Band"
+        },
+        "demoted": {
+          "name": "Traveling Band"
+        }
+      }
+    }
   }
 }
