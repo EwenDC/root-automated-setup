@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import expansionReducer from "../features/expansion/expansionSlice";
 import deckReducer from "../features/deck/deckSlice";
+import expansionReducer from "../features/expansion/expansionSlice";
+import factionReducer from "../features/faction/factionSlice";
 
 export const store = configureStore({
   reducer: {
-    expansion: expansionReducer,
     deck: deckReducer,
+    expansion: expansionReducer,
+    faction: factionReducer,
   },
 });
 

@@ -7,27 +7,86 @@
         "name": "Base"
       }
     },
-    "factions": {},
+    "factions": {
+      "marquise": {
+        "name": "Marquise de Cat",
+        "militant": true,
+        "vagabond": false
+      },
+      "eyrie": {
+        "name": "Eyrie Dynasties",
+        "militant": true,
+        "vagabond": false
+      },
+      "alliance": {
+        "name": "Woodland Alliance",
+        "militant": false,
+        "vagabond": false
+      },
+      "vagabond": {
+        "name": "Vagabond",
+        "militant": false,
+        "vagabond": true
+      }
+    },
     "maps": {},
     "vagabonds": {}
   },
   "riverfolk": {
     "name": "Root: The Riverfolk Expansion",
     "base": false,
-    "factions": {},
+    "factions": {
+      "cult": {
+        "name": "Lizard Cult",
+        "militant": false,
+        "vagabond": false
+      },
+      "riverfolk": {
+        "name": "Riverfolk Company",
+        "militant": false,
+        "vagabond": false
+      },
+      "vagabond2": {
+        "name": "Vagabond",
+        "militant": false,
+        "vagabond": true
+      }
+    },
     "vagabonds": {}
   },
   "underworld": {
     "name": "Root: The Underworld Expansion",
     "base": false,
-    "factions": {},
+    "factions": {
+      "duchy": {
+        "name": "Underground Duchy",
+        "militant": true,
+        "vagabond": false
+      },
+      "corvid": {
+        "name": "Corvid Conspiracy",
+        "militant": false,
+        "vagabond": false
+      }
+    },
     "landmarks": {},
     "maps": {}
   },
   "marauder": {
     "name": "Root: The Marauder Expansion",
     "base": false,
-    "factions": {},
+    "factions": {
+      "warlord": {
+        "name": "Lord of the Hundreds",
+        "militant": true,
+        "vagabond": false
+      },
+      "keepers": {
+        "name": "Keepers in Iron",
+        "militant": true,
+        "vagabond": false
+      }
+    },
     "hirelings": {}
   },
   "exilesDeck": {

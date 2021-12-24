@@ -9,12 +9,18 @@ import {
   enableExpansion,
   selectExpansionArray,
 } from "../../features/expansion/expansionSlice";
+import {
+  disableFaction,
+  enableFaction,
+  selectFactionArray,
+} from "../../features/faction/factionSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const expansions = useAppSelector(selectExpansionArray);
   const decks = useAppSelector(selectDeckArray);
+  const factions = useAppSelector(selectFactionArray);
 
   return (
     <div>
@@ -53,6 +59,31 @@ export const App: React.FC = () => {
                 </button>
               ) : (
                 <button onClick={() => dispatch(enableDeck(deck.code))}>
+                  Enable
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        Factions:
+        <ul>
+          {factions.map((faction) => (
+            <li
+              key={faction.code}
+              style={{
+                backgroundColor: faction.militant ? "red" : "white",
+                width: "fit-content",
+              }}
+            >
+              {faction.name}{" "}
+              {faction.enabled ? (
+                <button onClick={() => dispatch(disableFaction(faction.code))}>
+                  Disable
+                </button>
+              ) : (
+                <button onClick={() => dispatch(enableFaction(faction.code))}>
                   Enable
                 </button>
               )}
