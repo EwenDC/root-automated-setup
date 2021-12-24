@@ -2,19 +2,19 @@ import React from "react";
 import {
   disableDeck,
   enableDeck,
-  selectDecks,
+  selectDeckArray,
 } from "../../features/deck/deckSlice";
 import {
   disableExpansion,
   enableExpansion,
-  selectExpansions,
+  selectExpansionArray,
 } from "../../features/expansion/expansionSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const expansions = useAppSelector(selectExpansions);
-  const decks = useAppSelector(selectDecks);
+  const expansions = useAppSelector(selectExpansionArray);
+  const decks = useAppSelector(selectDeckArray);
 
   return (
     <div>

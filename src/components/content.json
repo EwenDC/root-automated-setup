@@ -1,77 +1,67 @@
 {
-  "expansions": [
-    {
-      "code": "root",
-      "name": "Root: Base Game",
-      "base": true,
-      "deck": {
-        "code": "root",
+  "root": {
+    "name": "Root: Base Game",
+    "base": true,
+    "decks": {
+      "root": {
         "name": "Base"
-      },
-      "factions": [],
-      "maps": [],
-      "vagabonds": []
-    },
-    {
-      "code": "riverfolk",
-      "name": "Root: The Riverfolk Expansion",
-      "base": false,
-      "factions": [],
-      "vagabonds": []
-    },
-    {
-      "code": "underworld",
-      "name": "Root: The Underworld Expansion",
-      "base": false,
-      "factions": [],
-      "landmarks": [],
-      "maps": []
-    },
-    {
-      "code": "marauder",
-      "name": "Root: The Marauder Expansion",
-      "base": false,
-      "factions": [],
-      "hirelings": []
-    },
-    {
-      "code": "exilesDeck",
-      "name": "Root: The Exiles and Partisans Deck",
-      "base": false,
-      "deck": {
-        "code": "exile",
-        "name": "Exiles and Partisans"
       }
     },
-    {
-      "code": "landmarkPack",
-      "name": "Root: The Landmarks Pack",
-      "base": false,
-      "landmarks": []
-    },
-    {
-      "code": "vagabondPack",
-      "name": "Root: The Vagabond Pack",
-      "base": false,
-      "vagabonds": []
-    },
-    {
-      "code": "riverfolkHirelings",
-      "name": "Root: The Riverfolk Hireling Pack",
-      "base": false,
-      "hirelings": []
-    },
-    {
-      "code": "underworldHirelings",
-      "name": "Root: The Underworld Hireling Pack",
-      "base": false,
-      "hirelings": []
-    },
-    {
-      "code": "marauderHirelings",
-      "name": "Root: The Marauder Hireling Pack",
-      "base": false,
-      "hirelings": []
+    "factions": {},
+    "maps": {},
+    "vagabonds": {}
+  },
+  "riverfolk": {
+    "name": "Root: The Riverfolk Expansion",
+    "base": false,
+    "factions": {},
+    "vagabonds": {}
+  },
+  "underworld": {
+    "name": "Root: The Underworld Expansion",
+    "base": false,
+    "factions": {},
+    "landmarks": {},
+    "maps": {}
+  },
+  "marauder": {
+    "name": "Root: The Marauder Expansion",
+    "base": false,
+    "factions": {},
+    "hirelings": {}
+  },
+  "exilesDeck": {
+    "name": "Root: The Exiles and Partisans Deck",
+    "base": false,
+    "decks": {
+      "exile": {
+        "name": "Exiles and Partisans"
+      }
     }
-  ]
+  },
+  "landmarkPack": {
+    "name": "Root: The Landmarks Pack",
+    "base": false,
+    "landmarks": {}
+  },
+  "vagabondPack": {
+    "name": "Root: The Vagabond Pack",
+    "base": false,
+    "vagabonds": {}
+  },
+  "riverfolkHirelings": {
+    "name": "Root: The Riverfolk Hireling Pack",
+    "base": false,
+    "hirelings": {}
+  },
+  "underworldHirelings": {
+    "name": "Root: The Underworld Hireling Pack",
+    "base": false,
+    "hirelings": {}
+  },
+  "marauderHirelings": {
+    "name": "Root: The Marauder Hireling Pack",
+    "base": false,
+    "hirelings": {}
+  }
 }

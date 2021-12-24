@@ -1,17 +1,22 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import content from "../../components/content.json";
 import { RootState } from "../../components/store";
 
 export interface Expansion {
-  code: string;
   name: string;
   enabled: boolean;
   base: boolean;
 }
 
 export interface ExpansionState {
-  expansions: Expansion[];
+  [code: string]: Expansion;
 }
+
+/** Helper function for getting the details of a specified expansion from content.json */
+export const getExpansionConfig = (expansionCode: string) =>
+  // It sucks, but we have to circumvent type saftey here
+  // Blame typescript's very loose typings of Object.entries preventing us from typing more strongly
+  content[expansionCode as keyof typeof content];
 
 const persistExpansionEnabled = (expansionCode: string, enabled: boolean) => {
   try {
@@ -53,44 +58,48 @@ export const expansionEnabled = (
   return enabled;
 };
 
-let initialState: ExpansionState = { expansions: [] };
-content.expansions.forEach((expansion) => {
-  initialState.expansions.push({
-    code: expansion.code,
+let initialState: ExpansionState = {};
+for (const [expansionCode, expansion] of Object.entries(content)) {
+  initialState[expansionCode] = {
     name: expansion.name,
-    enabled: expansionEnabled(expansion.code, expansion.base),
+    enabled: expansionEnabled(expansionCode, expansion.base),
     base: expansion.base,
-  });
-});
+  };
+}
 
-export const selectExpansions = (state: RootState) =>
-  state.expansion.expansions;
+/** Redux Selector for returning the expansion list as an array, moving the object key to the object field "code" */
+export const selectExpansionArray = createSelector(
+  (state: RootState) => state.expansion,
+  (expansionState: ExpansionState) => {
+    const array = [];
+    for (const [expansionCode, expansion] of Object.entries(expansionState)) {
+      array.push({ ...expansion, code: expansionCode });
+    }
+    return array;
+  }
+);
 
 export const expansionSlice = createSlice({
   name: "expansion",
   initialState,
   reducers: {
     enableExpansion: (state, action: PayloadAction<string>) => {
-      // Since expansions is an array we need to loop over it so we can match the code
-      state.expansions.forEach((value) => {
-        // Since the base game cannot be disabled, don't try to enable it
-        if (value.code === action.payload && !value.base) {
-          value.enabled = true;
-          // Also update local storage so the change persists between sessions
-          persistExpansionEnabled(value.code, value.enabled);
-        }
-      });
+      // Retreive the expansion
+      const expansion = state[action.payload];
+      // Only update the expansion state if it exists and is not the base game
+      if (expansion != null && !expansion.base) {
+        expansion.enabled = true;
+        persistExpansionEnabled(action.payload, expansion.enabled);
+      }
     },
     disableExpansion: (state, action: PayloadAction<string>) => {
-      // Since expansions is an array we need to loop over it so we can match the code
-      state.expansions.forEach((value) => {
-        // Make sure that the base game cannot be disabled
-        if (value.code === action.payload && !value.base) {
-          value.enabled = false;
-          // Also update local storage so the change persists between sessions
-          persistExpansionEnabled(value.code, value.enabled);
-        }
-      });
+      // Retreive the expansion
+      const expansion = state[action.payload];
+      // Only update the expansion state if it exists and is not the base game
+      if (expansion != null && !expansion.base) {
+        expansion.enabled = false;
+        persistExpansionEnabled(action.payload, expansion.enabled);
+      }
     },
   },
 });
