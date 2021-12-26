@@ -33,6 +33,11 @@ const addExpansionFactions = (state: FactionState, expansionCode: string) => {
           expansionCode: expansionCode,
           enabled: true,
         };
+      } else {
+        console.warn(
+          `Faction with duplicate code "${factionCode}" not added to state:`,
+          faction
+        );
       }
     }
 };

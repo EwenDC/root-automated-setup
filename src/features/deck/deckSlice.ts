@@ -29,6 +29,11 @@ const addExpansionDecks = (state: DeckState, expansionCode: string) => {
           expansionCode: expansionCode,
           enabled: true,
         };
+      } else {
+        console.warn(
+          `Deck with duplicate code "${deckCode}" not added to state:`,
+          deck
+        );
       }
     }
 };
@@ -50,6 +55,11 @@ export const selectDeckArray = createSelector(
     }
     return array;
   }
+);
+
+/** Redux Selector for returning an array of enabled decks */
+export const selectEnabledDecks = createSelector(selectDeckArray, (array) =>
+  array.filter((value) => value.enabled)
 );
 
 export const deckSlice = createSlice({

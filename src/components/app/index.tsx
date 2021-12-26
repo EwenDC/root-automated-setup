@@ -14,6 +14,11 @@ import {
   enableFaction,
   selectFactionArray,
 } from "../../features/faction/factionSlice";
+import {
+  disableHireling,
+  enableHireling,
+  selectHirelingArray,
+} from "../../features/hireling/hirelingSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 export const App: React.FC = () => {
@@ -21,6 +26,7 @@ export const App: React.FC = () => {
   const expansions = useAppSelector(selectExpansionArray);
   const decks = useAppSelector(selectDeckArray);
   const factions = useAppSelector(selectFactionArray);
+  const hirelings = useAppSelector(selectHirelingArray);
 
   return (
     <div>
@@ -84,6 +90,27 @@ export const App: React.FC = () => {
                 </button>
               ) : (
                 <button onClick={() => dispatch(enableFaction(faction.code))}>
+                  Enable
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        Hirelings:
+        <ul>
+          {hirelings.map((hireling) => (
+            <li key={hireling.code}>
+              {hireling.promoted.name} ({hireling.demoted.name}){" "}
+              {hireling.enabled ? (
+                <button
+                  onClick={() => dispatch(disableHireling(hireling.code))}
+                >
+                  Disable
+                </button>
+              ) : (
+                <button onClick={() => dispatch(enableHireling(hireling.code))}>
                   Enable
                 </button>
               )}
