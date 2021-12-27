@@ -23,9 +23,11 @@ export interface HirelingState {
   [code: string]: HirelingPair;
 }
 
-const addExpansionHirelings = (state: HirelingState, expansionCode: string) => {
-  const expansion = getExpansionConfig(expansionCode);
-
+const addExpansionHirelings = (
+  state: HirelingState,
+  expansionCode: string,
+  expansion = getExpansionConfig(expansionCode)
+) => {
   if (expansion != null && "hirelings" in expansion)
     for (const [hirelingCode, hireling] of Object.entries(
       expansion.hirelings
@@ -41,7 +43,7 @@ const addExpansionHirelings = (state: HirelingState, expansionCode: string) => {
         };
       } else {
         console.warn(
-          `Hireling with duplicate code "${hirelingCode}" not added to state:`,
+          `While enabling expansion "${expansionCode}", hireling with duplicate code "${hirelingCode}" not added to state:`,
           hireling
         );
       }
@@ -51,7 +53,7 @@ const addExpansionHirelings = (state: HirelingState, expansionCode: string) => {
 let initialState: HirelingState = {};
 for (const [expansionCode, expansion] of Object.entries(content)) {
   if (expansionEnabled(expansionCode, expansion.base)) {
-    addExpansionHirelings(initialState, expansionCode);
+    addExpansionHirelings(initialState, expansionCode, expansion);
   }
 }
 
@@ -73,22 +75,22 @@ export const selectEnabledHirelings = createSelector(
   (array) => array.filter((value) => value.enabled)
 );
 
-export const factionSlice = createSlice({
+export const hirelingSlice = createSlice({
   name: "hireling",
   initialState,
   reducers: {
     enableHireling: (state, action: PayloadAction<string>) => {
-      // Retreive the faction
+      // Retreive the hireling
       const hireling = state[action.payload];
-      // Only update the faction state if it exists
+      // Only update the hireling state if it exists
       if (hireling != null) {
         hireling.enabled = true;
       }
     },
     disableHireling: (state, action: PayloadAction<string>) => {
-      // Retreive the faction
+      // Retreive the hireling
       const hireling = state[action.payload];
-      // Only update the faction state if it exists
+      // Only update the hireling state if it exists
       if (hireling != null) {
         hireling.enabled = false;
       }
@@ -101,7 +103,7 @@ export const factionSlice = createSlice({
     [disableExpansionAction]: (state, action: PayloadAction<string>) => {
       // Skip processing for the base game, as that cannot be disabled
       if (!getExpansionConfig(action.payload)?.base) {
-        // Remove all factions matching the disabled expansion
+        // Remove all hirelings matching the disabled expansion
         for (const [hirelingCode, hireling] of Object.entries(state)) {
           if (hireling.expansionCode === action.payload) {
             delete state[hirelingCode];
@@ -112,5 +114,5 @@ export const factionSlice = createSlice({
   },
 });
 
-export const { enableHireling, disableHireling } = factionSlice.actions;
-export default factionSlice.reducer;
+export const { enableHireling, disableHireling } = hirelingSlice.actions;
+export default hirelingSlice.reducer;

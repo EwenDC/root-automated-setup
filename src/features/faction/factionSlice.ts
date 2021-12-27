@@ -19,9 +19,11 @@ export interface FactionState {
   [code: string]: Faction;
 }
 
-const addExpansionFactions = (state: FactionState, expansionCode: string) => {
-  const expansion = getExpansionConfig(expansionCode);
-
+const addExpansionFactions = (
+  state: FactionState,
+  expansionCode: string,
+  expansion = getExpansionConfig(expansionCode)
+) => {
   if (expansion != null && "factions" in expansion)
     for (const [factionCode, faction] of Object.entries(expansion.factions)) {
       // Don't add to state if it already exists
@@ -35,7 +37,7 @@ const addExpansionFactions = (state: FactionState, expansionCode: string) => {
         };
       } else {
         console.warn(
-          `Faction with duplicate code "${factionCode}" not added to state:`,
+          `While enabling expansion "${expansionCode}", faction with duplicate code "${factionCode}" not added to state:`,
           faction
         );
       }
@@ -45,7 +47,7 @@ const addExpansionFactions = (state: FactionState, expansionCode: string) => {
 let initialState: FactionState = {};
 for (const [expansionCode, expansion] of Object.entries(content)) {
   if (expansionEnabled(expansionCode, expansion.base)) {
-    addExpansionFactions(initialState, expansionCode);
+    addExpansionFactions(initialState, expansionCode, expansion);
   }
 }
 

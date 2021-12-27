@@ -69,7 +69,14 @@
         "vagabond": false
       }
     },
-    "landmarks": {},
+    "landmarks": {
+      "tower": {
+        "name": "The Tower"
+      },
+      "ferry": {
+        "name": "The Ferry"
+      }
+    },
     "maps": {}
   },
   "marauder": {
@@ -138,7 +145,20 @@
   "landmarkPack": {
     "name": "Root: The Landmarks Pack",
     "base": false,
-    "landmarks": {}
+    "landmarks": {
+      "treetop": {
+        "name": "Elder Treetop"
+      },
+      "city": {
+        "name": "Lost City"
+      },
+      "market": {
+        "name": "Black Market"
+      },
+      "forge": {
+        "name": "Legendary Forge"
+      }
+    }
   },
   "vagabondPack": {
     "name": "Root: The Vagabond Pack",

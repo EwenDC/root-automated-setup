@@ -17,9 +17,11 @@ export interface DeckState {
   [code: string]: Deck;
 }
 
-const addExpansionDecks = (state: DeckState, expansionCode: string) => {
-  const expansion = getExpansionConfig(expansionCode);
-
+const addExpansionDecks = (
+  state: DeckState,
+  expansionCode: string,
+  expansion = getExpansionConfig(expansionCode)
+) => {
   if (expansion != null && "decks" in expansion)
     for (const [deckCode, deck] of Object.entries(expansion.decks)) {
       // Don't add to state if it already exists
@@ -31,7 +33,7 @@ const addExpansionDecks = (state: DeckState, expansionCode: string) => {
         };
       } else {
         console.warn(
-          `Deck with duplicate code "${deckCode}" not added to state:`,
+          `While enabling expansion "${expansionCode}", deck with duplicate code "${deckCode}" not added to state:`,
           deck
         );
       }
@@ -41,7 +43,7 @@ const addExpansionDecks = (state: DeckState, expansionCode: string) => {
 let initialState: DeckState = {};
 for (const [expansionCode, expansion] of Object.entries(content)) {
   if (expansionEnabled(expansionCode, expansion.base)) {
-    addExpansionDecks(initialState, expansionCode);
+    addExpansionDecks(initialState, expansionCode, expansion);
   }
 }
 
