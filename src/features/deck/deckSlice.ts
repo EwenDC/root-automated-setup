@@ -1,16 +1,20 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import content from "../../components/content.json";
 import { RootState } from "../../components/store";
-import { expansionEnabled, getExpansionConfig } from "../../util";
+import {
+  Component,
+  deleteExpansionComponents,
+  disableComponent,
+  enableComponent,
+  getExpansionConfig,
+  setupInitialState,
+} from "../../util";
 import {
   disableExpansionAction,
   enableExpansionAction,
 } from "../expansion/expansionSlice";
 
-export interface Deck {
+export interface Deck extends Component {
   name: string;
-  expansionCode: string;
-  enabled: boolean;
 }
 
 export interface DeckState {
@@ -22,7 +26,7 @@ const addExpansionDecks = (
   expansionCode: string,
   expansion = getExpansionConfig(expansionCode)
 ) => {
-  if (expansion != null && "decks" in expansion)
+  if (expansion != null && "decks" in expansion) {
     for (const [deckCode, deck] of Object.entries(expansion.decks)) {
       // Don't add to state if it already exists
       if (state[deckCode] == null) {
@@ -38,14 +42,8 @@ const addExpansionDecks = (
         );
       }
     }
-};
-
-let initialState: DeckState = {};
-for (const [expansionCode, expansion] of Object.entries(content)) {
-  if (expansionEnabled(expansionCode, expansion.base)) {
-    addExpansionDecks(initialState, expansionCode, expansion);
   }
-}
+};
 
 /** Redux Selector for returning the deck list as an array, moving the object key to the object field "code" */
 export const selectDeckArray = createSelector(
@@ -66,40 +64,15 @@ export const selectEnabledDecks = createSelector(selectDeckArray, (array) =>
 
 export const deckSlice = createSlice({
   name: "deck",
-  initialState,
+  initialState: setupInitialState(addExpansionDecks),
   reducers: {
-    enableDeck: (state, action: PayloadAction<string>) => {
-      // Retreive the deck
-      const deck = state[action.payload];
-      // Only update the deck state if it exists
-      if (deck != null) {
-        deck.enabled = true;
-      }
-    },
-    disableDeck: (state, action: PayloadAction<string>) => {
-      // Retreive the deck
-      const deck = state[action.payload];
-      // Only update the deck state if it exists
-      if (deck != null) {
-        deck.enabled = false;
-      }
-    },
+    enableDeck: enableComponent,
+    disableDeck: disableComponent,
   },
   extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) => {
-      addExpansionDecks(state, action.payload);
-    },
-    [disableExpansionAction]: (state, action: PayloadAction<string>) => {
-      // Skip processing for the base game, as that cannot be disabled
-      if (!getExpansionConfig(action.payload)?.base) {
-        // Remove all decks matching the disabled expansion
-        for (const [deckCode, deck] of Object.entries(state)) {
-          if (deck.expansionCode === action.payload) {
-            delete state[deckCode];
-          }
-        }
-      }
-    },
+    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
+      addExpansionDecks(state, action.payload),
+    [disableExpansionAction]: deleteExpansionComponents,
   },
 });
 

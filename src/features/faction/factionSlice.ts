@@ -1,18 +1,22 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import content from "../../components/content.json";
 import { RootState } from "../../components/store";
-import { expansionEnabled, getExpansionConfig } from "../../util";
+import {
+  Component,
+  deleteExpansionComponents,
+  disableComponent,
+  enableComponent,
+  getExpansionConfig,
+  setupInitialState,
+} from "../../util";
 import {
   disableExpansionAction,
   enableExpansionAction,
 } from "../expansion/expansionSlice";
 
-export interface Faction {
+export interface Faction extends Component {
   name: string;
   militant: boolean;
   vagabond: boolean;
-  expansionCode: string;
-  enabled: boolean;
 }
 
 export interface FactionState {
@@ -44,13 +48,6 @@ const addExpansionFactions = (
     }
 };
 
-let initialState: FactionState = {};
-for (const [expansionCode, expansion] of Object.entries(content)) {
-  if (expansionEnabled(expansionCode, expansion.base)) {
-    addExpansionFactions(initialState, expansionCode, expansion);
-  }
-}
-
 /** Redux Selector for returning the faction list as an array, moving the object key to the object field "code" */
 export const selectFactionArray = createSelector(
   (state: RootState) => state.faction,
@@ -77,40 +74,15 @@ export const selectNonMilitantFactions = createSelector(
 
 export const factionSlice = createSlice({
   name: "faction",
-  initialState,
+  initialState: setupInitialState(addExpansionFactions),
   reducers: {
-    enableFaction: (state, action: PayloadAction<string>) => {
-      // Retreive the faction
-      const faction = state[action.payload];
-      // Only update the faction state if it exists
-      if (faction != null) {
-        faction.enabled = true;
-      }
-    },
-    disableFaction: (state, action: PayloadAction<string>) => {
-      // Retreive the faction
-      const faction = state[action.payload];
-      // Only update the faction state if it exists
-      if (faction != null) {
-        faction.enabled = false;
-      }
-    },
+    enableFaction: enableComponent,
+    disableFaction: disableComponent,
   },
   extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) => {
-      addExpansionFactions(state, action.payload);
-    },
-    [disableExpansionAction]: (state, action: PayloadAction<string>) => {
-      // Skip processing for the base game, as that cannot be disabled
-      if (!getExpansionConfig(action.payload)?.base) {
-        // Remove all factions matching the disabled expansion
-        for (const [factionCode, faction] of Object.entries(state)) {
-          if (faction.expansionCode === action.payload) {
-            delete state[factionCode];
-          }
-        }
-      }
-    },
+    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
+      addExpansionFactions(state, action.payload),
+    [disableExpansionAction]: deleteExpansionComponents,
   },
 });
 

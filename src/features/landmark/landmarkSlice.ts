@@ -1,16 +1,20 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import content from "../../components/content.json";
 import { RootState } from "../../components/store";
-import { expansionEnabled, getExpansionConfig } from "../../util";
+import {
+  Component,
+  deleteExpansionComponents,
+  disableComponent,
+  enableComponent,
+  getExpansionConfig,
+  setupInitialState,
+} from "../../util";
 import {
   disableExpansionAction,
   enableExpansionAction,
 } from "../expansion/expansionSlice";
 
-export interface Landmark {
+export interface Landmark extends Component {
   name: string;
-  expansionCode: string;
-  enabled: boolean;
 }
 export interface LandmarkState {
   [code: string]: Landmark;
@@ -41,13 +45,6 @@ const addExpansionLandmarks = (
     }
 };
 
-let initialState: LandmarkState = {};
-for (const [expansionCode, expansion] of Object.entries(content)) {
-  if (expansionEnabled(expansionCode, expansion.base)) {
-    addExpansionLandmarks(initialState, expansionCode, expansion);
-  }
-}
-
 /** Redux Selector for returning the landmark list as an array, moving the object key to the object field "code" */
 export const selectLandmarkArray = createSelector(
   (state: RootState) => state.landmark,
@@ -68,40 +65,15 @@ export const selectEnabledLandmarks = createSelector(
 
 export const landmarkSlice = createSlice({
   name: "landmark",
-  initialState,
+  initialState: setupInitialState(addExpansionLandmarks),
   reducers: {
-    enableLandmark: (state, action: PayloadAction<string>) => {
-      // Retreive the landmark
-      const landmark = state[action.payload];
-      // Only update the landmark state if it exists
-      if (landmark != null) {
-        landmark.enabled = true;
-      }
-    },
-    disableLandmark: (state, action: PayloadAction<string>) => {
-      // Retreive the landmark
-      const landmark = state[action.payload];
-      // Only update the landmark state if it exists
-      if (landmark != null) {
-        landmark.enabled = false;
-      }
-    },
+    enableLandmark: enableComponent,
+    disableLandmark: disableComponent,
   },
   extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) => {
-      addExpansionLandmarks(state, action.payload);
-    },
-    [disableExpansionAction]: (state, action: PayloadAction<string>) => {
-      // Skip processing for the base game, as that cannot be disabled
-      if (!getExpansionConfig(action.payload)?.base) {
-        // Remove all landmarks matching the disabled expansion
-        for (const [hirelingCode, hireling] of Object.entries(state)) {
-          if (hireling.expansionCode === action.payload) {
-            delete state[hirelingCode];
-          }
-        }
-      }
-    },
+    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
+      addExpansionLandmarks(state, action.payload),
+    [disableExpansionAction]: deleteExpansionComponents,
   },
 });
 

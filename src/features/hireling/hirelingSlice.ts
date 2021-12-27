@@ -1,7 +1,13 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import content from "../../components/content.json";
 import { RootState } from "../../components/store";
-import { expansionEnabled, getExpansionConfig } from "../../util";
+import {
+  Component,
+  deleteExpansionComponents,
+  disableComponent,
+  enableComponent,
+  getExpansionConfig,
+  setupInitialState,
+} from "../../util";
 import {
   disableExpansionAction,
   enableExpansionAction,
@@ -11,12 +17,10 @@ export interface Hireling {
   name: string;
 }
 
-export interface HirelingPair {
+export interface HirelingPair extends Component {
   factions: string[];
   promoted: Hireling;
   demoted: Hireling;
-  expansionCode: string;
-  enabled: boolean;
 }
 
 export interface HirelingState {
@@ -50,13 +54,6 @@ const addExpansionHirelings = (
     }
 };
 
-let initialState: HirelingState = {};
-for (const [expansionCode, expansion] of Object.entries(content)) {
-  if (expansionEnabled(expansionCode, expansion.base)) {
-    addExpansionHirelings(initialState, expansionCode, expansion);
-  }
-}
-
 /** Redux Selector for returning the hireling list as an array, moving the object key to the object field "code" */
 export const selectHirelingArray = createSelector(
   (state: RootState) => state.hireling,
@@ -77,40 +74,15 @@ export const selectEnabledHirelings = createSelector(
 
 export const hirelingSlice = createSlice({
   name: "hireling",
-  initialState,
+  initialState: setupInitialState(addExpansionHirelings),
   reducers: {
-    enableHireling: (state, action: PayloadAction<string>) => {
-      // Retreive the hireling
-      const hireling = state[action.payload];
-      // Only update the hireling state if it exists
-      if (hireling != null) {
-        hireling.enabled = true;
-      }
-    },
-    disableHireling: (state, action: PayloadAction<string>) => {
-      // Retreive the hireling
-      const hireling = state[action.payload];
-      // Only update the hireling state if it exists
-      if (hireling != null) {
-        hireling.enabled = false;
-      }
-    },
+    enableHireling: enableComponent,
+    disableHireling: disableComponent,
   },
   extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) => {
-      addExpansionHirelings(state, action.payload);
-    },
-    [disableExpansionAction]: (state, action: PayloadAction<string>) => {
-      // Skip processing for the base game, as that cannot be disabled
-      if (!getExpansionConfig(action.payload)?.base) {
-        // Remove all hirelings matching the disabled expansion
-        for (const [hirelingCode, hireling] of Object.entries(state)) {
-          if (hireling.expansionCode === action.payload) {
-            delete state[hirelingCode];
-          }
-        }
-      }
-    },
+    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
+      addExpansionHirelings(state, action.payload),
+    [disableExpansionAction]: deleteExpansionComponents,
   },
 });
 
