@@ -24,6 +24,11 @@ import {
   enableLandmark,
   selectLandmarkArray,
 } from "../../features/landmark/landmarkSlice";
+import {
+  disableMap,
+  enableMap,
+  selectMapArray,
+} from "../../features/map/mapSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 export const App: React.FC = () => {
@@ -33,6 +38,7 @@ export const App: React.FC = () => {
   const factions = useAppSelector(selectFactionArray);
   const hirelings = useAppSelector(selectHirelingArray);
   const landmarks = useAppSelector(selectLandmarkArray);
+  const maps = useAppSelector(selectMapArray);
 
   return (
     <div>
@@ -96,6 +102,25 @@ export const App: React.FC = () => {
                 </button>
               ) : (
                 <button onClick={() => dispatch(enableFaction(faction.code))}>
+                  Enable
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        Maps:
+        <ul>
+          {maps.map((map) => (
+            <li key={map.code}>
+              {map.name}{" "}
+              {map.enabled ? (
+                <button onClick={() => dispatch(disableMap(map.code))}>
+                  Disable
+                </button>
+              ) : (
+                <button onClick={() => dispatch(enableMap(map.code))}>
                   Enable
                 </button>
               )}

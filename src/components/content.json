@@ -33,12 +33,12 @@
       "autumn": {
         "name": "Autumn",
         "printedSuits": true,
-        "landmark": null
+        "landmark": ""
       },
       "winter": {
         "name": "Winter",
         "printedSuits": false,
-        "landmark": null
+        "landmark": ""
       }
     },
     "vagabonds": {}
