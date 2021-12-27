@@ -1,7 +1,11 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import content from "../../components/content.json";
-import { RootState } from "../../components/store";
-import { expansionEnabled, persistExpansionEnabled } from "../../util";
+import {
+  ComponentState,
+  expansionEnabled,
+  persistExpansionEnabled,
+  selectComponentArray,
+} from "../../util";
 
 export interface Expansion {
   name: string;
@@ -9,11 +13,7 @@ export interface Expansion {
   base: boolean;
 }
 
-export interface ExpansionState {
-  [code: string]: Expansion;
-}
-
-let initialState: ExpansionState = {};
+let initialState: ComponentState<Expansion> = {};
 for (const [expansionCode, expansion] of Object.entries(content)) {
   initialState[expansionCode] = {
     name: expansion.name,
@@ -23,15 +23,8 @@ for (const [expansionCode, expansion] of Object.entries(content)) {
 }
 
 /** Redux Selector for returning the expansion list as an array, moving the object key to the object field "code" */
-export const selectExpansionArray = createSelector(
-  (state: RootState) => state.expansion,
-  (stateSlice) => {
-    const array = [];
-    for (const [code, object] of Object.entries(stateSlice)) {
-      array.push({ ...object, code });
-    }
-    return array;
-  }
+export const selectExpansionArray = selectComponentArray(
+  (state) => state.expansion
 );
 
 export const expansionSlice = createSlice({

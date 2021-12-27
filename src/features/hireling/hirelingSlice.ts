@@ -1,11 +1,12 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../components/store";
 import {
   Component,
+  ComponentState,
   deleteExpansionComponents,
   disableComponent,
   enableComponent,
   getExpansionConfig,
+  selectComponentArray,
   setupInitialState,
 } from "../../util";
 import {
@@ -16,19 +17,14 @@ import {
 export interface Hireling {
   name: string;
 }
-
 export interface HirelingPair extends Component {
   factions: string[];
   promoted: Hireling;
   demoted: Hireling;
 }
 
-export interface HirelingState {
-  [code: string]: HirelingPair;
-}
-
 const addExpansionHirelings = (
-  state: HirelingState,
+  state: ComponentState<HirelingPair>,
   expansionCode: string,
   expansion = getExpansionConfig(expansionCode)
 ) => {
@@ -55,15 +51,8 @@ const addExpansionHirelings = (
 };
 
 /** Redux Selector for returning the hireling list as an array, moving the object key to the object field "code" */
-export const selectHirelingArray = createSelector(
-  (state: RootState) => state.hireling,
-  (stateSlice) => {
-    const array = [];
-    for (const [code, object] of Object.entries(stateSlice)) {
-      array.push({ ...object, code });
-    }
-    return array;
-  }
+export const selectHirelingArray = selectComponentArray(
+  (state) => state.hireling
 );
 
 /** Redux Selector for returning an array of enabled hirelings */

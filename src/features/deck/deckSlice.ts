@@ -1,11 +1,12 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../components/store";
 import {
   Component,
+  ComponentState,
   deleteExpansionComponents,
   disableComponent,
   enableComponent,
   getExpansionConfig,
+  selectComponentArray,
   setupInitialState,
 } from "../../util";
 import {
@@ -17,12 +18,8 @@ export interface Deck extends Component {
   name: string;
 }
 
-export interface DeckState {
-  [code: string]: Deck;
-}
-
 const addExpansionDecks = (
-  state: DeckState,
+  state: ComponentState<Deck>,
   expansionCode: string,
   expansion = getExpansionConfig(expansionCode)
 ) => {
@@ -46,16 +43,7 @@ const addExpansionDecks = (
 };
 
 /** Redux Selector for returning the deck list as an array, moving the object key to the object field "code" */
-export const selectDeckArray = createSelector(
-  (state: RootState) => state.deck,
-  (stateSlice) => {
-    const array = [];
-    for (const [code, object] of Object.entries(stateSlice)) {
-      array.push({ ...object, code });
-    }
-    return array;
-  }
-);
+export const selectDeckArray = selectComponentArray((state) => state.deck);
 
 /** Redux Selector for returning an array of enabled decks */
 export const selectEnabledDecks = createSelector(selectDeckArray, (array) =>

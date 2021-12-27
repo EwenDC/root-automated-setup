@@ -1,13 +1,14 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, PayloadAction } from "@reduxjs/toolkit";
 import content from "./components/content.json";
+import { RootState } from "./components/store";
 
 export interface Component {
   expansionCode: string;
   enabled: boolean;
 }
 
-export interface ComponentState {
-  [code: string]: Component;
+export interface ComponentState<T> {
+  [code: string]: T;
 }
 
 export const isTrue = "1";
@@ -71,18 +72,32 @@ export const expansionEnabled = (
 };
 
 /**
+ * Redux Selector for returning a component list as an array, moving the component key to the component field "code"
+ * @param select Select function for selecting the component list from the root state
+ */
+export const selectComponentArray = <T>(
+  select: (state: RootState) => ComponentState<T>
+) =>
+  createSelector(select, (stateSlice) => {
+    const array = [];
+    for (const [code, object] of Object.entries(stateSlice)) {
+      array.push({ ...object, code });
+    }
+    return array;
+  });
+
+/**
  * Generic function for populating the starting state of a Redux slice using the provided addExpansionComponents function
  * @param addExpansionComponents Function for extracting state from a given expansion
  */
-export const setupInitialState = <T extends ComponentState>(
+export const setupInitialState = <T>(
   addExpansionComponents: (
-    state: T,
+    state: ComponentState<T>,
     expansionCode: string,
     expansion?: any
   ) => void
-): T => {
-  // For a reason I don't understand this can't be typed to T, so we have to leave it as any
-  const initialState: any = {};
+) => {
+  const initialState: ComponentState<T> = {};
   for (const [expansionCode, expansion] of Object.entries(content)) {
     if (expansionEnabled(expansionCode, expansion.base)) {
       addExpansionComponents(initialState, expansionCode, expansion);
@@ -96,8 +111,8 @@ export const setupInitialState = <T extends ComponentState>(
  * @param state Editable copy of current Redux slice state
  * @param action Payloaded action with component code to be enabled
  */
-export const enableComponent = <T extends ComponentState>(
-  state: T,
+export const enableComponent = <T extends Component>(
+  state: ComponentState<T>,
   action: PayloadAction<string>
 ) => {
   // Retreive the component
@@ -113,8 +128,8 @@ export const enableComponent = <T extends ComponentState>(
  * @param state Editable copy of current Redux slice state
  * @param action Payloaded action with component code to be disabled
  */
-export const disableComponent = <T extends ComponentState>(
-  state: T,
+export const disableComponent = <T extends Component>(
+  state: ComponentState<T>,
   action: PayloadAction<string>
 ) => {
   // Retreive the component
@@ -130,8 +145,8 @@ export const disableComponent = <T extends ComponentState>(
  * @param state Editable copy of current Redux slice state
  * @param action Payloaded action with code of expansion whose components are to be deleted from state
  */
-export const deleteExpansionComponents = <T extends ComponentState>(
-  state: T,
+export const deleteExpansionComponents = <T extends Component>(
+  state: ComponentState<T>,
   action: PayloadAction<string>
 ) => {
   // Skip processing for the base game, as that cannot be disabled

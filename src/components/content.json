@@ -29,7 +29,18 @@
         "vagabond": true
       }
     },
-    "maps": {},
+    "maps": {
+      "autumn": {
+        "name": "Autumn",
+        "printedSuits": true,
+        "landmark": null
+      },
+      "winter": {
+        "name": "Winter",
+        "printedSuits": false,
+        "landmark": null
+      }
+    },
     "vagabonds": {}
   },
   "riverfolk": {
@@ -77,7 +88,18 @@
         "name": "The Ferry"
       }
     },
-    "maps": {}
+    "maps": {
+      "lake": {
+        "name": "Lake",
+        "printedSuits": false,
+        "landmark": "ferry"
+      },
+      "mountain": {
+        "name": "Mountain",
+        "printedSuits": false,
+        "landmark": "tower"
+      }
+    }
   },
   "marauder": {
     "name": "Root: The Marauder Expansion",

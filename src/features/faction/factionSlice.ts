@@ -1,11 +1,12 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../components/store";
 import {
   Component,
+  ComponentState,
   deleteExpansionComponents,
   disableComponent,
   enableComponent,
   getExpansionConfig,
+  selectComponentArray,
   setupInitialState,
 } from "../../util";
 import {
@@ -19,12 +20,8 @@ export interface Faction extends Component {
   vagabond: boolean;
 }
 
-export interface FactionState {
-  [code: string]: Faction;
-}
-
 const addExpansionFactions = (
-  state: FactionState,
+  state: ComponentState<Faction>,
   expansionCode: string,
   expansion = getExpansionConfig(expansionCode)
 ) => {
@@ -49,15 +46,8 @@ const addExpansionFactions = (
 };
 
 /** Redux Selector for returning the faction list as an array, moving the object key to the object field "code" */
-export const selectFactionArray = createSelector(
-  (state: RootState) => state.faction,
-  (stateSlice) => {
-    const array = [];
-    for (const [code, object] of Object.entries(stateSlice)) {
-      array.push({ ...object, code });
-    }
-    return array;
-  }
+export const selectFactionArray = selectComponentArray(
+  (state) => state.faction
 );
 
 /** Redux Selector for returning an array of enabled militant factions */
