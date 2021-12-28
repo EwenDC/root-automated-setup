@@ -1,0 +1,19 @@
+.carousel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  overflow: visible;
+}
+
+.expansion {
+  height: 200px; /*TODO: CHANGE TO EM*/
+  width: 150px; /*TODO: CHANGE TO EM*/
+  margin: 10px; /*TODO: CHANGE TO EM*/
+  flex: 1 0;
+}
+
+.expansion[data-enabled="false"] {
+  background-color: rgb(197, 197, 197);
+}
