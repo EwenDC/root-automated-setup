@@ -29,6 +29,11 @@ import {
   enableMap,
   selectMapArray,
 } from "../../features/map/mapSlice";
+import {
+  disableVagabond,
+  enableVagabond,
+  selectVagabondArray,
+} from "../../features/vagabond/vagabondSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 export const App: React.FC = () => {
@@ -39,6 +44,7 @@ export const App: React.FC = () => {
   const hirelings = useAppSelector(selectHirelingArray);
   const landmarks = useAppSelector(selectLandmarkArray);
   const maps = useAppSelector(selectMapArray);
+  const vagabonds = useAppSelector(selectVagabondArray);
 
   return (
     <div>
@@ -121,6 +127,27 @@ export const App: React.FC = () => {
                 </button>
               ) : (
                 <button onClick={() => dispatch(enableMap(map.code))}>
+                  Enable
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        Vagabond:
+        <ul>
+          {vagabonds.map((vagabond) => (
+            <li key={vagabond.code}>
+              {vagabond.name}{" "}
+              {vagabond.enabled ? (
+                <button
+                  onClick={() => dispatch(disableVagabond(vagabond.code))}
+                >
+                  Disable
+                </button>
+              ) : (
+                <button onClick={() => dispatch(enableVagabond(vagabond.code))}>
                   Enable
                 </button>
               )}

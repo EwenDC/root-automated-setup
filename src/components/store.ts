@@ -5,6 +5,7 @@ import factionReducer from "../features/faction/factionSlice";
 import hirelingReducer from "../features/hireling/hirelingSlice";
 import landmarkReducer from "../features/landmark/landmarkSlice";
 import mapReducer from "../features/map/mapSlice";
+import vagabondReducer from "../features/vagabond/vagabondSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     hireling: hirelingReducer,
     landmark: landmarkReducer,
     map: mapReducer,
+    vagabond: vagabondReducer,
   },
 });
 

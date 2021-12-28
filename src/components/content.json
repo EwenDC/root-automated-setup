@@ -54,8 +54,8 @@
       }
     },
     "vagabonds": {
-      "theif": {
-        "name": "Theif",
+      "thief": {
+        "name": "Thief",
         "startingItems": ["boot", "torch", "tea", "sword"]
       },
       "tinker": {
