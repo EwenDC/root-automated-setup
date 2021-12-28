@@ -14,17 +14,22 @@ import {
   enableExpansionAction,
 } from "../expansion/expansionSlice";
 
-export interface Hireling {
+export interface HirelingDemoted {
   name: string;
 }
-export interface HirelingPair extends Component {
+export interface HirelingPromoted extends HirelingDemoted {
+  warriors: number;
+  components: number;
+  componentName?: string;
+}
+export interface Hireling extends Component {
   factions: string[];
-  promoted: Hireling;
-  demoted: Hireling;
+  promoted: HirelingPromoted;
+  demoted: HirelingDemoted;
 }
 
 const addExpansionHirelings = (
-  state: ComponentState<HirelingPair>,
+  state: ComponentState<Hireling>,
   expansionCode: string,
   expansion = getExpansionConfig(expansionCode)
 ) => {
@@ -35,9 +40,14 @@ const addExpansionHirelings = (
       // Don't add to state if it already exists
       if (state[hirelingCode] == null) {
         state[hirelingCode] = {
-          factions: hireling.factions,
-          promoted: hireling.promoted,
-          demoted: hireling.demoted,
+          ...hireling,
+          promoted: {
+            ...hireling.promoted,
+            componentName:
+              hireling.promoted.componentName === ""
+                ? undefined
+                : hireling.promoted.componentName,
+          },
           expansionCode: expansionCode,
           enabled: true,
         };

@@ -18,6 +18,9 @@ export interface Faction extends Component {
   name: string;
   militant: boolean;
   vagabond: boolean;
+  warriors: number;
+  buildings: number;
+  tokens: number;
 }
 
 const addExpansionFactions = (
@@ -30,9 +33,7 @@ const addExpansionFactions = (
       // Don't add to state if it already exists
       if (state[factionCode] == null) {
         state[factionCode] = {
-          name: faction.name,
-          militant: faction.militant,
-          vagabond: faction.vagabond,
+          ...faction,
           expansionCode: expansionCode,
           enabled: true,
         };

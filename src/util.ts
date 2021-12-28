@@ -11,6 +11,16 @@ export interface ComponentState<T> {
   [code: string]: T;
 }
 
+export type VagabondItem =
+  | "boot"
+  | "sword"
+  | "bag"
+  | "hammer"
+  | "tea"
+  | "coin"
+  | "crossbow"
+  | "torch";
+
 export const isTrue = "1";
 export const isFalse = "0";
 

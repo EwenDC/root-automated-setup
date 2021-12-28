@@ -30,8 +30,7 @@ const addExpansionMaps = (
       // Don't add to state if it already exists
       if (state[mapCode] == null) {
         state[mapCode] = {
-          name: map.name,
-          printedSuits: map.printedSuits,
+          ...map,
           landmark: map.landmark === "" ? undefined : map.landmark,
           expansionCode: expansionCode,
           enabled: true,

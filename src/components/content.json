@@ -11,22 +11,34 @@
       "marquise": {
         "name": "Marquise de Cat",
         "militant": true,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 25,
+        "buildings": 18,
+        "tokens": 9
       },
       "eyrie": {
         "name": "Eyrie Dynasties",
         "militant": true,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 20,
+        "buildings": 7,
+        "tokens": 0
       },
       "alliance": {
         "name": "Woodland Alliance",
         "militant": false,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 10,
+        "buildings": 3,
+        "tokens": 10
       },
       "vagabond": {
         "name": "Vagabond",
         "militant": false,
-        "vagabond": true
+        "vagabond": true,
+        "warriors": 1,
+        "buildings": 0,
+        "tokens": 0
       }
     },
     "maps": {
@@ -41,7 +53,20 @@
         "landmark": ""
       }
     },
-    "vagabonds": {}
+    "vagabonds": {
+      "theif": {
+        "name": "Theif",
+        "startingItems": ["boot", "torch", "tea", "sword"]
+      },
+      "tinker": {
+        "name": "Tinker",
+        "startingItems": ["boot", "torch", "bag", "hammer"]
+      },
+      "ranger": {
+        "name": "Ranger",
+        "startingItems": ["boot", "torch", "crossbow", "sword"]
+      }
+    }
   },
   "riverfolk": {
     "name": "Root: The Riverfolk Expansion",
@@ -50,20 +75,42 @@
       "cult": {
         "name": "Lizard Cult",
         "militant": false,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 25,
+        "buildings": 15,
+        "tokens": 0
       },
       "riverfolk": {
         "name": "Riverfolk Company",
         "militant": false,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 15,
+        "buildings": 0,
+        "tokens": 9
       },
       "vagabond2": {
         "name": "Vagabond",
         "militant": false,
-        "vagabond": true
+        "vagabond": true,
+        "warriors": 1,
+        "buildings": 0,
+        "tokens": 0
       }
     },
-    "vagabonds": {}
+    "vagabonds": {
+      "vagrant": {
+        "name": "Vagrant",
+        "startingItems": ["coin", "torch", "boot"]
+      },
+      "arbiter": {
+        "name": "Arbiter",
+        "startingItems": ["boot", "torch", "sword", "sword"]
+      },
+      "scoundrel": {
+        "name": "Scoundrel",
+        "startingItems": ["boot", "boot", "torch", "crossbow"]
+      }
+    }
   },
   "underworld": {
     "name": "Root: The Underworld Expansion",
@@ -72,12 +119,18 @@
       "duchy": {
         "name": "Underground Duchy",
         "militant": true,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 20,
+        "buildings": 6,
+        "tokens": 3
       },
       "corvid": {
         "name": "Corvid Conspiracy",
         "militant": false,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 15,
+        "buildings": 0,
+        "tokens": 8
       }
     },
     "landmarks": {
@@ -108,19 +161,28 @@
       "warlord": {
         "name": "Lord of the Hundreds",
         "militant": true,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 21,
+        "buildings": 6,
+        "tokens": 5
       },
       "keepers": {
         "name": "Keepers in Iron",
         "militant": true,
-        "vagabond": false
+        "vagabond": false,
+        "warriors": 15,
+        "buildings": 3,
+        "tokens": 12
       }
     },
     "hirelings": {
       "patrol": {
         "factions": ["marquise"],
         "promoted": {
-          "name": "Forest Patrol"
+          "name": "Forest Patrol",
+          "warriors": 12,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Feline Physicians"
@@ -129,7 +191,10 @@
       "dynasty": {
         "factions": ["eyrie"],
         "promoted": {
-          "name": "Last Dynasty"
+          "name": "Last Dynasty",
+          "warriors": 5,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Bluebird Nobles"
@@ -138,7 +203,10 @@
       "uprising": {
         "factions": ["alliance"],
         "promoted": {
-          "name": "Spring Uprising"
+          "name": "Spring Uprising",
+          "warriors": 4,
+          "components": 1,
+          "componentName": "Uprising Die"
         },
         "demoted": {
           "name": "Rabbit Scouts"
@@ -147,7 +215,10 @@
       "outcast": {
         "factions": ["vagabond", "vagabond2"],
         "promoted": {
-          "name": "The Outcast"
+          "name": "The Outcast",
+          "warriors": 1,
+          "components": 3,
+          "componentName": "Club Item"
         },
         "demoted": {
           "name": "The Brigand"
@@ -185,7 +256,20 @@
   "vagabondPack": {
     "name": "Root: The Vagabond Pack",
     "base": false,
-    "vagabonds": {}
+    "vagabonds": {
+      "adventurer": {
+        "name": "Adventurer",
+        "startingItems": ["boot", "torch", "hammer"]
+      },
+      "ronin": {
+        "name": "Ronin",
+        "startingItems": ["boot", "boot", "torch", "sword"]
+      },
+      "harrier": {
+        "name": "Harrier",
+        "startingItems": ["coin", "torch", "sword", "crossbow"]
+      }
+    }
   },
   "riverfolkHirelings": {
     "name": "Root: The Riverfolk Hireling Pack",
@@ -194,7 +278,10 @@
       "prophets": {
         "factions": ["cult"],
         "promoted": {
-          "name": "Warm Sun Prophets"
+          "name": "Warm Sun Prophets",
+          "warriors": 4,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Lizard Envoys"
@@ -203,7 +290,10 @@
       "flotilla": {
         "factions": ["riverfolk"],
         "promoted": {
-          "name": "Riverfolk Flotilla"
+          "name": "Riverfolk Flotilla",
+          "warriors": 1,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Otter Divers"
@@ -212,7 +302,10 @@
       "bandits": {
         "factions": [],
         "promoted": {
-          "name": "Highway Bandits"
+          "name": "Highway Bandits",
+          "warriors": 4,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Bandit Guilds"
@@ -227,7 +320,10 @@
       "expedition": {
         "factions": ["duchy"],
         "promoted": {
-          "name": "Sunward Expedition"
+          "name": "Sunward Expedition",
+          "warriors": 8,
+          "components": 3,
+          "componentName": "Foothold Token"
         },
         "demoted": {
           "name": "Mole Artisans"
@@ -236,7 +332,10 @@
       "spies": {
         "factions": ["corvid"],
         "promoted": {
-          "name": "Corvid Spies"
+          "name": "Corvid Spies",
+          "warriors": 6,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Raven Guards"
@@ -245,7 +344,10 @@
       "protector": {
         "factions": [],
         "promoted": {
-          "name": "Furious Protector"
+          "name": "Furious Protector",
+          "warriors": 1,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Bandit Guilds"
@@ -260,7 +362,10 @@
       "flamebearers": {
         "factions": ["warlord"],
         "promoted": {
-          "name": "Flame Bearers"
+          "name": "Flame Bearers",
+          "warriors": 6,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Rat Ravagers"
@@ -269,7 +374,10 @@
       "vaultkeepers": {
         "factions": ["keepers"],
         "promoted": {
-          "name": "Vault Keepers"
+          "name": "Vault Keepers",
+          "warriors": 6,
+          "components": 6,
+          "componentName": "Vault Building"
         },
         "demoted": {
           "name": "Badger Bodyguards"
@@ -278,7 +386,10 @@
       "band": {
         "factions": [],
         "promoted": {
-          "name": "Woodland Band"
+          "name": "Woodland Band",
+          "warriors": 5,
+          "components": 0,
+          "componentName": ""
         },
         "demoted": {
           "name": "Traveling Band"

@@ -30,7 +30,7 @@ const addExpansionLandmarks = (
       // Don't add to state if it already exists
       if (state[landmarkCode] == null) {
         state[landmarkCode] = {
-          name: landmark.name,
+          ...landmark,
           expansionCode: expansionCode,
           enabled: true,
         };

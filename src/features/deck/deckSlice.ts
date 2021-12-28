@@ -28,7 +28,7 @@ const addExpansionDecks = (
       // Don't add to state if it already exists
       if (state[deckCode] == null) {
         state[deckCode] = {
-          name: deck.name,
+          ...deck,
           expansionCode: expansionCode,
           enabled: true,
         };
