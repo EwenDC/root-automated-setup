@@ -8,6 +8,7 @@ import {
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
+  toggleComponent,
 } from "../../util";
 import {
   disableExpansionAction,
@@ -67,6 +68,7 @@ export const factionSlice = createSlice({
   name: "faction",
   initialState: setupInitialState(addExpansionFactions),
   reducers: {
+    toggleFaction: toggleComponent,
     enableFaction: enableComponent,
     disableFaction: disableComponent,
   },
@@ -77,5 +79,6 @@ export const factionSlice = createSlice({
   },
 });
 
-export const { enableFaction, disableFaction } = factionSlice.actions;
+export const { toggleFaction, enableFaction, disableFaction } =
+  factionSlice.actions;
 export default factionSlice.reducer;

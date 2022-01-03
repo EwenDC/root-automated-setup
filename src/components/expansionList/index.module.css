@@ -2,18 +2,27 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
   align-items: stretch;
-  overflow: visible;
+  overflow: auto;
 }
 
 .expansion {
-  height: 200px; /*TODO: CHANGE TO EM*/
-  width: 150px; /*TODO: CHANGE TO EM*/
-  margin: 10px; /*TODO: CHANGE TO EM*/
-  flex: 1 0;
+  color: black;
+  height: 16em;
+  min-width: 12em;
+  margin: 1em;
+  flex: 1;
+  background: none;
+  border: none;
+  border-radius: 1em;
+  cursor: pointer;
 }
 
-.expansion[data-enabled="false"] {
-  background-color: rgb(197, 197, 197);
+.expansion:disabled {
+  border: 0.25em solid black;
+  cursor: auto;
+}
+
+.enabled {
+  border: 0.25em solid darkred;
 }

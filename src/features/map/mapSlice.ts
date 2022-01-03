@@ -8,6 +8,7 @@ import {
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
+  toggleComponent,
 } from "../../util";
 import {
   disableExpansionAction,
@@ -56,6 +57,7 @@ export const mapSlice = createSlice({
   name: "map",
   initialState: setupInitialState(addExpansionMaps),
   reducers: {
+    toggleMap: toggleComponent,
     enableMap: enableComponent,
     disableMap: disableComponent,
   },
@@ -66,5 +68,5 @@ export const mapSlice = createSlice({
   },
 });
 
-export const { enableMap, disableMap } = mapSlice.actions;
+export const { toggleMap, enableMap, disableMap } = mapSlice.actions;
 export default mapSlice.reducer;

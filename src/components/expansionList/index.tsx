@@ -1,34 +1,26 @@
+import classNames from "classnames";
 import React from "react";
 import {
-  disableExpansion,
-  enableExpansion,
   selectExpansionArray,
+  toggleExpansion,
 } from "../../features/expansion/expansionSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import style from "./index.module.css";
+import styles from "./index.module.css";
 
 export const ExpansionList: React.FC = () => {
   const dispatch = useAppDispatch();
   const expansions = useAppSelector(selectExpansionArray);
 
   return (
-    <div className={style.carousel}>
+    <div className={styles.carousel}>
       {expansions.map((expansion) => (
         <button
           key={expansion.code}
-          className={style.expansion}
-          onClick={
-            expansion.base
-              ? undefined
-              : () =>
-                  dispatch(
-                    expansion.enabled
-                      ? disableExpansion(expansion.code)
-                      : enableExpansion(expansion.code)
-                  )
-          }
+          className={classNames(styles.expansion, {
+            [styles.enabled]: expansion.enabled,
+          })}
+          onClick={() => dispatch(toggleExpansion(expansion.code))}
           disabled={expansion.base}
-          data-enabled={expansion.enabled}
         >
           {expansion.name}
         </button>

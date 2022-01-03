@@ -8,6 +8,7 @@ import {
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
+  toggleComponent,
 } from "../../util";
 import {
   disableExpansionAction,
@@ -75,6 +76,7 @@ export const hirelingSlice = createSlice({
   name: "hireling",
   initialState: setupInitialState(addExpansionHirelings),
   reducers: {
+    toggleHireling: toggleComponent,
     enableHireling: enableComponent,
     disableHireling: disableComponent,
   },

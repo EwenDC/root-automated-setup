@@ -107,6 +107,27 @@ export const setupInitialState = <T>(
 };
 
 /**
+ * Generic version of Toggle reducer for enabling or disabling a component in state
+ * @param state Editable copy of current Redux slice state
+ * @param action Payloaded action with component code to be enabled or disabled
+ * @param overrideValue Optional override value for what you want the component
+ * enabled value to be set to, instead of toggling its current state
+ */
+export const toggleComponent = <T extends Component>(
+  state: ComponentState<T>,
+  action: PayloadAction<string>,
+  overrideValue?: boolean
+) => {
+  // Retreive the component
+  const component = state[action.payload];
+  // Only update the component state if it exists
+  if (component != null) {
+    // If enabled value is passed in, set enabled to that. Otherwise toggle it.
+    component.enabled = overrideValue ?? !component.enabled;
+  }
+};
+
+/**
  * Generic version of Enable reducer for enabling a component in state
  * @param state Editable copy of current Redux slice state
  * @param action Payloaded action with component code to be enabled
@@ -114,31 +135,17 @@ export const setupInitialState = <T>(
 export const enableComponent = <T extends Component>(
   state: ComponentState<T>,
   action: PayloadAction<string>
-) => {
-  // Retreive the component
-  const component = state[action.payload];
-  // Only update the component state if it exists
-  if (component != null) {
-    component.enabled = true;
-  }
-};
+) => toggleComponent(state, action, true);
 
 /**
- * Generic version of Disable reducer for enabling a component in state
+ * Generic version of Disable reducer for disabling a component in state
  * @param state Editable copy of current Redux slice state
  * @param action Payloaded action with component code to be disabled
  */
 export const disableComponent = <T extends Component>(
   state: ComponentState<T>,
   action: PayloadAction<string>
-) => {
-  // Retreive the component
-  const component = state[action.payload];
-  // Only update the component state if it exists
-  if (component != null) {
-    component.enabled = false;
-  }
-};
+) => toggleComponent(state, action, false);
 
 /**
  * Generic version of Disable Expansion reducer for deleting expansion components from state (components not deleted if expansion marked as base)

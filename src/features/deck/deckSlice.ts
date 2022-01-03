@@ -8,6 +8,7 @@ import {
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
+  toggleComponent,
 } from "../../util";
 import {
   disableExpansionAction,
@@ -54,6 +55,7 @@ export const deckSlice = createSlice({
   name: "deck",
   initialState: setupInitialState(addExpansionDecks),
   reducers: {
+    toggleDeck: toggleComponent,
     enableDeck: enableComponent,
     disableDeck: disableComponent,
   },
@@ -64,5 +66,5 @@ export const deckSlice = createSlice({
   },
 });
 
-export const { enableDeck, disableDeck } = deckSlice.actions;
+export const { toggleDeck, enableDeck, disableDeck } = deckSlice.actions;
 export default deckSlice.reducer;
