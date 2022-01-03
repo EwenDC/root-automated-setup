@@ -3,8 +3,6 @@ import {
   Component,
   ComponentState,
   deleteExpansionComponents,
-  disableComponent,
-  enableComponent,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
@@ -56,8 +54,6 @@ export const deckSlice = createSlice({
   initialState: setupInitialState(addExpansionDecks),
   reducers: {
     toggleDeck: toggleComponent,
-    enableDeck: enableComponent,
-    disableDeck: disableComponent,
   },
   extraReducers: {
     [enableExpansionAction]: (state, action: PayloadAction<string>) =>
@@ -66,5 +62,5 @@ export const deckSlice = createSlice({
   },
 });
 
-export const { toggleDeck, enableDeck, disableDeck } = deckSlice.actions;
+export const { toggleDeck } = deckSlice.actions;
 export default deckSlice.reducer;

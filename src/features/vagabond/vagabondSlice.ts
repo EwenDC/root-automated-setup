@@ -3,8 +3,6 @@ import {
   Component,
   ComponentState,
   deleteExpansionComponents,
-  disableComponent,
-  enableComponent,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
@@ -61,8 +59,6 @@ export const vagabondSlice = createSlice({
   initialState: setupInitialState(addExpansionVagabonds),
   reducers: {
     toggleVagabond: toggleComponent,
-    enableVagabond: enableComponent,
-    disableVagabond: disableComponent,
   },
   extraReducers: {
     [enableExpansionAction]: (state, action: PayloadAction<string>) =>
@@ -71,6 +67,5 @@ export const vagabondSlice = createSlice({
   },
 });
 
-export const { toggleVagabond, enableVagabond, disableVagabond } =
-  vagabondSlice.actions;
+export const { toggleVagabond } = vagabondSlice.actions;
 export default vagabondSlice.reducer;

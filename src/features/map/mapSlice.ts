@@ -3,8 +3,6 @@ import {
   Component,
   ComponentState,
   deleteExpansionComponents,
-  disableComponent,
-  enableComponent,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
@@ -58,8 +56,6 @@ export const mapSlice = createSlice({
   initialState: setupInitialState(addExpansionMaps),
   reducers: {
     toggleMap: toggleComponent,
-    enableMap: enableComponent,
-    disableMap: disableComponent,
   },
   extraReducers: {
     [enableExpansionAction]: (state, action: PayloadAction<string>) =>
@@ -68,5 +64,5 @@ export const mapSlice = createSlice({
   },
 });
 
-export const { toggleMap, enableMap, disableMap } = mapSlice.actions;
+export const { toggleMap } = mapSlice.actions;
 export default mapSlice.reducer;

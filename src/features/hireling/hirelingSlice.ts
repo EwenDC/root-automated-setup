@@ -3,8 +3,6 @@ import {
   Component,
   ComponentState,
   deleteExpansionComponents,
-  disableComponent,
-  enableComponent,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
@@ -77,8 +75,6 @@ export const hirelingSlice = createSlice({
   initialState: setupInitialState(addExpansionHirelings),
   reducers: {
     toggleHireling: toggleComponent,
-    enableHireling: enableComponent,
-    disableHireling: disableComponent,
   },
   extraReducers: {
     [enableExpansionAction]: (state, action: PayloadAction<string>) =>
@@ -87,5 +83,5 @@ export const hirelingSlice = createSlice({
   },
 });
 
-export const { enableHireling, disableHireling } = hirelingSlice.actions;
+export const { toggleHireling } = hirelingSlice.actions;
 export default hirelingSlice.reducer;

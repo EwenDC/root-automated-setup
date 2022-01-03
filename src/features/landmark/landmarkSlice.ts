@@ -3,8 +3,6 @@ import {
   Component,
   ComponentState,
   deleteExpansionComponents,
-  disableComponent,
-  enableComponent,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
@@ -60,8 +58,6 @@ export const landmarkSlice = createSlice({
   initialState: setupInitialState(addExpansionLandmarks),
   reducers: {
     toggleLandmark: toggleComponent,
-    enableLandmark: enableComponent,
-    disableLandmark: disableComponent,
   },
   extraReducers: {
     [enableExpansionAction]: (state, action: PayloadAction<string>) =>
@@ -70,6 +66,5 @@ export const landmarkSlice = createSlice({
   },
 });
 
-export const { toggleLandmark, enableLandmark, disableLandmark } =
-  landmarkSlice.actions;
+export const { toggleLandmark } = landmarkSlice.actions;
 export default landmarkSlice.reducer;
