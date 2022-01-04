@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import content from "../../components/content.json";
-import { AppDispatch, AppGetState } from "../../components/store";
+import content from "../components/content.json";
+import { AppThunk } from "../components";
 import {
   ComponentState,
   expansionEnabled,
   persistExpansionEnabled,
   selectComponentArray,
-} from "../../util";
+} from "./reduxUtils";
 
 export interface Expansion {
   name: string;
@@ -30,15 +30,15 @@ export const selectExpansionArray = selectComponentArray(
 
 const setExpansionEnabled = (
   state: ComponentState<Expansion>,
-  action: PayloadAction<string>,
-  value: boolean
+  expansionCode: string,
+  enabled: boolean
 ) => {
   // Retreive the expansion (may return undefined if code does not exist)
-  const expansion = state[action.payload];
+  const expansion = state[expansionCode];
   // Only update the expansion state if it exists and is not the base game
   if (expansion != null && !expansion.base) {
-    expansion.enabled = value;
-    persistExpansionEnabled(action.payload, expansion.enabled);
+    expansion.enabled = enabled;
+    persistExpansionEnabled(expansionCode, expansion.enabled);
   }
 };
 
@@ -46,8 +46,10 @@ export const expansionSlice = createSlice({
   name: "expansion",
   initialState,
   reducers: {
-    enableExpansion: (...params) => setExpansionEnabled(...params, true),
-    disableExpansion: (...params) => setExpansionEnabled(...params, false),
+    enableExpansion: (state, action: PayloadAction<string>) =>
+      setExpansionEnabled(state, action.payload, true),
+    disableExpansion: (state, action: PayloadAction<string>) =>
+      setExpansionEnabled(state, action.payload, false),
   },
 });
 
@@ -56,7 +58,8 @@ export const enableExpansionAction = enableExpansion.type;
 export const disableExpansionAction = disableExpansion.type;
 
 export const toggleExpansion =
-  (expansionCode: string) => (dispatch: AppDispatch, getState: AppGetState) => {
+  (expansionCode: string): AppThunk =>
+  (dispatch, getState) => {
     // Retreive the expansion (may return undefined if code does not exist)
     const expansion = getState().expansion[expansionCode];
     // Only update the expansion state if it exists and is not the base game

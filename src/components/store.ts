@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import deckReducer from "../features/deck/deckSlice";
-import expansionReducer from "../features/expansion/expansionSlice";
-import factionReducer from "../features/faction/factionSlice";
-import hirelingReducer from "../features/hireling/hirelingSlice";
-import landmarkReducer from "../features/landmark/landmarkSlice";
-import mapReducer from "../features/map/mapSlice";
-import vagabondReducer from "../features/vagabond/vagabondSlice";
+import {
+  deckReducer,
+  expansionReducer,
+  factionReducer,
+  hirelingReducer,
+  landmarkReducer,
+  mapReducer,
+  vagabondReducer,
+} from "../features/";
 
 export const store = configureStore({
   reducer: {
@@ -20,8 +22,7 @@ export const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
-export type AppGetState = typeof store.getState;
-export type RootState = ReturnType<AppGetState>;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

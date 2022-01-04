@@ -3,9 +3,9 @@ import React from "react";
 import {
   selectExpansionArray,
   toggleExpansion,
-} from "../../features/expansion/expansionSlice";
+} from "../../features/expansionSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import styles from "./index.module.css";
+import styles from "./expansionList.module.css";
 
 export const ExpansionList: React.FC = () => {
   const dispatch = useAppDispatch();

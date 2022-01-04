@@ -1,6 +1,6 @@
 import { createSelector, PayloadAction } from "@reduxjs/toolkit";
-import content from "./components/content.json";
-import { RootState } from "./components/store";
+import content from "../components/content.json";
+import { RootState } from "../components";
 
 export interface Component {
   expansionCode: string;
@@ -119,7 +119,7 @@ export const toggleComponent = <T extends Component>(
   const component = state[action.payload];
   // Only update the component state if it exists
   if (component != null) {
-    // If enabled value is passed in, set enabled to that. Otherwise toggle it.
+    // Toggle enabled value
     component.enabled = !component.enabled;
   }
 };

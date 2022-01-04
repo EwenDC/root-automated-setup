@@ -7,11 +7,11 @@ import {
   selectComponentArray,
   setupInitialState,
   toggleComponent,
-} from "../../util";
+} from "./reduxUtils";
 import {
   disableExpansionAction,
   enableExpansionAction,
-} from "../expansion/expansionSlice";
+} from "./expansionSlice";
 
 export interface Faction extends Component {
   name: string;

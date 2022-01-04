@@ -1,5 +1,5 @@
 .container {
-  max-width: 1080px; /*TODO: CHANGE TO EM*/
+  max-width: 80em;
   margin-left: auto;
   margin-right: auto;
 }
