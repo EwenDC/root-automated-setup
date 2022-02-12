@@ -1,6 +1,6 @@
 import { createSelector, PayloadAction } from "@reduxjs/toolkit";
 import content from "../components/content.json";
-import { RootState } from "../components";
+import { RootState } from "../components/store";
 
 export interface Component {
   expansionCode: string;

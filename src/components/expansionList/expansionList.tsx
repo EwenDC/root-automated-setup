@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   selectExpansionArray,
   toggleExpansion,
@@ -10,6 +11,7 @@ import styles from "./expansionList.module.css";
 export const ExpansionList: React.FC = () => {
   const dispatch = useAppDispatch();
   const expansions = useAppSelector(selectExpansionArray);
+  const { t } = useTranslation();
 
   return (
     <div className={styles.carousel}>
@@ -22,7 +24,7 @@ export const ExpansionList: React.FC = () => {
           onClick={() => dispatch(toggleExpansion(expansion.code))}
           disabled={expansion.base}
         >
-          {expansion.name}
+          {t(expansion.name)}
         </button>
       ))}
     </div>

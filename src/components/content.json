@@ -1,10 +1,10 @@
 {
   "root": {
-    "name": "Root: Base Game",
+    "name": "expansion.root",
     "base": true,
     "decks": {
-      "base": {
-        "name": "Base"
+      "standard": {
+        "name": "Standard"
       }
     },
     "factions": {
@@ -69,7 +69,7 @@
     }
   },
   "riverfolk": {
-    "name": "Root: The Riverfolk Expansion",
+    "name": "expansion.riverfolk",
     "base": false,
     "factions": {
       "cult": {
@@ -113,7 +113,7 @@
     }
   },
   "underworld": {
-    "name": "Root: The Underworld Expansion",
+    "name": "expansion.underworld",
     "base": false,
     "factions": {
       "duchy": {
@@ -155,7 +155,7 @@
     }
   },
   "marauder": {
-    "name": "Root: The Marauder Expansion",
+    "name": "expansion.marauder",
     "base": false,
     "factions": {
       "warlord": {
@@ -227,7 +227,7 @@
     }
   },
   "exilesDeck": {
-    "name": "Root: The Exiles and Partisans Deck",
+    "name": "expansion.exilesDeck",
     "base": false,
     "decks": {
       "exiles": {
@@ -236,7 +236,7 @@
     }
   },
   "landmarkPack": {
-    "name": "Root: The Landmarks Pack",
+    "name": "expansion.landmarkPack",
     "base": false,
     "landmarks": {
       "treetop": {
@@ -254,7 +254,7 @@
     }
   },
   "vagabondPack": {
-    "name": "Root: The Vagabond Pack",
+    "name": "expansion.vagabondPack",
     "base": false,
     "vagabonds": {
       "adventurer": {
@@ -272,7 +272,7 @@
     }
   },
   "riverfolkHirelings": {
-    "name": "Root: The Riverfolk Hireling Pack",
+    "name": "expansion.riverfolkHirelings",
     "base": false,
     "hirelings": {
       "prophets": {
@@ -314,7 +314,7 @@
     }
   },
   "underworldHirelings": {
-    "name": "Root: The Underworld Hireling Pack",
+    "name": "expansion.underworldHirelings",
     "base": false,
     "hirelings": {
       "expedition": {
@@ -356,7 +356,7 @@
     }
   },
   "marauderHirelings": {
-    "name": "Root: The Marauder Hireling Pack",
+    "name": "expansion.marauderHirelings",
     "base": false,
     "hirelings": {
       "flamebearers": {

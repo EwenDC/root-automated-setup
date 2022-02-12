@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import content from "../components/content.json";
-import { AppThunk } from "../components";
+import { AppThunk } from "../components/store";
 import {
   ComponentState,
   expansionEnabled,
