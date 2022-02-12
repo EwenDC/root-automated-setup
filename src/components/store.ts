@@ -6,6 +6,7 @@ import {
   hirelingReducer,
   landmarkReducer,
   mapReducer,
+  setupReducer,
   vagabondReducer,
 } from "../features/";
 
@@ -17,6 +18,7 @@ export const store = configureStore({
     hireling: hirelingReducer,
     landmark: landmarkReducer,
     map: mapReducer,
+    setup: setupReducer,
     vagabond: vagabondReducer,
   },
 });
