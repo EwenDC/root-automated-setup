@@ -1,14 +1,92 @@
 {
+  "component": {
+    "clubItem": "Club Item",
+    "footholdToken": "Foothold Token",
+    "uprisingDie": "Uprising Die",
+    "vaultBuilding": "Vault Building"
+  },
+  "deck": {
+    "exiles": "Exiles and Partisans",
+    "standard": "Standard"
+  },
   "expansion": {
-    "root": "Root: Base Game",
-    "riverfolk": "Root: The Riverfolk Expansion",
-    "underworld": "Root: The Underworld Expansion",
-    "marauder": "Root: The Marauder Expansion",
     "exilesDeck": "Root: The Exiles and Partisans Deck",
     "landmarkPack": "Root: The Landmarks Pack",
-    "vagabondPack": "Root: The Vagabond Pack",
+    "marauder": "Root: The Marauder Expansion",
+    "marauderHirelings": "Root: The Marauder Hireling Pack",
+    "riverfolk": "Root: The Riverfolk Expansion",
     "riverfolkHirelings": "Root: The Riverfolk Hireling Pack",
+    "root": "Root: Base Game",
+    "underworld": "Root: The Underworld Expansion",
     "underworldHirelings": "Root: The Underworld Hireling Pack",
-    "marauderHirelings": "Root: The Marauder Hireling Pack"
+    "vagabondPack": "Root: The Vagabond Pack"
+  },
+  "faction": {
+    "alliance": "Woodland Alliance",
+    "corvid": "Corvid Conspiracy",
+    "cult": "Lizard Cult",
+    "duchy": "Underground Duchy",
+    "eyrie": "Eyrie Dynasties",
+    "keepers": "Keepers in Iron",
+    "marquise": "Marquise de Cat",
+    "riverfolk": "Riverfolk Company",
+    "vagabond": "Vagabond",
+    "warlord": "Lord of the Hundreds"
+  },
+  "hireling": {
+    "badgerBodyguards": "Badger Bodyguards",
+    "banditGuilds": "Bandit Guilds",
+    "bluebirdNobles": "Bluebird Nobles",
+    "brigand": "The Brigand",
+    "corvidSpies": "Corvid Spies",
+    "felinePhysicians": "Feline Physicians",
+    "flameBearers": "Flame Bearers",
+    "forestPatrol": "Forest Patrol",
+    "furiousProtector": "Furious Protector",
+    "highwayBandits": "Highway Bandits",
+    "lastDynasty": "Last Dynasty",
+    "lizardEnvoys": "Lizard Envoys",
+    "moleArtisans": "Mole Artisans",
+    "otterDivers": "Otter Divers",
+    "outcast": "The Outcast",
+    "rabbitScouts": "Rabbit Scouts",
+    "ratRavagers": "Rat Ravagers",
+    "ravenGuards": "Raven Guards",
+    "riverfolkFlotilla": "Riverfolk Flotilla",
+    "springUprising": "Spring Uprising",
+    "stoicProtector": "Stoic Protector",
+    "sunwardExpedition": "Sunward Expedition",
+    "travelingBand": "Traveling Band",
+    "vaultKeepers": "Vault Keepers",
+    "warmSunProphets": "Warm Sun Prophets",
+    "woodlandBand": "Woodland Band"
+  },
+  "landmark": {
+    "city": "Lost City",
+    "ferry": "The Ferry",
+    "forge": "Legendary Forge",
+    "market": "Black Market",
+    "tower": "The Tower",
+    "treetop": "Elder Treetop"
+  },
+  "map": {
+    "autumn": "Autumn",
+    "lake": "Lake",
+    "mountain": "Mountain",
+    "winter": "Winter"
+  },
+  "setup": {
+    "welcome": "Welcome to the Root automated setup! To get started, select which Root content you are playing with, and your player count. Automated factions are not currently supported, so please set them up manually using the setup instructions found in the respective manuals."
+  },
+  "vagabond": {
+    "adventurer": "Adventurer",
+    "arbiter": "Arbiter",
+    "harrier": "Harrier",
+    "ranger": "Ranger",
+    "ronin": "Ronin",
+    "scoundrel": "Scoundrel",
+    "thief": "Thief",
+    "tinker": "Tinker",
+    "vagrant": "Vagrant"
   }
 }

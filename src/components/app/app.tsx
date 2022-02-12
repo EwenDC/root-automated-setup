@@ -1,15 +1,15 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import ExpansionList from "../expansionList";
 import styles from "./app.module.css";
 
-export const App: React.FC = () => (
-  <div className={styles.container}>
-    <ExpansionList />
-    <div>
-      Welcome to the Root automated setup! To get started, select which Root
-      content you are playing with, and your player count. Automated factions
-      are not currently supported, so please set them up manually using the
-      setup instructions found in the respective manuals.
+export const App: React.FC = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div className={styles.container}>
+      <ExpansionList />
+      <div>{t("setup.welcome")}</div>
     </div>
-  </div>
-);
+  );
+};
