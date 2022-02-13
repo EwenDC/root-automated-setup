@@ -70,8 +70,7 @@ const initialState: SetupState = {
   faction: null,
 };
 
-export const selectCurrentStep = (state: RootState) =>
-  state.setup.present.currentStep;
+export const selectSetupParameters = (state: RootState) => state.setup.present;
 
 export const setupSlice = createSlice({
   name: "setup",

@@ -14,7 +14,6 @@ import {
 } from "./expansionSlice";
 
 export interface Vagabond extends Component {
-  name: string;
   startingItems: string[];
 }
 

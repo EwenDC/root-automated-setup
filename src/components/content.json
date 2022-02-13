@@ -42,27 +42,22 @@
     },
     "maps": {
       "autumn": {
-        "name": "map.autumn",
         "printedSuits": true,
         "landmark": ""
       },
       "winter": {
-        "name": "map.winter",
         "printedSuits": false,
         "landmark": ""
       }
     },
     "vagabonds": {
       "thief": {
-        "name": "vagabond.thief",
         "startingItems": ["boot", "torch", "tea", "sword"]
       },
       "tinker": {
-        "name": "vagabond.tinker",
         "startingItems": ["boot", "torch", "bag", "hammer"]
       },
       "ranger": {
-        "name": "vagabond.ranger",
         "startingItems": ["boot", "torch", "crossbow", "sword"]
       }
     }
@@ -97,15 +92,12 @@
     },
     "vagabonds": {
       "vagrant": {
-        "name": "vagabond.vagrant",
         "startingItems": ["coin", "torch", "boot"]
       },
       "arbiter": {
-        "name": "vagabond.arbiter",
         "startingItems": ["boot", "torch", "sword", "sword"]
       },
       "scoundrel": {
-        "name": "vagabond.scoundrel",
         "startingItems": ["boot", "boot", "torch", "crossbow"]
       }
     }
@@ -140,12 +132,10 @@
     },
     "maps": {
       "lake": {
-        "name": "map.lake",
         "printedSuits": false,
         "landmark": "ferry"
       },
       "mountain": {
-        "name": "map.mountain",
         "printedSuits": false,
         "landmark": "tower"
       }
@@ -251,15 +241,12 @@
     "base": false,
     "vagabonds": {
       "adventurer": {
-        "name": "vagabond.adventurer",
         "startingItems": ["boot", "torch", "hammer"]
       },
       "ronin": {
-        "name": "vagabond.ronin",
         "startingItems": ["boot", "boot", "torch", "sword"]
       },
       "harrier": {
-        "name": "vagabond.harrier",
         "startingItems": ["coin", "torch", "sword", "crossbow"]
       }
     }

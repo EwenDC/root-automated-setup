@@ -14,7 +14,6 @@ import {
 } from "./expansionSlice";
 
 export interface Map extends Component {
-  name: string;
   printedSuits: boolean;
   landmark?: string;
 }
