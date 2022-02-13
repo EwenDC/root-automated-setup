@@ -1,6 +1,5 @@
 {
   "root": {
-    "name": "expansion.root",
     "base": true,
     "decks": {
       "standard": {
@@ -69,7 +68,6 @@
     }
   },
   "riverfolk": {
-    "name": "expansion.riverfolk",
     "base": false,
     "factions": {
       "cult": {
@@ -113,7 +111,6 @@
     }
   },
   "underworld": {
-    "name": "expansion.underworld",
     "base": false,
     "factions": {
       "duchy": {
@@ -155,7 +152,6 @@
     }
   },
   "marauder": {
-    "name": "expansion.marauder",
     "base": false,
     "factions": {
       "warlord": {
@@ -227,7 +223,6 @@
     }
   },
   "exilesDeck": {
-    "name": "expansion.exilesDeck",
     "base": false,
     "decks": {
       "exiles": {
@@ -236,7 +231,6 @@
     }
   },
   "landmarkPack": {
-    "name": "expansion.landmarkPack",
     "base": false,
     "landmarks": {
       "treetop": {
@@ -254,7 +248,6 @@
     }
   },
   "vagabondPack": {
-    "name": "expansion.vagabondPack",
     "base": false,
     "vagabonds": {
       "adventurer": {
@@ -272,7 +265,6 @@
     }
   },
   "riverfolkHirelings": {
-    "name": "expansion.riverfolkHirelings",
     "base": false,
     "hirelings": {
       "prophets": {
@@ -314,7 +306,6 @@
     }
   },
   "underworldHirelings": {
-    "name": "expansion.underworldHirelings",
     "base": false,
     "hirelings": {
       "expedition": {
@@ -356,7 +347,6 @@
     }
   },
   "marauderHirelings": {
-    "name": "expansion.marauderHirelings",
     "base": false,
     "hirelings": {
       "flamebearers": {

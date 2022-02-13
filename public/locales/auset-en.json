@@ -76,7 +76,20 @@
     "winter": "Winter"
   },
   "setup": {
-    "welcome": "Welcome to the Root automated setup! To get started, select which Root content you are playing with, and your player count. Automated factions are not currently supported, so please set them up manually using the setup instructions found in the respective manuals."
+    "chooseExpansions": "Welcome to the Root automated setup! To get started, please select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the screen to do so.",
+    "chooseMap": "",
+    "setupMap": "",
+    "chooseDeck": "",
+    "setUpBots": "",
+    "seatPlayers": "",
+    "chooseLandmarks": "",
+    "setUpLandmarks": "",
+    "chooseHirelings": "",
+    "setUpHirelings": "",
+    "drawCards": "",
+    "chooseFaction": "",
+    "placeScoreMarkers": "",
+    "chooseHand": ""
   },
   "vagabond": {
     "adventurer": "Adventurer",

@@ -9,7 +9,6 @@ import {
 } from "./reduxUtils";
 
 export interface Expansion {
-  name: string;
   enabled: boolean;
   base: boolean;
 }
@@ -17,7 +16,6 @@ export interface Expansion {
 let initialState: ComponentState<Expansion> = {};
 for (const [expansionCode, expansion] of Object.entries(content)) {
   initialState[expansionCode] = {
-    name: expansion.name,
     enabled: expansionEnabled(expansionCode, expansion.base),
     base: expansion.base,
   };

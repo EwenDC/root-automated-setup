@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import undoable from "redux-undo";
+import undoable, { GroupByFunction } from "redux-undo";
+import { RootState } from "../components/store";
 
 export enum SetupStep {
   chooseExpansions,
@@ -13,14 +14,15 @@ export enum SetupStep {
   chooseHirelings,
   setUpHirelings,
   drawCards,
-  setUpFactions,
+  chooseFaction,
+  setUpFaction,
   placeScoreMarkers,
   chooseHand,
 }
 
 export interface FactionPoolEntry {
   factionCode: string;
-  lockedByFaction: string;
+  lockedByFaction?: string;
 }
 
 export interface SetupState {
@@ -44,8 +46,10 @@ export interface SetupState {
   chooseHirelingsSkipped: boolean;
   // setUpHirelings
   doHirelingSetup: boolean;
-  // setUpFactions
+  // chooseFaction
   factionPool: FactionPoolEntry[];
+  // setUpFaction
+  faction: string | null;
 }
 
 const initialState: SetupState = {
@@ -63,7 +67,11 @@ const initialState: SetupState = {
   chooseHirelingsSkipped: false,
   doHirelingSetup: false,
   factionPool: [],
+  faction: null,
 };
+
+export const selectCurrentStep = (state: RootState) =>
+  state.setup.present.currentStep;
 
 export const setupSlice = createSlice({
   name: "setup",
@@ -71,5 +79,12 @@ export const setupSlice = createSlice({
   reducers: {},
 });
 
+// Function to group steps together so that undo/redo will always jump between steps
+const setupGroupBy: GroupByFunction<SetupState> = (
+  action,
+  currentState,
+  previousHistory
+) => currentState.currentStep;
+
 //export const {} = setupSlice.actions;
-export default undoable(setupSlice.reducer);
+export default undoable(setupSlice.reducer, { groupBy: setupGroupBy });

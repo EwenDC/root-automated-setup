@@ -57,7 +57,7 @@ export const selectMilitantFactions = createSelector(
 );
 
 /** Redux Selector for returning an array of enabled non-militant factions */
-export const selectNonMilitantFactions = createSelector(
+export const selectInsurgentFactions = createSelector(
   selectFactionArray,
   (array) => array.filter((value) => value.enabled && !value.militant)
 );
