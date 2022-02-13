@@ -7,7 +7,6 @@ import styles from "./app.module.css";
 
 export const App: React.FC = () => {
   const {
-    currentStep,
     chooseDeckSkipped,
     doBotSetup,
     chooseLandmarksSkipped,
@@ -17,47 +16,35 @@ export const App: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Step step={SetupStep.chooseExpansions} currentStep={currentStep}>
+      <Step step={SetupStep.chooseExpansions}>
         <ExpansionList />
       </Step>
-      <Step step={SetupStep.chooseMap} currentStep={currentStep}></Step>
-      <Step step={SetupStep.setupMap} currentStep={currentStep}></Step>
-      <Step
-        step={SetupStep.chooseDeck}
-        currentStep={currentStep}
-        stepSkipped={chooseDeckSkipped}
-      ></Step>
-      <Step
-        step={SetupStep.setUpBots}
-        currentStep={currentStep}
-        stepSkipped={!doBotSetup}
-      ></Step>
-      <Step step={SetupStep.seatPlayers} currentStep={currentStep}></Step>
+      <Step step={SetupStep.chooseMap}></Step>
+      <Step step={SetupStep.setupMap}></Step>
+      <Step step={SetupStep.chooseDeck} stepSkipped={chooseDeckSkipped}></Step>
+      <Step step={SetupStep.setUpBots} stepSkipped={!doBotSetup}></Step>
+      <Step step={SetupStep.seatPlayers}></Step>
       <Step
         step={SetupStep.chooseLandmarks}
-        currentStep={currentStep}
         stepSkipped={chooseLandmarksSkipped}
       ></Step>
       <Step
         step={SetupStep.setUpLandmarks}
-        currentStep={currentStep}
         stepSkipped={landmarkCount <= 0}
       ></Step>
       <Step
         step={SetupStep.chooseHirelings}
-        currentStep={currentStep}
         stepSkipped={chooseHirelingsSkipped}
       ></Step>
       <Step
         step={SetupStep.setUpHirelings}
-        currentStep={currentStep}
         stepSkipped={chooseHirelingsSkipped}
       ></Step>
-      <Step step={SetupStep.drawCards} currentStep={currentStep}></Step>
-      <Step step={SetupStep.chooseFaction} currentStep={currentStep}></Step>
-      <Step step={SetupStep.setUpFaction} currentStep={currentStep}></Step>
-      <Step step={SetupStep.placeScoreMarkers} currentStep={currentStep}></Step>
-      <Step step={SetupStep.chooseHand} currentStep={currentStep}></Step>
+      <Step step={SetupStep.drawCards}></Step>
+      <Step step={SetupStep.chooseFaction}></Step>
+      <Step step={SetupStep.setUpFaction} useStepText={false}></Step>
+      <Step step={SetupStep.placeScoreMarkers}></Step>
+      <Step step={SetupStep.chooseHand}></Step>
     </div>
   );
 };

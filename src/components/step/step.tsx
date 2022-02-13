@@ -1,25 +1,26 @@
 import classNames from "classnames";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { SetupStep } from "../../features";
+import { selectSetupParameters, SetupStep } from "../../features";
+import { useAppSelector } from "../hooks";
 import styles from "./step.module.css";
 import { StepProvider } from "./stepContext";
 
 interface StepProps {
   step: SetupStep;
-  currentStep: SetupStep;
   stepSkipped?: boolean;
   useStepText?: boolean;
 }
 
 const Step: React.FC<StepProps> = ({
   step,
-  currentStep,
   stepSkipped,
   useStepText,
   children,
 }) => {
+  const { currentStep } = useAppSelector(selectSetupParameters);
   const { t } = useTranslation();
+
   // Skip rendering if the setup process isn't up to our step or we were skipped
   if (currentStep < step || stepSkipped) return null;
 
