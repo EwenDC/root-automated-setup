@@ -61,6 +61,9 @@
     "warmSunProphets": "Warm Sun Prophets",
     "woodlandBand": "Woodland Band"
   },
+  "label": {
+    "includeBotStep": "Include setup step for bots"
+  },
   "landmark": {
     "city": "Lost City",
     "ferry": "The Ferry",

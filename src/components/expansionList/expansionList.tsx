@@ -9,7 +9,7 @@ import styles from "./expansionList.module.css";
 export const ExpansionList: React.FC = () => {
   const dispatch = useAppDispatch();
   const expansions = useAppSelector(selectExpansionArray);
-  const context = useContext(StepContext);
+  const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
 
   return (
@@ -22,7 +22,7 @@ export const ExpansionList: React.FC = () => {
             [styles.base]: expansion.base,
           })}
           onClick={() => dispatch(toggleExpansion(expansion.code))}
-          disabled={!context.stepActive || expansion.base}
+          disabled={!stepActive || expansion.base}
         >
           {t(`expansion.${expansion.code}`)}
         </button>

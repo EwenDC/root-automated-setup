@@ -1,5 +1,6 @@
 import React from "react";
 import { selectSetupParameters, SetupStep } from "../../features";
+import Checkbox from "../checkbox";
 import ExpansionList from "../expansionList";
 import { useAppSelector } from "../hooks";
 import Step from "../step";
@@ -18,6 +19,7 @@ export const App: React.FC = () => {
     <div className={styles.container}>
       <Step step={SetupStep.chooseExpansions}>
         <ExpansionList />
+        <Checkbox id="includeBotStep" />
       </Step>
       <Step step={SetupStep.chooseMap}></Step>
       <Step step={SetupStep.setupMap}></Step>
