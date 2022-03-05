@@ -143,3 +143,11 @@ export const deleteExpansionComponents = <T extends Component>(
     }
   }
 };
+
+/**
+ * Returns a random element from a given list
+ * @param list The list of elements to be randomly selected
+ */
+export const getRandom = <T>(list: T[]): T =>
+  // get a random index in the given list (i.e. between 0 inclusive and list.length exclusive)
+  list[Math.floor(Math.random() * list.length)];
