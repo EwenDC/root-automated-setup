@@ -13,13 +13,13 @@ import {
   enableExpansionAction,
 } from "./expansionSlice";
 
-export interface Map extends Component {
+export interface MapComponent extends Component {
   printedSuits: boolean;
   landmark?: string;
 }
 
 const addExpansionMaps = (
-  state: ComponentState<Map>,
+  state: ComponentState<MapComponent>,
   expansionCode: string,
   expansion = getExpansionConfig(expansionCode)
 ) => {

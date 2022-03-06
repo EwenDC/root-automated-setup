@@ -8,20 +8,15 @@ import { StepProvider } from "./stepContext";
 
 interface StepProps {
   step: SetupStep;
-  stepSkipped?: boolean;
   useStepText?: boolean;
 }
 
-const Step: React.FC<StepProps> = ({
-  step,
-  stepSkipped,
-  useStepText,
-  children,
-}) => {
-  const { currentStep } = useAppSelector(selectSetupParameters);
+const Step: React.FC<StepProps> = ({ step, useStepText, children }) => {
+  const { currentStep, skippedSteps } = useAppSelector(selectSetupParameters);
   const { t } = useTranslation();
 
   // Skip rendering if the setup process isn't up to our step or we were skipped
+  const stepSkipped: boolean = skippedSteps.get(step) ?? false;
   if (currentStep < step || stepSkipped) return null;
 
   // TODO: Trigger a scroll-to when we become active
@@ -40,7 +35,6 @@ const Step: React.FC<StepProps> = ({
 };
 
 Step.defaultProps = {
-  stepSkipped: false,
   useStepText: true,
 };
 

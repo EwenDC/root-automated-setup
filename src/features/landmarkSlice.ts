@@ -12,6 +12,7 @@ import {
   disableExpansionAction,
   enableExpansionAction,
 } from "./expansionSlice";
+import { RootState } from "../components/store";
 
 export interface Landmark extends Component {
   name: string;
@@ -42,6 +43,9 @@ const addExpansionLandmarks = (
     }
 };
 
+export const selectLandmark = (state: RootState, code: string) =>
+  state.landmark[code];
+
 /** Redux Selector for returning the landmark list as an array, moving the object key to the object field "code" */
 export const selectLandmarkArray = selectComponentArray(
   (state) => state.landmark
@@ -57,6 +61,15 @@ export const landmarkSlice = createSlice({
   name: "landmark",
   initialState: setupInitialState(addExpansionLandmarks),
   reducers: {
+    enableLandmark: (state, action: PayloadAction<string>) => {
+      // Retreive the landmark
+      const landmark = state[action.payload];
+      // Only update the landmark state if it exists
+      if (landmark != null) {
+        // Enabled the landmark
+        landmark.enabled = true;
+      }
+    },
     toggleLandmark: toggleComponent,
   },
   extraReducers: {
@@ -66,5 +79,5 @@ export const landmarkSlice = createSlice({
   },
 });
 
-export const { toggleLandmark } = landmarkSlice.actions;
+export const { enableLandmark, toggleLandmark } = landmarkSlice.actions;
 export default landmarkSlice.reducer;

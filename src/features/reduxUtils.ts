@@ -11,6 +11,10 @@ export interface ComponentState<T> {
   [code: string]: T;
 }
 
+export type WithCode<T> = T & {
+  code: string;
+};
+
 export const isTrue = "1";
 export const isFalse = "0";
 
@@ -145,9 +149,15 @@ export const deleteExpansionComponents = <T extends Component>(
 };
 
 /**
- * Returns a random element from a given list
+ * Returns a random element from a given list, while also removing it
  * @param list The list of elements to be randomly selected
  */
-export const getRandom = <T>(list: T[]): T =>
-  // get a random index in the given list (i.e. between 0 inclusive and list.length exclusive)
-  list[Math.floor(Math.random() * list.length)];
+export const takeRandom = <T>(list: T[]): T => {
+  // Get a random index in the given list (i.e. between 0 inclusive and list.length exclusive)
+  const i = Math.floor(Math.random() * list.length);
+  // Save value at given index so we can return it
+  const returnVal = list[i];
+  // Delete 1 element starting at chosen index
+  list.splice(i, 1);
+  return returnVal;
+};

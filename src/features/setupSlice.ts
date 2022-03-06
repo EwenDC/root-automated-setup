@@ -1,9 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import undoable, { GroupByFunction } from "redux-undo";
 import { AppThunk, RootState } from "../components/store";
-import { selectDeckArray, selectEnabledDecks } from "./deckSlice";
-import { selectEnabledMaps } from "./mapSlice";
-import { getRandom } from "./reduxUtils";
+import { Deck, selectDeckArray, selectEnabledDecks } from "./deckSlice";
+import { Hireling, selectHirelingArray } from "./hirelingSlice";
+import {
+  enableLandmark,
+  Landmark,
+  selectEnabledLandmarks,
+  selectLandmark,
+  selectLandmarkArray,
+} from "./landmarkSlice";
+import { MapComponent, selectEnabledMaps } from "./mapSlice";
+import { takeRandom, WithCode } from "./reduxUtils";
 
 export enum SetupStep {
   chooseExpansions,
@@ -13,9 +21,12 @@ export enum SetupStep {
   setUpBots,
   seatPlayers,
   chooseLandmarks,
-  setUpLandmarks,
+  setUpLandmark1,
+  setUpLandmark2,
   chooseHirelings,
-  setUpHirelings,
+  setUpHireling1,
+  setUpHireling2,
+  setUpHireling3,
   drawCards,
   chooseFaction,
   setUpFaction,
@@ -23,8 +34,8 @@ export enum SetupStep {
   chooseHand,
 }
 
-export interface SkipStepInput {
-  step: SetupStep;
+export interface SkipStepsInput {
+  steps: SetupStep[];
   skip: boolean;
 }
 
@@ -36,33 +47,42 @@ export interface FactionPoolEntry {
 export interface SetupState {
   currentStep: SetupStep;
   skippedSteps: Map<SetupStep, boolean>;
-  // chooseMap
-  map: string | null;
-  usePrintedSuits: boolean;
-  useMapLandmark: boolean;
-  // chooseDeck
-  deck: string | null;
-  // seatPlayers
   playerCount: number;
   fixedFirstPlayer: boolean;
-  // chooseLandmarks
-  landmarkCount: number;
-  // chooseFaction
+  // Map
+  map: WithCode<MapComponent> | null;
+  usePrintedSuits: boolean;
+  useMapLandmark: boolean;
+  // Deck
+  deck: WithCode<Deck> | null;
+  // Landmarks
+  landmarkCount: 0 | 1 | 2;
+  landmark1: WithCode<Landmark> | null;
+  landmark2: WithCode<Landmark> | null;
+  // Hirelings
+  hireling1: WithCode<Hireling> | null;
+  hireling2: WithCode<Hireling> | null;
+  hireling3: WithCode<Hireling> | null;
+  // Factions
   factionPool: FactionPoolEntry[];
-  // setUpFaction
   faction: string | null;
 }
 
 const initialState: SetupState = {
   currentStep: SetupStep.chooseExpansions,
   skippedSteps: new Map(),
+  playerCount: 4,
+  fixedFirstPlayer: false,
   map: null,
   usePrintedSuits: false,
   useMapLandmark: false,
   deck: null,
-  playerCount: 4,
-  fixedFirstPlayer: false,
   landmarkCount: 0,
+  landmark1: null,
+  landmark2: null,
+  hireling1: null,
+  hireling2: null,
+  hireling3: null,
   factionPool: [],
   faction: null,
 };
@@ -83,8 +103,10 @@ export const setupSlice = createSlice({
         skipStep = state.skippedSteps.get(state.currentStep) ?? false;
       } while (skipStep);
     },
-    skipStep: (state, action: PayloadAction<SkipStepInput>) => {
-      state.skippedSteps.set(action.payload.step, action.payload.skip);
+    skipSteps: (state, action: PayloadAction<SkipStepsInput>) => {
+      action.payload.steps.forEach((step) => {
+        state.skippedSteps.set(step, action.payload.skip);
+      });
     },
     usePrintedSuits: (state, action: PayloadAction<boolean>) => {
       state.usePrintedSuits = action.payload;
@@ -92,11 +114,20 @@ export const setupSlice = createSlice({
     useMapLandmark: (state, action: PayloadAction<boolean>) => {
       state.useMapLandmark = action.payload;
     },
-    setMap: (state, action: PayloadAction<string>) => {
+    setMap: (state, action: PayloadAction<WithCode<MapComponent>>) => {
       state.map = action.payload;
     },
-    setDeck: (state, action: PayloadAction<string>) => {
+    setDeck: (state, action: PayloadAction<WithCode<Deck>>) => {
       state.deck = action.payload;
+    },
+    setLandmarkCount: (state, action: PayloadAction<0 | 1 | 2>) => {
+      state.landmarkCount = action.payload;
+    },
+    setLandmark1: (state, action: PayloadAction<WithCode<Landmark>>) => {
+      state.landmark1 = action.payload;
+    },
+    setLandmark2: (state, action: PayloadAction<WithCode<Landmark>>) => {
+      state.landmark2 = action.payload;
     },
   },
 });
@@ -104,11 +135,14 @@ export const setupSlice = createSlice({
 export const {
   setStep,
   incrementStep,
-  skipStep,
+  skipSteps,
   usePrintedSuits,
   useMapLandmark,
   setMap,
   setDeck,
+  setLandmarkCount,
+  setLandmark1,
+  setLandmark2,
 } = setupSlice.actions;
 
 export const nextStep = (): AppThunk => (dispatch, getState) => {
@@ -119,18 +153,44 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
   // Handle any special logic that fires at the end of a step
   switch (setupParameters.currentStep) {
     case SetupStep.chooseExpansions:
-      // After locking in the chosen expansions, we need to calculate which steps can be skipped
-
+      // After locking in the Choosen expansions, we need to calculate which steps can be skipped
       // Do we need to choose a deck?
       const decks = selectDeckArray(getState());
       if (decks.length === 1) {
         // Auto select the only deck
-        dispatch(setDeck(decks[0].code));
-        dispatch(skipStep({ step: SetupStep.chooseDeck, skip: true }));
+        dispatch(setDeck(decks[0]));
+        dispatch(skipSteps({ steps: [SetupStep.chooseDeck], skip: true }));
       } else {
         // Make sure we do the choose deck step
-        dispatch(skipStep({ step: SetupStep.chooseDeck, skip: false }));
+        dispatch(skipSteps({ steps: [SetupStep.chooseDeck], skip: false }));
       }
+
+      // Are there any landmarks that can be set up?
+      const landmarks = selectLandmarkArray(getState());
+      dispatch(
+        skipSteps({
+          steps: [
+            SetupStep.chooseLandmarks,
+            SetupStep.setUpLandmark1,
+            SetupStep.setUpLandmark2,
+          ],
+          skip: landmarks.length === 0,
+        })
+      );
+
+      // Are there any hirelings that can be set up?
+      const hirelings = selectHirelingArray(getState());
+      dispatch(
+        skipSteps({
+          steps: [
+            SetupStep.chooseHirelings,
+            SetupStep.setUpHireling1,
+            SetupStep.setUpHireling2,
+            SetupStep.setUpHireling3,
+          ],
+          skip: hirelings.length === 0,
+        })
+      );
       break;
 
     case SetupStep.chooseMap:
@@ -139,9 +199,15 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Check that there is even a map to be selected...
       if (mapPool.length > 0) {
-        // Chose a random map and move on to next step
-        dispatch(setMap(getRandom(mapPool).code));
-        dispatch(incrementStep());
+        // Choose a random map
+        const map = takeRandom(mapPool);
+        dispatch(setMap(map));
+
+        // Set the landmark count in advance if we have one with the map
+        if (setupParameters.useMapLandmark && map.landmark) {
+          dispatch(setLandmarkCount(1));
+          dispatch(enableLandmark(map.landmark));
+        }
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
@@ -154,28 +220,80 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Check that there is even a deck to be selected...
       if (deckPool.length > 0) {
-        // Chose a random map and move on to next step
-        dispatch(setMap(getRandom(deckPool).code));
-        dispatch(incrementStep());
+        // Choose a random deck
+        dispatch(setDeck(takeRandom(deckPool)));
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
       }
       break;
 
-    case SetupStep.seatPlayers:
-      break;
-
     case SetupStep.chooseLandmarks:
+      // Get our list of landmarks which are avaliable for selection
+      let LandmarkPool = selectEnabledLandmarks(getState());
+
+      // Check that there are enough enabled landmarks for how many we want to set up
+      if (LandmarkPool.length >= setupParameters.landmarkCount) {
+        // Select the first landmark (either the map's landmark or a random one)
+        if (setupParameters.useMapLandmark && setupParameters.map?.landmark) {
+          // Retrieve the map's landmark and set it as landmark 1
+          const mapLandmark = selectLandmark(
+            getState(),
+            setupParameters.map.landmark
+          );
+          // Choose the landmark of the map
+          dispatch(
+            setLandmark1({ ...mapLandmark, code: setupParameters.map.landmark })
+          );
+          // Make sure to filter said landmark from the pool in case we have to choose a second
+          LandmarkPool = LandmarkPool.filter(
+            (landmark) => landmark.code !== setupParameters.map?.landmark
+          );
+        } else if (setupParameters.landmarkCount > 0) {
+          // Choose a random landmark
+          dispatch(setLandmark1(takeRandom(LandmarkPool)));
+        } else {
+          // We're not setting up any landmarks, so skip both setup steps
+          dispatch(
+            skipSteps({
+              steps: [SetupStep.setUpLandmark1, SetupStep.setUpLandmark2],
+              skip: true,
+            })
+          );
+        }
+
+        // Select the second landmark
+        if (setupParameters.landmarkCount > 1) {
+          // Choose a random landmark
+          dispatch(setLandmark2(takeRandom(LandmarkPool)));
+        } else if (setupParameters.landmarkCount > 0) {
+          // If we did setup the first landmark then handle skipping just the second landmark setup
+          dispatch(
+            skipSteps({ steps: [SetupStep.setUpLandmark2], skip: true })
+          );
+        }
+      } else {
+        // Invalid state, do not proceed
+        doIncrementStep = false;
+      }
       break;
 
-    case SetupStep.setUpLandmarks:
+    case SetupStep.setUpLandmark1:
+      break;
+
+    case SetupStep.setUpLandmark2:
       break;
 
     case SetupStep.chooseHirelings:
       break;
 
-    case SetupStep.setUpHirelings:
+    case SetupStep.setUpHireling1:
+      break;
+
+    case SetupStep.setUpHireling2:
+      break;
+
+    case SetupStep.setUpHireling3:
       break;
 
     case SetupStep.drawCards:
@@ -201,7 +319,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       doIncrementStep = false;
   }
 
-  // Increment the step (unless we're in an invalid state)
+  // Increment the step if we're still flagged to do so
   if (doIncrementStep) {
     dispatch(incrementStep());
   }
