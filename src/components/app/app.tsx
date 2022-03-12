@@ -24,11 +24,14 @@ export const App: React.FC = () => {
       <Step step={SetupStep.setUpHireling1}></Step>
       <Step step={SetupStep.setUpHireling2}></Step>
       <Step step={SetupStep.setUpHireling3}></Step>
+      <Step step={SetupStep.postHirelingSetup}></Step>
       <Step step={SetupStep.drawCards}></Step>
-      <Step step={SetupStep.chooseFaction}></Step>
+      <Step step={SetupStep.chooseFactions}></Step>
+      <Step step={SetupStep.selectFaction}></Step>
       <Step step={SetupStep.setUpFaction} useStepText={false}></Step>
       <Step step={SetupStep.placeScoreMarkers}></Step>
       <Step step={SetupStep.chooseHand}></Step>
+      <Step step={SetupStep.setupEnd}></Step>
     </div>
   );
 };

@@ -3,6 +3,12 @@ import undoable, { GroupByFunction } from "redux-undo";
 import { AppThunk, RootState } from "../components/store";
 import { Deck, selectDeckArray, selectEnabledDecks } from "./deckSlice";
 import {
+  Faction,
+  selectInsurgentFactions,
+  selectMilitantFactions,
+  toggleFaction,
+} from "./factionSlice";
+import {
   Hireling,
   HirelingDemoted,
   HirelingPromoted,
@@ -17,13 +23,12 @@ import {
   toggleLandmark,
 } from "./landmarkSlice";
 import { MapComponent, selectEnabledMaps } from "./mapSlice";
-import { takeRandom } from "./reduxUtils";
+import { takeRandom, WithCode } from "./reduxUtils";
 
 export enum SetupStep {
   chooseExpansions,
   chooseMap,
   setupMap,
-  chooseDeck,
   setUpBots,
   seatPlayers,
   chooseLandmarks,
@@ -33,11 +38,15 @@ export enum SetupStep {
   setUpHireling1,
   setUpHireling2,
   setUpHireling3,
+  postHirelingSetup,
+  chooseDeck,
   drawCards,
-  chooseFaction,
+  chooseFactions,
+  selectFaction,
   setUpFaction,
   placeScoreMarkers,
   chooseHand,
+  setupEnd,
 }
 
 export interface SkipStepsInput {
@@ -59,16 +68,12 @@ export type HirelingEntry =
       promoted: false;
     });
 
-export interface FactionPoolEntry {
-  factionCode: string;
-  lockedByFaction?: string;
-}
-
 export interface SetupState {
   currentStep: SetupStep;
   skippedSteps: Map<SetupStep, boolean>;
   playerCount: number;
   fixedFirstPlayer: boolean;
+  firstPlayer: number;
   errorMessage: string | null;
   // Map
   map: MapComponent | null;
@@ -86,8 +91,10 @@ export interface SetupState {
   hireling3: HirelingEntry | null;
   // Factions
   excludedFactions: string[];
-  factionPool: FactionPoolEntry[];
-  faction: string | null;
+  factionPool: WithCode<Faction>[];
+  lastFactionLocked: boolean;
+  currentFaction: Faction | null;
+  currentFactionPlayer: number | null;
 }
 
 const initialState: SetupState = {
@@ -95,6 +102,7 @@ const initialState: SetupState = {
   skippedSteps: new Map(),
   playerCount: 4,
   fixedFirstPlayer: false,
+  firstPlayer: 1,
   errorMessage: null,
   map: null,
   usePrintedSuits: false,
@@ -108,7 +116,9 @@ const initialState: SetupState = {
   hireling3: null,
   excludedFactions: [],
   factionPool: [],
-  faction: null,
+  lastFactionLocked: false,
+  currentFaction: null,
+  currentFactionPlayer: null,
 };
 
 export const selectSetupParameters = (state: RootState) => state.setup.present;
@@ -137,6 +147,9 @@ export const setupSlice = createSlice({
     },
     fixFirstPlayer: (state, action: PayloadAction<boolean>) => {
       state.fixedFirstPlayer = action.payload;
+    },
+    setFirstPlayer: (state, action: PayloadAction<number>) => {
+      state.firstPlayer = action.payload;
     },
     setErrorMessage: (state, action: PayloadAction<string | null>) => {
       state.errorMessage = action.payload;
@@ -176,6 +189,35 @@ export const setupSlice = createSlice({
     clearExcludedFactions: (state) => {
       state.excludedFactions = [];
     },
+    clearFactionPool: (state) => {
+      state.factionPool = [];
+      state.lastFactionLocked = false;
+      state.currentFaction = null;
+      state.currentFactionPlayer = null;
+    },
+    addToFactionPool: (state, action: PayloadAction<WithCode<Faction>>) => {
+      // Add to our pool, and set it to locked if insurgent
+      state.factionPool.push(action.payload);
+      state.lastFactionLocked = !action.payload.militant;
+    },
+    selectFaction: (state, action: PayloadAction<string>) => {
+      // Check if the faction is in our pool, and at what index
+      const i = state.factionPool.findIndex(
+        (faction) => faction.code === action.payload
+      );
+
+      // Select the faction if it's in our pool and not locked
+      if (
+        i > -1 &&
+        (i < state.factionPool.length - 1 || !state.lastFactionLocked)
+      ) {
+        state.currentFaction = state.factionPool[i];
+        // Delete 1 element starting at chosen index
+        state.factionPool.splice(i, 1);
+        // Clear the lock if we're selecting a militant faction
+        if (state.currentFaction.militant) state.lastFactionLocked = false;
+      }
+    },
   },
 });
 
@@ -185,6 +227,7 @@ export const {
   skipSteps,
   setPlayerCount,
   fixFirstPlayer,
+  setFirstPlayer,
   setErrorMessage,
   usePrintedSuits,
   useMapLandmark,
@@ -195,6 +238,9 @@ export const {
   setLandmark2,
   setHireling,
   clearExcludedFactions,
+  clearFactionPool,
+  addToFactionPool,
+  selectFaction,
 } = setupSlice.actions;
 
 export const nextStep = (): AppThunk => (dispatch, getState) => {
@@ -240,13 +286,16 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             SetupStep.setUpHireling1,
             SetupStep.setUpHireling2,
             SetupStep.setUpHireling3,
+            SetupStep.postHirelingSetup,
           ],
           skip: hirelings.length === 0,
         })
       );
 
       // Clear the exlcude faction pool of any potential stale data from previous setups
-      dispatch(clearExcludedFactions());
+      // We need to do this here in case we skip the chooseHirelings step
+      if (setupParameters.excludedFactions.length > 0)
+        dispatch(clearExcludedFactions());
       break;
 
     case SetupStep.chooseMap:
@@ -271,19 +320,18 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
       break;
 
-    case SetupStep.chooseDeck:
-      // Get our list of decks which are avaliable for selection
-      const deckPool = selectEnabledDecks(getState());
+    case SetupStep.seatPlayers:
+      let firstPlayer: number;
 
-      // Check that there is even a deck to be selected...
-      if (deckPool.length > 0) {
-        // Choose a random deck
-        dispatch(setDeck(takeRandom(deckPool)));
+      if (setupParameters.fixedFirstPlayer) {
+        firstPlayer = 1;
       } else {
-        // Invalid state, do not proceed
-        doIncrementStep = false;
-        validationError = "error.noDeck";
+        // Randomly pick a first player between 1 and playerCount
+        firstPlayer =
+          Math.floor(Math.random() * setupParameters.playerCount) + 1;
       }
+
+      dispatch(setFirstPlayer(firstPlayer));
       break;
 
     case SetupStep.chooseLandmarks:
@@ -342,6 +390,10 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.chooseHirelings:
+      // Clear the exlcude faction pool of any potential stale data from previous hireling setups
+      if (setupParameters.excludedFactions.length > 0)
+        dispatch(clearExcludedFactions());
+
       // Did we skip the hireling setup?
       if (!setupParameters.skippedSteps.get(SetupStep.setUpHireling1)) {
         // Get our list of hirelings which are avaliable for selection
@@ -349,8 +401,6 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
         // Check that there are enough hirelings selected
         if (hirelingPool.length >= 3) {
-          // Clear the exlcude faction pool of any potential stale data from previous hireling setups
-          dispatch(clearExcludedFactions());
           // Choose three random hirelings
           for (let number = 1; number <= 3; number++) {
             dispatch(
@@ -361,6 +411,10 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
               })
             );
           }
+          // Disable the factions that are mutually exclusive with the selected hirelings
+          selectSetupParameters(getState()).excludedFactions.forEach((code) => {
+            dispatch(toggleFaction({ code, enabled: false }));
+          });
         } else {
           // Invalid state, do not proceed
           doIncrementStep = false;
@@ -369,28 +423,65 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
       break;
 
-    case SetupStep.setUpHireling1:
+    case SetupStep.chooseDeck:
+      // Get our list of decks which are avaliable for selection
+      const deckPool = selectEnabledDecks(getState());
+
+      // Check that there is even a deck to be selected...
+      if (deckPool.length > 0) {
+        // Choose a random deck
+        dispatch(setDeck(takeRandom(deckPool)));
+      } else {
+        // Invalid state, do not proceed
+        doIncrementStep = false;
+        validationError = "error.noDeck";
+      }
       break;
 
-    case SetupStep.setUpHireling2:
+    case SetupStep.chooseFactions:
+      // Clear the faction pool of any potential stale data from previous setups
+      if (setupParameters.factionPool.length > 0) dispatch(clearFactionPool());
+
+      // Get our list of militant factions which are avaliable for selection
+      const workingFactionPool = selectMilitantFactions(getState());
+      const insurgentFactions = selectInsurgentFactions(getState());
+
+      // Check that there are enough factions avaliable for setup
+      if (
+        workingFactionPool.length > 0 &&
+        workingFactionPool.length + insurgentFactions.length >=
+          setupParameters.playerCount + 1
+      ) {
+        // Start by adding a random militant faction
+        dispatch(addToFactionPool(takeRandom(workingFactionPool)));
+        // Add the insurgent factions to the mix
+        workingFactionPool.concat(...insurgentFactions);
+        // Add enough factions to make the total pool playerCount + 1
+        for (let i = 0; i < setupParameters.playerCount; i++) {
+          dispatch(addToFactionPool(takeRandom(workingFactionPool)));
+        }
+      } else {
+        // Invalid state, do not proceed
+        doIncrementStep = false;
+
+        // Set the correct error message
+        if (workingFactionPool.length === 0) {
+          validationError = "error.noMilitantFaction";
+        } else {
+          validationError = "error.tooFewFaction";
+        }
+      }
       break;
 
-    case SetupStep.setUpHireling3:
-      break;
-
-    case SetupStep.drawCards:
-      break;
-
-    case SetupStep.chooseFaction:
+    case SetupStep.selectFaction:
       break;
 
     case SetupStep.setUpFaction:
       break;
 
-    case SetupStep.placeScoreMarkers:
-      break;
-
-    case SetupStep.chooseHand:
+    case SetupStep.setupEnd:
+      // This is the final step, so don't try to increment
+      doIncrementStep = false;
       break;
 
     default:

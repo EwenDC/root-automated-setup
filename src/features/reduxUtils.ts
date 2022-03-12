@@ -18,6 +18,10 @@ export type toggleComponentInput =
       enabled?: boolean;
     };
 
+export type WithCode<T> = T & {
+  code: string;
+};
+
 export const isTrue = "1";
 export const isFalse = "0";
 
