@@ -11,10 +11,6 @@ export interface ComponentState<T> {
   [code: string]: T;
 }
 
-export type WithCode<T> = T & {
-  code: string;
-};
-
 export const isTrue = "1";
 export const isFalse = "0";
 

@@ -2,7 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import undoable, { GroupByFunction } from "redux-undo";
 import { AppThunk, RootState } from "../components/store";
 import { Deck, selectDeckArray, selectEnabledDecks } from "./deckSlice";
-import { Hireling, selectHirelingArray } from "./hirelingSlice";
+import {
+  Hireling,
+  HirelingDemoted,
+  HirelingPromoted,
+  selectEnabledHirelings,
+  selectHirelingArray,
+} from "./hirelingSlice";
 import {
   enableLandmark,
   Landmark,
@@ -11,7 +17,7 @@ import {
   selectLandmarkArray,
 } from "./landmarkSlice";
 import { MapComponent, selectEnabledMaps } from "./mapSlice";
-import { takeRandom, WithCode } from "./reduxUtils";
+import { takeRandom } from "./reduxUtils";
 
 export enum SetupStep {
   chooseExpansions,
@@ -39,6 +45,20 @@ export interface SkipStepsInput {
   skip: boolean;
 }
 
+export interface SetHirelingInput {
+  number: number;
+  hireling: Hireling;
+  promoted: boolean;
+}
+
+export type HirelingEntry =
+  | (HirelingPromoted & {
+      promoted: true;
+    })
+  | (HirelingDemoted & {
+      promoted: false;
+    });
+
 export interface FactionPoolEntry {
   factionCode: string;
   lockedByFaction?: string;
@@ -49,21 +69,23 @@ export interface SetupState {
   skippedSteps: Map<SetupStep, boolean>;
   playerCount: number;
   fixedFirstPlayer: boolean;
+  errorMessage: string | null;
   // Map
-  map: WithCode<MapComponent> | null;
+  map: MapComponent | null;
   usePrintedSuits: boolean;
   useMapLandmark: boolean;
   // Deck
-  deck: WithCode<Deck> | null;
+  deck: Deck | null;
   // Landmarks
   landmarkCount: 0 | 1 | 2;
-  landmark1: WithCode<Landmark> | null;
-  landmark2: WithCode<Landmark> | null;
+  landmark1: Landmark | null;
+  landmark2: Landmark | null;
   // Hirelings
-  hireling1: WithCode<Hireling> | null;
-  hireling2: WithCode<Hireling> | null;
-  hireling3: WithCode<Hireling> | null;
+  hireling1: HirelingEntry | null;
+  hireling2: HirelingEntry | null;
+  hireling3: HirelingEntry | null;
   // Factions
+  excludedFactions: string[];
   factionPool: FactionPoolEntry[];
   faction: string | null;
 }
@@ -73,6 +95,7 @@ const initialState: SetupState = {
   skippedSteps: new Map(),
   playerCount: 4,
   fixedFirstPlayer: false,
+  errorMessage: null,
   map: null,
   usePrintedSuits: false,
   useMapLandmark: false,
@@ -83,6 +106,7 @@ const initialState: SetupState = {
   hireling1: null,
   hireling2: null,
   hireling3: null,
+  excludedFactions: [],
   factionPool: [],
   faction: null,
 };
@@ -108,26 +132,49 @@ export const setupSlice = createSlice({
         state.skippedSteps.set(step, action.payload.skip);
       });
     },
+    setPlayerCount: (state, action: PayloadAction<number>) => {
+      state.playerCount = action.payload;
+    },
+    fixFirstPlayer: (state, action: PayloadAction<boolean>) => {
+      state.fixedFirstPlayer = action.payload;
+    },
+    setErrorMessage: (state, action: PayloadAction<string | null>) => {
+      state.errorMessage = action.payload;
+    },
     usePrintedSuits: (state, action: PayloadAction<boolean>) => {
       state.usePrintedSuits = action.payload;
     },
     useMapLandmark: (state, action: PayloadAction<boolean>) => {
       state.useMapLandmark = action.payload;
     },
-    setMap: (state, action: PayloadAction<WithCode<MapComponent>>) => {
+    setMap: (state, action: PayloadAction<MapComponent>) => {
       state.map = action.payload;
     },
-    setDeck: (state, action: PayloadAction<WithCode<Deck>>) => {
+    setDeck: (state, action: PayloadAction<Deck>) => {
       state.deck = action.payload;
     },
     setLandmarkCount: (state, action: PayloadAction<0 | 1 | 2>) => {
       state.landmarkCount = action.payload;
     },
-    setLandmark1: (state, action: PayloadAction<WithCode<Landmark>>) => {
+    setLandmark1: (state, action: PayloadAction<Landmark>) => {
       state.landmark1 = action.payload;
     },
-    setLandmark2: (state, action: PayloadAction<WithCode<Landmark>>) => {
+    setLandmark2: (state, action: PayloadAction<Landmark>) => {
       state.landmark2 = action.payload;
+    },
+    setHireling: (state, action: PayloadAction<SetHirelingInput>) => {
+      const hireling: HirelingEntry = action.payload.promoted
+        ? { ...action.payload.hireling.promoted, promoted: true }
+        : { ...action.payload.hireling.demoted, promoted: false };
+
+      if (action.payload.number === 1) state.hireling1 = hireling;
+      if (action.payload.number === 2) state.hireling2 = hireling;
+      if (action.payload.number === 3) state.hireling3 = hireling;
+
+      state.excludedFactions.push(...action.payload.hireling.factions);
+    },
+    clearExcludedFactions: (state) => {
+      state.excludedFactions = [];
     },
   },
 });
@@ -136,6 +183,9 @@ export const {
   setStep,
   incrementStep,
   skipSteps,
+  setPlayerCount,
+  fixFirstPlayer,
+  setErrorMessage,
   usePrintedSuits,
   useMapLandmark,
   setMap,
@@ -143,12 +193,15 @@ export const {
   setLandmarkCount,
   setLandmark1,
   setLandmark2,
+  setHireling,
+  clearExcludedFactions,
 } = setupSlice.actions;
 
 export const nextStep = (): AppThunk => (dispatch, getState) => {
   // Retrieve our setup state
   const setupParameters = selectSetupParameters(getState());
   let doIncrementStep = true;
+  let validationError: string | null = null;
 
   // Handle any special logic that fires at the end of a step
   switch (setupParameters.currentStep) {
@@ -191,6 +244,9 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           skip: hirelings.length === 0,
         })
       );
+
+      // Clear the exlcude faction pool of any potential stale data from previous setups
+      dispatch(clearExcludedFactions());
       break;
 
     case SetupStep.chooseMap:
@@ -211,6 +267,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
+        validationError = "error.noMap";
       }
       break;
 
@@ -225,6 +282,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
+        validationError = "error.noDeck";
       }
       break;
 
@@ -242,9 +300,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             setupParameters.map.landmark
           );
           // Choose the landmark of the map
-          dispatch(
-            setLandmark1({ ...mapLandmark, code: setupParameters.map.landmark })
-          );
+          dispatch(setLandmark1(mapLandmark));
           // Make sure to filter said landmark from the pool in case we have to choose a second
           LandmarkPool = LandmarkPool.filter(
             (landmark) => landmark.code !== setupParameters.map?.landmark
@@ -275,16 +331,42 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
+
+        // Set the correct error message
+        if (LandmarkPool.length === 0) {
+          validationError = "error.noLandmark";
+        } else {
+          validationError = "error.tooFewLandmark";
+        }
       }
       break;
 
-    case SetupStep.setUpLandmark1:
-      break;
-
-    case SetupStep.setUpLandmark2:
-      break;
-
     case SetupStep.chooseHirelings:
+      // Did we skip the hireling setup?
+      if (!setupParameters.skippedSteps.get(SetupStep.setUpHireling1)) {
+        // Get our list of hirelings which are avaliable for selection
+        const hirelingPool = selectEnabledHirelings(getState());
+
+        // Check that there are enough hirelings selected
+        if (hirelingPool.length >= 3) {
+          // Clear the exlcude faction pool of any potential stale data from previous hireling setups
+          dispatch(clearExcludedFactions());
+          // Choose three random hirelings
+          for (let number = 1; number <= 3; number++) {
+            dispatch(
+              setHireling({
+                number,
+                hireling: takeRandom(hirelingPool),
+                promoted: setupParameters.playerCount + number < 6,
+              })
+            );
+          }
+        } else {
+          // Invalid state, do not proceed
+          doIncrementStep = false;
+          validationError = "error.tooFewHireling";
+        }
+      }
       break;
 
     case SetupStep.setUpHireling1:
@@ -317,6 +399,11 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       );
       dispatch(setStep(SetupStep.chooseExpansions));
       doIncrementStep = false;
+  }
+
+  // Set the error message if it's changed
+  if (setupParameters.errorMessage !== validationError) {
+    dispatch(setErrorMessage(validationError));
   }
 
   // Increment the step if we're still flagged to do so

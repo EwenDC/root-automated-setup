@@ -9,6 +9,13 @@
     "exiles": "Exiles and Partisans",
     "standard": "Standard"
   },
+  "error": {
+    "noDeck": "No Decks selected! Please select at least one Deck.",
+    "noLandmark": "No Landmarks selected! Please select at least one Landmark, or set the Landmark count to zero.",
+    "noMap": "No Maps selected! Please select at least one Map.",
+    "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
+    "tooFewHireling": "Not enough Hirelings selected! Please select at least three Hirelings, or skip the Hireling setup."
+  },
   "expansion": {
     "exilesDeck": "Root: The Exiles and Partisans Deck",
     "landmarkPack": "Root: The Landmarks Pack",
