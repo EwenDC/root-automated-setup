@@ -61,15 +61,6 @@ export const landmarkSlice = createSlice({
   name: "landmark",
   initialState: setupInitialState(addExpansionLandmarks),
   reducers: {
-    enableLandmark: (state, action: PayloadAction<string>) => {
-      // Retreive the landmark
-      const landmark = state[action.payload];
-      // Only update the landmark state if it exists
-      if (landmark != null) {
-        // Enabled the landmark
-        landmark.enabled = true;
-      }
-    },
     toggleLandmark: toggleComponent,
   },
   extraReducers: {
@@ -79,5 +70,5 @@ export const landmarkSlice = createSlice({
   },
 });
 
-export const { enableLandmark, toggleLandmark } = landmarkSlice.actions;
+export const { toggleLandmark } = landmarkSlice.actions;
 export default landmarkSlice.reducer;

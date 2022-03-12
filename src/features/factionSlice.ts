@@ -12,6 +12,7 @@ import {
   disableExpansionAction,
   enableExpansionAction,
 } from "./expansionSlice";
+import { RootState } from "../components/store";
 
 export interface Faction extends Component {
   name: string;
@@ -44,6 +45,9 @@ const addExpansionFactions = (
       }
     }
 };
+
+export const selectFaction = (state: RootState, code: string) =>
+  state.faction[code];
 
 /** Redux Selector for returning the faction list as an array, moving the object key to the object field "code" */
 export const selectFactionArray = selectComponentArray(

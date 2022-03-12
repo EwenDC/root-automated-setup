@@ -11,6 +11,13 @@ export interface ComponentState<T> {
   [code: string]: T;
 }
 
+export type toggleComponentInput =
+  | string
+  | {
+      code: string;
+      enabled?: boolean;
+    };
+
 export const isTrue = "1";
 export const isFalse = "0";
 
@@ -109,18 +116,30 @@ export const setupInitialState = <T>(
 /**
  * Generic version of Toggle reducer for enabling or disabling a component in state
  * @param state Editable copy of current Redux slice state
- * @param action Payloaded action with component code to be enabled or disabled
+ * @param action Payloaded action with either just the component code to be
+ * enabled or disabled, or the component code and enable state to be set
  */
 export const toggleComponent = <T extends Component>(
   state: ComponentState<T>,
-  action: PayloadAction<string>
+  action: PayloadAction<toggleComponentInput>
 ) => {
+  let code: string;
+  let enable: boolean | undefined;
+
+  // Are we toggling or setting a specific value?
+  if (typeof action.payload === "string") {
+    code = action.payload;
+  } else {
+    code = action.payload.code;
+    enable = action.payload.enabled;
+  }
+
   // Retreive the component
-  const component = state[action.payload];
+  const component = state[code];
   // Only update the component state if it exists
   if (component != null) {
     // Toggle enabled value
-    component.enabled = !component.enabled;
+    component.enabled = enable ?? !component.enabled;
   }
 };
 

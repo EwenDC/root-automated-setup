@@ -10,11 +10,11 @@ import {
   selectHirelingArray,
 } from "./hirelingSlice";
 import {
-  enableLandmark,
   Landmark,
   selectEnabledLandmarks,
   selectLandmark,
   selectLandmarkArray,
+  toggleLandmark,
 } from "./landmarkSlice";
 import { MapComponent, selectEnabledMaps } from "./mapSlice";
 import { takeRandom } from "./reduxUtils";
@@ -262,7 +262,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         // Set the landmark count in advance if we have one with the map
         if (setupParameters.useMapLandmark && map.landmark) {
           dispatch(setLandmarkCount(1));
-          dispatch(enableLandmark(map.landmark));
+          dispatch(toggleLandmark({ code: map.landmark, enabled: true }));
         }
       } else {
         // Invalid state, do not proceed

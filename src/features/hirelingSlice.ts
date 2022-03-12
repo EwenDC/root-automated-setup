@@ -12,6 +12,7 @@ import {
   disableExpansionAction,
   enableExpansionAction,
 } from "./expansionSlice";
+import { RootState } from "../components/store";
 
 export interface HirelingDemoted {
   name: string;
@@ -58,6 +59,9 @@ const addExpansionHirelings = (
       }
     }
 };
+
+export const selectHireling = (state: RootState, code: string) =>
+  state.hireling[code];
 
 /** Redux Selector for returning the hireling list as an array, moving the object key to the object field "code" */
 export const selectHirelingArray = selectComponentArray(

@@ -12,6 +12,7 @@ import {
   disableExpansionAction,
   enableExpansionAction,
 } from "./expansionSlice";
+import { RootState } from "../components/store";
 
 export interface Deck extends Component {
   name: string;
@@ -40,6 +41,8 @@ const addExpansionDecks = (
     }
   }
 };
+
+export const selectDeck = (state: RootState, code: string) => state.deck[code];
 
 /** Redux Selector for returning the deck list as an array, moving the object key to the object field "code" */
 export const selectDeckArray = selectComponentArray((state) => state.deck);

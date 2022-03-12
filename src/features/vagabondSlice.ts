@@ -12,6 +12,7 @@ import {
   disableExpansionAction,
   enableExpansionAction,
 } from "./expansionSlice";
+import { RootState } from "../components/store";
 
 export interface Vagabond extends Component {
   startingItems: string[];
@@ -41,6 +42,9 @@ const addExpansionVagabonds = (
       }
     }
 };
+
+export const selectVagabond = (state: RootState, code: string) =>
+  state.vagabond[code];
 
 /** Redux Selector for returning the vagabond list as an array, moving the object key to the object field "code" */
 export const selectVagabondArray = selectComponentArray(

@@ -12,6 +12,7 @@ import {
   disableExpansionAction,
   enableExpansionAction,
 } from "./expansionSlice";
+import { RootState } from "../components/store";
 
 export interface MapComponent extends Component {
   printedSuits: boolean;
@@ -41,6 +42,8 @@ const addExpansionMaps = (
       }
     }
 };
+
+export const selectMap = (state: RootState, code: string) => state.map[code];
 
 /** Redux Selector for returning the landmark list as an array, moving the object key to the object field "code" */
 export const selectMapArray = selectComponentArray((state) => state.map);
