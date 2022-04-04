@@ -13,8 +13,8 @@ export const App: React.FC = () => {
         <Checkbox id="includeBotStep" />
       </Step>
       <Step step={SetupStep.chooseMap}></Step>
-      <Step step={SetupStep.setupMap}></Step>
-      <Step step={SetupStep.chooseDeck}></Step>
+      <Step step={SetupStep.setUpMap}></Step>
+      <Step step={SetupStep.setUpMapLandmark}></Step>
       <Step step={SetupStep.setUpBots}></Step>
       <Step step={SetupStep.seatPlayers}></Step>
       <Step step={SetupStep.chooseLandmarks}></Step>
@@ -25,6 +25,7 @@ export const App: React.FC = () => {
       <Step step={SetupStep.setUpHireling2}></Step>
       <Step step={SetupStep.setUpHireling3}></Step>
       <Step step={SetupStep.postHirelingSetup}></Step>
+      <Step step={SetupStep.chooseDeck}></Step>
       <Step step={SetupStep.drawCards}></Step>
       <Step step={SetupStep.chooseFactions}></Step>
       <Step step={SetupStep.selectFaction}></Step>

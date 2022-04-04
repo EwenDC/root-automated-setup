@@ -15,8 +15,8 @@
     "noMap": "No Maps selected! Please select at least one Map.",
     "noMilitantFaction": "No Militant Factions selected! Please select at least one Militant Faction.",
     "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count.",
-    "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
-    "tooFewHireling": "Not enough Hirelings selected! Please select at least three Hirelings, or skip the Hireling setup."
+    "tooFewHireling": "Not enough Hirelings selected! Please select at least three Hirelings, or skip the Hireling setup.",
+    "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count."
   },
   "expansion": {
     "exilesDeck": "Root: The Exiles and Partisans Deck",

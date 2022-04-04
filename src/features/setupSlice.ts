@@ -18,7 +18,6 @@ import {
 import {
   Landmark,
   selectEnabledLandmarks,
-  selectLandmark,
   selectLandmarkArray,
   toggleLandmark,
 } from "./landmarkSlice";
@@ -28,7 +27,8 @@ import { takeRandom, WithCode } from "./reduxUtils";
 export enum SetupStep {
   chooseExpansions,
   chooseMap,
-  setupMap,
+  setUpMap,
+  setUpMapLandmark,
   setUpBots,
   seatPlayers,
   chooseLandmarks,
@@ -76,15 +76,15 @@ export interface SetupState {
   firstPlayer: number;
   errorMessage: string | null;
   // Map
-  map: MapComponent | null;
+  map: WithCode<MapComponent> | null;
   usePrintedSuits: boolean;
   useMapLandmark: boolean;
   // Deck
   deck: Deck | null;
   // Landmarks
   landmarkCount: 0 | 1 | 2;
-  landmark1: Landmark | null;
-  landmark2: Landmark | null;
+  landmark1: WithCode<Landmark> | null;
+  landmark2: WithCode<Landmark> | null;
   // Hirelings
   hireling1: HirelingEntry | null;
   hireling2: HirelingEntry | null;
@@ -143,13 +143,29 @@ export const setupSlice = createSlice({
       });
     },
     setPlayerCount: (state, action: PayloadAction<number>) => {
-      state.playerCount = action.payload;
+      // Make sure the player count is valid (i.e. above 0)
+      if (action.payload >= 1) {
+        state.playerCount = action.payload;
+      } else {
+        console.warn(
+          "Invalid payload for setPlayerCount action: Payload must be a number above 0",
+          action
+        );
+      }
     },
-    fixFirstPlayer: (state, action: PayloadAction<boolean>) => {
+    fixedFirstPlayer: (state, action: PayloadAction<boolean>) => {
       state.fixedFirstPlayer = action.payload;
     },
     setFirstPlayer: (state, action: PayloadAction<number>) => {
-      state.firstPlayer = action.payload;
+      // Make sure the player count is valid (i.e. between 1 and playerCount)
+      if (action.payload >= 1 && action.payload <= state.playerCount) {
+        state.firstPlayer = action.payload;
+      } else {
+        console.warn(
+          `Invalid payload for setFirstPlayer action: Payload must be a number between 1 and playerCount (${state.playerCount})`,
+          action
+        );
+      }
     },
     setErrorMessage: (state, action: PayloadAction<string | null>) => {
       state.errorMessage = action.payload;
@@ -160,31 +176,91 @@ export const setupSlice = createSlice({
     useMapLandmark: (state, action: PayloadAction<boolean>) => {
       state.useMapLandmark = action.payload;
     },
-    setMap: (state, action: PayloadAction<MapComponent>) => {
+    setMap: (state, action: PayloadAction<WithCode<MapComponent>>) => {
       state.map = action.payload;
     },
     setDeck: (state, action: PayloadAction<Deck>) => {
       state.deck = action.payload;
     },
-    setLandmarkCount: (state, action: PayloadAction<0 | 1 | 2>) => {
-      state.landmarkCount = action.payload;
+    setLandmarkCount: (state, action: PayloadAction<number>) => {
+      // We use === instead of >= or <= to ensure typescript can infer the correct payload type
+      if (
+        action.payload === 0 ||
+        action.payload === 1 ||
+        action.payload === 2
+      ) {
+        if (
+          action.payload === 2 &&
+          state.useMapLandmark &&
+          state.map?.landmark
+        ) {
+          console.warn(
+            "Invalid payload for setLandmarkCount action: Payload cannot be 2 when useMapLandmark is true and there is a map landmark",
+            action
+          );
+        } else {
+          state.landmarkCount = action.payload;
+        }
+      } else {
+        console.warn(
+          "Invalid payload for setLandmarkCount action: Payload must be a number between 0 and 2",
+          action
+        );
+      }
     },
-    setLandmark1: (state, action: PayloadAction<Landmark>) => {
-      state.landmark1 = action.payload;
+    setLandmark1: (state, action: PayloadAction<WithCode<Landmark>>) => {
+      if (state.landmarkCount < 1) {
+        console.warn(
+          "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1",
+          action
+        );
+      } else if (
+        state.useMapLandmark &&
+        state.map?.landmark === action.payload.code
+      ) {
+        console.warn(
+          "Invalid payload for setLandmark1 action: Payload cannot be the map landmark when useMapLandmark is true",
+          action
+        );
+      } else {
+        state.landmark1 = action.payload;
+      }
     },
-    setLandmark2: (state, action: PayloadAction<Landmark>) => {
-      state.landmark2 = action.payload;
+    setLandmark2: (state, action: PayloadAction<WithCode<Landmark>>) => {
+      if (state.landmarkCount < 2) {
+        console.warn(
+          "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2",
+          action
+        );
+      } else if (
+        state.useMapLandmark &&
+        state.map?.landmark === action.payload.code
+      ) {
+        console.warn(
+          "Invalid payload for setLandmark2 action: Payload cannot be the map landmark when useMapLandmark is true",
+          action
+        );
+      } else {
+        state.landmark2 = action.payload;
+      }
     },
     setHireling: (state, action: PayloadAction<SetHirelingInput>) => {
-      const hireling: HirelingEntry = action.payload.promoted
-        ? { ...action.payload.hireling.promoted, promoted: true }
-        : { ...action.payload.hireling.demoted, promoted: false };
+      if (action.payload.number >= 1 && action.payload.number <= 3) {
+        const hireling: HirelingEntry = action.payload.promoted
+          ? { ...action.payload.hireling.promoted, promoted: true }
+          : { ...action.payload.hireling.demoted, promoted: false };
 
-      if (action.payload.number === 1) state.hireling1 = hireling;
-      if (action.payload.number === 2) state.hireling2 = hireling;
-      if (action.payload.number === 3) state.hireling3 = hireling;
+        if (action.payload.number === 1) state.hireling1 = hireling;
+        if (action.payload.number === 2) state.hireling2 = hireling;
+        if (action.payload.number === 3) state.hireling3 = hireling;
 
-      state.excludedFactions.push(...action.payload.hireling.factions);
+        state.excludedFactions.push(...action.payload.hireling.factions);
+      } else {
+        console.warn(
+          'Invalid payload for setHireling action: Payload field "number" must be a number between 1 and 3',
+          action
+        );
+      }
     },
     clearExcludedFactions: (state) => {
       state.excludedFactions = [];
@@ -200,7 +276,7 @@ export const setupSlice = createSlice({
       state.factionPool.push(action.payload);
       state.lastFactionLocked = !action.payload.militant;
     },
-    selectFaction: (state, action: PayloadAction<string>) => {
+    chooseFaction: (state, action: PayloadAction<string>) => {
       // Check if the faction is in our pool, and at what index
       const i = state.factionPool.findIndex(
         (faction) => faction.code === action.payload
@@ -226,7 +302,7 @@ export const {
   incrementStep,
   skipSteps,
   setPlayerCount,
-  fixFirstPlayer,
+  fixedFirstPlayer,
   setFirstPlayer,
   setErrorMessage,
   usePrintedSuits,
@@ -240,7 +316,7 @@ export const {
   clearExcludedFactions,
   clearFactionPool,
   addToFactionPool,
-  selectFaction,
+  chooseFaction,
 } = setupSlice.actions;
 
 export const nextStep = (): AppThunk => (dispatch, getState) => {
@@ -308,10 +384,16 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         const map = takeRandom(mapPool);
         dispatch(setMap(map));
 
-        // Set the landmark count in advance if we have one with the map
+        // Do the map landmark setup if we have one
         if (setupParameters.useMapLandmark && map.landmark) {
-          dispatch(setLandmarkCount(1));
-          dispatch(toggleLandmark({ code: map.landmark, enabled: true }));
+          dispatch(
+            skipSteps({ steps: [SetupStep.setUpMapLandmark], skip: false })
+          );
+          dispatch(toggleLandmark({ code: map.landmark, enabled: false }));
+        } else {
+          dispatch(
+            skipSteps({ steps: [SetupStep.setUpMapLandmark], skip: true })
+          );
         }
       } else {
         // Invalid state, do not proceed
@@ -340,22 +422,21 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Check that there are enough enabled landmarks for how many we want to set up
       if (LandmarkPool.length >= setupParameters.landmarkCount) {
-        // Select the first landmark (either the map's landmark or a random one)
-        if (setupParameters.useMapLandmark && setupParameters.map?.landmark) {
-          // Retrieve the map's landmark and set it as landmark 1
-          const mapLandmark = selectLandmark(
-            getState(),
-            setupParameters.map.landmark
-          );
-          // Choose the landmark of the map
-          dispatch(setLandmark1(mapLandmark));
-          // Make sure to filter said landmark from the pool in case we have to choose a second
-          LandmarkPool = LandmarkPool.filter(
-            (landmark) => landmark.code !== setupParameters.map?.landmark
-          );
-        } else if (setupParameters.landmarkCount > 0) {
+        // Select the first landmark
+        if (setupParameters.landmarkCount >= 1) {
           // Choose a random landmark
           dispatch(setLandmark1(takeRandom(LandmarkPool)));
+
+          // Select the second landmark
+          if (setupParameters.landmarkCount >= 2) {
+            // Choose a random landmark
+            dispatch(setLandmark2(takeRandom(LandmarkPool)));
+          } else {
+            // Handle skipping just the second landmark setup
+            dispatch(
+              skipSteps({ steps: [SetupStep.setUpLandmark2], skip: true })
+            );
+          }
         } else {
           // We're not setting up any landmarks, so skip both setup steps
           dispatch(
@@ -363,17 +444,6 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
               steps: [SetupStep.setUpLandmark1, SetupStep.setUpLandmark2],
               skip: true,
             })
-          );
-        }
-
-        // Select the second landmark
-        if (setupParameters.landmarkCount > 1) {
-          // Choose a random landmark
-          dispatch(setLandmark2(takeRandom(LandmarkPool)));
-        } else if (setupParameters.landmarkCount > 0) {
-          // If we did setup the first landmark then handle skipping just the second landmark setup
-          dispatch(
-            skipSteps({ steps: [SetupStep.setUpLandmark2], skip: true })
           );
         }
       } else {
@@ -390,7 +460,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.chooseHirelings:
-      // Clear the exlcude faction pool of any potential stale data from previous hireling setups
+      // Clear the exclude faction pool of any potential stale data from previous hireling setups
       if (setupParameters.excludedFactions.length > 0)
         dispatch(clearExcludedFactions());
 
@@ -510,5 +580,4 @@ const setupGroupBy: GroupByFunction<SetupState> = (
   previousHistory
 ) => currentState.currentStep;
 
-//export const {} = setupSlice.actions;
 export default undoable(setupSlice.reducer, { groupBy: setupGroupBy });
