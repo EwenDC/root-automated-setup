@@ -73,7 +73,7 @@ export interface SetupState {
   skippedSteps: Map<SetupStep, boolean>;
   playerCount: number;
   fixedFirstPlayer: boolean;
-  firstPlayer: number;
+  playerOrder: number[];
   errorMessage: string | null;
   // Map
   map: WithCode<MapComponent> | null;
@@ -93,8 +93,9 @@ export interface SetupState {
   excludedFactions: string[];
   factionPool: WithCode<Faction>[];
   lastFactionLocked: boolean;
+  currentPlayerIndex: number;
+  currentFactionIndex: number | null;
   currentFaction: Faction | null;
-  currentFactionPlayer: number | null;
 }
 
 const initialState: SetupState = {
@@ -102,7 +103,7 @@ const initialState: SetupState = {
   skippedSteps: new Map(),
   playerCount: 4,
   fixedFirstPlayer: false,
-  firstPlayer: 1,
+  playerOrder: [],
   errorMessage: null,
   map: null,
   usePrintedSuits: false,
@@ -117,8 +118,9 @@ const initialState: SetupState = {
   excludedFactions: [],
   factionPool: [],
   lastFactionLocked: false,
+  currentPlayerIndex: 0,
+  currentFactionIndex: null,
   currentFaction: null,
-  currentFactionPlayer: null,
 };
 
 export const selectSetupParameters = (state: RootState) => state.setup.present;
@@ -159,7 +161,14 @@ export const setupSlice = createSlice({
     setFirstPlayer: (state, action: PayloadAction<number>) => {
       // Make sure the player count is valid (i.e. between 1 and playerCount)
       if (action.payload >= 1 && action.payload <= state.playerCount) {
-        state.firstPlayer = action.payload;
+        state.playerOrder = [];
+        // Generate the player order array
+        for (let i = 0; i < state.playerCount; i++) {
+          // Add each player to the array, starting with the first player
+          let nextPlayer = action.payload + i;
+          if (nextPlayer > state.playerCount) nextPlayer -= state.playerCount;
+          state.playerOrder.push(nextPlayer);
+        }
       } else {
         console.warn(
           `Invalid payload for setFirstPlayer action: Payload must be a number between 1 and playerCount (${state.playerCount})`,
@@ -268,30 +277,66 @@ export const setupSlice = createSlice({
     clearFactionPool: (state) => {
       state.factionPool = [];
       state.lastFactionLocked = false;
+      state.currentFactionIndex = null;
       state.currentFaction = null;
-      state.currentFactionPlayer = null;
     },
     addToFactionPool: (state, action: PayloadAction<WithCode<Faction>>) => {
-      // Add to our pool, and set it to locked if insurgent
-      state.factionPool.push(action.payload);
-      state.lastFactionLocked = !action.payload.militant;
+      // Ensure that the passed-in faction isn't part of the exclude pool
+      if (state.excludedFactions.includes(action.payload.code)) {
+        console.warn(
+          `Invalid payload for addToFactionPool action: Payload field "code" cannot be contained within excludedFactions ${state.excludedFactions}`,
+          action
+        );
+      } else {
+        // Add to our pool, and set it to locked if insurgent
+        state.factionPool.push(action.payload);
+        state.lastFactionLocked = !action.payload.militant;
+      }
     },
-    chooseFaction: (state, action: PayloadAction<string>) => {
-      // Check if the faction is in our pool, and at what index
-      const i = state.factionPool.findIndex(
-        (faction) => faction.code === action.payload
-      );
-
+    setCurrentPlayerIndex: (state, action: PayloadAction<number>) => {
+      if (action.payload >= 0 && action.payload < state.playerCount) {
+        state.currentPlayerIndex = action.payload;
+      } else {
+        console.warn(
+          `Invalid payload for setCurrentPlayerIndex action: Payload must be a number larger than or equal to 0 but smaller than the player count (${state.playerCount})`,
+          action
+        );
+      }
+    },
+    setCurrentFactionIndex: (state, action: PayloadAction<number>) => {
+      if (action.payload >= 0 && action.payload < state.factionPool.length) {
+        state.currentFactionIndex = action.payload;
+      } else {
+        console.warn(
+          `Invalid payload for setCurrentFactionIndex action: Payload must be a number larger than or equal to 0 but smaller than the faction pool length (${state.factionPool.length})`,
+          action
+        );
+      }
+    },
+    applyCurrentFactionIndex: (state, action: PayloadAction) => {
       // Select the faction if it's in our pool and not locked
-      if (
-        i > -1 &&
-        (i < state.factionPool.length - 1 || !state.lastFactionLocked)
+      if (state.currentFactionIndex == null) {
+        console.warn(
+          "Invalid applyCurrentFactionIndex action: currentFactionIndex is null",
+          action
+        );
+      } else if (
+        state.currentFactionIndex === state.factionPool.length - 1 &&
+        state.lastFactionLocked
       ) {
-        state.currentFaction = state.factionPool[i];
-        // Delete 1 element starting at chosen index
-        state.factionPool.splice(i, 1);
+        console.warn(
+          `Invalid applyCurrentFactionIndex action: Cannot apply index ${state.currentFactionIndex} when lastFactionLocked is true`,
+          action
+        );
+      } else {
+        // Save the faction at currentFactionIndex
+        state.currentFaction = state.factionPool[state.currentFactionIndex];
         // Clear the lock if we're selecting a militant faction
         if (state.currentFaction.militant) state.lastFactionLocked = false;
+        // Delete 1 element starting at chosen index
+        state.factionPool.splice(state.currentFactionIndex, 1);
+        // Reset the index
+        state.currentFactionIndex = null;
       }
     },
   },
@@ -316,7 +361,9 @@ export const {
   clearExcludedFactions,
   clearFactionPool,
   addToFactionPool,
-  chooseFaction,
+  setCurrentPlayerIndex,
+  setCurrentFactionIndex,
+  applyCurrentFactionIndex,
 } = setupSlice.actions;
 
 export const nextStep = (): AppThunk => (dispatch, getState) => {
@@ -404,11 +451,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
     case SetupStep.seatPlayers:
       let firstPlayer: number;
-
+      // Do we need to randomise the first player
       if (setupParameters.fixedFirstPlayer) {
+        // First player is always "1" as the player number represents turn order
         firstPlayer = 1;
       } else {
-        // Randomly pick a first player between 1 and playerCount
+        // Randomly pick a first player between 1 and playerCount, as the player number represents table seating order
         firstPlayer =
           Math.floor(Math.random() * setupParameters.playerCount) + 1;
       }
@@ -530,6 +578,9 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         for (let i = 0; i < setupParameters.playerCount; i++) {
           dispatch(addToFactionPool(takeRandom(workingFactionPool)));
         }
+
+        // Begin the setup at the bottom of player order
+        dispatch(setCurrentPlayerIndex(setupParameters.playerCount - 1));
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
@@ -544,9 +595,35 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.selectFaction:
+      // Ensure the user has actually selected a faction and that it isn't the locked final insurgent faction
+      if (
+        setupParameters.currentFactionIndex != null &&
+        (setupParameters.currentFactionIndex <
+          setupParameters.factionPool.length - 1 ||
+          !setupParameters.lastFactionLocked)
+      ) {
+        dispatch(applyCurrentFactionIndex());
+      } else {
+        doIncrementStep = false;
+
+        if (setupParameters.currentFactionIndex == null) {
+          validationError = "error.noFaction";
+        } else {
+          validationError = "error.lockedFaction";
+        }
+      }
       break;
 
     case SetupStep.setUpFaction:
+      // Now that we're done for setting up this player, move on to the next one
+      let nextPlayer = setupParameters.currentPlayerIndex - 1;
+      // Jump back to the selectFaction step if we haven't run out of players
+      if (nextPlayer >= 0) {
+        doIncrementStep = false;
+        dispatch(setCurrentPlayerIndex(nextPlayer));
+        dispatch(setStep(SetupStep.selectFaction));
+      }
+      // If we have run out of players, automatically proceed to next step
       break;
 
     case SetupStep.setupEnd:

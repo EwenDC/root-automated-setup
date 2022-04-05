@@ -10,7 +10,9 @@
     "standard": "Standard"
   },
   "error": {
+    "lockedFaction": "Cannot select last faction until a Militant faction has been selected.",
     "noDeck": "No Decks selected! Please select at least one Deck.",
+    "noFaction": "No Faction selected! Please select a faction to play.",
     "noLandmark": "No Landmarks selected! Please select at least one Landmark, or set the Landmark count to zero.",
     "noMap": "No Maps selected! Please select at least one Map.",
     "noMilitantFaction": "No Militant Factions selected! Please select at least one Militant Faction.",
