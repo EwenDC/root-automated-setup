@@ -17,7 +17,7 @@ export const Toolbar: React.FC = () => {
         <button
           className={styles.fullbutton}
           disabled={currentStep >= SetupStep.setupEnd}
-          onClick={() => dispatch(nextStep)}
+          onClick={() => dispatch(nextStep())}
         >
           {t("label.nextStep")}
         </button>

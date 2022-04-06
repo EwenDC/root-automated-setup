@@ -632,13 +632,6 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // This is the final step, so don't try to increment
       doIncrementStep = false;
       break;
-
-    default:
-      console.error(
-        `Invalid current step ${setupParameters.currentStep}! Resetting current step to ${SetupStep.chooseExpansions}...`
-      );
-      dispatch(setStep(SetupStep.chooseExpansions));
-      doIncrementStep = false;
   }
 
   // Set the error message if it's changed
