@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
 
 import i18n from "i18next";
@@ -34,15 +34,15 @@ i18n
     },
   });
 
-const root = createRoot(document.getElementById("root")!);
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Suspense fallback={<Fallback />}>
         <App />
       </Suspense>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 serviceWorker.register();
