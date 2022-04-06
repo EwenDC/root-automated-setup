@@ -16,7 +16,7 @@ const Step: React.FC<StepProps> = ({ step, useStepText, children }) => {
   const { t } = useTranslation();
 
   // Skip rendering if the setup process isn't up to our step or we were skipped
-  const stepSkipped: boolean = skippedSteps.get(step) ?? false;
+  const stepSkipped: boolean = skippedSteps[step] ?? false;
   if (currentStep < step || stepSkipped) return null;
 
   // TODO: Trigger a scroll-to when we become active
@@ -27,7 +27,9 @@ const Step: React.FC<StepProps> = ({ step, useStepText, children }) => {
       className={classNames(styles.step, { [styles.inactive]: !stepActive })}
     >
       {useStepText ? (
-        <span className={styles.stepText}>{t(`setup.${SetupStep[step]}`)}</span>
+        <span className={styles.stepText}>
+          {t(`setupStep.${SetupStep[step]}`)}
+        </span>
       ) : null}
       <StepProvider value={{ stepActive }}>{children}</StepProvider>
     </div>

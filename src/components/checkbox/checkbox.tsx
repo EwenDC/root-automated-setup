@@ -5,9 +5,15 @@ import styles from "./checkbox.module.css";
 
 interface CheckboxProps {
   id: string;
+  defaultValue?: boolean;
+  onChange: (checked: boolean) => void;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({ id }) => {
+export const Checkbox: React.FC<CheckboxProps> = ({
+  id,
+  defaultValue,
+  onChange,
+}) => {
   const { t } = useTranslation();
   const { stepActive } = useContext(StepContext);
   return (
@@ -19,7 +25,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id }) => {
         id={id}
         type="checkbox"
         className={styles.checkbox}
+        defaultChecked={defaultValue ?? false}
         disabled={!stepActive}
+        onChange={(e) => onChange(e.target.checked)}
       />
     </>
   );

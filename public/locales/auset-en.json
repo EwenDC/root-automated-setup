@@ -73,7 +73,10 @@
     "woodlandBand": "Woodland Band"
   },
   "label": {
-    "includeBotStep": "Include setup step for bots"
+    "includeBotStep": "Include setup step for bots",
+    "nextStep": "Next Step",
+    "redo": "Redo",
+    "undo": "Undo"
   },
   "landmark": {
     "city": "Lost City",
@@ -89,21 +92,21 @@
     "mountain": "Mountain",
     "winter": "Winter"
   },
-  "setup": {
+  "setupStep": {
     "chooseExpansions": "Welcome to the Root automated setup! To get started, please select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the screen to do so.",
     "chooseMap": "",
-    "setupMap": "",
-    "chooseDeck": "",
     "setUpBots": "",
     "seatPlayers": "",
     "chooseLandmarks": "",
-    "setUpLandmarks": "",
     "chooseHirelings": "",
-    "setUpHirelings": "",
+    "postHirelingSetup": "",
+    "chooseDeck": "",
     "drawCards": "",
-    "chooseFaction": "",
+    "chooseFactions": "",
+    "selectFaction": "",
     "placeScoreMarkers": "",
-    "chooseHand": ""
+    "chooseHand": "",
+    "setupEnd": ""
   },
   "vagabond": {
     "adventurer": "Adventurer",

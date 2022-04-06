@@ -70,7 +70,7 @@ export type HirelingEntry =
 
 export interface SetupState {
   currentStep: SetupStep;
-  skippedSteps: Map<SetupStep, boolean>;
+  skippedSteps: boolean[];
   playerCount: number;
   fixedFirstPlayer: boolean;
   playerOrder: number[];
@@ -100,7 +100,7 @@ export interface SetupState {
 
 const initialState: SetupState = {
   currentStep: SetupStep.chooseExpansions,
-  skippedSteps: new Map(),
+  skippedSteps: [],
   playerCount: 4,
   fixedFirstPlayer: false,
   playerOrder: [],
@@ -122,6 +122,8 @@ const initialState: SetupState = {
   currentFactionIndex: null,
   currentFaction: null,
 };
+// Default to skipping bot setup step
+initialState.skippedSteps[SetupStep.setUpBots] = true;
 
 export const selectSetupParameters = (state: RootState) => state.setup.present;
 
@@ -136,12 +138,12 @@ export const setupSlice = createSlice({
       let skipStep = false;
       do {
         state.currentStep++;
-        skipStep = state.skippedSteps.get(state.currentStep) ?? false;
+        skipStep = state.skippedSteps[state.currentStep] ?? false;
       } while (skipStep);
     },
     skipSteps: (state, action: PayloadAction<SkipStepsInput>) => {
       action.payload.steps.forEach((step) => {
-        state.skippedSteps.set(step, action.payload.skip);
+        state.skippedSteps[step] = action.payload.skip;
       });
     },
     setPlayerCount: (state, action: PayloadAction<number>) => {
@@ -513,7 +515,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         dispatch(clearExcludedFactions());
 
       // Did we skip the hireling setup?
-      if (!setupParameters.skippedSteps.get(SetupStep.setUpHireling1)) {
+      if (!setupParameters.skippedSteps[SetupStep.setUpHireling1]) {
         // Get our list of hirelings which are avaliable for selection
         const hirelingPool = selectEnabledHirelings(getState());
 
