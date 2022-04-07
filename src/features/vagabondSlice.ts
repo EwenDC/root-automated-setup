@@ -71,4 +71,5 @@ export const vagabondSlice = createSlice({
 });
 
 export const { toggleVagabond } = vagabondSlice.actions;
+export const toggleVagabondAction = toggleVagabond.type;
 export default vagabondSlice.reducer;

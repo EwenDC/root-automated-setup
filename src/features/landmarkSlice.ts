@@ -71,4 +71,5 @@ export const landmarkSlice = createSlice({
 });
 
 export const { toggleLandmark } = landmarkSlice.actions;
+export const toggleLandmarkAction = toggleLandmark.type;
 export default landmarkSlice.reducer;

@@ -1,12 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import undoable, { GroupByFunction } from "redux-undo";
 import { AppThunk, RootState } from "../components/store";
-import { Deck, selectDeckArray, selectEnabledDecks } from "./deckSlice";
+import {
+  Deck,
+  selectDeckArray,
+  selectEnabledDecks,
+  toggleDeckAction,
+} from "./deckSlice";
+import {
+  disableExpansionAction,
+  enableExpansionAction,
+} from "./expansionSlice";
 import {
   Faction,
   selectInsurgentFactions,
   selectMilitantFactions,
   toggleFaction,
+  toggleFactionAction,
 } from "./factionSlice";
 import {
   Hireling,
@@ -14,15 +24,18 @@ import {
   HirelingPromoted,
   selectEnabledHirelings,
   selectHirelingArray,
+  toggleHirelingAction,
 } from "./hirelingSlice";
 import {
   Landmark,
   selectEnabledLandmarks,
   selectLandmarkArray,
   toggleLandmark,
+  toggleLandmarkAction,
 } from "./landmarkSlice";
-import { MapComponent, selectEnabledMaps } from "./mapSlice";
+import { MapComponent, selectEnabledMaps, toggleMapAction } from "./mapSlice";
 import { takeRandom, WithCode } from "./reduxUtils";
+import { toggleVagabondAction } from "./vagabondSlice";
 
 export enum SetupStep {
   chooseExpansions,
@@ -75,6 +88,7 @@ export interface SetupState {
   fixedFirstPlayer: boolean;
   playerOrder: number[];
   errorMessage: string | null;
+  componentsChanged: number; // We need this so enabling/disabling a component clears redo queue
   // Map
   map: WithCode<MapComponent> | null;
   usePrintedSuits: boolean;
@@ -105,6 +119,7 @@ const initialState: SetupState = {
   fixedFirstPlayer: false,
   playerOrder: [],
   errorMessage: null,
+  componentsChanged: 0,
   map: null,
   usePrintedSuits: false,
   useMapLandmark: false,
@@ -126,6 +141,17 @@ const initialState: SetupState = {
 initialState.skippedSteps[SetupStep.setUpBots] = true;
 
 export const selectSetupParameters = (state: RootState) => state.setup.present;
+export const selectSetupUndoState = (state: RootState) => {
+  return {
+    canUndo: state.setup.past.length > 0,
+    canRedo: state.setup.future.length > 0,
+  };
+};
+
+// This function allows us to clear redo history when components are enabled or disabled
+const detectComponentChange = (state: SetupState) => {
+  state.componentsChanged++;
+};
 
 export const setupSlice = createSlice({
   name: "setup",
@@ -135,6 +161,7 @@ export const setupSlice = createSlice({
       state.currentStep = action.payload;
     },
     incrementStep: (state) => {
+      state.componentsChanged = 0;
       let skipStep = false;
       do {
         state.currentStep++;
@@ -341,6 +368,16 @@ export const setupSlice = createSlice({
         state.currentFactionIndex = null;
       }
     },
+  },
+  extraReducers: {
+    [toggleDeckAction]: detectComponentChange,
+    [enableExpansionAction]: detectComponentChange,
+    [disableExpansionAction]: detectComponentChange,
+    [toggleFactionAction]: detectComponentChange,
+    [toggleHirelingAction]: detectComponentChange,
+    [toggleLandmarkAction]: detectComponentChange,
+    [toggleMapAction]: detectComponentChange,
+    [toggleVagabondAction]: detectComponentChange,
   },
 });
 
@@ -652,4 +689,7 @@ const setupGroupBy: GroupByFunction<SetupState> = (
   previousHistory
 ) => currentState.currentStep;
 
-export default undoable(setupSlice.reducer, { groupBy: setupGroupBy });
+export default undoable(setupSlice.reducer, {
+  groupBy: setupGroupBy,
+  ignoreInitialState: true,
+});

@@ -88,4 +88,5 @@ export const hirelingSlice = createSlice({
 });
 
 export const { toggleHireling } = hirelingSlice.actions;
+export const toggleHirelingAction = toggleHireling.type;
 export default hirelingSlice.reducer;

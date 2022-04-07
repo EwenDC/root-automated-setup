@@ -80,4 +80,5 @@ export const factionSlice = createSlice({
 });
 
 export const { toggleFaction } = factionSlice.actions;
+export const toggleFactionAction = toggleFaction.type;
 export default factionSlice.reducer;

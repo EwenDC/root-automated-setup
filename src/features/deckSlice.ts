@@ -66,4 +66,5 @@ export const deckSlice = createSlice({
 });
 
 export const { toggleDeck } = deckSlice.actions;
+export const toggleDeckAction = toggleDeck.type;
 export default deckSlice.reducer;

@@ -67,4 +67,5 @@ export const mapSlice = createSlice({
 });
 
 export const { toggleMap } = mapSlice.actions;
+export const toggleMapAction = toggleMap.type;
 export default mapSlice.reducer;
