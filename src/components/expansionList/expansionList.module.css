@@ -8,22 +8,22 @@
 
 .expansion {
   color: black;
-  height: 16em;
-  min-width: 12em;
-  margin: 1em;
+  height: 16rem;
+  min-width: 12rem;
+  margin: 1rem;
   flex: 0;
   background: none;
   border: none;
-  border-radius: 1em;
+  border-radius: 1rem;
   cursor: pointer;
 }
 
 .expansion.base {
-  border: 0.25em solid black;
+  border: 0.25rem solid black;
 }
 
 .expansion.enabled {
-  border: 0.25em solid darkred;
+  border: 0.25rem solid darkred;
 }
 
 .expansion:disabled {

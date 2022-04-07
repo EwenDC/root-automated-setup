@@ -19,8 +19,8 @@ const Step: React.FC<StepProps> = ({ step, useStepText, children }) => {
   const stepSkipped: boolean = skippedSteps[step] ?? false;
   if (currentStep < step || stepSkipped) return null;
 
-  // TODO: Trigger a scroll-to when we become active
   const stepActive = currentStep === step;
+  // TODO: Trigger a scroll-to when we become active
 
   return (
     <div
