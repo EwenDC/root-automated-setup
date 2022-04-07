@@ -27,23 +27,23 @@ export const App: React.FC = () => {
           />
         </Step>
         <Step step={SetupStep.chooseMap}></Step>
-        <Step step={SetupStep.setUpMap} useStepText={false}></Step>
-        <Step step={SetupStep.setUpMapLandmark} useStepText={false}></Step>
+        <Step step={SetupStep.setUpMap}></Step>
+        <Step step={SetupStep.setUpMapLandmark}></Step>
         <Step step={SetupStep.setUpBots}></Step>
         <Step step={SetupStep.seatPlayers}></Step>
         <Step step={SetupStep.chooseLandmarks}></Step>
-        <Step step={SetupStep.setUpLandmark1} useStepText={false}></Step>
-        <Step step={SetupStep.setUpLandmark2} useStepText={false}></Step>
+        <Step step={SetupStep.setUpLandmark1}></Step>
+        <Step step={SetupStep.setUpLandmark2}></Step>
         <Step step={SetupStep.chooseHirelings}></Step>
-        <Step step={SetupStep.setUpHireling1} useStepText={false}></Step>
-        <Step step={SetupStep.setUpHireling2} useStepText={false}></Step>
-        <Step step={SetupStep.setUpHireling3} useStepText={false}></Step>
+        <Step step={SetupStep.setUpHireling1}></Step>
+        <Step step={SetupStep.setUpHireling2}></Step>
+        <Step step={SetupStep.setUpHireling3}></Step>
         <Step step={SetupStep.postHirelingSetup}></Step>
         <Step step={SetupStep.chooseDeck}></Step>
         <Step step={SetupStep.drawCards}></Step>
         <Step step={SetupStep.chooseFactions}></Step>
         <Step step={SetupStep.selectFaction}></Step>
-        <Step step={SetupStep.setUpFaction} useStepText={false}></Step>
+        <Step step={SetupStep.setUpFaction}></Step>
         <Step step={SetupStep.placeScoreMarkers}></Step>
         <Step step={SetupStep.chooseHand}></Step>
         <Step step={SetupStep.setupEnd}></Step>

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { selectSetupParameters, SetupStep } from "../../features";
 import { useAppSelector } from "../hooks";
 import styles from "./step.module.css";
@@ -8,12 +8,11 @@ import { StepProvider } from "./stepContext";
 
 interface StepProps {
   step: SetupStep;
-  useStepText?: boolean;
 }
 
-const Step: React.FC<StepProps> = ({ step, useStepText, children }) => {
+const Step: React.FC<StepProps> = ({ step, children }) => {
   const { currentStep, skippedSteps } = useAppSelector(selectSetupParameters);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // Skip rendering if the setup process isn't up to our step or we were skipped
   const stepSkipped: boolean = skippedSteps[step] ?? false;
@@ -26,18 +25,21 @@ const Step: React.FC<StepProps> = ({ step, useStepText, children }) => {
     <div
       className={classNames(styles.step, { [styles.inactive]: !stepActive })}
     >
-      {useStepText ? (
+      {i18n.exists(`setupStep.${SetupStep[step]}.title`) ? (
+        <h1 className={styles.stepTitle}>
+          {t(`setupStep.${SetupStep[step]}.title`)}
+        </h1>
+      ) : null}
+      {i18n.exists(`setupStep.${SetupStep[step]}.body`) ? (
         <span className={styles.stepText}>
-          {t(`setupStep.${SetupStep[step]}`)}
+          <Trans i18nKey={`setupStep.${SetupStep[step]}.body`} />
         </span>
       ) : null}
-      <StepProvider value={{ stepActive }}>{children}</StepProvider>
+      {children ? (
+        <StepProvider value={{ stepActive }}>{children}</StepProvider>
+      ) : null}
     </div>
   );
-};
-
-Step.defaultProps = {
-  useStepText: true,
 };
 
 export { Step };

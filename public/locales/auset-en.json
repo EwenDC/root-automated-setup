@@ -93,20 +93,51 @@
     "winter": "Winter"
   },
   "setupStep": {
-    "chooseExpansions": "Welcome to the Root automated setup! To get started, please select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the screen to do so.",
-    "chooseMap": "",
-    "setUpBots": "",
-    "seatPlayers": "",
-    "chooseLandmarks": "",
-    "chooseHirelings": "",
-    "postHirelingSetup": "",
-    "chooseDeck": "",
-    "drawCards": "",
-    "chooseFactions": "",
-    "selectFaction": "",
-    "placeScoreMarkers": "",
-    "chooseHand": "",
-    "setupEnd": ""
+    "chooseExpansions": {
+      "body": "Welcome to the Root automated setup! To get started, select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the screen to do so."
+    },
+    "chooseMap": {
+      "title": "Choose and Set up Map",
+      "body": "As a group, decide which map you would like to play on. If you select multiple maps, a random map will be chosen from the selected."
+    },
+    "setUpBots": {
+      "title": "Set Up Bots",
+      "body": "As a group, decide which bots you would like to play with, following their setup instructions as described in the Law of Rootbotics."
+    },
+    "seatPlayers": {
+      "title": "Seat Players",
+      "body": "Select how many players you are playing with, and if you wish for the app to chose a random starting player."
+    },
+    "chooseLandmarks": {
+      "title": "Set up Landmarks",
+      "body": "As a group, decide how many landmarks you want to play with (in addition to the map landmark if it was included), and which ones to include in the selection pool."
+    },
+    "chooseHirelings": {
+      "title": "Set up Hirelings",
+      "body": "As a group, decide if you want to play with Hirelings, and which ones to include in the selection pool."
+    },
+    "postHirelingSetup": {
+      "body": "<strong>Place Hireling Markers.</strong><br/>Place the three hireling markers—marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
+    },
+    "chooseDeck": {
+      "title": "Choose Deck",
+      "body": "As a group, decide which deck you would like to use. If you select multiple decks, a random deck will be chosen from the selected."
+    },
+    "drawCards": {
+      "title": "Draw Five Cards"
+    },
+    "chooseFactions": {
+      "title": "Set Up Factions",
+      "body": "As a group, select which factions you would like to include in the selection pool."
+    },
+    "placeScoreMarkers": {
+      "title": "Place Score Markers",
+      "body": "Each player place their chosen faction's score marker on the \"0\" space of the score track."
+    },
+    "chooseHand": {
+      "title": "Choose Starting Hands",
+      "body": "Each player chooses three cards in their hand to keep and puts the other two cards face down on the shared deck. When finished, shuffle the shared deck."
+    }
   },
   "vagabond": {
     "adventurer": "Adventurer",

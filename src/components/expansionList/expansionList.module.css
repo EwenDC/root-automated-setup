@@ -1,29 +1,38 @@
 .carousel {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: stretch;
   overflow: auto;
 }
 
 .expansion {
   color: black;
-  height: 16rem;
-  min-width: 12rem;
+  font-size: 16px;
+  height: 10rem;
+  min-width: 10rem;
   margin: 1rem;
   flex: 0;
   background: none;
   border: none;
   border-radius: 1rem;
+  padding: 0.25rem;
   cursor: pointer;
 }
 
 .expansion.base {
   border: 0.25rem solid black;
+  padding: 0;
 }
 
 .expansion.enabled {
   border: 0.25rem solid darkred;
+  padding: 0;
+}
+
+.inactive .expansion {
+  color: dimgray;
+  border-color: dimgray;
 }
 
 .expansion:disabled {

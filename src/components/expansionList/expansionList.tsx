@@ -13,20 +13,26 @@ export const ExpansionList: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.carousel}>
-      {expansions.map((expansion) => (
-        <button
-          key={expansion.code}
-          className={classNames(styles.expansion, {
-            [styles.enabled]: expansion.enabled && !expansion.base,
-            [styles.base]: expansion.base,
-          })}
-          onClick={() => dispatch(toggleExpansion(expansion.code))}
-          disabled={!stepActive || expansion.base}
-        >
-          {t(`expansion.${expansion.code}`)}
-        </button>
-      ))}
+    <div
+      className={classNames(styles.carousel, {
+        [styles.inactive]: !stepActive,
+      })}
+    >
+      {expansions.map((expansion) =>
+        expansion.enabled || stepActive ? (
+          <button
+            key={expansion.code}
+            className={classNames(styles.expansion, {
+              [styles.enabled]: expansion.enabled && !expansion.base,
+              [styles.base]: expansion.base,
+            })}
+            onClick={() => dispatch(toggleExpansion(expansion.code))}
+            disabled={!stepActive || expansion.base}
+          >
+            {t(`expansion.${expansion.code}`)}
+          </button>
+        ) : null
+      )}
     </div>
   );
 };
