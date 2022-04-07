@@ -461,8 +461,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.chooseMap:
-      // Get our list of maps which are avaliable for selection
-      const mapPool = selectEnabledMaps(getState());
+      // Get our list of maps which are avaliable for selection (copying the result so we don't alter the memoized list)
+      let mapPool = [...selectEnabledMaps(getState())];
 
       // Check that there is even a map to be selected...
       if (mapPool.length > 0) {
@@ -504,8 +504,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.chooseLandmarks:
-      // Get our list of landmarks which are avaliable for selection
-      let LandmarkPool = selectEnabledLandmarks(getState());
+      // Get our list of landmarks which are avaliable for selection (copying the result so we don't alter the memoized list)
+      let LandmarkPool = [...selectEnabledLandmarks(getState())];
 
       // Check that there are enough enabled landmarks for how many we want to set up
       if (LandmarkPool.length >= setupParameters.landmarkCount) {
@@ -553,8 +553,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Did we skip the hireling setup?
       if (!setupParameters.skippedSteps[SetupStep.setUpHireling1]) {
-        // Get our list of hirelings which are avaliable for selection
-        const hirelingPool = selectEnabledHirelings(getState());
+        // Get our list of hirelings which are avaliable for selection (copying the result so we don't alter the memoized list)
+        let hirelingPool = [...selectEnabledHirelings(getState())];
 
         // Check that there are enough hirelings selected
         if (hirelingPool.length >= 3) {
@@ -581,8 +581,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.chooseDeck:
-      // Get our list of decks which are avaliable for selection
-      const deckPool = selectEnabledDecks(getState());
+      // Get our list of decks which are avaliable for selection (copying the result so we don't alter the memoized list)
+      let deckPool = [...selectEnabledDecks(getState())];
 
       // Check that there is even a deck to be selected...
       if (deckPool.length > 0) {
@@ -599,8 +599,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Clear the faction pool of any potential stale data from previous setups
       if (setupParameters.factionPool.length > 0) dispatch(clearFactionPool());
 
-      // Get our list of militant factions which are avaliable for selection
-      const workingFactionPool = selectMilitantFactions(getState());
+      // Get our list of militant factions which are avaliable for selection (copying the result so we don't alter the memoized list)
+      let workingFactionPool = [...selectMilitantFactions(getState())];
       const insurgentFactions = selectInsurgentFactions(getState());
 
       // Check that there are enough factions avaliable for setup
@@ -612,7 +612,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         // Start by adding a random militant faction
         dispatch(addToFactionPool(takeRandom(workingFactionPool)));
         // Add the insurgent factions to the mix
-        workingFactionPool.concat(...insurgentFactions);
+        workingFactionPool = [...workingFactionPool, ...insurgentFactions];
         // Add enough factions to make the total pool playerCount + 1
         for (let i = 0; i < setupParameters.playerCount; i++) {
           dispatch(addToFactionPool(takeRandom(workingFactionPool)));
@@ -655,7 +655,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
     case SetupStep.setUpFaction:
       // Now that we're done for setting up this player, move on to the next one
-      let nextPlayer = setupParameters.currentPlayerIndex - 1;
+      const nextPlayer = setupParameters.currentPlayerIndex - 1;
       // Jump back to the selectFaction step if we haven't run out of players
       if (nextPlayer >= 0) {
         doIncrementStep = false;

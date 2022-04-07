@@ -117,7 +117,7 @@
       "body": "As a group, decide if you want to play with Hirelings, and which ones to include in the selection pool."
     },
     "postHirelingSetup": {
-      "body": "<strong>Place Hireling Markers.</strong><br/>Place the three hireling markers—marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
+      "body": "<strong>Place Hireling Markers.</strong><br/>Place the three hireling markers - marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
     },
     "chooseDeck": {
       "title": "Choose Deck",

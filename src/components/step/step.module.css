@@ -3,11 +3,12 @@
 }
 
 .step.inactive {
-  color: dimgray;
+  color: darkgray;
 }
 
 .stepTitle {
   font-weight: 400;
+  font-variant: small-caps;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }

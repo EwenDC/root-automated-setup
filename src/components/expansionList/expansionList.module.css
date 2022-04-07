@@ -26,13 +26,13 @@
 }
 
 .expansion.enabled {
-  border: 0.25rem solid darkred;
+  border: 0.25rem dashed black;
   padding: 0;
 }
 
 .inactive .expansion {
-  color: dimgray;
-  border-color: dimgray;
+  color: darkgray;
+  border-color: darkgray;
 }
 
 .expansion:disabled {
