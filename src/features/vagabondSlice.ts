@@ -1,7 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  Component,
-  ComponentState,
   deleteExpansionComponents,
   getExpansionConfig,
   selectComponentArray,
@@ -13,10 +11,7 @@ import {
   enableExpansionAction,
 } from "./expansionSlice";
 import { RootState } from "../components/store";
-
-export interface Vagabond extends Component {
-  startingItems: string[];
-}
+import { ComponentState, Vagabond } from "../types";
 
 const addExpansionVagabonds = (
   state: ComponentState<Vagabond>,

@@ -15,19 +15,19 @@
   flex: 0;
   background: none;
   border: none;
+  padding: 0.5rem;
   border-radius: 1rem;
-  padding: 0.25rem;
   cursor: pointer;
 }
 
-.expansion.base {
+.expansion.locked {
   border: 0.25rem solid black;
-  padding: 0;
+  padding: 0.25rem;
 }
 
 .expansion.enabled {
   border: 0.25rem dashed black;
-  padding: 0;
+  padding: 0.25rem;
 }
 
 .inactive .expansion {

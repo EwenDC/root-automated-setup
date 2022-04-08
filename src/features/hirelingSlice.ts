@@ -1,7 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  Component,
-  ComponentState,
   deleteExpansionComponents,
   getExpansionConfig,
   selectComponentArray,
@@ -13,20 +11,7 @@ import {
   enableExpansionAction,
 } from "./expansionSlice";
 import { RootState } from "../components/store";
-
-export interface HirelingDemoted {
-  name: string;
-}
-export interface HirelingPromoted extends HirelingDemoted {
-  warriors: number;
-  components: number;
-  componentName?: string;
-}
-export interface Hireling extends Component {
-  factions: string[];
-  promoted: HirelingPromoted;
-  demoted: HirelingDemoted;
-}
+import { ComponentState, Hireling } from "../types";
 
 const addExpansionHirelings = (
   state: ComponentState<Hireling>,

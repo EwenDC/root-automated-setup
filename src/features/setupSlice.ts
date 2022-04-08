@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import undoable, { GroupByFunction } from "redux-undo";
 import { AppThunk, RootState } from "../components/store";
 import {
-  Deck,
   selectDeckArray,
   selectEnabledDecks,
   toggleDeckAction,
@@ -12,30 +11,35 @@ import {
   enableExpansionAction,
 } from "./expansionSlice";
 import {
-  Faction,
   selectInsurgentFactions,
   selectMilitantFactions,
   toggleFaction,
   toggleFactionAction,
 } from "./factionSlice";
 import {
-  Hireling,
-  HirelingDemoted,
-  HirelingPromoted,
   selectEnabledHirelings,
   selectHirelingArray,
   toggleHirelingAction,
 } from "./hirelingSlice";
 import {
-  Landmark,
   selectEnabledLandmarks,
   selectLandmarkArray,
   toggleLandmark,
   toggleLandmarkAction,
 } from "./landmarkSlice";
-import { MapComponent, selectEnabledMaps, toggleMapAction } from "./mapSlice";
-import { takeRandom, WithCode } from "./reduxUtils";
+import { selectEnabledMaps, toggleMapAction } from "./mapSlice";
+import { takeRandom } from "./reduxUtils";
 import { toggleVagabondAction } from "./vagabondSlice";
+import {
+  Deck,
+  Faction,
+  Hireling,
+  HirelingDemoted,
+  HirelingPromoted,
+  Landmark,
+  MapComponent,
+  WithCode,
+} from "../types";
 
 export enum SetupStep {
   chooseExpansions,

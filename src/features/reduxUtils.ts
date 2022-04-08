@@ -1,26 +1,7 @@
 import { createSelector, PayloadAction } from "@reduxjs/toolkit";
 import content from "../components/content.json";
 import { RootState } from "../components/store";
-
-export interface Component {
-  expansionCode: string;
-  enabled: boolean;
-}
-
-export interface ComponentState<T> {
-  [code: string]: T;
-}
-
-export type toggleComponentInput =
-  | string
-  | {
-      code: string;
-      enabled?: boolean;
-    };
-
-export type WithCode<T> = T & {
-  code: string;
-};
+import { Disableable, ComponentState, ExpansionComponent } from "../types";
 
 export const isTrue = "1";
 export const isFalse = "0";
@@ -117,13 +98,19 @@ export const setupInitialState = <T>(
   return initialState;
 };
 
+type toggleComponentInput =
+  | string
+  | {
+      code: string;
+      enabled?: boolean;
+    };
 /**
  * Generic version of Toggle reducer for enabling or disabling a component in state
  * @param state Editable copy of current Redux slice state
  * @param action Payloaded action with either just the component code to be
  * enabled or disabled, or the component code and enable state to be set
  */
-export const toggleComponent = <T extends Component>(
+export const toggleComponent = <T extends Disableable>(
   state: ComponentState<T>,
   action: PayloadAction<toggleComponentInput>
 ) => {
@@ -152,7 +139,7 @@ export const toggleComponent = <T extends Component>(
  * @param state Editable copy of current Redux slice state
  * @param action Payloaded action with code of expansion whose components are to be deleted from state
  */
-export const deleteExpansionComponents = <T extends Component>(
+export const deleteExpansionComponents = <T extends ExpansionComponent>(
   state: ComponentState<T>,
   action: PayloadAction<string>
 ) => {

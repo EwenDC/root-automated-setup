@@ -1,7 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  Component,
-  ComponentState,
   deleteExpansionComponents,
   getExpansionConfig,
   selectComponentArray,
@@ -13,11 +11,7 @@ import {
   enableExpansionAction,
 } from "./expansionSlice";
 import { RootState } from "../components/store";
-
-export interface MapComponent extends Component {
-  printedSuits: boolean;
-  landmark?: string;
-}
+import { ComponentState, MapComponent } from "../types";
 
 const addExpansionMaps = (
   state: ComponentState<MapComponent>,

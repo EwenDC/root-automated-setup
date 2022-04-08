@@ -2,16 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import content from "../components/content.json";
 import { AppThunk, RootState } from "../components/store";
 import {
-  ComponentState,
   expansionEnabled,
   persistExpansionEnabled,
   selectComponentArray,
 } from "./reduxUtils";
-
-export interface Expansion {
-  enabled: boolean;
-  base: boolean;
-}
+import { ComponentState, Expansion } from "../types";
 
 let initialState: ComponentState<Expansion> = {};
 for (const [expansionCode, expansion] of Object.entries(content)) {

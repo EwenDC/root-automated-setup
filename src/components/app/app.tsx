@@ -1,7 +1,15 @@
 import React from "react";
-import { selectSetupParameters, SetupStep, skipSteps } from "../../features";
+import {
+  selectExpansionArray,
+  selectMapArray,
+  selectSetupParameters,
+  SetupStep,
+  skipSteps,
+  toggleExpansion,
+  toggleMap,
+} from "../../features";
 import Checkbox from "../checkbox";
-import ExpansionList from "../expansionList";
+import ComponentList from "../componentList";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import Step from "../step";
 import Toolbar from "../toolbar";
@@ -15,7 +23,12 @@ export const App: React.FC = () => {
     <>
       <div className={styles.container}>
         <Step step={SetupStep.chooseExpansions}>
-          <ExpansionList />
+          <ComponentList
+            selector={selectExpansionArray}
+            toggleFunc={(code) => dispatch(toggleExpansion(code))}
+            translationPrefix="expansion."
+            lockFunc={(expansion) => expansion.base}
+          />
           <Checkbox
             id="includeBotStep"
             defaultValue={!skippedSteps[SetupStep.setUpBots]}
@@ -26,7 +39,13 @@ export const App: React.FC = () => {
             }
           />
         </Step>
-        <Step step={SetupStep.chooseMap}></Step>
+        <Step step={SetupStep.chooseMap}>
+          <ComponentList
+            selector={selectMapArray}
+            toggleFunc={(code) => dispatch(toggleMap(code))}
+            translationPrefix="map."
+          />
+        </Step>
         <Step step={SetupStep.setUpMap}></Step>
         <Step step={SetupStep.setUpMapLandmark}></Step>
         <Step step={SetupStep.setUpBots}></Step>
