@@ -6,7 +6,7 @@
   overflow: auto;
 }
 
-.expansion {
+.component {
   color: black;
   font-size: 16px;
   height: 10rem;
@@ -20,21 +20,21 @@
   cursor: pointer;
 }
 
-.expansion.locked {
+.component.locked {
   border: 0.25rem solid black;
   padding: 0.25rem;
 }
 
-.expansion.enabled {
+.component.enabled {
   border: 0.25rem dashed black;
   padding: 0.25rem;
 }
 
-.inactive .expansion {
+.inactive .component {
   color: darkgray;
   border-color: darkgray;
 }
 
-.expansion:disabled {
+.component:disabled {
   cursor: auto;
 }

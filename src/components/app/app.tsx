@@ -25,9 +25,11 @@ export const App: React.FC = () => {
         <Step step={SetupStep.chooseExpansions}>
           <ComponentList
             selector={selectExpansionArray}
-            toggleFunc={(code) => dispatch(toggleExpansion(code))}
-            translationPrefix="expansion."
-            lockFunc={(expansion) => expansion.base}
+            toggleComponent={(expansion) =>
+              dispatch(toggleExpansion(expansion.code))
+            }
+            getTooltipCode={(expansion) => `expansion.${expansion.code}`}
+            isLocked={(expansion) => expansion.base}
           />
           <Checkbox
             id="includeBotStep"
@@ -42,8 +44,8 @@ export const App: React.FC = () => {
         <Step step={SetupStep.chooseMap}>
           <ComponentList
             selector={selectMapArray}
-            toggleFunc={(code) => dispatch(toggleMap(code))}
-            translationPrefix="map."
+            toggleComponent={(map) => dispatch(toggleMap(map.code))}
+            getTooltipCode={(map) => `map.${map.code}`}
           />
         </Step>
         <Step step={SetupStep.setUpMap}></Step>

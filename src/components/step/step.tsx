@@ -26,12 +26,12 @@ const Step: React.FC<StepProps> = ({ step, children }) => {
       className={classNames(styles.step, { [styles.inactive]: !stepActive })}
     >
       {i18n.exists(`setupStep.${SetupStep[step]}.title`) ? (
-        <h1 className={styles.stepTitle}>
+        <h1 className={styles.title}>
           {t(`setupStep.${SetupStep[step]}.title`)}
         </h1>
       ) : null}
       {i18n.exists(`setupStep.${SetupStep[step]}.body`) ? (
-        <span className={styles.stepText}>
+        <span className={styles.text}>
           <Trans i18nKey={`setupStep.${SetupStep[step]}.body`} />
         </span>
       ) : null}

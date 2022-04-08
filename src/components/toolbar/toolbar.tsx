@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ActionCreators } from "redux-undo";
@@ -20,21 +21,21 @@ export const Toolbar: React.FC = () => {
     <div className={styles.anchor}>
       <div className={styles.toolbar}>
         <button
-          className={styles.microbutton}
+          className={classNames(styles.button, styles.left)}
           disabled={!canUndo}
           onClick={() => dispatch(ActionCreators.undo())}
         >
           {t("label.undo")}
         </button>
         <button
-          className={styles.microbutton}
+          className={classNames(styles.button, styles.left)}
           disabled={!canRedo}
           onClick={() => dispatch(ActionCreators.redo())}
         >
           {t("label.redo")}
         </button>
         <button
-          className={styles.fullbutton}
+          className={classNames(styles.button, styles.right)}
           disabled={currentStep >= SetupStep.setupEnd}
           onClick={() => dispatch(nextStep())}
         >

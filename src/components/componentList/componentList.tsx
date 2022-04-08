@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { PropsWithChildren, useContext } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Disableable, WithCode } from "../../types";
 import { useAppSelector } from "../hooks";
@@ -9,15 +9,17 @@ import styles from "./componentList.module.css";
 
 interface ComponentListProps<T extends WithCode<Disableable>> {
   selector: (state: RootState) => T[];
-  toggleFunc: (code: string) => void;
-  translationPrefix: string;
-  lockFunc?: (component: T) => boolean;
+  toggleComponent: (component: T) => void;
+  getTooltipCode: (component: T) => string;
+  isLocked?: (component: T) => boolean;
 }
 
-export const ComponentList = <T extends WithCode<Disableable>>(
-  props: PropsWithChildren<ComponentListProps<T>>
-) => {
-  const { selector, toggleFunc, translationPrefix, lockFunc } = props;
+export const ComponentList = <T extends WithCode<Disableable>>({
+  selector,
+  toggleComponent,
+  getTooltipCode,
+  isLocked,
+}: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
   const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
@@ -30,18 +32,18 @@ export const ComponentList = <T extends WithCode<Disableable>>(
     >
       {components.map((component) => {
         if (component.enabled || stepActive) {
-          const componentLocked = lockFunc ? lockFunc(component) : false;
+          const componentLocked = isLocked ? isLocked(component) : false;
           return (
             <button
               key={component.code}
-              className={classNames(styles.expansion, {
+              className={classNames(styles.component, {
                 [styles.enabled]: component.enabled && !componentLocked,
                 [styles.locked]: componentLocked,
               })}
-              onClick={() => toggleFunc(component.code)}
+              onClick={() => toggleComponent(component)}
               disabled={!stepActive || componentLocked}
             >
-              {t(`${translationPrefix}${component.code}`)}
+              {t(getTooltipCode(component))}
             </button>
           );
         }

@@ -13,10 +13,18 @@
   padding: 1rem;
 }
 
-.microbutton {
+.button {
+  cursor: pointer;
+}
+
+.button:disabled {
+  cursor: auto;
+}
+
+.left {
   float: left;
 }
 
-.fullbutton {
+.right {
   float: right;
 }
