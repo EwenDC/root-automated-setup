@@ -10,14 +10,14 @@ import styles from "./componentList.module.css";
 interface ComponentListProps<T extends WithCode<Disableable>> {
   selector: (state: RootState) => T[];
   toggleComponent: (component: T) => void;
-  getTooltipCode: (component: T) => string;
+  getTooltipKey: (component: T) => string;
   isLocked?: (component: T) => boolean;
 }
 
 export const ComponentList = <T extends WithCode<Disableable>>({
   selector,
   toggleComponent,
-  getTooltipCode,
+  getTooltipKey,
   isLocked,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
@@ -43,7 +43,7 @@ export const ComponentList = <T extends WithCode<Disableable>>({
               onClick={() => toggleComponent(component)}
               disabled={!stepActive || componentLocked}
             >
-              {t(getTooltipCode(component))}
+              {t(getTooltipKey(component))}
             </button>
           );
         }

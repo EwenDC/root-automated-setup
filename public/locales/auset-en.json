@@ -87,10 +87,30 @@
     "treetop": "Elder Treetop"
   },
   "map": {
-    "autumn": "Autumn",
-    "lake": "Lake",
-    "mountain": "Mountain",
-    "winter": "Winter"
+    "autumn": {
+      "name": "Autumn",
+      "setupTitle": "Set up the Autumn Map.",
+      "setupText": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing, covering the printed suit symbols.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
+    },
+    "lake": {
+      "name": "Lake",
+      "setupTitle": "Set up the Lake Map.",
+      "setupText": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map.",
+      "landmarkSetupTitle": "Set up the Ferry.",
+      "landmarkSetupText": "Place the Ferry piece in the corner clearing that is also a coastal clearing."
+    },
+    "mountain": {
+      "name": "Mountain",
+      "setupTitle": "Set up the Mountain Map.",
+      "setupText": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker color with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
+      "landmarkSetupTitle": "Set up the Tower.",
+      "landmarkSetupText": "Place the Tower piece in the central clearing showing two towers."
+    },
+    "winter": {
+      "name": "Winter",
+      "setupTitle": "Set up the Winter Map.",
+      "setupText": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
+    }
   },
   "setupStep": {
     "chooseExpansions": {
@@ -117,7 +137,8 @@
       "body": "As a group, decide if you want to play with Hirelings, and which ones to include in the selection pool."
     },
     "postHirelingSetup": {
-      "body": "<strong>Place Hireling Markers.</strong><br/>Place the three hireling markers - marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
+      "subtitle": "Place Hireling Markers.",
+      "body": "Place the three hireling markers - marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
     },
     "chooseDeck": {
       "title": "Choose Deck",

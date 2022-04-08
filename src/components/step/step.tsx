@@ -8,9 +8,18 @@ import { StepProvider } from "./stepContext";
 
 interface StepProps {
   step: SetupStep;
+  titleKey?: string;
+  subtitleKey?: string;
+  textKey?: string;
 }
 
-const Step: React.FC<StepProps> = ({ step, children }) => {
+const Step: React.FC<StepProps> = ({
+  step,
+  titleKey,
+  subtitleKey,
+  textKey,
+  children,
+}) => {
   const { currentStep, skippedSteps } = useAppSelector(selectSetupParameters);
   const { t, i18n } = useTranslation();
 
@@ -25,15 +34,18 @@ const Step: React.FC<StepProps> = ({ step, children }) => {
     <div
       className={classNames(styles.step, { [styles.inactive]: !stepActive })}
     >
-      {i18n.exists(`setupStep.${SetupStep[step]}.title`) ? (
+      {titleKey ?? i18n.exists(`setupStep.${SetupStep[step]}.title`) ? (
         <h1 className={styles.title}>
-          {t(`setupStep.${SetupStep[step]}.title`)}
+          {t(titleKey ?? `setupStep.${SetupStep[step]}.title`)}
         </h1>
       ) : null}
-      {i18n.exists(`setupStep.${SetupStep[step]}.body`) ? (
-        <span className={styles.text}>
-          <Trans i18nKey={`setupStep.${SetupStep[step]}.body`} />
-        </span>
+      {subtitleKey ?? i18n.exists(`setupStep.${SetupStep[step]}.subtitle`) ? (
+        <h2 className={styles.subtitle}>
+          {t(subtitleKey ?? `setupStep.${SetupStep[step]}.subtitle`)}
+        </h2>
+      ) : null}
+      {textKey ?? i18n.exists(`setupStep.${SetupStep[step]}.body`) ? (
+        <Trans i18nKey={textKey ?? `setupStep.${SetupStep[step]}.body`} />
       ) : null}
       {children ? (
         <StepProvider value={{ stepActive }}>{children}</StepProvider>

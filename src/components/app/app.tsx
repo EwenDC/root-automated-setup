@@ -16,7 +16,7 @@ import Toolbar from "../toolbar";
 import styles from "./app.module.css";
 
 export const App: React.FC = () => {
-  const { skippedSteps } = useAppSelector(selectSetupParameters);
+  const { skippedSteps, map } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
 
   return (
@@ -28,7 +28,7 @@ export const App: React.FC = () => {
             toggleComponent={(expansion) =>
               dispatch(toggleExpansion(expansion.code))
             }
-            getTooltipCode={(expansion) => `expansion.${expansion.code}`}
+            getTooltipKey={(expansion) => `expansion.${expansion.code}`}
             isLocked={(expansion) => expansion.base}
           />
           <Checkbox
@@ -45,11 +45,19 @@ export const App: React.FC = () => {
           <ComponentList
             selector={selectMapArray}
             toggleComponent={(map) => dispatch(toggleMap(map.code))}
-            getTooltipCode={(map) => `map.${map.code}`}
+            getTooltipKey={(map) => `map.${map.code}.name`}
           />
         </Step>
-        <Step step={SetupStep.setUpMap}></Step>
-        <Step step={SetupStep.setUpMapLandmark}></Step>
+        <Step
+          step={SetupStep.setUpMap}
+          subtitleKey={`map.${map?.code}.setupTitle`}
+          textKey={`map.${map?.code}.setupText`}
+        ></Step>
+        <Step
+          step={SetupStep.setUpMapLandmark}
+          subtitleKey={`map.${map?.code}.landmarkSetupTitle`}
+          textKey={`map.${map?.code}.landmarkSetupText`}
+        ></Step>
         <Step step={SetupStep.setUpBots}></Step>
         <Step step={SetupStep.seatPlayers}></Step>
         <Step step={SetupStep.chooseLandmarks}></Step>
