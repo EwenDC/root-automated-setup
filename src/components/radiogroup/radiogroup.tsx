@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Trans } from "react-i18next";
 import { StepContext } from "../step";
 import styles from "./radiogroup.module.css";

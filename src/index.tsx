@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
@@ -37,9 +37,9 @@ i18n
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Suspense fallback={<Fallback />}>
+      <React.Suspense fallback={<Fallback />}>
         <App />
-      </Suspense>
+      </React.Suspense>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

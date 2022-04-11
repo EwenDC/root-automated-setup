@@ -1,4 +1,3 @@
-import React from "react";
 import {
   enableMapLandmark,
   fixFirstPlayer,
@@ -7,6 +6,7 @@ import {
   selectLandmarkMaps,
   selectMapArray,
   selectSetupParameters,
+  setPlayerCount,
   skipSteps,
   toggleExpansion,
   toggleMap,
@@ -15,6 +15,7 @@ import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
 import ComponentList from "../componentList";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import NumberSelector from "../numberSelector";
 import Radiogroup from "../radiogroup";
 import Step from "../step";
 import Toolbar from "../toolbar";
@@ -23,7 +24,7 @@ import styles from "./app.module.css";
 export const App: React.FC = () => {
   const { skippedSteps } = useAppSelector(selectFlowState);
   const landmarkMaps = useAppSelector(selectLandmarkMaps);
-  const { map, useMapLandmark, fixedFirstPlayer } = useAppSelector(
+  const { map, useMapLandmark, fixedFirstPlayer, playerCount } = useAppSelector(
     selectSetupParameters
   );
   const dispatch = useAppDispatch();
@@ -74,6 +75,13 @@ export const App: React.FC = () => {
         />
         <Step step={SetupStep.setUpBots} />
         <Step step={SetupStep.seatPlayers}>
+          <NumberSelector
+            id="playerCount"
+            value={playerCount}
+            minVal={1}
+            maxVal={6}
+            onChange={(value) => dispatch(setPlayerCount(value))}
+          />
           <Radiogroup
             id="fixedFirstPlayer"
             defaultValue={fixedFirstPlayer}

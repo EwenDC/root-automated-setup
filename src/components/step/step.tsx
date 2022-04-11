@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { selectFlowState } from "../../features";
 import { SetupStep } from "../../types";

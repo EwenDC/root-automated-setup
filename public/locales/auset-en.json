@@ -79,9 +79,10 @@
     },
     "includeBotStep": "Include setup step for bots",
     "nextStep": "Next Step",
+    "playerCount": "Player Count",
     "redo": "Redo",
     "undo": "Undo",
-    "useMapLandmark": "Use the Landmark for the selected Map <i>(if it has one, overriding the landmark's default setup with the map-specific version)</i>"
+    "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default setup with the map-specific version)</i>"
   },
   "landmark": {
     "city": "Lost City",
