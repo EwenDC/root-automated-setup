@@ -1,12 +1,13 @@
 import classNames from "classnames";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ActionCreators } from "redux-undo";
 import {
   nextStep,
+  redo,
   selectSetupParameters,
   selectSetupUndoState,
   SetupStep,
+  undo,
 } from "../../features";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import styles from "./toolbar.module.css";
@@ -23,14 +24,14 @@ export const Toolbar: React.FC = () => {
         <button
           className={classNames(styles.button, styles.left)}
           disabled={!canUndo}
-          onClick={() => dispatch(ActionCreators.undo())}
+          onClick={() => dispatch(undo())}
         >
           {t("label.undo")}
         </button>
         <button
           className={classNames(styles.button, styles.left)}
           disabled={!canRedo}
-          onClick={() => dispatch(ActionCreators.redo())}
+          onClick={() => dispatch(redo())}
         >
           {t("label.redo")}
         </button>

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import undoable, { GroupByFunction } from "redux-undo";
+import undoable, { ActionCreators, GroupByFunction } from "redux-undo";
 import { AppThunk, RootState } from "../components/store";
 import {
   selectDeckArray,
@@ -95,7 +95,6 @@ export interface SetupState {
   componentsChanged: number; // We need this so enabling/disabling a component clears redo queue
   // Map
   map: WithCode<MapComponent> | null;
-  usePrintedSuits: boolean;
   useMapLandmark: boolean;
   // Deck
   deck: Deck | null;
@@ -125,7 +124,6 @@ const initialState: SetupState = {
   errorMessage: null,
   componentsChanged: 0,
   map: null,
-  usePrintedSuits: false,
   useMapLandmark: false,
   deck: null,
   landmarkCount: 0,
@@ -211,9 +209,6 @@ export const setupSlice = createSlice({
     },
     setErrorMessage: (state, action: PayloadAction<string | null>) => {
       state.errorMessage = action.payload;
-    },
-    usePrintedSuits: (state, action: PayloadAction<boolean>) => {
-      state.usePrintedSuits = action.payload;
     },
     useMapLandmark: (state, action: PayloadAction<boolean>) => {
       state.useMapLandmark = action.payload;
@@ -393,7 +388,6 @@ export const {
   fixedFirstPlayer,
   setFirstPlayer,
   setErrorMessage,
-  usePrintedSuits,
   useMapLandmark,
   setMap,
   setDeck,
@@ -683,6 +677,40 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
   // Increment the step if we're still flagged to do so
   if (doIncrementStep) {
     dispatch(incrementStep());
+  }
+};
+
+export const undo = (): AppThunk => (dispatch, getState) => {
+  let setupUndoState = selectSetupUndoState(getState());
+  if (setupUndoState.canUndo) {
+    let setupParameters = selectSetupParameters(getState());
+    let lastStep;
+    do {
+      lastStep = setupParameters.currentStep;
+      dispatch(ActionCreators.undo());
+      setupParameters = selectSetupParameters(getState());
+      setupUndoState = selectSetupUndoState(getState());
+    } while (
+      lastStep === setupParameters.currentStep &&
+      setupUndoState.canUndo
+    );
+  }
+};
+
+export const redo = (): AppThunk => (dispatch, getState) => {
+  let setupUndoState = selectSetupUndoState(getState());
+  if (setupUndoState.canRedo) {
+    let setupParameters = selectSetupParameters(getState());
+    let lastStep;
+    do {
+      lastStep = setupParameters.currentStep;
+      dispatch(ActionCreators.redo());
+      setupParameters = selectSetupParameters(getState());
+      setupUndoState = selectSetupUndoState(getState());
+    } while (
+      lastStep === setupParameters.currentStep &&
+      setupUndoState.canRedo
+    );
   }
 };
 
