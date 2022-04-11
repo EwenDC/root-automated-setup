@@ -101,7 +101,7 @@ export const setupSlice = createSlice({
     setErrorMessage: (state, action: PayloadAction<string | null>) => {
       state.errorMessage = action.payload;
     },
-    useMapLandmark: (state, action: PayloadAction<boolean>) => {
+    enableMapLandmark: (state, action: PayloadAction<boolean>) => {
       state.useMapLandmark = action.payload;
     },
     setMap: (state, action: PayloadAction<WithCode<MapComponent>>) => {
@@ -117,18 +117,7 @@ export const setupSlice = createSlice({
         action.payload === 1 ||
         action.payload === 2
       ) {
-        if (
-          action.payload === 2 &&
-          state.useMapLandmark &&
-          state.map?.landmark
-        ) {
-          console.warn(
-            "Invalid payload for setLandmarkCount action: Payload cannot be 2 when useMapLandmark is true and there is a map landmark",
-            action
-          );
-        } else {
-          state.landmarkCount = action.payload;
-        }
+        state.landmarkCount = action.payload;
       } else {
         console.warn(
           "Invalid payload for setLandmarkCount action: Payload must be a number between 0 and 2",
@@ -282,7 +271,7 @@ export const {
   fixedFirstPlayer,
   setFirstPlayer,
   setErrorMessage,
-  useMapLandmark,
+  enableMapLandmark,
   setMap,
   setDeck,
   setLandmarkCount,

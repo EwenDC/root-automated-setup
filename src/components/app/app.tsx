@@ -1,7 +1,9 @@
 import React from "react";
 import {
+  enableMapLandmark,
   selectExpansionArray,
   selectFlowState,
+  selectLandmarkMaps,
   selectMapArray,
   selectSetupParameters,
   skipSteps,
@@ -18,7 +20,8 @@ import styles from "./app.module.css";
 
 export const App: React.FC = () => {
   const { skippedSteps } = useAppSelector(selectFlowState);
-  const { map } = useAppSelector(selectSetupParameters);
+  const landmarkMaps = useAppSelector(selectLandmarkMaps);
+  const { map, useMapLandmark } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
 
   return (
@@ -47,6 +50,13 @@ export const App: React.FC = () => {
             toggleComponent={(map) => dispatch(toggleMap(map.code))}
             getTooltipKey={(map) => `map.${map.code}.name`}
           />
+          {landmarkMaps.length > 0 ? (
+            <Checkbox
+              id="useMapLandmark"
+              defaultValue={useMapLandmark}
+              onChange={(checked) => dispatch(enableMapLandmark(checked))}
+            />
+          ) : null}
         </Step>
         <Step
           step={SetupStep.setUpMap}

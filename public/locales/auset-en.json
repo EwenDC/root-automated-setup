@@ -76,7 +76,8 @@
     "includeBotStep": "Include setup step for bots",
     "nextStep": "Next Step",
     "redo": "Redo",
-    "undo": "Undo"
+    "undo": "Undo",
+    "useMapLandmark": "Use the default Landmark for the selected Map (if there is one)"
   },
   "landmark": {
     "city": "Lost City",
