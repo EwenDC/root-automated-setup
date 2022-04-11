@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { selectSetupParameters } from "../../features";
+import { selectFlowState } from "../../features";
 import { SetupStep } from "../../types";
 import { useAppSelector } from "../hooks";
 import styles from "./step.module.css";
@@ -21,7 +21,7 @@ const Step: React.FC<StepProps> = ({
   textKey,
   children,
 }) => {
-  const { currentStep, skippedSteps } = useAppSelector(selectSetupParameters);
+  const { currentStep, skippedSteps } = useAppSelector(selectFlowState);
   const { t, i18n } = useTranslation();
 
   // Skip rendering if the setup process isn't up to our step or we were skipped

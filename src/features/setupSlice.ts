@@ -1,4 +1,4 @@
-import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../components/store";
 import { selectDeckArray, selectEnabledDecks } from "./deckSlice";
 import {
@@ -25,11 +25,14 @@ import {
   SetupStep,
   WithCode,
 } from "../types";
+import {
+  incrementStep,
+  selectFlowState,
+  setStep,
+  skipSteps,
+} from "./flowSlice";
 
 const initialState: SetupState = {
-  currentStep: SetupStep.chooseExpansions,
-  futureSteps: [],
-  skippedSteps: [],
   playerCount: 4,
   fixedFirstPlayer: false,
   playerOrder: [],
@@ -55,53 +58,14 @@ const initialState: SetupState = {
   currentFactionIndex: null,
   currentFaction: null,
 };
-// Default to skipping bot setup step
-initialState.skippedSteps[SetupStep.setUpBots] = true;
 
+/** Returns the setup parameters from redux state */
 export const selectSetupParameters = (state: RootState) => state.setup;
-
-// We have to create these actions in advance so we can use extraReducers to handle their logic
-// We use extraReducers so that we can have a default action that will clear the redo queue upon any other action occuring
-export const undoStep = createAction("setup/undoStep");
-export const redoStep = createAction("setup/redoStep");
 
 export const setupSlice = createSlice({
   name: "setup",
   initialState: initialState,
   reducers: {
-    setStep: (state, action: PayloadAction<SetupStep>) => {
-      state.currentStep = action.payload;
-    },
-    incrementStep: (state, action: PayloadAction) => {
-      if (state.currentStep < SetupStep.setupEnd) {
-        let skipStep = false;
-        do {
-          state.currentStep++;
-          skipStep = state.skippedSteps[state.currentStep] ?? false;
-        } while (skipStep && state.currentStep < SetupStep.setupEnd);
-      } else {
-        console.warn(
-          `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`,
-          action
-        );
-      }
-    },
-    skipSteps: {
-      prepare: (steps: SetupStep | SetupStep[], skip: boolean) => ({
-        payload: {
-          steps: typeof steps === "number" ? [steps] : steps,
-          skip: skip,
-        },
-      }),
-      reducer: (
-        state,
-        action: PayloadAction<{ steps: SetupStep[]; skip: boolean }>
-      ) => {
-        action.payload.steps.forEach((step) => {
-          state.skippedSteps[step] = action.payload.skip;
-        });
-      },
-    },
     setPlayerCount: (state, action: PayloadAction<number>) => {
       // Make sure the player count is valid (i.e. above 0)
       if (action.payload >= 1) {
@@ -311,44 +275,9 @@ export const setupSlice = createSlice({
       }
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(undoStep, (state, action: PayloadAction) => {
-        if (state.currentStep > SetupStep.chooseExpansions) {
-          state.futureSteps.unshift(state.currentStep);
-          let skipStep = false;
-          do {
-            state.currentStep--;
-            skipStep = state.skippedSteps[state.currentStep] ?? false;
-          } while (skipStep && state.currentStep > SetupStep.chooseExpansions);
-        } else {
-          console.warn(
-            `Invalid undoStep action: Current step must be larger than ${SetupStep.chooseExpansions}`,
-            action
-          );
-        }
-      })
-      .addCase(redoStep, (state, action: PayloadAction) => {
-        const nextStep = state.futureSteps.shift();
-        if (nextStep != null) {
-          state.currentStep = nextStep;
-        } else {
-          console.warn(
-            `Invalid redoStep action: Future Steps array returned empty value (${nextStep})`,
-            action
-          );
-        }
-      })
-      .addDefaultCase((state) => {
-        state.futureSteps = [];
-      });
-  },
 });
 
 export const {
-  setStep,
-  incrementStep,
-  skipSteps,
   setPlayerCount,
   fixedFirstPlayer,
   setFirstPlayer,
@@ -369,14 +298,16 @@ export const {
 } = setupSlice.actions;
 export default setupSlice.reducer;
 
+/** Advances to the next step in setup, performing all validation logic and state changes required for each step */
 export const nextStep = (): AppThunk => (dispatch, getState) => {
   // Retrieve our setup state
   const setupParameters = selectSetupParameters(getState());
+  const flowState = selectFlowState(getState());
   let doIncrementStep = true;
   let validationError: string | null = null;
 
   // Handle any special logic that fires at the end of a step
-  switch (setupParameters.currentStep) {
+  switch (flowState.currentStep) {
     case SetupStep.chooseExpansions:
       // After locking in the Choosen expansions, we need to calculate which steps can be skipped
       // Do we need to choose a deck?
@@ -510,7 +441,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         dispatch(clearExcludedFactions());
 
       // Did we skip the hireling setup?
-      if (!setupParameters.skippedSteps[SetupStep.setUpHireling1]) {
+      if (!flowState.skippedSteps[SetupStep.setUpHireling1]) {
         // Get our list of hirelings which are avaliable for selection (copying the result so we don't alter the memoized list)
         let hirelingPool = [...selectEnabledHirelings(getState())];
 

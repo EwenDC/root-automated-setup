@@ -82,6 +82,34 @@ export type HirelingEntry =
       promoted: false;
     });
 
+/** An object containing all variables used during the setup process */
+export interface SetupState {
+  playerCount: number;
+  fixedFirstPlayer: boolean;
+  playerOrder: number[];
+  errorMessage: string | null;
+  // Map
+  map: WithCode<MapComponent> | null;
+  useMapLandmark: boolean;
+  // Deck
+  deck: Deck | null;
+  // Landmarks
+  landmarkCount: 0 | 1 | 2;
+  landmark1: WithCode<Landmark> | null;
+  landmark2: WithCode<Landmark> | null;
+  // Hirelings
+  hireling1: HirelingEntry | null;
+  hireling2: HirelingEntry | null;
+  hireling3: HirelingEntry | null;
+  // Factions
+  excludedFactions: string[];
+  factionPool: WithCode<Faction>[];
+  lastFactionLocked: boolean;
+  currentPlayerIndex: number;
+  currentFactionIndex: number | null;
+  currentFaction: Faction | null;
+}
+
 /** An enum of the individual steps in the setup process. The setup process will step through this list during execution */
 export enum SetupStep {
   chooseExpansions,
@@ -108,33 +136,9 @@ export enum SetupStep {
   setupEnd,
 }
 
-/** An object containing all variables used during the setup process */
-export interface SetupState {
+/** An object representing the step state, including the current step, future steps we've visited, and what steps should be skipped */
+export interface StepState {
   currentStep: SetupStep;
   futureSteps: SetupStep[];
   skippedSteps: boolean[];
-  playerCount: number;
-  fixedFirstPlayer: boolean;
-  playerOrder: number[];
-  errorMessage: string | null;
-  // Map
-  map: WithCode<MapComponent> | null;
-  useMapLandmark: boolean;
-  // Deck
-  deck: Deck | null;
-  // Landmarks
-  landmarkCount: 0 | 1 | 2;
-  landmark1: WithCode<Landmark> | null;
-  landmark2: WithCode<Landmark> | null;
-  // Hirelings
-  hireling1: HirelingEntry | null;
-  hireling2: HirelingEntry | null;
-  hireling3: HirelingEntry | null;
-  // Factions
-  excludedFactions: string[];
-  factionPool: WithCode<Faction>[];
-  lastFactionLocked: boolean;
-  currentPlayerIndex: number;
-  currentFactionIndex: number | null;
-  currentFaction: Faction | null;
 }

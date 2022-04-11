@@ -55,6 +55,7 @@ export const enableExpansionAction = enableExpansion.type;
 export const disableExpansionAction = disableExpansion.type;
 export default expansionSlice.reducer;
 
+/** Thunk for toggling an expansion, dispatching either the enableExpansion or disableExpansion action */
 export const toggleExpansion =
   (expansionCode: string): AppThunk =>
   (dispatch, getState) => {

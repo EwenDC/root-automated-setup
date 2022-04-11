@@ -1,12 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import {
-  nextStep,
-  redoStep,
-  selectSetupParameters,
-  undoStep,
-} from "../../features";
+import { nextStep, redoStep, selectFlowState, undoStep } from "../../features";
 import { SetupStep } from "../../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import styles from "./toolbar.module.css";
@@ -14,7 +9,7 @@ import styles from "./toolbar.module.css";
 export const Toolbar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { currentStep, futureSteps } = useAppSelector(selectSetupParameters);
+  const { currentStep, futureSteps } = useAppSelector(selectFlowState);
 
   return (
     <div className={styles.anchor}>

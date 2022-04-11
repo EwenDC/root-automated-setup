@@ -1,6 +1,7 @@
 import React from "react";
 import {
   selectExpansionArray,
+  selectFlowState,
   selectMapArray,
   selectSetupParameters,
   skipSteps,
@@ -16,7 +17,8 @@ import Toolbar from "../toolbar";
 import styles from "./app.module.css";
 
 export const App: React.FC = () => {
-  const { skippedSteps, map } = useAppSelector(selectSetupParameters);
+  const { skippedSteps } = useAppSelector(selectFlowState);
+  const { map } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
 
   return (
