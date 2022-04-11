@@ -37,6 +37,7 @@ const addExpansionDecks = (
   }
 };
 
+/** Redux Selector for returning a specified Deck from state */
 export const selectDeck = (state: RootState, code: string) => state.deck[code];
 
 /** Redux Selector for returning the deck list as an array, moving the object key to the object field "code" */
@@ -61,5 +62,4 @@ export const deckSlice = createSlice({
 });
 
 export const { toggleDeck } = deckSlice.actions;
-export const toggleDeckAction = toggleDeck.type;
 export default deckSlice.reducer;

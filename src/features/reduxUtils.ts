@@ -98,40 +98,35 @@ export const setupInitialState = <T>(
   return initialState;
 };
 
-type toggleComponentInput =
-  | string
-  | {
-      code: string;
-      enabled?: boolean;
-    };
 /**
  * Generic version of Toggle reducer for enabling or disabling a component in state
- * @param state Editable copy of current Redux slice state
- * @param action Payloaded action with either just the component code to be
- * enabled or disabled, or the component code and enable state to be set
+ * @param code The component code to be enabled or disabled
+ * @param enabled An override value for component enable. Will default to toggling the component if not provided
  */
-export const toggleComponent = <T extends Disableable>(
-  state: ComponentState<T>,
-  action: PayloadAction<toggleComponentInput>
-) => {
-  let code: string;
-  let enable: boolean | undefined;
-
-  // Are we toggling or setting a specific value?
-  if (typeof action.payload === "string") {
-    code = action.payload;
-  } else {
-    code = action.payload.code;
-    enable = action.payload.enabled;
-  }
-
-  // Retreive the component
-  const component = state[code];
-  // Only update the component state if it exists
-  if (component != null) {
-    // Toggle enabled value
-    component.enabled = enable ?? !component.enabled;
-  }
+export const toggleComponent = {
+  prepare: (code: string, enabled?: boolean) => ({
+    payload: {
+      code: code,
+      enabled: enabled,
+    },
+  }),
+  reducer: <T extends Disableable>(
+    state: ComponentState<T>,
+    action: PayloadAction<{ code: string; enabled?: boolean }>
+  ) => {
+    // Retreive the component
+    const component = state[action.payload.code];
+    // Only update the component state if it exists
+    if (component != null) {
+      // Toggle enabled value
+      component.enabled = action.payload.enabled ?? !component.enabled;
+    } else {
+      console.warn(
+        "Invalid payload for toggleComponent action: Payload code not found in component state",
+        action
+      );
+    }
+  },
 };
 
 /**

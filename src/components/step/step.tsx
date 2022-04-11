@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { selectSetupParameters, SetupStep } from "../../features";
+import { selectSetupParameters } from "../../features";
+import { SetupStep } from "../../types";
 import { useAppSelector } from "../hooks";
 import styles from "./step.module.css";
 import { StepProvider } from "./stepContext";

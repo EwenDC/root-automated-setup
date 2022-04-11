@@ -3,11 +3,11 @@ import {
   selectExpansionArray,
   selectMapArray,
   selectSetupParameters,
-  SetupStep,
   skipSteps,
   toggleExpansion,
   toggleMap,
 } from "../../features";
+import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
 import ComponentList from "../componentList";
 import { useAppDispatch, useAppSelector } from "../hooks";
@@ -35,9 +35,7 @@ export const App: React.FC = () => {
             id="includeBotStep"
             defaultValue={!skippedSteps[SetupStep.setUpBots]}
             onChange={(checked) =>
-              dispatch(
-                skipSteps({ steps: [SetupStep.setUpBots], skip: !checked })
-              )
+              dispatch(skipSteps(SetupStep.setUpBots, !checked))
             }
           />
         </Step>

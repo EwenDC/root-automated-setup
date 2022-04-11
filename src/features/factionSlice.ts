@@ -36,6 +36,7 @@ const addExpansionFactions = (
     }
 };
 
+/** Redux Selector for returning a specified Faction from state */
 export const selectFaction = (state: RootState, code: string) =>
   state.faction[code];
 
@@ -70,5 +71,4 @@ export const factionSlice = createSlice({
 });
 
 export const { toggleFaction } = factionSlice.actions;
-export const toggleFactionAction = toggleFaction.type;
 export default factionSlice.reducer;

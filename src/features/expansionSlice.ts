@@ -16,6 +16,7 @@ for (const [expansionCode, expansion] of Object.entries(content)) {
   };
 }
 
+/** Redux Selector for returning a specified Expansion from state */
 export const selectExpansion = (state: RootState, code: string) =>
   state.expansion[code];
 
@@ -52,6 +53,7 @@ export const expansionSlice = createSlice({
 export const { enableExpansion, disableExpansion } = expansionSlice.actions;
 export const enableExpansionAction = enableExpansion.type;
 export const disableExpansionAction = disableExpansion.type;
+export default expansionSlice.reducer;
 
 export const toggleExpansion =
   (expansionCode: string): AppThunk =>
@@ -68,5 +70,3 @@ export const toggleExpansion =
       }
     }
   };
-
-export default expansionSlice.reducer;

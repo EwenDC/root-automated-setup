@@ -3,35 +3,33 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import {
   nextStep,
-  redo,
+  redoStep,
   selectSetupParameters,
-  selectSetupUndoState,
-  SetupStep,
-  undo,
+  undoStep,
 } from "../../features";
+import { SetupStep } from "../../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import styles from "./toolbar.module.css";
 
 export const Toolbar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { canUndo, canRedo } = useAppSelector(selectSetupUndoState);
-  const { currentStep } = useAppSelector(selectSetupParameters);
+  const { currentStep, futureSteps } = useAppSelector(selectSetupParameters);
 
   return (
     <div className={styles.anchor}>
       <div className={styles.toolbar}>
         <button
           className={classNames(styles.button, styles.left)}
-          disabled={!canUndo}
-          onClick={() => dispatch(undo())}
+          disabled={currentStep <= SetupStep.chooseExpansions}
+          onClick={() => dispatch(undoStep())}
         >
           {t("label.undo")}
         </button>
         <button
           className={classNames(styles.button, styles.left)}
-          disabled={!canRedo}
-          onClick={() => dispatch(redo())}
+          disabled={futureSteps.length === 0}
+          onClick={() => dispatch(redoStep())}
         >
           {t("label.redo")}
         </button>

@@ -38,6 +38,7 @@ const addExpansionLandmarks = (
     }
 };
 
+/** Redux Selector for returning a specified Landmark from state */
 export const selectLandmark = (state: RootState, code: string) =>
   state.landmark[code];
 
@@ -66,5 +67,4 @@ export const landmarkSlice = createSlice({
 });
 
 export const { toggleLandmark } = landmarkSlice.actions;
-export const toggleLandmarkAction = toggleLandmark.type;
 export default landmarkSlice.reducer;

@@ -45,6 +45,7 @@ const addExpansionHirelings = (
     }
 };
 
+/** Redux Selector for returning a specified Hireling from state */
 export const selectHireling = (state: RootState, code: string) =>
   state.hireling[code];
 
@@ -73,5 +74,4 @@ export const hirelingSlice = createSlice({
 });
 
 export const { toggleHireling } = hirelingSlice.actions;
-export const toggleHirelingAction = toggleHireling.type;
 export default hirelingSlice.reducer;

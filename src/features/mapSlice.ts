@@ -37,6 +37,7 @@ const addExpansionMaps = (
     }
 };
 
+/** Redux Selector for returning a specified Map from state */
 export const selectMap = (state: RootState, code: string) => state.map[code];
 
 /** Redux Selector for returning the landmark list as an array, moving the object key to the object field "code" */
@@ -61,5 +62,4 @@ export const mapSlice = createSlice({
 });
 
 export const { toggleMap } = mapSlice.actions;
-export const toggleMapAction = toggleMap.type;
 export default mapSlice.reducer;

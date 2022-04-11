@@ -1,137 +1,53 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import undoable, { ActionCreators, GroupByFunction } from "redux-undo";
+import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../components/store";
-import {
-  selectDeckArray,
-  selectEnabledDecks,
-  toggleDeckAction,
-} from "./deckSlice";
-import {
-  disableExpansionAction,
-  enableExpansionAction,
-} from "./expansionSlice";
+import { selectDeckArray, selectEnabledDecks } from "./deckSlice";
 import {
   selectInsurgentFactions,
   selectMilitantFactions,
   toggleFaction,
-  toggleFactionAction,
 } from "./factionSlice";
-import {
-  selectEnabledHirelings,
-  selectHirelingArray,
-  toggleHirelingAction,
-} from "./hirelingSlice";
+import { selectEnabledHirelings, selectHirelingArray } from "./hirelingSlice";
 import {
   selectEnabledLandmarks,
   selectLandmarkArray,
   toggleLandmark,
-  toggleLandmarkAction,
 } from "./landmarkSlice";
-import { selectEnabledMaps, toggleMapAction } from "./mapSlice";
+import { selectEnabledMaps } from "./mapSlice";
 import { takeRandom } from "./reduxUtils";
-import { toggleVagabondAction } from "./vagabondSlice";
 import {
   Deck,
   Faction,
   Hireling,
-  HirelingDemoted,
-  HirelingPromoted,
+  HirelingEntry,
   Landmark,
   MapComponent,
+  SetupState,
+  SetupStep,
   WithCode,
 } from "../types";
 
-export enum SetupStep {
-  chooseExpansions,
-  chooseMap,
-  setUpMap,
-  setUpMapLandmark,
-  setUpBots,
-  seatPlayers,
-  chooseLandmarks,
-  setUpLandmark1,
-  setUpLandmark2,
-  chooseHirelings,
-  setUpHireling1,
-  setUpHireling2,
-  setUpHireling3,
-  postHirelingSetup,
-  chooseDeck,
-  drawCards,
-  chooseFactions,
-  selectFaction,
-  setUpFaction,
-  placeScoreMarkers,
-  chooseHand,
-  setupEnd,
-}
-
-export interface SkipStepsInput {
-  steps: SetupStep[];
-  skip: boolean;
-}
-
-export interface SetHirelingInput {
-  number: number;
-  hireling: Hireling;
-  promoted: boolean;
-}
-
-export type HirelingEntry =
-  | (HirelingPromoted & {
-      promoted: true;
-    })
-  | (HirelingDemoted & {
-      promoted: false;
-    });
-
-export interface SetupState {
-  currentStep: SetupStep;
-  skippedSteps: boolean[];
-  playerCount: number;
-  fixedFirstPlayer: boolean;
-  playerOrder: number[];
-  errorMessage: string | null;
-  componentsChanged: number; // We need this so enabling/disabling a component clears redo queue
-  // Map
-  map: WithCode<MapComponent> | null;
-  useMapLandmark: boolean;
-  // Deck
-  deck: Deck | null;
-  // Landmarks
-  landmarkCount: 0 | 1 | 2;
-  landmark1: WithCode<Landmark> | null;
-  landmark2: WithCode<Landmark> | null;
-  // Hirelings
-  hireling1: HirelingEntry | null;
-  hireling2: HirelingEntry | null;
-  hireling3: HirelingEntry | null;
-  // Factions
-  excludedFactions: string[];
-  factionPool: WithCode<Faction>[];
-  lastFactionLocked: boolean;
-  currentPlayerIndex: number;
-  currentFactionIndex: number | null;
-  currentFaction: Faction | null;
-}
-
 const initialState: SetupState = {
   currentStep: SetupStep.chooseExpansions,
+  futureSteps: [],
   skippedSteps: [],
   playerCount: 4,
   fixedFirstPlayer: false,
   playerOrder: [],
   errorMessage: null,
-  componentsChanged: 0,
+  // Map
   map: null,
   useMapLandmark: false,
+  // Deck
   deck: null,
+  // Landmarks
   landmarkCount: 0,
   landmark1: null,
   landmark2: null,
+  // Hirelings
   hireling1: null,
   hireling2: null,
   hireling3: null,
+  // Factions
   excludedFactions: [],
   factionPool: [],
   lastFactionLocked: false,
@@ -142,18 +58,12 @@ const initialState: SetupState = {
 // Default to skipping bot setup step
 initialState.skippedSteps[SetupStep.setUpBots] = true;
 
-export const selectSetupParameters = (state: RootState) => state.setup.present;
-export const selectSetupUndoState = (state: RootState) => {
-  return {
-    canUndo: state.setup.past.length > 0,
-    canRedo: state.setup.future.length > 0,
-  };
-};
+export const selectSetupParameters = (state: RootState) => state.setup;
 
-// This function allows us to clear redo history when components are enabled or disabled
-const detectComponentChange = (state: SetupState) => {
-  state.componentsChanged++;
-};
+// We have to create these actions in advance so we can use extraReducers to handle their logic
+// We use extraReducers so that we can have a default action that will clear the redo queue upon any other action occuring
+export const undoStep = createAction("setup/undoStep");
+export const redoStep = createAction("setup/redoStep");
 
 export const setupSlice = createSlice({
   name: "setup",
@@ -162,18 +72,35 @@ export const setupSlice = createSlice({
     setStep: (state, action: PayloadAction<SetupStep>) => {
       state.currentStep = action.payload;
     },
-    incrementStep: (state) => {
-      state.componentsChanged = 0;
-      let skipStep = false;
-      do {
-        state.currentStep++;
-        skipStep = state.skippedSteps[state.currentStep] ?? false;
-      } while (skipStep);
+    incrementStep: (state, action: PayloadAction) => {
+      if (state.currentStep < SetupStep.setupEnd) {
+        let skipStep = false;
+        do {
+          state.currentStep++;
+          skipStep = state.skippedSteps[state.currentStep] ?? false;
+        } while (skipStep && state.currentStep < SetupStep.setupEnd);
+      } else {
+        console.warn(
+          `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`,
+          action
+        );
+      }
     },
-    skipSteps: (state, action: PayloadAction<SkipStepsInput>) => {
-      action.payload.steps.forEach((step) => {
-        state.skippedSteps[step] = action.payload.skip;
-      });
+    skipSteps: {
+      prepare: (steps: SetupStep | SetupStep[], skip: boolean) => ({
+        payload: {
+          steps: typeof steps === "number" ? [steps] : steps,
+          skip: skip,
+        },
+      }),
+      reducer: (
+        state,
+        action: PayloadAction<{ steps: SetupStep[]; skip: boolean }>
+      ) => {
+        action.payload.steps.forEach((step) => {
+          state.skippedSteps[step] = action.payload.skip;
+        });
+      },
     },
     setPlayerCount: (state, action: PayloadAction<number>) => {
       // Make sure the player count is valid (i.e. above 0)
@@ -281,23 +208,39 @@ export const setupSlice = createSlice({
         state.landmark2 = action.payload;
       }
     },
-    setHireling: (state, action: PayloadAction<SetHirelingInput>) => {
-      if (action.payload.number >= 1 && action.payload.number <= 3) {
-        const hireling: HirelingEntry = action.payload.promoted
-          ? { ...action.payload.hireling.promoted, promoted: true }
-          : { ...action.payload.hireling.demoted, promoted: false };
+    setHireling: {
+      prepare: (number: number, hireling: Hireling, promoted: boolean) => ({
+        payload: {
+          number,
+          hireling,
+          promoted,
+        },
+      }),
+      reducer: (
+        state,
+        action: PayloadAction<{
+          number: number;
+          hireling: Hireling;
+          promoted: boolean;
+        }>
+      ) => {
+        if (action.payload.number >= 1 && action.payload.number <= 3) {
+          const hireling: HirelingEntry = action.payload.promoted
+            ? { ...action.payload.hireling.promoted, promoted: true }
+            : { ...action.payload.hireling.demoted, promoted: false };
 
-        if (action.payload.number === 1) state.hireling1 = hireling;
-        if (action.payload.number === 2) state.hireling2 = hireling;
-        if (action.payload.number === 3) state.hireling3 = hireling;
+          if (action.payload.number === 1) state.hireling1 = hireling;
+          if (action.payload.number === 2) state.hireling2 = hireling;
+          if (action.payload.number === 3) state.hireling3 = hireling;
 
-        state.excludedFactions.push(...action.payload.hireling.factions);
-      } else {
-        console.warn(
-          'Invalid payload for setHireling action: Payload field "number" must be a number between 1 and 3',
-          action
-        );
-      }
+          state.excludedFactions.push(...action.payload.hireling.factions);
+        } else {
+          console.warn(
+            'Invalid payload for setHireling action: Payload field "number" must be a number between 1 and 3',
+            action
+          );
+        }
+      },
     },
     clearExcludedFactions: (state) => {
       state.excludedFactions = [];
@@ -368,15 +311,37 @@ export const setupSlice = createSlice({
       }
     },
   },
-  extraReducers: {
-    [toggleDeckAction]: detectComponentChange,
-    [enableExpansionAction]: detectComponentChange,
-    [disableExpansionAction]: detectComponentChange,
-    [toggleFactionAction]: detectComponentChange,
-    [toggleHirelingAction]: detectComponentChange,
-    [toggleLandmarkAction]: detectComponentChange,
-    [toggleMapAction]: detectComponentChange,
-    [toggleVagabondAction]: detectComponentChange,
+  extraReducers: (builder) => {
+    builder
+      .addCase(undoStep, (state, action: PayloadAction) => {
+        if (state.currentStep > SetupStep.chooseExpansions) {
+          state.futureSteps.unshift(state.currentStep);
+          let skipStep = false;
+          do {
+            state.currentStep--;
+            skipStep = state.skippedSteps[state.currentStep] ?? false;
+          } while (skipStep && state.currentStep > SetupStep.chooseExpansions);
+        } else {
+          console.warn(
+            `Invalid undoStep action: Current step must be larger than ${SetupStep.chooseExpansions}`,
+            action
+          );
+        }
+      })
+      .addCase(redoStep, (state, action: PayloadAction) => {
+        const nextStep = state.futureSteps.shift();
+        if (nextStep != null) {
+          state.currentStep = nextStep;
+        } else {
+          console.warn(
+            `Invalid redoStep action: Future Steps array returned empty value (${nextStep})`,
+            action
+          );
+        }
+      })
+      .addDefaultCase((state) => {
+        state.futureSteps = [];
+      });
   },
 });
 
@@ -402,6 +367,7 @@ export const {
   setCurrentFactionIndex,
   applyCurrentFactionIndex,
 } = setupSlice.actions;
+export default setupSlice.reducer;
 
 export const nextStep = (): AppThunk => (dispatch, getState) => {
   // Retrieve our setup state
@@ -418,38 +384,38 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (decks.length === 1) {
         // Auto select the only deck
         dispatch(setDeck(decks[0]));
-        dispatch(skipSteps({ steps: [SetupStep.chooseDeck], skip: true }));
+        dispatch(skipSteps(SetupStep.chooseDeck, true));
       } else {
         // Make sure we do the choose deck step
-        dispatch(skipSteps({ steps: [SetupStep.chooseDeck], skip: false }));
+        dispatch(skipSteps(SetupStep.chooseDeck, false));
       }
 
       // Are there any landmarks that can be set up?
       const landmarks = selectLandmarkArray(getState());
       dispatch(
-        skipSteps({
-          steps: [
+        skipSteps(
+          [
             SetupStep.chooseLandmarks,
             SetupStep.setUpLandmark1,
             SetupStep.setUpLandmark2,
           ],
-          skip: landmarks.length === 0,
-        })
+          landmarks.length === 0
+        )
       );
 
       // Are there any hirelings that can be set up?
       const hirelings = selectHirelingArray(getState());
       dispatch(
-        skipSteps({
-          steps: [
+        skipSteps(
+          [
             SetupStep.chooseHirelings,
             SetupStep.setUpHireling1,
             SetupStep.setUpHireling2,
             SetupStep.setUpHireling3,
             SetupStep.postHirelingSetup,
           ],
-          skip: hirelings.length === 0,
-        })
+          hirelings.length === 0
+        )
       );
 
       // Clear the exlcude faction pool of any potential stale data from previous setups
@@ -470,14 +436,10 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
         // Do the map landmark setup if we have one
         if (setupParameters.useMapLandmark && map.landmark) {
-          dispatch(
-            skipSteps({ steps: [SetupStep.setUpMapLandmark], skip: false })
-          );
-          dispatch(toggleLandmark({ code: map.landmark, enabled: false }));
+          dispatch(skipSteps(SetupStep.setUpMapLandmark, false));
+          dispatch(toggleLandmark(map.landmark, false));
         } else {
-          dispatch(
-            skipSteps({ steps: [SetupStep.setUpMapLandmark], skip: true })
-          );
+          dispatch(skipSteps(SetupStep.setUpMapLandmark, true));
         }
       } else {
         // Invalid state, do not proceed
@@ -518,17 +480,15 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             dispatch(setLandmark2(takeRandom(LandmarkPool)));
           } else {
             // Handle skipping just the second landmark setup
-            dispatch(
-              skipSteps({ steps: [SetupStep.setUpLandmark2], skip: true })
-            );
+            dispatch(skipSteps(SetupStep.setUpLandmark2, true));
           }
         } else {
           // We're not setting up any landmarks, so skip both setup steps
           dispatch(
-            skipSteps({
-              steps: [SetupStep.setUpLandmark1, SetupStep.setUpLandmark2],
-              skip: true,
-            })
+            skipSteps(
+              [SetupStep.setUpLandmark1, SetupStep.setUpLandmark2],
+              true
+            )
           );
         }
       } else {
@@ -559,16 +519,16 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           // Choose three random hirelings
           for (let number = 1; number <= 3; number++) {
             dispatch(
-              setHireling({
+              setHireling(
                 number,
-                hireling: takeRandom(hirelingPool),
-                promoted: setupParameters.playerCount + number < 6,
-              })
+                takeRandom(hirelingPool),
+                setupParameters.playerCount + number < 6
+              )
             );
           }
           // Disable the factions that are mutually exclusive with the selected hirelings
           selectSetupParameters(getState()).excludedFactions.forEach((code) => {
-            dispatch(toggleFaction({ code, enabled: false }));
+            dispatch(toggleFaction(code, false));
           });
         } else {
           // Invalid state, do not proceed
@@ -679,49 +639,3 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     dispatch(incrementStep());
   }
 };
-
-export const undo = (): AppThunk => (dispatch, getState) => {
-  let setupUndoState = selectSetupUndoState(getState());
-  if (setupUndoState.canUndo) {
-    let setupParameters = selectSetupParameters(getState());
-    let lastStep;
-    do {
-      lastStep = setupParameters.currentStep;
-      dispatch(ActionCreators.undo());
-      setupParameters = selectSetupParameters(getState());
-      setupUndoState = selectSetupUndoState(getState());
-    } while (
-      lastStep === setupParameters.currentStep &&
-      setupUndoState.canUndo
-    );
-  }
-};
-
-export const redo = (): AppThunk => (dispatch, getState) => {
-  let setupUndoState = selectSetupUndoState(getState());
-  if (setupUndoState.canRedo) {
-    let setupParameters = selectSetupParameters(getState());
-    let lastStep;
-    do {
-      lastStep = setupParameters.currentStep;
-      dispatch(ActionCreators.redo());
-      setupParameters = selectSetupParameters(getState());
-      setupUndoState = selectSetupUndoState(getState());
-    } while (
-      lastStep === setupParameters.currentStep &&
-      setupUndoState.canRedo
-    );
-  }
-};
-
-// Function to group steps together so that undo/redo will always jump between steps
-const setupGroupBy: GroupByFunction<SetupState> = (
-  action,
-  currentState,
-  previousHistory
-) => currentState.currentStep;
-
-export default undoable(setupSlice.reducer, {
-  groupBy: setupGroupBy,
-  ignoreInitialState: true,
-});

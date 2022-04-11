@@ -38,6 +38,7 @@ const addExpansionVagabonds = (
     }
 };
 
+/** Redux Selector for returning a specified Vagabond from state */
 export const selectVagabond = (state: RootState, code: string) =>
   state.vagabond[code];
 
@@ -66,5 +67,4 @@ export const vagabondSlice = createSlice({
 });
 
 export const { toggleVagabond } = vagabondSlice.actions;
-export const toggleVagabondAction = toggleVagabond.type;
 export default vagabondSlice.reducer;
