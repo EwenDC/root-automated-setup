@@ -1,6 +1,7 @@
 import React from "react";
 import {
   enableMapLandmark,
+  fixFirstPlayer,
   selectExpansionArray,
   selectFlowState,
   selectLandmarkMaps,
@@ -14,6 +15,7 @@ import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
 import ComponentList from "../componentList";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import Radiogroup from "../radiogroup";
 import Step from "../step";
 import Toolbar from "../toolbar";
 import styles from "./app.module.css";
@@ -21,7 +23,9 @@ import styles from "./app.module.css";
 export const App: React.FC = () => {
   const { skippedSteps } = useAppSelector(selectFlowState);
   const landmarkMaps = useAppSelector(selectLandmarkMaps);
-  const { map, useMapLandmark } = useAppSelector(selectSetupParameters);
+  const { map, useMapLandmark, fixedFirstPlayer } = useAppSelector(
+    selectSetupParameters
+  );
   const dispatch = useAppDispatch();
 
   return (
@@ -62,14 +66,20 @@ export const App: React.FC = () => {
           step={SetupStep.setUpMap}
           subtitleKey={`map.${map?.code}.setupTitle`}
           textKey={`map.${map?.code}.setupText`}
-        ></Step>
+        />
         <Step
           step={SetupStep.setUpMapLandmark}
           subtitleKey={`map.${map?.code}.landmarkSetupTitle`}
           textKey={`map.${map?.code}.landmarkSetupText`}
-        ></Step>
-        <Step step={SetupStep.setUpBots}></Step>
-        <Step step={SetupStep.seatPlayers}></Step>
+        />
+        <Step step={SetupStep.setUpBots} />
+        <Step step={SetupStep.seatPlayers}>
+          <Radiogroup
+            id="fixedFirstPlayer"
+            defaultValue={fixedFirstPlayer}
+            onChange={(value) => dispatch(fixFirstPlayer(value))}
+          />
+        </Step>
         <Step step={SetupStep.chooseLandmarks}></Step>
         <Step step={SetupStep.setUpLandmark1}></Step>
         <Step step={SetupStep.setUpLandmark2}></Step>

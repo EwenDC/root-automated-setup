@@ -73,11 +73,15 @@
     "woodlandBand": "Woodland Band"
   },
   "label": {
+    "fixedFirstPlayer": {
+      "false": "Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>",
+      "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
+    },
     "includeBotStep": "Include setup step for bots",
     "nextStep": "Next Step",
     "redo": "Redo",
     "undo": "Undo",
-    "useMapLandmark": "Use the default Landmark for the selected Map (if there is one)"
+    "useMapLandmark": "Use the Landmark for the selected Map <i>(if it has one, overriding the landmark's default setup with the map-specific version)</i>"
   },
   "landmark": {
     "city": "Lost City",
@@ -127,7 +131,7 @@
     },
     "seatPlayers": {
       "title": "Seat Players",
-      "body": "Select how many players you are playing with, and if you wish for the app to chose a random starting player."
+      "body": "Select how many players you are playing with, and if you wish for the app to choose a random starting player."
     },
     "chooseLandmarks": {
       "title": "Set up Landmarks",

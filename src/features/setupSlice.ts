@@ -77,7 +77,7 @@ export const setupSlice = createSlice({
         );
       }
     },
-    fixedFirstPlayer: (state, action: PayloadAction<boolean>) => {
+    fixFirstPlayer: (state, action: PayloadAction<boolean>) => {
       state.fixedFirstPlayer = action.payload;
     },
     setFirstPlayer: (state, action: PayloadAction<number>) => {
@@ -268,7 +268,7 @@ export const setupSlice = createSlice({
 
 export const {
   setPlayerCount,
-  fixedFirstPlayer,
+  fixFirstPlayer,
   setFirstPlayer,
   setErrorMessage,
   enableMapLandmark,

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../components/store";
-import { SetupStep, StepState } from "../types";
+import { SetupStep, FlowState } from "../types";
 
-const initialState: StepState = {
+const initialState: FlowState = {
   currentStep: SetupStep.chooseExpansions,
   futureSteps: [],
   skippedSteps: [],

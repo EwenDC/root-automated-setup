@@ -1,0 +1,10 @@
+.container {
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.radio {
+  margin-top: 0.3rem;
+  margin-right: 0.5rem;
+}

@@ -136,8 +136,8 @@ export enum SetupStep {
   setupEnd,
 }
 
-/** An object representing the step state, including the current step, future steps we've visited, and what steps should be skipped */
-export interface StepState {
+/** An object representing the flow state, including the current step, future steps we've visited, and what steps should be skipped */
+export interface FlowState {
   currentStep: SetupStep;
   futureSteps: SetupStep[];
   skippedSteps: boolean[];

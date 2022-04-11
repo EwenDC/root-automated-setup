@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans } from "react-i18next";
 import { StepContext } from "../step";
 import styles from "./checkbox.module.css";
 
@@ -14,13 +14,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   defaultValue,
   onChange,
 }) => {
-  const { t } = useTranslation();
   const { stepActive } = useContext(StepContext);
   return (
-    <>
-      <label htmlFor={id} className={styles.label}>
-        {t(`label.${id}`)}
-      </label>
+    <div className={styles.container}>
       <input
         id={id}
         type="checkbox"
@@ -29,6 +25,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         disabled={!stepActive}
         onChange={(e) => onChange(e.target.checked)}
       />
-    </>
+      <label htmlFor={id}>
+        <Trans i18nKey={`label.${id}`} />
+      </label>
+    </div>
   );
 };
