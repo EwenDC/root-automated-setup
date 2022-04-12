@@ -132,7 +132,7 @@
     },
     "seatPlayers": {
       "title": "Seat Players",
-      "body": "Select how many players you are playing with, and if you wish for the app to choose a random starting player."
+      "body": "Determine the player seating order, then select how many players you are playing with, and if you wish for the app to choose a random starting player."
     },
     "chooseLandmarks": {
       "title": "Set up Landmarks",

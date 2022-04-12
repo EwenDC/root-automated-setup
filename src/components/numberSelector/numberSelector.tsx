@@ -1,4 +1,6 @@
-import { useTranslation } from "react-i18next";
+import { useContext } from "react";
+import { Trans } from "react-i18next";
+import { StepContext } from "../step";
 import styles from "./numberSelector.module.css";
 
 interface NumberSelectorProps {
@@ -16,32 +18,41 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
   maxVal,
   onChange,
 }) => {
-  const { t } = useTranslation();
-  const adjustValue = (amount: number) => {
-    const newValue = value + amount;
-    if (newValue >= minVal && newValue <= maxVal) onChange(newValue);
-  };
-
+  const { stepActive } = useContext(StepContext);
   return (
-    <>
-      <label className={styles.label}>{t(`label.${id}`)}</label>
-      <span className={styles.wrapper}>
-        <button
-          onClick={() => adjustValue(-1)}
-          disabled={value <= minVal}
-          className={styles.button}
-        >
-          -
-        </button>
-        {value}
-        <button
-          onClick={() => adjustValue(+1)}
-          disabled={value >= maxVal}
-          className={styles.button}
-        >
-          +
-        </button>
-      </span>
-    </>
+    <div className={styles.container}>
+      <label htmlFor={id} className={styles.label}>
+        <Trans i18nKey={`label.${id}`} />
+      </label>
+      {stepActive ? (
+        <>
+          (
+          <input
+            id={id}
+            type="number"
+            className={styles.input}
+            value={value}
+            min={minVal}
+            max={maxVal}
+            size={maxVal.toString().length}
+            onChange={(e) => {
+              const newValue = Number(e.target.value);
+              if (
+                !isNaN(newValue) &&
+                newValue >= minVal &&
+                newValue <= maxVal
+              ) {
+                onChange(newValue);
+              }
+            }}
+          />
+          )
+        </>
+      ) : (
+        <span id={id} className={styles.value}>
+          {value}
+        </span>
+      )}
+    </div>
   );
 };

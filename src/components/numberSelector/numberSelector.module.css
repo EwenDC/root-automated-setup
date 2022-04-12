@@ -1,8 +1,19 @@
+.container {
+  margin-top: 0.75rem;
+  display: flex;
+}
+
 .label {
+  margin-right: 0.5rem;
 }
 
-.wrapper {
+.input {
+  font-size: 1.25rem;
+  background: none;
+  border: none;
 }
 
-.button {
+.value {
+  font-size: 1.25rem;
+  padding-left: 0.5rem;
 }
