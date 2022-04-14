@@ -7,10 +7,7 @@ import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-import { Provider } from "react-redux";
-import { store } from "./components/store";
 import { Fallback } from "./components/fallback";
-
 import * as serviceWorker from "./serviceWorker";
 
 // Since we have to suspend for i18next anyway, may as well lazy load the app itself
@@ -36,11 +33,9 @@ i18n
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <React.Suspense fallback={<Fallback />}>
-        <App />
-      </React.Suspense>
-    </Provider>
+    <React.Suspense fallback={<Fallback />}>
+      <App />
+    </React.Suspense>
   </React.StrictMode>,
   document.getElementById("root")
 );
