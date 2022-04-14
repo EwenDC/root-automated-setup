@@ -15,11 +15,9 @@ import {
 import { selectEnabledMaps } from "./mapSlice";
 import { takeRandom } from "./reduxUtils";
 import {
-  Deck,
   Faction,
   Hireling,
   HirelingEntry,
-  Landmark,
   MapComponent,
   SetupState,
   SetupStep,
@@ -107,7 +105,7 @@ export const setupSlice = createSlice({
     setMap: (state, action: PayloadAction<WithCode<MapComponent>>) => {
       state.map = action.payload;
     },
-    setDeck: (state, action: PayloadAction<Deck>) => {
+    setDeck: (state, action: PayloadAction<string>) => {
       state.deck = action.payload;
     },
     setLandmarkCount: (state, action: PayloadAction<number>) => {
@@ -125,7 +123,7 @@ export const setupSlice = createSlice({
         );
       }
     },
-    setLandmark1: (state, action: PayloadAction<WithCode<Landmark>>) => {
+    setLandmark1: (state, action: PayloadAction<string>) => {
       if (state.landmarkCount < 1) {
         console.warn(
           "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1",
@@ -133,7 +131,7 @@ export const setupSlice = createSlice({
         );
       } else if (
         state.useMapLandmark &&
-        state.map?.landmark === action.payload.code
+        state.map?.landmark === action.payload
       ) {
         console.warn(
           "Invalid payload for setLandmark1 action: Payload cannot be the map landmark when useMapLandmark is true",
@@ -143,7 +141,7 @@ export const setupSlice = createSlice({
         state.landmark1 = action.payload;
       }
     },
-    setLandmark2: (state, action: PayloadAction<WithCode<Landmark>>) => {
+    setLandmark2: (state, action: PayloadAction<string>) => {
       if (state.landmarkCount < 2) {
         console.warn(
           "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2",
@@ -151,7 +149,7 @@ export const setupSlice = createSlice({
         );
       } else if (
         state.useMapLandmark &&
-        state.map?.landmark === action.payload.code
+        state.map?.landmark === action.payload
       ) {
         console.warn(
           "Invalid payload for setLandmark2 action: Payload cannot be the map landmark when useMapLandmark is true",
@@ -303,7 +301,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       const decks = selectDeckArray(getState());
       if (decks.length === 1) {
         // Auto select the only deck
-        dispatch(setDeck(decks[0]));
+        dispatch(setDeck(decks[0].code));
         dispatch(skipSteps(SetupStep.chooseDeck, true));
       } else {
         // Make sure we do the choose deck step
@@ -392,12 +390,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         // Select the first landmark
         if (setupParameters.landmarkCount >= 1) {
           // Choose a random landmark
-          dispatch(setLandmark1(takeRandom(LandmarkPool)));
+          dispatch(setLandmark1(takeRandom(LandmarkPool).code));
 
           // Select the second landmark
           if (setupParameters.landmarkCount >= 2) {
             // Choose a random landmark
-            dispatch(setLandmark2(takeRandom(LandmarkPool)));
+            dispatch(setLandmark2(takeRandom(LandmarkPool).code));
           } else {
             // Handle skipping just the second landmark setup
             dispatch(skipSteps(SetupStep.setUpLandmark2, true));
@@ -465,7 +463,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Check that there is even a deck to be selected...
       if (deckPool.length > 0) {
         // Choose a random deck
-        dispatch(setDeck(takeRandom(deckPool)));
+        dispatch(setDeck(takeRandom(deckPool).code));
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;

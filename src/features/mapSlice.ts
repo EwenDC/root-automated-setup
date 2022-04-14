@@ -25,6 +25,7 @@ const addExpansionMaps = (
         state[mapCode] = {
           ...map,
           landmark: map.landmark === "" ? undefined : map.landmark,
+          image: map.image === "" ? undefined : map.image,
           expansionCode: expansionCode,
           enabled: true,
         };

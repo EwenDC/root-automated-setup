@@ -26,6 +26,7 @@ const addExpansionHirelings = (
       if (state[hirelingCode] == null) {
         state[hirelingCode] = {
           ...hireling,
+          image: hireling.image === "" ? undefined : hireling.image,
           promoted: {
             ...hireling.promoted,
             componentName:

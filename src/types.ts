@@ -1,10 +1,11 @@
 /** An object that can be enabled or disabled */
-export interface Disableable {
+export interface GameComponent {
   enabled: boolean;
+  image?: string;
 }
 
 /** An object representing a game component, Storing it's originating expansion and whether it is enabled or disabled */
-export interface ExpansionComponent extends Disableable {
+export interface ExpansionComponent extends GameComponent {
   expansionCode: string;
 }
 
@@ -19,7 +20,7 @@ export type WithCode<T> = T & {
 };
 
 /** An object representing an Expansion or Base Box for the Root board game */
-export interface Expansion extends Disableable {
+export interface Expansion extends GameComponent {
   base: boolean;
 }
 
@@ -42,16 +43,6 @@ export interface Vagabond extends ExpansionComponent {
 export interface MapComponent extends ExpansionComponent {
   printedSuits: boolean;
   landmark?: string;
-}
-
-/** An object representing a card Deck from the Root board game */
-export interface Deck extends ExpansionComponent {
-  name: string;
-}
-
-/** An object representing a Landmark peice from the Root board game */
-export interface Landmark extends ExpansionComponent {
-  name: string;
 }
 
 /** An object representing a Demoted Hireling from the Root board game */
@@ -92,11 +83,11 @@ export interface SetupState {
   map: WithCode<MapComponent> | null;
   useMapLandmark: boolean;
   // Deck
-  deck: Deck | null;
+  deck: string | null;
   // Landmarks
   landmarkCount: 0 | 1 | 2;
-  landmark1: WithCode<Landmark> | null;
-  landmark2: WithCode<Landmark> | null;
+  landmark1: string | null;
+  landmark2: string | null;
   // Hirelings
   hireling1: HirelingEntry | null;
   hireling2: HirelingEntry | null;

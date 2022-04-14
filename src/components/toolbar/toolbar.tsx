@@ -11,8 +11,8 @@ export const Toolbar: React.FC = () => {
   const { currentStep, futureSteps } = useAppSelector(selectFlowState);
 
   return (
-    <div className={styles.anchor}>
-      <div className={styles.toolbar}>
+    <footer className={styles.anchor}>
+      <nav className={styles.toolbar}>
         <button
           className={classNames(styles.button, styles.left)}
           disabled={currentStep <= SetupStep.chooseExpansions}
@@ -34,7 +34,7 @@ export const Toolbar: React.FC = () => {
         >
           {t("label.nextStep")}
         </button>
-      </div>
-    </div>
+      </nav>
+    </footer>
   );
 };

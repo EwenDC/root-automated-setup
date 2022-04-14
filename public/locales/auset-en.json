@@ -21,16 +21,16 @@
     "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count."
   },
   "expansion": {
-    "exilesDeck": "Root: The Exiles and Partisans Deck",
-    "landmarkPack": "Root: The Landmarks Pack",
-    "marauder": "Root: The Marauder Expansion",
-    "marauderHirelings": "Root: The Marauder Hireling Pack",
-    "riverfolk": "Root: The Riverfolk Expansion",
-    "riverfolkHirelings": "Root: The Riverfolk Hireling Pack",
-    "root": "Root: Base Game",
-    "underworld": "Root: The Underworld Expansion",
-    "underworldHirelings": "Root: The Underworld Hireling Pack",
-    "vagabondPack": "Root: The Vagabond Pack"
+    "exilesDeck": "Exiles and Partisans Deck",
+    "landmarkPack": "Landmarks Pack",
+    "marauder": "Marauder Expansion",
+    "marauderHirelings": "Marauder Hireling Pack",
+    "riverfolk": "Riverfolk Expansion",
+    "riverfolkHirelings": "Riverfolk Hireling Pack",
+    "root": "Root",
+    "underworld": "Underworld Expansion",
+    "underworldHirelings": "Underworld Hireling Pack",
+    "vagabondPack": "Vagabond Pack"
   },
   "faction": {
     "alliance": "Woodland Alliance",
@@ -136,7 +136,7 @@
     },
     "chooseLandmarks": {
       "title": "Set up Landmarks",
-      "body": "As a group, decide how many landmarks you want to play with (in addition to the map landmark if it was included), and which ones to include in the selection pool."
+      "body": "As a group, decide how many landmarks you want to play with <i>(in addition to the map landmark if it was included)</i>, and which ones to include in the selection pool."
     },
     "chooseHirelings": {
       "title": "Set up Hirelings",

@@ -1,7 +1,7 @@
 import { createSelector, PayloadAction } from "@reduxjs/toolkit";
 import content from "../components/content.json";
 import { RootState } from "../components/store";
-import { Disableable, ComponentState, ExpansionComponent } from "../types";
+import { GameComponent, ComponentState, ExpansionComponent } from "../types";
 
 export const isTrue = "1";
 export const isFalse = "0";
@@ -110,7 +110,7 @@ export const toggleComponent = {
       enabled: enabled,
     },
   }),
-  reducer: <T extends Disableable>(
+  reducer: <T extends GameComponent>(
     state: ComponentState<T>,
     action: PayloadAction<{ code: string; enabled?: boolean }>
   ) => {

@@ -24,6 +24,7 @@ const addExpansionFactions = (
       if (state[factionCode] == null) {
         state[factionCode] = {
           ...faction,
+          image: faction.image === "" ? undefined : faction.image,
           expansionCode: expansionCode,
           enabled: true,
         };

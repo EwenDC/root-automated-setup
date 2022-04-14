@@ -26,6 +26,7 @@ const addExpansionVagabonds = (
       if (state[vagabondCode] == null) {
         state[vagabondCode] = {
           ...vagabond,
+          image: vagabond.image === "" ? undefined : vagabond.image,
           expansionCode: expansionCode,
           enabled: true,
         };

@@ -30,7 +30,7 @@ i18n
       escapeValue: false, // not needed for react as it escapes by default
     },
     backend: {
-      loadPath: "/locales/{{ns}}-{{lng}}.json",
+      loadPath: `${process.env.PUBLIC_URL}/locales/{{ns}}-{{lng}}.json`,
     },
   });
 

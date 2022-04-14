@@ -1,14 +1,16 @@
 {
   "root": {
     "base": true,
+    "image": "expansions/root.png",
     "decks": {
       "standard": {
-        "name": "deck.standard"
+        "image": ""
       }
     },
     "factions": {
       "marquise": {
         "name": "faction.marquise",
+        "image": "",
         "militant": true,
         "vagabond": false,
         "warriors": 25,
@@ -17,6 +19,7 @@
       },
       "eyrie": {
         "name": "faction.eyrie",
+        "image": "",
         "militant": true,
         "vagabond": false,
         "warriors": 20,
@@ -25,6 +28,7 @@
       },
       "alliance": {
         "name": "faction.alliance",
+        "image": "",
         "militant": false,
         "vagabond": false,
         "warriors": 10,
@@ -33,6 +37,7 @@
       },
       "vagabond": {
         "name": "faction.vagabond",
+        "image": "",
         "militant": false,
         "vagabond": true,
         "warriors": 1,
@@ -43,30 +48,37 @@
     "maps": {
       "autumn": {
         "printedSuits": true,
-        "landmark": ""
+        "landmark": "",
+        "image": ""
       },
       "winter": {
         "printedSuits": false,
-        "landmark": ""
+        "landmark": "",
+        "image": ""
       }
     },
     "vagabonds": {
       "thief": {
-        "startingItems": ["boot", "torch", "tea", "sword"]
+        "startingItems": ["boot", "torch", "tea", "sword"],
+        "image": ""
       },
       "tinker": {
-        "startingItems": ["boot", "torch", "bag", "hammer"]
+        "startingItems": ["boot", "torch", "bag", "hammer"],
+        "image": ""
       },
       "ranger": {
-        "startingItems": ["boot", "torch", "crossbow", "sword"]
+        "startingItems": ["boot", "torch", "crossbow", "sword"],
+        "image": ""
       }
     }
   },
   "riverfolk": {
     "base": false,
+    "image": "expansions/riverfolk.png",
     "factions": {
       "cult": {
         "name": "faction.cult",
+        "image": "",
         "militant": false,
         "vagabond": false,
         "warriors": 25,
@@ -75,6 +87,7 @@
       },
       "riverfolk": {
         "name": "faction.riverfolk",
+        "image": "",
         "militant": false,
         "vagabond": false,
         "warriors": 15,
@@ -83,6 +96,7 @@
       },
       "vagabond2": {
         "name": "faction.vagabond",
+        "image": "",
         "militant": false,
         "vagabond": true,
         "warriors": 1,
@@ -92,21 +106,26 @@
     },
     "vagabonds": {
       "vagrant": {
-        "startingItems": ["coin", "torch", "boot"]
+        "startingItems": ["coin", "torch", "boot"],
+        "image": ""
       },
       "arbiter": {
-        "startingItems": ["boot", "torch", "sword", "sword"]
+        "startingItems": ["boot", "torch", "sword", "sword"],
+        "image": ""
       },
       "scoundrel": {
-        "startingItems": ["boot", "boot", "torch", "crossbow"]
+        "startingItems": ["boot", "boot", "torch", "crossbow"],
+        "image": ""
       }
     }
   },
   "underworld": {
     "base": false,
+    "image": "expansions/underworld.png",
     "factions": {
       "duchy": {
         "name": "faction.duchy",
+        "image": "",
         "militant": true,
         "vagabond": false,
         "warriors": 20,
@@ -115,6 +134,7 @@
       },
       "corvid": {
         "name": "faction.corvid",
+        "image": "",
         "militant": false,
         "vagabond": false,
         "warriors": 15,
@@ -124,28 +144,32 @@
     },
     "landmarks": {
       "tower": {
-        "name": "landmark.tower"
+        "image": ""
       },
       "ferry": {
-        "name": "landmark.ferry"
+        "image": ""
       }
     },
     "maps": {
       "lake": {
         "printedSuits": false,
-        "landmark": "ferry"
+        "landmark": "ferry",
+        "image": ""
       },
       "mountain": {
         "printedSuits": false,
-        "landmark": "tower"
+        "landmark": "tower",
+        "image": ""
       }
     }
   },
   "marauder": {
     "base": false,
+    "image": "expansions/marauder.png",
     "factions": {
       "warlord": {
         "name": "faction.warlord",
+        "image": "",
         "militant": true,
         "vagabond": false,
         "warriors": 21,
@@ -154,6 +178,7 @@
       },
       "keepers": {
         "name": "faction.keepers",
+        "image": "",
         "militant": true,
         "vagabond": false,
         "warriors": 15,
@@ -163,6 +188,7 @@
     },
     "hirelings": {
       "patrol": {
+        "image": "",
         "factions": ["marquise"],
         "promoted": {
           "name": "hireling.forestPatrol",
@@ -175,6 +201,7 @@
         }
       },
       "dynasty": {
+        "image": "",
         "factions": ["eyrie"],
         "promoted": {
           "name": "hireling.lastDynasty",
@@ -187,6 +214,7 @@
         }
       },
       "uprising": {
+        "image": "",
         "factions": ["alliance"],
         "promoted": {
           "name": "hireling.springUprising",
@@ -199,6 +227,7 @@
         }
       },
       "outcast": {
+        "image": "",
         "factions": ["vagabond", "vagabond2"],
         "promoted": {
           "name": "hireling.outcast",
@@ -214,47 +243,55 @@
   },
   "exilesDeck": {
     "base": false,
+    "image": "expansions/exilesDeck.png",
     "decks": {
       "exiles": {
-        "name": "deck.exiles"
+        "image": ""
       }
     }
   },
   "landmarkPack": {
     "base": false,
+    "image": "expansions/landmarkPack.png",
     "landmarks": {
       "treetop": {
-        "name": "landmark.treetop"
+        "image": ""
       },
       "city": {
-        "name": "landmark.city"
+        "image": ""
       },
       "market": {
-        "name": "landmark.market"
+        "image": ""
       },
       "forge": {
-        "name": "landmark.forge"
+        "image": ""
       }
     }
   },
   "vagabondPack": {
     "base": false,
+    "image": "expansions/vagabondPack.png",
     "vagabonds": {
       "adventurer": {
-        "startingItems": ["boot", "torch", "hammer"]
+        "startingItems": ["boot", "torch", "hammer"],
+        "image": ""
       },
       "ronin": {
-        "startingItems": ["boot", "boot", "torch", "sword"]
+        "startingItems": ["boot", "boot", "torch", "sword"],
+        "image": ""
       },
       "harrier": {
-        "startingItems": ["coin", "torch", "sword", "crossbow"]
+        "startingItems": ["coin", "torch", "sword", "crossbow"],
+        "image": ""
       }
     }
   },
   "riverfolkHirelings": {
     "base": false,
+    "image": "",
     "hirelings": {
       "prophets": {
+        "image": "",
         "factions": ["cult"],
         "promoted": {
           "name": "hireling.warmSunProphets",
@@ -267,6 +304,7 @@
         }
       },
       "flotilla": {
+        "image": "",
         "factions": ["riverfolk"],
         "promoted": {
           "name": "hireling.riverfolkFlotilla",
@@ -279,6 +317,7 @@
         }
       },
       "bandits": {
+        "image": "",
         "factions": [],
         "promoted": {
           "name": "hireling.highwayBandits",
@@ -294,8 +333,10 @@
   },
   "underworldHirelings": {
     "base": false,
+    "image": "",
     "hirelings": {
       "expedition": {
+        "image": "",
         "factions": ["duchy"],
         "promoted": {
           "name": "hireling.sunwardExpedition",
@@ -308,6 +349,7 @@
         }
       },
       "spies": {
+        "image": "",
         "factions": ["corvid"],
         "promoted": {
           "name": "hireling.corvidSpies",
@@ -320,6 +362,7 @@
         }
       },
       "protector": {
+        "image": "",
         "factions": [],
         "promoted": {
           "name": "hireling.furiousProtector",
@@ -335,8 +378,10 @@
   },
   "marauderHirelings": {
     "base": false,
+    "image": "",
     "hirelings": {
       "flamebearers": {
+        "image": "",
         "factions": ["warlord"],
         "promoted": {
           "name": "hireling.flameBearers",
@@ -349,6 +394,7 @@
         }
       },
       "vaultkeepers": {
+        "image": "",
         "factions": ["keepers"],
         "promoted": {
           "name": "hireling.vaultKeepers",
@@ -361,6 +407,7 @@
         }
       },
       "band": {
+        "image": "",
         "factions": [],
         "promoted": {
           "name": "hireling.woodlandBand",

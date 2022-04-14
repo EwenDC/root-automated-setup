@@ -11,10 +11,10 @@ import {
   enableExpansionAction,
 } from "./expansionSlice";
 import { RootState } from "../components/store";
-import { ComponentState, Deck } from "../types";
+import { ComponentState, ExpansionComponent } from "../types";
 
 const addExpansionDecks = (
-  state: ComponentState<Deck>,
+  state: ComponentState<ExpansionComponent>,
   expansionCode: string,
   expansion = getExpansionConfig(expansionCode)
 ) => {
@@ -23,7 +23,7 @@ const addExpansionDecks = (
       // Don't add to state if it already exists
       if (state[deckCode] == null) {
         state[deckCode] = {
-          ...deck,
+          image: deck.image === "" ? undefined : deck.image,
           expansionCode: expansionCode,
           enabled: true,
         };

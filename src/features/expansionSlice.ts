@@ -11,8 +11,9 @@ import { ComponentState, Expansion } from "../types";
 let initialState: ComponentState<Expansion> = {};
 for (const [expansionCode, expansion] of Object.entries(content)) {
   initialState[expansionCode] = {
-    enabled: expansionEnabled(expansionCode, expansion.base),
     base: expansion.base,
+    image: expansion.image === "" ? undefined : expansion.image,
+    enabled: expansionEnabled(expansionCode, expansion.base),
   };
 }
 

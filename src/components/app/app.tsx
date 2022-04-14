@@ -2,6 +2,7 @@ import {
   enableMapLandmark,
   fixFirstPlayer,
   selectExpansionArray,
+  selectFactionArray,
   selectFlowState,
   selectLandmarkMaps,
   selectMapArray,
@@ -23,15 +24,16 @@ import styles from "./app.module.css";
 
 export const App: React.FC = () => {
   const { skippedSteps } = useAppSelector(selectFlowState);
-  const landmarkMaps = useAppSelector(selectLandmarkMaps);
   const { map, useMapLandmark, fixedFirstPlayer, playerCount } = useAppSelector(
     selectSetupParameters
   );
+  const landmarkMaps = useAppSelector(selectLandmarkMaps);
+  const factions = useAppSelector(selectFactionArray);
   const dispatch = useAppDispatch();
 
   return (
     <>
-      <div className={styles.container}>
+      <main className={styles.container}>
         <Step step={SetupStep.chooseExpansions}>
           <ComponentList
             selector={selectExpansionArray}
@@ -79,7 +81,7 @@ export const App: React.FC = () => {
             id="playerCount"
             value={playerCount}
             minVal={1}
-            maxVal={6}
+            maxVal={factions.length - 1}
             onChange={(value) => dispatch(setPlayerCount(value))}
           />
           <Radiogroup
@@ -104,7 +106,7 @@ export const App: React.FC = () => {
         <Step step={SetupStep.placeScoreMarkers}></Step>
         <Step step={SetupStep.chooseHand}></Step>
         <Step step={SetupStep.setupEnd}></Step>
-      </div>
+      </main>
       <Toolbar />
     </>
   );

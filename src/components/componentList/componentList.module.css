@@ -15,26 +15,40 @@
   flex: 0;
   background: none;
   border: none;
-  padding: 0.5rem;
+  padding: 0.25rem;
   border-radius: 1rem;
   cursor: pointer;
 }
 
-.component.locked {
-  border: 0.25rem solid black;
-  padding: 0.25rem;
+.component:focus-visible {
+  border: 0.15rem dotted black;
+  padding: 0.1rem;
+  outline: none;
 }
 
 .component.enabled {
-  border: 0.25rem dashed black;
-  padding: 0.25rem;
+  outline: 0.2rem dashed black;
+  filter: none;
 }
 
-.inactive .component {
-  color: darkgray;
-  border-color: darkgray;
+.component.locked {
+  outline: 0.2rem solid black;
 }
 
 .component:disabled {
   cursor: auto;
+}
+
+.image {
+  width: 6rem;
+  height: 6rem;
+  filter: grayscale();
+}
+
+.component.enabled .image {
+  filter: none;
+}
+
+.inactive .component {
+  color: darkgray;
 }
