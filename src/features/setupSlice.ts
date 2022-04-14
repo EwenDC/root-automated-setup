@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../components/store";
 import { selectDeckArray, selectEnabledDecks } from "./deckSlice";
 import {
+  selectFactionArray,
   selectInsurgentFactions,
   selectMilitantFactions,
   toggleFaction,
@@ -308,6 +309,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         dispatch(skipSteps(SetupStep.chooseDeck, false));
       }
 
+      // Correct our current playercount if it is too high (this can occur with undo/redo)
+      const maxPlayerCount = selectFactionArray(getState()).length - 1;
+      if (setupParameters.playerCount > maxPlayerCount) {
+        dispatch(setPlayerCount(maxPlayerCount));
+      }
+
       // Are there any landmarks that can be set up?
       const landmarks = selectLandmarkArray(getState());
       dispatch(
@@ -353,12 +360,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         dispatch(setMap(map));
 
         // Do the map landmark setup if we have one
-        if (setupParameters.useMapLandmark && map.landmark) {
-          dispatch(skipSteps(SetupStep.setUpMapLandmark, false));
-          dispatch(toggleLandmark(map.landmark, false));
-        } else {
-          dispatch(skipSteps(SetupStep.setUpMapLandmark, true));
-        }
+        dispatch(
+          skipSteps(
+            SetupStep.setUpMapLandmark,
+            !setupParameters.useMapLandmark || !map.landmark
+          )
+        );
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
@@ -368,6 +375,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
     case SetupStep.seatPlayers:
       let firstPlayer: number;
+
       // Do we need to randomise the first player
       if (setupParameters.fixedFirstPlayer) {
         // First player is always "1" as the player number represents turn order
@@ -377,8 +385,20 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         firstPlayer =
           Math.floor(Math.random() * setupParameters.playerCount) + 1;
       }
-
       dispatch(setFirstPlayer(firstPlayer));
+
+      // Ensure that any landmarks not supported at this player count or used by map setup are disabled
+      selectLandmarkArray(getState()).forEach((landmark) => {
+        // Calculate what the enable state of the landmark should be
+        const shouldEnable =
+          landmark.minPlayers <= setupParameters.playerCount &&
+          (!setupParameters.useMapLandmark ||
+            setupParameters.map?.landmark !== landmark.code);
+        // If the desired state does not match the actual state, fix it
+        if (landmark.enabled !== shouldEnable) {
+          dispatch(toggleLandmark(landmark.code, shouldEnable));
+        }
+      });
       break;
 
     case SetupStep.chooseLandmarks:
@@ -396,8 +416,16 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           if (setupParameters.landmarkCount >= 2) {
             // Choose a random landmark
             dispatch(setLandmark2(takeRandom(LandmarkPool).code));
+            // Ensure we don't skip the setup steps
+            dispatch(
+              skipSteps(
+                [SetupStep.setUpLandmark1, SetupStep.setUpLandmark2],
+                false
+              )
+            );
           } else {
             // Handle skipping just the second landmark setup
+            dispatch(skipSteps(SetupStep.setUpLandmark1, false));
             dispatch(skipSteps(SetupStep.setUpLandmark2, true));
           }
         } else {

@@ -144,10 +144,12 @@
     },
     "landmarks": {
       "tower": {
-        "image": ""
+        "image": "",
+        "minPlayers": 0
       },
       "ferry": {
-        "image": ""
+        "image": "",
+        "minPlayers": 0
       }
     },
     "maps": {
@@ -255,16 +257,20 @@
     "image": "expansions/landmarkPack.png",
     "landmarks": {
       "treetop": {
-        "image": ""
+        "image": "",
+        "minPlayers": 3
       },
       "city": {
-        "image": ""
+        "image": "",
+        "minPlayers": 0
       },
       "market": {
-        "image": ""
+        "image": "",
+        "minPlayers": 0
       },
       "forge": {
-        "image": ""
+        "image": "",
+        "minPlayers": 0
       }
     }
   },

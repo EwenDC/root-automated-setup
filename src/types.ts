@@ -1,10 +1,10 @@
-/** An object that can be enabled or disabled */
+/** A game component that can be enabled or disabled, and may have an associated image */
 export interface GameComponent {
   enabled: boolean;
   image?: string;
 }
 
-/** An object representing a game component, Storing it's originating expansion and whether it is enabled or disabled */
+/** An object representing a game component from an expansion. It holds the same information as a game component but also saves the expansion it is from */
 export interface ExpansionComponent extends GameComponent {
   expansionCode: string;
 }
@@ -43,6 +43,11 @@ export interface Vagabond extends ExpansionComponent {
 export interface MapComponent extends ExpansionComponent {
   printedSuits: boolean;
   landmark?: string;
+}
+
+/** An object representing a Landmark piece from the Root board game */
+export interface Landmark extends ExpansionComponent {
+  minPlayers: number;
 }
 
 /** An object representing a Demoted Hireling from the Root board game */

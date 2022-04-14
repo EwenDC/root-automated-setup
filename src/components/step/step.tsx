@@ -11,6 +11,7 @@ interface StepProps {
   titleKey?: string;
   subtitleKey?: string;
   textKey?: string;
+  textCount?: number;
 }
 
 const Step: React.FC<StepProps> = ({
@@ -18,6 +19,7 @@ const Step: React.FC<StepProps> = ({
   titleKey,
   subtitleKey,
   textKey,
+  textCount,
   children,
 }) => {
   const { currentStep, skippedSteps } = useAppSelector(selectFlowState);
@@ -45,7 +47,10 @@ const Step: React.FC<StepProps> = ({
         </h2>
       ) : null}
       {textKey ?? i18n.exists(`setupStep.${SetupStep[step]}.body`) ? (
-        <Trans i18nKey={textKey ?? `setupStep.${SetupStep[step]}.body`} />
+        <Trans
+          i18nKey={textKey ?? `setupStep.${SetupStep[step]}.body`}
+          count={textCount}
+        />
       ) : null}
       {children ? (
         <StepProvider value={{ stepActive }}>{children}</StepProvider>

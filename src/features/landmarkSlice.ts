@@ -11,10 +11,10 @@ import {
   enableExpansionAction,
 } from "./expansionSlice";
 import { RootState } from "../components/store";
-import { ComponentState, ExpansionComponent } from "../types";
+import { ComponentState, Landmark } from "../types";
 
 const addExpansionLandmarks = (
-  state: ComponentState<ExpansionComponent>,
+  state: ComponentState<Landmark>,
   expansionCode: string,
   expansion = getExpansionConfig(expansionCode)
 ) => {
@@ -25,6 +25,7 @@ const addExpansionLandmarks = (
       // Don't add to state if it already exists
       if (state[landmarkCode] == null) {
         state[landmarkCode] = {
+          ...landmark,
           image: landmark.image === "" ? undefined : landmark.image,
           expansionCode: expansionCode,
           enabled: true,

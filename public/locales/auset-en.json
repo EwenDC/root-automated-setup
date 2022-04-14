@@ -10,7 +10,9 @@
     "standard": "Standard"
   },
   "error": {
+    "landmarkNotEnoughPlayers": "Not enough players to play with this landmark",
     "lockedFaction": "Cannot select last faction until a Militant faction has been selected.",
+    "mapLandmarkUsed": "Landmark already included in map setup",
     "noDeck": "No Decks selected! Please select at least one Deck.",
     "noFaction": "No Faction selected! Please select a faction to play.",
     "noLandmark": "No Landmarks selected! Please select at least one Landmark, or set the Landmark count to zero.",
@@ -18,7 +20,8 @@
     "noMilitantFaction": "No Militant Factions selected! Please select at least one Militant Faction.",
     "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count.",
     "tooFewHireling": "Not enough Hirelings selected! Please select at least three Hirelings, or skip the Hireling setup.",
-    "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count."
+    "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
+    "tooManyPlayer": "Too many players selected! Please lower the player count or include more expansions with additional factions."
   },
   "expansion": {
     "exilesDeck": "Exiles and Partisans Deck",
@@ -78,6 +81,7 @@
       "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
     },
     "includeBotStep": "Include setup step for bots",
+    "landmarkCount": "Landmark Count",
     "nextStep": "Next Step",
     "playerCount": "Player Count",
     "redo": "Redo",
@@ -85,12 +89,36 @@
     "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default setup with the map-specific version)</i>"
   },
   "landmark": {
-    "city": "Lost City",
-    "ferry": "The Ferry",
-    "forge": "Legendary Forge",
-    "market": "Black Market",
-    "tower": "The Tower",
-    "treetop": "Elder Treetop"
+    "city": {
+      "name": "Lost City",
+      "setupTitle": "Set up the Lost City.",
+      "setupText": "Player {{count}}, place the Lost City in a random clearing with the river, not with or adjacent to another Landmark. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side."
+    },
+    "ferry": {
+      "name": "The Ferry",
+      "setupTitle": "Set up The Ferry.",
+      "setupText": "Player {{count}}, place the Ferry in a random clearing with the river or Lake, not with or adjacent to another Landmark. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
+    },
+    "forge": {
+      "name": "Legendary Forge",
+      "setupTitle": "Set up the Legendary Forge.",
+      "setupText": "Player {{count}}, place the Legendary Forge in a random clearing, not with or adjacent to another Landmark. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side. Depending on the suit of the clearing the Forge was placed in, collect the following items from the item supply and place them on the landmark card:<p><i>Fox:</i> 2 Swords, 1 Crossbow, 1 Hammer.<br/><i>Mouse:</i> 2 Bags, 2 Tea.<br/><i>Rabbit:</i> 2 Boots, 2 Coins.</p>"
+    },
+    "market": {
+      "name": "Black Market",
+      "setupTitle": "Set up the Black Market.",
+      "setupText": "Player {{count}}, place the Black Market in a random clearing with only 1 building slot, not with or adjacent to another Landmark. Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side. Draw 3 cards without looking at them and place them face down next to the landmark card."
+    },
+    "tower": {
+      "name": "The Tower",
+      "setupTitle": "Set up The Tower.",
+      "setupText": "Player {{count}}, place the Tower in a random clearing with a ruin, not with or adjacent to another Landmark. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
+    },
+    "treetop": {
+      "name": "Elder Treetop",
+      "setupTitle": "Set up the Elder Treetop.",
+      "setupText": "Player {{count}}, place the Elder Treetop in a random corner clearing, not with or adjacent to another Landmark. Grab the \"Elder Treetop\" landmark card from the game box and place it next to the board on it's non-setup side."
+    }
   },
   "map": {
     "autumn": {
@@ -102,15 +130,13 @@
       "name": "Lake",
       "setupTitle": "Set up the Lake Map.",
       "setupText": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map.",
-      "landmarkSetupTitle": "Set up the Ferry.",
-      "landmarkSetupText": "Place the Ferry piece in the corner clearing that is also a coastal clearing."
+      "landmarkSetupText": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "mountain": {
       "name": "Mountain",
       "setupTitle": "Set up the Mountain Map.",
       "setupText": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker color with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
-      "landmarkSetupTitle": "Set up the Tower.",
-      "landmarkSetupText": "Place the Tower piece in the central clearing showing two towers."
+      "landmarkSetupText": "Place the Tower piece in the central clearing showing two towers. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "winter": {
       "name": "Winter",

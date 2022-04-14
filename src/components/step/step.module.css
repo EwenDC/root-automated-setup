@@ -7,6 +7,10 @@
   color: darkgray;
 }
 
+.step p {
+  margin: 0.5rem 0;
+}
+
 .title {
   font-weight: 400;
   font-variant: small-caps;

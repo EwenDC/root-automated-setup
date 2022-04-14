@@ -7,7 +7,7 @@
 }
 
 .component {
-  color: black;
+  color: darkgray;
   font-size: 16px;
   height: 10rem;
   min-width: 10rem;
@@ -27,12 +27,16 @@
 }
 
 .component.enabled {
+  color: black;
   outline: 0.2rem dashed black;
-  filter: none;
 }
 
 .component.locked {
-  outline: 0.2rem solid black;
+  outline: 0.15rem solid darkgray;
+}
+
+.component.enabled.locked {
+  outline-color: black;
 }
 
 .component:disabled {
@@ -47,8 +51,4 @@
 
 .component.enabled .image {
   filter: none;
-}
-
-.inactive .component {
-  color: darkgray;
 }

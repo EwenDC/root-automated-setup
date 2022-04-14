@@ -11,26 +11,24 @@ import defaultImage from "../../images/componentDefault.png";
 interface ComponentListProps<T extends WithCode<GameComponent>> {
   selector: (state: RootState) => T[];
   toggleComponent: (component: T) => void;
-  getTooltipKey: (component: T) => string;
+  getLabelKey: (component: T) => string;
   isLocked?: (component: T) => boolean;
+  getLockedKey?: (component: T) => string;
 }
 
 export const ComponentList = <T extends WithCode<GameComponent>>({
   selector,
   toggleComponent,
-  getTooltipKey,
+  getLabelKey,
   isLocked,
+  getLockedKey,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
   const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
 
   return (
-    <div
-      className={classNames(styles.carousel, {
-        [styles.inactive]: !stepActive,
-      })}
-    >
+    <div className={styles.carousel}>
       {components.map((component) => {
         if (component.enabled || stepActive) {
           const componentLocked = isLocked ? isLocked(component) : false;
@@ -43,6 +41,11 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
               })}
               onClick={() => toggleComponent(component)}
               disabled={!stepActive || componentLocked}
+              title={
+                componentLocked && getLockedKey
+                  ? t(getLockedKey(component))
+                  : undefined
+              }
               role="switch"
               aria-checked={component.enabled}
             >
@@ -53,10 +56,10 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
                     ? `${process.env.PUBLIC_URL}/images/${component.image}`
                     : defaultImage
                 }
-                alt={t(getTooltipKey(component))}
-                aria-hidden="true" // We're including the alt text in the button itself so don't bother reading out the image
+                alt="" // We're including the alt text in the button itself so don't bother reading out the image
+                aria-hidden="true"
               />
-              <div>{t(getTooltipKey(component))}</div>
+              <div>{t(getLabelKey(component))}</div>
             </button>
           );
         }
