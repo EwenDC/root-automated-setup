@@ -8,18 +8,28 @@ import { StepProvider } from "./stepContext";
 
 interface StepProps {
   step: SetupStep;
+  renderTitle?: boolean;
   titleKey?: string;
+  titleOptions?: object;
+  renderSubtitle?: boolean;
   subtitleKey?: string;
+  subtitleOptions?: object;
   textKey?: string;
   textCount?: number;
+  textOptions?: object;
 }
 
 const Step: React.FC<StepProps> = ({
   step,
+  renderTitle,
   titleKey,
+  titleOptions,
+  renderSubtitle,
   subtitleKey,
+  subtitleOptions,
   textKey,
   textCount,
+  textOptions,
   children,
 }) => {
   const { currentStep, skippedSteps } = useAppSelector(selectFlowState);
@@ -36,22 +46,28 @@ const Step: React.FC<StepProps> = ({
     <div
       className={classNames(styles.step, { [styles.inactive]: !stepActive })}
     >
-      {titleKey ?? i18n.exists(`setupStep.${SetupStep[step]}.title`) ? (
+      {renderTitle ??
+      titleKey ??
+      i18n.exists(`setupStep.${SetupStep[step]}.title`) ? (
         <h1 className={styles.title}>
-          {t(titleKey ?? `setupStep.${SetupStep[step]}.title`)}
+          {t(titleKey ?? `setupStep.${SetupStep[step]}.title`, titleOptions)}
         </h1>
       ) : null}
-      {subtitleKey ?? i18n.exists(`setupStep.${SetupStep[step]}.subtitle`) ? (
+      {renderSubtitle ??
+      subtitleKey ??
+      i18n.exists(`setupStep.${SetupStep[step]}.subtitle`) ? (
         <h2 className={styles.subtitle}>
-          {t(subtitleKey ?? `setupStep.${SetupStep[step]}.subtitle`)}
+          {t(
+            subtitleKey ?? `setupStep.${SetupStep[step]}.subtitle`,
+            subtitleOptions
+          )}
         </h2>
       ) : null}
-      {textKey ?? i18n.exists(`setupStep.${SetupStep[step]}.body`) ? (
-        <Trans
-          i18nKey={textKey ?? `setupStep.${SetupStep[step]}.body`}
-          count={textCount}
-        />
-      ) : null}
+      <Trans
+        i18nKey={textKey ?? `setupStep.${SetupStep[step]}.body`}
+        count={textCount}
+        tOptions={textOptions}
+      />
       {children ? (
         <StepProvider value={{ stepActive }}>{children}</StepProvider>
       ) : null}

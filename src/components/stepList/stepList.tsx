@@ -1,6 +1,8 @@
+import { useTranslation } from "react-i18next";
 import {
   enableMapLandmark,
   fixFirstPlayer,
+  selectDeckArray,
   selectExpansionArray,
   selectFactionArray,
   selectFlowState,
@@ -11,6 +13,7 @@ import {
   setLandmarkCount,
   setPlayerCount,
   skipSteps,
+  toggleDeck,
   toggleExpansion,
   toggleLandmark,
   toggleMap,
@@ -32,6 +35,7 @@ export const StepList: React.FC = () => {
     playerOrder,
     map,
     useMapLandmark,
+    deck,
     landmarkCount,
     landmark1,
     landmark2,
@@ -39,6 +43,7 @@ export const StepList: React.FC = () => {
   const landmarkMaps = useAppSelector(selectLandmarkMaps);
   const factions = useAppSelector(selectFactionArray);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   return (
     <main className={styles.container}>
@@ -75,13 +80,27 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpMap}
-        subtitleKey={`map.${map?.code}.setupTitle`}
+        subtitleOptions={{ map: map && t(`map.${map?.code}.name`) }}
         textKey={`map.${map?.code}.setupText`}
       />
       <Step
         step={SetupStep.setUpMapLandmark}
         subtitleKey={`landmark.${map?.landmark}.setupTitle`}
         textKey={`map.${map?.code}.landmarkSetupText`}
+      />
+      <Step step={SetupStep.chooseDeck}>
+        <ComponentList
+          selector={selectDeckArray}
+          toggleComponent={(deck) => dispatch(toggleDeck(deck.code))}
+          getLabelKey={(deck) => `deck.${deck.code}`}
+        />
+      </Step>
+      <Step
+        step={SetupStep.setUpDeck}
+        renderTitle={skippedSteps[SetupStep.chooseDeck] ?? false}
+        renderSubtitle={!skippedSteps[SetupStep.chooseDeck]}
+        subtitleOptions={{ deck: deck && t(`deck.${deck}`) }}
+        textOptions={{ deck: deck && t(`deck.${deck}`) }}
       />
       <Step step={SetupStep.setUpBots} />
       <Step step={SetupStep.seatPlayers}>
@@ -142,8 +161,10 @@ export const StepList: React.FC = () => {
       <Step step={SetupStep.setUpHireling2}></Step>
       <Step step={SetupStep.setUpHireling3}></Step>
       <Step step={SetupStep.postHirelingSetup}></Step>
-      <Step step={SetupStep.chooseDeck}></Step>
-      <Step step={SetupStep.drawCards}></Step>
+      <Step
+        step={SetupStep.drawCards}
+        textOptions={{ context: playerCount > 2 ? "includeDom" : "excludeDom" }}
+      />
       <Step step={SetupStep.chooseFactions}></Step>
       <Step step={SetupStep.selectFaction}></Step>
       <Step step={SetupStep.setUpFaction}></Step>

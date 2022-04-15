@@ -123,24 +123,20 @@
   "map": {
     "autumn": {
       "name": "Autumn",
-      "setupTitle": "Set up the Autumn Map.",
       "setupText": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing, covering the printed suit symbols.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
     },
     "lake": {
       "name": "Lake",
-      "setupTitle": "Set up the Lake Map.",
       "setupText": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map.",
       "landmarkSetupText": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "mountain": {
       "name": "Mountain",
-      "setupTitle": "Set up the Mountain Map.",
       "setupText": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker color with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
       "landmarkSetupText": "Place the Tower piece in the central clearing showing two towers. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "winter": {
       "name": "Winter",
-      "setupTitle": "Set up the Winter Map.",
       "setupText": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
     }
   },
@@ -151,6 +147,18 @@
     "chooseMap": {
       "title": "Choose and Set up Map",
       "body": "As a group, decide which map you would like to play on. If you select multiple maps, a random map will be chosen from the selected."
+    },
+    "setUpMap": {
+      "subtitle": "Set up the {{map}} Map."
+    },
+    "chooseDeck": {
+      "title": "Choose and Set up Deck",
+      "body": "As a group, decide which deck you would like to use. If you select multiple decks, a random deck will be chosen from the selected."
+    },
+    "setUpDeck": {
+      "title": "Set up Deck",
+      "subtitle": "Set up the {{deck}} Deck.",
+      "body": "Grab the {{deck}} deck from the game box and place it next to the map."
     },
     "setUpBots": {
       "title": "Set Up Bots",
@@ -172,12 +180,10 @@
       "subtitle": "Place Hireling Markers.",
       "body": "Place the three hireling markers - marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
     },
-    "chooseDeck": {
-      "title": "Choose Deck",
-      "body": "As a group, decide which deck you would like to use. If you select multiple decks, a random deck will be chosen from the selected."
-    },
     "drawCards": {
-      "title": "Draw Five Cards"
+      "title": "Draw Five Cards",
+      "body_excludeDom": "Remove all four dominance cards from the deck. Shuffle the deck. Each player draws five cards. <i>(You will choose three cards to keep later.)</i>",
+      "body_includeDom": "Shuffle the deck. Each player draws five cards. <i>(You will choose three cards to keep later.)</i>"
     },
     "chooseFactions": {
       "title": "Set Up Factions",
