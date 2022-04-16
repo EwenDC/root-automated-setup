@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { TOptions } from "i18next";
 import { Trans, useTranslation } from "react-i18next";
 import { selectFlowState } from "../../features";
 import { SetupStep } from "../../types";
@@ -10,13 +11,13 @@ interface StepProps {
   step: SetupStep;
   renderTitle?: boolean;
   titleKey?: string;
-  titleOptions?: object;
+  titleOptions?: TOptions;
   renderSubtitle?: boolean;
   subtitleKey?: string;
-  subtitleOptions?: object;
+  subtitleOptions?: TOptions;
   textKey?: string;
   textCount?: number;
-  textOptions?: object;
+  textOptions?: Omit<TOptions, "count">; // For Trans component count cannot be passed in with options
 }
 
 const Step: React.FC<StepProps> = ({

@@ -161,10 +161,7 @@ export const StepList: React.FC = () => {
       <Step step={SetupStep.setUpHireling2}></Step>
       <Step step={SetupStep.setUpHireling3}></Step>
       <Step step={SetupStep.postHirelingSetup}></Step>
-      <Step
-        step={SetupStep.drawCards}
-        textOptions={{ context: playerCount > 2 ? "includeDom" : "excludeDom" }}
-      />
+      <Step step={SetupStep.drawCards} />
       <Step step={SetupStep.chooseFactions}></Step>
       <Step step={SetupStep.selectFaction}></Step>
       <Step step={SetupStep.setUpFaction}></Step>

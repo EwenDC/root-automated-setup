@@ -158,7 +158,7 @@
     "setUpDeck": {
       "title": "Set up Deck",
       "subtitle": "Set up the {{deck}} Deck.",
-      "body": "Grab the {{deck}} deck from the game box and place it next to the map."
+      "body": "Grab the {{deck}} deck from the game box and place it next to the map. If you will be playing with less than three players, remove all four dominance cards from the deck. Shuffle the deck."
     },
     "setUpBots": {
       "title": "Set Up Bots",
@@ -182,8 +182,7 @@
     },
     "drawCards": {
       "title": "Draw Five Cards",
-      "body_excludeDom": "Remove all four dominance cards from the deck. Shuffle the deck. Each player draws five cards. <i>(You will choose three cards to keep later.)</i>",
-      "body_includeDom": "Shuffle the deck. Each player draws five cards. <i>(You will choose three cards to keep later.)</i>"
+      "body": "Each player draw five cards from the deck. <i>(You will choose three cards to keep later.)</i>"
     },
     "chooseFactions": {
       "title": "Set Up Factions",
