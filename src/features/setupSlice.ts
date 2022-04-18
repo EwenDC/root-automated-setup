@@ -16,9 +16,11 @@ import {
 import { selectEnabledMaps } from "./mapSlice";
 import { takeRandom } from "./reduxUtils";
 import {
+  ExpansionComponent,
   Faction,
   Hireling,
   HirelingEntry,
+  Landmark,
   MapComponent,
   SetupState,
   SetupStep,
@@ -106,7 +108,7 @@ export const setupSlice = createSlice({
     setMap: (state, action: PayloadAction<WithCode<MapComponent>>) => {
       state.map = action.payload;
     },
-    setDeck: (state, action: PayloadAction<string>) => {
+    setDeck: (state, action: PayloadAction<WithCode<ExpansionComponent>>) => {
       state.deck = action.payload;
     },
     setLandmarkCount: (state, action: PayloadAction<number>) => {
@@ -124,7 +126,7 @@ export const setupSlice = createSlice({
         );
       }
     },
-    setLandmark1: (state, action: PayloadAction<string>) => {
+    setLandmark1: (state, action: PayloadAction<WithCode<Landmark>>) => {
       if (state.landmarkCount < 1) {
         console.warn(
           "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1",
@@ -132,7 +134,7 @@ export const setupSlice = createSlice({
         );
       } else if (
         state.useMapLandmark &&
-        state.map?.landmark === action.payload
+        state.map?.landmark === action.payload.code
       ) {
         console.warn(
           "Invalid payload for setLandmark1 action: Payload cannot be the map landmark when useMapLandmark is true",
@@ -142,7 +144,7 @@ export const setupSlice = createSlice({
         state.landmark1 = action.payload;
       }
     },
-    setLandmark2: (state, action: PayloadAction<string>) => {
+    setLandmark2: (state, action: PayloadAction<WithCode<Landmark>>) => {
       if (state.landmarkCount < 2) {
         console.warn(
           "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2",
@@ -150,7 +152,7 @@ export const setupSlice = createSlice({
         );
       } else if (
         state.useMapLandmark &&
-        state.map?.landmark === action.payload
+        state.map?.landmark === action.payload.code
       ) {
         console.warn(
           "Invalid payload for setLandmark2 action: Payload cannot be the map landmark when useMapLandmark is true",
@@ -161,25 +163,30 @@ export const setupSlice = createSlice({
       }
     },
     setHireling: {
-      prepare: (number: number, hireling: Hireling, promoted: boolean) => ({
+      prepare: (
+        number: number,
+        hireling: WithCode<Hireling>,
+        demoted: boolean
+      ) => ({
         payload: {
           number,
           hireling,
-          promoted,
+          demoted,
         },
       }),
       reducer: (
         state,
         action: PayloadAction<{
           number: number;
-          hireling: Hireling;
-          promoted: boolean;
+          hireling: WithCode<Hireling>;
+          demoted: boolean;
         }>
       ) => {
         if (action.payload.number >= 1 && action.payload.number <= 3) {
-          const hireling: HirelingEntry = action.payload.promoted
-            ? { ...action.payload.hireling.promoted, promoted: true }
-            : { ...action.payload.hireling.demoted, promoted: false };
+          const hireling: HirelingEntry = {
+            ...action.payload.hireling,
+            demoted: action.payload.demoted,
+          };
 
           if (action.payload.number === 1) state.hireling1 = hireling;
           if (action.payload.number === 2) state.hireling2 = hireling;
@@ -302,7 +309,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       const decks = selectDeckArray(getState());
       if (decks.length === 1) {
         // Auto select the only deck
-        dispatch(setDeck(decks[0].code));
+        dispatch(setDeck(decks[0]));
         dispatch(skipSteps(SetupStep.chooseDeck, true));
       } else {
         // Make sure we do the choose deck step
@@ -330,16 +337,18 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Are there any hirelings that can be set up?
       const hirelings = selectHirelingArray(getState());
+      dispatch(skipSteps(SetupStep.chooseHirelings, hirelings.length === 0));
+
+      // Always default to skipping the actual hireling setup, as per other optional components
       dispatch(
         skipSteps(
           [
-            SetupStep.chooseHirelings,
             SetupStep.setUpHireling1,
             SetupStep.setUpHireling2,
             SetupStep.setUpHireling3,
             SetupStep.postHirelingSetup,
           ],
-          hirelings.length === 0
+          true
         )
       );
 
@@ -410,12 +419,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         // Select the first landmark
         if (setupParameters.landmarkCount >= 1) {
           // Choose a random landmark
-          dispatch(setLandmark1(takeRandom(LandmarkPool).code));
+          dispatch(setLandmark1(takeRandom(LandmarkPool)));
 
           // Select the second landmark
           if (setupParameters.landmarkCount >= 2) {
             // Choose a random landmark
-            dispatch(setLandmark2(takeRandom(LandmarkPool).code));
+            dispatch(setLandmark2(takeRandom(LandmarkPool)));
             // Ensure we don't skip the setup steps
             dispatch(
               skipSteps(
@@ -468,7 +477,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
               setHireling(
                 number,
                 takeRandom(hirelingPool),
-                setupParameters.playerCount + number < 6
+                setupParameters.playerCount + number > 5
               )
             );
           }
@@ -491,7 +500,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Check that there is even a deck to be selected...
       if (deckPool.length > 0) {
         // Choose a random deck
-        dispatch(setDeck(takeRandom(deckPool).code));
+        dispatch(setDeck(takeRandom(deckPool)));
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;

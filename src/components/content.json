@@ -192,54 +192,30 @@
       "patrol": {
         "image": "",
         "factions": ["marquise"],
-        "promoted": {
-          "name": "hireling.forestPatrol",
-          "warriors": 12,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.felinePhysicians"
-        }
+        "warriors": 12,
+        "components": 0,
+        "componentName": ""
       },
       "dynasty": {
         "image": "",
         "factions": ["eyrie"],
-        "promoted": {
-          "name": "hireling.lastDynasty",
-          "warriors": 5,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.bluebirdNobles"
-        }
+        "warriors": 5,
+        "components": 0,
+        "componentName": ""
       },
       "uprising": {
         "image": "",
         "factions": ["alliance"],
-        "promoted": {
-          "name": "hireling.springUprising",
-          "warriors": 4,
-          "components": 1,
-          "componentName": "component.uprisingDie"
-        },
-        "demoted": {
-          "name": "hireling.rabbitScouts"
-        }
+        "warriors": 4,
+        "components": 1,
+        "componentName": "component.uprisingDie"
       },
       "outcast": {
         "image": "",
         "factions": ["vagabond", "vagabond2"],
-        "promoted": {
-          "name": "hireling.outcast",
-          "warriors": 1,
-          "components": 3,
-          "componentName": "component.clubItem"
-        },
-        "demoted": {
-          "name": "hireling.brigand"
-        }
+        "warriors": 1,
+        "components": 3,
+        "componentName": "component.clubItem"
       }
     }
   },
@@ -299,41 +275,23 @@
       "prophets": {
         "image": "",
         "factions": ["cult"],
-        "promoted": {
-          "name": "hireling.warmSunProphets",
-          "warriors": 4,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.lizardEnvoys"
-        }
+        "warriors": 4,
+        "components": 0,
+        "componentName": ""
       },
       "flotilla": {
         "image": "",
         "factions": ["riverfolk"],
-        "promoted": {
-          "name": "hireling.riverfolkFlotilla",
-          "warriors": 1,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.otterDivers"
-        }
+        "warriors": 1,
+        "components": 0,
+        "componentName": ""
       },
       "bandits": {
         "image": "",
         "factions": [],
-        "promoted": {
-          "name": "hireling.highwayBandits",
-          "warriors": 4,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.banditGuilds"
-        }
+        "warriors": 4,
+        "components": 0,
+        "componentName": ""
       }
     }
   },
@@ -344,41 +302,23 @@
       "expedition": {
         "image": "",
         "factions": ["duchy"],
-        "promoted": {
-          "name": "hireling.sunwardExpedition",
-          "warriors": 8,
-          "components": 3,
-          "componentName": "component.footholdToken"
-        },
-        "demoted": {
-          "name": "hireling.moleArtisans"
-        }
+        "warriors": 8,
+        "components": 3,
+        "componentName": "component.footholdToken"
       },
       "spies": {
         "image": "",
         "factions": ["corvid"],
-        "promoted": {
-          "name": "hireling.corvidSpies",
-          "warriors": 6,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.ravenGuards"
-        }
+        "warriors": 6,
+        "components": 0,
+        "componentName": ""
       },
       "protector": {
         "image": "",
         "factions": [],
-        "promoted": {
-          "name": "hireling.furiousProtector",
-          "warriors": 1,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.stoicProtector"
-        }
+        "warriors": 1,
+        "components": 0,
+        "componentName": ""
       }
     }
   },
@@ -389,41 +329,23 @@
       "flamebearers": {
         "image": "",
         "factions": ["warlord"],
-        "promoted": {
-          "name": "hireling.flameBearers",
-          "warriors": 6,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.ratRavagers"
-        }
+        "warriors": 6,
+        "components": 0,
+        "componentName": ""
       },
       "vaultkeepers": {
         "image": "",
         "factions": ["keepers"],
-        "promoted": {
-          "name": "hireling.vaultKeepers",
-          "warriors": 6,
-          "components": 6,
-          "componentName": "component.vaultBuilding"
-        },
-        "demoted": {
-          "name": "hireling.badgerBodyguards"
-        }
+        "warriors": 6,
+        "components": 6,
+        "componentName": "component.vaultBuilding"
       },
       "band": {
         "image": "",
         "factions": [],
-        "promoted": {
-          "name": "hireling.woodlandBand",
-          "warriors": 5,
-          "components": 0,
-          "componentName": ""
-        },
-        "demoted": {
-          "name": "hireling.travelingBand"
-        }
+        "warriors": 5,
+        "components": 0,
+        "componentName": ""
       }
     }
   }

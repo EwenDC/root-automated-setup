@@ -49,6 +49,7 @@ const Step: React.FC<StepProps> = ({
     >
       {renderTitle ??
       titleKey ??
+      titleOptions ?? // We need to render if options are passed in as i18n.exists misses dynamic keys
       i18n.exists(`setupStep.${SetupStep[step]}.title`) ? (
         <h1 className={styles.title}>
           {t(titleKey ?? `setupStep.${SetupStep[step]}.title`, titleOptions)}
@@ -56,6 +57,7 @@ const Step: React.FC<StepProps> = ({
       ) : null}
       {renderSubtitle ??
       subtitleKey ??
+      subtitleOptions ?? // We need to render if options are passed in as i18n.exists misses dynamic keys
       i18n.exists(`setupStep.${SetupStep[step]}.subtitle`) ? (
         <h2 className={styles.subtitle}>
           {t(

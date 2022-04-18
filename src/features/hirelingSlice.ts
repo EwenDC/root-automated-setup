@@ -27,13 +27,8 @@ const addExpansionHirelings = (
         state[hirelingCode] = {
           ...hireling,
           image: hireling.image === "" ? undefined : hireling.image,
-          promoted: {
-            ...hireling.promoted,
-            componentName:
-              hireling.promoted.componentName === ""
-                ? undefined
-                : hireling.promoted.componentName,
-          },
+          componentName:
+            hireling.componentName === "" ? undefined : hireling.componentName,
           expansionCode: expansionCode,
           enabled: true,
         };

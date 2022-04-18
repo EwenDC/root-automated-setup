@@ -10,10 +10,10 @@ import defaultImage from "../../images/componentDefault.png";
 
 interface ComponentListProps<T extends WithCode<GameComponent>> {
   selector: (state: RootState) => T[];
-  toggleComponent: (component: T) => void;
-  getLabelKey: (component: T) => string;
-  isLocked?: (component: T) => boolean;
-  getLockedKey?: (component: T) => string;
+  toggleComponent: (component: T, index: number, array: T[]) => void;
+  getLabelKey: (component: T, index: number, array: T[]) => string;
+  isLocked?: (component: T, index: number, array: T[]) => boolean;
+  getLockedKey?: (component: T, index: number, array: T[]) => string;
 }
 
 export const ComponentList = <T extends WithCode<GameComponent>>({
@@ -28,10 +28,16 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
   const { t } = useTranslation();
 
   return (
-    <div className={styles.carousel}>
-      {components.map((component) => {
+    <div
+      className={classNames(styles.carousel, {
+        [styles.inactive]: !stepActive,
+      })}
+    >
+      {components.map((component, index, array) => {
         if (component.enabled || stepActive) {
-          const componentLocked = isLocked ? isLocked(component) : false;
+          const componentLocked = isLocked
+            ? isLocked(component, index, array)
+            : false;
           return (
             <button
               key={component.code}
@@ -39,11 +45,11 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
                 [styles.enabled]: stepActive && component.enabled,
                 [styles.locked]: stepActive && componentLocked,
               })}
-              onClick={() => toggleComponent(component)}
+              onClick={() => toggleComponent(component, index, array)}
               disabled={!stepActive || componentLocked}
               title={
                 componentLocked && getLockedKey
-                  ? t(getLockedKey(component))
+                  ? t(getLockedKey(component, index, array))
                   : undefined
               }
               role="switch"
@@ -59,7 +65,7 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />
-              <div>{t(getLabelKey(component))}</div>
+              <div>{t(getLabelKey(component, index, array))}</div>
             </button>
           );
         }

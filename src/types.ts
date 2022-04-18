@@ -50,33 +50,18 @@ export interface Landmark extends ExpansionComponent {
   minPlayers: number;
 }
 
-/** An object representing a Demoted Hireling from the Root board game */
-export interface HirelingDemoted {
-  name: string;
-}
-
-/** An object representing a Promoted Hireling from the Root board game */
-export interface HirelingPromoted extends HirelingDemoted {
+/** An object representing a physical Hireling card from the Root board game, which could be Promoted or Demoted */
+export interface Hireling extends ExpansionComponent {
+  factions: string[];
   warriors: number;
   components: number;
   componentName?: string;
 }
 
-/** An object representing a physical Hireling card from the Root board game, which contains both a Promoted and Demoted Hireling */
-export interface Hireling extends ExpansionComponent {
-  factions: string[];
-  promoted: HirelingPromoted;
-  demoted: HirelingDemoted;
+/** An object representing an promoted or demoted Hireling */
+export interface HirelingEntry extends WithCode<Hireling> {
+  demoted: boolean;
 }
-
-/** An object representing an individual promoted or demoted Hireling stored in-memory during the setup process */
-export type HirelingEntry =
-  | (HirelingPromoted & {
-      promoted: true;
-    })
-  | (HirelingDemoted & {
-      promoted: false;
-    });
 
 /** An object containing all variables used during the setup process */
 export interface SetupState {
@@ -88,11 +73,11 @@ export interface SetupState {
   map: WithCode<MapComponent> | null;
   useMapLandmark: boolean;
   // Deck
-  deck: string | null;
+  deck: WithCode<ExpansionComponent> | null;
   // Landmarks
   landmarkCount: 0 | 1 | 2;
-  landmark1: string | null;
-  landmark2: string | null;
+  landmark1: WithCode<Landmark> | null;
+  landmark2: WithCode<Landmark> | null;
   // Hirelings
   hireling1: HirelingEntry | null;
   hireling2: HirelingEntry | null;
@@ -103,7 +88,7 @@ export interface SetupState {
   lastFactionLocked: boolean;
   currentPlayerIndex: number;
   currentFactionIndex: number | null;
-  currentFaction: Faction | null;
+  currentFaction: WithCode<Faction> | null;
 }
 
 /** An enum of the individual steps in the setup process. The setup process will step through this list during execution */

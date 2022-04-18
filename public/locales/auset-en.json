@@ -36,44 +36,118 @@
     "vagabondPack": "Vagabond Pack"
   },
   "faction": {
-    "alliance": "Woodland Alliance",
-    "corvid": "Corvid Conspiracy",
-    "cult": "Lizard Cult",
-    "duchy": "Underground Duchy",
-    "eyrie": "Eyrie Dynasties",
-    "keepers": "Keepers in Iron",
-    "marquise": "Marquise de Cat",
-    "riverfolk": "Riverfolk Company",
-    "vagabond": "Vagabond",
-    "warlord": "Lord of the Hundreds"
+    "alliance": {
+      "name": "Woodland Alliance"
+    },
+    "corvid": {
+      "name": "Corvid Conspiracy"
+    },
+    "cult": {
+      "name": "Lizard Cult"
+    },
+    "duchy": {
+      "name": "Underground Duchy"
+    },
+    "eyrie": {
+      "name": "Eyrie Dynasties"
+    },
+    "keepers": {
+      "name": "Keepers in Iron"
+    },
+    "marquise": {
+      "name": "Marquise de Cat"
+    },
+    "riverfolk": {
+      "name": "Riverfolk Company"
+    },
+    "vagabond": {
+      "name": "Vagabond"
+    },
+    "warlord": {
+      "name": "Lord of the Hundreds"
+    }
   },
   "hireling": {
-    "badgerBodyguards": "Badger Bodyguards",
-    "banditGuilds": "Bandit Guilds",
-    "bluebirdNobles": "Bluebird Nobles",
-    "brigand": "The Brigand",
-    "corvidSpies": "Corvid Spies",
-    "felinePhysicians": "Feline Physicians",
-    "flameBearers": "Flame Bearers",
-    "forestPatrol": "Forest Patrol",
-    "furiousProtector": "Furious Protector",
-    "highwayBandits": "Highway Bandits",
-    "lastDynasty": "Last Dynasty",
-    "lizardEnvoys": "Lizard Envoys",
-    "moleArtisans": "Mole Artisans",
-    "otterDivers": "Otter Divers",
-    "outcast": "The Outcast",
-    "rabbitScouts": "Rabbit Scouts",
-    "ratRavagers": "Rat Ravagers",
-    "ravenGuards": "Raven Guards",
-    "riverfolkFlotilla": "Riverfolk Flotilla",
-    "springUprising": "Spring Uprising",
-    "stoicProtector": "Stoic Protector",
-    "sunwardExpedition": "Sunward Expedition",
-    "travelingBand": "Traveling Band",
-    "vaultKeepers": "Vault Keepers",
-    "warmSunProphets": "Warm Sun Prophets",
-    "woodlandBand": "Woodland Band"
+    "band": {
+      "name": "Woodland Band",
+      "setup": "Player {{count}}, grab the hireling card for {{hireling}} from the game box, and place it next to the map non-demoted side up.",
+      "demoted": {
+        "name": "Traveling Band",
+        "setup": "Player {{count}}, grab the hireling card for {{hireling}} from the game box, and place it next to the map demoted side up."
+      }
+    },
+    "bandits": {
+      "name": "Highway Bandits",
+      "demoted": {
+        "name": "Bandit Guilds"
+      }
+    },
+    "dynasty": {
+      "name": "Last Dynasty",
+      "demoted": {
+        "name": "Bluebird Nobles"
+      }
+    },
+    "expedition": {
+      "name": "Sunward Expedition",
+      "demoted": {
+        "name": "Mole Artisans"
+      }
+    },
+    "flamebearers": {
+      "name": "Flame Bearers",
+      "demoted": {
+        "name": "Rat Ravagers"
+      }
+    },
+    "flotilla": {
+      "name": "Riverfolk Flotilla",
+      "demoted": {
+        "name": "Otter Divers"
+      }
+    },
+    "outcast": {
+      "name": "The Outcast",
+      "demoted": {
+        "name": "The Brigand"
+      }
+    },
+    "patrol": {
+      "name": "Forest Patrol",
+      "demoted": {
+        "name": "Feline Physicians"
+      }
+    },
+    "prophets": {
+      "name": "Warm Sun Prophets",
+      "demoted": {
+        "name": "Lizard Envoys"
+      }
+    },
+    "protector": {
+      "name": "Furious Protector",
+      "demoted": {
+        "name": "Stoic Protector"
+      }
+    },
+    "spies": {
+      "name": "Corvid Spies",
+      "demoted": {
+        "name": "Raven Guards"
+      }
+    },
+    "uprising": {
+      "name": "Spring Uprising",
+      "demoted": {
+        "name": "Rabbit Scouts"
+      }
+    },
+    "vaultkeepers": {
+      "name": "Vault Keepers",
+      "demoted": {
+        "name": "Badger Bodyguards"
+      }
+    }
   },
   "label": {
     "fixedFirstPlayer": {
@@ -81,6 +155,7 @@
       "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
     },
     "includeBotStep": "Include setup step for bots",
+    "includeHirelings": "Include Hirelings",
     "landmarkCount": "Landmark Count",
     "nextStep": "Next Step",
     "playerCount": "Player Count",
@@ -91,53 +166,47 @@
   "landmark": {
     "city": {
       "name": "Lost City",
-      "setupTitle": "Set up the Lost City.",
-      "setupText": "Player {{count}}, place the Lost City in a random clearing with the river, not with or adjacent to another Landmark. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "Player {{count}}, place the Lost City in a random clearing with the river, not with or adjacent to another Landmark. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "ferry": {
       "name": "The Ferry",
-      "setupTitle": "Set up The Ferry.",
-      "setupText": "Player {{count}}, place the Ferry in a random clearing with the river or Lake, not with or adjacent to another Landmark. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "Player {{count}}, place the Ferry in a random clearing with the river or Lake, not with or adjacent to another Landmark. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "forge": {
       "name": "Legendary Forge",
-      "setupTitle": "Set up the Legendary Forge.",
-      "setupText": "Player {{count}}, place the Legendary Forge in a random clearing, not with or adjacent to another Landmark. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side. Depending on the suit of the clearing the Forge was placed in, collect the following items from the item supply and place them on the landmark card:<p><i>Fox:</i> 2 Swords, 1 Crossbow, 1 Hammer.<br/><i>Mouse:</i> 2 Bags, 2 Tea.<br/><i>Rabbit:</i> 2 Boots, 2 Coins.</p>"
+      "setup": "Player {{count}}, place the Legendary Forge in a random clearing, not with or adjacent to another Landmark. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side. Depending on the suit of the clearing the Forge was placed in, collect the following items from the item supply and place them on the landmark card:<p><i>Fox:</i> 2 Swords, 1 Crossbow, 1 Hammer.<br/><i>Mouse:</i> 2 Bags, 2 Tea.<br/><i>Rabbit:</i> 2 Boots, 2 Coins.</p>"
     },
     "market": {
       "name": "Black Market",
-      "setupTitle": "Set up the Black Market.",
-      "setupText": "Player {{count}}, place the Black Market in a random clearing with only 1 building slot, not with or adjacent to another Landmark. Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side. Draw 3 cards without looking at them and place them face down next to the landmark card."
+      "setup": "Player {{count}}, place the Black Market in a random clearing with only 1 building slot, not with or adjacent to another Landmark. Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side. Draw 3 cards without looking at them and place them face down next to the landmark card."
     },
     "tower": {
       "name": "The Tower",
-      "setupTitle": "Set up The Tower.",
-      "setupText": "Player {{count}}, place the Tower in a random clearing with a ruin, not with or adjacent to another Landmark. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "Player {{count}}, place the Tower in a random clearing with a ruin, not with or adjacent to another Landmark. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "treetop": {
       "name": "Elder Treetop",
-      "setupTitle": "Set up the Elder Treetop.",
-      "setupText": "Player {{count}}, place the Elder Treetop in a random corner clearing, not with or adjacent to another Landmark. Grab the \"Elder Treetop\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "Player {{count}}, place the Elder Treetop in a random corner clearing, not with or adjacent to another Landmark. Grab the \"Elder Treetop\" landmark card from the game box and place it next to the board on it's non-setup side."
     }
   },
   "map": {
     "autumn": {
       "name": "Autumn",
-      "setupText": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing, covering the printed suit symbols.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
+      "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing, covering the printed suit symbols.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
     },
     "lake": {
       "name": "Lake",
-      "setupText": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map.",
-      "landmarkSetupText": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map.",
+      "landmarkSetup": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "mountain": {
       "name": "Mountain",
-      "setupText": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker color with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
-      "landmarkSetupText": "Place the Tower piece in the central clearing showing two towers. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker color with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
+      "landmarkSetup": "Place the Tower piece in the central clearing showing two towers. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "winter": {
       "name": "Winter",
-      "setupText": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
+      "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
     }
   },
   "setupStep": {
@@ -151,6 +220,9 @@
     "setUpMap": {
       "subtitle": "Set up the {{map}} Map."
     },
+    "setUpMapLandmark": {
+      "subtitle": "Set up {{landmark}}."
+    },
     "chooseDeck": {
       "title": "Choose and Set up Deck",
       "body": "As a group, decide which deck you would like to use. If you select multiple decks, a random deck will be chosen from the selected."
@@ -161,7 +233,7 @@
       "body": "Grab the {{deck}} deck from the game box and place it next to the map. If you will be playing with less than three players, remove all four dominance cards from the deck. Shuffle the deck."
     },
     "setUpBots": {
-      "title": "Set Up Bots",
+      "title": "Set up Bots",
       "body": "As a group, decide which bots you would like to play with, following their setup instructions as described in the Law of Rootbotics."
     },
     "seatPlayers": {
@@ -172,9 +244,24 @@
       "title": "Set up Landmarks",
       "body": "As a group, decide how many landmarks you want to play with <i>(in addition to the map landmark if it was included)</i>, and which ones to include in the selection pool."
     },
+    "setUpLandmark1": {
+      "subtitle": "Set up {{landmark}}."
+    },
+    "setUpLandmark2": {
+      "subtitle": "Set up {{landmark}}."
+    },
     "chooseHirelings": {
       "title": "Set up Hirelings",
       "body": "As a group, decide if you want to play with Hirelings, and which ones to include in the selection pool."
+    },
+    "setUpHireling1": {
+      "subtitle": "Set up {{hireling}}."
+    },
+    "setUpHireling2": {
+      "subtitle": "Set up {{hireling}}."
+    },
+    "setUpHireling3": {
+      "subtitle": "Set up {{hireling}}."
     },
     "postHirelingSetup": {
       "subtitle": "Place Hireling Markers.",
@@ -185,8 +272,15 @@
       "body": "Each player draw five cards from the deck. <i>(You will choose three cards to keep later.)</i>"
     },
     "chooseFactions": {
-      "title": "Set Up Factions",
+      "title": "Set up Factions",
       "body": "As a group, select which factions you would like to include in the selection pool."
+    },
+    "selectFaction": {
+      "subtitle": "Choose Faction.",
+      "body": "Player {{count}}, choose which faction you would like to play from the faction pool below."
+    },
+    "setUpFaction": {
+      "subtitle": "Set up the {{faction}}."
     },
     "placeScoreMarkers": {
       "title": "Place Score Markers",
@@ -195,6 +289,10 @@
     "chooseHand": {
       "title": "Choose Starting Hands",
       "body": "Each player chooses three cards in their hand to keep and puts the other two cards face down on the shared deck. When finished, shuffle the shared deck."
+    },
+    "setupEnd": {
+      "title": "",
+      "body": ""
     }
   },
   "vagabond": {

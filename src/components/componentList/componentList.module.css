@@ -6,6 +6,11 @@
   overflow: auto;
 }
 
+.carousel.inactive {
+  margin-top: -1rem;
+  margin-bottom: -1rem;
+}
+
 .component {
   color: darkgray;
   font-size: 16px;

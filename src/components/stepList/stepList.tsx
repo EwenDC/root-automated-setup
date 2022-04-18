@@ -5,7 +5,7 @@ import {
   selectDeckArray,
   selectExpansionArray,
   selectFactionArray,
-  selectFlowState,
+  selectHirelingArray,
   selectLandmarkArray,
   selectLandmarkMaps,
   selectMapArray,
@@ -15,34 +15,43 @@ import {
   skipSteps,
   toggleDeck,
   toggleExpansion,
+  toggleHireling,
   toggleLandmark,
   toggleMap,
 } from "../../features";
 import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
 import ComponentList from "../componentList";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+  useNthLastPlayer,
+  useStepSkipped,
+} from "../hooks";
 import NumberSelector from "../numberSelector";
 import Radiogroup from "../radiogroup";
 import Step from "../step";
 import styles from "./stepList.module.css";
 
 export const StepList: React.FC = () => {
-  const { skippedSteps } = useAppSelector(selectFlowState);
   const {
     playerCount,
     fixedFirstPlayer,
-    playerOrder,
     map,
     useMapLandmark,
     deck,
     landmarkCount,
     landmark1,
     landmark2,
+    hireling1,
+    hireling2,
+    hireling3,
   } = useAppSelector(selectSetupParameters);
   const landmarkMaps = useAppSelector(selectLandmarkMaps);
   const factions = useAppSelector(selectFactionArray);
   const dispatch = useAppDispatch();
+  const stepSkipped = useStepSkipped();
+  const nthLastPlayer = useNthLastPlayer();
   const { t } = useTranslation();
 
   return (
@@ -58,7 +67,7 @@ export const StepList: React.FC = () => {
         />
         <Checkbox
           id="includeBotStep"
-          defaultValue={!skippedSteps[SetupStep.setUpBots]}
+          defaultValue={!stepSkipped(SetupStep.setUpBots)}
           onChange={(checked) =>
             dispatch(skipSteps(SetupStep.setUpBots, !checked))
           }
@@ -81,12 +90,14 @@ export const StepList: React.FC = () => {
       <Step
         step={SetupStep.setUpMap}
         subtitleOptions={{ map: map && t(`map.${map?.code}.name`) }}
-        textKey={`map.${map?.code}.setupText`}
+        textKey={`map.${map?.code}.setup`}
       />
       <Step
         step={SetupStep.setUpMapLandmark}
-        subtitleKey={`landmark.${map?.landmark}.setupTitle`}
-        textKey={`map.${map?.code}.landmarkSetupText`}
+        subtitleOptions={{
+          landmark: map?.landmark && t(`landmark.${map?.landmark}.name`),
+        }}
+        textKey={`map.${map?.code}.landmarkSetup`}
       />
       <Step step={SetupStep.chooseDeck}>
         <ComponentList
@@ -97,10 +108,10 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpDeck}
-        renderTitle={skippedSteps[SetupStep.chooseDeck] ?? false}
-        renderSubtitle={!skippedSteps[SetupStep.chooseDeck]}
-        subtitleOptions={{ deck: deck && t(`deck.${deck}`) }}
-        textOptions={{ deck: deck && t(`deck.${deck}`) }}
+        renderTitle={stepSkipped(SetupStep.chooseDeck)}
+        renderSubtitle={!stepSkipped(SetupStep.chooseDeck)}
+        subtitleOptions={{ deck: deck && t(`deck.${deck.code}`) }}
+        textOptions={{ deck: deck && t(`deck.${deck.code}`) }}
       />
       <Step step={SetupStep.setUpBots} />
       <Step step={SetupStep.seatPlayers}>
@@ -146,27 +157,103 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpLandmark1}
-        subtitleKey={`landmark.${landmark1}.setupTitle`}
-        textKey={`landmark.${landmark1}.setupText`}
-        textCount={playerOrder[playerOrder.length - 1]} // Last player in turn order
+        subtitleOptions={{
+          landmark: landmark1 && t(`landmark.${landmark1.code}.name`),
+        }}
+        textKey={`landmark.${landmark1?.code}.setup`}
+        textCount={nthLastPlayer(1)} // Last player in turn order
       />
       <Step
         step={SetupStep.setUpLandmark2}
-        subtitleKey={`landmark.${landmark2}.setupTitle`}
-        textKey={`landmark.${landmark2}.setupText`}
-        textCount={playerOrder[playerOrder.length - 2]} // Second last player in turn order
+        subtitleOptions={{
+          landmark: landmark2 && t(`landmark.${landmark2.code}.name`),
+        }}
+        textKey={`landmark.${landmark2?.code}.setup`}
+        textCount={nthLastPlayer(2)} // Second last player in turn order
       />
-      <Step step={SetupStep.chooseHirelings}></Step>
-      <Step step={SetupStep.setUpHireling1}></Step>
-      <Step step={SetupStep.setUpHireling2}></Step>
-      <Step step={SetupStep.setUpHireling3}></Step>
-      <Step step={SetupStep.postHirelingSetup}></Step>
+      <Step step={SetupStep.chooseHirelings}>
+        <Checkbox
+          id="includeHirelings"
+          defaultValue={!stepSkipped(SetupStep.setUpHireling1)}
+          onChange={(checked) =>
+            dispatch(
+              skipSteps(
+                [
+                  SetupStep.setUpHireling1,
+                  SetupStep.setUpHireling2,
+                  SetupStep.setUpHireling3,
+                  SetupStep.postHirelingSetup,
+                ],
+                !checked
+              )
+            )
+          }
+        />
+        {!stepSkipped(SetupStep.setUpHireling1) ? (
+          <ComponentList
+            selector={selectHirelingArray}
+            toggleComponent={(hireling) =>
+              dispatch(toggleHireling(hireling.code))
+            }
+            getLabelKey={(hireling) => `hireling.${hireling.code}.name`}
+          />
+        ) : null}
+      </Step>
+      <Step
+        step={SetupStep.setUpHireling1}
+        subtitleOptions={{
+          hireling:
+            hireling1 &&
+            t(
+              `hireling.${hireling1.code}.${
+                hireling1.demoted ? "demoted." : ""
+              }name`
+            ),
+        }}
+        textKey={`hireling.${hireling1?.code}.${
+          hireling1?.demoted ? "demoted." : ""
+        }setup`}
+        textCount={nthLastPlayer(1)} // Last player in turn order
+      />
+      <Step
+        step={SetupStep.setUpHireling2}
+        subtitleOptions={{
+          hireling:
+            hireling2 &&
+            t(
+              `hireling.${hireling2.code}.${
+                hireling2.demoted ? "demoted." : ""
+              }name`
+            ),
+        }}
+        textKey={`hireling.${hireling2?.code}.${
+          hireling2?.demoted ? "demoted." : ""
+        }setup`}
+        textCount={nthLastPlayer(2)} // Second last player in turn order
+      />
+      <Step
+        step={SetupStep.setUpHireling3}
+        subtitleOptions={{
+          hireling:
+            hireling3 &&
+            t(
+              `hireling.${hireling3.code}.${
+                hireling3.demoted ? "demoted." : ""
+              }name`
+            ),
+        }}
+        textKey={`hireling.${hireling3?.code}.${
+          hireling3?.demoted ? "demoted." : ""
+        }setup`}
+        textCount={nthLastPlayer(3)} // Third last player in turn order
+      />
+      <Step step={SetupStep.postHirelingSetup} />
       <Step step={SetupStep.drawCards} />
       <Step step={SetupStep.chooseFactions}></Step>
       <Step step={SetupStep.selectFaction}></Step>
-      <Step step={SetupStep.setUpFaction}></Step>
-      <Step step={SetupStep.placeScoreMarkers}></Step>
-      <Step step={SetupStep.chooseHand}></Step>
+      <Step step={SetupStep.setUpFaction} />
+      <Step step={SetupStep.placeScoreMarkers} />
+      <Step step={SetupStep.chooseHand} />
       <Step step={SetupStep.setupEnd}></Step>
     </main>
   );
