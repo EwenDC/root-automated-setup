@@ -70,82 +70,106 @@
   "hireling": {
     "band": {
       "name": "Woodland Band",
-      "setup": "Player {{count}}, grab the hireling card for {{hireling}} from the game box, and place it next to the map non-demoted side up.",
+      "setup": "Player {{count}}, grab the hireling card and 5 warriors for the Woodland Band from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
         "name": "Traveling Band",
-        "setup": "Player {{count}}, grab the hireling card for {{hireling}} from the game box, and place it next to the map demoted side up."
+        "setup": "Player {{count}}, grab the hireling card and 5 warriors for the Woodland Band from the game box. Place them next to the map <i>(with the card's demoted \"Traveling Band\" side up)</i>."
       }
     },
     "bandits": {
       "name": "Highway Bandits",
+      "setup": "Player {{count}}, grab the hireling card and 4 warriors for the Highway Bandits from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Bandit Guilds"
+        "name": "Bandit Guilds",
+        "setup": "Player {{count}}, grab the hireling card and 4 warriors for the Highway Bandits from the game box. Place them next to the map <i>(with the card's demoted \"Bandit Guilds\" side up)</i>."
       }
     },
     "dynasty": {
       "name": "Last Dynasty",
+      "setup": "Player {{count}}, grab the hireling card and 5 warriors for the Last Dynasty from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Bluebird Nobles"
+        "name": "Bluebird Nobles",
+        "setup": "Player {{count}}, grab the Last Dynasty hireling card from the game box. Place it next to the map with it's demoted \"Bluebird Nobles\" side up."
       }
     },
     "expedition": {
       "name": "Sunward Expedition",
+      "setup": "Player {{count}}, grab the hireling card, 8 warriors, and 3 foothold tokens for the Sunward Expedition from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Mole Artisans"
+        "name": "Mole Artisans",
+        "setup": "Player {{count}}, grab the Sunward Expedition hireling card from the game box. Place it next to the map with it's demoted \"Mole Artisans\" side up."
       }
     },
     "flamebearers": {
       "name": "Flame Bearers",
+      "setup": "Player {{count}}, grab the hireling card and 6 warriors for the Flame Bearers from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Rat Ravagers"
+        "name": "Rat Ravagers",
+        "setup": "Player {{count}}, grab the Flame Bearers hireling card from the game box. Place it next to the map with it's demoted \"Rat Ravagers\" side up."
       }
     },
     "flotilla": {
       "name": "Riverfolk Flotilla",
+      "setup": "Player {{count}}, grab the hireling card and pawn for the Riverfolk Flotilla from the game box. Place the Flotilla pawn in an edge clearing along the river. Place the card next to the map <i>(non-demoted side up)</i>.",
       "demoted": {
-        "name": "Otter Divers"
+        "name": "Otter Divers",
+        "setup": "Player {{count}}, grab the Riverfolk Flotilla hireling card from the game box. Place it next to the map with it's demoted \"Otter Divers\" side up."
       }
     },
     "outcast": {
       "name": "The Outcast",
+      "setup": "Player {{count}}, grab the hireling card, pawn, and 3 club items for the Outcast from the game box. Place the Outcast pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 club items on top of it <i>(non-exhaused side up)</i>.",
       "demoted": {
-        "name": "The Brigand"
+        "name": "The Brigand",
+        "setup": "Player {{count}}, grab the Outcast hireling card from the game box. Place it next to the map with it's demoted \"The Brigand\" side up. Place items marked with an \"R\" under the map ruins."
       }
     },
     "patrol": {
       "name": "Forest Patrol",
+      "setup": "Player {{count}}, grab the hireling card and 12 warriors for the Forest Patrol from the game box. Place a Patrol warrior in each clearing of the map. Place the hireling card next to the map <i>(non-demoted side up)</i>.",
       "demoted": {
-        "name": "Feline Physicians"
+        "name": "Feline Physicians",
+        "setup": "Player {{count}}, grab the Forest Patrol hireling card from the game box. Place it next to the map with it's demoted \"Feline Physicians\" side up."
       }
     },
     "prophets": {
       "name": "Warm Sun Prophets",
+      "setup": "Player {{count}}, grab the hireling card and 4 warriors for the Warm Sun Prophets from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Lizard Envoys"
+        "name": "Lizard Envoys",
+        "setup": "Player {{count}}, grab the Warm Sun Prophets hireling card from the game box. Place it next to the map with it's demoted \"Lizard Envoys\" side up."
       }
     },
     "protector": {
       "name": "Furious Protector",
+      "setup": "Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Stoic Protector"
+        "name": "Stoic Protector",
+        "setup": "Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place them next to the map <i>(with the card's demoted \"Stoic Protector\" side up)</i>."
       }
     },
     "spies": {
       "name": "Corvid Spies",
+      "setup": "Player {{count}}, grab the hireling card and 6 warriors for the Corvid Spies from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Raven Guards"
+        "name": "Raven Guards",
+        "setup": "Player {{count}}, grab the Corvid Spies hireling card from the game box. Place it next to the map with it's demoted \"Raven Guards\" side up."
       }
     },
     "uprising": {
       "name": "Spring Uprising",
+      "setup": "Player {{count}}, grab the hireling card, 4 warriors, and uprising die for the Spring Uprising from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Rabbit Scouts"
+        "name": "Rabbit Scouts",
+        "setup": "Player {{count}}, grab the Spring Uprising hireling card from the game box. Place it next to the map with it's demoted \"Rabbit Scouts\" side up."
       }
     },
     "vaultkeepers": {
       "name": "Vault Keepers",
+      "setup": "Player {{count}}, grab the hireling card and 6 warriors for the Vault Keepers from the game box. Place them next to the map <i>(with the card's non-demoted side up)</i>.",
       "demoted": {
-        "name": "Badger Bodyguards"
+        "name": "Badger Bodyguards",
+        "setup": "Player {{count}}, grab the Vault Keepers hireling card from the game box. Place it next to the map with it's demoted \"Badger Bodyguards\" side up."
       }
     }
   },
