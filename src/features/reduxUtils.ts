@@ -1,7 +1,7 @@
 import { createSelector, PayloadAction } from "@reduxjs/toolkit";
 import content from "../components/content.json";
 import { RootState } from "../components/store";
-import { GameComponent, ComponentState, ExpansionComponent } from "../types";
+import { GameComponent, ComponentState } from "../types";
 
 export const isTrue = "1";
 export const isFalse = "0";
@@ -127,26 +127,6 @@ export const toggleComponent = {
       );
     }
   },
-};
-
-/**
- * Generic version of Disable Expansion reducer for deleting expansion components from state (components not deleted if expansion marked as base)
- * @param state Editable copy of current Redux slice state
- * @param action Payloaded action with code of expansion whose components are to be deleted from state
- */
-export const deleteExpansionComponents = <T extends ExpansionComponent>(
-  state: ComponentState<T>,
-  action: PayloadAction<string>
-) => {
-  // Skip processing for the base game, as that cannot be disabled
-  if (!getExpansionConfig(action.payload)?.base) {
-    // Remove all components matching the disabled expansion
-    for (const [componentCode, component] of Object.entries(state)) {
-      if (component.expansionCode === action.payload) {
-        delete state[componentCode];
-      }
-    }
-  }
 };
 
 /**
