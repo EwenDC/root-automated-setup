@@ -1,15 +1,11 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import {
-  deleteExpansionComponents,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
   toggleComponent,
 } from "./reduxUtils";
-import {
-  disableExpansionAction,
-  enableExpansionAction,
-} from "./expansionSlice";
+import { expansionReducers } from "./expansionSlice";
 import { RootState } from "../components/store";
 import { ComponentState, Vagabond } from "../types";
 
@@ -60,11 +56,7 @@ export const vagabondSlice = createSlice({
   reducers: {
     toggleVagabond: toggleComponent,
   },
-  extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
-      addExpansionVagabonds(state, action.payload),
-    [disableExpansionAction]: deleteExpansionComponents,
-  },
+  extraReducers: (builder) => expansionReducers(builder, addExpansionVagabonds),
 });
 
 export const { toggleVagabond } = vagabondSlice.actions;

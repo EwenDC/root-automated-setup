@@ -4,7 +4,7 @@
     "image": "expansions/root.png",
     "decks": {
       "standard": {
-        "image": ""
+        "image": "decks/standard.png"
       }
     },
     "factions": {
@@ -49,12 +49,12 @@
       "autumn": {
         "printedSuits": true,
         "landmark": "",
-        "image": ""
+        "image": "maps/autumn.png"
       },
       "winter": {
         "printedSuits": false,
         "landmark": "",
-        "image": ""
+        "image": "maps/winter.png"
       }
     },
     "vagabonds": {
@@ -156,12 +156,12 @@
       "lake": {
         "printedSuits": false,
         "landmark": "ferry",
-        "image": ""
+        "image": "maps/lake.png"
       },
       "mountain": {
         "printedSuits": false,
         "landmark": "tower",
-        "image": ""
+        "image": "maps/mountain.png"
       }
     }
   },
@@ -224,7 +224,7 @@
     "image": "expansions/exilesDeck.png",
     "decks": {
       "exiles": {
-        "image": ""
+        "image": "decks/exiles.png"
       }
     }
   },
@@ -270,7 +270,7 @@
   },
   "riverfolkHirelings": {
     "base": false,
-    "image": "",
+    "image": "expansions/riverfolkHirelings.png",
     "hirelings": {
       "prophets": {
         "image": "",
@@ -297,7 +297,7 @@
   },
   "underworldHirelings": {
     "base": false,
-    "image": "",
+    "image": "expansions/underworldHirelings.png",
     "hirelings": {
       "expedition": {
         "image": "",
@@ -324,7 +324,7 @@
   },
   "marauderHirelings": {
     "base": false,
-    "image": "",
+    "image": "expansions/marauderHirelings.png",
     "hirelings": {
       "flamebearers": {
         "image": "",

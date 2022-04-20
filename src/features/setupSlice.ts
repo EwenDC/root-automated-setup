@@ -337,20 +337,24 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Are there any hirelings that can be set up?
       const hirelings = selectHirelingArray(getState());
-      dispatch(skipSteps(SetupStep.chooseHirelings, hirelings.length === 0));
-
-      // Always default to skipping the actual hireling setup, as per other optional components
-      dispatch(
-        skipSteps(
-          [
-            SetupStep.setUpHireling1,
-            SetupStep.setUpHireling2,
-            SetupStep.setUpHireling3,
-            SetupStep.postHirelingSetup,
-          ],
-          true
-        )
-      );
+      if (hirelings.length === 0) {
+        // We must ensure all hireling setup is skipped
+        dispatch(
+          skipSteps(
+            [
+              SetupStep.chooseHirelings,
+              SetupStep.setUpHireling1,
+              SetupStep.setUpHireling2,
+              SetupStep.setUpHireling3,
+              SetupStep.postHirelingSetup,
+            ],
+            true
+          )
+        );
+      } else {
+        // By default we still skip the actual hireling setup, as per other optional components
+        dispatch(skipSteps(SetupStep.chooseHirelings, false));
+      }
 
       // Clear the exlcude faction pool of any potential stale data from previous setups
       // We need to do this here in case we skip the chooseHirelings step

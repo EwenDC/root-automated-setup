@@ -1,12 +1,18 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  ActionReducerMapBuilder,
+  createSlice,
+  Draft,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import content from "../components/content.json";
 import { AppThunk, RootState } from "../components/store";
 import {
   expansionEnabled,
+  getExpansionConfig,
   persistExpansionEnabled,
   selectComponentArray,
 } from "./reduxUtils";
-import { ComponentState, Expansion } from "../types";
+import { ComponentState, Expansion, ExpansionComponent } from "../types";
 
 let initialState: ComponentState<Expansion> = {};
 for (const [expansionCode, expansion] of Object.entries(content)) {
@@ -52,9 +58,32 @@ export const expansionSlice = createSlice({
 });
 
 export const { enableExpansion, disableExpansion } = expansionSlice.actions;
-export const enableExpansionAction = enableExpansion.type;
-export const disableExpansionAction = disableExpansion.type;
 export default expansionSlice.reducer;
+
+/** Function for adding automatic enable/disable expansion reducers to a redux slice */
+export const expansionReducers = <T extends ExpansionComponent>(
+  builder: ActionReducerMapBuilder<ComponentState<T>>,
+  addExpansionComponents: (
+    state: Draft<ComponentState<T>>,
+    expansionCode: string
+  ) => void
+) => {
+  builder
+    .addCase(enableExpansion, (state, action) =>
+      addExpansionComponents(state, action.payload)
+    )
+    .addCase(disableExpansion, (state, action) => {
+      // Skip processing for the base game, as that cannot be disabled
+      if (!getExpansionConfig(action.payload)?.base) {
+        // Remove all components matching the disabled expansion
+        for (const [componentCode, component] of Object.entries(state)) {
+          if (component.expansionCode === action.payload) {
+            delete state[componentCode];
+          }
+        }
+      }
+    });
+};
 
 /** Thunk for toggling an expansion, dispatching either the enableExpansion or disableExpansion action */
 export const toggleExpansion =

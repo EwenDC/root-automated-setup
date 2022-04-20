@@ -7,8 +7,12 @@ const initialState: FlowState = {
   futureSteps: [],
   skippedSteps: [],
 };
-// Default to skipping bot setup step
+// Default to skipping bot & hireling setup steps
 initialState.skippedSteps[SetupStep.setUpBots] = true;
+initialState.skippedSteps[SetupStep.setUpHireling1] = true;
+initialState.skippedSteps[SetupStep.setUpHireling2] = true;
+initialState.skippedSteps[SetupStep.setUpHireling3] = true;
+initialState.skippedSteps[SetupStep.postHirelingSetup] = true;
 
 /** Returns the flow information (including current step) from redux state */
 export const selectFlowState = (state: RootState) => state.flow;

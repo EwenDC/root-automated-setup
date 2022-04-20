@@ -1,17 +1,13 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import {
-  deleteExpansionComponents,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
   toggleComponent,
 } from "./reduxUtils";
-import {
-  disableExpansionAction,
-  enableExpansionAction,
-} from "./expansionSlice";
 import { RootState } from "../components/store";
 import { ComponentState, Faction } from "../types";
+import { expansionReducers } from "./expansionSlice";
 
 const addExpansionFactions = (
   state: ComponentState<Faction>,
@@ -64,11 +60,7 @@ export const factionSlice = createSlice({
   reducers: {
     toggleFaction: toggleComponent,
   },
-  extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
-      addExpansionFactions(state, action.payload),
-    [disableExpansionAction]: deleteExpansionComponents,
-  },
+  extraReducers: (builder) => expansionReducers(builder, addExpansionFactions),
 });
 
 export const { toggleFaction } = factionSlice.actions;

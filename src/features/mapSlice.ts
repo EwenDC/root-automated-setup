@@ -1,15 +1,11 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import {
-  deleteExpansionComponents,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
   toggleComponent,
 } from "./reduxUtils";
-import {
-  disableExpansionAction,
-  enableExpansionAction,
-} from "./expansionSlice";
+import { expansionReducers } from "./expansionSlice";
 import { RootState } from "../components/store";
 import { ComponentState, MapComponent } from "../types";
 
@@ -60,11 +56,7 @@ export const mapSlice = createSlice({
   reducers: {
     toggleMap: toggleComponent,
   },
-  extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
-      addExpansionMaps(state, action.payload),
-    [disableExpansionAction]: deleteExpansionComponents,
-  },
+  extraReducers: (builder) => expansionReducers(builder, addExpansionMaps),
 });
 
 export const { toggleMap } = mapSlice.actions;

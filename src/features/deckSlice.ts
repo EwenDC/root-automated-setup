@@ -1,17 +1,13 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import {
-  deleteExpansionComponents,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
   toggleComponent,
 } from "./reduxUtils";
-import {
-  disableExpansionAction,
-  enableExpansionAction,
-} from "./expansionSlice";
 import { RootState } from "../components/store";
 import { ComponentState, ExpansionComponent } from "../types";
+import { expansionReducers } from "./expansionSlice";
 
 const addExpansionDecks = (
   state: ComponentState<ExpansionComponent>,
@@ -54,11 +50,7 @@ export const deckSlice = createSlice({
   reducers: {
     toggleDeck: toggleComponent,
   },
-  extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
-      addExpansionDecks(state, action.payload),
-    [disableExpansionAction]: deleteExpansionComponents,
-  },
+  extraReducers: (builder) => expansionReducers(builder, addExpansionDecks),
 });
 
 export const { toggleDeck } = deckSlice.actions;

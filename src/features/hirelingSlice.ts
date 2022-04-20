@@ -1,17 +1,13 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import {
-  deleteExpansionComponents,
   getExpansionConfig,
   selectComponentArray,
   setupInitialState,
   toggleComponent,
 } from "./reduxUtils";
-import {
-  disableExpansionAction,
-  enableExpansionAction,
-} from "./expansionSlice";
 import { RootState } from "../components/store";
 import { ComponentState, Hireling } from "../types";
+import { expansionReducers } from "./expansionSlice";
 
 const addExpansionHirelings = (
   state: ComponentState<Hireling>,
@@ -62,11 +58,7 @@ export const hirelingSlice = createSlice({
   reducers: {
     toggleHireling: toggleComponent,
   },
-  extraReducers: {
-    [enableExpansionAction]: (state, action: PayloadAction<string>) =>
-      addExpansionHirelings(state, action.payload),
-    [disableExpansionAction]: deleteExpansionComponents,
-  },
+  extraReducers: (builder) => expansionReducers(builder, addExpansionHirelings),
 });
 
 export const { toggleHireling } = hirelingSlice.actions;
