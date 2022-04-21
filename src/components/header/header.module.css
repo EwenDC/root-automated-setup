@@ -1,0 +1,22 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.logo {
+  width: 24rem;
+  height: 6rem;
+  /* Properties for Fallback text */
+  font-size: 6rem;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 2rem;
+  font-variant: small-caps;
+  font-weight: 400;
+}
