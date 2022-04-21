@@ -21,7 +21,8 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "en",
-    debug: process.env.NODE_ENV !== "production",
+    debug: process.env.NODE_ENV === "development",
+    load: "languageOnly", // Just load the base language with no locale. Can be removed in the future to support explicit locales
     ns: "auset",
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default

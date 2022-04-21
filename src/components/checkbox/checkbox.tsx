@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useContext } from "react";
 import { Trans } from "react-i18next";
 import { StepContext } from "../step";
@@ -16,7 +17,11 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 }) => {
   const { stepActive } = useContext(StepContext);
   return (
-    <div className={styles.container}>
+    <div
+      className={classNames(styles.container, {
+        [styles.inactive]: !stepActive,
+      })}
+    >
       <input
         id={id}
         type="checkbox"
@@ -25,7 +30,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         disabled={!stepActive}
         onChange={(e) => onChange(e.target.checked)}
       />
-      <label htmlFor={id}>
+      <label htmlFor={id} className={styles.label}>
         <Trans i18nKey={`label.${id}`} />
       </label>
     </div>

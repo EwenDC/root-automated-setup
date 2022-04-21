@@ -351,15 +351,14 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             true
           )
         );
+        // Clear the exlcude faction pool of any potential stale data from previous setups
+        // We need to do this here since we're skipping the chooseHirelings step
+        if (setupParameters.excludedFactions.length > 0)
+          dispatch(clearExcludedFactions());
       } else {
         // By default we still skip the actual hireling setup, as per other optional components
         dispatch(skipSteps(SetupStep.chooseHirelings, false));
       }
-
-      // Clear the exlcude faction pool of any potential stale data from previous setups
-      // We need to do this here in case we skip the chooseHirelings step
-      if (setupParameters.excludedFactions.length > 0)
-        dispatch(clearExcludedFactions());
       break;
 
     case SetupStep.chooseMap:

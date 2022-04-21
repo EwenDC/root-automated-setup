@@ -238,7 +238,7 @@
   },
   "setupStep": {
     "chooseExpansions": {
-      "body": "Welcome to the Root automated setup! To get started, select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the screen to do so."
+      "body": "Welcome to the Root Automated Setup. This page will guide you through the Advanced Setup rules for the popular board game Root, with no shuffling or setup cards required! To get started, select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the page to do so."
     },
     "chooseMap": {
       "title": "Choose and Set up Map",
