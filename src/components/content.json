@@ -144,11 +144,11 @@
     },
     "landmarks": {
       "tower": {
-        "image": "",
+        "image": "landmarks/tower.png",
         "minPlayers": 0
       },
       "ferry": {
-        "image": "",
+        "image": "landmarks/ferry.png",
         "minPlayers": 0
       }
     },
@@ -233,19 +233,19 @@
     "image": "expansions/landmarkPack.png",
     "landmarks": {
       "treetop": {
-        "image": "",
+        "image": "landmarks/treetop.png",
         "minPlayers": 3
       },
       "city": {
-        "image": "",
+        "image": "landmarks/city.png",
         "minPlayers": 0
       },
       "market": {
-        "image": "",
+        "image": "landmarks/market.png",
         "minPlayers": 0
       },
       "forge": {
-        "image": "",
+        "image": "landmarks/forge.png",
         "minPlayers": 0
       }
     }
