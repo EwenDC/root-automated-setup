@@ -22,30 +22,34 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
         [styles.inactive]: !stepActive,
       })}
     >
-      <input
-        name={id}
-        id={`${id}False`}
-        type="radio"
-        className={styles.radio}
-        checked={!defaultValue}
-        disabled={!stepActive}
-        onChange={() => onChange(false)}
-      />
-      <label htmlFor={`${id}False`} className={styles.label}>
-        <Trans i18nKey={`label.${id}.false`} />
-      </label>
-      <input
-        name={id}
-        id={`${id}True`}
-        type="radio"
-        className={styles.radio}
-        checked={defaultValue ?? false}
-        disabled={!stepActive}
-        onChange={() => onChange(true)}
-      />
-      <label htmlFor={`${id}True`} className={styles.label}>
-        <Trans i18nKey={`label.${id}.true`} />
-      </label>
+      <div className={styles.option}>
+        <input
+          name={id}
+          id={`${id}False`}
+          type="radio"
+          className={styles.radio}
+          checked={!defaultValue}
+          disabled={!stepActive}
+          onChange={() => onChange(false)}
+        />
+        <label htmlFor={`${id}False`} className={styles.label}>
+          <Trans i18nKey={`label.${id}.false`} />
+        </label>
+      </div>
+      <div className={styles.option}>
+        <input
+          name={id}
+          id={`${id}True`}
+          type="radio"
+          className={styles.radio}
+          checked={defaultValue ?? false}
+          disabled={!stepActive}
+          onChange={() => onChange(true)}
+        />
+        <label htmlFor={`${id}True`} className={styles.label}>
+          <Trans i18nKey={`label.${id}.true`} />
+        </label>
+      </div>
     </div>
   );
 };

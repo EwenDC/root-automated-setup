@@ -1,7 +1,7 @@
 .container {
   display: flex;
   margin-top: 0.5rem;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .checkbox {
@@ -14,7 +14,7 @@
   height: 1rem;
   border: 0.15rem solid black;
   border-radius: 0.15rem;
-  transform: translateY(-0.075rem);
+  transform: translateY(0.2rem);
 }
 
 .checkbox:disabled {

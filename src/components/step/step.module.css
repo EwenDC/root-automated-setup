@@ -1,6 +1,9 @@
 .step {
-  margin-top: 1rem;
   line-height: 1.5rem;
+}
+
+.step:not(:first-child) {
+  margin-top: 1rem;
 }
 
 .step.inactive {

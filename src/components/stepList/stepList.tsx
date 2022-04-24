@@ -118,7 +118,7 @@ export const StepList: React.FC = () => {
         <NumberSelector
           id="playerCount"
           value={playerCount}
-          minVal={1}
+          minVal={stepSkipped(SetupStep.setUpBots) ? 2 : 1}
           maxVal={factions.length - 1}
           onChange={(value) => dispatch(setPlayerCount(value))}
         />

@@ -5,6 +5,11 @@
   font-family: "Libre Baskerville", serif;
 }
 
+*::selection {
+  color: black;
+  background: lightgray;
+}
+
 body {
   margin: 0;
   font-size: 16px;

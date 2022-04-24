@@ -316,10 +316,17 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         dispatch(skipSteps(SetupStep.chooseDeck, false));
       }
 
-      // Correct our current playercount if it is too high (this can occur with undo/redo)
-      const maxPlayerCount = selectFactionArray(getState()).length - 1;
-      if (setupParameters.playerCount > maxPlayerCount) {
-        dispatch(setPlayerCount(maxPlayerCount));
+      // Correct our current playercount if it is too low or high (this can occur with undo/redo)
+      if (
+        setupParameters.playerCount < 2 &&
+        (flowState.skippedSteps[SetupStep.setUpBots] ?? false)
+      ) {
+        dispatch(setPlayerCount(2));
+      } else {
+        const maxPlayerCount = selectFactionArray(getState()).length - 1;
+        if (setupParameters.playerCount > maxPlayerCount) {
+          dispatch(setPlayerCount(maxPlayerCount));
+        }
       }
 
       // Are there any landmarks that can be set up?

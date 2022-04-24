@@ -44,7 +44,7 @@ const Step: React.FC<StepProps> = ({
   // TODO: Trigger a scroll-to when we become active
 
   return (
-    <div
+    <section
       className={classNames(styles.step, { [styles.inactive]: !stepActive })}
     >
       {renderTitle ??
@@ -74,7 +74,7 @@ const Step: React.FC<StepProps> = ({
       {children ? (
         <StepProvider value={{ stepActive }}>{children}</StepProvider>
       ) : null}
-    </div>
+    </section>
   );
 };
 

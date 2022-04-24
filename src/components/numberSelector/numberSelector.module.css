@@ -15,7 +15,7 @@
 
 .input:focus-visible {
   outline: 0.15rem dotted black;
-  outline-offset: -0.1rem;
+  outline-offset: -0.15rem;
 }
 
 .value {

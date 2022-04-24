@@ -19,6 +19,27 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
   onChange,
 }) => {
   const { stepActive } = useContext(StepContext);
+  const size = maxVal.toString().length;
+
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = event.target.value;
+    let newValue = Number(rawValue);
+    // Only continue processing if the user entered a numeric value
+    if (!isNaN(newValue)) {
+      // Trim off any extra numbers at the start of the input to allow numbers to be freely typed in
+      // We do this in a loop so we keep cutting off leading digits until we get a valid value
+      for (let digits = size; digits > 0; digits--) {
+        newValue = Number(rawValue.substr(rawValue.length - digits));
+        // Stop the loop once the value is small enough
+        if (newValue <= maxVal) {
+          // Only make the change if the value isn't too small
+          if (newValue >= minVal) onChange(newValue);
+          break;
+        }
+      }
+    }
+  };
+
   return (
     <div className={styles.container}>
       <label htmlFor={id} className={styles.label}>
@@ -34,17 +55,8 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
             value={value}
             min={minVal}
             max={maxVal}
-            size={maxVal.toString().length}
-            onChange={(e) => {
-              const newValue = Number(e.target.value);
-              if (
-                !isNaN(newValue) &&
-                newValue >= minVal &&
-                newValue <= maxVal
-              ) {
-                onChange(newValue);
-              }
-            }}
+            size={size}
+            onChange={changeHandler}
           />
           )
         </>
