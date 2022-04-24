@@ -5,6 +5,7 @@
 }
 
 .checkbox {
+  cursor: pointer;
   /* Override the default checkbox appearance */
   appearance: none;
   display: grid;
@@ -14,7 +15,6 @@
   border: 0.15rem solid black;
   border-radius: 0.15rem;
   transform: translateY(-0.075rem);
-  cursor: pointer;
 }
 
 .checkbox:disabled {

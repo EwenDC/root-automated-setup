@@ -5,6 +5,60 @@
 }
 
 .radio {
-  margin-top: 0.3rem;
-  margin-right: 0.5rem;
+  cursor: pointer;
+  flex: none;
+  /* Override the default radio appearance */
+  appearance: none;
+  color: black;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 0.15rem solid black;
+  border-radius: 50%;
+  transform: translateY(0.16rem);
+  display: grid;
+  place-content: center;
+}
+
+.radio:disabled {
+  border-color: darkgray;
+  cursor: auto;
+}
+
+.radio:focus-visible {
+  outline: 0.15rem dotted black;
+  outline-offset: 0.05rem;
+}
+
+.radio::before {
+  content: "";
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  transform: scale(0);
+  clip-path: polygon(14% 44%, 0% 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  /* transition: 120ms transform ease-in-out; */
+  box-shadow: inset 1rem 1rem black;
+}
+
+@media (forced-colors: active) {
+  .radio::before {
+    background-color: CanvasText;
+  }
+}
+
+.radio:checked::before {
+  transform: scale(1);
+}
+
+.radio:disabled::before {
+  box-shadow: inset 1rem 1rem darkgray;
+}
+
+.label {
+  cursor: pointer;
+  padding-left: 0.5rem;
+}
+
+.inactive .label {
+  cursor: auto;
 }

@@ -13,6 +13,11 @@
   border: none;
 }
 
+.input:focus-visible {
+  outline: 0.15rem dotted black;
+  outline-offset: -0.1rem;
+}
+
 .value {
   font-size: 1.25rem;
   padding-left: 0.5rem;

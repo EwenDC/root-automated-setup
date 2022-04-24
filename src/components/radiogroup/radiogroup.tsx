@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useContext } from "react";
 import { Trans } from "react-i18next";
 import { StepContext } from "../step";
@@ -16,7 +17,11 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
 }) => {
   const { stepActive } = useContext(StepContext);
   return (
-    <div className={styles.container}>
+    <div
+      className={classNames(styles.container, {
+        [styles.inactive]: !stepActive,
+      })}
+    >
       <input
         name={id}
         id={`${id}False`}
@@ -26,7 +31,7 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
         disabled={!stepActive}
         onChange={() => onChange(false)}
       />
-      <label htmlFor={`${id}False`}>
+      <label htmlFor={`${id}False`} className={styles.label}>
         <Trans i18nKey={`label.${id}.false`} />
       </label>
       <input
@@ -38,7 +43,7 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
         disabled={!stepActive}
         onChange={() => onChange(true)}
       />
-      <label htmlFor={`${id}True`}>
+      <label htmlFor={`${id}True`} className={styles.label}>
         <Trans i18nKey={`label.${id}.true`} />
       </label>
     </div>
