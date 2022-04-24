@@ -16,7 +16,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   onChange,
 }) => {
   const { stepActive } = useContext(StepContext);
-  return (
+  return stepActive || defaultValue ? (
     <div
       className={classNames(styles.container, {
         [styles.inactive]: !stepActive,
@@ -34,5 +34,5 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         <Trans i18nKey={`label.${id}`} />
       </label>
     </div>
-  );
+  ) : null;
 };

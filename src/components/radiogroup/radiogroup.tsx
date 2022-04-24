@@ -22,34 +22,38 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
         [styles.inactive]: !stepActive,
       })}
     >
-      <div className={styles.option}>
-        <input
-          name={id}
-          id={`${id}False`}
-          type="radio"
-          className={styles.radio}
-          checked={!defaultValue}
-          disabled={!stepActive}
-          onChange={() => onChange(false)}
-        />
-        <label htmlFor={`${id}False`} className={styles.label}>
-          <Trans i18nKey={`label.${id}.false`} />
-        </label>
-      </div>
-      <div className={styles.option}>
-        <input
-          name={id}
-          id={`${id}True`}
-          type="radio"
-          className={styles.radio}
-          checked={defaultValue ?? false}
-          disabled={!stepActive}
-          onChange={() => onChange(true)}
-        />
-        <label htmlFor={`${id}True`} className={styles.label}>
-          <Trans i18nKey={`label.${id}.true`} />
-        </label>
-      </div>
+      {stepActive || !defaultValue ? (
+        <div className={styles.option}>
+          <input
+            name={id}
+            id={`${id}False`}
+            type="radio"
+            className={styles.radio}
+            checked={!defaultValue}
+            disabled={!stepActive}
+            onChange={() => onChange(false)}
+          />
+          <label htmlFor={`${id}False`} className={styles.label}>
+            <Trans i18nKey={`label.${id}.false`} />
+          </label>
+        </div>
+      ) : null}
+      {stepActive || (defaultValue ?? false) ? (
+        <div className={styles.option}>
+          <input
+            name={id}
+            id={`${id}True`}
+            type="radio"
+            className={styles.radio}
+            checked={defaultValue ?? false}
+            disabled={!stepActive}
+            onChange={() => onChange(true)}
+          />
+          <label htmlFor={`${id}True`} className={styles.label}>
+            <Trans i18nKey={`label.${id}.true`} />
+          </label>
+        </div>
+      ) : null}
     </div>
   );
 };
