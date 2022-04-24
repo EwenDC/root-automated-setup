@@ -21,6 +21,7 @@
     "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count.",
     "tooFewHireling": "Not enough Hirelings selected! Please select at least three Hirelings, or skip the Hireling setup.",
     "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
+    "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions.",
     "tooManyPlayer": "Too many players selected! Please lower the player count or include more expansions with additional factions."
   },
   "expansion": {

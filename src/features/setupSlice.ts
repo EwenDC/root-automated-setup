@@ -5,6 +5,7 @@ import {
   selectFactionArray,
   selectInsurgentFactions,
   selectMilitantFactions,
+  selectVagabondFactions,
   toggleFaction,
 } from "./factionSlice";
 import { selectEnabledHirelings, selectHirelingArray } from "./hirelingSlice";
@@ -18,12 +19,14 @@ import { takeRandom } from "./reduxUtils";
 import {
   ExpansionComponent,
   Faction,
+  FactionEntry,
   Hireling,
   HirelingEntry,
   Landmark,
   MapComponent,
   SetupState,
   SetupStep,
+  Vagabond,
   WithCode,
 } from "../types";
 import {
@@ -32,6 +35,7 @@ import {
   setStep,
   skipSteps,
 } from "./flowSlice";
+import { selectEnabledVagabonds } from "./vagabondSlice";
 
 const initialState: SetupState = {
   playerCount: 4,
@@ -210,18 +214,34 @@ export const setupSlice = createSlice({
       state.currentFactionIndex = null;
       state.currentFaction = null;
     },
-    addToFactionPool: (state, action: PayloadAction<WithCode<Faction>>) => {
-      // Ensure that the passed-in faction isn't part of the exclude pool
-      if (state.excludedFactions.includes(action.payload.code)) {
-        console.warn(
-          `Invalid payload for addToFactionPool action: Payload field "code" cannot be contained within excludedFactions ${state.excludedFactions}`,
-          action
-        );
-      } else {
-        // Add to our pool, and set it to locked if insurgent
-        state.factionPool.push(action.payload);
-        state.lastFactionLocked = !action.payload.militant;
-      }
+    addToFactionPool: {
+      prepare: (
+        faction: WithCode<Faction>,
+        vagabondPool: WithCode<Vagabond>[]
+      ) => ({
+        payload: {
+          ...faction,
+          vagabond: faction.isVagabond ? takeRandom(vagabondPool) : undefined,
+        },
+      }),
+      reducer: (state, action: PayloadAction<FactionEntry>) => {
+        // Ensure that the passed-in faction isn't part of the exclude pool
+        if (state.excludedFactions.includes(action.payload.code)) {
+          console.warn(
+            `Invalid payload for addToFactionPool action: Payload field "code" cannot be contained within excludedFactions ${state.excludedFactions}`,
+            action
+          );
+        } else if (action.payload.isVagabond && !action.payload.vagabond) {
+          console.warn(
+            'Invalid payload for addToFactionPool action: Payload field "vagabond" cannot be omited if "isVagabond" is true',
+            action
+          );
+        } else {
+          // Add to our pool, and set it to locked if insurgent
+          state.factionPool.push(action.payload);
+          state.lastFactionLocked = !action.payload.militant;
+        }
+      },
     },
     setCurrentPlayerIndex: (state, action: PayloadAction<number>) => {
       if (action.payload >= 0 && action.payload < state.playerCount) {
@@ -330,7 +350,6 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
 
       // Are there any landmarks that can be set up?
-      const landmarks = selectLandmarkArray(getState());
       dispatch(
         skipSteps(
           [
@@ -338,13 +357,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             SetupStep.setUpLandmark1,
             SetupStep.setUpLandmark2,
           ],
-          landmarks.length === 0
+          selectLandmarkArray(getState()).length === 0
         )
       );
 
       // Are there any hirelings that can be set up?
-      const hirelings = selectHirelingArray(getState());
-      if (hirelings.length === 0) {
+      if (selectHirelingArray(getState()).length === 0) {
         // We must ensure all hireling setup is skipped
         dispatch(
           skipSteps(
@@ -392,6 +410,21 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
       break;
 
+    case SetupStep.chooseDeck:
+      // Get our list of decks which are avaliable for selection (copying the result so we don't alter the memoized list)
+      let deckPool = [...selectEnabledDecks(getState())];
+
+      // Check that there is even a deck to be selected...
+      if (deckPool.length > 0) {
+        // Choose a random deck
+        dispatch(setDeck(takeRandom(deckPool)));
+      } else {
+        // Invalid state, do not proceed
+        doIncrementStep = false;
+        validationError = "error.noDeck";
+      }
+      break;
+
     case SetupStep.seatPlayers:
       let firstPlayer: number;
 
@@ -422,19 +455,19 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
     case SetupStep.chooseLandmarks:
       // Get our list of landmarks which are avaliable for selection (copying the result so we don't alter the memoized list)
-      let LandmarkPool = [...selectEnabledLandmarks(getState())];
+      let landmarkPool = [...selectEnabledLandmarks(getState())];
 
       // Check that there are enough enabled landmarks for how many we want to set up
-      if (LandmarkPool.length >= setupParameters.landmarkCount) {
+      if (landmarkPool.length >= setupParameters.landmarkCount) {
         // Select the first landmark
         if (setupParameters.landmarkCount >= 1) {
           // Choose a random landmark
-          dispatch(setLandmark1(takeRandom(LandmarkPool)));
+          dispatch(setLandmark1(takeRandom(landmarkPool)));
 
           // Select the second landmark
           if (setupParameters.landmarkCount >= 2) {
             // Choose a random landmark
-            dispatch(setLandmark2(takeRandom(LandmarkPool)));
+            dispatch(setLandmark2(takeRandom(landmarkPool)));
             // Ensure we don't skip the setup steps
             dispatch(
               skipSteps(
@@ -461,7 +494,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         doIncrementStep = false;
 
         // Set the correct error message
-        if (LandmarkPool.length === 0) {
+        if (landmarkPool.length === 0) {
           validationError = "error.noLandmark";
         } else {
           validationError = "error.tooFewLandmark";
@@ -503,42 +536,37 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
       break;
 
-    case SetupStep.chooseDeck:
-      // Get our list of decks which are avaliable for selection (copying the result so we don't alter the memoized list)
-      let deckPool = [...selectEnabledDecks(getState())];
-
-      // Check that there is even a deck to be selected...
-      if (deckPool.length > 0) {
-        // Choose a random deck
-        dispatch(setDeck(takeRandom(deckPool)));
-      } else {
-        // Invalid state, do not proceed
-        doIncrementStep = false;
-        validationError = "error.noDeck";
-      }
-      break;
-
     case SetupStep.chooseFactions:
       // Clear the faction pool of any potential stale data from previous setups
       if (setupParameters.factionPool.length > 0) dispatch(clearFactionPool());
 
-      // Get our list of militant factions which are avaliable for selection (copying the result so we don't alter the memoized list)
+      // Get our list of militant factions and vagabonds which are avaliable for selection (copying the results so we don't alter the memoized lists)
       let workingFactionPool = [...selectMilitantFactions(getState())];
+      let vagabondPool = [...selectEnabledVagabonds(getState())];
+
+      // Get our list of insurgent factions to be added to the working faction pool during setup
       const insurgentFactions = selectInsurgentFactions(getState());
+      // Get our vagabond faction count to validate our vagabondPool against
+      const vagabondFactionCount = selectVagabondFactions(getState()).length;
 
       // Check that there are enough factions avaliable for setup
       if (
         workingFactionPool.length > 0 &&
+        vagabondPool.length >= vagabondFactionCount &&
         workingFactionPool.length + insurgentFactions.length >=
           setupParameters.playerCount + 1
       ) {
         // Start by adding a random militant faction
-        dispatch(addToFactionPool(takeRandom(workingFactionPool)));
+        dispatch(
+          addToFactionPool(takeRandom(workingFactionPool), vagabondPool)
+        );
         // Add the insurgent factions to the mix
         workingFactionPool = [...workingFactionPool, ...insurgentFactions];
         // Add enough factions to make the total pool playerCount + 1
         for (let i = 0; i < setupParameters.playerCount; i++) {
-          dispatch(addToFactionPool(takeRandom(workingFactionPool)));
+          dispatch(
+            addToFactionPool(takeRandom(workingFactionPool), vagabondPool)
+          );
         }
 
         // Begin the setup at the bottom of player order
@@ -550,6 +578,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         // Set the correct error message
         if (workingFactionPool.length === 0) {
           validationError = "error.noMilitantFaction";
+        } else if (vagabondPool.length < vagabondFactionCount) {
+          validationError = "error.tooFewVagabond";
         } else {
           validationError = "error.tooFewFaction";
         }

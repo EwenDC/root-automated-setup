@@ -12,7 +12,7 @@
         "name": "faction.marquise",
         "image": "",
         "militant": true,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 25,
         "buildings": 18,
         "tokens": 9
@@ -21,7 +21,7 @@
         "name": "faction.eyrie",
         "image": "",
         "militant": true,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 20,
         "buildings": 7,
         "tokens": 0
@@ -30,7 +30,7 @@
         "name": "faction.alliance",
         "image": "",
         "militant": false,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 10,
         "buildings": 3,
         "tokens": 10
@@ -39,7 +39,7 @@
         "name": "faction.vagabond",
         "image": "",
         "militant": false,
-        "vagabond": true,
+        "isVagabond": true,
         "warriors": 1,
         "buildings": 0,
         "tokens": 0
@@ -80,7 +80,7 @@
         "name": "faction.cult",
         "image": "",
         "militant": false,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 25,
         "buildings": 15,
         "tokens": 0
@@ -89,7 +89,7 @@
         "name": "faction.riverfolk",
         "image": "",
         "militant": false,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 15,
         "buildings": 0,
         "tokens": 9
@@ -98,7 +98,7 @@
         "name": "faction.vagabond",
         "image": "",
         "militant": false,
-        "vagabond": true,
+        "isVagabond": true,
         "warriors": 1,
         "buildings": 0,
         "tokens": 0
@@ -127,7 +127,7 @@
         "name": "faction.duchy",
         "image": "",
         "militant": true,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 20,
         "buildings": 6,
         "tokens": 3
@@ -136,7 +136,7 @@
         "name": "faction.corvid",
         "image": "",
         "militant": false,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 15,
         "buildings": 0,
         "tokens": 8
@@ -173,7 +173,7 @@
         "name": "faction.warlord",
         "image": "",
         "militant": true,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 21,
         "buildings": 6,
         "tokens": 5
@@ -182,7 +182,7 @@
         "name": "faction.keepers",
         "image": "",
         "militant": true,
-        "vagabond": false,
+        "isVagabond": false,
         "warriors": 15,
         "buildings": 3,
         "tokens": 12

@@ -24,21 +24,6 @@ export interface Expansion extends GameComponent {
   base: boolean;
 }
 
-/** An object representing a Faction from the Root board game */
-export interface Faction extends ExpansionComponent {
-  name: string;
-  militant: boolean;
-  vagabond: boolean;
-  warriors: number;
-  buildings: number;
-  tokens: number;
-}
-
-/** An object representing a Vagabond character from the Root board game */
-export interface Vagabond extends ExpansionComponent {
-  startingItems: string[];
-}
-
 /** An object representing a Map from the Root board game */
 export interface MapComponent extends ExpansionComponent {
   printedSuits: boolean;
@@ -63,6 +48,25 @@ export interface HirelingEntry extends WithCode<Hireling> {
   demoted: boolean;
 }
 
+/** An object representing a Faction from the Root board game */
+export interface Faction extends ExpansionComponent {
+  name: string;
+  militant: boolean;
+  isVagabond: boolean;
+  warriors: number;
+  buildings: number;
+  tokens: number;
+}
+
+/** An object representing a Vagabond character from the Root board game */
+export interface Vagabond extends ExpansionComponent {
+  startingItems: string[];
+}
+
+export type FactionEntry = WithCode<Faction> & {
+  vagabond?: Vagabond;
+};
+
 /** An object containing all variables used during the setup process */
 export interface SetupState {
   playerCount: number;
@@ -84,11 +88,11 @@ export interface SetupState {
   hireling3: HirelingEntry | null;
   // Factions
   excludedFactions: string[];
-  factionPool: WithCode<Faction>[];
+  factionPool: FactionEntry[];
   lastFactionLocked: boolean;
   currentPlayerIndex: number;
   currentFactionIndex: number | null;
-  currentFaction: WithCode<Faction> | null;
+  currentFaction: FactionEntry | null;
 }
 
 /** An enum of the individual steps in the setup process. The setup process will step through this list during execution */

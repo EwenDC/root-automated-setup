@@ -54,6 +54,12 @@ export const selectInsurgentFactions = createSelector(
   (array) => array.filter((value) => value.enabled && !value.militant)
 );
 
+/** Redux Selector for returning an array of enabled vagabond factions */
+export const selectVagabondFactions = createSelector(
+  selectFactionArray,
+  (array) => array.filter((value) => value.enabled && value.isVagabond)
+);
+
 export const factionSlice = createSlice({
   name: "faction",
   initialState: setupInitialState(addExpansionFactions),
