@@ -210,7 +210,7 @@
         "components": 1,
         "componentName": "component.uprisingDie"
       },
-      "outcast": {
+      "exile": {
         "image": "",
         "factions": ["vagabond", "vagabond2"],
         "warriors": 1,
@@ -273,21 +273,21 @@
     "image": "expansions/riverfolkHirelings.png",
     "hirelings": {
       "prophets": {
-        "image": "",
+        "image": "hirelings/prophets.png",
         "factions": ["cult"],
         "warriors": 4,
         "components": 0,
         "componentName": ""
       },
       "flotilla": {
-        "image": "",
+        "image": "hirelings/flotilla.png",
         "factions": ["riverfolk"],
         "warriors": 1,
         "components": 0,
         "componentName": ""
       },
       "bandits": {
-        "image": "",
+        "image": "hirelings/bandits.png",
         "factions": [],
         "warriors": 4,
         "components": 0,
@@ -300,21 +300,21 @@
     "image": "expansions/underworldHirelings.png",
     "hirelings": {
       "expedition": {
-        "image": "",
+        "image": "hirelings/expedition.png",
         "factions": ["duchy"],
         "warriors": 8,
         "components": 3,
         "componentName": "component.footholdToken"
       },
       "spies": {
-        "image": "",
+        "image": "hirelings/spies.png",
         "factions": ["corvid"],
         "warriors": 6,
         "components": 0,
         "componentName": ""
       },
       "protector": {
-        "image": "",
+        "image": "hirelings/protector.png",
         "factions": [],
         "warriors": 1,
         "components": 0,
@@ -327,21 +327,21 @@
     "image": "expansions/marauderHirelings.png",
     "hirelings": {
       "flamebearers": {
-        "image": "",
+        "image": "hirelings/flamebearers.png",
         "factions": ["warlord"],
         "warriors": 6,
         "components": 0,
         "componentName": ""
       },
       "vaultkeepers": {
-        "image": "",
+        "image": "hirelings/vaultkeepers.png",
         "factions": ["keepers"],
         "warriors": 6,
         "components": 6,
         "componentName": "component.vaultBuilding"
       },
       "band": {
-        "image": "",
+        "image": "hirelings/band.png",
         "factions": [],
         "warriors": 5,
         "components": 0,
