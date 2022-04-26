@@ -5,7 +5,6 @@ import {
   selectDeckArray,
   selectExpansionArray,
   selectFactionCodeArray,
-  selectFactionHirelingArray,
   selectHirelingArray,
   selectLandmarkArray,
   selectEnabledLandmarkMaps,
@@ -50,7 +49,6 @@ export const StepList: React.FC = () => {
   } = useAppSelector(selectSetupParameters);
   const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
   const factionCodes = useAppSelector(selectFactionCodeArray);
-  const factionHirelings = useAppSelector(selectFactionHirelingArray);
   const dispatch = useAppDispatch();
   const stepSkipped = useStepSkipped();
   const nthLastPlayer = useNthLastPlayer();
@@ -199,8 +197,8 @@ export const StepList: React.FC = () => {
             }
             getLabelKey={(hireling) => `hireling.${hireling.code}.name`}
             getLockedKey={(hireling) =>
-              // Are there no factions to spare for an equivilent hireling?
-              factionHirelings.length <= playerCount + 1 &&
+              // Are we at the max player count (i.e. there are no factions to spare for an equivilent hireling)?
+              playerCount >= factionCodes.length - 1 &&
               // Is this hireling one of the faction equivilents?
               hireling.factions.some((faction) =>
                 factionCodes.includes(faction)

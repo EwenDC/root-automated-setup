@@ -7,6 +7,7 @@ import {
   selectEnabledMilitantFactions,
   selectEnabledVagabondFactions,
   toggleFaction,
+  selectFactionArray,
 } from "./factionSlice";
 import {
   selectEnabledFactionHirelings,
@@ -461,8 +462,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       dispatch(
         massComponentToggle(
           selectFactionHirelingArray,
-          selectFactionHirelingArray(getState()).length >
-            setupParameters.playerCount + 1,
+          setupParameters.playerCount <
+            selectFactionCodeArray(getState()).length - 1,
           toggleHireling
         )
       );
@@ -528,13 +529,20 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         let hirelingPool = [...selectEnabledIndependentHirelings(getState())];
         let factionHirelings = [...selectEnabledFactionHirelings(getState())];
 
-        // Calculate how many factions we can spare for hirelings (i.e. total faction hirelings minus setup faction count)
-        const factionHirelingCount =
-          factionHirelings.length - (setupParameters.playerCount + 1);
+        // Calculate how many factions we can spare for hirelings (i.e. total factions minus setup faction count)
+        const spareFactionCount =
+          selectFactionCodeArray(getState()).length -
+          (setupParameters.playerCount + 1);
 
-        // Add a random sample of faction hirelings to our pool. This ensures that the random hireling draw will never exclude too many factions for setup
-        for (let count = 1; count <= factionHirelingCount; count++)
-          hirelingPool.push(takeRandom(factionHirelings));
+        // If we can only spare less than 3 factions then limit the amount of faction hirelings
+        if (spareFactionCount < 3) {
+          // Add a random sample of faction hirelings to our pool. This ensures that the random hireling draw will never exclude too many factions for setup
+          for (let count = 1; count <= spareFactionCount; count++)
+            hirelingPool.push(takeRandom(factionHirelings));
+        } else {
+          // There are enough spare factions that we can throw all faction hirelings into the mix
+          hirelingPool = hirelingPool.concat(factionHirelings);
+        }
 
         // Check that there are enough hirelings selected
         if (hirelingPool.length >= 3) {
@@ -549,9 +557,16 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             );
           }
           // Disable the factions that are mutually exclusive with the selected hirelings
-          selectSetupParameters(getState()).excludedFactions.forEach((code) => {
-            dispatch(toggleFaction(code, false));
-          });
+          const excludedFactions = selectSetupParameters(
+            getState()
+          ).excludedFactions;
+          dispatch(
+            massComponentToggle(
+              selectFactionArray,
+              (faction) => !excludedFactions.includes(faction.code),
+              toggleFaction
+            )
+          );
         } else {
           // Invalid state, do not proceed
           doIncrementStep = false;
@@ -587,7 +602,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           addToFactionPool(takeRandom(workingFactionPool), vagabondPool)
         );
         // Add the insurgent factions to the mix
-        workingFactionPool = [...workingFactionPool, ...insurgentFactions];
+        workingFactionPool = workingFactionPool.concat(insurgentFactions);
         // Add enough factions to make the total pool playerCount + 1
         for (let i = 0; i < setupParameters.playerCount; i++) {
           dispatch(

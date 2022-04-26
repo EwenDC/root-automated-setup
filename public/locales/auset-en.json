@@ -10,18 +10,18 @@
     "standard": "Standard"
   },
   "error": {
-    "baseExpansionRequired": "A base copy of Root is required for setup",
-    "factionHirelingExcluded": "The Faction associated with this Hireling is required for setup",
+    "baseExpansionRequired": "A base copy of Root is required for set up",
+    "factionHirelingExcluded": "The Faction associated with this Hireling is required for set up",
     "landmarkNotEnoughPlayers": "Not enough players to play with this landmark",
     "lockedFaction": "Cannot select last faction until a Militant faction has been selected.",
-    "mapLandmarkUsed": "Landmark already included in map setup",
+    "mapLandmarkUsed": "Landmark already included in map set up",
     "noDeck": "No Decks selected! Please select at least one Deck.",
     "noFaction": "No Faction selected! Please select a faction to play.",
     "noLandmark": "No Landmarks selected! Please select at least one Landmark, or set the Landmark count to zero.",
     "noMap": "No Maps selected! Please select at least one Map.",
     "noMilitantFaction": "No Militant Factions selected! Please select at least one Militant Faction.",
     "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count.",
-    "tooFewHireling": "Not enough Hirelings selected! This could be because the current Hireling selection would remove too many factions from the draft. Please select more Hirelings, lower the player count, or exclude the Hirelings from setup.",
+    "tooFewHireling": "Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection would remove too many factions from the draft. Please select more Hirelings, lower the player count, or exclude the Hirelings from set up.",
     "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
     "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions."
   },
@@ -180,7 +180,7 @@
       "false": "Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>",
       "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
     },
-    "includeBotStep": "Include setup step for bots",
+    "includeBotStep": "Include set up step for bots",
     "includeHirelings": "Include Hirelings",
     "landmarkCount": "Landmark Count",
     "logoAlt": "ROOT",
@@ -190,7 +190,7 @@
     "playerCount": "Player Count",
     "redo": "Redo",
     "undo": "Undo",
-    "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default setup with the map-specific version)</i>"
+    "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default set up with the map-specific version)</i>"
   },
   "landmark": {
     "city": {
@@ -240,7 +240,7 @@
   },
   "setupStep": {
     "chooseExpansions": {
-      "body": "Welcome to the Root Automated Setup. This page will guide you through the Advanced Setup rules for the popular board game Root, with minimal shuffling and no setup cards required! To get started, select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the page to do so."
+      "body": "Welcome to the Root Automated Setup. This page will guide you through the advanced set up rules for the popular board game Root, with minimal shuffling and no set up cards required! To get started, select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the page to do so."
     },
     "chooseMap": {
       "title": "Choose and Set up Map",
@@ -263,7 +263,7 @@
     },
     "setUpBots": {
       "title": "Set up Bots",
-      "body": "As a group, decide which bots you would like to play with, following their setup instructions as described in the Law of Rootbotics."
+      "body": "As a group, decide which bots you would like to play with, following their set up instructions as described in the Law of Rootbotics."
     },
     "seatPlayers": {
       "title": "Seat Players",
