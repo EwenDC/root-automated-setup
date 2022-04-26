@@ -530,15 +530,29 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         let factionHirelings = [...selectEnabledFactionHirelings(getState())];
 
         // Calculate how many factions we can spare for hirelings (i.e. total factions minus setup faction count)
-        const spareFactionCount =
-          selectFactionCodeArray(getState()).length -
-          (setupParameters.playerCount + 1);
+        const factionCodes = selectFactionCodeArray(getState());
+        let spareFactionCount =
+          factionCodes.length - (setupParameters.playerCount + 1);
 
-        // If we can only spare less than 3 factions then limit the amount of faction hirelings
-        if (spareFactionCount < 3) {
-          // Add a random sample of faction hirelings to our pool. This ensures that the random hireling draw will never exclude too many factions for setup
-          for (let count = 1; count <= spareFactionCount; count++)
-            hirelingPool.push(takeRandom(factionHirelings));
+        // If we can only spare 3 or less factions then limit the amount of faction hirelings
+        if (spareFactionCount <= 3) {
+          // Add a random sample of faction hirelings to our pool, ensuring that the random hireling draw will never exclude too many factions for setup
+          while (spareFactionCount > 0 && factionHirelings.length > 0) {
+            // Grab a random faction hireling
+            let hireling = takeRandom(factionHirelings);
+            // Calculate how many factions we will exclude by including it (based on what factions are actually in play)
+            let excludeCount =
+              hireling.factions.length > 1
+                ? hireling.factions.filter((factionCode) =>
+                    factionCodes.includes(factionCode)
+                  ).length
+                : 1;
+            // Ensure that we don't exclude too many factions by addding this hireling (The Exile can cause this edge case)
+            if (spareFactionCount - excludeCount >= 0) {
+              hirelingPool.push(hireling);
+              spareFactionCount -= excludeCount;
+            }
+          }
         } else {
           // There are enough spare factions that we can throw all faction hirelings into the mix
           hirelingPool = hirelingPool.concat(factionHirelings);

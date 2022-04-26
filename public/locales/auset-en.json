@@ -21,7 +21,7 @@
     "noMap": "No Maps selected! Please select at least one Map.",
     "noMilitantFaction": "No Militant Factions selected! Please select at least one Militant Faction.",
     "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count.",
-    "tooFewHireling": "Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection would remove too many factions from the draft. Please select more Hirelings, lower the player count, or exclude the Hirelings from set up.",
+    "tooFewHireling": "Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection requires removing too many factions from the draft. Please adjust the selected Hirelings, lower the player count, or skip the Hireling set up.",
     "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
     "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions."
   },
