@@ -2,20 +2,26 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../components/store";
 import { selectDeckArray, selectEnabledDecks } from "./deckSlice";
 import {
-  selectFactionArray,
-  selectInsurgentFactions,
-  selectMilitantFactions,
-  selectVagabondFactions,
+  selectFactionCodeArray,
+  selectEnabledInsurgentFactions,
+  selectEnabledMilitantFactions,
+  selectEnabledVagabondFactions,
   toggleFaction,
 } from "./factionSlice";
-import { selectEnabledHirelings, selectHirelingArray } from "./hirelingSlice";
+import {
+  selectEnabledFactionHirelings,
+  selectHirelingArray,
+  selectEnabledIndependentHirelings,
+  toggleHireling,
+  selectFactionHirelingArray,
+} from "./hirelingSlice";
 import {
   selectEnabledLandmarks,
   selectLandmarkArray,
   toggleLandmark,
 } from "./landmarkSlice";
 import { selectEnabledMaps } from "./mapSlice";
-import { takeRandom } from "./reduxUtils";
+import { massComponentToggle, takeRandom } from "./reduxUtils";
 import {
   ExpansionComponent,
   Faction,
@@ -343,7 +349,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       ) {
         dispatch(setPlayerCount(2));
       } else {
-        const maxPlayerCount = selectFactionArray(getState()).length - 1;
+        const maxPlayerCount = selectFactionCodeArray(getState()).length - 1;
         if (setupParameters.playerCount > maxPlayerCount) {
           dispatch(setPlayerCount(maxPlayerCount));
         }
@@ -440,17 +446,26 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       dispatch(setFirstPlayer(firstPlayer));
 
       // Ensure that any landmarks not supported at this player count or used by map setup are disabled
-      selectLandmarkArray(getState()).forEach((landmark) => {
-        // Calculate what the enable state of the landmark should be
-        const shouldEnable =
-          landmark.minPlayers <= setupParameters.playerCount &&
-          (!setupParameters.useMapLandmark ||
-            setupParameters.map?.landmark !== landmark.code);
-        // If the desired state does not match the actual state, fix it
-        if (landmark.enabled !== shouldEnable) {
-          dispatch(toggleLandmark(landmark.code, shouldEnable));
-        }
-      });
+      dispatch(
+        massComponentToggle(
+          selectLandmarkArray,
+          (landmark) =>
+            landmark.minPlayers <= setupParameters.playerCount &&
+            (!setupParameters.useMapLandmark ||
+              setupParameters.map?.landmark !== landmark.code),
+          toggleLandmark
+        )
+      );
+
+      // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
+      dispatch(
+        massComponentToggle(
+          selectFactionHirelingArray,
+          selectFactionHirelingArray(getState()).length >
+            setupParameters.playerCount + 1,
+          toggleHireling
+        )
+      );
       break;
 
     case SetupStep.chooseLandmarks:
@@ -509,8 +524,17 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Did we skip the hireling setup?
       if (!flowState.skippedSteps[SetupStep.setUpHireling1]) {
-        // Get our list of hirelings which are avaliable for selection (copying the result so we don't alter the memoized list)
-        let hirelingPool = [...selectEnabledHirelings(getState())];
+        // Get our lists of independent & faction hirelings which are avaliable for selection (copying the results so we don't alter the memoized lists)
+        let hirelingPool = [...selectEnabledIndependentHirelings(getState())];
+        let factionHirelings = [...selectEnabledFactionHirelings(getState())];
+
+        // Calculate how many factions we can spare for hirelings (i.e. total faction hirelings minus setup faction count)
+        const factionHirelingCount =
+          factionHirelings.length - (setupParameters.playerCount + 1);
+
+        // Add a random sample of faction hirelings to our pool. This ensures that the random hireling draw will never exclude too many factions for setup
+        for (let count = 1; count <= factionHirelingCount; count++)
+          hirelingPool.push(takeRandom(factionHirelings));
 
         // Check that there are enough hirelings selected
         if (hirelingPool.length >= 3) {
@@ -541,13 +565,15 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (setupParameters.factionPool.length > 0) dispatch(clearFactionPool());
 
       // Get our list of militant factions and vagabonds which are avaliable for selection (copying the results so we don't alter the memoized lists)
-      let workingFactionPool = [...selectMilitantFactions(getState())];
+      let workingFactionPool = [...selectEnabledMilitantFactions(getState())];
       let vagabondPool = [...selectEnabledVagabonds(getState())];
 
       // Get our list of insurgent factions to be added to the working faction pool during setup
-      const insurgentFactions = selectInsurgentFactions(getState());
+      const insurgentFactions = selectEnabledInsurgentFactions(getState());
       // Get our vagabond faction count to validate our vagabondPool against
-      const vagabondFactionCount = selectVagabondFactions(getState()).length;
+      const vagabondFactionCount = selectEnabledVagabondFactions(
+        getState()
+      ).length;
 
       // Check that there are enough factions avaliable for setup
       if (

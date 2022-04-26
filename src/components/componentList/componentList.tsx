@@ -12,15 +12,13 @@ interface ComponentListProps<T extends WithCode<GameComponent>> {
   selector: (state: RootState) => T[];
   toggleComponent: (component: T, index: number, array: T[]) => void;
   getLabelKey: (component: T, index: number, array: T[]) => string;
-  isLocked?: (component: T, index: number, array: T[]) => boolean;
-  getLockedKey?: (component: T, index: number, array: T[]) => string;
+  getLockedKey?: (component: T, index: number, array: T[]) => string | null;
 }
 
 export const ComponentList = <T extends WithCode<GameComponent>>({
   selector,
   toggleComponent,
   getLabelKey,
-  isLocked,
   getLockedKey,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
@@ -35,9 +33,10 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
     >
       {components.map((component, index, array) => {
         if (component.enabled || stepActive) {
-          const componentLocked = isLocked
-            ? isLocked(component, index, array)
-            : false;
+          const componentLockedMessage = getLockedKey
+            ? getLockedKey(component, index, array)
+            : null;
+          const componentLocked = componentLockedMessage != null;
           return (
             <button
               key={component.code}
@@ -48,9 +47,7 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
               onClick={() => toggleComponent(component, index, array)}
               disabled={!stepActive || componentLocked}
               title={
-                componentLocked && getLockedKey
-                  ? t(getLockedKey(component, index, array))
-                  : undefined
+                componentLockedMessage ? t(componentLockedMessage) : undefined
               }
               role="switch"
               aria-checked={component.enabled}

@@ -22,7 +22,7 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
         [styles.inactive]: !stepActive,
       })}
     >
-      {stepActive || !defaultValue ? (
+      {!defaultValue || stepActive ? (
         <div className={styles.option}>
           <input
             name={id}
@@ -38,7 +38,7 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
           </label>
         </div>
       ) : null}
-      {stepActive || (defaultValue ?? false) ? (
+      {defaultValue || stepActive ? (
         <div className={styles.option}>
           <input
             name={id}

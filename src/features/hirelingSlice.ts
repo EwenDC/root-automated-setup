@@ -8,6 +8,7 @@ import {
 import { RootState } from "../components/store";
 import { ComponentState, Hireling } from "../types";
 import { expansionReducers } from "./expansionSlice";
+import { selectFactionCodeArray } from "./factionSlice";
 
 const addExpansionHirelings = (
   state: ComponentState<Hireling>,
@@ -46,10 +47,38 @@ export const selectHirelingArray = selectComponentArray(
   (state) => state.hireling
 );
 
-/** Redux Selector for returning an array of enabled hirelings */
-export const selectEnabledHirelings = createSelector(
+/** Redux Selector for returning an array of all hirelings that replace an included faction */
+export const selectFactionHirelingArray = createSelector(
   selectHirelingArray,
+  selectFactionCodeArray,
+  (hirelings, factionCodes) =>
+    hirelings.filter((hireling) =>
+      // Only include a hireling if at least one of it's faction codes matches an enabled faction
+      hireling.factions.some((factionCode) =>
+        factionCodes.includes(factionCode)
+      )
+    )
+);
+
+/** Redux Selector for returning an array of enabled hirelings that replace an included faction */
+export const selectEnabledFactionHirelings = createSelector(
+  selectFactionHirelingArray,
   (array) => array.filter((value) => value.enabled)
+);
+
+/** Redux Selector for returning an array of enabled hirelings that do not replace an included faction */
+export const selectEnabledIndependentHirelings = createSelector(
+  selectHirelingArray,
+  selectFactionCodeArray,
+  (hirelings, factionCodes) =>
+    hirelings.filter(
+      (hireling) =>
+        hireling.enabled &&
+        // Only include a hireling if none of it's faction codes matches an enabled faction
+        hireling.factions.every(
+          (factionCode) => !factionCodes.includes(factionCode)
+        )
+    )
 );
 
 export const hirelingSlice = createSlice({

@@ -4,10 +4,11 @@ import {
   fixFirstPlayer,
   selectDeckArray,
   selectExpansionArray,
-  selectFactionArray,
+  selectFactionCodeArray,
+  selectFactionHirelingArray,
   selectHirelingArray,
   selectLandmarkArray,
-  selectLandmarkMaps,
+  selectEnabledLandmarkMaps,
   selectMapArray,
   selectSetupParameters,
   setLandmarkCount,
@@ -47,8 +48,9 @@ export const StepList: React.FC = () => {
     hireling2,
     hireling3,
   } = useAppSelector(selectSetupParameters);
-  const landmarkMaps = useAppSelector(selectLandmarkMaps);
-  const factions = useAppSelector(selectFactionArray);
+  const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
+  const factionCodes = useAppSelector(selectFactionCodeArray);
+  const factionHirelings = useAppSelector(selectFactionHirelingArray);
   const dispatch = useAppDispatch();
   const stepSkipped = useStepSkipped();
   const nthLastPlayer = useNthLastPlayer();
@@ -63,7 +65,9 @@ export const StepList: React.FC = () => {
             dispatch(toggleExpansion(expansion.code))
           }
           getLabelKey={(expansion) => `expansion.${expansion.code}`}
-          isLocked={(expansion) => expansion.base}
+          getLockedKey={(expansion) =>
+            expansion.base ? "error.baseExpansionRequired" : null
+          }
         />
         <Checkbox
           id="includeBotStep"
@@ -119,7 +123,7 @@ export const StepList: React.FC = () => {
           id="playerCount"
           value={playerCount}
           minVal={stepSkipped(SetupStep.setUpBots) ? 2 : 1}
-          maxVal={factions.length - 1}
+          maxVal={factionCodes.length - 1}
           onChange={(value) => dispatch(setPlayerCount(value))}
         />
         <Radiogroup
@@ -143,14 +147,12 @@ export const StepList: React.FC = () => {
               dispatch(toggleLandmark(landmark.code))
             }
             getLabelKey={(landmark) => `landmark.${landmark.code}.name`}
-            isLocked={(landmark) =>
-              landmark.minPlayers > playerCount ||
-              (useMapLandmark && landmark.code === map?.landmark)
-            }
             getLockedKey={(landmark) =>
               landmark.minPlayers > playerCount
                 ? "error.landmarkNotEnoughPlayers"
-                : "error.mapLandmarkUsed"
+                : useMapLandmark && landmark.code === map?.landmark
+                ? "error.mapLandmarkUsed"
+                : null
             }
           />
         ) : null}
@@ -196,6 +198,16 @@ export const StepList: React.FC = () => {
               dispatch(toggleHireling(hireling.code))
             }
             getLabelKey={(hireling) => `hireling.${hireling.code}.name`}
+            getLockedKey={(hireling) =>
+              // Are there no factions to spare for an equivilent hireling?
+              factionHirelings.length <= playerCount + 1 &&
+              // Is this hireling one of the faction equivilents?
+              hireling.factions.some((faction) =>
+                factionCodes.includes(faction)
+              )
+                ? "error.factionHirelingExcluded"
+                : null
+            }
           />
         ) : null}
       </Step>

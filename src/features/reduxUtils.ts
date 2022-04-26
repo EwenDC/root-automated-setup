@@ -1,7 +1,7 @@
 import { createSelector, PayloadAction } from "@reduxjs/toolkit";
 import content from "../components/content.json";
-import { RootState } from "../components/store";
-import { GameComponent, ComponentState } from "../types";
+import { AppThunk, RootState } from "../components/store";
+import { GameComponent, ComponentState, WithCode } from "../types";
 
 export const isTrue = "1";
 export const isFalse = "0";
@@ -128,6 +128,36 @@ export const toggleComponent = {
     }
   },
 };
+
+/** Thunk action for mass updating the enable/disable state of multiple components, dispatching the minimum amount of actions to do so */
+export const massComponentToggle =
+  <T extends GameComponent>(
+    selectComponentArray: (state: RootState) => WithCode<T>[],
+    componentEnable:
+      | boolean
+      | ((
+          component: WithCode<T>,
+          index: number,
+          array: WithCode<T>[]
+        ) => boolean),
+    toggleComponent: (
+      code: string,
+      enabled?: boolean
+    ) => PayloadAction<{ code: string; enabled?: boolean }>
+  ): AppThunk =>
+  (dispatch, getState) => {
+    selectComponentArray(getState()).forEach((component, index, array) => {
+      // Calculate what the enable state of the component should be
+      const shouldEnable =
+        typeof componentEnable === "function"
+          ? componentEnable(component, index, array)
+          : componentEnable;
+      // If the desired state does not match the actual state, fix it
+      if (component.enabled !== shouldEnable) {
+        dispatch(toggleComponent(component.code, shouldEnable));
+      }
+    });
+  };
 
 /**
  * Returns a random element from a given list, while also removing it

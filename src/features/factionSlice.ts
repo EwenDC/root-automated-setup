@@ -42,20 +42,26 @@ export const selectFactionArray = selectComponentArray(
   (state) => state.faction
 );
 
+/** Redux Selector for returning an array of included faction codes */
+export const selectFactionCodeArray = createSelector(
+  (state: RootState) => state.faction,
+  (factions) => Object.keys(factions)
+);
+
 /** Redux Selector for returning an array of enabled militant factions */
-export const selectMilitantFactions = createSelector(
+export const selectEnabledMilitantFactions = createSelector(
   selectFactionArray,
   (array) => array.filter((value) => value.enabled && value.militant)
 );
 
 /** Redux Selector for returning an array of enabled non-militant factions */
-export const selectInsurgentFactions = createSelector(
+export const selectEnabledInsurgentFactions = createSelector(
   selectFactionArray,
   (array) => array.filter((value) => value.enabled && !value.militant)
 );
 
 /** Redux Selector for returning an array of enabled vagabond factions */
-export const selectVagabondFactions = createSelector(
+export const selectEnabledVagabondFactions = createSelector(
   selectFactionArray,
   (array) => array.filter((value) => value.enabled && value.isVagabond)
 );

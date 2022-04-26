@@ -16,7 +16,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   onChange,
 }) => {
   const { stepActive } = useContext(StepContext);
-  return stepActive || defaultValue ? (
+  return defaultValue || stepActive ? (
     <div
       className={classNames(styles.container, {
         [styles.inactive]: !stepActive,

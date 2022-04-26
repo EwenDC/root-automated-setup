@@ -46,8 +46,9 @@ export const selectEnabledMaps = createSelector(selectMapArray, (array) =>
 );
 
 /** Redux Selector for returning an array of enabled maps which have a landmark */
-export const selectLandmarkMaps = createSelector(selectEnabledMaps, (array) =>
-  array.filter((value) => value.landmark != null)
+export const selectEnabledLandmarkMaps = createSelector(
+  selectEnabledMaps,
+  (array) => array.filter((value) => value.landmark != null)
 );
 
 export const mapSlice = createSlice({

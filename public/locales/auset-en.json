@@ -10,6 +10,8 @@
     "standard": "Standard"
   },
   "error": {
+    "baseExpansionRequired": "A base copy of Root is required for setup",
+    "factionHirelingExcluded": "The Faction associated with this Hireling is required for setup",
     "landmarkNotEnoughPlayers": "Not enough players to play with this landmark",
     "lockedFaction": "Cannot select last faction until a Militant faction has been selected.",
     "mapLandmarkUsed": "Landmark already included in map setup",
@@ -19,10 +21,9 @@
     "noMap": "No Maps selected! Please select at least one Map.",
     "noMilitantFaction": "No Militant Factions selected! Please select at least one Militant Faction.",
     "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count.",
-    "tooFewHireling": "Not enough Hirelings selected! Please select at least three Hirelings, or skip the Hireling setup.",
+    "tooFewHireling": "Not enough Hirelings selected! This could be because the current Hireling selection would remove too many factions from the draft. Please select more Hirelings, lower the player count, or exclude the Hirelings from setup.",
     "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
-    "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions.",
-    "tooManyPlayer": "Too many players selected! Please lower the player count or include more expansions with additional factions."
+    "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions."
   },
   "expansion": {
     "exilesDeck": "Exiles and Partisans Deck",
