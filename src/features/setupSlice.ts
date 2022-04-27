@@ -25,21 +25,20 @@ import { selectEnabledMaps } from "./mapSlice";
 import { massComponentToggle, takeRandom } from "./reduxUtils";
 import {
   ExpansionComponent,
-  Faction,
-  FactionEntry,
   Hireling,
   HirelingEntry,
   Landmark,
   MapComponent,
   SetupState,
   SetupStep,
-  Vagabond,
   WithCode,
 } from "../types";
 import {
+  addToFactionPool,
+  clearFactionPool,
   incrementStep,
   selectFlowState,
-  setStep,
+  setCurrentPlayerIndex,
   skipSteps,
 } from "./flowSlice";
 import { selectEnabledVagabonds } from "./vagabondSlice";
@@ -64,11 +63,6 @@ const initialState: SetupState = {
   hireling3: null,
   // Factions
   excludedFactions: [],
-  factionPool: [],
-  lastFactionLocked: false,
-  currentPlayerIndex: 0,
-  currentFactionIndex: null,
-  currentFaction: null,
 };
 
 /** Returns the setup parameters from redux state */
@@ -215,87 +209,6 @@ export const setupSlice = createSlice({
     clearExcludedFactions: (state) => {
       state.excludedFactions = [];
     },
-    clearFactionPool: (state) => {
-      state.factionPool = [];
-      state.lastFactionLocked = false;
-      state.currentFactionIndex = null;
-      state.currentFaction = null;
-    },
-    addToFactionPool: {
-      prepare: (
-        faction: WithCode<Faction>,
-        vagabondPool: WithCode<Vagabond>[]
-      ) => ({
-        payload: {
-          ...faction,
-          vagabond: faction.isVagabond ? takeRandom(vagabondPool) : undefined,
-        },
-      }),
-      reducer: (state, action: PayloadAction<FactionEntry>) => {
-        // Ensure that the passed-in faction isn't part of the exclude pool
-        if (state.excludedFactions.includes(action.payload.code)) {
-          console.warn(
-            `Invalid payload for addToFactionPool action: Payload field "code" cannot be contained within excludedFactions ${state.excludedFactions}`,
-            action
-          );
-        } else if (action.payload.isVagabond && !action.payload.vagabond) {
-          console.warn(
-            'Invalid payload for addToFactionPool action: Payload field "vagabond" cannot be omited if "isVagabond" is true',
-            action
-          );
-        } else {
-          // Add to our pool, and set it to locked if insurgent
-          state.factionPool.push(action.payload);
-          state.lastFactionLocked = !action.payload.militant;
-        }
-      },
-    },
-    setCurrentPlayerIndex: (state, action: PayloadAction<number>) => {
-      if (action.payload >= 0 && action.payload < state.playerCount) {
-        state.currentPlayerIndex = action.payload;
-      } else {
-        console.warn(
-          `Invalid payload for setCurrentPlayerIndex action: Payload must be a number larger than or equal to 0 but smaller than the player count (${state.playerCount})`,
-          action
-        );
-      }
-    },
-    setCurrentFactionIndex: (state, action: PayloadAction<number>) => {
-      if (action.payload >= 0 && action.payload < state.factionPool.length) {
-        state.currentFactionIndex = action.payload;
-      } else {
-        console.warn(
-          `Invalid payload for setCurrentFactionIndex action: Payload must be a number larger than or equal to 0 but smaller than the faction pool length (${state.factionPool.length})`,
-          action
-        );
-      }
-    },
-    applyCurrentFactionIndex: (state, action: PayloadAction) => {
-      // Select the faction if it's in our pool and not locked
-      if (state.currentFactionIndex == null) {
-        console.warn(
-          "Invalid applyCurrentFactionIndex action: currentFactionIndex is null",
-          action
-        );
-      } else if (
-        state.currentFactionIndex === state.factionPool.length - 1 &&
-        state.lastFactionLocked
-      ) {
-        console.warn(
-          `Invalid applyCurrentFactionIndex action: Cannot apply index ${state.currentFactionIndex} when lastFactionLocked is true`,
-          action
-        );
-      } else {
-        // Save the faction at currentFactionIndex
-        state.currentFaction = state.factionPool[state.currentFactionIndex];
-        // Clear the lock if we're selecting a militant faction
-        if (state.currentFaction.militant) state.lastFactionLocked = false;
-        // Delete 1 element starting at chosen index
-        state.factionPool.splice(state.currentFactionIndex, 1);
-        // Reset the index
-        state.currentFactionIndex = null;
-      }
-    },
   },
 });
 
@@ -312,11 +225,6 @@ export const {
   setLandmark2,
   setHireling,
   clearExcludedFactions,
-  clearFactionPool,
-  addToFactionPool,
-  setCurrentPlayerIndex,
-  setCurrentFactionIndex,
-  applyCurrentFactionIndex,
 } = setupSlice.actions;
 export default setupSlice.reducer;
 
@@ -346,7 +254,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Correct our current playercount if it is too low or high (this can occur with undo/redo)
       if (
         setupParameters.playerCount < 2 &&
-        (flowState.skippedSteps[SetupStep.setUpBots] ?? false)
+        flowState.skippedSteps[SetupStep.setUpBots]
       ) {
         dispatch(setPlayerCount(2));
       } else {
@@ -603,7 +511,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
     case SetupStep.chooseFactions:
       // Clear the faction pool of any potential stale data from previous setups
-      if (setupParameters.factionPool.length > 0) dispatch(clearFactionPool());
+      if (flowState.factionPool.length > 0) dispatch(clearFactionPool());
 
       // Get our list of militant factions and vagabonds which are avaliable for selection (copying the results so we don't alter the memoized lists)
       let workingFactionPool = [...selectEnabledMilitantFactions(getState())];
@@ -656,33 +564,18 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     case SetupStep.selectFaction:
       // Ensure the user has actually selected a faction and that it isn't the locked final insurgent faction
       if (
-        setupParameters.currentFactionIndex != null &&
-        (setupParameters.currentFactionIndex <
-          setupParameters.factionPool.length - 1 ||
-          !setupParameters.lastFactionLocked)
+        flowState.currentFactionIndex == null ||
+        (flowState.currentFactionIndex === flowState.factionPool.length - 1 &&
+          flowState.lastFactionLocked)
       ) {
-        dispatch(applyCurrentFactionIndex());
-      } else {
         doIncrementStep = false;
 
-        if (setupParameters.currentFactionIndex == null) {
+        if (flowState.currentFactionIndex == null) {
           validationError = "error.noFaction";
         } else {
           validationError = "error.lockedFaction";
         }
       }
-      break;
-
-    case SetupStep.setUpFaction:
-      // Now that we're done for setting up this player, move on to the next one
-      const nextPlayer = setupParameters.currentPlayerIndex - 1;
-      // Jump back to the selectFaction step if we haven't run out of players
-      if (nextPlayer >= 0) {
-        doIncrementStep = false;
-        dispatch(setCurrentPlayerIndex(nextPlayer));
-        dispatch(setStep(SetupStep.selectFaction));
-      }
-      // If we have run out of players, automatically proceed to next step
       break;
 
     case SetupStep.setupEnd:

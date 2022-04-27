@@ -23,16 +23,12 @@ import {
   selectEnabledVagabondFactions,
   selectVagabondArray,
   toggleVagabond,
+  selectFlowState,
 } from "../../features";
 import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
 import ComponentToggle from "../componentToggle";
-import {
-  useAppDispatch,
-  useAppSelector,
-  useNthLastPlayer,
-  useStepSkipped,
-} from "../hooks";
+import { useAppDispatch, useAppSelector, useNthLastPlayer } from "../hooks";
 import NumberSelector from "../numberSelector";
 import Radiogroup from "../radiogroup";
 import Step from "../step";
@@ -53,11 +49,11 @@ export const StepList: React.FC = () => {
     hireling3,
     excludedFactions,
   } = useAppSelector(selectSetupParameters);
+  const { skippedSteps } = useAppSelector(selectFlowState);
   const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
   const factionCodes = useAppSelector(selectFactionCodeArray);
   const vagabondFactions = useAppSelector(selectEnabledVagabondFactions);
   const dispatch = useAppDispatch();
-  const stepSkipped = useStepSkipped();
   const nthLastPlayer = useNthLastPlayer();
   const { t } = useTranslation();
 
@@ -76,7 +72,7 @@ export const StepList: React.FC = () => {
         />
         <Checkbox
           id="includeBotStep"
-          defaultValue={!stepSkipped(SetupStep.setUpBots)}
+          defaultValue={!skippedSteps[SetupStep.setUpBots]}
           onChange={(checked) =>
             dispatch(skipSteps(SetupStep.setUpBots, !checked))
           }
@@ -117,8 +113,8 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpDeck}
-        renderTitle={stepSkipped(SetupStep.chooseDeck)}
-        renderSubtitle={!stepSkipped(SetupStep.chooseDeck)}
+        renderTitle={skippedSteps[SetupStep.chooseDeck]}
+        renderSubtitle={!skippedSteps[SetupStep.chooseDeck]}
         subtitleOptions={{ deck: deck && t(`deck.${deck.code}`) }}
         textOptions={{ deck: deck && t(`deck.${deck.code}`) }}
       />
@@ -127,7 +123,7 @@ export const StepList: React.FC = () => {
         <NumberSelector
           id="playerCount"
           value={playerCount}
-          minVal={stepSkipped(SetupStep.setUpBots) ? 2 : 1}
+          minVal={skippedSteps[SetupStep.setUpBots] ? 2 : 1}
           maxVal={factionCodes.length - 1}
           onChange={(value) => dispatch(setPlayerCount(value))}
         />
@@ -181,7 +177,7 @@ export const StepList: React.FC = () => {
       <Step step={SetupStep.chooseHirelings}>
         <Checkbox
           id="includeHirelings"
-          defaultValue={!stepSkipped(SetupStep.setUpHireling1)}
+          defaultValue={!skippedSteps[SetupStep.setUpHireling1]}
           onChange={(checked) =>
             dispatch(
               skipSteps(
@@ -196,7 +192,7 @@ export const StepList: React.FC = () => {
             )
           }
         />
-        {!stepSkipped(SetupStep.setUpHireling1) ? (
+        {!skippedSteps[SetupStep.setUpHireling1] ? (
           <ComponentToggle
             selector={selectHirelingArray}
             toggleComponent={(hireling) =>

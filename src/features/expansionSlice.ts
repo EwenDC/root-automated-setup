@@ -23,15 +23,6 @@ for (const [expansionCode, expansion] of Object.entries(content)) {
   };
 }
 
-/** Redux Selector for returning a specified Expansion from state */
-export const selectExpansion = (state: RootState, code: string) =>
-  state.expansion[code];
-
-/** Redux Selector for returning the expansion list as an array, moving the object key to the object field "code" */
-export const selectExpansionArray = selectComponentArray(
-  (state) => state.expansion
-);
-
 const setExpansionEnabled = (
   state: ComponentState<Expansion>,
   expansionCode: string,
@@ -45,6 +36,15 @@ const setExpansionEnabled = (
     persistExpansionEnabled(expansionCode, expansion.enabled);
   }
 };
+
+/** Redux Selector for returning a specified Expansion from state */
+export const selectExpansion = (state: RootState, code: string) =>
+  state.expansion[code];
+
+/** Redux Selector for returning the expansion list as an array, moving the object key to the object field "code" */
+export const selectExpansionArray = selectComponentArray(
+  (state) => state.expansion
+);
 
 export const expansionSlice = createSlice({
   name: "expansion",

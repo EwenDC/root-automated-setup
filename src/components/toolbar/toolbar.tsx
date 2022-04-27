@@ -8,14 +8,15 @@ import styles from "./toolbar.module.css";
 export const Toolbar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { currentStep, futureSteps } = useAppSelector(selectFlowState);
+  const { pastSteps, futureSteps, currentStep } =
+    useAppSelector(selectFlowState);
 
   return (
     <footer className={styles.anchor}>
       <nav className={styles.toolbar}>
         <button
           className={classNames(styles.button, styles.left)}
-          disabled={currentStep <= SetupStep.chooseExpansions}
+          disabled={pastSteps.length === 0}
           onClick={() => dispatch(undoStep())}
         >
           {t("label.undo")}

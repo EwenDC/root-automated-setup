@@ -1,11 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../components/store";
-import { SetupStep, FlowState } from "../types";
+import {
+  SetupStep,
+  FlowState,
+  FlowSlice,
+  WithCode,
+  Faction,
+  Vagabond,
+  FactionEntry,
+} from "../types";
+import { takeRandom } from "./reduxUtils";
 
 const initialState: FlowState = {
+  pastSteps: [],
   currentStep: SetupStep.chooseExpansions,
+  factionPool: [],
+  lastFactionLocked: false,
+  currentPlayerIndex: 0,
+  currentFactionIndex: null,
+  // Create an array with as many elements as there are setup steps
+  skippedSteps: Array(SetupStep.setupEnd + 1).fill(false),
   futureSteps: [],
-  skippedSteps: [],
 };
 // Default to skipping bot & hireling setup steps
 initialState.skippedSteps[SetupStep.setUpBots] = true;
@@ -14,6 +29,22 @@ initialState.skippedSteps[SetupStep.setUpHireling2] = true;
 initialState.skippedSteps[SetupStep.setUpHireling3] = true;
 initialState.skippedSteps[SetupStep.postHirelingSetup] = true;
 
+const getSlice = (state: FlowState): FlowSlice => ({
+  step: state.currentStep,
+  factionPool: state.factionPool,
+  lastFactionLocked: state.lastFactionLocked,
+  playerIndex: state.currentPlayerIndex,
+  factionIndex: state.currentFactionIndex,
+});
+
+const applySlice = (state: FlowState, slice: FlowSlice) => {
+  state.currentStep = slice.step;
+  state.factionPool = slice.factionPool;
+  state.lastFactionLocked = slice.lastFactionLocked;
+  state.currentPlayerIndex = slice.playerIndex;
+  state.currentFactionIndex = slice.factionIndex;
+};
+
 /** Returns the flow information (including current step) from redux state */
 export const selectFlowState = (state: RootState) => state.flow;
 
@@ -21,18 +52,38 @@ export const flowSlice = createSlice({
   name: "flow",
   initialState: initialState,
   reducers: {
-    setStep: (state, action: PayloadAction<SetupStep>) => {
-      state.currentStep = action.payload;
-      state.futureSteps = [];
-    },
     incrementStep: (state, action: PayloadAction) => {
       if (state.currentStep < SetupStep.setupEnd) {
-        let skipStep = false;
-        do {
-          state.currentStep++;
-          skipStep = state.skippedSteps[state.currentStep] ?? false;
-        } while (skipStep && state.currentStep < SetupStep.setupEnd);
+        // Add our current state to the undo queue and clear the redo queue
+        state.pastSteps.push(getSlice(state));
         state.futureSteps = [];
+
+        // Handle special case for faction setup
+        if (
+          state.currentStep === SetupStep.setUpFaction &&
+          state.currentPlayerIndex > 0
+        ) {
+          // If we still have players left over, move on to the next player
+          state.currentPlayerIndex--;
+          // Remove the faction we just set up from the pool
+          const [removedFaction] = state.factionPool.splice(
+            state.currentFactionIndex ?? 0,
+            1
+          );
+          state.currentFactionIndex = null;
+          // Clear the last faction lock if the removed faction was militant
+          if (state.lastFactionLocked && removedFaction.militant)
+            state.lastFactionLocked = false;
+          // Return to the faction selection step
+          state.currentStep = SetupStep.selectFaction;
+        } else {
+          // Go to the next non-skipped step
+          let skipStep = false;
+          do {
+            state.currentStep++;
+            skipStep = state.skippedSteps[state.currentStep];
+          } while (skipStep && state.currentStep < SetupStep.setupEnd);
+        }
       } else {
         console.warn(
           `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`,
@@ -41,27 +92,31 @@ export const flowSlice = createSlice({
       }
     },
     undoStep: (state, action: PayloadAction) => {
-      if (state.currentStep > SetupStep.chooseExpansions) {
-        state.futureSteps.unshift(state.currentStep);
-        let skipStep = false;
-        do {
-          state.currentStep--;
-          skipStep = state.skippedSteps[state.currentStep] ?? false;
-        } while (skipStep && state.currentStep > SetupStep.chooseExpansions);
+      // Get the previous step from the undo queue
+      const previousStep = state.pastSteps.pop();
+      if (previousStep != null) {
+        // Add our current state to the redo queue
+        state.futureSteps.unshift(getSlice(state));
+        // Override current state with state from previous step
+        applySlice(state, previousStep);
       } else {
         console.warn(
-          `Invalid undoStep action: Current step must be larger than ${SetupStep.chooseExpansions}`,
+          `Invalid undoStep action: pastSteps array returned empty value (${previousStep})`,
           action
         );
       }
     },
     redoStep: (state, action: PayloadAction) => {
+      // Get the next step from the redo queue
       const nextStep = state.futureSteps.shift();
       if (nextStep != null) {
-        state.currentStep = nextStep;
+        // Add our current state to the undo queue
+        state.pastSteps.push(getSlice(state));
+        // Override current state with state from next step
+        applySlice(state, nextStep);
       } else {
         console.warn(
-          `Invalid redoStep action: Future Steps array returned empty value (${nextStep})`,
+          `Invalid redoStep action: futureSteps array returned empty value (${nextStep})`,
           action
         );
       }
@@ -83,6 +138,59 @@ export const flowSlice = createSlice({
         state.futureSteps = [];
       },
     },
+    clearFactionPool: (state) => {
+      state.factionPool = [];
+      state.lastFactionLocked = false;
+      state.currentFactionIndex = null;
+      state.futureSteps = [];
+    },
+    addToFactionPool: {
+      prepare: (
+        faction: WithCode<Faction>,
+        vagabondPool: WithCode<Vagabond>[]
+      ) => ({
+        payload: {
+          ...faction,
+          vagabond: faction.isVagabond ? takeRandom(vagabondPool) : undefined,
+        },
+      }),
+      reducer: (state, action: PayloadAction<FactionEntry>) => {
+        // Ensure that the passed-in faction includes a vagabond character if required
+        if (!action.payload.isVagabond || action.payload.vagabond) {
+          // Add to our pool, and set it to locked if insurgent
+          state.factionPool.push(action.payload);
+          state.lastFactionLocked = !action.payload.militant;
+          state.futureSteps = [];
+        } else {
+          console.warn(
+            'Invalid payload for addToFactionPool action: Payload field "vagabond" cannot be omited if "isVagabond" is true',
+            action
+          );
+        }
+      },
+    },
+    setCurrentPlayerIndex: (state, action: PayloadAction<number>) => {
+      if (action.payload >= 0) {
+        state.currentPlayerIndex = action.payload;
+        state.futureSteps = [];
+      } else {
+        console.warn(
+          "Invalid payload for setCurrentPlayerIndex action: Payload must be a number larger than or equal to 0",
+          action
+        );
+      }
+    },
+    setCurrentFactionIndex: (state, action: PayloadAction<number>) => {
+      if (action.payload >= 0 && action.payload < state.factionPool.length) {
+        state.currentFactionIndex = action.payload;
+        state.futureSteps = [];
+      } else {
+        console.warn(
+          `Invalid payload for setCurrentFactionIndex action: Payload must be a number larger than or equal to 0 but smaller than the faction pool length (${state.factionPool.length})`,
+          action
+        );
+      }
+    },
   },
   extraReducers: (builder) => {
     // This allows us to always reset the redo queue if the setup state changes
@@ -92,6 +200,14 @@ export const flowSlice = createSlice({
   },
 });
 
-export const { setStep, incrementStep, undoStep, redoStep, skipSteps } =
-  flowSlice.actions;
+export const {
+  incrementStep,
+  undoStep,
+  redoStep,
+  skipSteps,
+  clearFactionPool,
+  addToFactionPool,
+  setCurrentPlayerIndex,
+  setCurrentFactionIndex,
+} = flowSlice.actions;
 export default flowSlice.reducer;

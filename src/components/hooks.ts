@@ -1,16 +1,9 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { selectFlowState, selectSetupParameters } from "../features";
-import { SetupStep } from "../types";
+import { selectSetupParameters } from "../features";
 import type { RootState, AppDispatch } from "./store";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-
-/** Returns a function for checking if a specified step is flagged to be skipped in redux state */
-export const useStepSkipped = () => {
-  const { skippedSteps } = useAppSelector(selectFlowState);
-  return (step: SetupStep) => skippedSteps[step] ?? false;
-};
 
 /** Returns a function for returning the player number for a specifed point in turn order */
 export const useNthLastPlayer = () => {
