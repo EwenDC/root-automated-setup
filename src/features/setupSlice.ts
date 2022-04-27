@@ -519,9 +519,14 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.chooseHirelings:
+      let excludedFactionsUpdated = false;
+
       // Clear the exclude faction pool of any potential stale data from previous hireling setups
-      if (setupParameters.excludedFactions.length > 0)
+      if (setupParameters.excludedFactions.length > 0) {
         dispatch(clearExcludedFactions());
+        // Flag the update to the excluded factions so we can re-enable any disabled ones if we skip hireling setup
+        excludedFactionsUpdated = true;
+      }
 
       // Did we skip the hireling setup?
       if (!flowState.skippedSteps[SetupStep.setUpHireling1]) {
@@ -543,7 +548,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             // Calculate how many factions we will exclude by including it (based on what factions are actually in play)
             let excludeCount =
               hireling.factions.length > 1
-                ? hireling.factions.filter((factionCode) =>
+                ? // Make sure we only count the factions that are actually in play
+                  hireling.factions.filter((factionCode) =>
                     factionCodes.includes(factionCode)
                   ).length
                 : 1;
@@ -560,6 +566,9 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
         // Check that there are enough hirelings selected
         if (hirelingPool.length >= 3) {
+          // Flag the update to the excluded factions so we can disable them later
+          excludedFactionsUpdated = true;
+
           // Choose three random hirelings
           for (let number = 1; number <= 3; number++) {
             dispatch(
@@ -570,22 +579,25 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
               )
             );
           }
-          // Disable the factions that are mutually exclusive with the selected hirelings
-          const excludedFactions = selectSetupParameters(
-            getState()
-          ).excludedFactions;
-          dispatch(
-            massComponentToggle(
-              selectFactionArray,
-              (faction) => !excludedFactions.includes(faction.code),
-              toggleFaction
-            )
-          );
         } else {
           // Invalid state, do not proceed
           doIncrementStep = false;
           validationError = "error.tooFewHireling";
         }
+      }
+
+      if (excludedFactionsUpdated) {
+        // Disable the factions that are mutually exclusive with the selected hirelings
+        const excludedFactions = selectSetupParameters(
+          getState()
+        ).excludedFactions;
+        dispatch(
+          massComponentToggle(
+            selectFactionArray,
+            (faction) => !excludedFactions.includes(faction.code),
+            toggleFaction
+          )
+        );
       }
       break;
 

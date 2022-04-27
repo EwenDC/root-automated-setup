@@ -18,10 +18,15 @@ import {
   toggleHireling,
   toggleLandmark,
   toggleMap,
+  selectFactionArray,
+  toggleFaction,
+  selectEnabledVagabondFactions,
+  selectVagabondArray,
+  toggleVagabond,
 } from "../../features";
 import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
-import ComponentList from "../componentList";
+import ComponentToggle from "../componentToggle";
 import {
   useAppDispatch,
   useAppSelector,
@@ -46,9 +51,11 @@ export const StepList: React.FC = () => {
     hireling1,
     hireling2,
     hireling3,
+    excludedFactions,
   } = useAppSelector(selectSetupParameters);
   const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
   const factionCodes = useAppSelector(selectFactionCodeArray);
+  const vagabondFactions = useAppSelector(selectEnabledVagabondFactions);
   const dispatch = useAppDispatch();
   const stepSkipped = useStepSkipped();
   const nthLastPlayer = useNthLastPlayer();
@@ -57,7 +64,7 @@ export const StepList: React.FC = () => {
   return (
     <main className={styles.container}>
       <Step step={SetupStep.chooseExpansions}>
-        <ComponentList
+        <ComponentToggle
           selector={selectExpansionArray}
           toggleComponent={(expansion) =>
             dispatch(toggleExpansion(expansion.code))
@@ -76,7 +83,7 @@ export const StepList: React.FC = () => {
         />
       </Step>
       <Step step={SetupStep.chooseMap}>
-        <ComponentList
+        <ComponentToggle
           selector={selectMapArray}
           toggleComponent={(map) => dispatch(toggleMap(map.code))}
           getLabelKey={(map) => `map.${map.code}.name`}
@@ -102,7 +109,7 @@ export const StepList: React.FC = () => {
         textKey={`map.${map?.code}.landmarkSetup`}
       />
       <Step step={SetupStep.chooseDeck}>
-        <ComponentList
+        <ComponentToggle
           selector={selectDeckArray}
           toggleComponent={(deck) => dispatch(toggleDeck(deck.code))}
           getLabelKey={(deck) => `deck.${deck.code}`}
@@ -139,7 +146,7 @@ export const StepList: React.FC = () => {
           onChange={(value) => dispatch(setLandmarkCount(value))}
         />
         {landmarkCount > 0 ? (
-          <ComponentList
+          <ComponentToggle
             selector={selectLandmarkArray}
             toggleComponent={(landmark) =>
               dispatch(toggleLandmark(landmark.code))
@@ -190,7 +197,7 @@ export const StepList: React.FC = () => {
           }
         />
         {!stepSkipped(SetupStep.setUpHireling1) ? (
-          <ComponentList
+          <ComponentToggle
             selector={selectHirelingArray}
             toggleComponent={(hireling) =>
               dispatch(toggleHireling(hireling.code))
@@ -259,7 +266,30 @@ export const StepList: React.FC = () => {
       />
       <Step step={SetupStep.postHirelingSetup} />
       <Step step={SetupStep.drawCards} />
-      <Step step={SetupStep.chooseFactions}></Step>
+      <Step step={SetupStep.chooseFactions}>
+        <ComponentToggle
+          selector={selectFactionArray}
+          toggleComponent={(faction) => dispatch(toggleFaction(faction.code))}
+          getLabelKey={(faction) => `faction.${faction.key}.name`}
+          getLockedKey={(faction) =>
+            excludedFactions.includes(faction.code)
+              ? "error.hirelingSelected"
+              : null
+          }
+        />
+        {vagabondFactions.length > 0 ? (
+          <>
+            {t("label.selectVagabonds")}
+            <ComponentToggle
+              selector={selectVagabondArray}
+              toggleComponent={(vagabond) =>
+                dispatch(toggleVagabond(vagabond.code))
+              }
+              getLabelKey={(vagabond) => `vagabond.${vagabond.code}.name`}
+            />
+          </>
+        ) : null}
+      </Step>
       <Step step={SetupStep.selectFaction}></Step>
       <Step step={SetupStep.setUpFaction} />
       <Step step={SetupStep.placeScoreMarkers} />

@@ -12,6 +12,7 @@
   "error": {
     "baseExpansionRequired": "A base copy of Root is required for set up",
     "factionHirelingExcluded": "The Faction associated with this Hireling is required for set up",
+    "hirelingSelected": "An equivalent Hireling for this faction is already in play",
     "landmarkNotEnoughPlayers": "Not enough players to play with this landmark",
     "lockedFaction": "Cannot select last faction until a Militant faction has been selected.",
     "mapLandmarkUsed": "Landmark already included in map set up",
@@ -72,7 +73,7 @@
   "hireling": {
     "band": {
       "name": "Popular Band",
-      "setup": "Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place 2 Band warriors, each in a different clearining. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
+      "setup": "Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place 2 Band warriors, each in a different clearing. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
       "demoted": {
         "name": "Street Band",
         "setup": "Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place them next to the map <i>(with the card's demoted \"Street Band\" side up)</i>."
@@ -180,7 +181,7 @@
       "false": "Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>",
       "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
     },
-    "includeBotStep": "Include set up step for bots",
+    "includeBotStep": "Include bot set up",
     "includeHirelings": "Include Hirelings",
     "landmarkCount": "Landmark Count",
     "logoAlt": "ROOT",
@@ -189,6 +190,7 @@
     "pageTitle": "Root Automated Setup",
     "playerCount": "Player Count",
     "redo": "Redo",
+    "selectVagabonds": "Select which vagabond characters you would like to include in the faction draft.",
     "undo": "Undo",
     "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default set up with the map-specific version)</i>"
   },
@@ -230,7 +232,7 @@
     },
     "mountain": {
       "name": "Mountain",
-      "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker color with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
+      "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
       "landmarkSetup": "Place the Tower piece in the central clearing showing two towers. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "winter": {
@@ -281,7 +283,7 @@
     },
     "chooseHirelings": {
       "title": "Set up Hirelings",
-      "body": "As a group, decide if you want to play with Hirelings, and which ones to include in the selection pool."
+      "body": "As a group, decide if you want to play with hirelings, and which ones to include in the selection pool."
     },
     "setUpHireling1": {
       "subtitle": "Set up {{hireling}}."
@@ -298,11 +300,11 @@
     },
     "drawCards": {
       "title": "Draw Five Cards",
-      "body": "Each player draw five cards from the deck. <i>(You will choose three cards to keep later.)</i>"
+      "body": "Each player draw five cards from the shared deck. <i>(You will choose three cards to keep later.)</i>"
     },
     "chooseFactions": {
       "title": "Set up Factions",
-      "body": "As a group, select which factions you would like to include in the selection pool."
+      "body": "As a group, select which factions you would like to include in the faction draft."
     },
     "selectFaction": {
       "subtitle": "Choose Faction.",
@@ -325,14 +327,32 @@
     }
   },
   "vagabond": {
-    "adventurer": "Adventurer",
-    "arbiter": "Arbiter",
-    "harrier": "Harrier",
-    "ranger": "Ranger",
-    "ronin": "Ronin",
-    "scoundrel": "Scoundrel",
-    "thief": "Thief",
-    "tinker": "Tinker",
-    "vagrant": "Vagrant"
+    "adventurer": {
+      "name": "Adventurer"
+    },
+    "arbiter": {
+      "name": "Arbiter"
+    },
+    "harrier": {
+      "name": "Harrier"
+    },
+    "ranger": {
+      "name": "Ranger"
+    },
+    "ronin": {
+      "name": "Ronin"
+    },
+    "scoundrel": {
+      "name": "Scoundrel"
+    },
+    "thief": {
+      "name": "Thief"
+    },
+    "tinker": {
+      "name": "Tinker"
+    },
+    "vagrant": {
+      "name": "Vagrant"
+    }
   }
 }

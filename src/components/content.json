@@ -9,8 +9,8 @@
     },
     "factions": {
       "marquise": {
-        "name": "faction.marquise",
-        "image": "",
+        "key": "marquise",
+        "image": "meeples/marquise.png",
         "militant": true,
         "isVagabond": false,
         "warriors": 25,
@@ -18,8 +18,8 @@
         "tokens": 9
       },
       "eyrie": {
-        "name": "faction.eyrie",
-        "image": "",
+        "key": "eyrie",
+        "image": "meeples/eyrie.png",
         "militant": true,
         "isVagabond": false,
         "warriors": 20,
@@ -27,8 +27,8 @@
         "tokens": 0
       },
       "alliance": {
-        "name": "faction.alliance",
-        "image": "",
+        "key": "alliance",
+        "image": "meeples/alliance.png",
         "militant": false,
         "isVagabond": false,
         "warriors": 10,
@@ -36,8 +36,8 @@
         "tokens": 10
       },
       "vagabond": {
-        "name": "faction.vagabond",
-        "image": "",
+        "key": "vagabond",
+        "image": "meeples/vagabond.png",
         "militant": false,
         "isVagabond": true,
         "warriors": 1,
@@ -77,8 +77,8 @@
     "image": "expansions/riverfolk.png",
     "factions": {
       "cult": {
-        "name": "faction.cult",
-        "image": "",
+        "key": "cult",
+        "image": "meeples/cult.png",
         "militant": false,
         "isVagabond": false,
         "warriors": 25,
@@ -86,8 +86,8 @@
         "tokens": 0
       },
       "riverfolk": {
-        "name": "faction.riverfolk",
-        "image": "",
+        "key": "riverfolk",
+        "image": "meeples/riverfolk.png",
         "militant": false,
         "isVagabond": false,
         "warriors": 15,
@@ -95,8 +95,8 @@
         "tokens": 9
       },
       "vagabond2": {
-        "name": "faction.vagabond",
-        "image": "",
+        "key": "vagabond",
+        "image": "meeples/vagabond2.png",
         "militant": false,
         "isVagabond": true,
         "warriors": 1,
@@ -124,8 +124,8 @@
     "image": "expansions/underworld.png",
     "factions": {
       "duchy": {
-        "name": "faction.duchy",
-        "image": "",
+        "key": "duchy",
+        "image": "meeples/duchy.png",
         "militant": true,
         "isVagabond": false,
         "warriors": 20,
@@ -133,8 +133,8 @@
         "tokens": 3
       },
       "corvid": {
-        "name": "faction.corvid",
-        "image": "",
+        "key": "corvid",
+        "image": "meeples/corvid.png",
         "militant": false,
         "isVagabond": false,
         "warriors": 15,
@@ -170,7 +170,7 @@
     "image": "expansions/marauder.png",
     "factions": {
       "warlord": {
-        "name": "faction.warlord",
+        "key": "warlord",
         "image": "",
         "militant": true,
         "isVagabond": false,
@@ -179,7 +179,7 @@
         "tokens": 5
       },
       "keepers": {
-        "name": "faction.keepers",
+        "key": "keepers",
         "image": "",
         "militant": true,
         "isVagabond": false,
@@ -273,21 +273,21 @@
     "image": "expansions/riverfolkHirelings.png",
     "hirelings": {
       "prophets": {
-        "image": "hirelings/prophets.png",
+        "image": "meeples/prophets.png",
         "factions": ["cult"],
         "warriors": 4,
         "components": 0,
         "componentName": ""
       },
       "flotilla": {
-        "image": "hirelings/flotilla.png",
+        "image": "meeples/flotilla.png",
         "factions": ["riverfolk"],
         "warriors": 1,
         "components": 0,
         "componentName": ""
       },
       "bandits": {
-        "image": "hirelings/bandits.png",
+        "image": "meeples/bandits.png",
         "factions": [],
         "warriors": 4,
         "components": 0,
@@ -300,21 +300,21 @@
     "image": "expansions/underworldHirelings.png",
     "hirelings": {
       "expedition": {
-        "image": "hirelings/expedition.png",
+        "image": "meeples/expedition.png",
         "factions": ["duchy"],
         "warriors": 8,
         "components": 3,
         "componentName": "component.footholdToken"
       },
       "spies": {
-        "image": "hirelings/spies.png",
+        "image": "meeples/spies.png",
         "factions": ["corvid"],
         "warriors": 6,
         "components": 0,
         "componentName": ""
       },
       "protector": {
-        "image": "hirelings/protector.png",
+        "image": "meeples/protector.png",
         "factions": [],
         "warriors": 1,
         "components": 0,
@@ -327,21 +327,21 @@
     "image": "expansions/marauderHirelings.png",
     "hirelings": {
       "flamebearers": {
-        "image": "hirelings/flamebearers.png",
+        "image": "meeples/flamebearers.png",
         "factions": ["warlord"],
         "warriors": 6,
         "components": 0,
         "componentName": ""
       },
       "vaultkeepers": {
-        "image": "hirelings/vaultkeepers.png",
+        "image": "meeples/vaultkeepers.png",
         "factions": ["keepers"],
         "warriors": 6,
         "components": 6,
         "componentName": "component.vaultBuilding"
       },
       "band": {
-        "image": "hirelings/band.png",
+        "image": "meeples/band.png",
         "factions": [],
         "warriors": 5,
         "components": 0,

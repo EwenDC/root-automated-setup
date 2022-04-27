@@ -5,7 +5,7 @@ import { GameComponent, WithCode } from "../../types";
 import { useAppSelector } from "../hooks";
 import { StepContext } from "../step";
 import { RootState } from "../store";
-import styles from "./componentList.module.css";
+import styles from "./componentToggle.module.css";
 import defaultImage from "../../images/componentDefault.png";
 
 interface ComponentListProps<T extends WithCode<GameComponent>> {
@@ -15,7 +15,7 @@ interface ComponentListProps<T extends WithCode<GameComponent>> {
   getLockedKey?: (component: T, index: number, array: T[]) => string | null;
 }
 
-export const ComponentList = <T extends WithCode<GameComponent>>({
+export const ComponentToggle = <T extends WithCode<GameComponent>>({
   selector,
   toggleComponent,
   getLabelKey,
@@ -33,10 +33,10 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
     >
       {components.map((component, index, array) => {
         if (component.enabled || stepActive) {
-          const componentLockedMessage = getLockedKey
+          const componentLockedKey = getLockedKey
             ? getLockedKey(component, index, array)
             : null;
-          const componentLocked = componentLockedMessage != null;
+          const componentLocked = componentLockedKey != null;
           return (
             <button
               key={component.code}
@@ -46,9 +46,7 @@ export const ComponentList = <T extends WithCode<GameComponent>>({
               })}
               onClick={() => toggleComponent(component, index, array)}
               disabled={!stepActive || componentLocked}
-              title={
-                componentLockedMessage ? t(componentLockedMessage) : undefined
-              }
+              title={componentLockedKey ? t(componentLockedKey) : undefined}
               role="switch"
               aria-checked={component.enabled}
             >

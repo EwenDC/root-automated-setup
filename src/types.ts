@@ -50,7 +50,7 @@ export interface HirelingEntry extends WithCode<Hireling> {
 
 /** An object representing a Faction from the Root board game */
 export interface Faction extends ExpansionComponent {
-  name: string;
+  key: string;
   militant: boolean;
   isVagabond: boolean;
   warriors: number;
