@@ -96,10 +96,10 @@
       }
     },
     "exile": {
-      "name": "The Exile",
+      "name": "Exile",
       "setup": "Player {{count}}, grab the hireling card, pawn, and 3 club items for the Exile from the game box. Place the Exile pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 club items on top of it <i>(unexhaused side up)</i>.",
       "demoted": {
-        "name": "The Bandit",
+        "name": "Bandit",
         "setup": "Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with it's demoted \"The Bandit\" side up. Place \"R\" items under the ruins as if the Vagabond were in play."
       }
     },
@@ -200,7 +200,7 @@
       "setup": "Player {{count}}, place the Lost City in a random clearing with the river, not with or adjacent to another Landmark. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "ferry": {
-      "name": "The Ferry",
+      "name": "Ferry",
       "setup": "Player {{count}}, place the Ferry in a random clearing with the river or Lake, not with or adjacent to another Landmark. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "forge": {
@@ -212,7 +212,7 @@
       "setup": "Player {{count}}, place the Black Market in a random clearing with only 1 building slot, not with or adjacent to another Landmark. Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side. Draw 3 cards without looking at them and place them face down next to the landmark card."
     },
     "tower": {
-      "name": "The Tower",
+      "name": "Tower",
       "setup": "Player {{count}}, place the Tower in a random clearing with a ruin, not with or adjacent to another Landmark. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "treetop": {
@@ -252,7 +252,7 @@
       "subtitle": "Set up the {{map}} Map."
     },
     "setUpMapLandmark": {
-      "subtitle": "Set up {{landmark}}."
+      "subtitle": "Set up the {{landmark}}."
     },
     "chooseDeck": {
       "title": "Choose and Set up Deck",
@@ -276,23 +276,23 @@
       "body": "As a group, decide how many landmarks you want to play with <i>(in addition to the map landmark if it was included)</i>, and which ones to include in the selection pool."
     },
     "setUpLandmark1": {
-      "subtitle": "Set up {{landmark}}."
+      "subtitle": "Set up the {{landmark}}."
     },
     "setUpLandmark2": {
-      "subtitle": "Set up {{landmark}}."
+      "subtitle": "Set up the {{landmark}}."
     },
     "chooseHirelings": {
       "title": "Set up Hirelings",
       "body": "As a group, decide if you want to play with hirelings, and which ones to include in the selection pool."
     },
     "setUpHireling1": {
-      "subtitle": "Set up {{hireling}}."
+      "subtitle": "Set up the {{hireling}}."
     },
     "setUpHireling2": {
-      "subtitle": "Set up {{hireling}}."
+      "subtitle": "Set up the {{hireling}}."
     },
     "setUpHireling3": {
-      "subtitle": "Set up {{hireling}}."
+      "subtitle": "Set up the {{hireling}}."
     },
     "postHirelingSetup": {
       "subtitle": "Place Hireling Markers.",

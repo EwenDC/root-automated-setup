@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { GameComponent, WithCode } from "../../types";
 import { useAppSelector } from "../hooks";
@@ -13,6 +13,7 @@ interface ComponentListProps<T extends WithCode<GameComponent>> {
   toggleComponent: (component: T, index: number, array: T[]) => void;
   getLabelKey: (component: T, index: number, array: T[]) => string;
   getLockedKey?: (component: T, index: number, array: T[]) => string | null;
+  unsorted?: boolean;
 }
 
 export const ComponentToggle = <T extends WithCode<GameComponent>>({
@@ -20,10 +21,26 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
   toggleComponent,
   getLabelKey,
   getLockedKey,
+  unsorted,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
   const { stepActive } = useContext(StepContext);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // Sort our component list, then memoize the result for performance
+  const sortedComponents = useMemo(() => {
+    // For sorting purposes, generate the final label text in advance
+    const returnValue = components.map((component, index, array) => ({
+      ...component,
+      label: t(getLabelKey(component, index, array)),
+    }));
+
+    // Sort it by default (unless asked explicitly not to)
+    if (!unsorted)
+      returnValue.sort((a, b) => a.label.localeCompare(b.label, i18n.language));
+
+    return returnValue;
+  }, [components, t, getLabelKey, unsorted, i18n.language]);
 
   return (
     <div
@@ -31,7 +48,7 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
         [styles.inactive]: !stepActive,
       })}
     >
-      {components.map((component, index, array) => {
+      {sortedComponents.map((component, index, array) => {
         if (component.enabled || stepActive) {
           const componentLockedKey = getLockedKey
             ? getLockedKey(component, index, array)
@@ -60,7 +77,7 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />
-              <div>{t(getLabelKey(component, index, array))}</div>
+              <div>{component.label}</div>
             </button>
           );
         }

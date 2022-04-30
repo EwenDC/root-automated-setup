@@ -69,6 +69,7 @@ export const StepList: React.FC = () => {
           getLockedKey={(expansion) =>
             expansion.base ? "error.baseExpansionRequired" : null
           }
+          unsorted={true}
         />
         <Checkbox
           id="includeBotStep"
