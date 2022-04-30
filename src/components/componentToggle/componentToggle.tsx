@@ -10,9 +10,9 @@ import defaultImage from "../../images/componentDefault.png";
 
 interface ComponentListProps<T extends WithCode<GameComponent>> {
   selector: (state: RootState) => T[];
-  toggleComponent: (component: T, index: number, array: T[]) => void;
-  getLabelKey: (component: T, index: number, array: T[]) => string;
-  getLockedKey?: (component: T, index: number, array: T[]) => string | null;
+  toggleComponent: (component: T) => void;
+  getLabelKey: (component: T) => string;
+  getLockedKey?: (component: T) => string | null;
   unsorted?: boolean;
 }
 
@@ -30,9 +30,9 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
   // Sort our component list, then memoize the result for performance
   const sortedComponents = useMemo(() => {
     // For sorting purposes, generate the final label text in advance
-    const returnValue = components.map((component, index, array) => ({
+    const returnValue = components.map((component) => ({
       ...component,
-      label: t(getLabelKey(component, index, array)),
+      label: t(getLabelKey(component)),
     }));
 
     // Sort it by default (unless asked explicitly not to)
@@ -48,10 +48,10 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
         [styles.inactive]: !stepActive,
       })}
     >
-      {sortedComponents.map((component, index, array) => {
+      {sortedComponents.map((component) => {
         if (component.enabled || stepActive) {
           const componentLockedKey = getLockedKey
-            ? getLockedKey(component, index, array)
+            ? getLockedKey(component)
             : null;
           const componentLocked = componentLockedKey != null;
           return (
@@ -61,7 +61,7 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
                 [styles.enabled]: stepActive && component.enabled,
                 [styles.locked]: stepActive && componentLocked,
               })}
-              onClick={() => toggleComponent(component, index, array)}
+              onClick={() => toggleComponent(component)}
               disabled={!stepActive || componentLocked}
               title={componentLockedKey ? t(componentLockedKey) : undefined}
               role="switch"

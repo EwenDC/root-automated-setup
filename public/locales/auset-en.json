@@ -249,10 +249,10 @@
       "body": "As a group, decide which map you would like to play on. If you select multiple maps, a random map will be chosen from the selected."
     },
     "setUpMap": {
-      "subtitle": "Set up the {{map}} Map."
+      "subtitle": "Set up the {{map}} Map"
     },
     "setUpMapLandmark": {
-      "subtitle": "Set up the {{landmark}}."
+      "subtitle": "Set up the {{landmark}}"
     },
     "chooseDeck": {
       "title": "Choose and Set up Deck",
@@ -260,7 +260,7 @@
     },
     "setUpDeck": {
       "title": "Set up Deck",
-      "subtitle": "Set up the {{deck}} Deck.",
+      "subtitle": "Set up the {{deck}} Deck",
       "body": "Grab the {{deck}} deck from the game box and place it next to the map. If you will be playing with less than three players, remove all four dominance cards from the deck. Shuffle the deck."
     },
     "setUpBots": {
@@ -276,26 +276,26 @@
       "body": "As a group, decide how many landmarks you want to play with <i>(in addition to the map landmark if it was included)</i>, and which ones to include in the selection pool."
     },
     "setUpLandmark1": {
-      "subtitle": "Set up the {{landmark}}."
+      "subtitle": "Set up the {{landmark}}"
     },
     "setUpLandmark2": {
-      "subtitle": "Set up the {{landmark}}."
+      "subtitle": "Set up the {{landmark}}"
     },
     "chooseHirelings": {
       "title": "Set up Hirelings",
       "body": "As a group, decide if you want to play with hirelings, and which ones to include in the selection pool."
     },
     "setUpHireling1": {
-      "subtitle": "Set up the {{hireling}}."
+      "subtitle": "Set up the {{hireling}}"
     },
     "setUpHireling2": {
-      "subtitle": "Set up the {{hireling}}."
+      "subtitle": "Set up the {{hireling}}"
     },
     "setUpHireling3": {
-      "subtitle": "Set up the {{hireling}}."
+      "subtitle": "Set up the {{hireling}}"
     },
     "postHirelingSetup": {
-      "subtitle": "Place Hireling Markers.",
+      "subtitle": "Place Hireling Markers",
       "body": "Place the three hireling markers - marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
     },
     "drawCards": {
@@ -307,11 +307,11 @@
       "body": "As a group, select which factions you would like to include in the faction draft."
     },
     "selectFaction": {
-      "subtitle": "Choose Faction.",
+      "subtitle": "Choose Faction",
       "body": "Player {{count}}, choose which faction you would like to play from the faction pool below."
     },
     "setUpFaction": {
-      "subtitle": "Set up the {{faction}}."
+      "subtitle": "Set up the {{faction}}"
     },
     "placeScoreMarkers": {
       "title": "Place Score Markers",

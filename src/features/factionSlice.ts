@@ -43,10 +43,8 @@ export const selectFactionArray = selectComponentArray(
 );
 
 /** Redux Selector for returning an array of included faction codes */
-export const selectFactionCodeArray = createSelector(
-  (state: RootState) => state.faction,
-  (factions) => Object.keys(factions)
-);
+export const selectFactionCodeArray = (state: RootState) =>
+  Object.keys(state.faction);
 
 /** Redux Selector for returning an array of enabled militant factions */
 export const selectEnabledMilitantFactions = createSelector(
