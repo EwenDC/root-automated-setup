@@ -17,6 +17,7 @@ interface StepProps {
   textCount?: number;
   textOptions?: Omit<TOptions, "count">; // For Trans component count cannot be passed in with options
   textBelowChildren?: boolean;
+  children?: React.ReactNode;
 }
 
 export const Step: React.FC<StepProps> = ({
