@@ -4,21 +4,35 @@
 }
 
 .label {
-  margin-right: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.button {
+  font-size: 1.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 1rem;
 }
 
 .input {
   font-size: 1.25rem;
+  text-align: center;
+  width: 2rem;
   background: none;
   border: none;
-}
-
-.input:focus-visible {
-  outline: 0.15rem dotted black;
-  outline-offset: -0.15rem;
+  padding: 0;
 }
 
 .value {
   font-size: 1.25rem;
-  padding-left: 0.5rem;
+  text-align: center;
+  width: 2rem;
+  padding: 0 1rem;
+}
+
+.button:focus-visible,
+.input:focus-visible {
+  outline: 0.15rem dotted black;
 }

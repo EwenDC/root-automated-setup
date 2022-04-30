@@ -48,7 +48,9 @@ export const StepList: React.FC = () => {
     hireling2,
     hireling3,
     excludedFactions,
+    playerOrder,
   } = useAppSelector(selectSetupParameters);
+  const { currentPlayerIndex } = useAppSelector(selectFlowState);
   const { skippedSteps } = useAppSelector(selectFlowState);
   const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
   const factionCodes = useAppSelector(selectFactionCodeArray);
@@ -67,6 +69,7 @@ export const StepList: React.FC = () => {
           }
           getLabelKey={(expansion) => `expansion.${expansion.code}`}
           getLockedKey={(expansion) =>
+            // Prevent the player from deselecting the Root base game
             expansion.base ? "error.baseExpansionRequired" : null
           }
           unsorted={true}
@@ -150,9 +153,11 @@ export const StepList: React.FC = () => {
             }
             getLabelKey={(landmark) => `landmark.${landmark.code}.name`}
             getLockedKey={(landmark) =>
+              // Disable this landmark if it requires more players to include
               landmark.minPlayers > playerCount
                 ? "error.landmarkNotEnoughPlayers"
-                : useMapLandmark && landmark.code === map?.landmark
+                : // Disable this landmark if it was already used in map setup
+                useMapLandmark && landmark.code === map?.landmark
                 ? "error.mapLandmarkUsed"
                 : null
             }
@@ -269,7 +274,14 @@ export const StepList: React.FC = () => {
           toggleComponent={(faction) => dispatch(toggleFaction(faction.code))}
           getLabelKey={(faction) => `faction.${faction.key}.name`}
           getLockedKey={(faction) =>
-            excludedFactions.includes(faction.code)
+            // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
+            playerCount < 3 &&
+            !faction.militant &&
+            skippedSteps[SetupStep.setUpHireling1] &&
+            skippedSteps[SetupStep.setUpBots]
+              ? "error.tooFewPlayerInsurgent"
+              : // Disable a faction if it was replaced by an equivilent hireling
+              excludedFactions.includes(faction.code)
               ? "error.hirelingSelected"
               : null
           }
@@ -287,7 +299,10 @@ export const StepList: React.FC = () => {
           </>
         ) : null}
       </Step>
-      <Step step={SetupStep.selectFaction}></Step>
+      <Step
+        step={SetupStep.selectFaction}
+        textCount={playerOrder[currentPlayerIndex]}
+      ></Step>
       <Step step={SetupStep.setUpFaction} />
       <Step step={SetupStep.placeScoreMarkers} />
       <Step step={SetupStep.chooseHand} />

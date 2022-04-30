@@ -375,6 +375,19 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           toggleHireling
         )
       );
+
+      // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
+      dispatch(
+        massComponentToggle(
+          selectFactionArray,
+          (faction) =>
+            setupParameters.playerCount > 2 ||
+            faction.militant ||
+            !flowState.skippedSteps[SetupStep.setUpHireling1] ||
+            !flowState.skippedSteps[SetupStep.setUpBots],
+          toggleFaction
+        )
+      );
       break;
 
     case SetupStep.chooseLandmarks:

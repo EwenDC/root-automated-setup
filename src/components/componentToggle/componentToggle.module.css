@@ -12,7 +12,7 @@
 
 .component {
   color: darkgray;
-  font-size: 16px;
+  font-size: 1rem;
   height: 10rem;
   min-width: 10rem;
   margin: 1rem;

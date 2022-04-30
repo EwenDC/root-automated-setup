@@ -24,6 +24,7 @@
     "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count.",
     "tooFewHireling": "Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection requires removing too many factions from the draft. Please adjust the selected Hirelings, lower the player count, or skip the Hireling set up.",
     "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
+    "tooFewPlayerInsurgent": "Cannot use non-militant factions with less than 3 players and no bots or hirelings",
     "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions."
   },
   "expansion": {
