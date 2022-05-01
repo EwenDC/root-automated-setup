@@ -1,9 +1,5 @@
-.anchor {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: 100;
+.container {
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
 }

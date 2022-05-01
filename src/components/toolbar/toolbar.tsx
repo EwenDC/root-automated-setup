@@ -12,7 +12,7 @@ export const Toolbar: React.FC = () => {
     useAppSelector(selectFlowState);
 
   return (
-    <footer className={styles.anchor}>
+    <footer className={styles.container}>
       <nav className={styles.toolbar}>
         <button
           className={classNames(styles.button, styles.left)}

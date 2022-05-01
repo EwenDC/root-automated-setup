@@ -1,5 +1,6 @@
 .container {
-  width: 100%;
+  flex-shrink: 0;
+  width: 100vw;
   display: flex;
   justify-content: center;
   flex-flow: column;
@@ -8,15 +9,28 @@
 }
 
 .logo {
-  width: 24rem;
-  height: 6rem;
+  /* Allow the logo to shrink if the screen is smaller than 24rem */
+  width: 100%;
+  max-width: 24rem;
+  max-height: 6rem;
   /* Properties for Fallback text */
-  font-size: 6rem;
+  font-size: 25vw;
   text-align: center;
 }
 
 .subtitle {
-  font-size: 2rem;
+  font-size: 8.5vw;
   font-variant: small-caps;
   font-weight: 400;
+}
+
+/* If the screen is large enough for the logo to be at max size, then set the logo alt and subtitle to full size */
+@media (min-width: 24rem) {
+  .logo {
+    font-size: 6rem;
+  }
+
+  .subtitle {
+    font-size: 2rem;
+  }
 }

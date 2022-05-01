@@ -16,3 +16,9 @@ body {
   background: ivory url("./images/background.jpg") top;
   background-size: 80rem;
 }
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
