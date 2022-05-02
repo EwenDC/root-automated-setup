@@ -4,6 +4,9 @@ import { nextStep, redoStep, selectFlowState, undoStep } from "../../features";
 import { SetupStep } from "../../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import styles from "./toolbar.module.css";
+import { ReactComponent as UndoIcon } from "../../images/undo.svg";
+import { ReactComponent as RedoIcon } from "../../images/redo.svg";
+import { ReactComponent as ArrowIcon } from "../../images/chevronRight.svg";
 
 export const Toolbar: React.FC = () => {
   const { t } = useTranslation();
@@ -18,15 +21,17 @@ export const Toolbar: React.FC = () => {
           className={classNames(styles.button, styles.left)}
           disabled={pastSteps.length === 0}
           onClick={() => dispatch(undoStep())}
+          title={t("label.undo")}
         >
-          {t("label.undo")}
+          <UndoIcon className={styles.image} />
         </button>
         <button
           className={classNames(styles.button, styles.left)}
           disabled={futureSteps.length === 0}
           onClick={() => dispatch(redoStep())}
+          title={t("label.redo")}
         >
-          {t("label.redo")}
+          <RedoIcon className={styles.image} />
         </button>
         <button
           className={classNames(styles.button, styles.right)}
@@ -34,6 +39,7 @@ export const Toolbar: React.FC = () => {
           onClick={() => dispatch(nextStep())}
         >
           {t("label.nextStep")}
+          <ArrowIcon className={styles.image} />
         </button>
       </nav>
     </footer>

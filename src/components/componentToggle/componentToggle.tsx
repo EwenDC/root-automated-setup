@@ -66,6 +66,7 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
               title={componentLockedKey ? t(componentLockedKey) : undefined}
               role="switch"
               aria-checked={component.enabled}
+              aria-label={stepActive ? component.label : undefined}
             >
               <img
                 className={styles.image}

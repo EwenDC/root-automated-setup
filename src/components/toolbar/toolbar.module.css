@@ -10,11 +10,32 @@
 }
 
 .button {
+  background: none;
+  border: none;
+  border-bottom: 0.15rem black solid;
+  border-radius: 0.2rem;
+  font-size: 1.5rem;
+  font-style: italic;
   cursor: pointer;
 }
 
+.button:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
 .button:disabled {
+  border-bottom: none;
+  color: darkgray;
   cursor: auto;
+}
+
+.button:focus-visible {
+  outline: 0.15rem dotted black;
+  outline-offset: -0.15rem;
+}
+
+.image {
+  height: 1rem;
 }
 
 .left {
@@ -23,4 +44,32 @@
 
 .right {
   float: right;
+}
+
+.right .image {
+  margin-left: 0.3rem;
+}
+
+@media (min-width: 992px) {
+  .button {
+    border-bottom: 0.2rem black solid;
+    border-radius: 0.3rem;
+    font-size: 2rem;
+  }
+
+  .button:not(:last-child) {
+    margin-right: 1rem;
+  }
+
+  .button:focus-visible {
+    outline: 0.2rem dotted black;
+  }
+
+  .image {
+    height: 1.5rem;
+  }
+
+  .right .image {
+    margin-left: 0.5rem;
+  }
 }

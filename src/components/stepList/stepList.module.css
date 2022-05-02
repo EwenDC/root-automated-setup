@@ -1,7 +1,12 @@
 .container {
   flex-grow: 1;
-  max-width: 80rem;
-  padding: 1rem;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (min-width: 80rem) {
+  .container {
+    max-width: 80rem;
+  }
 }

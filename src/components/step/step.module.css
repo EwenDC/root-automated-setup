@@ -1,9 +1,6 @@
 .step {
   line-height: 1.5rem;
-}
-
-.step:not(:first-child) {
-  margin-top: 1rem;
+  margin: 1rem;
 }
 
 .step.inactive {
@@ -18,12 +15,10 @@
   line-height: 2.2rem;
   font-weight: 400;
   font-variant: small-caps;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem;
 }
 
 .subtitle {
   font-size: 1rem;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem;
 }

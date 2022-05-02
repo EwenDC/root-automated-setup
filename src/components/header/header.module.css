@@ -1,6 +1,6 @@
 .container {
   flex-shrink: 0;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-flow: column;
