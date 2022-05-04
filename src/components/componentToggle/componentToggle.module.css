@@ -55,6 +55,7 @@
   outline-color: black;
 }
 
+.component.locked,
 .component:disabled {
   cursor: auto;
 }

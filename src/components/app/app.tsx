@@ -2,6 +2,7 @@ import { Provider } from "react-redux";
 import Header from "../header";
 import StepList from "../stepList";
 import { store } from "../store";
+import Toast from "../toast";
 import Toolbar from "../toolbar";
 
 export const App: React.FC = () => (
@@ -9,5 +10,6 @@ export const App: React.FC = () => (
     <Header />
     <StepList />
     <Toolbar />
+    <Toast />
   </Provider>
 );

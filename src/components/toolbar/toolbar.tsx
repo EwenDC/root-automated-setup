@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import styles from "./toolbar.module.css";
 import { ReactComponent as UndoIcon } from "../../images/undo.svg";
 import { ReactComponent as RedoIcon } from "../../images/redo.svg";
-import { ReactComponent as ArrowIcon } from "../../images/chevronRight.svg";
+import { ReactComponent as NextIcon } from "../../images/next.svg";
 
 export const Toolbar: React.FC = () => {
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ export const Toolbar: React.FC = () => {
           onClick={() => dispatch(nextStep())}
         >
           {t("label.nextStep")}
-          <ArrowIcon className={styles.image} />
+          <NextIcon className={styles.image} />
         </button>
       </nav>
     </footer>

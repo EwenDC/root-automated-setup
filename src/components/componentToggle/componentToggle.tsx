@@ -2,11 +2,12 @@ import classNames from "classnames";
 import { useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { GameComponent, WithCode } from "../../types";
-import { useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { StepContext } from "../step";
 import { RootState } from "../store";
 import styles from "./componentToggle.module.css";
 import defaultImage from "../../images/componentDefault.png";
+import { setErrorMessage } from "../../features";
 
 interface ComponentListProps<T extends WithCode<GameComponent>> {
   selector: (state: RootState) => T[];
@@ -24,6 +25,7 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
   unsorted,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
+  const dispatch = useAppDispatch();
   const { stepActive } = useContext(StepContext);
   const { t, i18n } = useTranslation();
 
@@ -61,11 +63,17 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
                 [styles.enabled]: stepActive && component.enabled,
                 [styles.locked]: stepActive && componentLocked,
               })}
-              onClick={() => toggleComponent(component)}
-              disabled={!stepActive || componentLocked}
-              title={componentLockedKey ? t(componentLockedKey) : undefined}
+              onClick={() =>
+                componentLocked
+                  ? dispatch(setErrorMessage(componentLockedKey))
+                  : toggleComponent(component)
+              }
+              disabled={!stepActive}
+              title={componentLocked ? t(componentLockedKey) : undefined}
+              tabIndex={stepActive && componentLocked ? -1 : undefined}
               role="switch"
               aria-checked={component.enabled}
+              aria-disabled={stepActive ? componentLocked : undefined}
               aria-label={stepActive ? component.label : undefined}
             >
               <img

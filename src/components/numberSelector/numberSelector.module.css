@@ -35,4 +35,5 @@
 .button:focus-visible,
 .input:focus-visible {
   outline: 0.15rem dotted black;
+  border-radius: 0.25rem;
 }

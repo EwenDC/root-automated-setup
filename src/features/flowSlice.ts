@@ -10,6 +10,7 @@ import {
   FactionEntry,
 } from "../types";
 import { takeRandom } from "./reduxUtils";
+import { setErrorMessage } from "./setupSlice";
 
 const initialState: FlowState = {
   pastSteps: [],
@@ -194,9 +195,12 @@ export const flowSlice = createSlice({
   },
   extraReducers: (builder) => {
     // This allows us to always reset the redo queue if the setup state changes
-    builder.addDefaultCase((state) => {
-      state.futureSteps = [];
-    });
+    builder
+      // Don't wipe redo queue when the only thing that happened was displaying an error
+      .addCase(setErrorMessage, () => {})
+      .addDefaultCase((state) => {
+        state.futureSteps = [];
+      });
   },
 });
 

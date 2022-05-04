@@ -42,7 +42,7 @@ export const Step: React.FC<StepProps> = ({
   useEffect(() => {
     if (stepActive)
       sectionElement.current?.scrollIntoView({ behavior: "smooth" });
-  }, [stepActive]);
+  });
 
   // Generate the Title Text in advance so we can use it to rename the window (if required)
   const titleText =

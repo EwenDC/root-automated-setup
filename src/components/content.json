@@ -1,10 +1,10 @@
 {
   "root": {
     "base": true,
-    "image": "expansions/root.png",
+    "image": "boxes/root.png",
     "decks": {
       "standard": {
-        "image": "decks/standard.png"
+        "image": "cards/standard.png"
       }
     },
     "factions": {
@@ -74,7 +74,7 @@
   },
   "riverfolk": {
     "base": false,
-    "image": "expansions/riverfolk.png",
+    "image": "boxes/riverfolk.png",
     "factions": {
       "cult": {
         "key": "cult",
@@ -121,7 +121,7 @@
   },
   "underworld": {
     "base": false,
-    "image": "expansions/underworld.png",
+    "image": "boxes/underworld.png",
     "factions": {
       "duchy": {
         "key": "duchy",
@@ -167,11 +167,11 @@
   },
   "marauder": {
     "base": false,
-    "image": "expansions/marauder.png",
+    "image": "boxes/marauder.png",
     "factions": {
       "warlord": {
         "key": "warlord",
-        "image": "",
+        "image": "meeples/warlord.png",
         "militant": true,
         "isVagabond": false,
         "warriors": 21,
@@ -180,7 +180,7 @@
       },
       "keepers": {
         "key": "keepers",
-        "image": "",
+        "image": "meeples/keepers.png",
         "militant": true,
         "isVagabond": false,
         "warriors": 15,
@@ -190,28 +190,28 @@
     },
     "hirelings": {
       "patrol": {
-        "image": "",
+        "image": "meeples/patrol.png",
         "factions": ["marquise"],
         "warriors": 12,
         "components": 0,
         "componentName": ""
       },
       "dynasty": {
-        "image": "",
+        "image": "meeples/dynasty.png",
         "factions": ["eyrie"],
         "warriors": 5,
         "components": 0,
         "componentName": ""
       },
       "uprising": {
-        "image": "",
+        "image": "meeples/uprising.png",
         "factions": ["alliance"],
         "warriors": 4,
         "components": 1,
         "componentName": "component.uprisingDie"
       },
       "exile": {
-        "image": "",
+        "image": "meeples/exile.png",
         "factions": ["vagabond", "vagabond2"],
         "warriors": 1,
         "components": 3,
@@ -221,16 +221,16 @@
   },
   "exilesDeck": {
     "base": false,
-    "image": "expansions/exilesDeck.png",
+    "image": "boxes/exilesDeck.png",
     "decks": {
       "exiles": {
-        "image": "decks/exiles.png"
+        "image": "cards/exiles.png"
       }
     }
   },
   "landmarkPack": {
     "base": false,
-    "image": "expansions/landmarkPack.png",
+    "image": "boxes/landmarkPack.png",
     "landmarks": {
       "treetop": {
         "image": "landmarks/treetop.png",
@@ -252,7 +252,7 @@
   },
   "vagabondPack": {
     "base": false,
-    "image": "expansions/vagabondPack.png",
+    "image": "boxes/vagabondPack.png",
     "vagabonds": {
       "adventurer": {
         "startingItems": ["boot", "torch", "hammer"],
@@ -270,7 +270,7 @@
   },
   "riverfolkHirelings": {
     "base": false,
-    "image": "expansions/riverfolkHirelings.png",
+    "image": "boxes/riverfolkHirelings.png",
     "hirelings": {
       "prophets": {
         "image": "meeples/prophets.png",
@@ -297,7 +297,7 @@
   },
   "underworldHirelings": {
     "base": false,
-    "image": "expansions/underworldHirelings.png",
+    "image": "boxes/underworldHirelings.png",
     "hirelings": {
       "expedition": {
         "image": "meeples/expedition.png",
@@ -324,7 +324,7 @@
   },
   "marauderHirelings": {
     "base": false,
-    "image": "expansions/marauderHirelings.png",
+    "image": "boxes/marauderHirelings.png",
     "hirelings": {
       "flamebearers": {
         "image": "meeples/flamebearers.png",

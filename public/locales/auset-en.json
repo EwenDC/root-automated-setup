@@ -14,18 +14,18 @@
     "factionHirelingExcluded": "The Faction associated with this Hireling is required for set up",
     "hirelingSelected": "An equivalent Hireling for this faction is already in play",
     "landmarkNotEnoughPlayers": "Not enough players to play with this landmark",
-    "lockedFaction": "Cannot select last faction until a Militant faction has been selected.",
+    "lockedFaction": "Cannot select last faction until a Militant faction has been selected",
     "mapLandmarkUsed": "Landmark already included in map set up",
-    "noDeck": "No Decks selected! Please select at least one Deck.",
-    "noFaction": "No Faction selected! Please select a faction to play.",
-    "noLandmark": "No Landmarks selected! Please select at least one Landmark, or set the Landmark count to zero.",
-    "noMap": "No Maps selected! Please select at least one Map.",
-    "noMilitantFaction": "No Militant Factions selected! Please select at least one Militant Faction.",
-    "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count.",
-    "tooFewHireling": "Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection requires removing too many factions from the draft. Please adjust the selected Hirelings, lower the player count, or skip the Hireling set up.",
-    "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count.",
+    "noDeck": "No Decks selected! Please select at least one Deck",
+    "noFaction": "No Faction selected! Please select a faction to play",
+    "noLandmark": "No Landmarks selected! Please select at least one Landmark, or set the Landmark count to zero",
+    "noMap": "No Maps selected! Please select at least one Map",
+    "noMilitantFaction": "No Militant Factions selected! Please select at least one Militant Faction",
+    "tooFewFaction": "Not enough Factions selected! Please select more Factions, or lower the player count",
+    "tooFewHireling": "Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection requires removing too many factions from the draft",
+    "tooFewLandmark": "Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count",
     "tooFewPlayerInsurgent": "Cannot use non-militant factions with less than 3 players and no bots or hirelings",
-    "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions."
+    "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions"
   },
   "expansion": {
     "exilesDeck": "Exiles and Partisans Deck",
@@ -178,6 +178,7 @@
     }
   },
   "label": {
+    "closeMessage": "Close Message",
     "fixedFirstPlayer": {
       "false": "Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>",
       "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
