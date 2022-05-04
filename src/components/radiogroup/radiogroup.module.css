@@ -42,10 +42,9 @@
   width: 0.65rem;
   height: 0.65rem;
   border-radius: 50%;
-  transform: scale(0);
   clip-path: polygon(14% 44%, 0% 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-  /* transition: 120ms transform ease-in-out; */
-  box-shadow: inset 1rem 1rem black;
+  box-shadow: inset 1rem 1rem transparent;
+  transition: 80ms box-shadow ease-out;
 }
 
 @media (forced-colors: active) {
@@ -55,7 +54,7 @@
 }
 
 .radio:checked::before {
-  transform: scale(1);
+  box-shadow: inset 1rem 1rem black;
 }
 
 .radio:disabled::before {
@@ -79,6 +78,10 @@
   .option:not(:last-child) .label {
     padding-right: 0.5rem;
   }
+}
+
+.inactive .radio::before {
+  transition: none;
 }
 
 .inactive .label {

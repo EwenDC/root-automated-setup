@@ -9,7 +9,7 @@
 }
 
 .carousel.inactive {
-  margin-top: 0;
+  margin: 0;
 }
 
 .carousel:focus-visible {
@@ -18,23 +18,27 @@
 }
 
 .component {
-  color: darkgray;
   font-size: 1rem;
   flex: 0;
   background: none;
-  border: none;
-  padding: 0.25rem;
   border-radius: 1rem;
+  padding: 0.1rem;
   cursor: pointer;
   height: 8rem;
   min-width: 8rem;
   margin: 0.4rem;
+  /* Transitioned properties */
+  color: darkgray;
+  outline: 0.2rem dashed transparent;
+  outline-offset: 0;
+  border: 0.15rem dotted transparent;
+  transition-property: color, outline, outline-offset, border;
+  transition-duration: 80ms;
+  transition-timing-function: ease-out;
 }
 
 .component:focus-visible {
   border: 0.15rem dotted black;
-  padding: 0.1rem;
-  outline: none;
   outline-offset: 0.15rem;
 }
 
@@ -57,18 +61,23 @@
 
 .carousel.inactive .component {
   margin: 0;
+  transition: none;
 }
 
 .image {
-  filter: grayscale();
   width: 3rem;
   height: 3rem;
+  /* Transitioned properties */
+  filter: grayscale();
+  transition-property: filter;
+  transition-duration: inherit;
+  transition-timing-function: inherit;
 }
 
 @media (min-width: 992px) {
   .carousel {
     flex-wrap: wrap;
-    overflow: none;
+    overflow: hidden;
     margin: 0.1rem 0rem;
   }
 

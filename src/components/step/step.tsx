@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { TOptions } from "i18next";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { selectFlowState } from "../../features";
 import { SetupStep } from "../../types";
@@ -33,12 +33,16 @@ export const Step: React.FC<StepProps> = ({
 }) => {
   const { currentStep, skippedSteps } = useAppSelector(selectFlowState);
   const { t, i18n } = useTranslation();
+  const sectionElement = useRef<HTMLElement>(null);
 
   // Figure out if we are the active step so we can tell children and trigger effects
   const stepActive = currentStep === step;
 
-  // TODO: Trigger a scroll-to effect when we become active
-  useEffect(() => {}, [stepActive]);
+  // Trigger a scroll-to effect when we become active
+  useEffect(() => {
+    if (stepActive)
+      sectionElement.current?.scrollIntoView({ behavior: "smooth" });
+  }, [stepActive]);
 
   // Generate the Title Text in advance so we can use it to rename the window (if required)
   const titleText =
@@ -79,6 +83,7 @@ export const Step: React.FC<StepProps> = ({
     return (
       <section
         className={classNames(styles.step, { [styles.inactive]: !stepActive })}
+        ref={sectionElement}
       >
         {titleText != null ? (
           <h1 className={styles.title}>{titleText}</h1>
