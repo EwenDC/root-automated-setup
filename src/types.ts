@@ -114,7 +114,7 @@ export enum SetupStep {
 }
 
 export interface FactionEntry extends WithCode<Faction> {
-  vagabond?: Vagabond;
+  vagabond?: WithCode<Vagabond>;
 }
 
 /** An object representing a slice of history for the flow state */

@@ -76,7 +76,7 @@ export const setupSlice = createSlice({
       // Make sure the player count is valid (i.e. above 0)
       if (action.payload >= 1) {
         state.playerCount = action.payload;
-        state.errorMessage = "";
+        state.errorMessage = null;
       } else {
         console.warn(
           "Invalid payload for setPlayerCount action: Payload must be a number above 0",
@@ -86,7 +86,7 @@ export const setupSlice = createSlice({
     },
     fixFirstPlayer: (state, action: PayloadAction<boolean>) => {
       state.fixedFirstPlayer = action.payload;
-      state.errorMessage = "";
+      state.errorMessage = null;
     },
     setFirstPlayer: (state, action: PayloadAction<number>) => {
       // Make sure the player count is valid (i.e. between 1 and playerCount)
@@ -111,7 +111,7 @@ export const setupSlice = createSlice({
     },
     enableMapLandmark: (state, action: PayloadAction<boolean>) => {
       state.useMapLandmark = action.payload;
-      state.errorMessage = "";
+      state.errorMessage = null;
     },
     setMap: (state, action: PayloadAction<WithCode<MapComponent>>) => {
       state.map = action.payload;
@@ -127,7 +127,7 @@ export const setupSlice = createSlice({
         action.payload === 2
       ) {
         state.landmarkCount = action.payload;
-        state.errorMessage = "";
+        state.errorMessage = null;
       } else {
         console.warn(
           "Invalid payload for setLandmarkCount action: Payload must be a number between 0 and 2",
@@ -217,7 +217,7 @@ export const setupSlice = createSlice({
   extraReducers: (builder) => {
     // This allows us to always reset the displayed error if the user makes a seperate input
     builder.addDefaultCase((state) => {
-      state.errorMessage = "";
+      state.errorMessage = null;
     });
   },
 });

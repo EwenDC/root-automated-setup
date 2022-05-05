@@ -14,22 +14,23 @@ export const Toast: React.FC = () => {
   const { t } = useTranslation();
 
   // Update the cached message if a new one came through
-  if (errorMessage !== "" && errorMessage !== cachedMessage)
+  if (errorMessage != null && errorMessage !== cachedMessage)
     setCachedMessage(errorMessage);
 
   return (
     <div
       className={classNames(styles.anchor, { [styles.hidden]: !errorMessage })}
       aria-hidden={!errorMessage}
+      aria-live="assertive"
     >
       <div className={styles.container}>
-        <span className={styles.message}>
+        <span id="appError" className={styles.message}>
           {cachedMessage && t(cachedMessage)}.
         </span>
         <button
           className={styles.close}
           title={t("label.closeMessage")}
-          onClick={() => dispatch(setErrorMessage(""))}
+          onClick={() => dispatch(setErrorMessage(null))}
           disabled={!errorMessage}
         >
           <CloseIcon />

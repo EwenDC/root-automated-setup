@@ -5,11 +5,7 @@
   max-width: 100%;
   flex-wrap: nowrap;
   overflow: auto;
-  margin: 0.6rem 0rem;
-}
-
-.carousel.inactive {
-  margin: 0;
+  padding: 0.3rem;
 }
 
 .carousel:focus-visible {
@@ -17,7 +13,7 @@
   border-radius: 1rem;
 }
 
-.component {
+.faction {
   font-size: 1rem;
   flex: 0;
   background: none;
@@ -26,66 +22,49 @@
   cursor: pointer;
   height: 8rem;
   min-width: 8rem;
-  margin: 0.4rem;
+  color: black;
+  margin: 0 0.15rem;
   /* Transitioned properties */
-  color: darkgray;
-  outline: 0.2rem dashed transparent;
+  outline: 0.15rem solid transparent;
   outline-offset: 0;
   border: 0.15rem dotted transparent;
-  transition-property: color, outline, outline-offset, border;
+  transition-property: outline, outline-offset, border;
   transition-duration: 80ms;
   transition-timing-function: ease-out;
 }
 
-.component:focus-visible {
-  outline-offset: 0.15rem;
+.faction:focus-visible {
   border-color: black;
+  outline-offset: 0.15rem;
 }
 
-.component.enabled {
-  color: black;
+.faction.selected {
   outline-color: black;
 }
 
-.component.locked {
-  outline: 0.15rem solid darkgray;
+.faction:disabled.selected {
+  outline-color: darkgray;
 }
 
-.component.enabled.locked {
-  outline-color: black;
-}
-
-.component.locked,
-.component:disabled {
+.faction.locked,
+.faction:disabled {
   cursor: auto;
-}
-
-.carousel.inactive .component {
-  margin: 0;
-  transition: none;
+  color: darkgray;
 }
 
 .image {
   width: 3rem;
   height: 3rem;
   /* Transitioned properties */
-  filter: grayscale();
   transition-property: filter;
   transition-duration: inherit;
   transition-timing-function: inherit;
 }
 
 @media (min-width: 992px) {
-  .carousel {
-    flex-wrap: wrap;
-    overflow: hidden;
-    margin: 0.1rem 0rem;
-  }
-
-  .component {
+  .faction {
     height: 10rem;
     min-width: 10rem;
-    margin: 0.9rem;
   }
 
   .image {
@@ -94,6 +73,7 @@
   }
 }
 
-.component.enabled .image {
-  filter: none;
+.faction.locked .image,
+.faction:disabled .image {
+  filter: grayscale();
 }

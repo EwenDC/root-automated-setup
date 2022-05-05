@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { useContext } from "react";
 import { Trans } from "react-i18next";
+import { selectSetupParameters } from "../../features";
+import { useAppSelector } from "../hooks";
 import { StepContext } from "../step";
 import styles from "./checkbox.module.css";
 
@@ -15,6 +17,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   defaultValue,
   onChange,
 }) => {
+  const { errorMessage } = useAppSelector(selectSetupParameters);
   const { stepActive } = useContext(StepContext);
   return defaultValue || stepActive ? (
     <div
@@ -29,6 +32,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         defaultChecked={defaultValue ?? false}
         disabled={!stepActive}
         onChange={(e) => onChange(e.target.checked)}
+        aria-invalid={stepActive && errorMessage ? true : undefined}
+        aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
       />
       <label htmlFor={id} className={styles.label}>
         <Trans i18nKey={`label.${id}`} />

@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { useContext } from "react";
 import { Trans } from "react-i18next";
+import { selectSetupParameters } from "../../features";
+import { useAppSelector } from "../hooks";
 import { StepContext } from "../step";
 import styles from "./radiogroup.module.css";
 
@@ -15,12 +17,18 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
   defaultValue,
   onChange,
 }) => {
+  const { errorMessage } = useAppSelector(selectSetupParameters);
   const { stepActive } = useContext(StepContext);
   return (
-    <div
+    <fieldset
+      name={id}
       className={classNames(styles.container, {
         [styles.inactive]: !stepActive,
       })}
+      disabled={!stepActive}
+      aria-required="true"
+      aria-invalid={stepActive && errorMessage ? true : undefined}
+      aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
     >
       {!defaultValue || stepActive ? (
         <div className={styles.option}>
@@ -30,7 +38,6 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
             type="radio"
             className={styles.radio}
             checked={!defaultValue}
-            disabled={!stepActive}
             onChange={() => onChange(false)}
           />
           <label htmlFor={`${id}False`} className={styles.label}>
@@ -45,8 +52,7 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
             id={`${id}True`}
             type="radio"
             className={styles.radio}
-            checked={defaultValue ?? false}
-            disabled={!stepActive}
+            checked={defaultValue}
             onChange={() => onChange(true)}
           />
           <label htmlFor={`${id}True`} className={styles.label}>
@@ -54,6 +60,10 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
           </label>
         </div>
       ) : null}
-    </div>
+    </fieldset>
   );
+};
+
+Radiogroup.defaultProps = {
+  defaultValue: false,
 };

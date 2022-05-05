@@ -32,7 +32,8 @@ initialState.skippedSteps[SetupStep.postHirelingSetup] = true;
 
 const getSlice = (state: FlowState): FlowSlice => ({
   step: state.currentStep,
-  factionPool: state.factionPool,
+  // This prevents changes we made to the faction pool in the draft state being reflected in the slice
+  factionPool: [...state.factionPool],
   lastFactionLocked: state.lastFactionLocked,
   playerIndex: state.currentPlayerIndex,
   factionIndex: state.currentFactionIndex,

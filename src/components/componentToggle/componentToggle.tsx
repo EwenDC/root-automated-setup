@@ -7,7 +7,7 @@ import { StepContext } from "../step";
 import { RootState } from "../store";
 import styles from "./componentToggle.module.css";
 import defaultImage from "../../images/componentDefault.png";
-import { setErrorMessage } from "../../features";
+import { selectSetupParameters, setErrorMessage } from "../../features";
 
 interface ComponentListProps<T extends WithCode<GameComponent>> {
   selector: (state: RootState) => T[];
@@ -25,6 +25,7 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
   unsorted,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
+  const { errorMessage } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
   const { stepActive } = useContext(StepContext);
   const { t, i18n } = useTranslation();
@@ -75,6 +76,10 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
               aria-checked={component.enabled}
               aria-disabled={stepActive ? componentLocked : undefined}
               aria-label={stepActive ? component.label : undefined}
+              aria-invalid={stepActive && errorMessage ? true : undefined}
+              aria-errormessage={
+                stepActive && errorMessage ? "appError" : undefined
+              }
             >
               <img
                 className={styles.image}

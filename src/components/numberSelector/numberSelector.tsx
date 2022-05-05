@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { Trans } from "react-i18next";
+import { selectSetupParameters } from "../../features";
+import { useAppSelector } from "../hooks";
 import { StepContext } from "../step";
 import styles from "./numberSelector.module.css";
 
@@ -18,6 +20,7 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
   maxVal,
   onChange,
 }) => {
+  const { errorMessage } = useAppSelector(selectSetupParameters);
   const { stepActive } = useContext(StepContext);
   // This used to be dynamic but we've effectivley constrained this via CSS
   const size = 2;
@@ -63,6 +66,10 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
             value={value}
             size={size}
             onChange={typingHandler}
+            aria-invalid={stepActive && errorMessage ? true : undefined}
+            aria-errormessage={
+              stepActive && errorMessage ? "appError" : undefined
+            }
           />
           <button className={styles.button} onClick={() => buttonHandler(+1)}>
             +

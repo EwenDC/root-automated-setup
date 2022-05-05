@@ -310,7 +310,7 @@
     },
     "selectFaction": {
       "subtitle": "Choose Faction",
-      "body": "Player {{count}}, choose which faction you would like to play from the faction pool below."
+      "body": "Player {{count}}, choose which faction you would like to play from the faction pool below. You may freely select factions from the list to see their stats, before confirming your selection by pressing \"Next Step.\""
     },
     "setUpFaction": {
       "subtitle": "Set up the {{faction}}"

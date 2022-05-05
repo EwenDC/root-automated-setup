@@ -28,6 +28,7 @@ import {
 import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
 import ComponentToggle from "../componentToggle";
+import { FactionSelect } from "../factionSelect/factionSelect";
 import { useAppDispatch, useAppSelector, useNthLastPlayer } from "../hooks";
 import NumberSelector from "../numberSelector";
 import Radiogroup from "../radiogroup";
@@ -50,7 +51,8 @@ export const StepList: React.FC = () => {
     excludedFactions,
     playerOrder,
   } = useAppSelector(selectSetupParameters);
-  const { currentPlayerIndex } = useAppSelector(selectFlowState);
+  const { currentPlayerIndex, factionPool, currentFactionIndex } =
+    useAppSelector(selectFlowState);
   const { skippedSteps } = useAppSelector(selectFlowState);
   const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
   const factionCodes = useAppSelector(selectFactionCodeArray);
@@ -302,8 +304,23 @@ export const StepList: React.FC = () => {
       <Step
         step={SetupStep.selectFaction}
         textCount={playerOrder[currentPlayerIndex]}
-      ></Step>
-      <Step step={SetupStep.setUpFaction} />
+      >
+        <FactionSelect />
+      </Step>
+      <Step
+        step={SetupStep.setUpFaction}
+        subtitleOptions={{
+          faction:
+            currentFactionIndex != null
+              ? t(`faction.${factionPool[currentFactionIndex].key}.name`)
+              : undefined,
+        }}
+        textKey={
+          currentFactionIndex != null
+            ? `faction.${factionPool[currentFactionIndex].key}.setup`
+            : undefined
+        }
+      />
       <Step step={SetupStep.placeScoreMarkers} />
       <Step step={SetupStep.chooseHand} />
       <Step step={SetupStep.setupEnd}></Step>
