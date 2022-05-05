@@ -585,19 +585,10 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.selectFaction:
-      // Ensure the user has actually selected a faction and that it isn't the locked final insurgent faction
-      if (
-        flowState.currentFactionIndex == null ||
-        (flowState.currentFactionIndex === flowState.factionPool.length - 1 &&
-          flowState.lastFactionLocked)
-      ) {
+      // Ensure the user has actually selected a faction
+      if (flowState.currentFactionIndex == null) {
         doIncrementStep = false;
-
-        if (flowState.currentFactionIndex == null) {
-          validationError = "error.noFaction";
-        } else {
-          validationError = "error.lockedFaction";
-        }
+        validationError = "error.noFaction";
       }
       break;
 

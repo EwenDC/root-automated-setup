@@ -4,14 +4,15 @@ import { useTranslation } from "react-i18next";
 import { GameComponent, WithCode } from "../../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { StepContext } from "../step";
-import { RootState } from "../store";
+import { AppThunk, RootState } from "../store";
 import styles from "./componentToggle.module.css";
 import defaultImage from "../../images/componentDefault.png";
 import { selectSetupParameters, setErrorMessage } from "../../features";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 interface ComponentListProps<T extends WithCode<GameComponent>> {
   selector: (state: RootState) => T[];
-  toggleComponent: (component: T) => void;
+  toggleComponent: (code: string) => PayloadAction<{ code: string }> | AppThunk;
   getLabelKey: (component: T) => string;
   getLockedKey?: (component: T) => string | null;
   unsorted?: boolean;
@@ -67,10 +68,14 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
               onClick={() =>
                 componentLocked
                   ? dispatch(setErrorMessage(componentLockedKey))
-                  : toggleComponent(component)
+                  : dispatch(toggleComponent(component.code))
               }
               disabled={!stepActive}
-              title={componentLocked ? t(componentLockedKey) : undefined}
+              title={
+                stepActive && componentLocked
+                  ? t(componentLockedKey)
+                  : undefined
+              }
               tabIndex={stepActive && componentLocked ? -1 : undefined}
               role="switch"
               aria-checked={component.enabled}

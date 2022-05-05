@@ -66,9 +66,7 @@ export const StepList: React.FC = () => {
       <Step step={SetupStep.chooseExpansions}>
         <ComponentToggle
           selector={selectExpansionArray}
-          toggleComponent={(expansion) =>
-            dispatch(toggleExpansion(expansion.code))
-          }
+          toggleComponent={toggleExpansion}
           getLabelKey={(expansion) => `expansion.${expansion.code}`}
           getLockedKey={(expansion) =>
             // Prevent the player from deselecting the Root base game
@@ -87,7 +85,7 @@ export const StepList: React.FC = () => {
       <Step step={SetupStep.chooseMap}>
         <ComponentToggle
           selector={selectMapArray}
-          toggleComponent={(map) => dispatch(toggleMap(map.code))}
+          toggleComponent={toggleMap}
           getLabelKey={(map) => `map.${map.code}.name`}
         />
         {landmarkMaps.length > 0 ? (
@@ -113,7 +111,7 @@ export const StepList: React.FC = () => {
       <Step step={SetupStep.chooseDeck}>
         <ComponentToggle
           selector={selectDeckArray}
-          toggleComponent={(deck) => dispatch(toggleDeck(deck.code))}
+          toggleComponent={toggleDeck}
           getLabelKey={(deck) => `deck.${deck.code}`}
         />
       </Step>
@@ -150,9 +148,7 @@ export const StepList: React.FC = () => {
         {landmarkCount > 0 ? (
           <ComponentToggle
             selector={selectLandmarkArray}
-            toggleComponent={(landmark) =>
-              dispatch(toggleLandmark(landmark.code))
-            }
+            toggleComponent={toggleLandmark}
             getLabelKey={(landmark) => `landmark.${landmark.code}.name`}
             getLockedKey={(landmark) =>
               // Disable this landmark if it requires more players to include
@@ -203,9 +199,7 @@ export const StepList: React.FC = () => {
         {!skippedSteps[SetupStep.setUpHireling1] ? (
           <ComponentToggle
             selector={selectHirelingArray}
-            toggleComponent={(hireling) =>
-              dispatch(toggleHireling(hireling.code))
-            }
+            toggleComponent={toggleHireling}
             getLabelKey={(hireling) => `hireling.${hireling.code}.name`}
             getLockedKey={(hireling) =>
               // Are we at the max player count (i.e. there are no factions to spare for an equivilent hireling)?
@@ -273,7 +267,7 @@ export const StepList: React.FC = () => {
       <Step step={SetupStep.chooseFactions}>
         <ComponentToggle
           selector={selectFactionArray}
-          toggleComponent={(faction) => dispatch(toggleFaction(faction.code))}
+          toggleComponent={toggleFaction}
           getLabelKey={(faction) => `faction.${faction.key}.name`}
           getLockedKey={(faction) =>
             // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
@@ -293,9 +287,7 @@ export const StepList: React.FC = () => {
             {t("label.selectVagabonds")}
             <ComponentToggle
               selector={selectVagabondArray}
-              toggleComponent={(vagabond) =>
-                dispatch(toggleVagabond(vagabond.code))
-              }
+              toggleComponent={toggleVagabond}
               getLabelKey={(vagabond) => `vagabond.${vagabond.code}.name`}
             />
           </>

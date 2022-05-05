@@ -55,6 +55,13 @@ export const FactionSelect: React.FC = () => {
               }
             }}
             disabled={!stepActive}
+            title={
+              stepActive &&
+              lastFactionLocked &&
+              index === factionPool.length - 1
+                ? t("error.lockedFaction")
+                : undefined
+            }
             role="radio"
             aria-checked={index === currentFactionIndex}
             aria-disabled={
