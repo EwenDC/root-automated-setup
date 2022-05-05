@@ -41,34 +41,44 @@
   },
   "faction": {
     "alliance": {
-      "name": "Woodland Alliance"
+      "name": "Woodland Alliance",
+      "setup": "<i>1.</i> Draw 3 <strong>cards</strong> and add them face down to your Supporters stack.<br/><i>2.</i> Fill your Sympathy track with <strong>sympathy tokens</strong>.<br/><i>3.</i> Put your 3 <strong>bases</strong> on your matching Bases spaces."
     },
     "corvid": {
-      "name": "Corvid Conspiracy"
+      "name": "Corvid Conspiracy",
+      "setup": "<i>1.</i> Choose a homeland clearing. Put 1 <strong>warrior</strong> and 1 <strong>plot token</strong> of your choice face down there.<br/><i>2.</i> Put 1 <strong>warrior</strong> in a clearing of each suit. <i>(Counting the previous step, place 4 warriors in total.)</i>"
     },
     "cult": {
-      "name": "Lizard Cult"
+      "name": "Lizard Cult",
+      "setup": "<i>1.</i> Choose a homeland clearing that is not adjacent to enemy homelands.<br/><i>2.</i> Put 4 <strong>warriors</strong> and 1 matching <strong>garden</strong> in your homeland. Put 3 <strong>warriors</strong> in clearings adjacent to it as evenly as possible.<br/><i>3.</i> Put 2 <strong>warriors</strong> in your Acolytes box.<br/><i>4.</i> Fill your Gardens tracks with <strong>gardens</strong>, except the leftmost space of the garden on the map.<br/><i>5.</i> Put your <strong>outcast marker</strong> on its Outcast side on any space of the Outcast box."
     },
     "duchy": {
-      "name": "Underground Duchy"
+      "name": "Underground Duchy",
+      "setup": "<i>1.</i> Choose a homeland clearing that is not adjacent to enemy homelands.<br/><i>2.</i> Put 2 <strong>warriors</strong> and 1 <strong>tunnel</strong> in your homeland. Put 5 <strong>warriors</strong> among clearings adjacent to it as evenly as possible.<br/><i>3.</i> Put your <strong>Burrow board</strong> near the map. Fill your Buildings tracks with your <strong>citadels</strong> and <strong>markets</strong>. Put your 9 <strong>minister cards</strong> on your Unswayed Ministers pile. Put your 9 <strong>crowns</strong> on the square spaces showing victory points."
     },
     "eyrie": {
-      "name": "Eyrie Dynasties"
+      "name": "Eyrie Dynasties",
+      "setup": "<i>1.</i> Choose a homeland clearing on the map edge clearing that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put 6 <strong>warriors</strong> and 1 <strong>roost</strong> in your homeland.<br/><i>3.</i> Put any <strong>leader card</strong> on your Leader Card slot. Keep the other 3 leaders face up nearby.<br/><i>4.</i> Tuck your 2 <strong>Loyal Viziers</strong> under the Decree column slots as listed on your current leader.<br/><i>5.</i> Fill your Roosts spaces with <strong>roosts</strong>, except the leftmost."
     },
     "keepers": {
-      "name": "Keepers in Iron"
+      "name": "Keepers in Iron",
+      "setup": "<i>1.</i> Shuffle all 12 <strong>relic tokens</strong> face down. Place one face down randomly in each forest.<br/><i>2.</i>Choose 2 adjacent homeland clearings on the map edge that have 2+ clearings between them and enemy homelands. Put 4 <strong>warriors</strong> in each homeland.<br/><i>3.</i> Put any remaining <strong>relics</strong>, as evenly as possible, among any forests that are not adjacent to your homelands.<br/><i>4.</i> Tuck a <strong>Faithful Retainer</strong> card into each of your Retinue column slots."
     },
     "marquise": {
-      "name": "Marquise de Cat"
+      "name": "Marquise de Cat",
+      "setup": "<i>1.</i> Choose 3 homeland clearings, each adjacent to one other.<br/><i>2.</i> Put 2 <strong>warriors</strong> in each of your homelands. Put 1 <strong>warrior</strong> in each other clearing.<br/><i>3.</i> Put the <strong>keep token</strong> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <strong>sawmill</strong>, <strong>workshop</strong>, and <strong>recruiter</strong> on the map, each in a different homeland of yours.<br/><i>4.</i> Fill your Buildings track with your <strong>buildings</strong>, except the leftmost spaces."
     },
     "riverfolk": {
-      "name": "Riverfolk Company"
+      "name": "Riverfolk Company",
+      "setup": "<i>1.</i> Put 4 <strong>warriors</strong> among any clearings along the river.<br/><i>2.</i> Put 3 <strong>warriors</strong> in your Payments box.<br/><i>3.</i> Fill your Trade Posts tracks with matching <strong>trade posts</strong>.<br/><i>4.</i> Put your 3 <strong>service markers</strong> on your Services track, setting a price for each service."
     },
     "vagabond": {
-      "name": "Vagabond"
+      "name": "Vagabond",
+      "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless a non-Vagabond has done so.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed.<br/><i>5.</i> Put <strong>relationship markers</strong> for non-Vagabond factions in play on the Indifferent space of Relationships <i>(after setup)</i>."
     },
     "warlord": {
-      "name": "Lord of the Hundreds"
+      "name": "Lord of the Hundreds",
+      "setup": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot.<br/><i>4.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done."
     }
   },
   "hireling": {
@@ -324,8 +334,8 @@
       "body": "Each player chooses three cards in their hand to keep and puts the other two cards face down on the shared deck. When finished, shuffle the shared deck."
     },
     "setupEnd": {
-      "title": "",
-      "body": ""
+      "title": "Begin Play",
+      "body": "The set up is now complete. Play will begin with Player {{count}}. If you wish to reset the setup process, use the button below.<p><i>\"Root Automated Setup\" Developed By Ewen Cameron</i><br/><i>Based on the board game \"Root\" published by Leder Games</i><br/><i>Application Licensed under CC BY-NC-SA 4.0</i></p>"
     }
   },
   "vagabond": {

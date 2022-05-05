@@ -312,10 +312,19 @@ export const StepList: React.FC = () => {
             ? `faction.${factionPool[currentFactionIndex].key}.setup`
             : undefined
         }
+        textOptions={{
+          vagabond:
+            currentFactionIndex != null &&
+            factionPool[currentFactionIndex].vagabond
+              ? t(
+                  `vagabond.${factionPool[currentFactionIndex].vagabond?.code}.name`
+                )
+              : undefined,
+        }}
       />
       <Step step={SetupStep.placeScoreMarkers} />
       <Step step={SetupStep.chooseHand} />
-      <Step step={SetupStep.setupEnd}></Step>
+      <Step step={SetupStep.setupEnd} textCount={playerOrder[0]} />
     </main>
   );
 };
