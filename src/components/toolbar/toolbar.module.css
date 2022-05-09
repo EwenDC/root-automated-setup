@@ -23,7 +23,7 @@
   margin-right: 0.5rem;
 }
 
-.button:disabled {
+.button.disabled {
   border-bottom: none;
   color: darkgray;
   cursor: auto;
