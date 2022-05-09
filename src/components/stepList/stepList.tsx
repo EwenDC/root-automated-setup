@@ -28,7 +28,7 @@ import {
 import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
 import ComponentToggle from "../componentToggle";
-import { FactionSelect } from "../factionSelect/factionSelect";
+import { FactionSelect } from "../factionSelect";
 import { useAppDispatch, useAppSelector, useNthLastPlayer } from "../hooks";
 import NumberSelector from "../numberSelector";
 import Radiogroup from "../radiogroup";

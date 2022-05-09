@@ -20,6 +20,29 @@ export const FactionSelect: React.FC = () => {
   const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
 
+  const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (
+    event
+  ) => {
+    const focusedIndex = currentFactionIndex ?? 0;
+    const maxIndex = factionPool.length - (lastFactionLocked ? 2 : 1);
+    let newIndex: number | undefined;
+
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      newIndex = focusedIndex + 1;
+      if (newIndex > maxIndex) newIndex = 0;
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      newIndex = focusedIndex - 1;
+      if (newIndex < 0) newIndex = maxIndex;
+    }
+
+    if (newIndex != null) {
+      event.preventDefault();
+      dispatch(setCurrentFactionIndex(newIndex));
+      // @ts-expect-error focus function is incorrectly excluded from children typing
+      event.currentTarget.parentNode?.children[newIndex].focus();
+    }
+  };
+
   return (
     <div
       className={styles.carousel}
@@ -70,6 +93,15 @@ export const FactionSelect: React.FC = () => {
                 : undefined
             }
             aria-label={stepActive ? factionName : undefined}
+            // We have to override the tabbing logic to meet the standard of role "radio"
+            tabIndex={
+              stepActive
+                ? index === currentFactionIndex ?? 0
+                  ? 0
+                  : -1
+                : undefined
+            }
+            onKeyDown={onKeyDownHandler}
           >
             <img
               className={styles.image}
