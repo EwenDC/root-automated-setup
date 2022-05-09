@@ -96,7 +96,7 @@ export const FactionSelect: React.FC = () => {
             // We have to override the tabbing logic to meet the standard of role "radio"
             tabIndex={
               stepActive
-                ? index === currentFactionIndex ?? 0
+                ? index === (currentFactionIndex ?? 0)
                   ? 0
                   : -1
                 : undefined
