@@ -219,48 +219,39 @@ export const StepList: React.FC = () => {
         subtitleOptions={{
           hireling:
             hireling1 &&
-            t(
-              `hireling.${hireling1.code}.${
-                hireling1.demoted ? "demoted." : ""
-              }name`
-            ),
+            t(`hireling.${hireling1.code}.name`, {
+              context: hireling1.demoted ? "demoted" : undefined,
+            }),
         }}
-        textKey={`hireling.${hireling1?.code}.${
-          hireling1?.demoted ? "demoted." : ""
-        }setup`}
+        textKey={`hireling.${hireling1?.code}.setup`}
         textCount={nthLastPlayer(1)} // Last player in turn order
+        textOptions={{ context: hireling1?.demoted ? "demoted" : undefined }}
       />
       <Step
         step={SetupStep.setUpHireling2}
         subtitleOptions={{
           hireling:
             hireling2 &&
-            t(
-              `hireling.${hireling2.code}.${
-                hireling2.demoted ? "demoted." : ""
-              }name`
-            ),
+            t(`hireling.${hireling2.code}.name`, {
+              context: hireling2.demoted ? "demoted" : undefined,
+            }),
         }}
-        textKey={`hireling.${hireling2?.code}.${
-          hireling2?.demoted ? "demoted." : ""
-        }setup`}
+        textKey={`hireling.${hireling2?.code}.setup`}
         textCount={nthLastPlayer(2)} // Second last player in turn order
+        textOptions={{ context: hireling2?.demoted ? "demoted" : undefined }}
       />
       <Step
         step={SetupStep.setUpHireling3}
         subtitleOptions={{
           hireling:
             hireling3 &&
-            t(
-              `hireling.${hireling3.code}.${
-                hireling3.demoted ? "demoted." : ""
-              }name`
-            ),
+            t(`hireling.${hireling3.code}.name`, {
+              context: hireling3.demoted ? "demoted" : undefined,
+            }),
         }}
-        textKey={`hireling.${hireling3?.code}.${
-          hireling3?.demoted ? "demoted." : ""
-        }setup`}
+        textKey={`hireling.${hireling3?.code}.setup`}
         textCount={nthLastPlayer(3)} // Third last player in turn order
+        textOptions={{ context: hireling3?.demoted ? "demoted" : undefined }}
       />
       <Step step={SetupStep.postHirelingSetup} />
       <Step step={SetupStep.drawCards} />
