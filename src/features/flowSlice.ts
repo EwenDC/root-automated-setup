@@ -193,6 +193,11 @@ export const flowSlice = createSlice({
         );
       }
     },
+    resetFlow: (state) => {
+      state.pastSteps = [];
+      state.currentStep = SetupStep.chooseExpansions;
+      state.futureSteps = [];
+    },
   },
   extraReducers: (builder) => {
     // This allows us to always reset the redo queue if the setup state changes
@@ -214,5 +219,6 @@ export const {
   addToFactionPool,
   setCurrentPlayerIndex,
   setCurrentFactionIndex,
+  resetFlow,
 } = flowSlice.actions;
 export default flowSlice.reducer;

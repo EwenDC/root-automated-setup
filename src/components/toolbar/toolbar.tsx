@@ -1,11 +1,18 @@
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
-import { nextStep, redoStep, selectFlowState, undoStep } from "../../features";
+import {
+  nextStep,
+  redoStep,
+  resetFlow,
+  selectFlowState,
+  undoStep,
+} from "../../features";
 import { SetupStep } from "../../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import styles from "./toolbar.module.css";
 import { ReactComponent as UndoIcon } from "../../images/undo.svg";
 import { ReactComponent as RedoIcon } from "../../images/redo.svg";
+import { ReactComponent as RestartIcon } from "../../images/restart.svg";
 import { ReactComponent as NextIcon } from "../../images/next.svg";
 import { useRef, useState } from "react";
 
@@ -48,7 +55,7 @@ export const Toolbar: React.FC = () => {
 
   const undoDisabled = pastSteps.length === 0;
   const redoDisabled = futureSteps.length === 0;
-  const nextDisabled = currentStep >= SetupStep.setupEnd;
+  const renderRestartButton = currentStep >= SetupStep.setupEnd;
 
   return (
     <footer className={styles.container}>
@@ -72,7 +79,7 @@ export const Toolbar: React.FC = () => {
           tabIndex={focusedIndex === 0 ? 0 : -1}
           onKeyDown={(e) => onKeyDownHandler(e, 0)}
         >
-          <UndoIcon className={styles.image} />
+          <UndoIcon className={styles.icon} />
         </button>
         <button
           className={classNames(styles.button, styles.left, {
@@ -93,28 +100,25 @@ export const Toolbar: React.FC = () => {
           tabIndex={focusedIndex === 1 ? 0 : -1}
           onKeyDown={(e) => onKeyDownHandler(e, 1)}
         >
-          <RedoIcon className={styles.image} />
+          <RedoIcon className={styles.icon} />
         </button>
         <button
-          className={classNames(styles.button, styles.right, {
-            [styles.disabled]: nextDisabled,
-          })}
+          className={`${styles.button} ${styles.right}`}
           ref={buttonRefs[2]}
-          onClick={
-            nextDisabled
-              ? undefined
-              : () => {
-                  dispatch(nextStep());
-                  setFocusedIndex(2);
-                }
-          }
-          aria-disabled={nextDisabled}
+          onClick={() => {
+            if (renderRestartButton) dispatch(resetFlow());
+            else dispatch(nextStep());
+            setFocusedIndex(2);
+          }}
           // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 2 ? 0 : -1}
           onKeyDown={(e) => onKeyDownHandler(e, 2)}
         >
-          {t("label.nextStep")}
-          <NextIcon className={styles.image} />
+          {renderRestartButton ? <RestartIcon className={styles.icon} /> : null}
+          <span className={styles.label}>
+            {t(renderRestartButton ? "label.restartSetup" : "label.nextStep")}
+          </span>
+          {!renderRestartButton ? <NextIcon className={styles.icon} /> : null}
         </button>
       </div>
     </footer>

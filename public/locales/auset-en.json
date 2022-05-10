@@ -176,6 +176,7 @@
     "pageTitle": "Root Automated Setup",
     "playerCount": "Player Count",
     "redo": "Redo",
+    "restartSetup": "Restart Setup",
     "selectVagabonds": "Select which vagabond characters you would like to include in the faction draft.",
     "undo": "Undo",
     "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default set up with the map-specific version)</i>"
@@ -309,7 +310,7 @@
     },
     "setupEnd": {
       "title": "Begin Play",
-      "body": "The set up is now complete. Play will begin with Player {{count}}. If you wish to reset the setup process, use the button below.<p><i>\"Root Automated Setup\" Developed By Ewen Cameron</i><br/><i>Based on the board game \"Root\" published by Leder Games</i><br/><i>Application Licensed under CC BY-NC-SA 4.0</i></p>"
+      "body": "The set up is now complete. Play will begin with Player {{count}}. If you wish to restart the setup process, use the button below.<p><i>\"Root Automated Setup\" Developed By Ewen Cameron</i><br/><i>Based on the board game \"Root\" published by Leder Games</i><br/><i>Application Licensed under CC BY-NC-SA 4.0</i></p>"
     }
   },
   "vagabond": {

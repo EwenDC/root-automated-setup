@@ -34,10 +34,6 @@
   outline-offset: -0.15rem;
 }
 
-.image {
-  height: 1rem;
-}
-
 .left {
   float: left;
 }
@@ -46,8 +42,16 @@
   float: right;
 }
 
-.right .image {
+.icon {
+  height: 1rem;
+}
+
+.label:not(:first-child) {
   margin-left: 0.3rem;
+}
+
+.label:not(:last-child) {
+  margin-right: 0.3rem;
 }
 
 @media (min-width: 992px) {
@@ -65,11 +69,15 @@
     outline: 0.2rem dotted black;
   }
 
-  .image {
+  .icon {
     height: 1.5rem;
   }
 
-  .right .image {
+  .label:not(:first-child) {
     margin-left: 0.5rem;
+  }
+
+  .label:not(:last-child) {
+    margin-right: 0.5rem;
   }
 }
