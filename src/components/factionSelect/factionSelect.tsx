@@ -11,6 +11,7 @@ import styles from "./factionSelect.module.css";
 import defaultImage from "../../images/componentDefault.png";
 import { useContext } from "react";
 import { StepContext } from "../step";
+import { ReactComponent as MilitantIcon } from "../../images/militant.svg";
 
 export const FactionSelect: React.FC = () => {
   const { factionPool, currentFactionIndex, lastFactionLocked } =
@@ -111,7 +112,17 @@ export const FactionSelect: React.FC = () => {
               aria-hidden="true"
             />
             <div className={styles.label}>
-              <span>{factionName}</span>
+              <span>
+                {faction.militant ? (
+                  <>
+                    <MilitantIcon
+                      className={styles.icon}
+                      title={t("label.militant")}
+                    />{" "}
+                  </>
+                ) : null}
+                {factionName}
+              </span>
             </div>
           </button>
         );
