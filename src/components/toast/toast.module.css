@@ -20,7 +20,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
+  flex: 1 0;
   max-width: 80rem;
 }
 

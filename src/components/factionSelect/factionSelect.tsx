@@ -43,6 +43,7 @@ export const FactionSelect: React.FC = () => {
     }
   };
 
+  const lastIndex = factionPool.length - 1;
   return (
     <div
       className={styles.carousel}
@@ -64,13 +65,13 @@ export const FactionSelect: React.FC = () => {
           <button
             key={faction.code}
             className={classNames(styles.faction, {
+              [styles.militant]: faction.militant,
               [styles.selected]: index === currentFactionIndex,
-              [styles.locked]:
-                lastFactionLocked && index === factionPool.length - 1,
+              [styles.locked]: lastFactionLocked && index === lastIndex,
             })}
             onClick={() => {
               if (index !== currentFactionIndex) {
-                if (!lastFactionLocked || index < factionPool.length - 1) {
+                if (!lastFactionLocked || index < lastIndex) {
                   dispatch(setCurrentFactionIndex(index));
                 } else {
                   dispatch(setErrorMessage("error.lockedFaction"));
@@ -79,18 +80,14 @@ export const FactionSelect: React.FC = () => {
             }}
             disabled={!stepActive}
             title={
-              stepActive &&
-              lastFactionLocked &&
-              index === factionPool.length - 1
+              stepActive && lastFactionLocked && index === lastIndex
                 ? t("error.lockedFaction")
                 : undefined
             }
             role="radio"
             aria-checked={index === currentFactionIndex}
             aria-disabled={
-              stepActive
-                ? lastFactionLocked && index === factionPool.length - 1
-                : undefined
+              stepActive ? lastFactionLocked && index === lastIndex : undefined
             }
             aria-label={stepActive ? factionName : undefined}
             // We have to override the tabbing logic to meet the standard of role "radio"
@@ -113,7 +110,9 @@ export const FactionSelect: React.FC = () => {
               alt="" // We're including the alt text in the button itself so don't bother reading out the image
               aria-hidden="true"
             />
-            <div>{factionName}</div>
+            <div className={styles.label}>
+              <span>{factionName}</span>
+            </div>
           </button>
         );
       })}

@@ -96,7 +96,9 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />
-              <div>{component.label}</div>
+              <div className={styles.label}>
+                <span>{component.label}</span>
+              </div>
             </button>
           );
         }

@@ -19,7 +19,7 @@
 
 .component {
   font-size: 1rem;
-  flex: 0;
+  flex: 0 0;
   background: none;
   border-radius: 1rem;
   padding: 0.1rem;
@@ -75,6 +75,10 @@
   transition-timing-function: inherit;
 }
 
+.component.enabled .image {
+  filter: none;
+}
+
 @media (min-width: 992px) {
   .carousel {
     flex-wrap: wrap;
@@ -86,14 +90,21 @@
     height: 10rem;
     min-width: 10rem;
     margin: 0.9rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .image {
     width: 6rem;
     height: 6rem;
+    flex: 0 0;
+    margin: 0.5rem auto;
   }
-}
 
-.component.enabled .image {
-  filter: none;
+  .label {
+    flex: 1 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
 }

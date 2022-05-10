@@ -1,5 +1,5 @@
 .container {
-  flex-shrink: 0;
+  flex: 0 0;
   display: flex;
   justify-content: center;
 }
@@ -12,11 +12,18 @@
 .button {
   background: none;
   border: none;
-  border-bottom: 0.15rem black solid;
-  border-radius: 0.2rem;
   font-size: 1.5rem;
   font-style: italic;
   cursor: pointer;
+  border-radius: 0.2rem;
+  outline-offset: -0.15rem;
+  /* Transitioned properties */
+  color: black;
+  border-bottom: 0.15rem black solid;
+  outline: 0.15rem dotted transparent;
+  transition-property: color, border, outline;
+  transition-duration: 80ms;
+  transition-timing-function: ease-out;
 }
 
 .button:not(:last-child) {
@@ -24,14 +31,13 @@
 }
 
 .button.disabled {
-  border-bottom: none;
-  color: darkgray;
   cursor: auto;
+  color: darkgray;
+  border-bottom-color: transparent;
 }
 
 .button:focus-visible {
-  outline: 0.15rem dotted black;
-  outline-offset: -0.15rem;
+  outline-color: black;
 }
 
 .left {
@@ -56,17 +62,14 @@
 
 @media (min-width: 992px) {
   .button {
-    border-bottom: 0.2rem black solid;
     border-radius: 0.3rem;
     font-size: 2rem;
+    border-bottom: 0.2rem black solid;
+    outline: 0.2rem dotted transparent;
   }
 
   .button:not(:last-child) {
     margin-right: 1rem;
-  }
-
-  .button:focus-visible {
-    outline: 0.2rem dotted black;
   }
 
   .icon {
