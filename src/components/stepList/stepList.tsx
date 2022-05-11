@@ -24,6 +24,8 @@ import {
   selectVagabondArray,
   toggleVagabond,
   selectFlowState,
+  selectFactionPool,
+  selectSetupMap,
 } from "../../features";
 import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
@@ -39,7 +41,6 @@ export const StepList: React.FC = () => {
   const {
     playerCount,
     fixedFirstPlayer,
-    map,
     useMapLandmark,
     deck,
     landmarkCount,
@@ -51,8 +52,10 @@ export const StepList: React.FC = () => {
     excludedFactions,
     playerOrder,
   } = useAppSelector(selectSetupParameters);
-  const { currentPlayerIndex, factionPool, currentFactionIndex } =
+  const map = useAppSelector(selectSetupMap);
+  const { currentPlayerIndex, currentFactionIndex } =
     useAppSelector(selectFlowState);
+  const factionPool = useAppSelector(selectFactionPool);
   const { skippedSteps } = useAppSelector(selectFlowState);
   const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
   const factionCodes = useAppSelector(selectFactionCodeArray);
@@ -119,8 +122,8 @@ export const StepList: React.FC = () => {
         step={SetupStep.setUpDeck}
         renderTitle={skippedSteps[SetupStep.chooseDeck]}
         renderSubtitle={!skippedSteps[SetupStep.chooseDeck]}
-        subtitleOptions={{ deck: deck && t(`deck.${deck.code}`) }}
-        textOptions={{ deck: deck && t(`deck.${deck.code}`) }}
+        subtitleOptions={{ deck: deck && t(`deck.${deck}`) }}
+        textOptions={{ deck: deck && t(`deck.${deck}`) }}
       />
       <Step step={SetupStep.setUpBots} />
       <Step step={SetupStep.seatPlayers}>
@@ -165,17 +168,17 @@ export const StepList: React.FC = () => {
       <Step
         step={SetupStep.setUpLandmark1}
         subtitleOptions={{
-          landmark: landmark1 && t(`landmark.${landmark1.code}.name`),
+          landmark: landmark1 && t(`landmark.${landmark1}.name`),
         }}
-        textKey={`landmark.${landmark1?.code}.setup`}
+        textKey={`landmark.${landmark1}.setup`}
         textCount={nthLastPlayer(1)} // Last player in turn order
       />
       <Step
         step={SetupStep.setUpLandmark2}
         subtitleOptions={{
-          landmark: landmark2 && t(`landmark.${landmark2.code}.name`),
+          landmark: landmark2 && t(`landmark.${landmark2}.name`),
         }}
-        textKey={`landmark.${landmark2?.code}.setup`}
+        textKey={`landmark.${landmark2}.setup`}
         textCount={nthLastPlayer(2)} // Second last player in turn order
       />
       <Step step={SetupStep.chooseHirelings}>

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../components/store";
 import {
   SetupStep,
@@ -49,6 +49,21 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
 
 /** Returns the flow information (including current step) from redux state */
 export const selectFlowState = (state: RootState) => state.flow;
+
+/** Returns the faction pool, joining the original faction and vagabond objects into the entries */
+export const selectFactionPool = createSelector(
+  (state: RootState) => state.flow.factionPool,
+  (state: RootState) => state.faction,
+  (state: RootState) => state.vagabond,
+  (factionPool, factions, vagabonds) =>
+    factionPool.map((entry) => ({
+      ...factions[entry.code],
+      code: entry.code,
+      vagabond: entry.vagabond
+        ? { ...vagabonds[entry.vagabond], code: entry.vagabond }
+        : undefined,
+    }))
+);
 
 export const flowSlice = createSlice({
   name: "flow",
@@ -152,23 +167,18 @@ export const flowSlice = createSlice({
         vagabondPool: WithCode<Vagabond>[]
       ) => ({
         payload: {
-          ...faction,
-          vagabond: faction.isVagabond ? takeRandom(vagabondPool) : undefined,
+          code: faction.code,
+          militant: faction.militant,
+          vagabond: faction.isVagabond
+            ? takeRandom(vagabondPool).code
+            : undefined,
         },
       }),
       reducer: (state, action: PayloadAction<FactionEntry>) => {
-        // Ensure that the passed-in faction includes a vagabond character if required
-        if (!action.payload.isVagabond || action.payload.vagabond) {
-          // Add to our pool, and set it to locked if insurgent
-          state.factionPool.push(action.payload);
-          state.lastFactionLocked = !action.payload.militant;
-          state.futureSteps = [];
-        } else {
-          console.warn(
-            'Invalid payload for addToFactionPool action: Payload field "vagabond" cannot be omited if "isVagabond" is true',
-            action
-          );
-        }
+        // Add to our pool, and set it to locked if insurgent
+        state.factionPool.push(action.payload);
+        state.lastFactionLocked = !action.payload.militant;
+        state.futureSteps = [];
       },
     },
     setCurrentPlayerIndex: (state, action: PayloadAction<number>) => {

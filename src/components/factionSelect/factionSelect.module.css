@@ -45,10 +45,6 @@
   outline-color: black;
 }
 
-.faction:disabled.selected {
-  outline-color: darkgray;
-}
-
 .faction.locked {
   background-color: gainsboro;
 }
@@ -63,6 +59,10 @@
   background-color: transparent;
 }
 
+.faction:disabled.selected {
+  outline-color: darkgray;
+}
+
 .image {
   width: 5rem;
   height: 5rem;
@@ -72,18 +72,6 @@
   transition-property: filter;
   transition-duration: inherit;
   transition-timing-function: inherit;
-}
-
-@media (min-width: 992px) {
-  .faction {
-    height: 10.5rem;
-    min-width: 10.5rem;
-  }
-
-  .image {
-    width: 6rem;
-    height: 6rem;
-  }
 }
 
 .faction.locked .image {
@@ -98,21 +86,45 @@
   height: 1rem;
 }
 
-.label {
+.title {
   flex: 1 0;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
 }
 
-.faction:not(:disabled) .label {
+.faction:not(:disabled) .title {
   color: white;
   background-color: #5a5b5f;
 }
 
-.faction.militant:not(:disabled) .label {
+.faction.militant:not(:disabled) .title {
   color: white;
   background-color: #a4153b;
+}
+
+.label {
+  margin: 0 0.1rem;
+}
+
+@media (min-width: 992px) {
+  .faction {
+    height: 10.5rem;
+    min-width: 10.5rem;
+  }
+
+  .image {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .title {
+    border-radius: 1rem;
+  }
+
+  .label {
+    margin: 0 0.25rem;
+  }
 }

@@ -59,7 +59,8 @@ export interface Vagabond extends ExpansionComponent {
 }
 
 /** An object representing an promoted or demoted Hireling */
-export interface HirelingEntry extends WithCode<Hireling> {
+export interface HirelingEntry {
+  code: string;
   demoted: boolean;
 }
 
@@ -70,14 +71,14 @@ export interface SetupState {
   playerOrder: number[];
   errorMessage: string | null;
   // Map
-  map: WithCode<MapComponent> | null;
+  map: string | null;
   useMapLandmark: boolean;
   // Deck
-  deck: WithCode<ExpansionComponent> | null;
+  deck: string | null;
   // Landmarks
   landmarkCount: 0 | 1 | 2;
-  landmark1: WithCode<Landmark> | null;
-  landmark2: WithCode<Landmark> | null;
+  landmark1: string | null;
+  landmark2: string | null;
   // Hirelings
   hireling1: HirelingEntry | null;
   hireling2: HirelingEntry | null;
@@ -113,8 +114,11 @@ export enum SetupStep {
   setupEnd,
 }
 
-export interface FactionEntry extends WithCode<Faction> {
-  vagabond?: WithCode<Vagabond>;
+/** An object representing a faction in the faction pool, along with it's assigned vagabond character (if it has one) */
+export interface FactionEntry {
+  code: string;
+  militant: boolean;
+  vagabond?: string;
 }
 
 /** An object representing a slice of history for the flow state */

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import {
+  selectFactionPool,
   selectFlowState,
   selectSetupParameters,
   setCurrentFactionIndex,
@@ -14,8 +15,9 @@ import { StepContext } from "../step";
 import { ReactComponent as MilitantIcon } from "../../images/militant.svg";
 
 export const FactionSelect: React.FC = () => {
-  const { factionPool, currentFactionIndex, lastFactionLocked } =
+  const { currentFactionIndex, lastFactionLocked } =
     useAppSelector(selectFlowState);
+  const factionPool = useAppSelector(selectFactionPool);
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
   const { stepActive } = useContext(StepContext);
@@ -121,8 +123,8 @@ export const FactionSelect: React.FC = () => {
               alt="" // We're including the alt text in the button itself so don't bother reading out the image
               aria-hidden="true"
             />
-            <div className={styles.label}>
-              <span>
+            <div className={styles.title}>
+              <span className={styles.label}>
                 {faction.militant ? (
                   <>
                     <MilitantIcon

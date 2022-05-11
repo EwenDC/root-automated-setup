@@ -68,6 +68,63 @@ const initialState: SetupState = {
 /** Returns the setup parameters from redux state */
 export const selectSetupParameters = (state: RootState) => state.setup;
 
+/** Returns the object for the map selected in setup */
+export const selectSetupMap = (state: RootState) =>
+  state.setup.map != null
+    ? { ...state.map[state.setup.map], code: state.setup.map }
+    : null;
+
+/** Returns the object for the deck selected in setup */
+export const selectSetupDeck = (state: RootState) =>
+  state.setup.deck != null
+    ? { ...state.deck[state.setup.deck], code: state.setup.deck }
+    : null;
+
+/** Returns the object for the first landmark selected in setup */
+export const selectSetupLandmark1 = (state: RootState) =>
+  state.setup.landmark1 != null
+    ? {
+        ...state.landmark[state.setup.landmark1],
+        code: state.setup.landmark1,
+      }
+    : null;
+
+/** Returns the object for the second landmark selected in setup */
+export const selectSetupLandmark2 = (state: RootState) =>
+  state.setup.landmark2 != null
+    ? {
+        ...state.landmark[state.setup.landmark2],
+        code: state.setup.landmark2,
+      }
+    : null;
+
+/** Returns the object for the first hireling selected in setup */
+export const selectSetupHireling1 = (state: RootState) =>
+  state.setup.hireling1 != null
+    ? {
+        ...state.hireling[state.setup.hireling1.code],
+        ...state.setup.hireling1,
+      }
+    : null;
+
+/** Returns the object for the second hireling selected in setup */
+export const selectSetupHireling2 = (state: RootState) =>
+  state.setup.hireling2 != null
+    ? {
+        ...state.hireling[state.setup.hireling2.code],
+        ...state.setup.hireling2,
+      }
+    : null;
+
+/** Returns the object for the third hireling selected in setup */
+export const selectSetupHireling3 = (state: RootState) =>
+  state.setup.hireling3 != null
+    ? {
+        ...state.hireling[state.setup.hireling3.code],
+        ...state.setup.hireling3,
+      }
+    : null;
+
 export const setupSlice = createSlice({
   name: "setup",
   initialState: initialState,
@@ -113,11 +170,17 @@ export const setupSlice = createSlice({
       state.useMapLandmark = action.payload;
       state.errorMessage = null;
     },
-    setMap: (state, action: PayloadAction<WithCode<MapComponent>>) => {
-      state.map = action.payload;
+    setMap: {
+      prepare: (map: WithCode<MapComponent>) => ({ payload: map.code }),
+      reducer: (state, action: PayloadAction<string>) => {
+        state.map = action.payload;
+      },
     },
-    setDeck: (state, action: PayloadAction<WithCode<ExpansionComponent>>) => {
-      state.deck = action.payload;
+    setDeck: {
+      prepare: (deck: WithCode<ExpansionComponent>) => ({ payload: deck.code }),
+      reducer: (state, action: PayloadAction<string>) => {
+        state.deck = action.payload;
+      },
     },
     setLandmarkCount: (state, action: PayloadAction<number>) => {
       // We use === instead of >= or <= to ensure typescript can infer the correct payload type
@@ -135,41 +198,31 @@ export const setupSlice = createSlice({
         );
       }
     },
-    setLandmark1: (state, action: PayloadAction<WithCode<Landmark>>) => {
-      if (state.landmarkCount < 1) {
-        console.warn(
-          "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1",
-          action
-        );
-      } else if (
-        state.useMapLandmark &&
-        state.map?.landmark === action.payload.code
-      ) {
-        console.warn(
-          "Invalid payload for setLandmark1 action: Payload cannot be the map landmark when useMapLandmark is true",
-          action
-        );
-      } else {
-        state.landmark1 = action.payload;
-      }
+    setLandmark1: {
+      prepare: (landmark: WithCode<Landmark>) => ({ payload: landmark.code }),
+      reducer: (state, action: PayloadAction<string>) => {
+        if (state.landmarkCount >= 1) {
+          state.landmark1 = action.payload;
+        } else {
+          console.warn(
+            "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1",
+            action
+          );
+        }
+      },
     },
-    setLandmark2: (state, action: PayloadAction<WithCode<Landmark>>) => {
-      if (state.landmarkCount < 2) {
-        console.warn(
-          "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2",
-          action
-        );
-      } else if (
-        state.useMapLandmark &&
-        state.map?.landmark === action.payload.code
-      ) {
-        console.warn(
-          "Invalid payload for setLandmark2 action: Payload cannot be the map landmark when useMapLandmark is true",
-          action
-        );
-      } else {
-        state.landmark2 = action.payload;
-      }
+    setLandmark2: {
+      prepare: (landmark: WithCode<Landmark>) => ({ payload: landmark.code }),
+      reducer: (state, action: PayloadAction<string>) => {
+        if (state.landmarkCount >= 2) {
+          state.landmark2 = action.payload;
+        } else {
+          console.warn(
+            "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2",
+            action
+          );
+        }
+      },
     },
     setHireling: {
       prepare: (
@@ -179,7 +232,8 @@ export const setupSlice = createSlice({
       ) => ({
         payload: {
           number,
-          hireling,
+          hireling: hireling.code,
+          factions: hireling.factions,
           demoted,
         },
       }),
@@ -187,13 +241,14 @@ export const setupSlice = createSlice({
         state,
         action: PayloadAction<{
           number: number;
-          hireling: WithCode<Hireling>;
+          hireling: string;
+          factions: string[];
           demoted: boolean;
         }>
       ) => {
         if (action.payload.number >= 1 && action.payload.number <= 3) {
           const hireling: HirelingEntry = {
-            ...action.payload.hireling,
+            code: action.payload.hireling,
             demoted: action.payload.demoted,
           };
 
@@ -201,7 +256,7 @@ export const setupSlice = createSlice({
           if (action.payload.number === 2) state.hireling2 = hireling;
           if (action.payload.number === 3) state.hireling3 = hireling;
 
-          state.excludedFactions.push(...action.payload.hireling.factions);
+          state.excludedFactions.push(...action.payload.factions);
         } else {
           console.warn(
             'Invalid payload for setHireling action: Payload field "number" must be a number between 1 and 3',
@@ -365,13 +420,14 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       dispatch(setFirstPlayer(firstPlayer));
 
       // Ensure that any landmarks not supported at this player count or used by map setup are disabled
+      const map = selectSetupMap(getState());
       dispatch(
         massComponentToggle(
           selectLandmarkArray,
           (landmark) =>
             landmark.minPlayers <= setupParameters.playerCount &&
             (!setupParameters.useMapLandmark ||
-              setupParameters.map?.landmark !== landmark.code),
+              map?.landmark !== landmark.code),
           toggleLandmark
         )
       );
