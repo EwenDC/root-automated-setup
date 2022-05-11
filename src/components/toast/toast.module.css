@@ -36,6 +36,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  height: 1.35rem;
   width: 1.35rem;
   margin-left: -1.35rem;
   padding: 0.25rem;
@@ -49,6 +50,7 @@
   }
 
   .close {
+    height: 2.25rem;
     width: 2.25rem;
     margin-left: -2.25rem;
     padding: 0.5rem;

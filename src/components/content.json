@@ -37,7 +37,7 @@
       },
       "vagabond": {
         "key": "vagabond",
-        "image": "meeples/vagabond.png",
+        "image": "meeples/thief.png",
         "militant": false,
         "isVagabond": true,
         "warriors": 1,
@@ -60,15 +60,15 @@
     "vagabonds": {
       "thief": {
         "startingItems": ["boot", "torch", "tea", "sword"],
-        "image": ""
+        "image": "meeples/thief.png"
       },
       "tinker": {
         "startingItems": ["boot", "torch", "bag", "hammer"],
-        "image": ""
+        "image": "meeples/tinker.png"
       },
       "ranger": {
         "startingItems": ["boot", "torch", "crossbow", "sword"],
-        "image": ""
+        "image": "meeples/ranger.png"
       }
     }
   },
@@ -96,7 +96,7 @@
       },
       "vagabond2": {
         "key": "vagabond",
-        "image": "meeples/vagabond2.png",
+        "image": "meeples/ronin.png",
         "militant": false,
         "isVagabond": true,
         "warriors": 1,
@@ -107,15 +107,15 @@
     "vagabonds": {
       "vagrant": {
         "startingItems": ["coin", "torch", "boot"],
-        "image": ""
+        "image": "meeples/vagrant.png"
       },
       "arbiter": {
         "startingItems": ["boot", "torch", "sword", "sword"],
-        "image": ""
+        "image": "meeples/arbiter.png"
       },
       "scoundrel": {
         "startingItems": ["boot", "boot", "torch", "crossbow"],
-        "image": ""
+        "image": "meeples/scoundrel.png"
       }
     }
   },
@@ -256,15 +256,15 @@
     "vagabonds": {
       "adventurer": {
         "startingItems": ["boot", "torch", "hammer"],
-        "image": ""
+        "image": "meeples/adventurer.png"
       },
       "ronin": {
         "startingItems": ["boot", "boot", "torch", "sword"],
-        "image": ""
+        "image": "meeples/ronin.png"
       },
       "harrier": {
         "startingItems": ["coin", "torch", "sword", "crossbow"],
-        "image": ""
+        "image": "meeples/harrier.png"
       }
     }
   },
