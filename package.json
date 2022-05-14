@@ -2,6 +2,7 @@
   "name": "root-automated-setup",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ewendc.github.io/root-automated-setup/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.4",
@@ -13,6 +14,7 @@
     "@types/react-dom": "^18.0.3",
     "classnames": "^2.3.1",
     "eslint-config-prettier": "^8.5.0",
+    "gh-pages": "^4.0.0",
     "i18next": "^21.6.16",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.0",
@@ -26,6 +28,8 @@
     "typescript-plugin-css-modules": "^3.4.0"
   },
   "scripts": {
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test"

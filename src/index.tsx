@@ -8,7 +8,7 @@ import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
 import { Fallback } from "./components/fallback";
-import * as serviceWorker from "./serviceWorker";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 // Since we have to suspend for i18next anyway, may as well lazy load the app itself
 const App = React.lazy(
@@ -41,4 +41,4 @@ root.render(
   </React.StrictMode>
 );
 
-serviceWorker.register();
+serviceWorkerRegistration.register();
