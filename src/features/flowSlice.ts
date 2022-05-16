@@ -9,7 +9,7 @@ import {
   Vagabond,
   FactionEntry,
 } from "../types";
-import { takeRandom } from "./reduxUtils";
+import { takeRandom } from "./utils";
 import { setErrorMessage } from "./setupSlice";
 
 const initialState: FlowState = {
@@ -46,9 +46,6 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentPlayerIndex = slice.playerIndex;
   state.currentFactionIndex = slice.factionIndex;
 };
-
-/** Returns the flow information (including current step) from redux state */
-export const selectFlowState = (state: RootState) => state.flow;
 
 /** Returns the faction pool, joining the original faction and vagabond objects into the entries */
 export const selectFactionPool = createSelector(
@@ -101,7 +98,7 @@ export const flowSlice = createSlice({
             skipStep = state.skippedSteps[state.currentStep];
           } while (skipStep && state.currentStep < SetupStep.setupEnd);
         }
-      } else {
+      } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`,
           action
@@ -116,7 +113,7 @@ export const flowSlice = createSlice({
         state.futureSteps.unshift(getSlice(state));
         // Override current state with state from previous step
         applySlice(state, previousStep);
-      } else {
+      } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `Invalid undoStep action: pastSteps array returned empty value (${previousStep})`,
           action
@@ -131,7 +128,7 @@ export const flowSlice = createSlice({
         state.pastSteps.push(getSlice(state));
         // Override current state with state from next step
         applySlice(state, nextStep);
-      } else {
+      } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `Invalid redoStep action: futureSteps array returned empty value (${nextStep})`,
           action
@@ -185,7 +182,7 @@ export const flowSlice = createSlice({
       if (action.payload >= 0) {
         state.currentPlayerIndex = action.payload;
         state.futureSteps = [];
-      } else {
+      } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           "Invalid payload for setCurrentPlayerIndex action: Payload must be a number larger than or equal to 0",
           action
@@ -196,7 +193,7 @@ export const flowSlice = createSlice({
       if (action.payload >= 0 && action.payload < state.factionPool.length) {
         state.currentFactionIndex = action.payload;
         state.futureSteps = [];
-      } else {
+      } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `Invalid payload for setCurrentFactionIndex action: Payload must be a number larger than or equal to 0 but smaller than the faction pool length (${state.factionPool.length})`,
           action

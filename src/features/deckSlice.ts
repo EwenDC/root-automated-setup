@@ -1,11 +1,9 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getExpansionConfig,
-  selectComponentArray,
   setupInitialState,
   toggleComponent,
-} from "./reduxUtils";
-import { RootState } from "../components/store";
+} from "./utils";
 import { ComponentState, ExpansionComponent } from "../types";
 import { expansionReducers } from "./expansionSlice";
 
@@ -23,7 +21,7 @@ const addExpansionDecks = (
           expansionCode: expansionCode,
           enabled: true,
         };
-      } else {
+      } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `While enabling expansion "${expansionCode}", deck with duplicate code "${deckCode}" not added to state:`,
           deck
@@ -32,17 +30,6 @@ const addExpansionDecks = (
     }
   }
 };
-
-/** Redux Selector for returning a specified Deck from state */
-export const selectDeck = (state: RootState, code: string) => state.deck[code];
-
-/** Redux Selector for returning the deck list as an array, moving the object key to the object field "code" */
-export const selectDeckArray = selectComponentArray((state) => state.deck);
-
-/** Redux Selector for returning an array of enabled decks */
-export const selectEnabledDecks = createSelector(selectDeckArray, (array) =>
-  array.filter((value) => value.enabled)
-);
 
 export const deckSlice = createSlice({
   name: "deck",

@@ -1,10 +1,6 @@
-import { createSelector, PayloadAction } from "@reduxjs/toolkit";
-import content from "../components/content.json";
-import { AppThunk, RootState } from "../components/store";
-import { GameComponent, ComponentState, WithCode } from "../types";
-
-export const isTrue = "1";
-export const isFalse = "0";
+import { PayloadAction } from "@reduxjs/toolkit";
+import content from "../content.json";
+import { GameComponent, ComponentState } from "../types";
 
 /**
  * Helper function for getting the details of a specified expansion from content.json
@@ -14,6 +10,9 @@ export const getExpansionConfig = (expansionCode: string) =>
   // It sucks, but we have to circumvent type saftey here
   // Blame typescript's very loose typings of Object.entries preventing us from typing more strongly
   content[expansionCode as keyof typeof content];
+
+const isTrue = "1";
+const isFalse = "0";
 
 /**
  * Saves the enable/disable state of the specified expansion to localStorage
@@ -27,10 +26,11 @@ export const persistExpansionEnabled = (
   try {
     localStorage.setItem(expansionCode, enabled ? isTrue : isFalse);
   } catch (error: any) {
-    console.warn(
-      `Failed to persist enable state of ${enabled} for expansion ${expansionCode}`,
-      error
-    );
+    if (process.env.NODE_ENV !== "production")
+      console.warn(
+        `Failed to persist enable state of ${enabled} for expansion ${expansionCode}`,
+        error
+      );
   }
 };
 
@@ -62,21 +62,6 @@ export const expansionEnabled = (
 
   return enabled;
 };
-
-/**
- * Redux Selector for returning a component list as an array, moving the component key to the component field "code"
- * @param select Select function for selecting the component list from the root state
- */
-export const selectComponentArray = <T>(
-  select: (state: RootState) => ComponentState<T>
-) =>
-  createSelector(select, (stateSlice) => {
-    const array = [];
-    for (const [code, object] of Object.entries(stateSlice)) {
-      array.push({ ...object, code });
-    }
-    return array;
-  });
 
 /**
  * Generic function for populating the starting state of a Redux slice using the provided addExpansionComponents function
@@ -120,7 +105,7 @@ export const toggleComponent = {
     if (component != null) {
       // Toggle enabled value
       component.enabled = action.payload.enabled ?? !component.enabled;
-    } else {
+    } else if (process.env.NODE_ENV !== "production") {
       console.warn(
         "Invalid payload for toggleComponent action: Payload code not found in component state",
         action
@@ -128,36 +113,6 @@ export const toggleComponent = {
     }
   },
 };
-
-/** Thunk action for mass updating the enable/disable state of multiple components, dispatching the minimum amount of actions to do so */
-export const massComponentToggle =
-  <T extends GameComponent>(
-    selectComponentArray: (state: RootState) => WithCode<T>[],
-    componentEnable:
-      | boolean
-      | ((
-          component: WithCode<T>,
-          index: number,
-          array: WithCode<T>[]
-        ) => boolean),
-    toggleComponent: (
-      code: string,
-      enabled?: boolean
-    ) => PayloadAction<{ code: string; enabled?: boolean }>
-  ): AppThunk =>
-  (dispatch, getState) => {
-    selectComponentArray(getState()).forEach((component, index, array) => {
-      // Calculate what the enable state of the component should be
-      const shouldEnable =
-        typeof componentEnable === "function"
-          ? componentEnable(component, index, array)
-          : componentEnable;
-      // If the desired state does not match the actual state, fix it
-      if (component.enabled !== shouldEnable) {
-        dispatch(toggleComponent(component.code, shouldEnable));
-      }
-    });
-  };
 
 /**
  * Returns a random element from a given list, while also removing it

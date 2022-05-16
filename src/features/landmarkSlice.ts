@@ -1,12 +1,10 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getExpansionConfig,
-  selectComponentArray,
   setupInitialState,
   toggleComponent,
-} from "./reduxUtils";
+} from "./utils";
 import { expansionReducers } from "./expansionSlice";
-import { RootState } from "../components/store";
 import { ComponentState, Landmark } from "../types";
 
 const addExpansionLandmarks = (
@@ -26,7 +24,7 @@ const addExpansionLandmarks = (
           expansionCode: expansionCode,
           enabled: true,
         };
-      } else {
+      } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `While enabling expansion "${expansionCode}", landmark with duplicate code "${landmarkCode}" not added to state:`,
           landmark
@@ -34,21 +32,6 @@ const addExpansionLandmarks = (
       }
     }
 };
-
-/** Redux Selector for returning a specified Landmark from state */
-export const selectLandmark = (state: RootState, code: string) =>
-  state.landmark[code];
-
-/** Redux Selector for returning the landmark list as an array, moving the object key to the object field "code" */
-export const selectLandmarkArray = selectComponentArray(
-  (state) => state.landmark
-);
-
-/** Redux Selector for returning an array of enabled landmarks */
-export const selectEnabledLandmarks = createSelector(
-  selectLandmarkArray,
-  (array) => array.filter((value) => value.enabled)
-);
 
 export const landmarkSlice = createSlice({
   name: "landmark",

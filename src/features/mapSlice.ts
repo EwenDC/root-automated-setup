@@ -1,12 +1,10 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getExpansionConfig,
-  selectComponentArray,
   setupInitialState,
   toggleComponent,
-} from "./reduxUtils";
+} from "./utils";
 import { expansionReducers } from "./expansionSlice";
-import { RootState } from "../components/store";
 import { ComponentState, MapComponent } from "../types";
 
 const addExpansionMaps = (
@@ -25,7 +23,7 @@ const addExpansionMaps = (
           expansionCode: expansionCode,
           enabled: true,
         };
-      } else {
+      } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `While enabling expansion "${expansionCode}", map with duplicate code "${mapCode}" not added to state:`,
           map
@@ -33,23 +31,6 @@ const addExpansionMaps = (
       }
     }
 };
-
-/** Redux Selector for returning a specified Map from state */
-export const selectMap = (state: RootState, code: string) => state.map[code];
-
-/** Redux Selector for returning the map list as an array, moving the object key to the object field "code" */
-export const selectMapArray = selectComponentArray((state) => state.map);
-
-/** Redux Selector for returning an array of enabled maps */
-export const selectEnabledMaps = createSelector(selectMapArray, (array) =>
-  array.filter((value) => value.enabled)
-);
-
-/** Redux Selector for returning an array of enabled maps which have a landmark */
-export const selectEnabledLandmarkMaps = createSelector(
-  selectEnabledMaps,
-  (array) => array.filter((value) => value.landmark != null)
-);
 
 export const mapSlice = createSlice({
   name: "map",

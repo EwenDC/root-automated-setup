@@ -26,5 +26,7 @@ export * from "./flowSlice";
 export * from "./hirelingSlice";
 export * from "./landmarkSlice";
 export * from "./mapSlice";
+export * from "./selectors";
+export * from "./thunks";
 export * from "./setupSlice";
 export * from "./vagabondSlice";
