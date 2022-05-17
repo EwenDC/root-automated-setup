@@ -41,7 +41,11 @@ export const Step: React.FC<StepProps> = ({
   // Trigger a scroll-to effect when we become active
   useEffect(() => {
     if (stepActive)
-      sectionElement.current?.scrollIntoView({ behavior: "smooth" });
+      sectionElement.current?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion)").matches
+          ? "auto"
+          : "smooth",
+      });
   });
 
   // Generate the Title Text in advance so we can use it to rename the window (if required)

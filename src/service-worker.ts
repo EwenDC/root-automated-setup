@@ -1,13 +1,15 @@
 /// <reference lib="webworker" />
 
-// See https://developers.google.com/web/tools/workbox/modules
+// See https://developer.chrome.com/docs/workbox/modules/
 // for the list of available Workbox modules.
 
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
-import { StaleWhileRevalidate } from "workbox-strategies";
+import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
+import { googleFontsCache, offlineFallback } from "workbox-recipes";
+import defaultImage from "./images/componentDefault.png";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -21,7 +23,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 const fileExtensionRegexp = /\/[^/?]+\.[^/]+$/;
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
-  ({ request, url }: { request: Request; url: URL }) => {
+  ({ request, url }) => {
     // If this isn't a navigation, skip.
     if (request.mode !== "navigate") {
       return false;
@@ -49,23 +51,39 @@ registerRoute(
   ({ url }) =>
     url.origin === self.location.origin &&
     url.pathname.startsWith(`${process.env.PUBLIC_URL}/locales/`),
-  // Serve cached translation, then update the cache in the background
+  // Serve cached translation, then immediately update the cache in the background
   new StaleWhileRevalidate({
-    cacheName: "locales",
+    cacheName: "translations",
+    // Limit how many translations can be cached, as we don't expect the user to be switching between lots of them
+    plugins: [new ExpirationPlugin({ maxEntries: 10 })],
   })
 );
 
-// Handle caching the images outside of the build
+// Handle caching the page font
+googleFontsCache();
+
+// Handle caching the component images (which live outside of the build)
 registerRoute(
   ({ url }) =>
     url.origin === self.location.origin &&
     url.pathname.startsWith(`${process.env.PUBLIC_URL}/images/`),
-  // Serve cached image, then update the cache in the background
-  new StaleWhileRevalidate({
-    cacheName: "images",
+  // Always serve cached image, only making a network request on cache miss
+  new CacheFirst({
+    cacheName: "componentImages",
     plugins: [
-      // Since the images are just for decoration, nominate them to be cleared first when the cache fills
-      new ExpirationPlugin({ purgeOnQuotaError: true }),
+      // We set a 30 day cache length on the images rather than a max entries, as we expect a lot of them
+      new ExpirationPlugin({
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+        // Since the images are just for decoration, nominate them to be cleared first when the cache fills
+        purgeOnQuotaError: true,
+      }),
     ],
   })
 );
+
+// Ensure that component images that are not cached can be replaced with a fallback when offline
+offlineFallback({
+  imageFallback: defaultImage,
+  // We redefine index.html here as the default will attempt to route to offline.html
+  pageFallback: `${process.env.PUBLIC_URL}/index.html`,
+});

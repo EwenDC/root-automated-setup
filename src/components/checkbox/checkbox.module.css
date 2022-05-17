@@ -55,6 +55,12 @@
   }
 }
 
+@media (prefers-reduced-motion) {
+  .checkbox::before {
+    transition: none;
+  }
+}
+
 .checkbox:checked::before {
   box-shadow: inset 1rem 1rem black;
 }

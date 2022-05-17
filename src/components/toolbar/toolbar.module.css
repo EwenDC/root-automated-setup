@@ -26,6 +26,12 @@
   transition-timing-function: ease-out;
 }
 
+@media (prefers-reduced-motion) {
+  .button {
+    transition: none;
+  }
+}
+
 .button:not(:last-child) {
   margin-right: 0.5rem;
 }

@@ -12,6 +12,12 @@
   transition: 250ms transform ease-in-out;
 }
 
+@media (prefers-reduced-motion) {
+  .anchor {
+    transition: none;
+  }
+}
+
 .anchor.hidden {
   transform: translateY(-100%);
 }

@@ -22,3 +22,27 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+#loading {
+  width: 10rem;
+  height: 10rem;
+  margin: auto;
+  border: 0.75rem solid transparent;
+  border-radius: 50%;
+  border-right-color: black;
+  animation: rotate 1s infinite linear;
+}
+
+noscript {
+  text-align: center;
+  margin-bottom: auto;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

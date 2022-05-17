@@ -55,6 +55,12 @@
   }
 }
 
+@media (prefers-reduced-motion) {
+  .radio::before {
+    transition: none;
+  }
+}
+
 .radio:checked::before {
   box-shadow: inset 1rem 1rem black;
 }

@@ -36,6 +36,12 @@
   transition-timing-function: ease-out;
 }
 
+@media (prefers-reduced-motion) {
+  .faction {
+    transition: none;
+  }
+}
+
 .faction:focus-visible {
   border-color: black;
   outline-offset: 0.15rem;
