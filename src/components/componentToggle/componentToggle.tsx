@@ -90,7 +90,7 @@ export const ComponentToggle = <T extends WithCode<GameComponent>>({
                 className={styles.image}
                 src={
                   component.image
-                    ? `${process.env.PUBLIC_URL}/images/${component.image}`
+                    ? process.env.PUBLIC_URL + "/images/" + component.image
                     : defaultImage
                 }
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image

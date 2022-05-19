@@ -36,7 +36,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
       />
       <label htmlFor={id} className={styles.label}>
-        <Trans i18nKey={`label.${id}`} />
+        <Trans i18nKey={"label." + id} />
       </label>
     </div>
   ) : null;

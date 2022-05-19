@@ -43,14 +43,14 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(`${process.env.PUBLIC_URL}/index.html`)
+  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
 );
 
 // Handle caching the translations
 registerRoute(
   ({ url }) =>
     url.origin === self.location.origin &&
-    url.pathname.startsWith(`${process.env.PUBLIC_URL}/locales/`),
+    url.pathname.startsWith(process.env.PUBLIC_URL + "/locales/"),
   // Serve cached translation, then immediately update the cache in the background
   new StaleWhileRevalidate({
     cacheName: "translations",
@@ -66,7 +66,7 @@ googleFontsCache();
 registerRoute(
   ({ url }) =>
     url.origin === self.location.origin &&
-    url.pathname.startsWith(`${process.env.PUBLIC_URL}/images/`),
+    url.pathname.startsWith(process.env.PUBLIC_URL + "/images/"),
   // Always serve cached image, only making a network request on cache miss
   new CacheFirst({
     cacheName: "componentImages",
@@ -85,5 +85,13 @@ registerRoute(
 offlineFallback({
   imageFallback: defaultImage,
   // We redefine index.html here as the default will attempt to route to offline.html
-  pageFallback: `${process.env.PUBLIC_URL}/index.html`,
+  pageFallback: process.env.PUBLIC_URL + "/index.html",
+});
+
+// This allows the web app to trigger skipWaiting via
+// registration.waiting.postMessage({type: 'SKIP_WAITING'})
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });

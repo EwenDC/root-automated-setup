@@ -60,10 +60,11 @@ export const FactionSelect: React.FC = () => {
       {factionPool.map((faction, index) => {
         // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
         const factionName = faction.vagabond
-          ? `${t(`vagabond.${faction.vagabond.code}.name`)} (${t(
-              `faction.${faction.key}.name`
-            )})`
-          : t(`faction.${faction.key}.name`);
+          ? t("vagabond." + faction.vagabond.code + ".name") +
+            " (" +
+            t("faction." + faction.key + ".name") +
+            ")"
+          : t("faction." + faction.key + ".name");
         // Swap out the faction image for the vagabond image (if we have one)
         const factionImage = faction.vagabond
           ? faction.vagabond.image
@@ -98,9 +99,9 @@ export const FactionSelect: React.FC = () => {
             }
             aria-label={
               stepActive
-                ? `${factionName}${
-                    faction.militant ? ` ${t("label.militant")}` : ""
-                  }`
+                ? factionName + faction.militant
+                  ? " " + t("label.militant")
+                  : ""
                 : undefined
             }
             // We have to override the tabbing logic to meet the standard of role "radio"
@@ -117,7 +118,7 @@ export const FactionSelect: React.FC = () => {
               className={styles.image}
               src={
                 factionImage
-                  ? `${process.env.PUBLIC_URL}/images/${factionImage}`
+                  ? process.env.PUBLIC_URL + "/images/" + factionImage
                   : defaultImage
               }
               alt="" // We're including the alt text in the button itself so don't bother reading out the image

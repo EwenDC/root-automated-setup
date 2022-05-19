@@ -34,14 +34,14 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
         <div className={styles.option}>
           <input
             name={id}
-            id={`${id}False`}
+            id={id + "False"}
             type="radio"
             className={styles.radio}
             checked={!defaultValue}
             onChange={() => onChange(false)}
           />
-          <label htmlFor={`${id}False`} className={styles.label}>
-            <Trans i18nKey={`label.${id}.false`} />
+          <label htmlFor={id + "False"} className={styles.label}>
+            <Trans i18nKey={"label." + id + ".false"} />
           </label>
         </div>
       ) : null}
@@ -49,14 +49,14 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({
         <div className={styles.option}>
           <input
             name={id}
-            id={`${id}True`}
+            id={id + "True"}
             type="radio"
             className={styles.radio}
             checked={defaultValue}
             onChange={() => onChange(true)}
           />
-          <label htmlFor={`${id}True`} className={styles.label}>
-            <Trans i18nKey={`label.${id}.true`} />
+          <label htmlFor={id + "True"} className={styles.label}>
+            <Trans i18nKey={"label." + id + ".true"} />
           </label>
         </div>
       ) : null}

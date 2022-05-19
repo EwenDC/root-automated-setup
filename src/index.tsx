@@ -2,13 +2,10 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
-// Since we have to suspend for i18next anyway, may as well lazy load the app itself
+// Since we have to suspend for i18next anyway, may as well lazy load the entire app
 const App = React.lazy(
-  () => import(/* webpackPreload: true */ "./components/app") // Preload as it's required for app function
+  () => import(/* webpackPreload: true */ "./components/app") // Preload since we require it ASAP
 );
-
-// Lazy load the i18next initialization code
-import(/* webpackPreload: true */ "./i18n"); // Preload as it's required for app function
 
 const root = createRoot(document.getElementById("root")!);
 root.render(
@@ -18,6 +15,3 @@ root.render(
     </React.Suspense>
   </React.StrictMode>
 );
-
-// Lazy load the service worker initialization code as it is not critical
-import("./serviceWorkerRegistration").then((module) => module.register());

@@ -70,7 +70,7 @@ export const StepList: React.FC = () => {
         <ComponentToggle
           selector={selectExpansionArray}
           toggleComponent={toggleExpansion}
-          getLabelKey={(expansion) => `expansion.${expansion.code}`}
+          getLabelKey={(expansion) => "expansion." + expansion.code}
           getLockedKey={(expansion) =>
             // Prevent the player from deselecting the Root base game
             expansion.base ? "error.baseExpansionRequired" : null
@@ -89,7 +89,7 @@ export const StepList: React.FC = () => {
         <ComponentToggle
           selector={selectMapArray}
           toggleComponent={toggleMap}
-          getLabelKey={(map) => `map.${map.code}.name`}
+          getLabelKey={(map) => "map." + map.code + ".name"}
         />
         {landmarkMaps.length > 0 ? (
           <Checkbox
@@ -101,29 +101,29 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpMap}
-        subtitleOptions={{ map: map && t(`map.${map?.code}.name`) }}
-        textKey={`map.${map?.code}.setup`}
+        subtitleOptions={{ map: map && t("map." + map.code + ".name") }}
+        textKey={"map." + map?.code + ".setup"}
       />
       <Step
         step={SetupStep.setUpMapLandmark}
         subtitleOptions={{
-          landmark: map?.landmark && t(`landmark.${map?.landmark}.name`),
+          landmark: map?.landmark && t("landmark." + map.landmark + ".name"),
         }}
-        textKey={`map.${map?.code}.landmarkSetup`}
+        textKey={"map." + map?.code + ".landmarkSetup"}
       />
       <Step step={SetupStep.chooseDeck}>
         <ComponentToggle
           selector={selectDeckArray}
           toggleComponent={toggleDeck}
-          getLabelKey={(deck) => `deck.${deck.code}`}
+          getLabelKey={(deck) => "deck." + deck.code}
         />
       </Step>
       <Step
         step={SetupStep.setUpDeck}
         renderTitle={skippedSteps[SetupStep.chooseDeck]}
         renderSubtitle={!skippedSteps[SetupStep.chooseDeck]}
-        subtitleOptions={{ deck: deck && t(`deck.${deck}`) }}
-        textOptions={{ deck: deck && t(`deck.${deck}`) }}
+        subtitleOptions={{ deck: deck && t("deck." + deck) }}
+        textOptions={{ deck: deck && t("deck." + deck) }}
       />
       <Step step={SetupStep.setUpBots} />
       <Step step={SetupStep.seatPlayers}>
@@ -152,7 +152,7 @@ export const StepList: React.FC = () => {
           <ComponentToggle
             selector={selectLandmarkArray}
             toggleComponent={toggleLandmark}
-            getLabelKey={(landmark) => `landmark.${landmark.code}.name`}
+            getLabelKey={(landmark) => "landmark." + landmark.code + ".name"}
             getLockedKey={(landmark) =>
               // Disable this landmark if it requires more players to include
               landmark.minPlayers > playerCount
@@ -168,17 +168,17 @@ export const StepList: React.FC = () => {
       <Step
         step={SetupStep.setUpLandmark1}
         subtitleOptions={{
-          landmark: landmark1 && t(`landmark.${landmark1}.name`),
+          landmark: landmark1 && t("landmark." + landmark1 + ".name"),
         }}
-        textKey={`landmark.${landmark1}.setup`}
+        textKey={"landmark." + landmark1 + ".setup"}
         textCount={nthLastPlayer(1)} // Last player in turn order
       />
       <Step
         step={SetupStep.setUpLandmark2}
         subtitleOptions={{
-          landmark: landmark2 && t(`landmark.${landmark2}.name`),
+          landmark: landmark2 && t("landmark." + landmark2 + ".name"),
         }}
-        textKey={`landmark.${landmark2}.setup`}
+        textKey={"landmark." + landmark2 + ".setup"}
         textCount={nthLastPlayer(2)} // Second last player in turn order
       />
       <Step step={SetupStep.chooseHirelings}>
@@ -203,7 +203,7 @@ export const StepList: React.FC = () => {
           <ComponentToggle
             selector={selectHirelingArray}
             toggleComponent={toggleHireling}
-            getLabelKey={(hireling) => `hireling.${hireling.code}.name`}
+            getLabelKey={(hireling) => "hireling." + hireling.code + ".name"}
             getLockedKey={(hireling) =>
               // Are we at the max player count (i.e. there are no factions to spare for an equivilent hireling)?
               playerCount >= factionCodes.length - 1 &&
@@ -222,11 +222,11 @@ export const StepList: React.FC = () => {
         subtitleOptions={{
           hireling:
             hireling1 &&
-            t(`hireling.${hireling1.code}.name`, {
+            t("hireling." + hireling1.code + ".name", {
               context: hireling1.demoted ? "demoted" : undefined,
             }),
         }}
-        textKey={`hireling.${hireling1?.code}.setup`}
+        textKey={"hireling." + hireling1?.code + ".setup"}
         textCount={nthLastPlayer(1)} // Last player in turn order
         textOptions={{ context: hireling1?.demoted ? "demoted" : undefined }}
       />
@@ -235,11 +235,11 @@ export const StepList: React.FC = () => {
         subtitleOptions={{
           hireling:
             hireling2 &&
-            t(`hireling.${hireling2.code}.name`, {
+            t("hireling." + hireling2.code + ".name", {
               context: hireling2.demoted ? "demoted" : undefined,
             }),
         }}
-        textKey={`hireling.${hireling2?.code}.setup`}
+        textKey={"hireling." + hireling2?.code + ".setup"}
         textCount={nthLastPlayer(2)} // Second last player in turn order
         textOptions={{ context: hireling2?.demoted ? "demoted" : undefined }}
       />
@@ -248,11 +248,11 @@ export const StepList: React.FC = () => {
         subtitleOptions={{
           hireling:
             hireling3 &&
-            t(`hireling.${hireling3.code}.name`, {
+            t("hireling." + hireling3.code + ".name", {
               context: hireling3.demoted ? "demoted" : undefined,
             }),
         }}
-        textKey={`hireling.${hireling3?.code}.setup`}
+        textKey={"hireling." + hireling3?.code + ".setup"}
         textCount={nthLastPlayer(3)} // Third last player in turn order
         textOptions={{ context: hireling3?.demoted ? "demoted" : undefined }}
       />
@@ -262,7 +262,7 @@ export const StepList: React.FC = () => {
         <ComponentToggle
           selector={selectFactionArray}
           toggleComponent={toggleFaction}
-          getLabelKey={(faction) => `faction.${faction.key}.name`}
+          getLabelKey={(faction) => "faction." + faction.key + ".name"}
           getLockedKey={(faction) =>
             // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
             playerCount < 3 &&
@@ -282,7 +282,7 @@ export const StepList: React.FC = () => {
             <ComponentToggle
               selector={selectVagabondArray}
               toggleComponent={toggleVagabond}
-              getLabelKey={(vagabond) => `vagabond.${vagabond.code}.name`}
+              getLabelKey={(vagabond) => "vagabond." + vagabond.code + ".name"}
             />
           </>
         ) : null}
@@ -298,12 +298,12 @@ export const StepList: React.FC = () => {
         subtitleOptions={{
           faction:
             currentFactionIndex != null
-              ? t(`faction.${factionPool[currentFactionIndex].key}.name`)
+              ? t("faction." + factionPool[currentFactionIndex].key + ".name")
               : undefined,
         }}
         textKey={
           currentFactionIndex != null
-            ? `faction.${factionPool[currentFactionIndex].key}.setup`
+            ? "faction." + factionPool[currentFactionIndex].key + ".setup"
             : undefined
         }
         textOptions={{
@@ -311,7 +311,9 @@ export const StepList: React.FC = () => {
             currentFactionIndex != null &&
             factionPool[currentFactionIndex].vagabond
               ? t(
-                  `vagabond.${factionPool[currentFactionIndex].vagabond?.code}.name`
+                  "vagabond." +
+                    factionPool[currentFactionIndex].vagabond?.code +
+                    ".name"
                 )
               : undefined,
         }}

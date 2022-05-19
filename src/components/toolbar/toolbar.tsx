@@ -103,7 +103,7 @@ export const Toolbar: React.FC = () => {
           <RedoIcon className={styles.icon} />
         </button>
         <button
-          className={`${styles.button} ${styles.right}`}
+          className={classNames(styles.button, styles.right)}
           ref={buttonRefs[2]}
           onClick={() => {
             if (renderRestartButton) dispatch(resetFlow());

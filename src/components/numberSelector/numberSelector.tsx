@@ -52,7 +52,7 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
   return (
     <div className={styles.container}>
       <label htmlFor={id} className={styles.label}>
-        <Trans i18nKey={`label.${id}`} />
+        <Trans i18nKey={"label." + id} />
       </label>
       {stepActive ? (
         <>
