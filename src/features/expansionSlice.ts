@@ -75,20 +75,3 @@ export const expansionReducers = <T extends ExpansionComponent>(
       }
     });
 };
-
-/** Thunk for toggling an expansion, dispatching either the enableExpansion or disableExpansion action */
-export const toggleExpansion =
-  (expansionCode: string): AppThunk =>
-  (dispatch, getState) => {
-    // Retreive the expansion (may return undefined if code does not exist)
-    const expansion = selectExpansion(getState(), expansionCode);
-    // Only update the expansion state if it exists and is not the base game
-    if (expansion != null && !expansion.base) {
-      // Dispatch action to invert current state. We need to do this so all slices can react to the expansion state change
-      if (expansion.enabled) {
-        dispatch(disableExpansion(expansionCode));
-      } else {
-        dispatch(enableExpansion(expansionCode));
-      }
-    }
-  };

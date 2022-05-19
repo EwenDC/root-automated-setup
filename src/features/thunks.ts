@@ -1,6 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../components/store";
 import { GameComponent, SetupStep, WithCode } from "../types";
+import { disableExpansion, enableExpansion } from "./expansionSlice";
 import { toggleFaction } from "./factionSlice";
 import {
   addToFactionPool,
@@ -18,6 +19,7 @@ import {
   selectEnabledInsurgentFactions,
   selectEnabledMilitantFactions,
   selectEnabledVagabondFactions,
+  selectExpansion,
   selectFactionArray,
   selectFactionCodeArray,
   selectFactionHirelingArray,
@@ -41,6 +43,23 @@ import {
   setPlayerCount,
 } from "./setupSlice";
 import { takeRandom } from "./utils";
+
+/** Thunk for toggling an expansion, dispatching either the enableExpansion or disableExpansion action */
+export const toggleExpansion =
+  (expansionCode: string): AppThunk =>
+  (dispatch, getState) => {
+    // Retreive the expansion (may return undefined if code does not exist)
+    const expansion = selectExpansion(getState(), expansionCode);
+    // Only update the expansion state if it exists and is not the base game
+    if (expansion != null && !expansion.base) {
+      // Dispatch action to invert current state. We need to do this so all slices can react to the expansion state change
+      if (expansion.enabled) {
+        dispatch(disableExpansion(expansionCode));
+      } else {
+        dispatch(enableExpansion(expansionCode));
+      }
+    }
+  };
 
 /**
  * Thunk action for mass updating the enable/disable state of multiple components, dispatching the minimum amount of actions to do so
