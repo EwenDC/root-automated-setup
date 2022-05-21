@@ -1,6 +1,10 @@
-import { disableExpansion, enableExpansion, factionReducer } from "..";
+import {
+  disableExpansion,
+  enableExpansion,
+  factionReducer,
+  toggleFaction,
+} from "..";
 import { ComponentState, Faction } from "../../types";
-import { toggleFaction } from "../factionSlice";
 
 const initialState: ComponentState<Faction> = {
   testFaction: {
@@ -80,7 +84,7 @@ describe("Faction Reducer", () => {
     let state = initialState;
 
     state = factionReducer(state, enableExpansion("dummyExpansion"));
-    expect(state).toEqual({
+    expect(state).toEqual<ComponentState<Faction>>({
       ...initialState,
       testFactionExpansion: {
         enabled: true,

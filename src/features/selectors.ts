@@ -63,6 +63,21 @@ export const selectEnabledVagabondFactions = (state: RootState) =>
     (value) => value.enabled && value.isVagabond
   );
 
+/** Returns the faction pool, joining the original faction and vagabond objects into the entries */
+export const selectFactionPool = createSelector(
+  (state: RootState) => state.flow.factionPool,
+  (state: RootState) => state.faction,
+  (state: RootState) => state.vagabond,
+  (factionPool, factions, vagabonds) =>
+    factionPool.map((entry) => ({
+      ...factions[entry.code],
+      code: entry.code,
+      vagabond: entry.vagabond
+        ? { ...vagabonds[entry.vagabond], code: entry.vagabond }
+        : undefined,
+    }))
+);
+
 /** Returns the flow information (including current step) from redux state */
 export const selectFlowState = (state: RootState) => state.flow;
 
@@ -76,32 +91,24 @@ export const selectHirelingArray = selectComponentArray(
 );
 
 /** Redux Selector for returning an array of all hirelings that replace an included faction */
-export const selectFactionHirelingArray = createSelector(
-  selectHirelingArray,
-  selectFactionCodeArray,
-  (hirelings, factionCodes) =>
-    hirelings.filter((hireling) =>
-      // Only include a hireling if at least one of it's faction codes matches an included faction
-      hireling.factions.some((factionCode) =>
-        factionCodes.includes(factionCode)
-      )
+export const selectFactionHirelingArray = (state: RootState) =>
+  selectHirelingArray(state).filter((hireling) =>
+    // Only include a hireling if at least one of it's faction codes matches an included faction
+    hireling.factions.some((factionCode) =>
+      selectFactionCodeArray(state).includes(factionCode)
     )
-);
+  );
 
 /** Redux Selector for returning an array of enabled hirelings that do not replace an included faction */
-export const selectEnabledIndependentHirelings = createSelector(
-  selectHirelingArray,
-  selectFactionCodeArray,
-  (hirelings, factionCodes) =>
-    hirelings.filter(
-      (hireling) =>
-        hireling.enabled &&
-        // Only include a hireling if none of it's faction codes matches an included faction
-        hireling.factions.every(
-          (factionCode) => !factionCodes.includes(factionCode)
-        )
-    )
-);
+export const selectEnabledIndependentHirelings = (state: RootState) =>
+  selectHirelingArray(state).filter(
+    (hireling) =>
+      hireling.enabled &&
+      // Only include a hireling if none of it's faction codes matches an included faction
+      hireling.factions.every(
+        (factionCode) => !selectFactionCodeArray(state).includes(factionCode)
+      )
+  );
 
 /** Redux Selector for returning a specified Landmark from state */
 export const selectLandmark = (state: RootState, code: string) =>

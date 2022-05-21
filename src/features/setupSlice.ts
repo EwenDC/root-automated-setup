@@ -33,7 +33,7 @@ const initialState: SetupState = {
 
 export const setupSlice = createSlice({
   name: "setup",
-  initialState: initialState,
+  initialState,
   reducers: {
     setPlayerCount: (state, action: PayloadAction<number>) => {
       // Make sure the player count is valid (i.e. above 0)

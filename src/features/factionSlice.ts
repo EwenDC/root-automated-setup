@@ -33,7 +33,7 @@ const addExpansionFactions = (
 
 export const factionSlice = createSlice({
   name: "faction",
-  initialState: setupInitialState(addExpansionFactions),
+  initialState: () => setupInitialState(addExpansionFactions),
   reducers: {
     toggleFaction: toggleComponent,
   },

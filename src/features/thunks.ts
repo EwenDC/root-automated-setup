@@ -70,24 +70,18 @@ export const toggleExpansion =
 const massComponentToggle =
   <T extends GameComponent>(
     selectComponentArray: (state: RootState) => WithCode<T>[],
-    componentEnable:
-      | boolean
-      | ((
-          component: WithCode<T>,
-          index: number,
-          array: WithCode<T>[]
-        ) => boolean),
+    componentEnable: boolean | ((component: WithCode<T>) => boolean),
     toggleComponent: (
       code: string,
       enabled?: boolean
     ) => PayloadAction<{ code: string; enabled?: boolean }>
   ): AppThunk =>
   (dispatch, getState) => {
-    selectComponentArray(getState()).forEach((component, index, array) => {
+    selectComponentArray(getState()).forEach((component) => {
       // Calculate what the enable state of the component should be
       const shouldEnable =
         typeof componentEnable === "function"
-          ? componentEnable(component, index, array)
+          ? componentEnable(component)
           : componentEnable;
       // If the desired state does not match the actual state, fix it
       if (component.enabled !== shouldEnable) {

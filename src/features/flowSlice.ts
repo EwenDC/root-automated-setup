@@ -1,5 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../components/store";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   SetupStep,
   FlowState,
@@ -47,24 +46,9 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentFactionIndex = slice.factionIndex;
 };
 
-/** Returns the faction pool, joining the original faction and vagabond objects into the entries */
-export const selectFactionPool = createSelector(
-  (state: RootState) => state.flow.factionPool,
-  (state: RootState) => state.faction,
-  (state: RootState) => state.vagabond,
-  (factionPool, factions, vagabonds) =>
-    factionPool.map((entry) => ({
-      ...factions[entry.code],
-      code: entry.code,
-      vagabond: entry.vagabond
-        ? { ...vagabonds[entry.vagabond], code: entry.vagabond }
-        : undefined,
-    }))
-);
-
 export const flowSlice = createSlice({
   name: "flow",
-  initialState: initialState,
+  initialState,
   reducers: {
     incrementStep: (state, action: PayloadAction) => {
       if (state.currentStep < SetupStep.setupEnd) {

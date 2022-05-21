@@ -35,7 +35,7 @@ const addExpansionVagabonds = (
 
 export const vagabondSlice = createSlice({
   name: "vagabond",
-  initialState: setupInitialState(addExpansionVagabonds),
+  initialState: () => setupInitialState(addExpansionVagabonds),
   reducers: {
     toggleVagabond: toggleComponent,
   },

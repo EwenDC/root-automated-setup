@@ -37,7 +37,7 @@ const addExpansionHirelings = (
 
 export const hirelingSlice = createSlice({
   name: "hireling",
-  initialState: setupInitialState(addExpansionHirelings),
+  initialState: () => setupInitialState(addExpansionHirelings),
   reducers: {
     toggleHireling: toggleComponent,
   },

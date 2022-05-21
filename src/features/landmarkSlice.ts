@@ -35,7 +35,7 @@ const addExpansionLandmarks = (
 
 export const landmarkSlice = createSlice({
   name: "landmark",
-  initialState: setupInitialState(addExpansionLandmarks),
+  initialState: () => setupInitialState(addExpansionLandmarks),
   reducers: {
     toggleLandmark: toggleComponent,
   },

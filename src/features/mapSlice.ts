@@ -34,7 +34,7 @@ const addExpansionMaps = (
 
 export const mapSlice = createSlice({
   name: "map",
-  initialState: setupInitialState(addExpansionMaps),
+  initialState: () => setupInitialState(addExpansionMaps),
   reducers: {
     toggleMap: toggleComponent,
   },

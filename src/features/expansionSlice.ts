@@ -5,23 +5,24 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import content from "../content.json";
-import { AppThunk } from "../components/store";
 import {
   expansionEnabled,
   getExpansionConfig,
   persistExpansionEnabled,
 } from "./utils";
 import { ComponentState, Expansion, ExpansionComponent } from "../types";
-import { selectExpansion } from "./selectors";
 
-let initialState: ComponentState<Expansion> = {};
-for (const [expansionCode, expansion] of Object.entries(content)) {
-  initialState[expansionCode] = {
-    base: expansion.base,
-    image: expansion.image === "" ? undefined : expansion.image,
-    enabled: expansionEnabled(expansionCode, expansion.base),
-  };
-}
+const setupInitialExpansionState = () => {
+  let initialState: ComponentState<Expansion> = {};
+  for (const [expansionCode, expansion] of Object.entries(content)) {
+    initialState[expansionCode] = {
+      base: expansion.base,
+      image: expansion.image === "" ? undefined : expansion.image,
+      enabled: expansionEnabled(expansionCode, expansion.base),
+    };
+  }
+  return initialState;
+};
 
 const setExpansionEnabled = (
   state: ComponentState<Expansion>,
@@ -39,7 +40,7 @@ const setExpansionEnabled = (
 
 export const expansionSlice = createSlice({
   name: "expansion",
-  initialState,
+  initialState: setupInitialExpansionState,
   reducers: {
     enableExpansion: (state, action: PayloadAction<string>) =>
       setExpansionEnabled(state, action.payload, true),

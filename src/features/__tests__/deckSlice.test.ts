@@ -51,7 +51,7 @@ describe("Deck Reducer", () => {
     let state = initialState;
 
     state = deckReducer(state, enableExpansion("dummyExpansion"));
-    expect(state).toEqual({
+    expect(state).toEqual<ComponentState<ExpansionComponent>>({
       ...initialState,
       testDeckExpansion: {
         enabled: true,

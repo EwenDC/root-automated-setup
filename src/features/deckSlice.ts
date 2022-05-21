@@ -33,7 +33,7 @@ const addExpansionDecks = (
 
 export const deckSlice = createSlice({
   name: "deck",
-  initialState: setupInitialState(addExpansionDecks),
+  initialState: () => setupInitialState(addExpansionDecks),
   reducers: {
     toggleDeck: toggleComponent,
   },
