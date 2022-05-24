@@ -63,7 +63,7 @@ export const Step: React.FC<StepProps> = ({
     if (stepActive)
       // Preappend the step title or subtitle if our step has one
       document.title =
-        (titleText ?? subtitleText ? titleText ?? subtitleText + " - " : "") +
+        (titleText || subtitleText ? (titleText || subtitleText) + " - " : "") +
         t("label.pageTitle");
   }, [stepActive, titleText, subtitleText, t]);
 
