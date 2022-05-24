@@ -16,6 +16,7 @@ const initialState: FlowState = {
   currentStep: SetupStep.chooseExpansions,
   factionPool: [],
   lastFactionLocked: false,
+  vagabondSetUp: false,
   currentPlayerIndex: 0,
   currentFactionIndex: null,
   // Create an array with as many elements as there are setup steps
@@ -34,6 +35,7 @@ const getSlice = (state: FlowState): FlowSlice => ({
   // This prevents changes we make to the faction pool in the draft state being reflected in already generated slices
   factionPool: [...state.factionPool],
   lastFactionLocked: state.lastFactionLocked,
+  vagabondSetUp: state.vagabondSetUp,
   playerIndex: state.currentPlayerIndex,
   factionIndex: state.currentFactionIndex,
 });
@@ -42,6 +44,7 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentStep = slice.step;
   state.factionPool = slice.factionPool;
   state.lastFactionLocked = slice.lastFactionLocked;
+  state.vagabondSetUp = slice.vagabondSetUp;
   state.currentPlayerIndex = slice.playerIndex;
   state.currentFactionIndex = slice.factionIndex;
 };
@@ -55,6 +58,14 @@ export const flowSlice = createSlice({
         // Add our current state to the undo queue and clear the redo queue
         state.pastSteps.push(getSlice(state));
         state.futureSteps = [];
+
+        // Flag that we set up a vagabond
+        if (
+          state.currentStep === SetupStep.setUpFaction &&
+          !state.vagabondSetUp &&
+          state.factionPool[state.currentFactionIndex ?? 0].vagabond
+        )
+          state.vagabondSetUp = true;
 
         // Handle special case for faction setup
         if (
@@ -140,7 +151,6 @@ export const flowSlice = createSlice({
       state.factionPool = [];
       state.lastFactionLocked = false;
       state.currentFactionIndex = null;
-      state.futureSteps = [];
     },
     addToFactionPool: {
       prepare: (
@@ -159,13 +169,11 @@ export const flowSlice = createSlice({
         // Add to our pool, and set it to locked if insurgent
         state.factionPool.push(action.payload);
         state.lastFactionLocked = !action.payload.militant;
-        state.futureSteps = [];
       },
     },
     setCurrentPlayerIndex: (state, action: PayloadAction<number>) => {
       if (action.payload >= 0) {
         state.currentPlayerIndex = action.payload;
-        state.futureSteps = [];
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           "Invalid payload for setCurrentPlayerIndex action: Payload must be a number larger than or equal to 0",

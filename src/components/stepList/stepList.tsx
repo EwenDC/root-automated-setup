@@ -53,7 +53,7 @@ export const StepList: React.FC = () => {
     playerOrder,
   } = useAppSelector(selectSetupParameters);
   const map = useAppSelector(selectSetupMap);
-  const { currentPlayerIndex, currentFactionIndex } =
+  const { currentPlayerIndex, currentFactionIndex, vagabondSetUp } =
     useAppSelector(selectFlowState);
   const factionPool = useAppSelector(selectFactionPool);
   const { skippedSteps } = useAppSelector(selectFlowState);
@@ -85,6 +85,20 @@ export const StepList: React.FC = () => {
           }
         />
       </Step>
+      <Step step={SetupStep.seatPlayers}>
+        <NumberSelector
+          id="playerCount"
+          value={playerCount}
+          minVal={skippedSteps[SetupStep.setUpBots] ? 2 : 1}
+          maxVal={factionCodes.length - 1}
+          onChange={(value) => dispatch(setPlayerCount(value))}
+        />
+        <Radiogroup
+          id="fixedFirstPlayer"
+          defaultValue={fixedFirstPlayer}
+          onChange={(value) => dispatch(fixFirstPlayer(value))}
+        />
+      </Step>
       <Step step={SetupStep.chooseMap}>
         <ComponentToggle
           selector={selectMapArray}
@@ -101,15 +115,15 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpMap}
-        subtitleOptions={{ map: map && t("map." + map.code + ".name") }}
         textKey={"map." + map?.code + ".setup"}
+        translationOptions={{ map: map && t("map." + map.code + ".name") }}
       />
       <Step
         step={SetupStep.setUpMapLandmark}
-        subtitleOptions={{
+        textKey={"map." + map?.code + ".landmarkSetup"}
+        translationOptions={{
           landmark: map?.landmark && t("landmark." + map.landmark + ".name"),
         }}
-        textKey={"map." + map?.code + ".landmarkSetup"}
       />
       <Step step={SetupStep.chooseDeck}>
         <ComponentToggle
@@ -122,25 +136,18 @@ export const StepList: React.FC = () => {
         step={SetupStep.setUpDeck}
         renderTitle={skippedSteps[SetupStep.chooseDeck]}
         renderSubtitle={!skippedSteps[SetupStep.chooseDeck]}
-        subtitleOptions={{ deck: deck && t("deck." + deck) }}
-        textOptions={{ deck: deck && t("deck." + deck) }}
+        translationOptions={{
+          context: playerCount < 3 ? "twoPlayer" : undefined,
+          deck: deck && t("deck." + deck),
+        }}
       />
       <Step step={SetupStep.setUpBots} />
-      <Step step={SetupStep.seatPlayers}>
-        <NumberSelector
-          id="playerCount"
-          value={playerCount}
-          minVal={skippedSteps[SetupStep.setUpBots] ? 2 : 1}
-          maxVal={factionCodes.length - 1}
-          onChange={(value) => dispatch(setPlayerCount(value))}
-        />
-        <Radiogroup
-          id="fixedFirstPlayer"
-          defaultValue={fixedFirstPlayer}
-          onChange={(value) => dispatch(fixFirstPlayer(value))}
-        />
-      </Step>
-      <Step step={SetupStep.chooseLandmarks}>
+      <Step
+        step={SetupStep.chooseLandmarks}
+        translationOptions={{
+          context: useMapLandmark && map?.landmark ? "mapLandmark" : undefined,
+        }}
+      >
         <NumberSelector
           id="landmarkCount"
           value={landmarkCount}
@@ -167,19 +174,21 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpLandmark1}
-        subtitleOptions={{
+        textKey={"landmark." + landmark1 + ".setup"}
+        translationOptions={{
+          context: map?.code,
+          count: nthLastPlayer(1),
           landmark: landmark1 && t("landmark." + landmark1 + ".name"),
         }}
-        textKey={"landmark." + landmark1 + ".setup"}
-        textCount={nthLastPlayer(1)} // Last player in turn order
       />
       <Step
         step={SetupStep.setUpLandmark2}
-        subtitleOptions={{
+        textKey={"landmark." + landmark2 + ".setup"}
+        translationOptions={{
+          context: map?.code,
+          count: nthLastPlayer(2),
           landmark: landmark2 && t("landmark." + landmark2 + ".name"),
         }}
-        textKey={"landmark." + landmark2 + ".setup"}
-        textCount={nthLastPlayer(2)} // Second last player in turn order
       />
       <Step step={SetupStep.chooseHirelings}>
         <Checkbox
@@ -219,42 +228,42 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpHireling1}
-        subtitleOptions={{
+        textKey={"hireling." + hireling1?.code + ".setup"}
+        translationOptions={{
+          context: hireling1?.demoted ? "demoted" : undefined,
+          count: nthLastPlayer(1),
           hireling:
             hireling1 &&
             t("hireling." + hireling1.code + ".name", {
               context: hireling1.demoted ? "demoted" : undefined,
             }),
         }}
-        textKey={"hireling." + hireling1?.code + ".setup"}
-        textCount={nthLastPlayer(1)} // Last player in turn order
-        textOptions={{ context: hireling1?.demoted ? "demoted" : undefined }}
       />
       <Step
         step={SetupStep.setUpHireling2}
-        subtitleOptions={{
+        textKey={"hireling." + hireling2?.code + ".setup"}
+        translationOptions={{
+          context: hireling2?.demoted ? "demoted" : undefined,
+          count: nthLastPlayer(2),
           hireling:
             hireling2 &&
             t("hireling." + hireling2.code + ".name", {
               context: hireling2.demoted ? "demoted" : undefined,
             }),
         }}
-        textKey={"hireling." + hireling2?.code + ".setup"}
-        textCount={nthLastPlayer(2)} // Second last player in turn order
-        textOptions={{ context: hireling2?.demoted ? "demoted" : undefined }}
       />
       <Step
         step={SetupStep.setUpHireling3}
-        subtitleOptions={{
+        textKey={"hireling." + hireling3?.code + ".setup"}
+        translationOptions={{
+          context: hireling3?.demoted ? "demoted" : undefined,
+          count: nthLastPlayer(3),
           hireling:
             hireling3 &&
             t("hireling." + hireling3.code + ".name", {
               context: hireling3.demoted ? "demoted" : undefined,
             }),
         }}
-        textKey={"hireling." + hireling3?.code + ".setup"}
-        textCount={nthLastPlayer(3)} // Third last player in turn order
-        textOptions={{ context: hireling3?.demoted ? "demoted" : undefined }}
       />
       <Step step={SetupStep.postHirelingSetup} />
       <Step step={SetupStep.drawCards} />
@@ -289,24 +298,23 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.selectFaction}
-        textCount={playerOrder[currentPlayerIndex]}
+        translationOptions={{ count: playerOrder[currentPlayerIndex] }}
       >
         <FactionSelect />
       </Step>
       <Step
         step={SetupStep.setUpFaction}
-        subtitleOptions={{
-          faction:
-            currentFactionIndex != null
-              ? t("faction." + factionPool[currentFactionIndex].key + ".name")
-              : undefined,
-        }}
         textKey={
           currentFactionIndex != null
             ? "faction." + factionPool[currentFactionIndex].key + ".setup"
             : undefined
         }
-        textOptions={{
+        translationOptions={{
+          context: vagabondSetUp ? "vagabondSetUp" : undefined,
+          faction:
+            currentFactionIndex != null
+              ? t("faction." + factionPool[currentFactionIndex].key + ".name")
+              : undefined,
           vagabond:
             currentFactionIndex != null &&
             factionPool[currentFactionIndex].vagabond
@@ -318,9 +326,17 @@ export const StepList: React.FC = () => {
               : undefined,
         }}
       />
-      <Step step={SetupStep.placeScoreMarkers} />
+      <Step
+        step={SetupStep.placeScoreMarkers}
+        translationOptions={{
+          context: vagabondSetUp ? "vagabondSetUp" : undefined,
+        }}
+      />
       <Step step={SetupStep.chooseHand} />
-      <Step step={SetupStep.setupEnd} textCount={playerOrder[0]} />
+      <Step
+        step={SetupStep.setupEnd}
+        translationOptions={{ count: playerOrder[0] }}
+      />
     </main>
   );
 };

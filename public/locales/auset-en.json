@@ -62,7 +62,7 @@
     },
     "keepers": {
       "name": "Keepers in Iron",
-      "setup": "<i>1.</i> Shuffle all 12 <strong>relic tokens</strong> face down. Place one face down randomly in each forest.<br/><i>2.</i>Choose 2 adjacent homeland clearings on the map edge that have 2+ clearings between them and enemy homelands. Put 4 <strong>warriors</strong> in each homeland.<br/><i>3.</i> Put any remaining <strong>relics</strong>, as evenly as possible, among any forests that are not adjacent to your homelands.<br/><i>4.</i> Tuck a <strong>Faithful Retainer</strong> card into each of your Retinue column slots."
+      "setup": "<i>1.</i> Shuffle all 12 <strong>relic tokens</strong> face down. Place one face down randomly in each forest.<br/><i>2.</i> Choose 2 adjacent homeland clearings on the map edge that have 2+ clearings between them and enemy homelands. Put 4 <strong>warriors</strong> in each homeland.<br/><i>3.</i> Put any remaining <strong>relics</strong>, as evenly as possible, among any forests that are not adjacent to your homelands.<br/><i>4.</i> Tuck a <strong>Faithful Retainer</strong> card into each of your Retinue column slots."
     },
     "marquise": {
       "name": "Marquise de Cat",
@@ -74,11 +74,13 @@
     },
     "vagabond": {
       "name": "Vagabond",
-      "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless a non-Vagabond has done so.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed.<br/><i>5.</i> Put <strong>relationship markers</strong> for non-Vagabond factions in play on the Indifferent space of Relationships <i>(after setup)</i>."
+      "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed.",
+      "setup_vagabondSetUp": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the second set of 4 <strong>\"R\" items</strong> under the ruins randomly <i>(in addition to the existing items)</i>.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed."
     },
     "warlord": {
       "name": "Lord of the Hundreds",
-      "setup": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot.<br/><i>4.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done."
+      "setup": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot.<br/><i>4.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done.",
+      "setup_vagabondSetUp": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot."
     }
   },
   "hireling": {
@@ -102,8 +104,8 @@
     },
     "exile": {
       "name": "Exile",
-      "name_demoted": "Bandit",
-      "setup": "Player {{count}}, grab the hireling card, pawn, and 3 club items for the Exile from the game box. Place the Exile pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 club items on top of it <i>(unexhaused side up)</i>.",
+      "name_demoted": "Brigand",
+      "setup": "Player {{count}}, grab the hireling card, pawn, and 3 club items for the Exile from the game box. Place the Exile pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 Club items on top of it <i>(unexhaused side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with it's demoted \"The Bandit\" side up. Place \"R\" items under the ruins as if the Vagabond were in play."
     },
     "expedition": {
@@ -127,7 +129,7 @@
     "patrol": {
       "name": "Forest Patrol",
       "name_demoted": "Feline Physicians",
-      "setup": "Player {{count}}, grab the hireling card and 12 warriors for the Forest Patrol from the game box. Place a Patrol warrior in each clearing of the map. Place the card next to the map <i>(non-demoted side up)</i>.",
+      "setup": "Player {{count}}, grab the hireling card and 12 warriors for the Forest Patrol from the game box. Place a Patrol warrior in each clearing. Place the card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Forest Patrol hireling card from the game box. Place it next to the map with it's demoted \"Feline Physicians\" side up."
     },
     "prophets": {
@@ -145,7 +147,7 @@
     "spies": {
       "name": "Corvid Spies",
       "name_demoted": "Raven Sentinels",
-      "setup": "Player {{count}}, grab the hireling card and 6 warriors for the Corvid Spies from the game box. Place 2 Spy warriors, one each in two clearings of a matching suit. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
+      "setup": "Player {{count}}, grab the hireling card and 6 warriors for the Corvid Spies from the game box. Place 2 Spy warriors, one each in two clearings of matching suit. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Corvid Spies hireling card from the game box. Place it next to the map with it's demoted \"Raven Sentinels\" side up."
     },
     "uprising": {
@@ -185,27 +187,29 @@
   "landmark": {
     "city": {
       "name": "Lost City",
-      "setup": "Player {{count}}, place the Lost City in a random clearing with the river, not with or adjacent to another Landmark. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "Player {{count}}, place the Lost City landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side.",
+      "setup_lake": "Player {{count}}, place the Lost City landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "ferry": {
       "name": "Ferry",
-      "setup": "Player {{count}}, place the Ferry in a random clearing with the river or Lake, not with or adjacent to another Landmark. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have \"The Ferry\" landmark card, take it from the game box and place it next to the board on it's non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>\"Once per turn, a player taking a move from the Ferry's clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card.\"</p>",
+      "setup_lake": "Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have \"The Ferry\" landmark card, take it from the game box and place it next to the board on it's non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>\"Once per turn, a player taking a move from the Ferry's clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card.\"</p>"
     },
     "forge": {
       "name": "Legendary Forge",
-      "setup": "Player {{count}}, place the Legendary Forge in a random clearing, not with or adjacent to another Landmark. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side. Depending on the suit of the clearing the Forge was placed in, collect the following items from the item supply and place them on the landmark card:<p><i>Fox:</i> 2 Swords, 1 Crossbow, 1 Hammer.<br/><i>Mouse:</i> 2 Bags, 2 Tea.<br/><i>Rabbit:</i> 2 Boots, 2 Coins.</p>"
+      "setup": "Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one.<br/>Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side. Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><i>Fox:</i> 2 Swords, 1 Crossbow, 1 Hammer.<br/><i>Mouse:</i> 2 Bags, 2 Tea.<br/><i>Rabbit:</i> 2 Boots, 2 Coins.</p>"
     },
     "market": {
       "name": "Black Market",
-      "setup": "Player {{count}}, place the Black Market in a random clearing with only 1 building slot, not with or adjacent to another Landmark. Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side. Draw 3 cards without looking at them and place them face down next to the landmark card."
+      "setup": "Player {{count}}, place the Black Market landmark in a clearing that has exactly one building slot and no ruin. It cannot have a landmark or be adjacent to one.<br/>Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side. Draw three cards but do not look at them. Place them face down next to the Black Market card."
     },
     "tower": {
       "name": "Tower",
-      "setup": "Player {{count}}, place the Tower in a random clearing with a ruin, not with or adjacent to another Landmark. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "Player {{count}}, place the Tower landmark in a clearing that has a ruin. It cannot have a landmark. If you have \"The Tower\" landmark card, take it from the game box and place it next to the board on it's non-setup side. If you do not have the card, the Tower has the following rule during play:<p>\"At the end of a player's Evening, if they rule the Tower's clearing, they score one point.\"</p>"
     },
     "treetop": {
       "name": "Elder Treetop",
-      "setup": "Player {{count}}, place the Elder Treetop in a random corner clearing, not with or adjacent to another Landmark. Grab the \"Elder Treetop\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "setup": "Player {{count}}, place the Elder Treetop in a corner clearing. It cannot have a landmark or be adjacent to one. Grab the \"Elder Treetop\" landmark card from the game box and place it next to the board on it's non-setup side."
     }
   },
   "map": {
@@ -216,12 +220,12 @@
     "lake": {
       "name": "Lake",
       "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map.",
-      "landmarkSetup": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have it, grab \"The Ferry\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "landmarkSetup": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have \"The Ferry\" landmark card, take it from the game box and place it next to the board on it's non-setup side."
     },
     "mountain": {
       "name": "Mountain",
       "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
-      "landmarkSetup": "Place the Tower piece in the central clearing showing two towers. If you have it, grab \"The Tower\" landmark card from the game box and place it next to the board on it's non-setup side."
+      "landmarkSetup": "Place the Tower piece in the central clearing showing two towers. If you have \"The Tower\" landmark card, take it from the game box and place it next to the board on it's non-setup side."
     },
     "winter": {
       "name": "Winter",
@@ -231,6 +235,10 @@
   "setupStep": {
     "chooseExpansions": {
       "body": "Welcome to the Root Automated Setup. This page will guide you through the advanced set up rules for the popular board game Root, with minimal shuffling and no set up cards required! To get started, select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the page to do so."
+    },
+    "seatPlayers": {
+      "title": "Seat Players",
+      "body": "Determine the player seating order, then select how many players you are playing with, and if you wish for the app to choose a random starting player."
     },
     "chooseMap": {
       "title": "Choose and Set up Map",
@@ -249,19 +257,17 @@
     "setUpDeck": {
       "title": "Set up Deck",
       "subtitle": "Set up the {{deck}} Deck",
-      "body": "Grab the {{deck}} deck from the game box and place it next to the map. If you will be playing with less than three players, remove all four dominance cards from the deck. Shuffle the deck."
+      "body": "Grab the {{deck}} deck from the game box and place it next to the map. Shuffle the deck.",
+      "body_twoPlayer": "Grab the {{deck}} deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck."
     },
     "setUpBots": {
       "title": "Set up Bots",
       "body": "As a group, decide which bots you would like to play with, following their set up instructions as described in the Law of Rootbotics."
     },
-    "seatPlayers": {
-      "title": "Seat Players",
-      "body": "Determine the player seating order, then select how many players you are playing with, and if you wish for the app to choose a random starting player."
-    },
     "chooseLandmarks": {
       "title": "Set up Landmarks",
-      "body": "As a group, decide how many landmarks you want to play with <i>(in addition to the map landmark if it was included)</i>, and which ones to include in the selection pool."
+      "body": "As a group, decide how many landmarks you want to play with, and which ones to include in the selection pool.",
+      "body_mapLandmark": "As a group, decide how many landmarks you want to play with <i>(in addition to the already included map landmark)</i>, and which ones to include in the selection pool."
     },
     "setUpLandmark1": {
       "subtitle": "Set up the {{landmark}}"
@@ -303,7 +309,9 @@
     },
     "placeScoreMarkers": {
       "title": "Place Score Markers",
-      "body": "Each player place their chosen faction's score marker on the \"0\" space of the score track."
+      "title_vagabondSetUp": "Place Score and Relationship Markers",
+      "body": "Each player place their chosen faction's score marker on the \"0\" space of the score track.",
+      "body_vagabondSetUp": "Each player place their chosen faction's score marker on the \"0\" space of the score track. Each Vagabond player place a relationship marker for every non-Vagabond faction in play on the Indifferent space of Relationships."
     },
     "chooseHand": {
       "title": "Choose Starting Hands",

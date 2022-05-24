@@ -90,13 +90,13 @@ export interface SetupState {
 /** An enum of the individual steps in the setup process. The setup process will step through this list during execution */
 export enum SetupStep {
   chooseExpansions,
+  seatPlayers,
   chooseMap,
   setUpMap,
   setUpMapLandmark,
   chooseDeck,
   setUpDeck,
   setUpBots,
-  seatPlayers,
   chooseLandmarks,
   setUpLandmark1,
   setUpLandmark2,
@@ -126,6 +126,7 @@ export interface FlowSlice {
   step: SetupStep;
   factionPool: FactionEntry[];
   lastFactionLocked: boolean;
+  vagabondSetUp: boolean;
   playerIndex: number;
   factionIndex: number | null;
 }
@@ -136,6 +137,7 @@ export interface FlowState {
   currentStep: SetupStep;
   factionPool: FactionEntry[];
   lastFactionLocked: boolean;
+  vagabondSetUp: boolean;
   currentPlayerIndex: number;
   currentFactionIndex: number | null;
   skippedSteps: boolean[];

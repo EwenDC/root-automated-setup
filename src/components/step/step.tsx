@@ -12,11 +12,9 @@ interface StepProps {
   step: SetupStep;
   renderTitle?: boolean;
   renderSubtitle?: boolean;
-  subtitleOptions?: TOptions;
   textKey?: string;
-  textCount?: number;
-  textOptions?: Omit<TOptions, "count">; // For Trans component count cannot be passed in with options
   textBelowChildren?: boolean;
+  translationOptions?: TOptions;
   children?: React.ReactNode;
 }
 
@@ -24,11 +22,9 @@ export const Step: React.FC<StepProps> = ({
   step,
   renderTitle,
   renderSubtitle,
-  subtitleOptions,
   textKey,
-  textCount,
-  textOptions,
   textBelowChildren,
+  translationOptions,
   children,
 }) => {
   const { currentStep, skippedSteps } = useAppSelector(selectFlowState);
@@ -52,16 +48,14 @@ export const Step: React.FC<StepProps> = ({
   const titleText =
     // Only generate if the prerequisites for rendering the title are met
     renderTitle ?? i18n.exists("setupStep." + SetupStep[step] + ".title")
-      ? t("setupStep." + SetupStep[step] + ".title")
+      ? t("setupStep." + SetupStep[step] + ".title", translationOptions)
       : null;
 
   // Generate the subtitle Text in advance so we can use it to rename the window (if required)
   const subtitleText =
     // Only generate if the prerequisites for rendering the subtitle are met
-    renderSubtitle ??
-    subtitleOptions ?? // We need to render if options are passed in as i18n.exists misses dynamic keys
-    i18n.exists("setupStep." + SetupStep[step] + ".subtitle")
-      ? t("setupStep." + SetupStep[step] + ".subtitle", subtitleOptions)
+    renderSubtitle ?? i18n.exists("setupStep." + SetupStep[step] + ".subtitle")
+      ? t("setupStep." + SetupStep[step] + ".subtitle", translationOptions)
       : null;
 
   // Rename the window to match our step (if we are the active step)
@@ -79,8 +73,8 @@ export const Step: React.FC<StepProps> = ({
     const stepText = (
       <Trans
         i18nKey={textKey ?? "setupStep." + SetupStep[step] + ".body"}
-        count={textCount}
-        tOptions={textOptions}
+        count={translationOptions?.count} // For Trans component count cannot be passed in with options
+        tOptions={translationOptions}
       />
     );
 

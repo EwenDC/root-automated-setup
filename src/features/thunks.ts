@@ -27,7 +27,6 @@ import {
   selectHirelingArray,
   selectLandmarkArray,
   selectMapArray,
-  selectSetupMap,
   selectSetupParameters,
   selectVagabondArray,
 } from "./selectors";
@@ -67,7 +66,7 @@ export const toggleExpansion =
  * @param componentEnable Either a function returning the desired enable state for a given component, or a boolean which sets the enable state of all given components
  * @param toggleComponent Action creator for dispatching the toggle component action for the given components
  */
-const massComponentToggle =
+export const massComponentToggle =
   <T extends GameComponent>(
     selectComponentArray: (state: RootState) => WithCode<T>[],
     componentEnable: boolean | ((component: WithCode<T>) => boolean),
@@ -163,6 +162,31 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
       break;
 
+    case SetupStep.seatPlayers:
+      let firstPlayer: number;
+
+      // Do we need to randomise the first player
+      if (setupParameters.fixedFirstPlayer) {
+        // First player is always "1" as the player number represents turn order
+        firstPlayer = 1;
+      } else {
+        // Randomly pick a first player between 1 and playerCount, as the player number represents table seating order
+        firstPlayer =
+          Math.floor(Math.random() * setupParameters.playerCount) + 1;
+      }
+      dispatch(setFirstPlayer(firstPlayer));
+
+      // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
+      dispatch(
+        massComponentToggle(
+          selectFactionHirelingArray,
+          setupParameters.playerCount <
+            selectFactionCodeArray(getState()).length - 1,
+          toggleHireling
+        )
+      );
+      break;
+
     case SetupStep.chooseMap:
       // Get our list of maps which are avaliable for selection
       let mapPool = selectEnabled(selectMapArray(getState()));
@@ -178,6 +202,18 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           skipSteps(
             SetupStep.setUpMapLandmark,
             !setupParameters.useMapLandmark || !map.landmark
+          )
+        );
+
+        // Ensure that any landmarks not supported at this player count or used by map setup are disabled
+        dispatch(
+          massComponentToggle(
+            selectLandmarkArray,
+            (landmark) =>
+              landmark.minPlayers <= setupParameters.playerCount &&
+              (!setupParameters.useMapLandmark ||
+                map.landmark !== landmark.code),
+            toggleLandmark
           )
         );
       } else {
@@ -200,57 +236,6 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         doIncrementStep = false;
         validationError = "error.noDeck";
       }
-      break;
-
-    case SetupStep.seatPlayers:
-      let firstPlayer: number;
-
-      // Do we need to randomise the first player
-      if (setupParameters.fixedFirstPlayer) {
-        // First player is always "1" as the player number represents turn order
-        firstPlayer = 1;
-      } else {
-        // Randomly pick a first player between 1 and playerCount, as the player number represents table seating order
-        firstPlayer =
-          Math.floor(Math.random() * setupParameters.playerCount) + 1;
-      }
-      dispatch(setFirstPlayer(firstPlayer));
-
-      // Ensure that any landmarks not supported at this player count or used by map setup are disabled
-      const map = selectSetupMap(getState());
-      dispatch(
-        massComponentToggle(
-          selectLandmarkArray,
-          (landmark) =>
-            landmark.minPlayers <= setupParameters.playerCount &&
-            (!setupParameters.useMapLandmark ||
-              map?.landmark !== landmark.code),
-          toggleLandmark
-        )
-      );
-
-      // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
-      dispatch(
-        massComponentToggle(
-          selectFactionHirelingArray,
-          setupParameters.playerCount <
-            selectFactionCodeArray(getState()).length - 1,
-          toggleHireling
-        )
-      );
-
-      // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
-      dispatch(
-        massComponentToggle(
-          selectFactionArray,
-          (faction) =>
-            setupParameters.playerCount > 2 ||
-            faction.militant ||
-            !flowState.skippedSteps[SetupStep.setUpHireling1] ||
-            !flowState.skippedSteps[SetupStep.setUpBots],
-          toggleFaction
-        )
-      );
       break;
 
     case SetupStep.chooseLandmarks:
@@ -303,14 +288,9 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       break;
 
     case SetupStep.chooseHirelings:
-      let excludedFactionsUpdated = false;
-
       // Clear the exclude faction pool of any potential stale data from previous hireling setups
-      if (setupParameters.excludedFactions.length > 0) {
+      if (setupParameters.excludedFactions.length > 0)
         dispatch(clearExcludedFactions());
-        // Flag the update to the excluded factions so we can re-enable any disabled ones if we skip hireling setup
-        excludedFactionsUpdated = true;
-      }
 
       // Did we skip the hireling setup?
       if (!flowState.skippedSteps[SetupStep.setUpHireling1]) {
@@ -352,9 +332,6 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
         // Check that there are enough hirelings selected
         if (hirelingPool.length >= 3) {
-          // Flag the update to the excluded factions so we can disable them later
-          excludedFactionsUpdated = true;
-
           // Choose three random hirelings
           for (let number = 1; number <= 3; number++) {
             dispatch(
@@ -372,19 +349,23 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         }
       }
 
-      if (excludedFactionsUpdated) {
-        // Disable the factions that are mutually exclusive with the selected hirelings
-        const excludedFactions = selectSetupParameters(
-          getState()
-        ).excludedFactions;
-        dispatch(
-          massComponentToggle(
-            selectFactionArray,
-            (faction) => !excludedFactions.includes(faction.code),
-            toggleFaction
-          )
-        );
-      }
+      // Disable the factions that are mutually exclusive with the selected hirelings
+      // Also disable insurgent factions if we're only playing with 2 people and no bots or hirelings
+      const excludedFactions = selectSetupParameters(
+        getState()
+      ).excludedFactions;
+      dispatch(
+        massComponentToggle(
+          selectFactionArray,
+          (faction) =>
+            !excludedFactions.includes(faction.code) &&
+            (setupParameters.playerCount > 2 ||
+              faction.militant ||
+              !flowState.skippedSteps[SetupStep.setUpHireling1] ||
+              !flowState.skippedSteps[SetupStep.setUpBots]),
+          toggleFaction
+        )
+      );
       break;
 
     case SetupStep.chooseFactions:

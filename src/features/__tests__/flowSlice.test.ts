@@ -1,3 +1,7 @@
 import { flowReducer } from "..";
 
-describe("Flow Reducer", () => {});
+describe("Flow Reducer", () => {
+  it("Should initialze state", () => {
+    expect(flowReducer(undefined, { type: "@@INIT" })).not.toBeNull();
+  });
+});
