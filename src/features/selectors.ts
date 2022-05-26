@@ -57,12 +57,6 @@ export const selectEnabledMilitantFactions = (state: RootState) =>
 export const selectEnabledInsurgentFactions = (state: RootState) =>
   selectFactionArray(state).filter((value) => value.enabled && !value.militant);
 
-/** Redux Selector for returning an array of enabled vagabond factions */
-export const selectEnabledVagabondFactions = (state: RootState) =>
-  selectFactionArray(state).filter(
-    (value) => value.enabled && value.isVagabond
-  );
-
 /** Returns the faction pool, joining the original faction and vagabond objects into the entries */
 export const selectFactionPool = createSelector(
   (state: RootState) => state.flow.factionPool,
@@ -124,12 +118,6 @@ export const selectMap = (state: RootState, code: string) => state.map[code];
 
 /** Redux Selector for returning the map list as an array, moving the object key to the object field "code" */
 export const selectMapArray = selectComponentArray((state) => state.map);
-
-/** Redux Selector for returning an array of enabled maps which have a landmark */
-export const selectEnabledLandmarkMaps = (state: RootState) =>
-  selectMapArray(state).filter(
-    (value) => value.enabled && value.landmark != null
-  );
 
 /** Returns the object for the map selected in setup */
 export const selectSetupMap = (state: RootState) =>

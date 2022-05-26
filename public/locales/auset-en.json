@@ -6,8 +6,18 @@
     "vaultBuilding": "Vault Building"
   },
   "deck": {
-    "exiles": "Exiles and Partisans",
-    "standard": "Standard"
+    "exiles": {
+      "name": "Exiles and Partisans",
+      "setupTitle": "Set up the Exiles and Partisans Deck",
+      "setup": "Grab the Exiles and Partisans deck from the game box and place it next to the map. Shuffle the deck.",
+      "setup_twoPlayer": "Grab the Exiles and Partisans deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck."
+    },
+    "standard": {
+      "name": "Standard",
+      "setupTitle": "Set up the Standard Deck",
+      "setup": "Grab the Standard deck from the game box and place it next to the map. Shuffle the deck.",
+      "setup_twoPlayer": "Grab the Standard deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck."
+    }
   },
   "error": {
     "baseExpansionRequired": "A base copy of Root is required for set up",
@@ -42,43 +52,53 @@
   "faction": {
     "alliance": {
       "name": "Woodland Alliance",
+      "setupTitle": "Set up the Woodland Alliance",
       "setup": "<i>1.</i> Draw 3 <strong>cards</strong> and add them face down to your Supporters stack.<br/><i>2.</i> Fill your Sympathy track with <strong>sympathy tokens</strong>.<br/><i>3.</i> Put your 3 <strong>bases</strong> on your matching Bases spaces."
     },
     "corvid": {
       "name": "Corvid Conspiracy",
+      "setupTitle": "Set up the Corvid Conspiracy",
       "setup": "<i>1.</i> Choose a homeland clearing. Put 1 <strong>warrior</strong> and 1 <strong>plot token</strong> of your choice face down there.<br/><i>2.</i> Put 1 <strong>warrior</strong> in a clearing of each suit. <i>(Counting the previous step, place 4 warriors in total.)</i>"
     },
     "cult": {
       "name": "Lizard Cult",
+      "setupTitle": "Set up the Lizard Cult",
       "setup": "<i>1.</i> Choose a homeland clearing that is not adjacent to enemy homelands.<br/><i>2.</i> Put 4 <strong>warriors</strong> and 1 matching <strong>garden</strong> in your homeland. Put 3 <strong>warriors</strong> in clearings adjacent to it as evenly as possible.<br/><i>3.</i> Put 2 <strong>warriors</strong> in your Acolytes box.<br/><i>4.</i> Fill your Gardens tracks with <strong>gardens</strong>, except the leftmost space of the garden on the map.<br/><i>5.</i> Put your <strong>outcast marker</strong> on its Outcast side on any space of the Outcast box."
     },
     "duchy": {
       "name": "Underground Duchy",
+      "setupTitle": "Set up the Underground Duchy",
       "setup": "<i>1.</i> Choose a homeland clearing that is not adjacent to enemy homelands.<br/><i>2.</i> Put 2 <strong>warriors</strong> and 1 <strong>tunnel</strong> in your homeland. Put 5 <strong>warriors</strong> among clearings adjacent to it as evenly as possible.<br/><i>3.</i> Put your <strong>Burrow board</strong> near the map. Fill your Buildings tracks with your <strong>citadels</strong> and <strong>markets</strong>. Put your 9 <strong>minister cards</strong> on your Unswayed Ministers pile. Put your 9 <strong>crowns</strong> on the square spaces showing victory points."
     },
     "eyrie": {
       "name": "Eyrie Dynasties",
+      "setupTitle": "Set up the Eyrie Dynasties",
       "setup": "<i>1.</i> Choose a homeland clearing on the map edge clearing that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put 6 <strong>warriors</strong> and 1 <strong>roost</strong> in your homeland.<br/><i>3.</i> Put any <strong>leader card</strong> on your Leader Card slot. Keep the other 3 leaders face up nearby.<br/><i>4.</i> Tuck your 2 <strong>Loyal Viziers</strong> under the Decree column slots as listed on your current leader.<br/><i>5.</i> Fill your Roosts spaces with <strong>roosts</strong>, except the leftmost."
     },
     "keepers": {
       "name": "Keepers in Iron",
+      "setupTitle": "Set up the Keepers in Iron",
       "setup": "<i>1.</i> Shuffle all 12 <strong>relic tokens</strong> face down. Place one face down randomly in each forest.<br/><i>2.</i> Choose 2 adjacent homeland clearings on the map edge that have 2+ clearings between them and enemy homelands. Put 4 <strong>warriors</strong> in each homeland.<br/><i>3.</i> Put any remaining <strong>relics</strong>, as evenly as possible, among any forests that are not adjacent to your homelands.<br/><i>4.</i> Tuck a <strong>Faithful Retainer</strong> card into each of your Retinue column slots."
     },
     "marquise": {
       "name": "Marquise de Cat",
+      "setupTitle": "Set up the Marquise de Cat",
       "setup": "<i>1.</i> Choose 3 homeland clearings, each adjacent to one other.<br/><i>2.</i> Put 2 <strong>warriors</strong> in each of your homelands. Put 1 <strong>warrior</strong> in each other clearing.<br/><i>3.</i> Put the <strong>keep token</strong> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <strong>sawmill</strong>, <strong>workshop</strong>, and <strong>recruiter</strong> on the map, each in a different homeland of yours.<br/><i>4.</i> Fill your Buildings track with your <strong>buildings</strong>, except the leftmost spaces."
     },
     "riverfolk": {
       "name": "Riverfolk Company",
+      "setupTitle": "Set up the Riverfolk Company",
       "setup": "<i>1.</i> Put 4 <strong>warriors</strong> among any clearings along the river.<br/><i>2.</i> Put 3 <strong>warriors</strong> in your Payments box.<br/><i>3.</i> Fill your Trade Posts tracks with matching <strong>trade posts</strong>.<br/><i>4.</i> Put your 3 <strong>service markers</strong> on your Services track, setting a price for each service."
     },
     "vagabond": {
       "name": "Vagabond",
+      "setupTitle": "Set up the Vagabond",
       "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed.",
       "setup_vagabondSetUp": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the second set of 4 <strong>\"R\" items</strong> under the ruins randomly <i>(in addition to the existing items)</i>.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed."
     },
     "warlord": {
       "name": "Lord of the Hundreds",
+      "setupTitle": "Set up the Lord of the Hundreds",
       "setup": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot.<br/><i>4.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done.",
       "setup_vagabondSetUp": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot."
     }
@@ -86,79 +106,92 @@
   "hireling": {
     "band": {
       "name": "Popular Band",
-      "name_demoted": "Street Band",
+      "setupTitle": "Set up the Popular Band",
+      "setupTitle_demoted": "Set up the Street Band",
       "setup": "Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place 2 Band warriors, each in a different clearing. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place them next to the map <i>(with the card's demoted \"Street Band\" side up)</i>."
     },
     "bandits": {
       "name": "Highway Bandits",
-      "name_demoted": "Bandit Gangs",
+      "setupTitle": "Set up the Highway Bandits",
+      "setupTitle_demoted": "Set up the Bandit Gangs",
       "setup": "Player {{count}}, grab the hireling card and 4 warriors for the Highway Bandits from the game box. Place 2 bandits, one each on a path without one. Place the remaining bandits and card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the hireling card and 4 warriors for the Highway Bandits from the game box. Place them next to the map <i>(with the card's demoted \"Bandit Gangs\" side up)</i>."
     },
     "dynasty": {
       "name": "Last Dynasty",
-      "name_demoted": "Bluebird Nobles",
+      "setupTitle": "Set up the Last Dynasty",
+      "setupTitle_demoted": "Set up the Bluebird Nobles",
       "setup": "Player {{count}}, grab the hireling card and 5 warriors for the Last Dynasty from the game box. Place all 5 Dynasty warriors in a clearing on the map edge. Place the card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Last Dynasty hireling card from the game box. Place it next to the map with it's demoted \"Bluebird Nobles\" side up."
     },
     "exile": {
-      "name": "Exile",
-      "name_demoted": "Brigand",
+      "name": "The Exile",
+      "setupTitle": "Set up the Exile",
+      "setupTitle_demoted": "Set up the Brigand",
       "setup": "Player {{count}}, grab the hireling card, pawn, and 3 club items for the Exile from the game box. Place the Exile pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 Club items on top of it <i>(unexhaused side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with it's demoted \"The Bandit\" side up. Place \"R\" items under the ruins as if the Vagabond were in play."
     },
     "expedition": {
       "name": "Sunward Expedition",
-      "name_demoted": "Mole Artisans",
+      "setupTitle": "Set up the Sunward Expedition",
+      "setupTitle_demoted": "Set up the Mole Artisans",
       "setup": "Player {{count}}, grab the hireling card, 8 warriors, and 3 foothold tokens for the Sunward Expedition from the game box. Place a foothold token and 3 Expedition warriors in any clearing. Place the remaining warriors, tokens, and card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Sunward Expedition hireling card from the game box. Place it next to the map with it's demoted \"Mole Artisans\" side up."
     },
     "flamebearers": {
       "name": "Flame Bearers",
-      "name_demoted": "Rat Smugglers",
+      "setupTitle": "Set up the Flame Bearers",
+      "setupTitle_demoted": "Set up the Rat Smugglers",
       "setup": "Player {{count}}, grab the hireling card and 6 warriors for the Flame Bearers from the game box. Place 2 Bearer warriors among any clearings (even the same). Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Flame Bearers hireling card from the game box. Place it next to the map with it's demoted \"Rat Smugglers\" side up."
     },
     "flotilla": {
       "name": "Riverfolk Flotilla",
-      "name_demoted": "Otter Divers",
+      "setupTitle": "Set up the Riverfolk Flotilla",
+      "setupTitle_demoted": "Set up the Otter Divers",
       "setup": "Player {{count}}, grab the hireling card and pawn for the Riverfolk Flotilla from the game box. Place the Flotilla pawn in a clearing on the map edge and river. Place the card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Riverfolk Flotilla hireling card from the game box. Place it next to the map with it's demoted \"Otter Divers\" side up."
     },
     "patrol": {
       "name": "Forest Patrol",
-      "name_demoted": "Feline Physicians",
+      "setupTitle": "Set up the Forest Patrol",
+      "setupTitle_demoted": "Set up the Feline Physicians",
       "setup": "Player {{count}}, grab the hireling card and 12 warriors for the Forest Patrol from the game box. Place a Patrol warrior in each clearing. Place the card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Forest Patrol hireling card from the game box. Place it next to the map with it's demoted \"Feline Physicians\" side up."
     },
     "prophets": {
       "name": "Warm Sun Prophets",
-      "name_demoted": "Lizard Envoys",
+      "setupTitle": "Set up the Warm Sun Prophets",
+      "setupTitle_demoted": "Set up the Lizard Envoys",
       "setup": "Player {{count}}, grab the hireling card and 4 warriors for the Warm Sun Prophets from the game box. Place a Prophet warrior in each clearing with a ruin. Place the card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Warm Sun Prophets hireling card from the game box. Place it next to the map with it's demoted \"Lizard Envoys\" side up."
     },
     "protector": {
       "name": "Furious Protector",
-      "name_demoted": "Stoic Protector",
+      "setupTitle": "Set up the Furious Protector",
+      "setupTitle_demoted": "Set up the Stoic Protector",
       "setup": "Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place the Protector pawn in any clearing. Place the card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place them next to the map <i>(with the card's demoted \"Stoic Protector\" side up)</i>."
     },
     "spies": {
       "name": "Corvid Spies",
-      "name_demoted": "Raven Sentinels",
+      "setupTitle": "Set up the Corvid Spies",
+      "setupTitle_demoted": "Set up the Raven Sentinels",
       "setup": "Player {{count}}, grab the hireling card and 6 warriors for the Corvid Spies from the game box. Place 2 Spy warriors, one each in two clearings of matching suit. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Corvid Spies hireling card from the game box. Place it next to the map with it's demoted \"Raven Sentinels\" side up."
     },
     "uprising": {
       "name": "Spring Uprising",
-      "name_demoted": "Rabbit Scouts",
+      "setupTitle": "Set up the Spring Uprising",
+      "setupTitle_demoted": "Set up the Rabbit Scouts",
       "setup": "Player {{count}}, grab the hireling card, 4 warriors, and uprising die for the Spring Uprising from the game box. Roll the uprising die twice and place an Uprising warrior in matching clearings. Place the remaining warriors, die, and card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Spring Uprising hireling card from the game box. Place it next to the map with it's demoted \"Rabbit Scouts\" side up."
     },
     "vaultkeepers": {
       "name": "Vault Keepers",
-      "name_demoted": "Badger Bodyguards",
+      "setupTitle": "Set up the Vault Keepers",
+      "setupTitle_demoted": "Set up the Badger Bodyguards",
       "setup": "Player {{count}}, grab the hireling card, 6 warriors, and 6 vault buildings for the Vault Keepers from the game box. Place 2 Keeper warriors and a vault building in any clearing with an open building slot. Place the remaining warriors, buildings, and card next to the map <i>(non-demoted side up)</i>.",
       "setup_demoted": "Player {{count}}, grab the Vault Keepers hireling card from the game box. Place it next to the map with it's demoted \"Badger Bodyguards\" side up."
     }
@@ -187,48 +220,58 @@
   "landmark": {
     "city": {
       "name": "Lost City",
+      "setupTitle": "Set up the Lost City",
       "setup": "Player {{count}}, place the Lost City landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side.",
       "setup_lake": "Player {{count}}, place the Lost City landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. Grab the \"Lost City\" landmark card from the game box and place it next to the board on it's non-setup side."
     },
     "ferry": {
       "name": "Ferry",
+      "setupTitle": "Set up the Ferry",
       "setup": "Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have \"The Ferry\" landmark card, take it from the game box and place it next to the board on it's non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>\"Once per turn, a player taking a move from the Ferry's clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card.\"</p>",
       "setup_lake": "Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have \"The Ferry\" landmark card, take it from the game box and place it next to the board on it's non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>\"Once per turn, a player taking a move from the Ferry's clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card.\"</p>"
     },
     "forge": {
       "name": "Legendary Forge",
+      "setupTitle": "Set up the Legendary Forge",
       "setup": "Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one.<br/>Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side. Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><i>Fox:</i> 2 Swords, 1 Crossbow, 1 Hammer.<br/><i>Mouse:</i> 2 Bags, 2 Tea.<br/><i>Rabbit:</i> 2 Boots, 2 Coins.</p>"
     },
     "market": {
       "name": "Black Market",
+      "setupTitle": "Set up the Black Market",
       "setup": "Player {{count}}, place the Black Market landmark in a clearing that has exactly one building slot and no ruin. It cannot have a landmark or be adjacent to one.<br/>Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side. Draw three cards but do not look at them. Place them face down next to the Black Market card."
     },
     "tower": {
       "name": "Tower",
+      "setupTitle": "Set up the Tower",
       "setup": "Player {{count}}, place the Tower landmark in a clearing that has a ruin. It cannot have a landmark. If you have \"The Tower\" landmark card, take it from the game box and place it next to the board on it's non-setup side. If you do not have the card, the Tower has the following rule during play:<p>\"At the end of a player's Evening, if they rule the Tower's clearing, they score one point.\"</p>"
     },
     "treetop": {
       "name": "Elder Treetop",
+      "setupTitle": "Set up the Elder Treetop",
       "setup": "Player {{count}}, place the Elder Treetop in a corner clearing. It cannot have a landmark or be adjacent to one. Grab the \"Elder Treetop\" landmark card from the game box and place it next to the board on it's non-setup side."
     }
   },
   "map": {
     "autumn": {
       "name": "Autumn",
+      "setupTitle": "Set up the Autumn Map",
       "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing, covering the printed suit symbols.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
     },
     "lake": {
       "name": "Lake",
+      "setupTitle": "Set up the Lake Map",
       "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map.",
       "landmarkSetup": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have \"The Ferry\" landmark card, take it from the game box and place it next to the board on it's non-setup side."
     },
     "mountain": {
       "name": "Mountain",
+      "setupTitle": "Set up the Mountain Map",
       "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
       "landmarkSetup": "Place the Tower piece in the central clearing showing two towers. If you have \"The Tower\" landmark card, take it from the game box and place it next to the board on it's non-setup side."
     },
     "winter": {
       "name": "Winter",
+      "setupTitle": "Set up the Winter Map",
       "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
     }
   },
@@ -244,21 +287,12 @@
       "title": "Choose and Set up Map",
       "body": "As a group, decide which map you would like to play on. If you select multiple maps, a random map will be chosen from the selected."
     },
-    "setUpMap": {
-      "subtitle": "Set up the {{map}} Map"
-    },
-    "setUpMapLandmark": {
-      "subtitle": "Set up the {{landmark}}"
-    },
     "chooseDeck": {
       "title": "Choose and Set up Deck",
       "body": "As a group, decide which deck you would like to use. If you select multiple decks, a random deck will be chosen from the selected."
     },
     "setUpDeck": {
-      "title": "Set up Deck",
-      "subtitle": "Set up the {{deck}} Deck",
-      "body": "Grab the {{deck}} deck from the game box and place it next to the map. Shuffle the deck.",
-      "body_twoPlayer": "Grab the {{deck}} deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck."
+      "title": "Set up Deck"
     },
     "setUpBots": {
       "title": "Set up Bots",
@@ -269,24 +303,9 @@
       "body": "As a group, decide how many landmarks you want to play with, and which ones to include in the selection pool.",
       "body_mapLandmark": "As a group, decide how many landmarks you want to play with <i>(in addition to the already included map landmark)</i>, and which ones to include in the selection pool."
     },
-    "setUpLandmark1": {
-      "subtitle": "Set up the {{landmark}}"
-    },
-    "setUpLandmark2": {
-      "subtitle": "Set up the {{landmark}}"
-    },
     "chooseHirelings": {
       "title": "Set up Hirelings",
       "body": "As a group, decide if you want to play with hirelings, and which ones to include in the selection pool."
-    },
-    "setUpHireling1": {
-      "subtitle": "Set up the {{hireling}}"
-    },
-    "setUpHireling2": {
-      "subtitle": "Set up the {{hireling}}"
-    },
-    "setUpHireling3": {
-      "subtitle": "Set up the {{hireling}}"
     },
     "postHirelingSetup": {
       "subtitle": "Place Hireling Markers",
@@ -303,9 +322,6 @@
     "selectFaction": {
       "subtitle": "Choose Faction",
       "body": "Player {{count}}, choose which faction you would like to play from the faction pool below. You may freely select factions from the list to see their stats, before confirming your selection by pressing \"Next Step.\""
-    },
-    "setUpFaction": {
-      "subtitle": "Set up the {{faction}}"
     },
     "placeScoreMarkers": {
       "title": "Place Score Markers",

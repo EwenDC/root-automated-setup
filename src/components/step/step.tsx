@@ -12,6 +12,7 @@ interface StepProps {
   step: SetupStep;
   renderTitle?: boolean;
   renderSubtitle?: boolean;
+  subtitleKey?: string;
   textKey?: string;
   textBelowChildren?: boolean;
   translationOptions?: TOptions;
@@ -22,6 +23,7 @@ export const Step: React.FC<StepProps> = ({
   step,
   renderTitle,
   renderSubtitle,
+  subtitleKey,
   textKey,
   textBelowChildren,
   translationOptions,
@@ -33,6 +35,8 @@ export const Step: React.FC<StepProps> = ({
 
   // Figure out if we are the active step so we can tell children and trigger effects
   const stepActive = currentStep === step;
+  // Skip rendering if the setup process isn't up to our step or we were skipped
+  const stepRendered = currentStep >= step && !skippedSteps[step];
 
   // Trigger a scroll-to effect when we become active
   useEffect(() => {
@@ -44,19 +48,31 @@ export const Step: React.FC<StepProps> = ({
       });
   });
 
-  // Generate the Title Text in advance so we can use it to rename the window (if required)
-  const titleText =
-    // Only generate if the prerequisites for rendering the title are met
-    renderTitle ?? i18n.exists("setupStep." + SetupStep[step] + ".title")
-      ? t("setupStep." + SetupStep[step] + ".title", translationOptions)
-      : null;
+  // Generate the (sub)title text in advance so we can use it to rename the window (if required)
+  let titleText: string | null = null;
+  let subtitleText: string | null = null;
 
-  // Generate the subtitle Text in advance so we can use it to rename the window (if required)
-  const subtitleText =
+  // Only compute the titles if we will actually render
+  // We do this instead of returning null here as the useEffect hook must always be called
+  if (stepRendered) {
+    // Only generate if the prerequisites for rendering the title are met
+    if (renderTitle ?? i18n.exists("setupStep." + SetupStep[step] + ".title"))
+      titleText = t(
+        "setupStep." + SetupStep[step] + ".title",
+        translationOptions
+      );
+
     // Only generate if the prerequisites for rendering the subtitle are met
-    renderSubtitle ?? i18n.exists("setupStep." + SetupStep[step] + ".subtitle")
-      ? t("setupStep." + SetupStep[step] + ".subtitle", translationOptions)
-      : null;
+    if (
+      renderSubtitle ??
+      subtitleKey ??
+      i18n.exists("setupStep." + SetupStep[step] + ".subtitle")
+    )
+      subtitleText = t(
+        subtitleKey ?? "setupStep." + SetupStep[step] + ".subtitle",
+        translationOptions
+      );
+  }
 
   // Rename the window to match our step (if we are the active step)
   useEffect(() => {
@@ -67,8 +83,7 @@ export const Step: React.FC<StepProps> = ({
         t("label.pageTitle");
   }, [stepActive, titleText, subtitleText, t]);
 
-  // Skip rendering if the setup process isn't up to our step or we were skipped
-  if (currentStep >= step && !skippedSteps[step]) {
+  if (stepRendered) {
     // Seperate the JSX for step text as it's rendering position changes based on textBelowChildren
     const stepText = (
       <Trans

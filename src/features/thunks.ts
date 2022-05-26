@@ -18,7 +18,6 @@ import {
   selectEnabledIndependentHirelings,
   selectEnabledInsurgentFactions,
   selectEnabledMilitantFactions,
-  selectEnabledVagabondFactions,
   selectExpansion,
   selectFactionArray,
   selectFactionCodeArray,
@@ -379,9 +378,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Get our list of insurgent factions to be added to the working faction pool during setup
       const insurgentFactions = selectEnabledInsurgentFactions(getState());
       // Get our vagabond faction count to validate our vagabondPool against
-      const vagabondFactionCount = selectEnabledVagabondFactions(
-        getState()
-      ).length;
+      const vagabondFactionCount = workingFactionPool
+        .concat(insurgentFactions)
+        .reduce(
+          (count, faction) => (faction.isVagabond ? count + 1 : count),
+          0
+        );
 
       // Check that there are enough factions avaliable for setup
       if (

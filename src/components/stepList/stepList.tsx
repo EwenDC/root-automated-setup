@@ -7,7 +7,6 @@ import {
   selectFactionCodeArray,
   selectHirelingArray,
   selectLandmarkArray,
-  selectEnabledLandmarkMaps,
   selectMapArray,
   selectSetupParameters,
   setLandmarkCount,
@@ -20,7 +19,6 @@ import {
   toggleMap,
   selectFactionArray,
   toggleFaction,
-  selectEnabledVagabondFactions,
   selectVagabondArray,
   toggleVagabond,
   selectFlowState,
@@ -52,14 +50,16 @@ export const StepList: React.FC = () => {
     excludedFactions,
     playerOrder,
   } = useAppSelector(selectSetupParameters);
-  const map = useAppSelector(selectSetupMap);
   const { currentPlayerIndex, currentFactionIndex, vagabondSetUp } =
     useAppSelector(selectFlowState);
-  const factionPool = useAppSelector(selectFactionPool);
   const { skippedSteps } = useAppSelector(selectFlowState);
-  const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
+
+  const factions = useAppSelector(selectFactionArray);
+  const maps = useAppSelector(selectMapArray);
+  const map = useAppSelector(selectSetupMap);
   const factionCodes = useAppSelector(selectFactionCodeArray);
-  const vagabondFactions = useAppSelector(selectEnabledVagabondFactions);
+  const factionPool = useAppSelector(selectFactionPool);
+
   const dispatch = useAppDispatch();
   const nthLastPlayer = useNthLastPlayer();
   const { t } = useTranslation();
@@ -90,7 +90,7 @@ export const StepList: React.FC = () => {
           id="playerCount"
           value={playerCount}
           minVal={skippedSteps[SetupStep.setUpBots] ? 2 : 1}
-          maxVal={factionCodes.length - 1}
+          maxVal={factions.length - 1}
           onChange={(value) => dispatch(setPlayerCount(value))}
         />
         <Radiogroup
@@ -105,7 +105,7 @@ export const StepList: React.FC = () => {
           toggleComponent={toggleMap}
           getLabelKey={(map) => "map." + map.code + ".name"}
         />
-        {landmarkMaps.length > 0 ? (
+        {maps.some((map) => map.landmark && map.enabled) ? (
           <Checkbox
             id="useMapLandmark"
             defaultValue={useMapLandmark}
@@ -115,30 +115,31 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpMap}
+        subtitleKey={"map." + map?.code + ".setupTitle"}
         textKey={"map." + map?.code + ".setup"}
         translationOptions={{ map: map && t("map." + map.code + ".name") }}
       />
       <Step
         step={SetupStep.setUpMapLandmark}
+        subtitleKey={"landmark." + map?.landmark + ".setupTitle"}
         textKey={"map." + map?.code + ".landmarkSetup"}
-        translationOptions={{
-          landmark: map?.landmark && t("landmark." + map.landmark + ".name"),
-        }}
+        translationOptions={{ context: map?.code }}
       />
       <Step step={SetupStep.chooseDeck}>
         <ComponentToggle
           selector={selectDeckArray}
           toggleComponent={toggleDeck}
-          getLabelKey={(deck) => "deck." + deck.code}
+          getLabelKey={(deck) => "deck." + deck.code + ".name"}
         />
       </Step>
       <Step
         step={SetupStep.setUpDeck}
         renderTitle={skippedSteps[SetupStep.chooseDeck]}
         renderSubtitle={!skippedSteps[SetupStep.chooseDeck]}
+        subtitleKey={"deck." + deck + ".setupTitle"}
+        textKey={"deck." + deck + ".setup"}
         translationOptions={{
           context: playerCount < 3 ? "twoPlayer" : undefined,
-          deck: deck && t("deck." + deck),
         }}
       />
       <Step step={SetupStep.setUpBots} />
@@ -174,20 +175,20 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpLandmark1}
+        subtitleKey={"landmark." + landmark1 + ".setupTitle"}
         textKey={"landmark." + landmark1 + ".setup"}
         translationOptions={{
           context: map?.code,
           count: nthLastPlayer(1),
-          landmark: landmark1 && t("landmark." + landmark1 + ".name"),
         }}
       />
       <Step
         step={SetupStep.setUpLandmark2}
+        subtitleKey={"landmark." + landmark2 + ".setupTitle"}
         textKey={"landmark." + landmark2 + ".setup"}
         translationOptions={{
           context: map?.code,
           count: nthLastPlayer(2),
-          landmark: landmark2 && t("landmark." + landmark2 + ".name"),
         }}
       />
       <Step step={SetupStep.chooseHirelings}>
@@ -228,41 +229,29 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpHireling1}
+        subtitleKey={"hireling." + hireling1?.code + ".setupTitle"}
         textKey={"hireling." + hireling1?.code + ".setup"}
         translationOptions={{
           context: hireling1?.demoted ? "demoted" : undefined,
           count: nthLastPlayer(1),
-          hireling:
-            hireling1 &&
-            t("hireling." + hireling1.code + ".name", {
-              context: hireling1.demoted ? "demoted" : undefined,
-            }),
         }}
       />
       <Step
         step={SetupStep.setUpHireling2}
+        subtitleKey={"hireling." + hireling2?.code + ".setupTitle"}
         textKey={"hireling." + hireling2?.code + ".setup"}
         translationOptions={{
           context: hireling2?.demoted ? "demoted" : undefined,
           count: nthLastPlayer(2),
-          hireling:
-            hireling2 &&
-            t("hireling." + hireling2.code + ".name", {
-              context: hireling2.demoted ? "demoted" : undefined,
-            }),
         }}
       />
       <Step
         step={SetupStep.setUpHireling3}
+        subtitleKey={"hireling." + hireling3?.code + ".setupTitle"}
         textKey={"hireling." + hireling3?.code + ".setup"}
         translationOptions={{
           context: hireling3?.demoted ? "demoted" : undefined,
           count: nthLastPlayer(3),
-          hireling:
-            hireling3 &&
-            t("hireling." + hireling3.code + ".name", {
-              context: hireling3.demoted ? "demoted" : undefined,
-            }),
         }}
       />
       <Step step={SetupStep.postHirelingSetup} />
@@ -285,7 +274,7 @@ export const StepList: React.FC = () => {
               : null
           }
         />
-        {vagabondFactions.length > 0 ? (
+        {factions.some((faction) => faction.isVagabond && faction.enabled) ? (
           <>
             {t("label.selectVagabonds")}
             <ComponentToggle
@@ -304,6 +293,11 @@ export const StepList: React.FC = () => {
       </Step>
       <Step
         step={SetupStep.setUpFaction}
+        subtitleKey={
+          currentFactionIndex != null
+            ? "faction." + factionPool[currentFactionIndex].key + ".setupTitle"
+            : undefined
+        }
         textKey={
           currentFactionIndex != null
             ? "faction." + factionPool[currentFactionIndex].key + ".setup"
@@ -311,10 +305,6 @@ export const StepList: React.FC = () => {
         }
         translationOptions={{
           context: vagabondSetUp ? "vagabondSetUp" : undefined,
-          faction:
-            currentFactionIndex != null
-              ? t("faction." + factionPool[currentFactionIndex].key + ".name")
-              : undefined,
           vagabond:
             currentFactionIndex != null &&
             factionPool[currentFactionIndex].vagabond
