@@ -9,43 +9,6 @@
   padding: 1rem;
 }
 
-.button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  font-style: italic;
-  cursor: pointer;
-  border-radius: 0.2rem;
-  outline-offset: -0.15rem;
-  /* Transitioned properties */
-  color: black;
-  border-bottom: 0.15rem black solid;
-  outline: 0.15rem dotted transparent;
-  transition-property: color, border, outline;
-  transition-duration: 80ms;
-  transition-timing-function: ease-out;
-}
-
-@media (prefers-reduced-motion) {
-  .button {
-    transition: none;
-  }
-}
-
-.button:not(:last-child) {
-  margin-right: 0.5rem;
-}
-
-.button.disabled {
-  cursor: auto;
-  color: darkgray;
-  border-bottom-color: transparent;
-}
-
-.button:focus-visible {
-  outline-color: black;
-}
-
 .left {
   float: left;
 }
@@ -54,39 +17,14 @@
   float: right;
 }
 
-.icon {
-  height: 1rem;
-}
-
-.label:not(:first-child) {
-  margin-left: 0.3rem;
-}
-
-.label:not(:last-child) {
-  margin-right: 0.3rem;
+.left:not(:last-child),
+.right:not(:last-child) {
+  margin-right: 0.5rem;
 }
 
 @media (min-width: 992px) {
-  .button {
-    border-radius: 0.3rem;
-    font-size: 2rem;
-    border-bottom: 0.2rem black solid;
-    outline: 0.2rem dotted transparent;
-  }
-
-  .button:not(:last-child) {
+  .left:not(:last-child),
+  .right:not(:last-child) {
     margin-right: 1rem;
-  }
-
-  .icon {
-    height: 1.5rem;
-  }
-
-  .label:not(:first-child) {
-    margin-left: 0.5rem;
-  }
-
-  .label:not(:last-child) {
-    margin-right: 0.5rem;
   }
 }

@@ -1,20 +1,13 @@
-import classNames from "classnames";
 import { useTranslation } from "react-i18next";
-import {
-  nextStep,
-  redoStep,
-  resetFlow,
-  selectFlowState,
-  undoStep,
-} from "../../features";
+import { nextStep, redoStep, selectFlowState, undoStep } from "../../features";
 import { SetupStep } from "../../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import styles from "./toolbar.module.css";
 import { ReactComponent as UndoIcon } from "../../images/undo.svg";
 import { ReactComponent as RedoIcon } from "../../images/redo.svg";
-import { ReactComponent as RestartIcon } from "../../images/restart.svg";
 import { ReactComponent as NextIcon } from "../../images/next.svg";
 import { useRef, useState } from "react";
+import Button from "../button";
 
 export const Toolbar: React.FC = () => {
   const { t } = useTranslation();
@@ -55,71 +48,56 @@ export const Toolbar: React.FC = () => {
 
   const undoDisabled = pastSteps.length === 0;
   const redoDisabled = futureSteps.length === 0;
-  const renderRestartButton = currentStep >= SetupStep.setupEnd;
+  const nextStepDisabled = currentStep >= SetupStep.setupEnd;
 
   return (
     <footer className={styles.container}>
       <div className={styles.toolbar} role="toolbar">
-        <button
-          className={classNames(styles.button, styles.left, {
-            [styles.disabled]: undoDisabled,
-          })}
+        <Button
+          Icon={UndoIcon}
+          disabled={undoDisabled}
+          className={styles.left}
           ref={buttonRefs[0]}
-          onClick={
-            undoDisabled
-              ? undefined
-              : () => {
-                  dispatch(undoStep());
-                  setFocusedIndex(0);
-                }
-          }
+          onClick={() => {
+            dispatch(undoStep());
+            setFocusedIndex(0);
+          }}
           title={t("label.undo")}
           aria-disabled={undoDisabled}
           // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 0 ? 0 : -1}
           onKeyDown={(e) => onKeyDownHandler(e, 0)}
-        >
-          <UndoIcon className={styles.icon} />
-        </button>
-        <button
-          className={classNames(styles.button, styles.left, {
-            [styles.disabled]: redoDisabled,
-          })}
+        />
+        <Button
+          Icon={RedoIcon}
+          disabled={redoDisabled}
+          className={styles.left}
           ref={buttonRefs[1]}
-          onClick={
-            redoDisabled
-              ? undefined
-              : () => {
-                  dispatch(redoStep());
-                  setFocusedIndex(1);
-                }
-          }
+          onClick={() => {
+            dispatch(redoStep());
+            setFocusedIndex(1);
+          }}
           title={t("label.redo")}
           aria-disabled={redoDisabled}
           // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 1 ? 0 : -1}
           onKeyDown={(e) => onKeyDownHandler(e, 1)}
-        >
-          <RedoIcon className={styles.icon} />
-        </button>
-        <button
-          className={classNames(styles.button, styles.right)}
+        />
+        <Button
+          Icon={NextIcon}
+          disabled={nextStepDisabled}
+          className={styles.right}
           ref={buttonRefs[2]}
           onClick={() => {
-            if (renderRestartButton) dispatch(resetFlow());
-            else dispatch(nextStep());
+            dispatch(nextStep());
             setFocusedIndex(2);
           }}
           // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 2 ? 0 : -1}
           onKeyDown={(e) => onKeyDownHandler(e, 2)}
         >
-          {renderRestartButton ? <RestartIcon className={styles.icon} /> : null}
-          <span className={styles.label}>
-            {t(renderRestartButton ? "label.restartSetup" : "label.nextStep")}
-          </span>
-          {!renderRestartButton ? <NextIcon className={styles.icon} /> : null}
-        </button>
+          {t("label.nextStep")}
+        </Button>
       </div>
     </footer>
   );

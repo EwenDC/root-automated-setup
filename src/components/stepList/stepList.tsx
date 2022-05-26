@@ -24,6 +24,7 @@ import {
   selectFlowState,
   selectFactionPool,
   selectSetupMap,
+  resetFlow,
 } from "../../features";
 import { SetupStep } from "../../types";
 import Checkbox from "../checkbox";
@@ -34,6 +35,8 @@ import NumberSelector from "../numberSelector";
 import Radiogroup from "../radiogroup";
 import Step from "../step";
 import styles from "./stepList.module.css";
+import { ReactComponent as RestartIcon } from "../../images/restart.svg";
+import Button from "../button";
 
 export const StepList: React.FC = () => {
   const {
@@ -326,7 +329,15 @@ export const StepList: React.FC = () => {
       <Step
         step={SetupStep.setupEnd}
         translationOptions={{ count: playerOrder[0] }}
-      />
+      >
+        <Button
+          Icon={RestartIcon}
+          iconLeft={true}
+          onClick={() => dispatch(resetFlow())}
+        >
+          {t("label.restartSetup")}
+        </Button>
+      </Step>
     </main>
   );
 };
