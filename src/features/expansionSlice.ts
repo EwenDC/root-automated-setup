@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import content from "../content.json";
 import {
+  addExpansionComponents,
   expansionEnabled,
   getExpansionConfig,
   persistExpansionEnabled,
@@ -53,26 +54,22 @@ export const { enableExpansion, disableExpansion } = expansionSlice.actions;
 export default expansionSlice.reducer;
 
 /** Function for adding automatic enable/disable expansion reducers to a redux slice */
-export const expansionReducers = <T extends ExpansionComponent>(
-  builder: ActionReducerMapBuilder<ComponentState<T>>,
-  addExpansionComponents: (
-    state: Draft<ComponentState<T>>,
-    expansionCode: string
-  ) => void
-) => {
-  builder
-    .addCase(enableExpansion, (state, action) =>
-      addExpansionComponents(state, action.payload)
-    )
-    .addCase(disableExpansion, (state, action) => {
-      // Skip processing for the base game, as that cannot be disabled
-      if (!getExpansionConfig(action.payload)?.base) {
-        // Remove all components matching the disabled expansion
-        for (const [componentCode, component] of Object.entries(state)) {
-          if (component.expansionCode === action.payload) {
-            delete state[componentCode];
+export const expansionReducers =
+  <T extends ExpansionComponent>(componentKey: string) =>
+  (builder: ActionReducerMapBuilder<ComponentState<T>>) => {
+    builder
+      .addCase(enableExpansion, (state, action) =>
+        addExpansionComponents<Draft<T>>(state, action.payload, componentKey)
+      )
+      .addCase(disableExpansion, (state, action) => {
+        // Skip processing for the base game, as that cannot be disabled
+        if (!getExpansionConfig(action.payload)?.base) {
+          // Remove all components matching the disabled expansion
+          for (const [componentCode, component] of Object.entries(state)) {
+            if (component.expansionCode === action.payload) {
+              delete state[componentCode];
+            }
           }
         }
-      }
-    });
-};
+      });
+  };

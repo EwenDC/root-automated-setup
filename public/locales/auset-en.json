@@ -1,23 +1,43 @@
 {
-  "component": {
-    "clubItem": "Club Item",
-    "footholdToken": "Foothold Token",
-    "uprisingDie": "Uprising Die",
-    "vaultBuilding": "Vault Building"
-  },
-  "deck": {
-    "exiles": {
-      "name": "Exiles and Partisans",
-      "setupTitle": "Set up the Exiles and Partisans Deck",
-      "setup": "Grab the Exiles and Partisans deck from the game box and place it next to the map. Shuffle the deck.",
-      "setup_twoPlayer": "Grab the Exiles and Partisans deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck."
+  "label": {
+    "aggression": "Aggression",
+    "closeMessage": "Close Message",
+    "complexity": "Complexity",
+    "crafting": "Crafting Ability",
+    "factionRating": ["LOW", "MODERATE", "HIGH"],
+    "fixedFirstPlayer": {
+      "false": "Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>",
+      "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
     },
-    "standard": {
-      "name": "Standard",
-      "setupTitle": "Set up the Standard Deck",
-      "setup": "Grab the Standard deck from the game box and place it next to the map. Shuffle the deck.",
-      "setup_twoPlayer": "Grab the Standard deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck."
-    }
+    "includeBotStep": "Include bot set up",
+    "includeHirelings": "Include Hirelings",
+    "landmarkCount": "Landmark Count",
+    "logoAlt": "ROOT",
+    "logoText": "Automated Setup",
+    "militant": "(Militant)",
+    "nextStep": "Next Step",
+    "pageTitle": "Root Automated Setup",
+    "playerCount": "Player Count",
+    "redo": "Redo",
+    "restartSetup": "Restart Setup",
+    "selectVagabonds": "Select which vagabond characters you would like to include in the faction draft.",
+    "undo": "Undo",
+    "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default set up with the map-specific version)</i>",
+    "wealth": "Card Wealth"
+  },
+  "component": {
+    "building": "{{count}} buildings",
+    "bag": "Bag",
+    "boot": "Boot",
+    "coin": "Coin",
+    "crossbow": "Crossbow",
+    "hammer": "Hammer",
+    "sword": "Sword",
+    "tea": "Tea",
+    "token": "{{count}} tokens",
+    "torch": "Torch",
+    "warrior_one": "{{count}} pawn",
+    "warrior_other": "{{count}} warriors"
   },
   "error": {
     "baseExpansionRequired": "A base copy of Root is required for set up",
@@ -37,6 +57,83 @@
     "tooFewPlayerInsurgent": "Cannot use non-militant factions with less than 3 players and no bots or hirelings",
     "tooFewVagabond": "Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions"
   },
+  "setupStep": {
+    "chooseExpansions": {
+      "body": "Welcome to the Root Automated Setup. This page will guide you through the advanced set up rules for the popular board game Root, with minimal shuffling and no set up cards required! To get started, select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the page to do so."
+    },
+    "seatPlayers": {
+      "title": "Seat Players",
+      "body": "Determine the player seating order, then select how many players you are playing with, and if you wish for the app to choose a random starting player."
+    },
+    "chooseMap": {
+      "title": "Choose and Set up Map",
+      "body": "As a group, decide which map you would like to play on. If you select multiple maps, a random map will be chosen from the selected."
+    },
+    "chooseDeck": {
+      "title": "Choose and Set up Deck",
+      "body": "As a group, decide which deck you would like to use. If you select multiple decks, a random deck will be chosen from the selected."
+    },
+    "setUpDeck": {
+      "title": "Set up Deck"
+    },
+    "setUpBots": {
+      "title": "Set up Bots",
+      "body": "As a group, decide which bots you would like to play with, following their set up instructions as described in the Law of Rootbotics."
+    },
+    "chooseLandmarks": {
+      "title": "Set up Landmarks",
+      "body": "As a group, decide how many landmarks you want to play with, and which ones to include in the selection pool.",
+      "body_mapLandmark": "As a group, decide how many landmarks you want to play with <i>(in addition to the already included map landmark)</i>, and which ones to include in the selection pool."
+    },
+    "chooseHirelings": {
+      "title": "Set up Hirelings",
+      "body": "As a group, decide if you want to play with hirelings, and which ones to include in the selection pool."
+    },
+    "postHirelingSetup": {
+      "subtitle": "Place Hireling Markers",
+      "body": "Place the three hireling markers - marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
+    },
+    "drawCards": {
+      "title": "Draw Five Cards",
+      "body": "Each player draw five cards from the shared deck. <i>(You will choose three cards to keep later.)</i>"
+    },
+    "chooseFactions": {
+      "title": "Set up Factions",
+      "body": "As a group, select which factions you would like to include in the faction draft."
+    },
+    "selectFaction": {
+      "subtitle": "Choose Faction",
+      "body": "Player {{count}}, choose which faction you would like to play from the faction pool below. You may freely select factions from the list to see their stats, before confirming your selection by pressing \"Next Step.\""
+    },
+    "placeScoreMarkers": {
+      "title": "Place Score Markers",
+      "title_vagabondSetUp": "Place Score and Relationship Markers",
+      "body": "Each player place their chosen faction's score marker on the \"0\" space of the score track.",
+      "body_vagabondSetUp": "Each player place their chosen faction's score marker on the \"0\" space of the score track. Each Vagabond player place a relationship marker for every non-Vagabond faction in play on the Indifferent space of Relationships."
+    },
+    "chooseHand": {
+      "title": "Choose Starting Hands",
+      "body": "Each player chooses three cards in their hand to keep and puts the other two cards face down on the shared deck. When finished, shuffle the shared deck."
+    },
+    "setupEnd": {
+      "title": "Begin Play",
+      "body": "The set up is now complete. Play will begin with Player {{count}}. If you wish to restart the setup process, use the button below.<p><i>\"Root Automated Setup\" Developed By Ewen Cameron</i><br/><i>Based on the board game \"Root\" published by Leder Games</i><br/><i>Application Licensed under CC BY-NC-SA 4.0</i></p>"
+    }
+  },
+  "deck": {
+    "exiles": {
+      "name": "Exiles and Partisans",
+      "setupTitle": "Set up the Exiles and Partisans Deck",
+      "setup": "Grab the Exiles and Partisans deck from the game box and place it next to the map. Shuffle the deck.",
+      "setup_twoPlayer": "Grab the Exiles and Partisans deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck."
+    },
+    "standard": {
+      "name": "Standard",
+      "setupTitle": "Set up the Standard Deck",
+      "setup": "Grab the Standard deck from the game box and place it next to the map. Shuffle the deck.",
+      "setup_twoPlayer": "Grab the Standard deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck."
+    }
+  },
   "expansion": {
     "exilesDeck": "Exiles and Partisans Deck",
     "landmarkPack": "Landmarks Pack",
@@ -52,52 +149,72 @@
   "faction": {
     "alliance": {
       "name": "Woodland Alliance",
+      "summaryTitle": "Playing the Alliance",
+      "summary": "<p>As the Woodland Alliance, you work to gain more sympathy of the oppressed forest creatures. Each time you place a <strong>sympathy token</strong> on the map, you score points. The more sympathy tokens on the map, the more points you score.</p><p>To gain sympathy, though, you will need <strong>supporters</strong> - cards placed on your faction board - matching the clearings where you want sympathy. While you can add your own cards to your supporters, you can goad your enemies into doing the same by provoking <strong>Outrage</strong>: whenever another faction removes sympathy or moves warriors into a sympathetic clearing, they must add one of their own cards to your supporters.</p><p>Don't be afriad to set up chokepoints, as you are experts in <strong>Guerrilla War</strong>: when defending in battle, you use the higher die. Place your sympathy in clearings where conflict is likely, and force your opponent to face you!</p><p>Supporters can also be put toward violent <strong>revolt</strong>, which destorys <i>all</i> of your enemies' pieces in a clearing and places warriors and a new <strong>base</strong> there. Bases not only increase your card draw, but also let you train <strong>officers</strong>, which give you free actions each turn. Protect your bases well! If you lose a base, you'll lose many supporters and officers too.</p>",
       "setupTitle": "Set up the Woodland Alliance",
       "setup": "<i>1.</i> Draw 3 <strong>cards</strong> and add them face down to your Supporters stack.<br/><i>2.</i> Fill your Sympathy track with <strong>sympathy tokens</strong>.<br/><i>3.</i> Put your 3 <strong>bases</strong> on your matching Bases spaces."
     },
     "corvid": {
       "name": "Corvid Conspiracy",
+      "summaryTitle": "Playing the Corvids",
+      "summary": "<p>As the Corvid Conspiracy, you want to show that you are the true power behind the scenes, controlling the tides of the Woodland war. each time you flip a <strong>plot</strong> token you've placed on the map, you score points. The more face-up plots on the map when you do, the more points you score.</p><p>To place and flip plots, you must recruit and position your warriors wisely. Your faction is among the best at recruiting warriors to your cause, but they'll be spread thin, as you'll be hard pressed to move too often. Even more, you can't afford to battle too much, as placing a plot requires you to remove one or more Corvid warriors, and you cannot flip a plot unless its clearing has a Corvid warrior.</p><p>Thankfully, your warriors are exceedingly <strong>Nimble</strong>, letting them move regardless of rule. Additionally, your <strong>Embedded Agents</strong> make your plots dangerous to quash with brute force - when defending in battle with a facedown plot token, you deal an extra hit.</p><p>However, take care in leaving your plots open to <strong>Exposure</strong>. Any enemy faction in a clearing with a facedown plot can show you a matching card to guess which plot it is. If they're right, they've infiltrated you and foiled your plot! They remove the plot and ignore its effect. If they're wrong, though, you catch their spy red-handed. Your plot remains, and they give you the card they showed you. Bluff well.</p>",
       "setupTitle": "Set up the Corvid Conspiracy",
       "setup": "<i>1.</i> Choose a homeland clearing. Put 1 <strong>warrior</strong> and 1 <strong>plot token</strong> of your choice face down there.<br/><i>2.</i> Put 1 <strong>warrior</strong> in a clearing of each suit. <i>(Counting the previous step, place 4 warriors in total.)</i>"
     },
     "cult": {
       "name": "Lizard Cult",
+      "summaryTitle": "Playing the Lizard Cult",
+      "summary": "<p>As the Lizard Cult, you cater to those creatures who have been discarded by the other factions. You score victory points by performing the proper <strong>rituals</strong>, revealing cards from your hand matching clearings where you have <strong>gardens</strong>, and discarding cards to complete the rite. The more gardens you have in clearings matching the revealed card, the more points you score.</p><p>Your gentler apporach means you cannot battle your foes at first; to do so, you must radicalize your followers into <strong>acolytes</strong>. By doing so, you can perform <strong>conspiracies</strong> in clearings of the <strong>Outcast</strong>, the suit discarded the most over the prior round.</p><p>Your <strong>Hatred of Birds</strong> means your bird cards are not wild in your rituals. Your gardens spread the news of your dragon lord, drawing throngs of <strong>Pilgrims</strong>, so you rule a clearing if you have even a single garden there. Finally, your acolytes always get <strong>Revenge</strong> on the wicked: whenever one of your warriors is removed while defending, you gain another acolyte.</p>",
       "setupTitle": "Set up the Lizard Cult",
       "setup": "<i>1.</i> Choose a homeland clearing that is not adjacent to enemy homelands.<br/><i>2.</i> Put 4 <strong>warriors</strong> and 1 matching <strong>garden</strong> in your homeland. Put 3 <strong>warriors</strong> in clearings adjacent to it as evenly as possible.<br/><i>3.</i> Put 2 <strong>warriors</strong> in your Acolytes box.<br/><i>4.</i> Fill your Gardens tracks with <strong>gardens</strong>, except the leftmost space of the garden on the map.<br/><i>5.</i> Put your <strong>outcast marker</strong> on its Outcast side on any space of the Outcast box."
     },
     "duchy": {
       "name": "Underground Duchy",
+      "summaryTitle": "Playing the Duchy",
+      "summary": "<p>As the Underground Duchy, you want to show the foreign creatures of the Woodland that they would be better off as subjects. Each time you sway one of your <strong>ministers</strong> to the cause of pacifying and unifying the land above, you score points. The higher the rank of the minister you sway, the more points you score.</p><p>To sway a minister you must reveal cards, representing your support among Woodland separatists. The higher the minister's rank, the more cards you must reveal. However, you can only reveal cards that match clearings with any number of Duchy peices, showing your foothold in the swirling chaos. Each swayed minister gives you an extra action every turn. Some ministers even let you score victory points by touting your investments in the Woodland.</p><p>Your moles are well protected in <strong>the Burrow</strong>, a clearing only you can enter and which you always rule. From the Burrow, you can move to any <strong>tunnel</strong> you dig throughout the Woodland. Once you've pacified clearings and established rule, you can build <strong>citadels</strong> and <strong>markets</strong> to draw more creatures to your cause. However, whenever you lose buildings, you must pay the <strong>Price of Failure</strong> by losing sway with a minister of highest rank and discarding a random card.</p>",
       "setupTitle": "Set up the Underground Duchy",
       "setup": "<i>1.</i> Choose a homeland clearing that is not adjacent to enemy homelands.<br/><i>2.</i> Put 2 <strong>warriors</strong> and 1 <strong>tunnel</strong> in your homeland. Put 5 <strong>warriors</strong> among clearings adjacent to it as evenly as possible.<br/><i>3.</i> Put your <strong>Burrow board</strong> near the map. Fill your Buildings tracks with your <strong>citadels</strong> and <strong>markets</strong>. Put your 9 <strong>minister cards</strong> on your Unswayed Ministers pile. Put your 9 <strong>crowns</strong> on the square spaces showing victory points."
     },
     "eyrie": {
       "name": "Eyrie Dynasties",
+      "summaryTitle": "Playing the Eyrie",
+      "summary": "<p>As the Eyrie Dynasties, you wish to restore your once-dignified kind to your former glory by retaking control of the Woodland. Each turn, you score points for your <strong>roosts</strong> on the map. The more roosts, the more points you score.</p><p>However, you are bound by the <strong>Decree</strong>, a mandate from the Eyrie <strong>leader</strong>. Each turn, you must add cards to the Decree, and then take an action for each card in it. Each action must happen in the clearing matching its card, so plan wisely. At first this is simple, but as the Decree grows to 10 or 12 cards, you'll find yourself scrambling to complete every action. If you can't complete one, you'll fall into <strong>turmoil</strong>, losing you points, replacing your leader, and discarding the Decree.</p><p>Above all, remember: the ground creatures tremble and scatter upon your arrival. You are the <strong>Lords of the Forest</strong> - you rule a clearing even when tied for prescence. However, your people feel <strong>Disdain for Trade</strong>, so you'll often score fewer points for crafting items.</p>",
       "setupTitle": "Set up the Eyrie Dynasties",
       "setup": "<i>1.</i> Choose a homeland clearing on the map edge clearing that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put 6 <strong>warriors</strong> and 1 <strong>roost</strong> in your homeland.<br/><i>3.</i> Put any <strong>leader card</strong> on your Leader Card slot. Keep the other 3 leaders face up nearby.<br/><i>4.</i> Tuck your 2 <strong>Loyal Viziers</strong> under the Decree column slots as listed on your current leader.<br/><i>5.</i> Fill your Roosts spaces with <strong>roosts</strong>, except the leftmost."
     },
     "keepers": {
       "name": "Keepers in Iron",
+      "summaryTitle": "Playing the Keepers",
+      "summary": "<p>As the Keepers in Iron, you score points by recovering <strong>relics</strong> lost in past conflicts. You will need to <strong>delve</strong> relics out of the forests, move them to a <strong>waystation</strong> of the same type, and then <strong>recover</strong> them. Whether these relics belong to you or the Woodland, though, is another question.</p><p>As <strong>Devout Knights</strong> of an exiled order, you ignore the first hit you take in battle if you have both a warrior and a relic in it, whether attacking or defending. You can also move relics with your warriors.</p><p>Your relics are <strong>Prized Trophies</strong>, so keep them safe. Whenever an enemy removes a relic in any way, they score two points in-stead of one, and put it back in any forest.</p><p>Over time, you will grow your <strong>Retinue</strong>, three columns of cards that let you take actions. Delving and recovering relics will put your Retinue at risk, though, so you will need to plan ahead and take prudent risks in order to succeed.</p>",
       "setupTitle": "Set up the Keepers in Iron",
       "setup": "<i>1.</i> Shuffle all 12 <strong>relic tokens</strong> face down. Place one face down randomly in each forest.<br/><i>2.</i> Choose 2 adjacent homeland clearings on the map edge that have 2+ clearings between them and enemy homelands. Put 4 <strong>warriors</strong> in each homeland.<br/><i>3.</i> Put any remaining <strong>relics</strong>, as evenly as possible, among any forests that are not adjacent to your homelands.<br/><i>4.</i> Tuck a <strong>Faithful Retainer</strong> card into each of your Retinue column slots."
     },
     "marquise": {
       "name": "Marquise de Cat",
       "setupTitle": "Set up the Marquise de Cat",
+      "summaryTitle": "Playing the Marquise",
+      "summary": "<p>As the Marquise de Cat, you want to turn the Woodland into an industrial and military powerhouse. Each time you place a <strong>building</strong> on the map, you score points. The more of that building type there is on the map, the more points you score.</p><p>To fuel this construction, you must grow and protect an interconnected economy of <strong>wood</strong>. Building up infrastructure makes your turns more efficient and helps you draw more cards, so strike out to secure your right to expansion. Your military is legion, letting you enforce your rule with an iron fist, if necessary.</p><p>The seat of your power is the <strong>Keep of Marquise de Cat</strong>, a structure so imposing that no other faction can place pieces in its clearing. Even more, your <strong>Field Hospitals</strong> will help keep you in the fight. Whenever any of your warriors are removed, you can spend a card matching the warriors' clearing to place them back at your keep - as long as it stands. Protect it well!</p>",
       "setup": "<i>1.</i> Choose 3 homeland clearings, each adjacent to one other.<br/><i>2.</i> Put 2 <strong>warriors</strong> in each of your homelands. Put 1 <strong>warrior</strong> in each other clearing.<br/><i>3.</i> Put the <strong>keep token</strong> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <strong>sawmill</strong>, <strong>workshop</strong>, and <strong>recruiter</strong> on the map, each in a different homeland of yours.<br/><i>4.</i> Fill your Buildings track with your <strong>buildings</strong>, except the leftmost spaces."
     },
     "riverfolk": {
       "name": "Riverfolk Company",
+      "summaryTitle": "Playing the Riverfolk Company",
+      "summary": "<p>As the Riverfolk Company, you ply the rivers winding through the great Woodland, offering your services to any faction who can pay. You score victory points by establishing <strong>trade posts</strong> throughout the clearings.</p><p>Though the construction of trade posts is a viable way to score points, so too is the raw accumulation of wealth. Each Birdsong, you score points depending on how many <strong>funds</strong> you've saved up and earned over the last round. However, you'll also need to commit and spend your funds to expand and guard your trade network, strking a balance between dividends and growth.</p><p>You'll earn funds as other factions buy your <strong>services</strong>, whether the use of your riverboats or mercenary warriors, or even one of the cards in your public hand, which is all <strong>For Sale</strong>. You can set the prices of your services each turn, so try to predict which services the other factions will need.</p><p>Building trade posts helps you expand your clientele and sell more services, as a faction can buy more services from you as they expand into more clearings where you have trade posts. But be careful, when your trade posts are destroyed they cannot be rebuilt! While you may not rule many clearings, you can always move along river paths since you're a faction of <strong>Swimmers</strong>.</p>",
       "setupTitle": "Set up the Riverfolk Company",
       "setup": "<i>1.</i> Put 4 <strong>warriors</strong> among any clearings along the river.<br/><i>2.</i> Put 3 <strong>warriors</strong> in your Payments box.<br/><i>3.</i> Fill your Trade Posts tracks with matching <strong>trade posts</strong>.<br/><i>4.</i> Put your 3 <strong>service markers</strong> on your Services track, setting a price for each service."
     },
     "vagabond": {
       "name": "Vagabond",
+      "summaryTitle": "Playing the Vagabond",
+      "summary": "<p>As the Vagabond, you will play all sides of the conflict, making friends and foes as it suits you. You score points through your <strong>relationships</strong>, as you aid friendly factions by giving them cards, and as you grow your infamy with hostile factions by removing their pieces in battle. You'll also score points as you go on <strong>quests</strong> to spread your good name amongst the creatures of the Woodland.</p><p>To move and act effectively, you'll need to manage your satchel of <strong>items</strong>, expanding your selection by exploring ancient <strong>ruins</strong> and providing aid to other factions. Being a <strong>Lone Wanderer</strong>, you cannot rule a clearing or stop another faction from ruling one, but you are <strong>Nimble</strong>, so you can move regardless of who rules your clearing.</p>",
       "setupTitle": "Set up the Vagabond",
       "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed.",
       "setup_vagabondSetUp": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the second set of 4 <strong>\"R\" items</strong> under the ruins randomly <i>(in addition to the existing items)</i>.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed."
     },
     "warlord": {
       "name": "Lord of the Hundreds",
+      "summaryTitle": "Playing the Hundreds",
+      "summary": "<p>As the Lord of the Hundreds, you score points as you <strong>oppress</strong> your foes. At the end of your turn, the more clearings you rule that have <i>no</i> enemy pieces - no warriors, no buildings, nothing - the more points you score.</p><p>To grow in power and attract warriors, you must gain items and add them to your towering <strong>Hoard</strong>. Boots, bags, and coins increase your <strong>Command</strong>, while hammers, tea, swords, and the crossbow increase your <strong>Prowess</strong>. Your <strong>Contempt for Trade</strong> means you rarely score from crafting item, but you can steal items from enemies with your <strong>Looters</strong>!</p><p>Leading the Hundreds is your warlord, a warrior-demagogue whose fickle <strong>mood</strong> gives you an ability for the turn. Your warlord is obsessed with hoarding, so as you gain more items, you will have fewer moods to choose from.</p><p>Declaring yourself to be the true voice of the Woodland, you can incite <strong>mobs</strong>, which destroy enemy buildings and tokens, and raid ruins for their items.</p>",
       "setupTitle": "Set up the Lord of the Hundreds",
       "setup": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot.<br/><i>4.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done.",
       "setup_vagabondSetUp": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot."
@@ -196,27 +313,6 @@
       "setup_demoted": "Player {{count}}, grab the Vault Keepers hireling card from the game box. Place it next to the map with it's demoted \"Badger Bodyguards\" side up."
     }
   },
-  "label": {
-    "closeMessage": "Close Message",
-    "fixedFirstPlayer": {
-      "false": "Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>",
-      "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
-    },
-    "includeBotStep": "Include bot set up",
-    "includeHirelings": "Include Hirelings",
-    "landmarkCount": "Landmark Count",
-    "logoAlt": "ROOT",
-    "logoText": "Automated Setup",
-    "militant": "(Militant)",
-    "nextStep": "Next Step",
-    "pageTitle": "Root Automated Setup",
-    "playerCount": "Player Count",
-    "redo": "Redo",
-    "restartSetup": "Restart Setup",
-    "selectVagabonds": "Select which vagabond characters you would like to include in the faction draft.",
-    "undo": "Undo",
-    "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default set up with the map-specific version)</i>"
-  },
   "landmark": {
     "city": {
       "name": "Lost City",
@@ -273,69 +369,6 @@
       "name": "Winter",
       "setupTitle": "Set up the Winter Map",
       "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
-    }
-  },
-  "setupStep": {
-    "chooseExpansions": {
-      "body": "Welcome to the Root Automated Setup. This page will guide you through the advanced set up rules for the popular board game Root, with minimal shuffling and no set up cards required! To get started, select which Root content you are playing with. When you are ready to move on to the next step, use the buttons at the bottom of the page to do so."
-    },
-    "seatPlayers": {
-      "title": "Seat Players",
-      "body": "Determine the player seating order, then select how many players you are playing with, and if you wish for the app to choose a random starting player."
-    },
-    "chooseMap": {
-      "title": "Choose and Set up Map",
-      "body": "As a group, decide which map you would like to play on. If you select multiple maps, a random map will be chosen from the selected."
-    },
-    "chooseDeck": {
-      "title": "Choose and Set up Deck",
-      "body": "As a group, decide which deck you would like to use. If you select multiple decks, a random deck will be chosen from the selected."
-    },
-    "setUpDeck": {
-      "title": "Set up Deck"
-    },
-    "setUpBots": {
-      "title": "Set up Bots",
-      "body": "As a group, decide which bots you would like to play with, following their set up instructions as described in the Law of Rootbotics."
-    },
-    "chooseLandmarks": {
-      "title": "Set up Landmarks",
-      "body": "As a group, decide how many landmarks you want to play with, and which ones to include in the selection pool.",
-      "body_mapLandmark": "As a group, decide how many landmarks you want to play with <i>(in addition to the already included map landmark)</i>, and which ones to include in the selection pool."
-    },
-    "chooseHirelings": {
-      "title": "Set up Hirelings",
-      "body": "As a group, decide if you want to play with hirelings, and which ones to include in the selection pool."
-    },
-    "postHirelingSetup": {
-      "subtitle": "Place Hireling Markers",
-      "body": "Place the three hireling markers - marked \"4,\" \"8,\" and \"12\" - on the \"4,\" \"8,\" and \"12\" spaces of the score track on the map."
-    },
-    "drawCards": {
-      "title": "Draw Five Cards",
-      "body": "Each player draw five cards from the shared deck. <i>(You will choose three cards to keep later.)</i>"
-    },
-    "chooseFactions": {
-      "title": "Set up Factions",
-      "body": "As a group, select which factions you would like to include in the faction draft."
-    },
-    "selectFaction": {
-      "subtitle": "Choose Faction",
-      "body": "Player {{count}}, choose which faction you would like to play from the faction pool below. You may freely select factions from the list to see their stats, before confirming your selection by pressing \"Next Step.\""
-    },
-    "placeScoreMarkers": {
-      "title": "Place Score Markers",
-      "title_vagabondSetUp": "Place Score and Relationship Markers",
-      "body": "Each player place their chosen faction's score marker on the \"0\" space of the score track.",
-      "body_vagabondSetUp": "Each player place their chosen faction's score marker on the \"0\" space of the score track. Each Vagabond player place a relationship marker for every non-Vagabond faction in play on the Indifferent space of Relationships."
-    },
-    "chooseHand": {
-      "title": "Choose Starting Hands",
-      "body": "Each player chooses three cards in their hand to keep and puts the other two cards face down on the shared deck. When finished, shuffle the shared deck."
-    },
-    "setupEnd": {
-      "title": "Begin Play",
-      "body": "The set up is now complete. Play will begin with Player {{count}}. If you wish to restart the setup process, use the button below.<p><i>\"Root Automated Setup\" Developed By Ewen Cameron</i><br/><i>Based on the board game \"Root\" published by Leder Games</i><br/><i>Application Licensed under CC BY-NC-SA 4.0</i></p>"
     }
   },
   "vagabond": {

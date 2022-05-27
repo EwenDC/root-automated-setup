@@ -1,15 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import content from "../content.json";
-import { GameComponent, ComponentState } from "../types";
-
-/**
- * Helper function for getting the details of a specified expansion from content.json
- * @param expansionCode The expansion code to look up as a key on content.json
- */
-export const getExpansionConfig = (expansionCode: string) =>
-  // It sucks, but we have to circumvent type saftey here
-  // Blame typescript's very loose typings of Object.entries preventing us from typing more strongly
-  content[expansionCode as keyof typeof content];
+import { GameComponent, ComponentState, ExpansionComponent } from "../types";
 
 const isTrue = "1";
 const isFalse = "0";
@@ -64,24 +55,64 @@ export const expansionEnabled = (
 };
 
 /**
+ * Helper function for getting the details of a specified expansion from content.json
+ * @param expansionCode The expansion code to look up as a key on content.json
+ */
+export const getExpansionConfig = (expansionCode: string) =>
+  // It sucks, but we have to circumvent type saftey here
+  // Blame typescript's very loose typings of Object.entries preventing us from typing more strongly
+  content[expansionCode as keyof typeof content];
+
+/**
+ * Generic function for adding expansion components to the state of a Redux slice
+ * @param componentKey The expansion object key that the components are stored in
+ */
+export const addExpansionComponents = <T extends ExpansionComponent>(
+  state: ComponentState<T>,
+  expansionCode: string,
+  componentKey: string,
+  expansion = getExpansionConfig(expansionCode)
+) => {
+  if (expansion != null && componentKey in expansion)
+    for (const [componentCode, component] of Object.entries(
+      expansion[componentKey as keyof typeof expansion]
+    )) {
+      // Don't add to state if it already exists
+      if (state[componentCode] == null) {
+        state[componentCode] = {
+          ...component,
+          expansionCode: expansionCode,
+          enabled: true,
+        };
+      } else if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          `While enabling expansion "${expansionCode}", ${componentKey} component with duplicate code "${componentCode}" not added to state:`,
+          component
+        );
+      }
+    }
+};
+
+/**
  * Generic function for populating the starting state of a Redux slice using the provided addExpansionComponents function
  * @param addExpansionComponents Function for extracting state from a given expansion
  */
-export const setupInitialState = <T>(
-  addExpansionComponents: (
-    state: ComponentState<T>,
-    expansionCode: string,
-    expansion?: any
-  ) => void
-) => {
-  const initialState: ComponentState<T> = {};
-  for (const [expansionCode, expansion] of Object.entries(content)) {
-    if (expansionEnabled(expansionCode, expansion.base)) {
-      addExpansionComponents(initialState, expansionCode, expansion);
+export const setupInitialState =
+  <T extends ExpansionComponent>(componentKey: string) =>
+  () => {
+    const initialState: ComponentState<T> = {};
+    for (const [expansionCode, expansion] of Object.entries(content)) {
+      if (expansionEnabled(expansionCode, expansion.base)) {
+        addExpansionComponents<T>(
+          initialState,
+          expansionCode,
+          componentKey,
+          expansion
+        );
+      }
     }
-  }
-  return initialState;
-};
+    return initialState;
+  };
 
 /**
  * Generic version of Toggle reducer for enabling or disabling a component in state
@@ -91,8 +122,8 @@ export const setupInitialState = <T>(
 export const toggleComponent = {
   prepare: (code: string, enabled?: boolean) => ({
     payload: {
-      code: code,
-      enabled: enabled,
+      code,
+      enabled,
     },
   }),
   reducer: <T extends GameComponent>(

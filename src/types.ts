@@ -31,15 +31,18 @@ export interface Faction extends ExpansionComponent {
   isVagabond: boolean;
   warriors: number;
   buildings: number;
+  buildingImage?: string;
   tokens: number;
+  tokenImage?: string;
+  complexity: number;
+  wealth: number;
+  aggression: number;
+  crafting: number;
 }
 
 /** An object representing a physical Hireling card from the Root board game, which could be Promoted or Demoted */
 export interface Hireling extends ExpansionComponent {
   factions: string[];
-  warriors: number;
-  components: number;
-  componentName?: string;
 }
 
 /** An object representing a Landmark piece from the Root board game */
@@ -49,7 +52,6 @@ export interface Landmark extends ExpansionComponent {
 
 /** An object representing a Map from the Root board game */
 export interface MapComponent extends ExpansionComponent {
-  printedSuits: boolean;
   landmark?: string;
 }
 

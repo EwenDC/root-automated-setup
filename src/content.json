@@ -15,7 +15,13 @@
         "isVagabond": false,
         "warriors": 25,
         "buildings": 18,
-        "tokens": 9
+        "buildingImage": "buildings/marquise.png",
+        "tokens": 9,
+        "tokenImage": "tokens/marquise.png",
+        "complexity": 0,
+        "wealth": 1,
+        "aggression": 1,
+        "crafting": 1
       },
       "eyrie": {
         "key": "eyrie",
@@ -24,7 +30,12 @@
         "isVagabond": false,
         "warriors": 20,
         "buildings": 7,
-        "tokens": 0
+        "buildingImage": "buildings/roost.png",
+        "tokens": 0,
+        "complexity": 0,
+        "wealth": 0,
+        "aggression": 2,
+        "crafting": 1
       },
       "alliance": {
         "key": "alliance",
@@ -33,7 +44,13 @@
         "isVagabond": false,
         "warriors": 10,
         "buildings": 3,
-        "tokens": 10
+        "buildingImage": "buildings/bases.png",
+        "tokens": 10,
+        "tokenImage": "tokens/sympathy.png",
+        "complexity": 2,
+        "wealth": 1,
+        "aggression": 1,
+        "crafting": 2
       },
       "vagabond": {
         "key": "vagabond",
@@ -42,18 +59,18 @@
         "isVagabond": true,
         "warriors": 1,
         "buildings": 0,
-        "tokens": 0
+        "tokens": 0,
+        "complexity": 1,
+        "wealth": 1,
+        "aggression": 1,
+        "crafting": 0
       }
     },
     "maps": {
       "autumn": {
-        "printedSuits": true,
-        "landmark": "",
         "image": "maps/autumn.png"
       },
       "winter": {
-        "printedSuits": false,
-        "landmark": "",
         "image": "maps/winter.png"
       }
     },
@@ -83,7 +100,12 @@
         "isVagabond": false,
         "warriors": 25,
         "buildings": 15,
-        "tokens": 0
+        "buildingImage": "buildings/gardens.png",
+        "tokens": 0,
+        "complexity": 2,
+        "wealth": 2,
+        "aggression": 1,
+        "crafting": 2
       },
       "riverfolk": {
         "key": "riverfolk",
@@ -92,7 +114,12 @@
         "isVagabond": false,
         "warriors": 15,
         "buildings": 0,
-        "tokens": 9
+        "tokens": 9,
+        "tokenImage": "tokens/tradePost.png",
+        "complexity": 2,
+        "wealth": 2,
+        "aggression": 0,
+        "crafting": 1
       },
       "vagabond2": {
         "key": "vagabond",
@@ -101,7 +128,11 @@
         "isVagabond": true,
         "warriors": 1,
         "buildings": 0,
-        "tokens": 0
+        "tokens": 0,
+        "complexity": 1,
+        "wealth": 1,
+        "aggression": 1,
+        "crafting": 0
       }
     },
     "vagabonds": {
@@ -130,7 +161,13 @@
         "isVagabond": false,
         "warriors": 20,
         "buildings": 6,
-        "tokens": 3
+        "buildingImage": "buildings/duchy.png",
+        "tokens": 3,
+        "tokenImage": "tokens/tunnel.png",
+        "complexity": 1,
+        "wealth": 2,
+        "aggression": 1,
+        "crafting": 1
       },
       "corvid": {
         "key": "corvid",
@@ -139,7 +176,12 @@
         "isVagabond": false,
         "warriors": 15,
         "buildings": 0,
-        "tokens": 8
+        "tokens": 8,
+        "tokenImage": "tokens/plot.png",
+        "complexity": 0,
+        "wealth": 1,
+        "aggression": 1,
+        "crafting": 2
       }
     },
     "landmarks": {
@@ -154,12 +196,10 @@
     },
     "maps": {
       "lake": {
-        "printedSuits": false,
         "landmark": "ferry",
         "image": "maps/lake.png"
       },
       "mountain": {
-        "printedSuits": false,
         "landmark": "tower",
         "image": "maps/mountain.png"
       }
@@ -176,7 +216,13 @@
         "isVagabond": false,
         "warriors": 21,
         "buildings": 6,
-        "tokens": 5
+        "buildingImage": "buildings/stronghold.png",
+        "tokens": 5,
+        "tokenImage": "tokens/mob.png",
+        "complexity": 1,
+        "wealth": 0,
+        "aggression": 2,
+        "crafting": 0
       },
       "keepers": {
         "key": "keepers",
@@ -185,37 +231,31 @@
         "isVagabond": false,
         "warriors": 15,
         "buildings": 3,
-        "tokens": 12
+        "buildingImage": "buildings/waystations.png",
+        "tokens": 12,
+        "tokenImage": "tokens/relics.png",
+        "complexity": 2,
+        "wealth": 2,
+        "aggression": 1,
+        "crafting": 1
       }
     },
     "hirelings": {
       "patrol": {
         "image": "meeples/patrol.png",
-        "factions": ["marquise"],
-        "warriors": 12,
-        "components": 0,
-        "componentName": ""
+        "factions": ["marquise"]
       },
       "dynasty": {
         "image": "meeples/dynasty.png",
-        "factions": ["eyrie"],
-        "warriors": 5,
-        "components": 0,
-        "componentName": ""
+        "factions": ["eyrie"]
       },
       "uprising": {
         "image": "meeples/uprising.png",
-        "factions": ["alliance"],
-        "warriors": 4,
-        "components": 1,
-        "componentName": "component.uprisingDie"
+        "factions": ["alliance"]
       },
       "exile": {
         "image": "meeples/exile.png",
-        "factions": ["vagabond", "vagabond2"],
-        "warriors": 1,
-        "components": 3,
-        "componentName": "component.clubItem"
+        "factions": ["vagabond", "vagabond2"]
       }
     }
   },
@@ -274,24 +314,15 @@
     "hirelings": {
       "prophets": {
         "image": "meeples/prophets.png",
-        "factions": ["cult"],
-        "warriors": 4,
-        "components": 0,
-        "componentName": ""
+        "factions": ["cult"]
       },
       "flotilla": {
         "image": "meeples/flotilla.png",
-        "factions": ["riverfolk"],
-        "warriors": 1,
-        "components": 0,
-        "componentName": ""
+        "factions": ["riverfolk"]
       },
       "bandits": {
         "image": "meeples/bandits.png",
-        "factions": [],
-        "warriors": 4,
-        "components": 0,
-        "componentName": ""
+        "factions": []
       }
     }
   },
@@ -301,24 +332,15 @@
     "hirelings": {
       "expedition": {
         "image": "meeples/expedition.png",
-        "factions": ["duchy"],
-        "warriors": 8,
-        "components": 3,
-        "componentName": "component.footholdToken"
+        "factions": ["duchy"]
       },
       "spies": {
         "image": "meeples/spies.png",
-        "factions": ["corvid"],
-        "warriors": 6,
-        "components": 0,
-        "componentName": ""
+        "factions": ["corvid"]
       },
       "protector": {
         "image": "meeples/protector.png",
-        "factions": [],
-        "warriors": 1,
-        "components": 0,
-        "componentName": ""
+        "factions": []
       }
     }
   },
@@ -328,24 +350,15 @@
     "hirelings": {
       "flamebearers": {
         "image": "meeples/flamebearers.png",
-        "factions": ["warlord"],
-        "warriors": 6,
-        "components": 0,
-        "componentName": ""
+        "factions": ["warlord"]
       },
       "vaultkeepers": {
         "image": "meeples/vaultkeepers.png",
-        "factions": ["keepers"],
-        "warriors": 6,
-        "components": 6,
-        "componentName": "component.vaultBuilding"
+        "factions": ["keepers"]
       },
       "band": {
         "image": "meeples/band.png",
-        "factions": [],
-        "warriors": 5,
-        "components": 0,
-        "componentName": ""
+        "factions": []
       }
     }
   }

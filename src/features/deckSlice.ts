@@ -1,43 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  getExpansionConfig,
-  setupInitialState,
-  toggleComponent,
-} from "./utils";
-import { ComponentState, ExpansionComponent } from "../types";
+import { setupInitialState, toggleComponent } from "./utils";
 import { expansionReducers } from "./expansionSlice";
-
-const addExpansionDecks = (
-  state: ComponentState<ExpansionComponent>,
-  expansionCode: string,
-  expansion = getExpansionConfig(expansionCode)
-) => {
-  if (expansion != null && "decks" in expansion) {
-    for (const [deckCode, deck] of Object.entries(expansion.decks)) {
-      // Don't add to state if it already exists
-      if (state[deckCode] == null) {
-        state[deckCode] = {
-          image: deck.image === "" ? undefined : deck.image,
-          expansionCode: expansionCode,
-          enabled: true,
-        };
-      } else if (process.env.NODE_ENV !== "production") {
-        console.warn(
-          `While enabling expansion "${expansionCode}", deck with duplicate code "${deckCode}" not added to state:`,
-          deck
-        );
-      }
-    }
-  }
-};
+import { ExpansionComponent } from "../types";
 
 export const deckSlice = createSlice({
   name: "deck",
-  initialState: () => setupInitialState(addExpansionDecks),
+  initialState: setupInitialState<ExpansionComponent>("decks"),
   reducers: {
     toggleDeck: toggleComponent,
   },
-  extraReducers: (builder) => expansionReducers(builder, addExpansionDecks),
+  extraReducers: expansionReducers("decks"),
 });
 
 export const { toggleDeck } = deckSlice.actions;
