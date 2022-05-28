@@ -5,11 +5,15 @@
 
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
-import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
-import { registerRoute } from "workbox-routing";
+import {
+  precacheAndRoute,
+  createHandlerBoundToURL,
+  matchPrecache,
+} from "workbox-precaching";
+import { registerRoute, setCatchHandler } from "workbox-routing";
 import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
-import { googleFontsCache, offlineFallback } from "workbox-recipes";
-import defaultImage from "./images/componentDefault.png";
+import { googleFontsCache, imageCache } from "workbox-recipes";
+import defaultComponentImage from "./images/componentDefault.png";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -62,11 +66,16 @@ registerRoute(
 // Handle caching the page font
 googleFontsCache();
 
+// Helper function for determining if a given URL is for a component image
+const isComponentImage = (url: URL) =>
+  url.origin === self.location.origin &&
+  ["art", "boxes", "cards", "landmarks", "maps", "meeples"].some((path) =>
+    url.pathname.startsWith(process.env.PUBLIC_URL + "/images/" + path + "/")
+  );
+
 // Handle caching the component images (which live outside of the build)
 registerRoute(
-  ({ url }) =>
-    url.origin === self.location.origin &&
-    url.pathname.startsWith(process.env.PUBLIC_URL + "/images/"),
+  ({ url }) => isComponentImage(url),
   // Always serve cached image, only making a network request on cache miss
   new CacheFirst({
     cacheName: "componentImages",
@@ -81,11 +90,17 @@ registerRoute(
   })
 );
 
-// Ensure that component images that are not cached can be replaced with a fallback when offline
-offlineFallback({
-  imageFallback: defaultImage,
-  // We redefine index.html here as the default will attempt to route to offline.html
-  pageFallback: process.env.PUBLIC_URL + "/index.html",
+// Handle caching any other images
+imageCache();
+
+// Handle fallbacks
+setCatchHandler(async ({ url }) => {
+  // Ensure that component images that are not cached can be replaced with a fallback when offline
+  if (isComponentImage(url)) {
+    return (await matchPrecache(defaultComponentImage)) || Response.error();
+  }
+
+  return Response.error();
 });
 
 // This allows the web app to trigger skipWaiting via registration.waiting.postMessage({type: 'SKIP_WAITING'})

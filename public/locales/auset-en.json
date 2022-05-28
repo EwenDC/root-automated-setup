@@ -391,7 +391,9 @@
       "name": "Scoundrel"
     },
     "thief": {
-      "name": "Thief"
+      "name": "Thief",
+      "action": "Steal",
+      "effect": "Exhaust one <Torch/> to take a random card form any player in your clearing."
     },
     "tinker": {
       "name": "Tinker"

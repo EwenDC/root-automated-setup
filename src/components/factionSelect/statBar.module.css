@@ -7,6 +7,10 @@
   flex-direction: column;
 }
 
+.container.inactive {
+  border-left-color: darkgray;
+}
+
 .label {
   font-style: italic;
   margin-left: 0.25rem;
@@ -29,6 +33,12 @@
   .barHigh {
     transition: none;
   }
+}
+
+.inactive .barLow,
+.inactive .barModerate,
+.inactive .barHigh {
+  background-color: whitesmoke;
 }
 
 .barModerate {
