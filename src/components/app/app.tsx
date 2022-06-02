@@ -39,4 +39,11 @@ export const App: React.FC = () => (
   </Provider>
 );
 
-serviceWorkerRegistration.register();
+serviceWorkerRegistration.register({
+  onUpdate: (registration) => {
+    if (registration.waiting) {
+      registration.waiting.postMessage({ type: "SKIP_WAITING" });
+    }
+    window.location.reload();
+  },
+});

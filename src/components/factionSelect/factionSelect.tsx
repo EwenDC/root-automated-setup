@@ -12,8 +12,9 @@ import styles from "./factionSelect.module.css";
 import defaultImage from "../../images/componentDefault.png";
 import { useContext } from "react";
 import { StepContext } from "../step";
-import { ReactComponent as MilitantIcon } from "../../images/militant.svg";
+import { ReactComponent as MilitantIcon } from "../../images/icons/militant.svg";
 import { StatBar } from "./statBar";
+import Icon, { iconComponents } from "../icon";
 
 export const FactionSelect: React.FC = () => {
   const { currentFactionIndex, lastFactionLocked } =
@@ -156,6 +157,34 @@ export const FactionSelect: React.FC = () => {
             <StatBar stat="crafting" />
           </div>
           <div>
+            {selectedFaction.vagabond && (
+              <>
+                <p>
+                  <strong>{t("label.startingItems")}.</strong>{" "}
+                  {selectedFaction.vagabond.startingItems.map((item, index) => (
+                    <Icon key={index} icon={item}>
+                      {index ===
+                      selectedFaction.vagabond!.startingItems.length - 1
+                        ? "."
+                        : ", "}
+                    </Icon>
+                  ))}
+                </p>
+                <p>
+                  <strong>
+                    {t("label.specialAction")}:{" "}
+                    {t("vagabond." + selectedFaction.vagabond.code + ".action")}
+                    .
+                  </strong>{" "}
+                  <Trans
+                    i18nKey={
+                      "vagabond." + selectedFaction.vagabond.code + ".effect"
+                    }
+                    components={iconComponents}
+                  />
+                </p>
+              </>
+            )}
             <h3 className={styles.summaryTitle}>
               {t("faction." + selectedFaction.key + ".summaryTitle")}
             </h3>

@@ -1,0 +1,12 @@
+.item {
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: translate(0, 0.33rem);
+  margin-top: -1.5rem;
+  display: inline;
+  font-weight: bold;
+}
+
+.inactive {
+  filter: grayscale();
+}

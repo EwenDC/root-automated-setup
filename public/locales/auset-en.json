@@ -9,18 +9,23 @@
       "false": "Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>",
       "true": "Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>"
     },
+    "fox": "Fox",
     "includeBotStep": "Include bot set up",
     "includeHirelings": "Include Hirelings",
     "landmarkCount": "Landmark Count",
     "logoAlt": "ROOT",
     "logoText": "Automated Setup",
     "militant": "(Militant)",
+    "mouse": "Mouse",
     "nextStep": "Next Step",
     "pageTitle": "Root Automated Setup",
     "playerCount": "Player Count",
+    "rabbit": "Rabbit",
     "redo": "Redo",
     "restartSetup": "Restart Setup",
     "selectVagabonds": "Select which vagabond characters you would like to include in the faction draft.",
+    "specialAction": "Special Action",
+    "startingItems": "Starting Items",
     "undo": "Undo",
     "useMapLandmark": "Use the included Landmark for the selected Map <i>(overriding the landmark's default set up with the map-specific version)</i>",
     "wealth": "Card Wealth"
@@ -208,15 +213,15 @@
       "summaryTitle": "Playing the Vagabond",
       "summary": "<p>As the Vagabond, you will play all sides of the conflict, making friends and foes as it suits you. You score points through your <strong>relationships</strong>, as you aid friendly factions by giving them cards, and as you grow your infamy with hostile factions by removing their pieces in battle. You'll also score points as you go on <strong>quests</strong> to spread your good name amongst the creatures of the Woodland.</p><p>To move and act effectively, you'll need to manage your satchel of <strong>items</strong>, expanding your selection by exploring ancient <strong>ruins</strong> and providing aid to other factions. Being a <strong>Lone Wanderer</strong>, you cannot rule a clearing or stop another faction from ruling one, but you are <strong>Nimble</strong>, so you can move regardless of who rules your clearing.</p>",
       "setupTitle": "Set up the Vagabond",
-      "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed.",
-      "setup_vagabondSetUp": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the second set of 4 <strong>\"R\" items</strong> under the ruins randomly <i>(in addition to the existing items)</i>.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed."
+      "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly, unless this has already been done.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed.",
+      "setup_vagabondSetUp": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the additional <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly <i>(with the existing items)</i>.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed."
     },
     "warlord": {
       "name": "Lord of the Hundreds",
       "summaryTitle": "Playing the Hundreds",
       "summary": "<p>As the Lord of the Hundreds, you score points as you <strong>oppress</strong> your foes. At the end of your turn, the more clearings you rule that have <i>no</i> enemy pieces - no warriors, no buildings, nothing - the more points you score.</p><p>To grow in power and attract warriors, you must gain items and add them to your towering <strong>Hoard</strong>. Boots, bags, and coins increase your <strong>Command</strong>, while hammers, tea, swords, and the crossbow increase your <strong>Prowess</strong>. Your <strong>Contempt for Trade</strong> means you rarely score from crafting item, but you can steal items from enemies with your <strong>Looters</strong>!</p><p>Leading the Hundreds is your warlord, a warrior-demagogue whose fickle <strong>mood</strong> gives you an ability for the turn. Your warlord is obsessed with hoarding, so as you gain more items, you will have fewer moods to choose from.</p><p>Declaring yourself to be the true voice of the Woodland, you can incite <strong>mobs</strong>, which destroy enemy buildings and tokens, and raid ruins for their items.</p>",
       "setupTitle": "Set up the Lord of the Hundreds",
-      "setup": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot.<br/><i>4.</i> Put the 4 <strong>\"R\" items</strong> under the ruins randomly, unless this has already been done.",
+      "setup": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot.<br/><i>4.</i> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly, unless this has already been done.",
       "setup_vagabondSetUp": "<i>1.</i> Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.<br/><i>2.</i> Put your <strong>warlord</strong>, 4 <strong>warriors</strong>, and 1 <strong>stronghold</strong> in your homeland.<br/><i>3.</i> Pur your <strong>Stubborn mood card</strong> in your Mood Card slot."
     }
   },
@@ -247,7 +252,7 @@
       "setupTitle": "Set up the Exile",
       "setupTitle_demoted": "Set up the Brigand",
       "setup": "Player {{count}}, grab the hireling card, pawn, and 3 club items for the Exile from the game box. Place the Exile pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 Club items on top of it <i>(unexhaused side up)</i>.",
-      "setup_demoted": "Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with it's demoted \"The Bandit\" side up. Place \"R\" items under the ruins as if the Vagabond were in play."
+      "setup_demoted": "Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with it's demoted \"The Bandit\" side up. Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly, unless this has already been done."
     },
     "expedition": {
       "name": "Sunward Expedition",
@@ -329,12 +334,12 @@
     "forge": {
       "name": "Legendary Forge",
       "setupTitle": "Set up the Legendary Forge",
-      "setup": "Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one.<br/>Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side. Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><i>Fox:</i> 2 Swords, 1 Crossbow, 1 Hammer.<br/><i>Mouse:</i> 2 Bags, 2 Tea.<br/><i>Rabbit:</i> 2 Boots, 2 Coins.</p>"
+      "setup": "Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side.<br/>Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>"
     },
     "market": {
       "name": "Black Market",
       "setupTitle": "Set up the Black Market",
-      "setup": "Player {{count}}, place the Black Market landmark in a clearing that has exactly one building slot and no ruin. It cannot have a landmark or be adjacent to one.<br/>Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side. Draw three cards but do not look at them. Place them face down next to the Black Market card."
+      "setup": "Player {{count}}, place the Black Market landmark in a clearing that has exactly one building slot and no ruin. It cannot have a landmark or be adjacent to one. Grab the \"Black Market\" landmark card from the game box and place it next to the board on it's non-setup side.<br/>Draw three cards but do not look at them. Place them face down next to the Black Market card."
     },
     "tower": {
       "name": "Tower",
@@ -351,55 +356,71 @@
     "autumn": {
       "name": "Autumn",
       "setupTitle": "Set up the Autumn Map",
-      "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing, covering the printed suit symbols.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
+      "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing, covering the printed suit symbols.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Place the two dice near the map."
     },
     "lake": {
       "name": "Lake",
       "setupTitle": "Set up the Lake Map",
-      "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map.",
+      "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Place the two dice near the map.",
       "landmarkSetup": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have \"The Ferry\" landmark card, take it from the game box and place it next to the board on it's non-setup side."
     },
     "mountain": {
       "name": "Mountain",
       "setupTitle": "Set up the Mountain Map",
-      "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>6.</i> Place the two dice near the map.",
+      "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>5.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>6.</i> Place the two dice near the map.",
       "landmarkSetup": "Place the Tower piece in the central clearing showing two towers. If you have \"The Tower\" landmark card, take it from the game box and place it next to the board on it's non-setup side."
     },
     "winter": {
       "name": "Winter",
       "setupTitle": "Set up the Winter Map",
-      "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Form the Item Supply by placing the matching items on the item supply spaces near the top of the map.<br/><i>5.</i> Place the two dice near the map."
+      "setup": "<i>1.</i> Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Place the two dice near the map."
     }
   },
   "vagabond": {
     "adventurer": {
-      "name": "Adventurer"
+      "name": "Adventurer",
+      "action": "Improvise",
+      "effect": "Once per turn while taking the Quest action, you may treat one unexhausted item as any other item. When you exhaust it to complete the quest, also damage that item."
     },
     "arbiter": {
-      "name": "Arbiter"
+      "name": "Arbiter",
+      "action": "Protector",
+      "effect": "Before dice are rolled in a battle, the defender may enlist the Arbiter in the clearing of battle. The Arbiter scores one victory point and adds all of his undamaged <Sword/> to the maximum rolled hits of the defender. The Arbiter cannot enlist himself or be enlisted against himself."
     },
     "harrier": {
-      "name": "Harrier"
+      "name": "Harrier",
+      "action": "Glide",
+      "effect": "Exhaust a <Torch/> to move only your Vagabond pawn <i>(not other pieces)</i> to any clearing <i>(even Hostile)</i> on the map without exhausting any <Boot/>."
     },
     "ranger": {
-      "name": "Ranger"
+      "name": "Ranger",
+      "action": "Hideout",
+      "effect": "Exhaust one <Torch/> to repair three items. Then, immediately end Daylight and begin Evening."
     },
     "ronin": {
-      "name": "Ronin"
+      "name": "Ronin",
+      "action": "Swift Strike",
+      "effect": "You may exhaust a <Sword/> to deal an extra hit in battle <i>(after rolling)</i>."
     },
     "scoundrel": {
-      "name": "Scoundrel"
+      "name": "Scoundrel",
+      "action": "Scorched Earth",
+      "effect": "Exhaust a <Torch/> and place it in your clearing. Remove all enemy pieces from that clearing. Pieces cannot be placed in or moved into the clearing with the <Torch/>. <i>(You remain in this clearing. Once you move out, you cannot move back in. The <Torch/> cannot be removed with a \"Favor of the...\" card because it is not an enemy piece.)</i>"
     },
     "thief": {
       "name": "Thief",
       "action": "Steal",
-      "effect": "Exhaust one <Torch/> to take a random card form any player in your clearing."
+      "effect": "Exhaust one <Torch/> to take a random card from any player in your clearing."
     },
     "tinker": {
-      "name": "Tinker"
+      "name": "Tinker",
+      "action": "Day Labor",
+      "effect": "Exhaust one <Torch/> to take a card from the discard pile whose suit matches your clearing. <i>(You can always take a bird card.)</i>"
     },
     "vagrant": {
-      "name": "Vagrant"
+      "name": "Vagrant",
+      "action": "Instigate",
+      "effect": "Exhaust a <Torch/> to initiate a battle in your clearing. You choose the attacker and defender, you choose the order in which they each remove their own buildings and tokens, and you remove pieces for each. <i>(Score a victory point per building or token of either player removed, and per Hostile piece of either player removed.)</i>"
     }
   }
 }

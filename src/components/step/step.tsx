@@ -5,6 +5,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { selectFlowState } from "../../features";
 import { SetupStep } from "../../types";
 import { useAppSelector } from "../hooks";
+import { iconComponents } from "../icon";
 import styles from "./step.module.css";
 import { StepProvider } from "./stepContext";
 
@@ -56,22 +57,14 @@ export const Step: React.FC<StepProps> = ({
   // We do this instead of returning null here as the useEffect hook must always be called
   if (stepRendered) {
     // Only generate if the prerequisites for rendering the title are met
-    if (renderTitle ?? i18n.exists("setupStep." + SetupStep[step] + ".title"))
-      titleText = t(
-        "setupStep." + SetupStep[step] + ".title",
-        translationOptions
-      );
+    const defaultTitleKey = "setupStep." + SetupStep[step] + ".title";
+    if (renderTitle ?? i18n.exists(defaultTitleKey))
+      titleText = t(defaultTitleKey, translationOptions);
 
     // Only generate if the prerequisites for rendering the subtitle are met
-    if (
-      renderSubtitle ??
-      subtitleKey ??
-      i18n.exists("setupStep." + SetupStep[step] + ".subtitle")
-    )
-      subtitleText = t(
-        subtitleKey ?? "setupStep." + SetupStep[step] + ".subtitle",
-        translationOptions
-      );
+    const defaultSubtitleKey = "setupStep." + SetupStep[step] + ".subtitle";
+    if (renderSubtitle ?? subtitleKey ?? i18n.exists(defaultSubtitleKey))
+      subtitleText = t(subtitleKey ?? defaultSubtitleKey, translationOptions);
   }
 
   // Rename the window to match our step (if we are the active step)
@@ -83,19 +76,12 @@ export const Step: React.FC<StepProps> = ({
         t("label.pageTitle");
   }, [stepActive, titleText, subtitleText, t]);
 
-  if (stepRendered) {
-    // Seperate the JSX for step text as it's rendering position changes based on textBelowChildren
-    const stepText = (
-      <Trans
-        i18nKey={textKey ?? "setupStep." + SetupStep[step] + ".body"}
-        count={translationOptions?.count} // For Trans component count cannot be passed in with options
-        tOptions={translationOptions}
-      />
-    );
-
-    return (
+  return stepRendered ? (
+    <StepProvider value={{ stepActive }}>
       <section
-        className={classNames(styles.step, { [styles.inactive]: !stepActive })}
+        className={classNames(styles.step, {
+          [styles.inactive]: !stepActive,
+        })}
         ref={sectionElement}
       >
         {titleText != null ? (
@@ -104,15 +90,17 @@ export const Step: React.FC<StepProps> = ({
         {subtitleText != null ? (
           <h2 className={styles.subtitle}>{subtitleText}.</h2>
         ) : null}
-        {!textBelowChildren ? stepText : null}
-        {children && (
-          <StepProvider value={{ stepActive }}>{children}</StepProvider>
-        )}
-        {textBelowChildren ? stepText : null}
+        {textBelowChildren ? children : null}
+        <Trans
+          i18nKey={textKey ?? "setupStep." + SetupStep[step] + ".body"}
+          count={translationOptions?.count} // For Trans component count cannot be passed in with options
+          tOptions={translationOptions}
+          components={iconComponents}
+        />
+        {!textBelowChildren ? children : null}
       </section>
-    );
-  }
-  return null;
+    </StepProvider>
+  ) : null;
 };
 
 Step.defaultProps = {

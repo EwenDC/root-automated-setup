@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import styles from "./toast.module.css";
-import { ReactComponent as CloseIcon } from "../../images/close.svg";
+import { ReactComponent as CloseIcon } from "../../images/icons/close.svg";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { selectSetupParameters, setErrorMessage } from "../../features";
 import { useState } from "react";

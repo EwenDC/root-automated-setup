@@ -38,8 +38,7 @@ registerRoute(
       return false;
     }
 
-    // If this looks like a URL for a resource, because it contains
-    // a file extension, skip.
+    // If this looks like a URL for a resource, because it contains a file extension, skip.
     if (url.pathname.match(fileExtensionRegexp)) {
       return false;
     }
