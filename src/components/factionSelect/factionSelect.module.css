@@ -25,13 +25,13 @@
   height: 9rem;
   min-width: 9rem;
   color: black;
-  background-color: white;
   margin: 0 0.3rem;
   /* Transitioned properties */
   outline: 0.15rem solid transparent;
   outline-offset: 0;
   border: 0.15rem dotted transparent;
-  transition-property: outline, outline-offset, border;
+  background-color: white;
+  transition-property: outline, outline-offset, border, background-color;
   transition-duration: 80ms;
   transition-timing-function: ease-out;
 }
@@ -49,6 +49,14 @@
 
 .faction.selected {
   outline-color: black;
+}
+
+.faction:hover {
+  background-color: ivory;
+}
+
+.faction:active {
+  background-color: beige;
 }
 
 .faction.locked {

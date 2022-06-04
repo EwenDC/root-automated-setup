@@ -12,12 +12,6 @@
   transition: 250ms transform ease-in-out;
 }
 
-@media (prefers-reduced-motion) {
-  .anchor {
-    transition: none;
-  }
-}
-
 .anchor.hidden {
   transform: translateY(-100%);
 }
@@ -28,6 +22,7 @@
   align-items: center;
   flex: 1 0;
   max-width: 80rem;
+  padding: 0.33rem;
 }
 
 .message {
@@ -46,6 +41,18 @@
   width: 1.35rem;
   margin-left: -1.35rem;
   padding: 0.25rem;
+  color: black;
+  transition: color 80ms ease-out;
+}
+
+@media (prefers-reduced-motion) {
+  .anchor {
+    transition: none;
+  }
+
+  .close {
+    transition: none;
+  }
 }
 
 @media (min-width: 992px) {
@@ -66,4 +73,12 @@
 .close:focus-visible {
   outline: 0.15rem dotted black;
   border-radius: 0.25rem;
+}
+
+.close:hover {
+  color: dimgray;
+}
+
+.close:active {
+  color: darkgray;
 }

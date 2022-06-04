@@ -15,6 +15,22 @@
   border: 0.15rem solid black;
   border-radius: 0.15rem;
   transform: translateY(0.2rem);
+  background-color: transparent;
+  transition: 80ms background-color ease-out;
+}
+
+@media (prefers-reduced-motion) {
+  .checkbox {
+    transition: none;
+  }
+}
+
+.checkbox:hover:not(:disabled) {
+  background-color: ivory;
+}
+
+.checkbox:active:not(:disabled) {
+  background-color: beige;
 }
 
 .checkbox:disabled {
@@ -46,18 +62,14 @@
     50% 30%
   );
   box-shadow: inset 1rem 1rem transparent;
-  transition: 80ms box-shadow ease-out;
+  transition-property: box-shadow;
+  transition-duration: inherit;
+  transition-timing-function: inherit;
 }
 
 @media (forced-colors: active) {
   .checkbox::before {
     background-color: CanvasText;
-  }
-}
-
-@media (prefers-reduced-motion) {
-  .checkbox::before {
-    transition: none;
   }
 }
 

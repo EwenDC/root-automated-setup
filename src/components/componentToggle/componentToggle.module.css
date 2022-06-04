@@ -20,7 +20,7 @@
 .component {
   font-size: 1rem;
   flex: 0 0;
-  background: none;
+  background-color: transparent;
   border-radius: 1rem;
   padding: 0.1rem;
   cursor: pointer;
@@ -32,7 +32,7 @@
   outline: 0.2rem dashed transparent;
   outline-offset: 0;
   border: 0.15rem dotted transparent;
-  transition-property: color, outline, outline-offset, border;
+  transition-property: background-color, color, outline, outline-offset, border;
   transition-duration: 80ms;
   transition-timing-function: ease-out;
 }
@@ -59,6 +59,10 @@
 
 .component.enabled.locked {
   outline-color: black;
+}
+
+.component:hover:not(.locked):not(:disabled) {
+  background-color: ivory;
 }
 
 .component.locked,

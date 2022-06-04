@@ -9,11 +9,27 @@
 
 .button {
   font-size: 1.25rem;
-  background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   width: 1rem;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  transition: background-color 80ms ease-out;
+}
+
+@media (prefers-reduced-motion) {
+  .button {
+    transition: none;
+  }
+}
+
+.button:hover {
+  background-color: ivory;
+}
+
+.button:active {
+  background-color: beige;
 }
 
 .input {
@@ -23,6 +39,7 @@
   background: none;
   border: none;
   padding: 0;
+  border-radius: 0.25rem;
 }
 
 .value {
@@ -35,5 +52,4 @@
 .button:focus-visible,
 .input:focus-visible {
   outline: 0.15rem dotted black;
-  border-radius: 0.25rem;
 }

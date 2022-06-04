@@ -37,6 +37,8 @@ import Step from "../step";
 import styles from "./stepList.module.css";
 import { ReactComponent as RestartIcon } from "../../images/icons/restart.svg";
 import Button from "../button";
+import IconList from "../iconList";
+import Icon from "../icon";
 
 export const StepList: React.FC = () => {
   const {
@@ -62,6 +64,10 @@ export const StepList: React.FC = () => {
   const map = useAppSelector(selectSetupMap);
   const factionCodes = useAppSelector(selectFactionCodeArray);
   const factionPool = useAppSelector(selectFactionPool);
+  const selectedVagabond =
+    currentFactionIndex != null
+      ? factionPool[currentFactionIndex].vagabond
+      : undefined;
 
   const dispatch = useAppDispatch();
   const nthLastPlayer = useNthLastPlayer();
@@ -309,15 +315,25 @@ export const StepList: React.FC = () => {
         translationOptions={{
           context: vagabondSetUp ? "vagabondSetUp" : undefined,
           vagabond:
-            currentFactionIndex != null &&
-            factionPool[currentFactionIndex].vagabond
-              ? t(
-                  "vagabond." +
-                    factionPool[currentFactionIndex].vagabond?.code +
-                    ".name"
-                )
-              : undefined,
+            selectedVagabond &&
+            t("vagabond." + selectedVagabond.code + ".name"),
         }}
+        components={
+          selectedVagabond && {
+            InitialStartingItems: (
+              <IconList list={selectedVagabond.startingItems.slice(0, -1)} />
+            ),
+            FinalStartingItem: (
+              <Icon
+                icon={
+                  selectedVagabond.startingItems[
+                    selectedVagabond.startingItems.length - 1
+                  ]
+                }
+              />
+            ),
+          }
+        }
       />
       <Step
         step={SetupStep.placeScoreMarkers}

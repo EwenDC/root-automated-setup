@@ -1,16 +1,16 @@
 .button {
-  background: none;
+  background-color: ivory;
   border: none;
   font-size: 1.5rem;
   font-style: italic;
   cursor: pointer;
-  border-radius: 0.2rem;
+  border-radius: 0.5rem;
   outline-offset: -0.15rem;
   /* Transitioned properties */
   color: black;
   border-bottom: 0.15rem black solid;
   outline: 0.15rem dotted transparent;
-  transition-property: color, border, outline;
+  transition-property: background-color, color, border, outline;
   transition-duration: 80ms;
   transition-timing-function: ease-out;
 }
@@ -21,10 +21,19 @@
   }
 }
 
+.button:hover {
+  background-color: white;
+}
+
+.button:active {
+  background-color: beige;
+}
+
 .button.disabled {
   cursor: auto;
   color: darkgray;
   border-bottom-color: transparent;
+  background-color: ivory;
 }
 
 .button:focus-visible {
@@ -45,7 +54,7 @@
 
 @media (min-width: 992px) {
   .button {
-    border-radius: 0.3rem;
+    border-radius: 0.66rem;
     font-size: 2rem;
     border-bottom: 0.2rem black solid;
     outline: 0.2rem dotted transparent;

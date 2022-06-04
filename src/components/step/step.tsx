@@ -17,6 +17,9 @@ interface StepProps {
   textKey?: string;
   textBelowChildren?: boolean;
   translationOptions?: TOptions;
+  components?:
+    | readonly React.ReactNode[]
+    | { readonly [tagName: string]: React.ReactNode };
   children?: React.ReactNode;
 }
 
@@ -28,6 +31,7 @@ export const Step: React.FC<StepProps> = ({
   textKey,
   textBelowChildren,
   translationOptions,
+  components,
   children,
 }) => {
   const { currentStep, skippedSteps } = useAppSelector(selectFlowState);
@@ -84,18 +88,14 @@ export const Step: React.FC<StepProps> = ({
         })}
         ref={sectionElement}
       >
-        {titleText != null ? (
-          <h1 className={styles.title}>{titleText}</h1>
-        ) : null}
-        {subtitleText != null ? (
-          <h2 className={styles.subtitle}>{subtitleText}.</h2>
-        ) : null}
+        {titleText && <h1 className={styles.title}>{titleText}</h1>}
+        {subtitleText && <h2 className={styles.subtitle}>{subtitleText}.</h2>}
         {textBelowChildren ? children : null}
         <Trans
           i18nKey={textKey ?? "setupStep." + SetupStep[step] + ".body"}
           count={translationOptions?.count} // For Trans component count cannot be passed in with options
           tOptions={translationOptions}
-          components={iconComponents}
+          components={{ ...iconComponents, ...components }}
         />
         {!textBelowChildren ? children : null}
       </section>

@@ -15,7 +15,7 @@
     "landmarkCount": "Landmark Count",
     "logoAlt": "ROOT",
     "logoText": "Automated Setup",
-    "militant": "(Militant)",
+    "militant": "Militant",
     "mouse": "Mouse",
     "nextStep": "Next Step",
     "pageTitle": "Root Automated Setup",
@@ -213,8 +213,8 @@
       "summaryTitle": "Playing the Vagabond",
       "summary": "<p>As the Vagabond, you will play all sides of the conflict, making friends and foes as it suits you. You score points through your <strong>relationships</strong>, as you aid friendly factions by giving them cards, and as you grow your infamy with hostile factions by removing their pieces in battle. You'll also score points as you go on <strong>quests</strong> to spread your good name amongst the creatures of the Woodland.</p><p>To move and act effectively, you'll need to manage your satchel of <strong>items</strong>, expanding your selection by exploring ancient <strong>ruins</strong> and providing aid to other factions. Being a <strong>Lone Wanderer</strong>, you cannot rule a clearing or stop another faction from ruling one, but you are <strong>Nimble</strong>, so you can move regardless of who rules your clearing.</p>",
       "setupTitle": "Set up the Vagabond",
-      "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly, unless this has already been done.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed.",
-      "setup_vagabondSetUp": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the additional <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly <i>(with the existing items)</i>.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the listed <strong>\"S\" items</strong> in your Satchel and on their matching tracks, as needed."
+      "setup": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly, unless this has already been done.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <strong>starting items</strong> <i>(marked with \"S\")</i> in your Satchel and on their matching tracks, as needed.",
+      "setup_vagabondSetUp": "<i>1.</i> Put your <strong>pawn</strong> in any forest.<br/><i>2.</i> Shuffle the quest deck. Draw 3 <strong>quests</strong> to deal out nearby.<br/><i>3.</i> Put the additional <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly <i>(with the existing items)</i>.<br/><i>4.</i> Put the \"{{vagabond}}\" <strong>character card</strong> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <strong>starting items</strong> <i>(marked with \"S\")</i> in your Satchel and on their matching tracks, as needed."
     },
     "warlord": {
       "name": "Lord of the Hundreds",
@@ -252,7 +252,7 @@
       "setupTitle": "Set up the Exile",
       "setupTitle_demoted": "Set up the Brigand",
       "setup": "Player {{count}}, grab the hireling card, pawn, and 3 club items for the Exile from the game box. Place the Exile pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 Club items on top of it <i>(unexhaused side up)</i>.",
-      "setup_demoted": "Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with it's demoted \"The Bandit\" side up. Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly, unless this has already been done."
+      "setup_demoted": "Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with it's demoted \"The Bandit\" side up. Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <strong>ruin items</strong> <i>(marked with \"R\")</i> under the ruins randomly as if the Vagabond were in play."
     },
     "expedition": {
       "name": "Sunward Expedition",

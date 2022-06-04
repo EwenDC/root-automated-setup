@@ -14,7 +14,8 @@ import { useContext } from "react";
 import { StepContext } from "../step";
 import { ReactComponent as MilitantIcon } from "../../images/icons/militant.svg";
 import { StatBar } from "./statBar";
-import Icon, { iconComponents } from "../icon";
+import { iconComponents } from "../icon";
+import IconList from "../iconList";
 
 export const FactionSelect: React.FC = () => {
   const { currentFactionIndex, lastFactionLocked } =
@@ -107,7 +108,7 @@ export const FactionSelect: React.FC = () => {
               aria-label={
                 stepActive
                   ? factionName + faction.militant
-                    ? " " + t("label.militant")
+                    ? " (" + t("label.militant") + ")"
                     : ""
                   : undefined
               }
@@ -148,7 +149,7 @@ export const FactionSelect: React.FC = () => {
           );
         })}
       </div>
-      {selectedFaction && (
+      {stepActive && selectedFaction ? (
         <div className={styles.factionInfo}>
           <div className={styles.statContainer}>
             <StatBar stat="complexity" />
@@ -161,14 +162,7 @@ export const FactionSelect: React.FC = () => {
               <>
                 <p>
                   <strong>{t("label.startingItems")}.</strong>{" "}
-                  {selectedFaction.vagabond.startingItems.map((item, index) => (
-                    <Icon key={index} icon={item}>
-                      {index ===
-                      selectedFaction.vagabond!.startingItems.length - 1
-                        ? "."
-                        : ", "}
-                    </Icon>
-                  ))}
+                  <IconList list={selectedFaction.vagabond.startingItems} />.
                 </p>
                 <p>
                   <strong>
@@ -191,7 +185,7 @@ export const FactionSelect: React.FC = () => {
             <Trans i18nKey={"faction." + selectedFaction.key + ".summary"} />
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 };
