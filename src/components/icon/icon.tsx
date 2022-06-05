@@ -17,14 +17,12 @@ import swordImage from "../../images/items/sword.png";
 import teaImage from "../../images/items/tea.png";
 import torchImage from "../../images/items/torch.png";
 
-interface IconDictionary {
+const iconDict: {
   [icon: string]: {
     key: string;
     image: string;
   };
-}
-
-const iconDict: IconDictionary = {
+} = {
   fox: {
     key: "label.fox",
     image: foxIcon,

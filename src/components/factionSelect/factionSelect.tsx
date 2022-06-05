@@ -16,6 +16,7 @@ import { ReactComponent as MilitantIcon } from "../../images/icons/militant.svg"
 import { StatBar } from "./statBar";
 import { iconComponents } from "../icon";
 import IconList from "../iconList";
+import { ComponentCount } from "./componentCount";
 
 export const FactionSelect: React.FC = () => {
   const { currentFactionIndex, lastFactionLocked } =
@@ -151,13 +152,18 @@ export const FactionSelect: React.FC = () => {
       </div>
       {stepActive && selectedFaction ? (
         <div className={styles.factionInfo}>
-          <div className={styles.statContainer}>
+          <div className={styles.stats}>
             <StatBar stat="complexity" />
             <StatBar stat="wealth" />
             <StatBar stat="aggression" />
             <StatBar stat="crafting" />
           </div>
           <div>
+            <div className={styles.componentCounts}>
+              <ComponentCount component="warriors" />
+              <ComponentCount component="buildings" />
+              <ComponentCount component="tokens" />
+            </div>
             {selectedFaction.vagabond && (
               <>
                 <p>

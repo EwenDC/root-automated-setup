@@ -128,10 +128,14 @@
   flex-direction: column;
 }
 
-.statContainer {
-  margin: 0.75rem 0 0.5rem;
+.componentCounts,
+.stats {
   display: flex;
   flex-direction: row;
+}
+
+.stats {
+  margin: 0.75rem 0 0.5rem;
   flex-wrap: wrap;
 }
 
@@ -158,8 +162,9 @@
     flex-direction: row;
   }
 
-  .statContainer {
+  .stats {
     flex-direction: column;
+    flex-wrap: nowrap;
   }
 }
 

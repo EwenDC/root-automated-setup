@@ -68,7 +68,15 @@ googleFontsCache();
 // Helper function for determining if a given URL is for a component image
 const isComponentImage = (url: URL) =>
   url.origin === self.location.origin &&
-  ["art", "boxes", "cards", "landmarks", "maps", "meeples"].some((path) =>
+  [
+    "boxes",
+    "buildings",
+    "cards",
+    "landmarks",
+    "maps",
+    "meeples",
+    "tokens",
+  ].some((path) =>
     url.pathname.startsWith(process.env.PUBLIC_URL + "/images/" + path + "/")
   );
 

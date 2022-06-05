@@ -115,7 +115,7 @@
         "warriors": 15,
         "buildings": 0,
         "tokens": 9,
-        "tokenImage": "tokens/tradePost.png",
+        "tokenImage": "tokens/tradePosts.png",
         "complexity": 2,
         "wealth": 2,
         "aggression": 0,

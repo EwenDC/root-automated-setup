@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+  flex-direction: column;
+  text-align: center;
+}
+
+.container:not(:first-child) {
+  border-left: 0.15rem solid black;
+  padding-left: 1rem;
+}
+
+.container:not(:last-child) {
+  padding-right: 1rem;
+}
+
+.image {
+  width: 3rem;
+  height: 3rem;
+}
+
+@media (min-width: 992px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .image {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+.inactive .image {
+  filter: grayscale();
+}

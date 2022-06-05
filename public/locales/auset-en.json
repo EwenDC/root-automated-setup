@@ -31,7 +31,7 @@
     "wealth": "Card Wealth"
   },
   "component": {
-    "building": "{{count}} buildings",
+    "buildings": "{{count}} Buildings",
     "bag": "Bag",
     "boot": "Boot",
     "coin": "Coin",
@@ -39,10 +39,10 @@
     "hammer": "Hammer",
     "sword": "Sword",
     "tea": "Tea",
-    "token": "{{count}} tokens",
+    "tokens": "{{count}} Tokens",
     "torch": "Torch",
-    "warrior_one": "{{count}} pawn",
-    "warrior_other": "{{count}} warriors"
+    "warriors_one": "{{count}} Pawn",
+    "warriors_other": "{{count}} Warriors"
   },
   "error": {
     "baseExpansionRequired": "A base copy of Root is required for set up",
