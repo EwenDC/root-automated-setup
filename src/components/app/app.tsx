@@ -9,7 +9,7 @@ import StepList from "../stepList";
 import { store } from "../store";
 import Toast from "../toast";
 import Toolbar from "../toolbar";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import { registerServiceWorker } from "./serviceWorkerRegistration";
 
 // Don't try to re-initalize if this chunk got hot-reloaded in a dev environment
 (process.env.NODE_ENV !== "development" || !i18n.isInitialized) &&
@@ -39,11 +39,12 @@ export const App: React.FC = () => (
   </Provider>
 );
 
-serviceWorkerRegistration.register({
+registerServiceWorker({
   onUpdate: (registration) => {
     if (registration.waiting) {
+      // It's safe to skip waiting because at this point we've already served all the application
+      // code and localization, which are the two things that break the app when out of sync
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
     }
-    window.location.reload();
   },
 });

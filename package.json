@@ -1,6 +1,6 @@
 {
   "name": "root-automated-setup",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "homepage": "https://ewendc.github.io/root-automated-setup/",
   "dependencies": {
@@ -34,11 +34,12 @@
     "workbox-strategies": "^6.5.3"
   },
   "scripts": {
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
+    "test": "react-scripts test",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "postbuild": "node postBuild",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
