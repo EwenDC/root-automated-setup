@@ -26,11 +26,7 @@
 }
 
 .checkbox:hover:not(:disabled) {
-  background-color: ivory;
-}
-
-.checkbox:active:not(:disabled) {
-  background-color: beige;
+  background-color: white;
 }
 
 .checkbox:disabled {

@@ -6,6 +6,26 @@
   flex-wrap: nowrap;
   overflow: auto;
   margin: 0.6rem 0rem;
+  border-radius: 1rem;
+  /* Scroll Shadow */
+  background: linear-gradient(90deg, ivory 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0), ivory 70%) 0 100%,
+    radial-gradient(
+      farthest-side at 0% 50%,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0)
+    ),
+    radial-gradient(
+        farthest-side at 100% 50%,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
+  background-color: ivory;
+  background-repeat: no-repeat;
+  background-position: top left, top right, top left, top right;
+  background-size: 2.5rem 100%, 2.5rem 100%, 1.25rem 100%, 1.25rem 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 .carousel.inactive {
@@ -62,7 +82,7 @@
 }
 
 .component:hover:not(.locked):not(:disabled) {
-  background-color: ivory;
+  background-color: white;
 }
 
 .component.locked,
@@ -78,6 +98,7 @@
 .image {
   width: 3rem;
   height: 3rem;
+  mix-blend-mode: multiply;
   /* Transitioned properties */
   filter: grayscale();
   transition-property: filter;
@@ -94,6 +115,7 @@
     flex-wrap: wrap;
     overflow: hidden;
     margin: 0.1rem 0rem;
+    background: none;
   }
 
   .component {
@@ -104,11 +126,16 @@
     flex-direction: column;
   }
 
+  .component:hover:not(.locked):not(:disabled) {
+    background-color: ivory;
+  }
+
   .image {
     width: 6rem;
     height: 6rem;
     flex: 0 0;
     margin: 0.5rem auto;
+    mix-blend-mode: normal;
   }
 
   .label {

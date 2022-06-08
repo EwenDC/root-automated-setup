@@ -38,11 +38,11 @@
 }
 
 .radio:hover:not(:disabled) {
-  background-color: ivory;
+  background-color: white;
 }
 
 .radio:active:not(:disabled) {
-  background-color: beige;
+  background-color: cornsilk;
 }
 
 .radio:disabled {

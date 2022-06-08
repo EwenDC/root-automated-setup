@@ -196,9 +196,9 @@
     },
     "marquise": {
       "name": "Marquise de Cat",
-      "setupTitle": "Set up the Marquise de Cat",
       "summaryTitle": "Playing the Marquise",
       "summary": "<p>As the Marquise de Cat, you want to turn the Woodland into an industrial and military powerhouse. Each time you place a <strong>building</strong> on the map, you score points. The more of that building type there is on the map, the more points you score.</p><p>To fuel this construction, you must grow and protect an interconnected economy of <strong>wood</strong>. Building up infrastructure makes your turns more efficient and helps you draw more cards, so strike out to secure your right to expansion. Your military is legion, letting you enforce your rule with an iron fist, if necessary.</p><p>The seat of your power is the <strong>Keep of Marquise de Cat</strong>, a structure so imposing that no other faction can place pieces in its clearing. Even more, your <strong>Field Hospitals</strong> will help keep you in the fight. Whenever any of your warriors are removed, you can spend a card matching the warriors' clearing to place them back at your keep - as long as it stands. Protect it well!</p>",
+      "setupTitle": "Set up the Marquise de Cat",
       "setup": "<i>1.</i> Choose 3 homeland clearings, each adjacent to one other.<br/><i>2.</i> Put 2 <strong>warriors</strong> in each of your homelands. Put 1 <strong>warrior</strong> in each other clearing.<br/><i>3.</i> Put the <strong>keep token</strong> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <strong>sawmill</strong>, <strong>workshop</strong>, and <strong>recruiter</strong> on the map, each in a different homeland of yours.<br/><i>4.</i> Fill your Buildings track with your <strong>buildings</strong>, except the leftmost spaces."
     },
     "riverfolk": {
