@@ -128,6 +128,20 @@ The app will attempt to load all relevant text for this map from the `map.lake` 
 },
 ```
 
+Most text you define (with the exception of title/subtitle text) can support basic HTML formatting. More information is avaliable in the [react-i18next documentation](https://react.i18next.com/latest/trans-component#usage-with-simple-html-elements-like-less-than-br-greater-than-and-others-v10.4.0). The following list of custom tags are also supported for the purpose of displaying inline suit and item icons:
+
+- `<Fox/>`
+- `<Mouse/>`
+- `<Rabbit/>`
+- `<Bag/>`
+- `<Boot/>`
+- `<Coin/>`
+- `<Crossbow/>`
+- `<Hammer/>`
+- `<Sword/>`
+- `<Tea/>`
+- `<Torch/>`
+
 ### Content Images
 
 All images for the content are loaded dynamically at run-time on the browser. All component images are located within the [/public/images](https://github.com/EwenDC/root-automated-setup/tree/main/public/images) folder of the repository. This path is preappened to the path you define in content.json, so don't include `public/images/` or `images/` in your path. While all content should have an attached image, all images are actually optional and can be excluded from the content definition, in which case a fallback image will be displayed. (Please only use this fallback for development, content will not be added to the production build without an associated image unless the circumstances are extenuating).

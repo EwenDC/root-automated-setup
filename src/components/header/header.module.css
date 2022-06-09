@@ -22,6 +22,7 @@
   font-size: 8.5vw;
   font-variant: small-caps;
   font-weight: 400;
+  text-align: center;
 }
 
 /* If the screen is large enough for the logo to be at max size, then set the logo alt and subtitle to full size */

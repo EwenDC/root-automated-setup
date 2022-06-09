@@ -106,6 +106,11 @@
   transition-timing-function: inherit;
 }
 
+.largeLabels .image {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
 .component.enabled .image {
   filter: none;
 }
@@ -136,6 +141,11 @@
     flex: 0 0;
     margin: 0.5rem auto;
     mix-blend-mode: normal;
+  }
+
+  .largeLabels .image {
+    width: 5rem;
+    height: 5rem;
   }
 
   .label {

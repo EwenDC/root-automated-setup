@@ -149,6 +149,11 @@
   flex-direction: column;
 }
 
+.componentCounts {
+  max-width: 100%;
+  overflow: scroll;
+}
+
 .componentCounts,
 .stats {
   display: flex;
