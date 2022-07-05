@@ -126,7 +126,6 @@ export const StepList: React.FC = () => {
         step={SetupStep.setUpMap}
         subtitleKey={"map." + map?.code + ".setupTitle"}
         textKey={"map." + map?.code + ".setup"}
-        translationOptions={{ map: map && t("map." + map.code + ".name") }}
       />
       <Step
         step={SetupStep.setUpMapLandmark}
