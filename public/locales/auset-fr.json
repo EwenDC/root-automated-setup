@@ -72,27 +72,27 @@
     },
     "chooseMap": {
       "title": "Choisir et mettre en place le Plateau",
-      "body": "En groupe, décidez avec quel plateau vous souhaitez jouer. Si vous sélectionnez plusieurs plateaux, un plateau sera choisi aléatoirement parmi ceux sélectionnés."
+      "body": "Décidez ensemble avec quel plateau vous souhaitez jouer. Si vous sélectionnez plusieurs plateaux, un plateau sera choisi aléatoirement parmi ceux sélectionnés."
     },
     "chooseDeck": {
       "title": "Choisir et mettre en place le Paquet",
-      "body": "En groupe, décidez quel paquet de cartes vous souhaitez utiliser. Si vous sélectionnez plusieurs paquets, un paquet sera choisi aléatoirement parmi ceux sélectionnés."
+      "body": "Décidez ensemble quel paquet de cartes vous souhaitez utiliser. Si vous sélectionnez plusieurs paquets, un paquet sera choisi aléatoirement parmi ceux sélectionnés."
     },
     "setUpDeck": {
       "title": "Mettre en place le Paquet"
     },
     "setUpBots": {
       "title": "Mettre en place les Robots",
-      "body": "En groupe, décidez avec quels robots vous souhaitez jouer, en suivant leurs instructions de mise en place comme décrit dans les Lois de la Rootbotique."
+      "body": "Décidez ensemble avec quels robots vous souhaitez jouer, en suivant leurs instructions de mise en place comme décrit dans les Lois de la Rootbotique."
     },
     "chooseLandmarks": {
       "title": "Mettre en place les Lieux",
-      "body": "En groupe, décidez avec combien de lieux vous souhaitez jouer et lesquels inclure dans la sélection.",
-      "body_mapLandmark": "En groupe, décidez avec combien de lieux vous souhaitez jouer <i>(en plus du lieu déjà inclus avec le plateau)</i>, et lesquels inclure dans la sélection."
+      "body": "Décidez ensemble avec combien de lieux vous souhaitez jouer et lesquels inclure dans la sélection.",
+      "body_mapLandmark": "Décidez ensemble avec combien de lieux vous souhaitez jouer <i>(en plus du lieu déjà inclus avec le plateau)</i>, et lesquels inclure dans la sélection."
     },
     "chooseHirelings": {
       "title": "Mettre en place les Recrues",
-      "body": "En groupe, décidez si vous souhaitez jouer avec des recrues et lesquelles inclure dans la sélection."
+      "body": "Décidez ensemble si vous souhaitez jouer avec des recrues et lesquelles inclure dans la sélection."
     },
     "postHirelingSetup": {
       "subtitle": "Placer les marqueurs Recrue",
@@ -104,7 +104,7 @@
     },
     "chooseFactions": {
       "title": "Mettre en place les Factions",
-      "body": "En groupe, sélectionnez les factions que vous souhaitez inclure dans le draft de factions."
+      "body": "Sélectionnez ensemble les factions que vous souhaitez inclure dans le draft de factions."
     },
     "selectFaction": {
       "subtitle": "Choisir une Faction",
