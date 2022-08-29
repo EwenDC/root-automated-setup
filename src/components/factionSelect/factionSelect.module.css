@@ -47,6 +47,7 @@
   color: black;
   margin: 0 0.3rem;
   mix-blend-mode: multiply;
+  will-change: opacity;
   /* Transitioned properties */
   outline: 0.15rem solid transparent;
   outline-offset: 0;

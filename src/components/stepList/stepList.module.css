@@ -1,12 +1,11 @@
 .container {
-  flex: 1 0;
   max-width: 100%;
-  margin: 0 auto 3rem auto;
+  margin: 0 auto 4rem;
 }
 
 @media (min-width: 992px) {
   .container {
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
   }
 }
 

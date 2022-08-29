@@ -1,5 +1,4 @@
 .container {
-  flex: 0 0;
   display: flex;
   justify-content: center;
   position: fixed;
