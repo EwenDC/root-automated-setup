@@ -4,7 +4,10 @@ import "./index.css";
 
 // Since we have to suspend for i18next anyway, may as well lazy load the entire app
 const App = React.lazy(
-  () => import(/* webpackPreload: true */ "./components/app") // Preload since we require it ASAP
+  () =>
+    import(
+      /* webpackPreload: true, webpackChunkName: "auset" */ "./components/app"
+    ) // Preload since we require it ASAP
 );
 
 const root = createRoot(document.getElementById("root")!);

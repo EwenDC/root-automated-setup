@@ -76,8 +76,7 @@ When translating, place the substitution (as-is) in the correct place in your te
 },
 ```
 
-If the substitution is `{{count}}`, that represents a contextual number for the text. You can provide plural forms of the text for your language in separate keys, even if the English translation does not include those keys. See the [i18next documentation](https://www.i18next.com/translation-function/plurals) for more information.<br/>
-\*This is the only situation in which you will modify the structure/keys of the translation file
+\*If the substitution is `{{count}}`, that represents a contextual number for the text. You can provide plural forms of the text for your language in separate keys, even if the English translation does not include those keys. See the [i18next documentation](https://www.i18next.com/translation-function/plurals) for more information. This is the only situation in which you will modify the structure/keys of the translation file
 
 ### Testing a Translation
 

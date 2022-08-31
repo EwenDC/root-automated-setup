@@ -3,7 +3,7 @@ import styles from "./toast.module.css";
 import { ReactComponent as CloseIcon } from "../../images/icons/close.svg";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { selectSetupParameters, setErrorMessage } from "../../features";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 
 export const Toast: React.FC = () => {
@@ -14,8 +14,9 @@ export const Toast: React.FC = () => {
   const { t } = useTranslation();
 
   // Update the cached message if a new one came through
-  if (errorMessage != null && errorMessage !== cachedMessage)
-    setCachedMessage(errorMessage);
+  useEffect(() => {
+    if (errorMessage != null) setCachedMessage(errorMessage);
+  }, [errorMessage]);
 
   return (
     <div

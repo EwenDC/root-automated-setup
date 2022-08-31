@@ -28,6 +28,9 @@ import { registerServiceWorker } from "./serviceWorkerRegistration";
       backend: {
         loadPath: process.env.PUBLIC_URL + "/locales/{{ns}}-{{lng}}.json",
       },
+      react: {
+        transKeepBasicHtmlNodesFor: ["br", "strong", "i", "p", "b"],
+      },
     });
 
 export const App: React.FC = () => (
