@@ -1,13 +1,13 @@
 import { RootState } from "../components/store";
 import { createSelector } from "@reduxjs/toolkit";
-import { ComponentState, GameComponent } from "../types";
+import { GameComponent } from "../types";
 
 /**
  * Redux Selector for returning a component list as an array, moving the component key to the component field "code"
  * @param select Select function for selecting the component list from the root state
  */
 const selectComponentArray = <T>(
-  select: (state: RootState) => ComponentState<T>
+  select: (state: RootState) => Record<string, T>
 ) =>
   createSelector(select, (stateSlice) => {
     const array = [];

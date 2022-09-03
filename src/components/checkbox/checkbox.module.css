@@ -4,7 +4,7 @@
   align-items: flex-start;
 }
 
-.checkbox {
+.input {
   cursor: pointer;
   /* Override the default checkbox appearance */
   appearance: none;
@@ -25,21 +25,21 @@
   }
 }
 
-.checkbox:hover:not(:disabled) {
+.input:hover:not(:disabled) {
   background-color: white;
 }
 
-.checkbox:disabled {
+.input:disabled {
   border-color: darkgray;
   cursor: auto;
 }
 
-.checkbox:focus-visible {
+.input:focus-visible {
   outline: 0.15rem dotted black;
   outline-offset: 0.05rem;
 }
 
-.checkbox::before {
+.input::before {
   content: "";
   width: 0.65rem;
   height: 0.65rem;
@@ -64,16 +64,16 @@
 }
 
 @media (forced-colors: active) {
-  .checkbox::before {
+  .input::before {
     background-color: CanvasText;
   }
 }
 
-.checkbox:checked::before {
+.input:checked::before {
   box-shadow: inset 1rem 1rem black;
 }
 
-.checkbox:disabled::before {
+.input:disabled::before {
   box-shadow: inset 1rem 1rem darkgray;
 }
 
@@ -82,7 +82,7 @@
   cursor: pointer;
 }
 
-.inactive .checkbox::before {
+.inactive .input::before {
   transition: none;
 }
 

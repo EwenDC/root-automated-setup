@@ -9,11 +9,6 @@ export interface ExpansionComponent extends GameComponent {
   expansionCode: string;
 }
 
-/** A generic object where each key is the code of an underlying object */
-export interface ComponentState<T> {
-  [code: string]: T;
-}
-
 /** Adds the field "code" to an existing type */
 export type WithCode<T> = T & {
   code: string;

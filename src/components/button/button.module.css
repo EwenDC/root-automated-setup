@@ -1,4 +1,4 @@
-.button {
+.wrapper {
   background-color: ivory;
   border: none;
   font-size: 1.5rem;
@@ -16,27 +16,27 @@
 }
 
 @media (prefers-reduced-motion) {
-  .button {
+  .wrapper {
     transition: none;
   }
 }
 
-.button:hover {
+.wrapper:hover {
   background-color: white;
 }
 
-.button:active {
+.wrapper:active {
   background-color: cornsilk;
 }
 
-.button.disabled {
+.wrapper.disabled {
   cursor: auto;
   color: darkgray;
   border-bottom-color: transparent;
   background-color: ivory;
 }
 
-.button:focus-visible {
+.wrapper:focus-visible {
   outline-color: black;
 }
 
@@ -53,7 +53,7 @@
 }
 
 @media (min-width: 992px) {
-  .button {
+  .wrapper {
     border-radius: 0.66rem;
     font-size: 2rem;
     border-bottom: 0.2rem black solid;

@@ -23,7 +23,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         {...props}
         ref={ref}
-        className={classNames(styles.button, className, {
+        className={classNames(styles.wrapper, className, {
           [styles.disabled]: disabled,
         })}
         onClick={disabled ? undefined : onClick}

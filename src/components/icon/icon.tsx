@@ -17,12 +17,7 @@ import swordImage from "../../images/items/sword.png";
 import teaImage from "../../images/items/tea.png";
 import torchImage from "../../images/items/torch.png";
 
-const iconDict: {
-  [icon: string]: {
-    key: string;
-    image: string;
-  };
-} = {
+const iconDict: Record<string, { key: string; image: string }> = {
   fox: {
     key: "label.fox",
     image: foxIcon,

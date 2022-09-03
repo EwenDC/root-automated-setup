@@ -52,7 +52,7 @@ export const Toolbar: React.FC = () => {
 
   return (
     <footer className={styles.container}>
-      <div className={styles.toolbar} role="toolbar">
+      <div className={styles.bar} role="toolbar">
         <Button
           Icon={UndoIcon}
           disabled={undoDisabled}

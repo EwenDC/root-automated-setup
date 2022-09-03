@@ -83,7 +83,7 @@ export const Step: React.FC<StepProps> = ({
   return stepRendered ? (
     <StepProvider value={{ stepActive }}>
       <section
-        className={classNames(styles.step, {
+        className={classNames(styles.container, {
           [styles.inactive]: !stepActive,
         })}
         ref={sectionElement}

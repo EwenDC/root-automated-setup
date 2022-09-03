@@ -1,13 +1,13 @@
-.step {
+.container {
   line-height: 1.5rem;
   margin: 1rem;
 }
 
-.step.inactive {
+.container.inactive {
   color: darkgray;
 }
 
-.step p {
+.container p {
   margin: 0.5rem 0;
 }
 

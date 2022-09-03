@@ -11,10 +11,10 @@ import {
   getExpansionConfig,
   persistExpansionEnabled,
 } from "./utils";
-import { ComponentState, Expansion, ExpansionComponent } from "../types";
+import { Expansion, ExpansionComponent } from "../types";
 
 const setupInitialExpansionState = () => {
-  let initialState: ComponentState<Expansion> = {};
+  let initialState: Record<string, Expansion> = {};
   for (const [expansionCode, expansion] of Object.entries(content)) {
     initialState[expansionCode] = {
       base: expansion.base,
@@ -26,7 +26,7 @@ const setupInitialExpansionState = () => {
 };
 
 const setExpansionEnabled = (
-  state: ComponentState<Expansion>,
+  state: Record<string, Expansion>,
   expansionCode: string,
   enabled: boolean
 ) => {
@@ -56,7 +56,7 @@ export default expansionSlice.reducer;
 /** Function for adding automatic enable/disable expansion reducers to a redux slice */
 export const expansionReducers =
   <T extends ExpansionComponent>(componentKey: string) =>
-  (builder: ActionReducerMapBuilder<ComponentState<T>>) => {
+  (builder: ActionReducerMapBuilder<Record<string, T>>) => {
     builder
       .addCase(enableExpansion, (state, action) =>
         addExpansionComponents<Draft<T>>(state, action.payload, componentKey)

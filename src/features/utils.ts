@@ -1,6 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import content from "../content.json";
-import { GameComponent, ComponentState, ExpansionComponent } from "../types";
+import { GameComponent, ExpansionComponent } from "../types";
 
 const isTrue = "1";
 const isFalse = "0";
@@ -68,7 +68,7 @@ export const getExpansionConfig = (expansionCode: string) =>
  * @param componentKey The expansion object key that the components are stored in
  */
 export const addExpansionComponents = <T extends ExpansionComponent>(
-  state: ComponentState<T>,
+  state: Record<string, T>,
   expansionCode: string,
   componentKey: string,
   expansion = getExpansionConfig(expansionCode)
@@ -100,7 +100,7 @@ export const addExpansionComponents = <T extends ExpansionComponent>(
 export const setupInitialState =
   <T extends ExpansionComponent>(componentKey: string) =>
   () => {
-    const initialState: ComponentState<T> = {};
+    const initialState: Record<string, T> = {};
     for (const [expansionCode, expansion] of Object.entries(content)) {
       if (expansionEnabled(expansionCode, expansion.base)) {
         addExpansionComponents<T>(
@@ -127,7 +127,7 @@ export const toggleComponent = {
     },
   }),
   reducer: <T extends GameComponent>(
-    state: ComponentState<T>,
+    state: Record<string, T>,
     action: PayloadAction<{ code: string; enabled?: boolean }>
   ) => {
     // Retreive the component
@@ -146,7 +146,7 @@ export const toggleComponent = {
 };
 
 /**
- * Returns a random element from a given list, while also removing it
+ * Removes a random element from a given list, and then returns it
  * @param list The list of elements to be randomly selected
  */
 export const takeRandom = <T>(list: T[]): T => {

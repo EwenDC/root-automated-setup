@@ -28,7 +28,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       <input
         id={id}
         type="checkbox"
-        className={styles.checkbox}
+        className={styles.input}
         defaultChecked={defaultValue ?? false}
         disabled={!stepActive}
         onChange={(e) => onChange(e.target.checked)}
