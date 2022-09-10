@@ -5,15 +5,10 @@
 
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
-import {
-  precacheAndRoute,
-  createHandlerBoundToURL,
-  matchPrecache,
-} from "workbox-precaching";
-import { registerRoute, setCatchHandler } from "workbox-routing";
-import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
+import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
+import { registerRoute } from "workbox-routing";
+import { StaleWhileRevalidate } from "workbox-strategies";
 import { googleFontsCache, imageCache } from "workbox-recipes";
-import defaultComponentImage from "./images/componentDefault.png";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -62,57 +57,15 @@ registerRoute(
   new StaleWhileRevalidate({
     cacheName: "translations",
     // Limit how many translations can be cached, as we don't expect the user to be switching between lots of them
-    plugins: [new ExpirationPlugin({ maxEntries: 10 })],
+    plugins: [new ExpirationPlugin({ maxEntries: 5 })],
   })
 );
 
 // Handle caching the page font
 googleFontsCache();
 
-/** Helper function for determining if a given URL is for a component image */
-const isComponentImage = (url: URL) =>
-  url.origin === self.location.origin &&
-  [
-    "boxes",
-    "buildings",
-    "cards",
-    "landmarks",
-    "maps",
-    "meeples",
-    "tokens",
-  ].some((path) =>
-    url.pathname.startsWith(process.env.PUBLIC_URL + "/images/" + path + "/")
-  );
-
-// Handle caching the component images (which live outside of the build)
-registerRoute(
-  ({ url }) => isComponentImage(url),
-  // Always serve cached image, only making a network request on cache miss
-  new CacheFirst({
-    cacheName: "componentImages",
-    plugins: [
-      // We set a 30 day cache length on the images rather than a max entries, as we expect a lot of them
-      new ExpirationPlugin({
-        maxAgeSeconds: 30 * 24 * 60 * 60,
-        // Since the images are just for decoration, nominate them to be cleared first when the cache fills
-        purgeOnQuotaError: true,
-      }),
-    ],
-  })
-);
-
-// Handle caching any other images
+// Handle caching images not included in the build process
 imageCache();
-
-// Handle fallbacks
-setCatchHandler(async ({ url }) => {
-  // Ensure that component images that are not cached can be replaced with a fallback when offline
-  if (isComponentImage(url)) {
-    return (await matchPrecache(defaultComponentImage)) || Response.error();
-  }
-
-  return Response.error();
-});
 
 // This allows the web app to trigger skipWaiting via registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener("message", (event) => {
