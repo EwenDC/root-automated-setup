@@ -1,5 +1,5 @@
 import deckReducer from "./deckSlice";
-import expansionReducer from "./expansionSlice";
+import expansionReducer from "./componentsSlice";
 import factionReducer from "./factionSlice";
 import flowReducer from "./flowSlice";
 import hirelingReducer from "./hirelingSlice";
@@ -20,7 +20,7 @@ export {
 };
 
 export * from "./deckSlice";
-export * from "./expansionSlice";
+export * from "./componentsSlice";
 export * from "./factionSlice";
 export * from "./flowSlice";
 export * from "./hirelingSlice";

@@ -1,6 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import content from "../content.json";
-import { GameComponent, ExpansionComponent } from "../types";
+import content from "../content";
+import { ComponentInfo, GameComponent } from "../types";
 
 const isTrue = "1";
 const isFalse = "0";
@@ -67,7 +67,7 @@ export const getExpansionConfig = (expansionCode: string) =>
  * Generic function for adding expansion components to the state of a Redux slice
  * @param componentKey The expansion object key that the components are stored in
  */
-export const addExpansionComponents = <T extends ExpansionComponent>(
+export const addExpansionComponents = <T extends GameComponent>(
   state: Record<string, T>,
   expansionCode: string,
   componentKey: string,
@@ -98,7 +98,7 @@ export const addExpansionComponents = <T extends ExpansionComponent>(
  * @param addExpansionComponents Function for extracting state from a given expansion
  */
 export const setupInitialState =
-  <T extends ExpansionComponent>(componentKey: string) =>
+  <T extends GameComponent>(componentKey: string) =>
   () => {
     const initialState: Record<string, T> = {};
     for (const [expansionCode, expansion] of Object.entries(content)) {
@@ -126,7 +126,7 @@ export const toggleComponent = {
       enabled,
     },
   }),
-  reducer: <T extends GameComponent>(
+  reducer: <T extends ComponentInfo>(
     state: Record<string, T>,
     action: PayloadAction<{ code: string; enabled?: boolean }>
   ) => {

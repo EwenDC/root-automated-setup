@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  ExpansionComponent,
+  GameComponent,
   Hireling,
   HirelingEntry,
   Landmark,
@@ -83,7 +83,7 @@ export const setupSlice = createSlice({
       },
     },
     setDeck: {
-      prepare: (deck: WithCode<ExpansionComponent>) => ({ payload: deck.code }),
+      prepare: (deck: WithCode<GameComponent>) => ({ payload: deck.code }),
       reducer: (state, action: PayloadAction<string>) => {
         state.deck = action.payload;
       },

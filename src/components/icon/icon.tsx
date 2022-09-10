@@ -16,8 +16,9 @@ import hammerImage from "../../images/items/hammer.png";
 import swordImage from "../../images/items/sword.png";
 import teaImage from "../../images/items/tea.png";
 import torchImage from "../../images/items/torch.png";
+import { ClearingSuit, Item } from "../../types";
 
-const iconDict: Record<string, { key: string; image: string }> = {
+const iconDict: Record<Item | ClearingSuit, { key: string; image: string }> = {
   fox: {
     key: "label.fox",
     image: foxIcon,
@@ -65,7 +66,7 @@ const iconDict: Record<string, { key: string; image: string }> = {
 };
 
 interface ItemProps {
-  icon: string;
+  icon: Item | ClearingSuit;
   children?: React.ReactNode;
 }
 

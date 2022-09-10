@@ -4,14 +4,14 @@ import {
   Draft,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import content from "../content.json";
+import content from "../content";
 import {
   addExpansionComponents,
   expansionEnabled,
   getExpansionConfig,
   persistExpansionEnabled,
 } from "./utils";
-import { Expansion, ExpansionComponent } from "../types";
+import { Expansion, GameComponent } from "../types";
 
 const setupInitialExpansionState = () => {
   let initialState: Record<string, Expansion> = {};
@@ -55,7 +55,7 @@ export default expansionSlice.reducer;
 
 /** Function for adding automatic enable/disable expansion reducers to a redux slice */
 export const expansionReducers =
-  <T extends ExpansionComponent>(componentKey: string) =>
+  <T extends GameComponent>(componentKey: string) =>
   (builder: ActionReducerMapBuilder<Record<string, T>>) => {
     builder
       .addCase(enableExpansion, (state, action) =>

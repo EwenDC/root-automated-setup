@@ -1,7 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../components/store";
-import { GameComponent, SetupStep, WithCode } from "../types";
-import { disableExpansion, enableExpansion } from "./expansionSlice";
+import { ComponentInfo, SetupStep, WithCode } from "../types";
+import { disableExpansion, enableExpansion } from "./componentsSlice";
 import { toggleFaction } from "./factionSlice";
 import {
   addToFactionPool,
@@ -66,7 +66,7 @@ export const toggleExpansion =
  * @param toggleComponent Action creator for dispatching the toggle component action for the given components
  */
 export const massComponentToggle =
-  <T extends GameComponent>(
+  <T extends ComponentInfo>(
     selectComponentArray: (state: RootState) => WithCode<T>[],
     componentEnable: boolean | ((component: WithCode<T>) => boolean),
     toggleComponent: (

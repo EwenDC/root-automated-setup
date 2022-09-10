@@ -1,6 +1,6 @@
 import { RootState } from "../components/store";
 import { createSelector } from "@reduxjs/toolkit";
-import { GameComponent } from "../types";
+import { ComponentInfo } from "../types";
 
 /**
  * Redux Selector for returning a component list as an array, moving the component key to the component field "code"
@@ -18,7 +18,7 @@ const selectComponentArray = <T>(
   });
 
 /** Filters out disabled components from a given component array */
-export const selectEnabled = <T extends GameComponent>(array: T[]) =>
+export const selectEnabled = <T extends ComponentInfo>(array: T[]) =>
   array.filter((value) => value.enabled);
 
 /** Redux Selector for returning a specified Deck from state */

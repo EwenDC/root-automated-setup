@@ -1,26 +1,40 @@
-/** A game component that can be enabled or disabled, and may have an associated image */
-export interface GameComponent {
-  enabled: boolean;
-  image?: string;
-}
-
-/** An object representing a game component from an expansion. It holds the same information as a game component but also saves the expansion it is from */
-export interface ExpansionComponent extends GameComponent {
-  expansionCode: string;
-}
-
 /** Adds the field "code" to an existing type */
 export type WithCode<T> = T & {
   code: string;
 };
 
+/** The name of a vagabond item */
+export type Item =
+  | "bag"
+  | "boot"
+  | "coin"
+  | "crossbow"
+  | "hammer"
+  | "sword"
+  | "tea"
+  | "torch";
+
+/** The name of a map clearing suit */
+export type ClearingSuit = "fox" | "mouse" | "rabbit";
+
+/** A basic game component, with an associated image */
+export interface GameComponent {
+  image?: string;
+}
+
 /** An object representing an Expansion or Base Box for the Root board game */
 export interface Expansion extends GameComponent {
   base: boolean;
+  decks?: Record<string, GameComponent>;
+  factions?: Record<string, Faction>;
+  hirelings?: Record<string, Hireling>;
+  landmarks?: Record<string, Landmark>;
+  maps?: Record<string, MapComponent>;
+  vagabonds?: Record<string, Vagabond>;
 }
 
 /** An object representing a Faction from the Root board game */
-export interface Faction extends ExpansionComponent {
+export interface Faction extends GameComponent {
   key: string;
   militant: boolean;
   isVagabond: boolean;
@@ -36,23 +50,40 @@ export interface Faction extends ExpansionComponent {
 }
 
 /** An object representing a physical Hireling card from the Root board game, which could be Promoted or Demoted */
-export interface Hireling extends ExpansionComponent {
+export interface Hireling extends GameComponent {
   factions: string[];
 }
 
 /** An object representing a Landmark piece from the Root board game */
-export interface Landmark extends ExpansionComponent {
+export interface Landmark extends GameComponent {
   minPlayers: number;
 }
 
 /** An object representing a Map from the Root board game */
-export interface MapComponent extends ExpansionComponent {
+export interface MapComponent extends GameComponent {
   landmark?: string;
 }
 
 /** An object representing a Vagabond character from the Root board game */
-export interface Vagabond extends ExpansionComponent {
-  startingItems: string[];
+export interface Vagabond extends GameComponent {
+  startingItems: Item[];
+}
+
+/** Generic information about a game component, namely whether it is enabled and what expansion it is from */
+export interface ComponentInfo {
+  enabled: boolean;
+  expansionCode: string;
+}
+
+/** Object tracking which components are avaliable for selection */
+export interface ComponentsState {
+  decks: Record<string, ComponentInfo>;
+  expansions: Record<string, Omit<ComponentInfo, "expansionCode">>;
+  factions: Record<string, ComponentInfo>;
+  hirelings: Record<string, ComponentInfo>;
+  landmarks: Record<string, ComponentInfo>;
+  maps: Record<string, ComponentInfo>;
+  vagabonds: Record<string, ComponentInfo>;
 }
 
 /** An object representing an promoted or demoted Hireling */
