@@ -1,75 +1,116 @@
-import {
-  ActionReducerMapBuilder,
-  createSlice,
-  Draft,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import content from "../content";
 import {
-  addExpansionComponents,
   expansionEnabled,
-  getExpansionConfig,
   persistExpansionEnabled,
+  typedEntries,
+  typedKeys,
 } from "./utils";
-import { Expansion, GameComponent } from "../types";
+import { ComponentsState, Expansion } from "../types";
 
-const setupInitialExpansionState = () => {
-  let initialState: Record<string, Expansion> = {};
-  for (const [expansionCode, expansion] of Object.entries(content)) {
-    initialState[expansionCode] = {
+const addExpansionComponents = (
+  state: ComponentsState,
+  expansionCode: string,
+  { base, image, ...components }: Expansion
+) => {
+  for (const [componentType, componentList] of typedEntries(components)) {
+    // Skip component types not included in a given expansion
+    if (componentList) {
+      for (const componentCode of typedKeys(componentList)) {
+        state[componentType][componentCode] = {
+          enabled: true,
+          expansionCode,
+        };
+      }
+    }
+  }
+};
+
+const setupInitialState = () => {
+  let initialState: ComponentsState = {
+    expansions: {},
+    decks: {},
+    factions: {},
+    hirelings: {},
+    landmarks: {},
+    maps: {},
+    vagabonds: {},
+  };
+
+  for (const [expansionCode, expansion] of typedEntries(content)) {
+    const enabled = expansionEnabled(expansionCode, expansion.base);
+
+    initialState.expansions[expansionCode] = {
       base: expansion.base,
-      image: expansion.image === "" ? undefined : expansion.image,
-      enabled: expansionEnabled(expansionCode, expansion.base),
+      enabled,
     };
+    // Add expansion components to state if the expansion is enabled
+    if (enabled) addExpansionComponents(initialState, expansionCode, expansion);
   }
   return initialState;
 };
 
-const setExpansionEnabled = (
-  state: Record<string, Expansion>,
-  expansionCode: string,
-  enabled: boolean
-) => {
-  // Retreive the expansion (may return undefined if code does not exist)
-  const expansion = state[expansionCode];
-  // Only update the expansion state if it exists and is not the base game
-  if (expansion != null && !expansion.base) {
-    expansion.enabled = enabled;
-    persistExpansionEnabled(expansionCode, expansion.enabled);
-  }
-};
+const toggleComponent =
+  (componentType: keyof ComponentsState) =>
+  (
+    state: ComponentsState,
+    { payload: componentCode }: PayloadAction<string>
+  ) => {
+    state[componentType][componentCode].enabled =
+      !state[componentType][componentCode].enabled;
+  };
 
-export const expansionSlice = createSlice({
-  name: "expansion",
-  initialState: setupInitialExpansionState,
+export const componentsSlice = createSlice({
+  name: "components",
+  initialState: setupInitialState,
   reducers: {
-    enableExpansion: (state, action: PayloadAction<string>) =>
-      setExpansionEnabled(state, action.payload, true),
-    disableExpansion: (state, action: PayloadAction<string>) =>
-      setExpansionEnabled(state, action.payload, false),
-  },
-});
+    toggleExpansion: (
+      state,
+      { payload: expansionCode }: PayloadAction<string>
+    ) => {
+      const expansion = state.expansions[expansionCode];
+      if (expansion) {
+        // Toggle enable state and persist change
+        expansion.enabled = !expansion.enabled;
+        persistExpansionEnabled(expansionCode, expansion.enabled);
 
-export const { enableExpansion, disableExpansion } = expansionSlice.actions;
-export default expansionSlice.reducer;
-
-/** Function for adding automatic enable/disable expansion reducers to a redux slice */
-export const expansionReducers =
-  <T extends GameComponent>(componentKey: string) =>
-  (builder: ActionReducerMapBuilder<Record<string, T>>) => {
-    builder
-      .addCase(enableExpansion, (state, action) =>
-        addExpansionComponents<Draft<T>>(state, action.payload, componentKey)
-      )
-      .addCase(disableExpansion, (state, action) => {
-        // Skip processing for the base game, as that cannot be disabled
-        if (!getExpansionConfig(action.payload)?.base) {
-          // Remove all components matching the disabled expansion
-          for (const [componentCode, component] of Object.entries(state)) {
-            if (component.expansionCode === action.payload) {
-              delete state[componentCode];
+        if (expansion.enabled) {
+          // The expansion was just enabled, add it's components to our component list
+          addExpansionComponents(state, expansionCode, content[expansionCode]);
+        } else {
+          // The expansion was just disabled, delete any components that came from it
+          const { expansions, ...components } = state;
+          for (const [componentType, componentList] of typedEntries(
+            components
+          )) {
+            for (const componentCode of typedKeys(componentList)) {
+              if (
+                state[componentType][componentCode].expansionCode ===
+                expansionCode
+              ) {
+                delete state[componentType][componentCode];
+              }
             }
           }
         }
-      });
-  };
+      }
+    },
+    toggleDeck: toggleComponent("decks"),
+    toggleFaction: toggleComponent("factions"),
+    toggleHireling: toggleComponent("hirelings"),
+    toggleLandmark: toggleComponent("landmarks"),
+    toggleMap: toggleComponent("maps"),
+    toggleVagabond: toggleComponent("vagabonds"),
+  },
+});
+
+export const {
+  toggleExpansion,
+  toggleDeck,
+  toggleFaction,
+  toggleHireling,
+  toggleLandmark,
+  toggleMap,
+  toggleVagabond,
+} = componentsSlice.actions;
+export default componentsSlice.reducer;

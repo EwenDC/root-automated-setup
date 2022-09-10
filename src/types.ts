@@ -69,6 +69,12 @@ export interface Vagabond extends GameComponent {
   startingItems: Item[];
 }
 
+/** Generic information about an expansion, namely whether it is enabled and if it is a base copy */
+export interface ExpansionInfo {
+  enabled: boolean;
+  base: boolean;
+}
+
 /** Generic information about a game component, namely whether it is enabled and what expansion it is from */
 export interface ComponentInfo {
   enabled: boolean;
@@ -77,8 +83,8 @@ export interface ComponentInfo {
 
 /** Object tracking which components are avaliable for selection */
 export interface ComponentsState {
+  expansions: Record<string, ExpansionInfo>;
   decks: Record<string, ComponentInfo>;
-  expansions: Record<string, Omit<ComponentInfo, "expansionCode">>;
   factions: Record<string, ComponentInfo>;
   hirelings: Record<string, ComponentInfo>;
   landmarks: Record<string, ComponentInfo>;

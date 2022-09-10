@@ -1,27 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import {
-  deckReducer,
-  expansionReducer,
-  factionReducer,
-  flowReducer,
-  hirelingReducer,
-  landmarkReducer,
-  mapReducer,
-  setupReducer,
-  vagabondReducer,
-} from "../features/";
+import { componentsReducer, flowReducer, setupReducer } from "../features/";
 
 export const store = configureStore({
   reducer: {
-    deck: deckReducer,
-    expansion: expansionReducer,
-    faction: factionReducer,
+    components: componentsReducer,
     flow: flowReducer,
-    hireling: hirelingReducer,
-    landmark: landmarkReducer,
-    map: mapReducer,
     setup: setupReducer,
-    vagabond: vagabondReducer,
   },
 });
 
