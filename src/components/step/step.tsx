@@ -17,9 +17,7 @@ interface StepProps {
   textKey?: string;
   textBelowChildren?: boolean;
   translationOptions?: TOptions;
-  components?:
-    | readonly React.ReactNode[]
-    | { readonly [tagName: string]: React.ReactNode };
+  components?: readonly React.ReactNode[] | { readonly [tagName: string]: React.ReactNode };
   children?: React.ReactNode;
 }
 
@@ -47,9 +45,7 @@ export const Step: React.FC<StepProps> = ({
   useEffect(() => {
     if (stepActive)
       sectionElement.current?.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion)").matches
-          ? "auto"
-          : "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion)").matches ? "auto" : "smooth",
       });
   });
 

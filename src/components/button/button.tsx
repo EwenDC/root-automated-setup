@@ -12,10 +12,7 @@ interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    { className, disabled, onClick, Icon, iconLeft, children, ...props },
-    ref
-  ) => {
+  ({ className, disabled, onClick, Icon, iconLeft, children, ...props }, ref) => {
     const renderIconLeft = Icon && iconLeft;
     const renderIconRight = Icon && !iconLeft;
     const buttonIcon = Icon && <Icon className={styles.icon} />;

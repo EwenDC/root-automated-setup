@@ -12,11 +12,7 @@ interface CheckboxProps {
   onChange: (checked: boolean) => void;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({
-  id,
-  defaultValue,
-  onChange,
-}) => {
+export const Checkbox: React.FC<CheckboxProps> = ({ id, defaultValue, onChange }) => {
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const { stepActive } = useContext(StepContext);
   return defaultValue || stepActive ? (

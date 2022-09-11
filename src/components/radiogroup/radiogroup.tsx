@@ -12,11 +12,7 @@ interface RadiogroupProps {
   onChange: (value: boolean) => void;
 }
 
-export const Radiogroup: React.FC<RadiogroupProps> = ({
-  id,
-  defaultValue,
-  onChange,
-}) => {
+export const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue, onChange }) => {
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const { stepActive } = useContext(StepContext);
   return (

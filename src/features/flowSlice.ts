@@ -5,8 +5,9 @@ import {
   FlowSlice,
   WithCode,
   Faction,
-  Vagabond,
   FactionEntry,
+  SkipStepsPayload,
+  CodeObject,
 } from "../types";
 import { takeRandom } from "./utils";
 import { setErrorMessage } from "./setupSlice";
@@ -53,7 +54,7 @@ export const flowSlice = createSlice({
   name: "flow",
   initialState,
   reducers: {
-    incrementStep: (state, action: PayloadAction) => {
+    incrementStep: (state) => {
       if (state.currentStep < SetupStep.setupEnd) {
         // Add our current state to the undo queue and clear the redo queue
         state.pastSteps.push(getSlice(state));
@@ -68,21 +69,14 @@ export const flowSlice = createSlice({
           state.vagabondSetUp = true;
 
         // Handle special case for faction setup
-        if (
-          state.currentStep === SetupStep.setUpFaction &&
-          state.currentPlayerIndex > 0
-        ) {
+        if (state.currentStep === SetupStep.setUpFaction && state.currentPlayerIndex > 0) {
           // If we still have players left over, move on to the next player
           state.currentPlayerIndex--;
           // Remove the faction we just set up from the pool
-          const [removedFaction] = state.factionPool.splice(
-            state.currentFactionIndex ?? 0,
-            1
-          );
+          const [removedFaction] = state.factionPool.splice(state.currentFactionIndex ?? 0, 1);
           state.currentFactionIndex = null;
           // Clear the last faction lock if the removed faction was militant
-          if (state.lastFactionLocked && removedFaction.militant)
-            state.lastFactionLocked = false;
+          if (state.lastFactionLocked && removedFaction.militant) state.lastFactionLocked = false;
           // Return to the faction selection step
           state.currentStep = SetupStep.selectFaction;
         } else {
@@ -95,12 +89,11 @@ export const flowSlice = createSlice({
         }
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`,
-          action
+          `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`
         );
       }
     },
-    undoStep: (state, action: PayloadAction) => {
+    undoStep: (state) => {
       // Get the previous step from the undo queue
       const previousStep = state.pastSteps.pop();
       if (previousStep != null) {
@@ -110,12 +103,11 @@ export const flowSlice = createSlice({
         applySlice(state, previousStep);
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          `Invalid undoStep action: pastSteps array returned empty value (${previousStep})`,
-          action
+          `Invalid undoStep action: pastSteps array returned empty value (${previousStep})`
         );
       }
     },
-    redoStep: (state, action: PayloadAction) => {
+    redoStep: (state) => {
       // Get the next step from the redo queue
       const nextStep = state.futureSteps.shift();
       if (nextStep != null) {
@@ -125,8 +117,7 @@ export const flowSlice = createSlice({
         applySlice(state, nextStep);
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          `Invalid redoStep action: futureSteps array returned empty value (${nextStep})`,
-          action
+          `Invalid redoStep action: futureSteps array returned empty value (${nextStep})`
         );
       }
     },
@@ -134,15 +125,12 @@ export const flowSlice = createSlice({
       prepare: (steps: SetupStep | SetupStep[], skip: boolean) => ({
         payload: {
           steps: typeof steps === "number" ? [steps] : steps,
-          skip: skip,
+          skip,
         },
       }),
-      reducer: (
-        state,
-        action: PayloadAction<{ steps: SetupStep[]; skip: boolean }>
-      ) => {
-        action.payload.steps.forEach((step) => {
-          state.skippedSteps[step] = action.payload.skip;
+      reducer: (state, { payload: { steps, skip } }: PayloadAction<SkipStepsPayload>) => {
+        steps.forEach((step) => {
+          state.skippedSteps[step] = skip;
         });
         state.futureSteps = [];
       },
@@ -153,42 +141,35 @@ export const flowSlice = createSlice({
       state.currentFactionIndex = null;
     },
     addToFactionPool: {
-      prepare: (
-        faction: WithCode<Faction>,
-        vagabondPool: WithCode<Vagabond>[]
-      ) => ({
+      prepare: (faction: WithCode<Faction>, vagabondPool: CodeObject[]) => ({
         payload: {
           code: faction.code,
           militant: faction.militant,
-          vagabond: faction.isVagabond
-            ? takeRandom(vagabondPool).code
-            : undefined,
+          vagabond: faction.isVagabond ? takeRandom(vagabondPool).code : undefined,
         },
       }),
-      reducer: (state, action: PayloadAction<FactionEntry>) => {
+      reducer: (state, { payload: factionEntry }: PayloadAction<FactionEntry>) => {
         // Add to our pool, and set it to locked if insurgent
-        state.factionPool.push(action.payload);
-        state.lastFactionLocked = !action.payload.militant;
+        state.factionPool.push(factionEntry);
+        state.lastFactionLocked = !factionEntry.militant;
       },
     },
-    setCurrentPlayerIndex: (state, action: PayloadAction<number>) => {
-      if (action.payload >= 0) {
-        state.currentPlayerIndex = action.payload;
+    setCurrentPlayerIndex: (state, { payload: currentPlayerIndex }: PayloadAction<number>) => {
+      if (currentPlayerIndex >= 0) {
+        state.currentPlayerIndex = currentPlayerIndex;
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          "Invalid payload for setCurrentPlayerIndex action: Payload must be a number larger than or equal to 0",
-          action
+          `Invalid payload for setCurrentPlayerIndex action: ${currentPlayerIndex} (Payload must be a number larger than or equal to 0)`
         );
       }
     },
-    setCurrentFactionIndex: (state, action: PayloadAction<number>) => {
-      if (action.payload >= 0 && action.payload < state.factionPool.length) {
-        state.currentFactionIndex = action.payload;
+    setCurrentFactionIndex: (state, { payload: currentFactionIndex }: PayloadAction<number>) => {
+      if (currentFactionIndex >= 0 && currentFactionIndex < state.factionPool.length) {
+        state.currentFactionIndex = currentFactionIndex;
         state.futureSteps = [];
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          `Invalid payload for setCurrentFactionIndex action: Payload must be a number larger than or equal to 0 but smaller than the faction pool length (${state.factionPool.length})`,
-          action
+          `Invalid payload for setCurrentFactionIndex action: ${currentFactionIndex} (Payload must be a number larger than or equal to 0 but smaller than the faction pool length [${state.factionPool.length}])`
         );
       }
     },

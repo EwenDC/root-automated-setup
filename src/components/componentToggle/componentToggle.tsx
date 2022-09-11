@@ -51,8 +51,7 @@ export const ComponentToggle = <T extends WithCode<ComponentInfo>>({
     });
 
     // Sort it by default (unless asked explicitly not to)
-    if (!unsorted)
-      returnValue.sort((a, b) => a.label.localeCompare(b.label, i18n.language));
+    if (!unsorted) returnValue.sort((a, b) => a.label.localeCompare(b.label, i18n.language));
 
     return returnValue;
   }, [components, t, getLabelKey, unsorted, i18n.language]);
@@ -66,9 +65,7 @@ export const ComponentToggle = <T extends WithCode<ComponentInfo>>({
     >
       {sortedComponents.map((component) => {
         if (component.enabled || stepActive) {
-          const componentLockedKey = getLockedKey
-            ? getLockedKey(component)
-            : null;
+          const componentLockedKey = getLockedKey ? getLockedKey(component) : null;
           const componentLocked = componentLockedKey != null;
           return (
             <button
@@ -83,20 +80,14 @@ export const ComponentToggle = <T extends WithCode<ComponentInfo>>({
                   : dispatch(toggleComponent(component.code))
               }
               disabled={!stepActive}
-              title={
-                stepActive && componentLocked
-                  ? t(componentLockedKey)
-                  : undefined
-              }
+              title={stepActive && componentLocked ? t(componentLockedKey) : undefined}
               tabIndex={stepActive && componentLocked ? -1 : undefined}
               role="switch"
               aria-checked={component.enabled}
               aria-disabled={stepActive ? componentLocked : undefined}
               aria-label={stepActive ? component.label : undefined}
               aria-invalid={stepActive && errorMessage ? true : undefined}
-              aria-errormessage={
-                stepActive && errorMessage ? "appError" : undefined
-              }
+              aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
             >
               <img
                 className={styles.image}

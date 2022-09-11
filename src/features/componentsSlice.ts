@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import content from "../content";
-import {
-  expansionEnabled,
-  persistExpansionEnabled,
-  typedEntries,
-  typedKeys,
-} from "./utils";
+import { expansionEnabled, persistExpansionEnabled, typedEntries, typedKeys } from "./utils";
 import { ComponentsState, Expansion } from "../types";
 
 const addExpansionComponents = (
@@ -14,14 +9,11 @@ const addExpansionComponents = (
   { base, image, ...components }: Expansion
 ) => {
   for (const [componentType, componentList] of typedEntries(components)) {
-    // Skip component types not included in a given expansion
-    if (componentList) {
-      for (const componentCode of typedKeys(componentList)) {
-        state[componentType][componentCode] = {
-          enabled: true,
-          expansionCode,
-        };
-      }
+    for (const componentCode of typedKeys(componentList!)) {
+      state[componentType][componentCode] = {
+        enabled: true,
+        expansionCode,
+      };
     }
   }
 };
@@ -52,24 +44,18 @@ const setupInitialState = () => {
 
 const toggleComponent =
   (componentType: keyof ComponentsState) =>
-  (
-    state: ComponentsState,
-    { payload: componentCode }: PayloadAction<string>
-  ) => {
-    state[componentType][componentCode].enabled =
-      !state[componentType][componentCode].enabled;
+  (state: ComponentsState, { payload: componentCode }: PayloadAction<string>) => {
+    state[componentType][componentCode].enabled = !state[componentType][componentCode].enabled;
   };
 
 export const componentsSlice = createSlice({
   name: "components",
   initialState: setupInitialState,
   reducers: {
-    toggleExpansion: (
-      state,
-      { payload: expansionCode }: PayloadAction<string>
-    ) => {
+    toggleExpansion: (state, { payload: expansionCode }: PayloadAction<string>) => {
       const expansion = state.expansions[expansionCode];
-      if (expansion) {
+      // Do not allow changing the enabled state of base game
+      if (expansion && !expansion.base) {
         // Toggle enable state and persist change
         expansion.enabled = !expansion.enabled;
         persistExpansionEnabled(expansionCode, expansion.enabled);
@@ -80,18 +66,23 @@ export const componentsSlice = createSlice({
         } else {
           // The expansion was just disabled, delete any components that came from it
           const { expansions, ...components } = state;
-          for (const [componentType, componentList] of typedEntries(
-            components
-          )) {
-            for (const componentCode of typedKeys(componentList)) {
-              if (
-                state[componentType][componentCode].expansionCode ===
-                expansionCode
-              ) {
+          for (const [componentType, componentList] of typedEntries(components)) {
+            for (const [componentCode, component] of typedEntries(componentList)) {
+              if (component.expansionCode === expansionCode) {
                 delete state[componentType][componentCode];
               }
             }
           }
+        }
+      } else if (process.env.NODE_ENV !== "production") {
+        if (expansion) {
+          console.warn(
+            `Invalid payload for toggleExpansion action: ${expansionCode} (Cannot disable expansion flagged as base)`
+          );
+        } else {
+          console.warn(
+            `Invalid payload for toggleExpansion action: ${expansionCode} (No expansion exists with provided code)`
+          );
         }
       }
     },

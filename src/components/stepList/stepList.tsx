@@ -65,9 +65,7 @@ export const StepList: React.FC = () => {
   const factionCodes = useAppSelector(selectFactionCodeArray);
   const factionPool = useAppSelector(selectFactionPool);
   const selectedVagabond =
-    currentFactionIndex != null
-      ? factionPool[currentFactionIndex].vagabond
-      : undefined;
+    currentFactionIndex != null ? factionPool[currentFactionIndex].vagabond : undefined;
 
   const dispatch = useAppDispatch();
   const nthLastPlayer = useNthLastPlayer();
@@ -89,9 +87,7 @@ export const StepList: React.FC = () => {
         <Checkbox
           id="includeBotStep"
           defaultValue={!skippedSteps[SetupStep.setUpBots]}
-          onChange={(checked) =>
-            dispatch(skipSteps(SetupStep.setUpBots, !checked))
-          }
+          onChange={(checked) => dispatch(skipSteps(SetupStep.setUpBots, !checked))}
         />
       </Step>
       <Step step={SetupStep.seatPlayers}>
@@ -226,9 +222,7 @@ export const StepList: React.FC = () => {
               // Are we at the max player count (i.e. there are no factions to spare for an equivilent hireling)?
               playerCount >= factionCodes.length - 1 &&
               // Is this hireling one of the faction equivilents?
-              hireling.factions.some((faction) =>
-                factionCodes.includes(faction)
-              )
+              hireling.factions.some((faction) => factionCodes.includes(faction))
                 ? "error.factionHirelingExcluded"
                 : null
             }
@@ -313,22 +307,14 @@ export const StepList: React.FC = () => {
         }
         translationOptions={{
           context: vagabondSetUp ? "vagabondSetUp" : undefined,
-          vagabond:
-            selectedVagabond &&
-            t("vagabond." + selectedVagabond.code + ".name"),
+          vagabond: selectedVagabond && t("vagabond." + selectedVagabond.code + ".name"),
         }}
         components={
           selectedVagabond && {
-            InitialStartingItems: (
-              <IconList list={selectedVagabond.startingItems.slice(0, -1)} />
-            ),
+            InitialStartingItems: <IconList list={selectedVagabond.startingItems.slice(0, -1)} />,
             FinalStartingItem: (
               <Icon
-                icon={
-                  selectedVagabond.startingItems[
-                    selectedVagabond.startingItems.length - 1
-                  ]
-                }
+                icon={selectedVagabond.startingItems[selectedVagabond.startingItems.length - 1]}
               />
             ),
           }
@@ -341,15 +327,8 @@ export const StepList: React.FC = () => {
         }}
       />
       <Step step={SetupStep.chooseHand} />
-      <Step
-        step={SetupStep.setupEnd}
-        translationOptions={{ count: playerOrder[0] }}
-      >
-        <Button
-          Icon={RestartIcon}
-          iconLeft={true}
-          onClick={() => dispatch(resetFlow())}
-        >
+      <Step step={SetupStep.setupEnd} translationOptions={{ count: playerOrder[0] }}>
+        <Button Icon={RestartIcon} iconLeft={true} onClick={() => dispatch(resetFlow())}>
           {t("label.restartSetup")}
         </Button>
       </Step>

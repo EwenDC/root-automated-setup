@@ -1,13 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  GameComponent,
-  Hireling,
-  HirelingEntry,
-  Landmark,
-  MapComponent,
-  SetupState,
-  WithCode,
-} from "../types";
+import { CodeObject, Hireling, SetHirelingPayload, SetupState, WithCode } from "../types";
 
 const initialState: SetupState = {
   playerCount: 4,
@@ -35,138 +27,104 @@ export const setupSlice = createSlice({
   name: "setup",
   initialState,
   reducers: {
-    setPlayerCount: (state, action: PayloadAction<number>) => {
+    setPlayerCount: (state, { payload: playerCount }: PayloadAction<number>) => {
       // Make sure the player count is valid (i.e. above 0)
-      if (action.payload >= 1) {
-        state.playerCount = action.payload;
+      if (playerCount >= 1) {
+        state.playerCount = playerCount;
         state.errorMessage = null;
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          "Invalid payload for setPlayerCount action: Payload must be a number above 0",
-          action
+          `Invalid payload for setPlayerCount action: ${playerCount} (Payload must be a number above 0)`
         );
       }
     },
-    fixFirstPlayer: (state, action: PayloadAction<boolean>) => {
-      state.fixedFirstPlayer = action.payload;
+    fixFirstPlayer: (state, { payload: fixedFirstPlayer }: PayloadAction<boolean>) => {
+      state.fixedFirstPlayer = fixedFirstPlayer;
       state.errorMessage = null;
     },
-    setFirstPlayer: (state, action: PayloadAction<number>) => {
+    setFirstPlayer: (state, { payload: firstPlayer }: PayloadAction<number>) => {
       // Make sure the player count is valid (i.e. between 1 and playerCount)
-      if (action.payload >= 1 && action.payload <= state.playerCount) {
+      if (firstPlayer >= 1 && firstPlayer <= state.playerCount) {
         state.playerOrder = [];
         // Generate the player order array
         for (let i = 0; i < state.playerCount; i++) {
           // Add each player to the array, starting with the first player
-          let nextPlayer = action.payload + i;
+          let nextPlayer = firstPlayer + i;
           if (nextPlayer > state.playerCount) nextPlayer -= state.playerCount;
           state.playerOrder.push(nextPlayer);
         }
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          `Invalid payload for setFirstPlayer action: Payload must be a number between 1 and playerCount (${state.playerCount})`,
-          action
+          `Invalid payload for setFirstPlayer action: ${firstPlayer} (Payload must be a number between 1 and playerCount [${state.playerCount}])`
         );
       }
     },
-    setErrorMessage: (state, action: PayloadAction<string | null>) => {
-      state.errorMessage = action.payload;
+    setErrorMessage: (state, { payload: errorMessage }: PayloadAction<string | null>) => {
+      state.errorMessage = errorMessage;
     },
-    enableMapLandmark: (state, action: PayloadAction<boolean>) => {
-      state.useMapLandmark = action.payload;
+    enableMapLandmark: (state, { payload: useMapLandmark }: PayloadAction<boolean>) => {
+      state.useMapLandmark = useMapLandmark;
       state.errorMessage = null;
     },
-    setMap: {
-      prepare: (map: WithCode<MapComponent>) => ({ payload: map.code }),
-      reducer: (state, action: PayloadAction<string>) => {
-        state.map = action.payload;
-      },
+    setMap: (state, { payload: { code: mapCode } }: PayloadAction<CodeObject>) => {
+      state.map = mapCode;
     },
-    setDeck: {
-      prepare: (deck: WithCode<GameComponent>) => ({ payload: deck.code }),
-      reducer: (state, action: PayloadAction<string>) => {
-        state.deck = action.payload;
-      },
+    setDeck: (state, { payload: { code: deckCode } }: PayloadAction<CodeObject>) => {
+      state.deck = deckCode;
     },
-    setLandmarkCount: (state, action: PayloadAction<number>) => {
+    setLandmarkCount: (state, { payload: landmarkCount }: PayloadAction<number>) => {
       // We use === instead of >= or <= to ensure typescript can infer the correct payload type
-      if (
-        action.payload === 0 ||
-        action.payload === 1 ||
-        action.payload === 2
-      ) {
-        state.landmarkCount = action.payload;
+      if (landmarkCount === 0 || landmarkCount === 1 || landmarkCount === 2) {
+        state.landmarkCount = landmarkCount;
         state.errorMessage = null;
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          "Invalid payload for setLandmarkCount action: Payload must be a number between 0 and 2",
-          action
+          `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and 2)`
         );
       }
     },
-    setLandmark1: {
-      prepare: (landmark: WithCode<Landmark>) => ({ payload: landmark.code }),
-      reducer: (state, action: PayloadAction<string>) => {
-        if (state.landmarkCount >= 1) {
-          state.landmark1 = action.payload;
-        } else if (process.env.NODE_ENV !== "production") {
-          console.warn(
-            "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1",
-            action
-          );
-        }
-      },
+    setLandmark1: (state, { payload: { code: landmarkCode } }: PayloadAction<CodeObject>) => {
+      if (state.landmarkCount >= 1) {
+        state.landmark1 = landmarkCode;
+      } else if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1"
+        );
+      }
     },
-    setLandmark2: {
-      prepare: (landmark: WithCode<Landmark>) => ({ payload: landmark.code }),
-      reducer: (state, action: PayloadAction<string>) => {
-        if (state.landmarkCount >= 2) {
-          state.landmark2 = action.payload;
-        } else if (process.env.NODE_ENV !== "production") {
-          console.warn(
-            "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2",
-            action
-          );
-        }
-      },
+    setLandmark2: (state, { payload: { code: landmarkCode } }: PayloadAction<CodeObject>) => {
+      if (state.landmarkCount >= 1) {
+        state.landmark2 = landmarkCode;
+      } else if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          "Invalid setLandmark2 action: Cannot set landmark 1 when landmark count less than 1"
+        );
+      }
     },
     setHireling: {
-      prepare: (
-        number: number,
-        hireling: WithCode<Hireling>,
-        demoted: boolean
-      ) => ({
+      prepare: (number: number, hireling: WithCode<Hireling>, demoted: boolean) => ({
         payload: {
           number,
-          hireling: hireling.code,
+          hirelingEntry: {
+            code: hireling.code,
+            demoted,
+          },
           factions: hireling.factions,
-          demoted,
         },
       }),
       reducer: (
         state,
-        action: PayloadAction<{
-          number: number;
-          hireling: string;
-          factions: string[];
-          demoted: boolean;
-        }>
+        { payload: { number, hirelingEntry, factions } }: PayloadAction<SetHirelingPayload>
       ) => {
-        if (action.payload.number >= 1 && action.payload.number <= 3) {
-          const hireling: HirelingEntry = {
-            code: action.payload.hireling,
-            demoted: action.payload.demoted,
-          };
+        if (number >= 1 && number <= 3) {
+          if (number === 1) state.hireling1 = hirelingEntry;
+          if (number === 2) state.hireling2 = hirelingEntry;
+          if (number === 3) state.hireling3 = hirelingEntry;
 
-          if (action.payload.number === 1) state.hireling1 = hireling;
-          if (action.payload.number === 2) state.hireling2 = hireling;
-          if (action.payload.number === 3) state.hireling3 = hireling;
-
-          state.excludedFactions.push(...action.payload.factions);
+          state.excludedFactions.push(...factions);
         } else if (process.env.NODE_ENV !== "production") {
           console.warn(
-            'Invalid payload for setHireling action: Payload field "number" must be a number between 1 and 3',
-            action
+            `Invalid payload.number for setHireling action: ${number} (Must be a number between 1 and 3)`
           );
         }
       },

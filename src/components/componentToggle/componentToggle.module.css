@@ -10,17 +10,8 @@
   /* Scroll Shadow */
   background: linear-gradient(90deg, ivory 30%, rgba(255, 255, 255, 0)),
     linear-gradient(90deg, rgba(255, 255, 255, 0), ivory 70%) 0 100%,
-    radial-gradient(
-      farthest-side at 0% 50%,
-      rgba(0, 0, 0, 0.33),
-      rgba(0, 0, 0, 0)
-    ),
-    radial-gradient(
-        farthest-side at 100% 50%,
-        rgba(0, 0, 0, 0.33),
-        rgba(0, 0, 0, 0)
-      )
-      0 100%;
+    radial-gradient(farthest-side at 0% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)),
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)) 0 100%;
   background-color: ivory;
   background-repeat: no-repeat;
   background-position: top left, top right, top left, top right;

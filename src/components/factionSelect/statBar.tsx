@@ -16,8 +16,7 @@ export const StatBar: React.FC<StatBarProps> = ({ stat }) => {
   const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
 
-  const statValue =
-    currentFactionIndex != null ? factionPool[currentFactionIndex][stat] : 0;
+  const statValue = currentFactionIndex != null ? factionPool[currentFactionIndex][stat] : 0;
   return (
     <div
       className={classNames(styles.container, {

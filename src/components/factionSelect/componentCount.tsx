@@ -19,23 +19,18 @@ interface ComponentCountProps {
   component: "warriors" | "buildings" | "tokens";
 }
 
-export const ComponentCount: React.FC<ComponentCountProps> = ({
-  component,
-}) => {
+export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
   const { currentFactionIndex } = useAppSelector(selectFlowState);
   const factionPool = useAppSelector(selectFactionPool);
   const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
 
   const componentCount =
-    currentFactionIndex != null
-      ? factionPool[currentFactionIndex][component]
-      : 0;
+    currentFactionIndex != null ? factionPool[currentFactionIndex][component] : 0;
 
   if (componentCount > 0) {
     // We know currentFactionIndex is not null because if it was componentCount defaults to 0
-    const componentImage =
-      factionPool[currentFactionIndex!][imageSource[component]];
+    const componentImage = factionPool[currentFactionIndex!][imageSource[component]];
     return (
       <div
         className={classNames(styles.container, {
@@ -44,11 +39,7 @@ export const ComponentCount: React.FC<ComponentCountProps> = ({
       >
         <img
           className={styles.image}
-          src={
-            componentImage
-              ? process.env.PUBLIC_URL + "/images/" + componentImage
-              : defaultImage
-          }
+          src={componentImage ? process.env.PUBLIC_URL + "/images/" + componentImage : defaultImage}
           alt="" // Image is just decoration, so hide from screen readers
           aria-hidden="true"
         />{" "}

@@ -447,4 +447,4 @@ const content: Record<string, Expansion> = {
   },
 };
 
-export default content;
+export default Object.freeze(content);

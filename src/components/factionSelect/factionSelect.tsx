@@ -19,17 +19,14 @@ import IconList from "../iconList";
 import { ComponentCount } from "./componentCount";
 
 export const FactionSelect: React.FC = () => {
-  const { currentFactionIndex, lastFactionLocked } =
-    useAppSelector(selectFlowState);
+  const { currentFactionIndex, lastFactionLocked } = useAppSelector(selectFlowState);
   const factionPool = useAppSelector(selectFactionPool);
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
   const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
 
-  const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (
-    event
-  ) => {
+  const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
     const focusedIndex = currentFactionIndex ?? 0;
     const maxIndex = factionPool.length - (lastFactionLocked ? 2 : 1);
     let newIndex: number | undefined;
@@ -51,8 +48,7 @@ export const FactionSelect: React.FC = () => {
   };
 
   const lastIndex = factionPool.length - 1;
-  const selectedFaction =
-    currentFactionIndex != null ? factionPool[currentFactionIndex] : null;
+  const selectedFaction = currentFactionIndex != null ? factionPool[currentFactionIndex] : null;
   return (
     <>
       <div
@@ -73,9 +69,7 @@ export const FactionSelect: React.FC = () => {
               ")"
             : t("faction." + faction.key + ".name");
           // Swap out the faction image for the vagabond image (if we have one)
-          const factionImage = faction.vagabond
-            ? faction.vagabond.image
-            : faction.image;
+          const factionImage = faction.vagabond ? faction.vagabond.image : faction.image;
           return (
             <button
               key={faction.code}
@@ -101,11 +95,7 @@ export const FactionSelect: React.FC = () => {
               }
               role="radio"
               aria-checked={index === currentFactionIndex}
-              aria-disabled={
-                stepActive
-                  ? lastFactionLocked && index === lastIndex
-                  : undefined
-              }
+              aria-disabled={stepActive ? lastFactionLocked && index === lastIndex : undefined}
               aria-label={
                 stepActive
                   ? factionName + faction.militant
@@ -114,21 +104,13 @@ export const FactionSelect: React.FC = () => {
                   : undefined
               }
               // We have to override the tabbing logic to meet the standard of role "radio"
-              tabIndex={
-                stepActive
-                  ? index === (currentFactionIndex ?? 0)
-                    ? 0
-                    : -1
-                  : undefined
-              }
+              tabIndex={stepActive ? (index === (currentFactionIndex ?? 0) ? 0 : -1) : undefined}
               onKeyDown={onKeyDownHandler}
             >
               <img
                 className={styles.image}
                 src={
-                  factionImage
-                    ? process.env.PUBLIC_URL + "/images/" + factionImage
-                    : defaultImage
+                  factionImage ? process.env.PUBLIC_URL + "/images/" + factionImage : defaultImage
                 }
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
@@ -137,10 +119,7 @@ export const FactionSelect: React.FC = () => {
                 <span className={styles.label}>
                   {faction.militant ? (
                     <>
-                      <MilitantIcon
-                        className={styles.icon}
-                        title={t("label.militant")}
-                      />{" "}
+                      <MilitantIcon className={styles.icon} title={t("label.militant")} />{" "}
                     </>
                   ) : null}
                   {factionName}
@@ -173,13 +152,10 @@ export const FactionSelect: React.FC = () => {
                 <p>
                   <strong>
                     {t("label.specialAction")}:{" "}
-                    {t("vagabond." + selectedFaction.vagabond.code + ".action")}
-                    .
+                    {t("vagabond." + selectedFaction.vagabond.code + ".action")}.
                   </strong>{" "}
                   <Trans
-                    i18nKey={
-                      "vagabond." + selectedFaction.vagabond.code + ".effect"
-                    }
+                    i18nKey={"vagabond." + selectedFaction.vagabond.code + ".effect"}
                     components={iconComponents}
                   />
                 </p>

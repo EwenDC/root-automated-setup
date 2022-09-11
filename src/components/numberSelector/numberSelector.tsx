@@ -67,9 +67,7 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
             size={size}
             onChange={typingHandler}
             aria-invalid={stepActive && errorMessage ? true : undefined}
-            aria-errormessage={
-              stepActive && errorMessage ? "appError" : undefined
-            }
+            aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
           />
           <button className={styles.button} onClick={() => buttonHandler(+1)}>
             +

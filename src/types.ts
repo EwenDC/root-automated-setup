@@ -1,18 +1,12 @@
-/** Adds the field "code" to an existing type */
-export type WithCode<T> = T & {
+export interface CodeObject {
   code: string;
-};
+}
+
+/** Adds the field "code" to an existing type */
+export type WithCode<T> = T & CodeObject;
 
 /** The name of a vagabond item */
-export type Item =
-  | "bag"
-  | "boot"
-  | "coin"
-  | "crossbow"
-  | "hammer"
-  | "sword"
-  | "tea"
-  | "torch";
+export type Item = "bag" | "boot" | "coin" | "crossbow" | "hammer" | "sword" | "tea" | "torch";
 
 /** The name of a map clearing suit */
 export type ClearingSuit = "fox" | "mouse" | "rabbit";
@@ -98,6 +92,12 @@ export interface HirelingEntry {
   demoted: boolean;
 }
 
+export interface SetHirelingPayload {
+  number: number;
+  hirelingEntry: HirelingEntry;
+  factions: string[];
+}
+
 /** An object containing all variables used during the setup process */
 export interface SetupState {
   playerCount: number;
@@ -146,6 +146,11 @@ export enum SetupStep {
   placeScoreMarkers,
   chooseHand,
   setupEnd,
+}
+
+export interface SkipStepsPayload {
+  steps: SetupStep[];
+  skip: boolean;
 }
 
 /** An object representing a faction in the faction pool, along with it's assigned vagabond character (if it has one) */

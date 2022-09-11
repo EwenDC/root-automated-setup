@@ -12,8 +12,7 @@ import Button from "../button";
 export const Toolbar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { pastSteps, futureSteps, currentStep } =
-    useAppSelector(selectFlowState);
+  const { pastSteps, futureSteps, currentStep } = useAppSelector(selectFlowState);
   const [focusedIndex, setFocusedIndex] = useState(0);
 
   const buttonRefs = [

@@ -5,9 +5,7 @@ const isTrue = "1";
 const isFalse = "0";
 
 export const typedKeys = Object.keys as <T extends object>(o: T) => (keyof T)[];
-export const typedEntries = Object.entries as <
-  T extends { [s: string]: any } | ArrayLike<any>
->(
+export const typedEntries = Object.entries as <T extends { [s: string]: any } | ArrayLike<any>>(
   o: T
 ) => [keyof T, T[keyof T]][];
 
@@ -16,10 +14,7 @@ export const typedEntries = Object.entries as <
  * @param expansionCode
  * @param enabled
  */
-export const persistExpansionEnabled = (
-  expansionCode: string,
-  enabled: boolean
-) => {
+export const persistExpansionEnabled = (expansionCode: string, enabled: boolean) => {
   try {
     localStorage.setItem(expansionCode, enabled ? isTrue : isFalse);
   } catch (error: any) {
@@ -36,10 +31,7 @@ export const persistExpansionEnabled = (
  * @param expansionCode The code of the expansion to check. Also the key of the value stored in localStorage
  * @param base If the given expansion is actually the base game, and thus is always enabled regardless of localStorage
  */
-export const expansionEnabled = (
-  expansionCode: string,
-  base: boolean
-): boolean => {
+export const expansionEnabled = (expansionCode: string, base: boolean): boolean => {
   // Base game is always enabled, so no need to save or load localStorage
   if (base) return true;
 
