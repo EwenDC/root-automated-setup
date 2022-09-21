@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ComponentInfo, WithCode } from "../../types";
+import { ComponentInfo, GameComponent, WithCode } from "../../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { StepContext } from "../step";
 import { AppThunk, RootState } from "../store";
@@ -10,15 +10,17 @@ import defaultImage from "../../images/componentDefault.png";
 import { selectSetupParameters, setErrorMessage } from "../../features";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-interface ComponentListProps<T extends WithCode<ComponentInfo>> {
+interface ComponentListProps<T> {
   selector: (state: RootState) => T[];
-  toggleComponent: (code: string) => PayloadAction<{ code: string }> | AppThunk;
+  toggleComponent: (code: string) => PayloadAction<any> | AppThunk;
   getLabelKey: (component: T) => string;
   getLockedKey?: (component: T) => string | null;
   unsorted?: boolean;
 }
 
-export const ComponentToggle = <T extends WithCode<ComponentInfo>>({
+export const ComponentToggle = <
+  T extends WithCode<Omit<ComponentInfo, "expansionCode"> & GameComponent>
+>({
   selector,
   toggleComponent,
   getLabelKey,
@@ -91,11 +93,7 @@ export const ComponentToggle = <T extends WithCode<ComponentInfo>>({
             >
               <img
                 className={styles.image}
-                src={
-                  component.image
-                    ? process.env.PUBLIC_URL + "/images/" + component.image
-                    : defaultImage
-                }
+                src={component.image || defaultImage}
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />

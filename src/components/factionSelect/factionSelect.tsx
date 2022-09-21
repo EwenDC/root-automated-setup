@@ -109,9 +109,7 @@ export const FactionSelect: React.FC = () => {
             >
               <img
                 className={styles.image}
-                src={
-                  factionImage ? process.env.PUBLIC_URL + "/images/" + factionImage : defaultImage
-                }
+                src={factionImage || defaultImage}
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />

@@ -39,7 +39,7 @@ export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => 
       >
         <img
           className={styles.image}
-          src={componentImage ? process.env.PUBLIC_URL + "/images/" + componentImage : defaultImage}
+          src={componentImage || defaultImage}
           alt="" // Image is just decoration, so hide from screen readers
           aria-hidden="true"
         />{" "}

@@ -35,6 +35,7 @@ const setupInitialState = () => {
     initialState.expansions[expansionCode] = {
       base: expansion.base,
       enabled,
+      image: expansion.image,
     };
     // Add expansion components to state if the expansion is enabled
     if (enabled) addExpansionComponents(initialState, expansionCode, expansion);

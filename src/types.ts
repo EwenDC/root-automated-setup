@@ -74,6 +74,7 @@ export interface ToggleComponentPayload {
 export interface ExpansionInfo {
   enabled: boolean;
   base: boolean;
+  image?: string;
 }
 
 /** Generic information about a game component, namely whether it is enabled and what expansion it is from */
