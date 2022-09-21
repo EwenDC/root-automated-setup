@@ -19,7 +19,6 @@ import gardenBuildings from "./images/buildings/gardens.png";
 import marquiseBuildings from "./images/buildings/marquise.png";
 import roostBuilding from "./images/buildings/roost.png";
 import strongholdBuilding from "./images/buildings/stronghold.png";
-import tradePostBuildings from "./images/buildings/tradePosts.png";
 import waystationBuildings from "./images/buildings/waystations.png";
 
 // Card Images
@@ -74,11 +73,12 @@ import vaultkeepersMeeple from "./images/meeples/vaultkeepers.png";
 import warlordMeeple from "./images/meeples/warlord.png";
 
 // Token Images
-import marquiseToken from "./images/tokens/marquise.png";
+import marquiseTokens from "./images/tokens/marquise.png";
 import mobToken from "./images/tokens/mob.png";
 import plotToken from "./images/tokens/plot.png";
 import relicTokens from "./images/tokens/relics.png";
 import sympathyToken from "./images/tokens/sympathy.png";
+import tradePostTokens from "./images/tokens/tradePosts.png";
 import tunnelToken from "./images/tokens/tunnel.png";
 
 const content: Record<string, Expansion> = {
@@ -100,7 +100,7 @@ const content: Record<string, Expansion> = {
         buildings: 18,
         buildingImage: marquiseBuildings,
         tokens: 9,
-        tokenImage: marquiseToken,
+        tokenImage: marquiseTokens,
         complexity: 0,
         wealth: 1,
         aggression: 1,
@@ -198,7 +198,7 @@ const content: Record<string, Expansion> = {
         warriors: 15,
         buildings: 0,
         tokens: 9,
-        tokenImage: tradePostBuildings,
+        tokenImage: tradePostTokens,
         complexity: 2,
         wealth: 2,
         aggression: 0,

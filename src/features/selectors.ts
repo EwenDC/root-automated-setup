@@ -1,44 +1,72 @@
 import { RootState } from "../components/store";
 import { createSelector } from "@reduxjs/toolkit";
-import { ComponentInfo } from "../types";
+import { ComponentInfo, ComponentsState } from "../types";
+import { typedEntries, typedKeys } from "./utils";
+import content from "../content";
 
 /**
- * Redux Selector for returning a component list as an array, moving the component key to the component field "code"
- * @param select Select function for selecting the component list from the root state
+ * Function for create Redux Selectors for returning a single component or a
+ * component list as an array, moving the component key to the component field "code"
+ * @param componentType The key the list of components is stored under in the "components" redux slice
+ * @param getComponentData Function for retreiving the extra data about the component from the content file
  */
-const selectComponentArray = <T>(select: (state: RootState) => Record<string, T>) =>
-  createSelector(select, (stateSlice) => {
-    const array = [];
-    for (const [code, object] of Object.entries(stateSlice)) {
-      array.push({ ...object, code });
+const generateComponentSelectors = <D>(
+  componentType: keyof Omit<ComponentsState, "expansions">,
+  getComponentData: (expansion: string, componentCode: string) => D
+) => ({
+  select(state: RootState, code: string) {
+    const componentInfo = state.components[componentType][code];
+    return { ...getComponentData(componentInfo.expansionCode, code), ...componentInfo };
+  },
+  selectArray: createSelector(
+    (state: RootState) => state.components[componentType],
+    (componentList) => {
+      const array = [];
+      for (const [code, componentInfo] of typedEntries(componentList)) {
+        array.push({
+          ...getComponentData(componentInfo.expansionCode, code),
+          ...componentInfo,
+          code,
+        });
+      }
+      return array;
     }
-    return array;
-  });
+  ),
+});
 
 /** Filters out disabled components from a given component array */
 export const selectEnabled = <T extends ComponentInfo>(array: T[]) =>
   array.filter((value) => value.enabled);
 
-/** Redux Selector for returning a specified Deck from state */
-export const selectDeck = (state: RootState, code: string) => state.deck[code];
-
-/** Redux Selector for returning the deck list as an array, moving the object key to the object field "code" */
-export const selectDeckArray = selectComponentArray((state) => state.deck);
+export const { select: selectDeck, selectArray: selectDeckArray } = generateComponentSelectors(
+  "decks",
+  (expansionCode, componentCode) => content[expansionCode].decks![componentCode]
+);
 
 /** Redux Selector for returning a specified Expansion from state */
-export const selectExpansion = (state: RootState, code: string) => state.expansion[code];
+export const selectExpansion = (state: RootState, code: string) =>
+  state.components.expansions[code];
 
 /** Redux Selector for returning the expansion list as an array, moving the object key to the object field "code" */
-export const selectExpansionArray = selectComponentArray((state) => state.expansion);
+export const selectExpansionArray = createSelector(
+  (state: RootState) => state.components.expansions,
+  (expansions) => {
+    const array = [];
+    for (const [code, expansionInfo] of typedEntries(expansions)) {
+      array.push({ ...expansionInfo, code });
+    }
+    return array;
+  }
+);
 
-/** Redux Selector for returning a specified Faction from state */
-export const selectFaction = (state: RootState, code: string) => state.faction[code];
-
-/** Redux Selector for returning the faction list as an array, moving the object key to the object field "code" */
-export const selectFactionArray = selectComponentArray((state) => state.faction);
+export const { select: selectFaction, selectArray: selectFactionArray } =
+  generateComponentSelectors(
+    "factions",
+    (expansionCode, componentCode) => content[expansionCode].factions![componentCode]
+  );
 
 /** Redux Selector for returning an array of included faction codes */
-export const selectFactionCodeArray = (state: RootState) => Object.keys(state.faction);
+export const selectFactionCodeArray = (state: RootState) => typedKeys(state.components.factions);
 
 /** Redux Selector for returning an array of enabled militant factions */
 export const selectEnabledMilitantFactions = (state: RootState) =>
@@ -49,26 +77,23 @@ export const selectEnabledInsurgentFactions = (state: RootState) =>
   selectFactionArray(state).filter((value) => value.enabled && !value.militant);
 
 /** Returns the faction pool, joining the original faction and vagabond objects into the entries */
-export const selectFactionPool = createSelector(
-  (state: RootState) => state.flow.factionPool,
-  (state: RootState) => state.faction,
-  (state: RootState) => state.vagabond,
-  (factionPool, factions, vagabonds) =>
-    factionPool.map((entry) => ({
-      ...factions[entry.code],
-      code: entry.code,
-      vagabond: entry.vagabond ? { ...vagabonds[entry.vagabond], code: entry.vagabond } : undefined,
-    }))
-);
+export const selectFactionPool = (state: RootState) =>
+  state.flow.factionPool.map((entry) => ({
+    ...selectFaction(state, entry.code),
+    code: entry.code,
+    vagabond: entry.vagabond
+      ? { ...selectVagabond(state, entry.vagabond), code: entry.vagabond }
+      : undefined,
+  }));
 
 /** Returns the flow information (including current step) from redux state */
 export const selectFlowState = (state: RootState) => state.flow;
 
-/** Redux Selector for returning a specified Hireling from state */
-export const selectHireling = (state: RootState, code: string) => state.hireling[code];
-
-/** Redux Selector for returning the hireling list as an array, moving the object key to the object field "code" */
-export const selectHirelingArray = selectComponentArray((state) => state.hireling);
+export const { select: selectHireling, selectArray: selectHirelingArray } =
+  generateComponentSelectors(
+    "hirelings",
+    (expansionCode, componentCode) => content[expansionCode].hirelings![componentCode]
+  );
 
 /** Redux Selector for returning an array of all hirelings that replace an included faction */
 export const selectFactionHirelingArray = (state: RootState) =>
@@ -86,31 +111,32 @@ export const selectEnabledIndependentHirelings = (state: RootState) =>
       hireling.factions.every((factionCode) => !selectFactionCodeArray(state).includes(factionCode))
   );
 
-/** Redux Selector for returning a specified Landmark from state */
-export const selectLandmark = (state: RootState, code: string) => state.landmark[code];
+export const { select: selectLandmark, selectArray: selectLandmarkArray } =
+  generateComponentSelectors(
+    "landmarks",
+    (expansionCode, componentCode) => content[expansionCode].landmarks![componentCode]
+  );
 
-/** Redux Selector for returning the landmark list as an array, moving the object key to the object field "code" */
-export const selectLandmarkArray = selectComponentArray((state) => state.landmark);
-
-/** Redux Selector for returning a specified Map from state */
-export const selectMap = (state: RootState, code: string) => state.map[code];
-
-/** Redux Selector for returning the map list as an array, moving the object key to the object field "code" */
-export const selectMapArray = selectComponentArray((state) => state.map);
+export const { select: selectMap, selectArray: selectMapArray } = generateComponentSelectors(
+  "maps",
+  (expansionCode, componentCode) => content[expansionCode].maps![componentCode]
+);
 
 /** Returns the object for the map selected in setup */
 export const selectSetupMap = (state: RootState) =>
-  state.setup.map != null ? { ...state.map[state.setup.map], code: state.setup.map } : null;
+  state.setup.map != null ? { ...selectMap(state, state.setup.map), code: state.setup.map } : null;
 
 /** Returns the object for the deck selected in setup */
 export const selectSetupDeck = (state: RootState) =>
-  state.setup.deck != null ? { ...state.deck[state.setup.deck], code: state.setup.deck } : null;
+  state.setup.deck != null
+    ? { ...selectDeck(state, state.setup.deck), code: state.setup.deck }
+    : null;
 
 /** Returns the object for the first landmark selected in setup */
 export const selectSetupLandmark1 = (state: RootState) =>
   state.setup.landmark1 != null
     ? {
-        ...state.landmark[state.setup.landmark1],
+        ...selectLandmark(state, state.setup.landmark1),
         code: state.setup.landmark1,
       }
     : null;
@@ -119,7 +145,7 @@ export const selectSetupLandmark1 = (state: RootState) =>
 export const selectSetupLandmark2 = (state: RootState) =>
   state.setup.landmark2 != null
     ? {
-        ...state.landmark[state.setup.landmark2],
+        ...selectLandmark(state, state.setup.landmark2),
         code: state.setup.landmark2,
       }
     : null;
@@ -128,7 +154,7 @@ export const selectSetupLandmark2 = (state: RootState) =>
 export const selectSetupHireling1 = (state: RootState) =>
   state.setup.hireling1 != null
     ? {
-        ...state.hireling[state.setup.hireling1.code],
+        ...selectHireling(state, state.setup.hireling1.code),
         ...state.setup.hireling1,
       }
     : null;
@@ -137,7 +163,7 @@ export const selectSetupHireling1 = (state: RootState) =>
 export const selectSetupHireling2 = (state: RootState) =>
   state.setup.hireling2 != null
     ? {
-        ...state.hireling[state.setup.hireling2.code],
+        ...selectHireling(state, state.setup.hireling2.code),
         ...state.setup.hireling2,
       }
     : null;
@@ -146,7 +172,7 @@ export const selectSetupHireling2 = (state: RootState) =>
 export const selectSetupHireling3 = (state: RootState) =>
   state.setup.hireling3 != null
     ? {
-        ...state.hireling[state.setup.hireling3.code],
+        ...selectHireling(state, state.setup.hireling3.code),
         ...state.setup.hireling3,
       }
     : null;
@@ -154,8 +180,8 @@ export const selectSetupHireling3 = (state: RootState) =>
 /** Returns the setup parameters from redux state */
 export const selectSetupParameters = (state: RootState) => state.setup;
 
-/** Redux Selector for returning a specified Vagabond from state */
-export const selectVagabond = (state: RootState, code: string) => state.vagabond[code];
-
-/** Redux Selector for returning the vagabond list as an array, moving the object key to the object field "code" */
-export const selectVagabondArray = selectComponentArray((state) => state.vagabond);
+export const { select: selectVagabond, selectArray: selectVagabondArray } =
+  generateComponentSelectors(
+    "vagabonds",
+    (expansionCode, componentCode) => content[expansionCode].vagabonds![componentCode]
+  );

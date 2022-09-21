@@ -93,11 +93,11 @@ export const setupSlice = createSlice({
       }
     },
     setLandmark2: (state, { payload: { code: landmarkCode } }: PayloadAction<CodeObject>) => {
-      if (state.landmarkCount >= 1) {
+      if (state.landmarkCount >= 2) {
         state.landmark2 = landmarkCode;
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
-          "Invalid setLandmark2 action: Cannot set landmark 1 when landmark count less than 1"
+          "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2"
         );
       }
     },
