@@ -1,3 +1,4 @@
+/** An object with an associated code */
 export interface CodeObject {
   code: string;
 }
@@ -63,6 +64,12 @@ export interface Vagabond extends GameComponent {
   startingItems: Item[];
 }
 
+/** Payload for Toggle Component redux action */
+export interface ToggleComponentPayload {
+  componentCode: string;
+  shouldEnable?: boolean;
+}
+
 /** Generic information about an expansion, namely whether it is enabled and if it is a base copy */
 export interface ExpansionInfo {
   enabled: boolean;
@@ -92,6 +99,7 @@ export interface HirelingEntry {
   demoted: boolean;
 }
 
+/** Payload for Set Hireling redux action */
 export interface SetHirelingPayload {
   number: number;
   hirelingEntry: HirelingEntry;
@@ -148,6 +156,7 @@ export enum SetupStep {
   setupEnd,
 }
 
+/** Payload for Skip Steps redux action */
 export interface SkipStepsPayload {
   steps: SetupStep[];
   skip: boolean;

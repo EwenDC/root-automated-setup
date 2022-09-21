@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import content from "../content";
 import { expansionEnabled, persistExpansionEnabled, typedEntries, typedKeys } from "./utils";
-import { ComponentsState, Expansion } from "../types";
+import { ComponentsState, Expansion, ToggleComponentPayload } from "../types";
 
 const addExpansionComponents = (
   state: ComponentsState,
@@ -42,11 +42,18 @@ const setupInitialState = () => {
   return initialState;
 };
 
-const toggleComponent =
-  (componentType: keyof ComponentsState) =>
-  (state: ComponentsState, { payload: componentCode }: PayloadAction<string>) => {
-    state[componentType][componentCode].enabled = !state[componentType][componentCode].enabled;
-  };
+const toggleComponent = (componentType: keyof ComponentsState) => ({
+  prepare: (componentCode: string, shouldEnable?: boolean) => ({
+    payload: { componentCode, shouldEnable },
+  }),
+  reducer: (
+    state: ComponentsState,
+    { payload: { componentCode, shouldEnable } }: PayloadAction<ToggleComponentPayload>
+  ) => {
+    state[componentType][componentCode].enabled =
+      shouldEnable ?? !state[componentType][componentCode].enabled;
+  },
+});
 
 export const componentsSlice = createSlice({
   name: "components",
