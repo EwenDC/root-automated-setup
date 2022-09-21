@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import { useContext } from "react";
 import { Trans } from "react-i18next";
-import { selectSetupParameters } from "../../features";
+import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
-import { StepContext } from "../step";
-import styles from "./checkbox.module.css";
+import { StepContext } from "./step";
+import styles from "./css/checkbox.module.css";
 
 interface CheckboxProps {
   id: string;
@@ -37,3 +37,5 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, defaultValue, onChange }
     </div>
   ) : null;
 };
+
+export default Checkbox;

@@ -4,12 +4,12 @@ import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { Provider } from "react-redux";
 
-import Header from "../header";
-import StepList from "../stepList";
+import Header from "./header";
+import StepList from "./stepList";
 import { store } from "../store";
-import Toast from "../toast";
-import Toolbar from "../toolbar";
-import { registerServiceWorker } from "./serviceWorkerRegistration";
+import Toast from "./toast";
+import Toolbar from "./toolbar";
+import { registerServiceWorker } from "../serviceWorkerRegistration";
 
 // Don't try to re-initalize if this chunk got hot-reloaded in a dev environment
 (process.env.NODE_ENV !== "development" || !i18n.isInitialized) &&
@@ -51,3 +51,5 @@ registerServiceWorker({
     }
   },
 });
+
+export default App;

@@ -2,12 +2,20 @@ import classNames from "classnames";
 import { TOptions } from "i18next";
 import { useEffect, useRef } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { selectFlowState } from "../../features";
-import { SetupStep } from "../../types";
+import { selectFlowState } from "../features/selectors";
+import { SetupStep } from "../types";
 import { useAppSelector } from "../hooks";
-import { iconComponents } from "../icon";
-import styles from "./step.module.css";
-import { StepProvider } from "./stepContext";
+import iconComponents from "../iconComponents";
+import styles from "./css/step.module.css";
+import { createContext } from "react";
+
+interface StepContextValue {
+  stepActive: boolean;
+}
+
+const defaultValue: StepContextValue = {
+  stepActive: false,
+};
 
 interface StepProps {
   step: SetupStep;
@@ -20,6 +28,9 @@ interface StepProps {
   components?: readonly React.ReactNode[] | { readonly [tagName: string]: React.ReactNode };
   children?: React.ReactNode;
 }
+
+export const StepContext = createContext(defaultValue);
+export const StepProvider = StepContext.Provider;
 
 export const Step: React.FC<StepProps> = ({
   step,
@@ -102,3 +113,5 @@ export const Step: React.FC<StepProps> = ({
 Step.defaultProps = {
   textBelowChildren: false,
 };
+
+export default Step;

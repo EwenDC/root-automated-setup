@@ -1,13 +1,14 @@
 import classNames from "classnames";
 import { useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ComponentInfo, GameComponent, WithCode } from "../../types";
+import { ComponentInfo, GameComponent, WithCode } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { StepContext } from "../step";
+import { StepContext } from "./step";
 import { AppThunk, RootState } from "../store";
-import styles from "./componentToggle.module.css";
-import defaultImage from "../../images/componentDefault.png";
-import { selectSetupParameters, setErrorMessage } from "../../features";
+import styles from "./css/componentToggle.module.css";
+import defaultImage from "../images/componentDefault.png";
+import { selectSetupParameters } from "../features/selectors";
+import { setErrorMessage } from "../features/setupSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 interface ComponentListProps<T> {
@@ -108,3 +109,5 @@ export const ComponentToggle = <
     </div>
   );
 };
+
+export default ComponentToggle;

@@ -1,9 +1,9 @@
-import styles from "./statBar.module.css";
+import styles from "./css/statBar.module.css";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../hooks";
-import { selectFactionPool, selectFlowState } from "../../features";
+import { selectFactionPool, selectFlowState } from "../features/selectors";
 import classNames from "classnames";
-import { StepContext } from "../step";
+import { StepContext } from "./step";
 import { useContext } from "react";
 
 interface StatBarProps {
@@ -36,3 +36,5 @@ export const StatBar: React.FC<StatBarProps> = ({ stat }) => {
     </div>
   );
 };
+
+export default StatBar;

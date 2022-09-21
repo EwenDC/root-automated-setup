@@ -1,13 +1,15 @@
 import { useTranslation } from "react-i18next";
-import { nextStep, redoStep, selectFlowState, undoStep } from "../../features";
-import { SetupStep } from "../../types";
+import { nextStep } from "../features/thunks";
+import { redoStep, undoStep } from "../features/flowSlice";
+import { selectFlowState } from "../features/selectors";
+import { SetupStep } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import styles from "./toolbar.module.css";
-import { ReactComponent as UndoIcon } from "../../images/icons/undo.svg";
-import { ReactComponent as RedoIcon } from "../../images/icons/redo.svg";
-import { ReactComponent as NextIcon } from "../../images/icons/next.svg";
+import styles from "./css/toolbar.module.css";
+import { ReactComponent as UndoIcon } from "../images/icons/undo.svg";
+import { ReactComponent as RedoIcon } from "../images/icons/redo.svg";
+import { ReactComponent as NextIcon } from "../images/icons/next.svg";
 import { useRef, useState } from "react";
-import Button from "../button";
+import Button from "./button";
 
 export const Toolbar: React.FC = () => {
   const { t } = useTranslation();
@@ -101,3 +103,5 @@ export const Toolbar: React.FC = () => {
     </footer>
   );
 };
+
+export default Toolbar;

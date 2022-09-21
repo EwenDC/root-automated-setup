@@ -1,11 +1,11 @@
-import styles from "./componentCount.module.css";
+import styles from "./css/componentCount.module.css";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../hooks";
-import { selectFactionPool, selectFlowState } from "../../features";
+import { selectFactionPool, selectFlowState } from "../features/selectors";
 import classNames from "classnames";
-import { StepContext } from "../step";
+import { StepContext } from "./step";
 import { useContext } from "react";
-import defaultImage from "../../images/componentDefault.png";
+import defaultImage from "../images/componentDefault.png";
 
 const imageSource: {
   [component: string]: "image" | "buildingImage" | "tokenImage";
@@ -52,3 +52,5 @@ export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => 
   }
   return null;
 };
+
+export default ComponentCount;

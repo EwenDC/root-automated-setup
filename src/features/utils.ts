@@ -1,5 +1,6 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import { ComponentInfo } from "../types";
+import { createSelector } from "@reduxjs/toolkit";
+import { RootState } from "../store";
+import { ComponentInfo, ComponentsState } from "../types";
 
 const isTrue = "1";
 const isFalse = "0";
@@ -53,37 +54,6 @@ export const expansionEnabled = (expansionCode: string, base: boolean): boolean 
 };
 
 /**
- * Generic version of Toggle reducer for enabling or disabling a component in state
- * @param code The component code to be enabled or disabled
- * @param enabled An override value for component enable. Will default to toggling the component if not provided
- */
-export const toggleComponent = {
-  prepare: (code: string, enabled?: boolean) => ({
-    payload: {
-      code,
-      enabled,
-    },
-  }),
-  reducer: <T extends ComponentInfo>(
-    state: Record<string, T>,
-    action: PayloadAction<{ code: string; enabled?: boolean }>
-  ) => {
-    // Retreive the component
-    const component = state[action.payload.code];
-    // Only update the component state if it exists
-    if (component != null) {
-      // Toggle enabled value
-      component.enabled = action.payload.enabled ?? !component.enabled;
-    } else if (process.env.NODE_ENV !== "production") {
-      console.warn(
-        "Invalid payload for toggleComponent action: Payload code not found in component state",
-        action
-      );
-    }
-  },
-};
-
-/**
  * Removes a random element from a given list, and then returns it
  * @param list The list of elements to be randomly selected
  */
@@ -96,3 +66,37 @@ export const takeRandom = <T>(list: T[]): T => {
   list.splice(i, 1);
   return returnVal;
 };
+
+/**
+ * Function for create Redux Selectors for returning a single component or a
+ * component list as an array, moving the component key to the component field "code"
+ * @param componentType The key the list of components is stored under in the "components" redux slice
+ * @param getComponentData Function for retreiving the extra data about the component from the content file
+ */
+export const generateComponentSelectors = <D>(
+  componentType: keyof Omit<ComponentsState, "expansions">,
+  getComponentData: (expansion: string, componentCode: string) => D
+) => ({
+  select(state: RootState, code: string) {
+    const componentInfo = state.components[componentType][code];
+    return { ...getComponentData(componentInfo.expansionCode, code), ...componentInfo };
+  },
+  selectArray: createSelector(
+    (state: RootState) => state.components[componentType],
+    (componentList) => {
+      const array = [];
+      for (const [code, componentInfo] of typedEntries(componentList)) {
+        array.push({
+          ...getComponentData(componentInfo.expansionCode, code),
+          ...componentInfo,
+          code,
+        });
+      }
+      return array;
+    }
+  ),
+});
+
+/** Filters out disabled components from a given component array */
+export const selectEnabled = <T extends ComponentInfo>(array: T[]) =>
+  array.filter((value) => value.enabled);

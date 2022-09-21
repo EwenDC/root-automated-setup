@@ -1,4 +1,4 @@
-import { Icon } from "./icon";
+import { Icon } from "./components/icon";
 
 export const iconComponents = {
   Bag: <Icon icon="bag" />,
@@ -13,3 +13,5 @@ export const iconComponents = {
   Tea: <Icon icon="tea" />,
   Torch: <Icon icon="torch" />,
 };
+
+export default iconComponents;

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import styles from "./button.module.css";
+import styles from "./css/button.module.css";
 
 interface ButtonProps
   extends React.DetailedHTMLProps<
@@ -45,3 +45,5 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.defaultProps = {
   iconLeft: false,
 };
+
+export default Button;

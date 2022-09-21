@@ -1,5 +1,5 @@
-import styles from "./header.module.css";
-import rootLogo from "../../images/logo.png";
+import styles from "./css/header.module.css";
+import rootLogo from "../images/logo.png";
 import { useTranslation } from "react-i18next";
 
 export const Header: React.FC = () => {
@@ -11,3 +11,5 @@ export const Header: React.FC = () => {
     </header>
   );
 };
+
+export default Header;

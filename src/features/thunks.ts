@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../components/store";
+import { AppThunk, RootState } from "../store";
 import { ComponentInfo, SetupStep, WithCode } from "../types";
 import { toggleFaction, toggleHireling, toggleLandmark } from "./componentsSlice";
 import {
@@ -11,7 +11,6 @@ import {
 } from "./flowSlice";
 import {
   selectDeckArray,
-  selectEnabled,
   selectEnabledIndependentHirelings,
   selectEnabledInsurgentFactions,
   selectEnabledMilitantFactions,
@@ -36,7 +35,7 @@ import {
   setMap,
   setPlayerCount,
 } from "./setupSlice";
-import { takeRandom } from "./utils";
+import { selectEnabled, takeRandom } from "./utils";
 
 /**
  * Thunk action for mass updating the enable/disable state of multiple components, dispatching the minimum amount of actions to do so

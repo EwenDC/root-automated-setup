@@ -1,5 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import { componentsReducer, flowReducer, setupReducer } from "../features/";
+import componentsReducer from "./features/componentsSlice";
+import flowReducer from "./features/flowSlice";
+import setupReducer from "./features/setupSlice";
 
 export const store = configureStore({
   reducer: {

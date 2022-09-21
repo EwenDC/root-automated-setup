@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
-import styles from "./toast.module.css";
-import { ReactComponent as CloseIcon } from "../../images/icons/close.svg";
+import styles from "./css/toast.module.css";
+import { ReactComponent as CloseIcon } from "../images/icons/close.svg";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { selectSetupParameters, setErrorMessage } from "../../features";
+import { selectSetupParameters } from "../features/selectors";
+import { setErrorMessage } from "../features/setupSlice";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 
@@ -40,3 +41,5 @@ export const Toast: React.FC = () => {
     </div>
   );
 };
+
+export default Toast;

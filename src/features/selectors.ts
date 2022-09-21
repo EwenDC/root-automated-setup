@@ -1,42 +1,7 @@
-import { RootState } from "../components/store";
+import { RootState } from "../store";
 import { createSelector } from "@reduxjs/toolkit";
-import { ComponentInfo, ComponentsState } from "../types";
-import { typedEntries, typedKeys } from "./utils";
+import { generateComponentSelectors, typedEntries, typedKeys } from "./utils";
 import content from "../content";
-
-/**
- * Function for create Redux Selectors for returning a single component or a
- * component list as an array, moving the component key to the component field "code"
- * @param componentType The key the list of components is stored under in the "components" redux slice
- * @param getComponentData Function for retreiving the extra data about the component from the content file
- */
-const generateComponentSelectors = <D>(
-  componentType: keyof Omit<ComponentsState, "expansions">,
-  getComponentData: (expansion: string, componentCode: string) => D
-) => ({
-  select(state: RootState, code: string) {
-    const componentInfo = state.components[componentType][code];
-    return { ...getComponentData(componentInfo.expansionCode, code), ...componentInfo };
-  },
-  selectArray: createSelector(
-    (state: RootState) => state.components[componentType],
-    (componentList) => {
-      const array = [];
-      for (const [code, componentInfo] of typedEntries(componentList)) {
-        array.push({
-          ...getComponentData(componentInfo.expansionCode, code),
-          ...componentInfo,
-          code,
-        });
-      }
-      return array;
-    }
-  ),
-});
-
-/** Filters out disabled components from a given component array */
-export const selectEnabled = <T extends ComponentInfo>(array: T[]) =>
-  array.filter((value) => value.enabled);
 
 export const { select: selectDeck, selectArray: selectDeckArray } = generateComponentSelectors(
   "decks",

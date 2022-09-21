@@ -1,21 +1,17 @@
 import classNames from "classnames";
 import { Trans, useTranslation } from "react-i18next";
-import {
-  selectFactionPool,
-  selectFlowState,
-  selectSetupParameters,
-  setCurrentFactionIndex,
-  setErrorMessage,
-} from "../../features";
+import { selectFactionPool, selectFlowState, selectSetupParameters } from "../features/selectors";
+import { setCurrentFactionIndex } from "../features/flowSlice";
+import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import styles from "./factionSelect.module.css";
-import defaultImage from "../../images/componentDefault.png";
+import styles from "./css/factionSelect.module.css";
+import defaultImage from "../images/componentDefault.png";
 import { useContext } from "react";
-import { StepContext } from "../step";
-import { ReactComponent as MilitantIcon } from "../../images/icons/militant.svg";
+import { StepContext } from "./step";
+import { ReactComponent as MilitantIcon } from "../images/icons/militant.svg";
 import { StatBar } from "./statBar";
-import { iconComponents } from "../icon";
-import IconList from "../iconList";
+import iconComponents from "../iconComponents";
+import IconList from "./iconList";
 import { ComponentCount } from "./componentCount";
 
 export const FactionSelect: React.FC = () => {
@@ -169,3 +165,5 @@ export const FactionSelect: React.FC = () => {
     </>
   );
 };
+
+export default FactionSelect;

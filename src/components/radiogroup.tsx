@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import { useContext } from "react";
 import { Trans } from "react-i18next";
-import { selectSetupParameters } from "../../features";
+import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
-import { StepContext } from "../step";
-import styles from "./radiogroup.module.css";
+import { StepContext } from "./step";
+import styles from "./css/radiogroup.module.css";
 
 interface RadiogroupProps {
   id: string;
@@ -63,3 +63,5 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue, onChan
 Radiogroup.defaultProps = {
   defaultValue: false,
 };
+
+export default Radiogroup;

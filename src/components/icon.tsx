@@ -1,22 +1,22 @@
 import classNames from "classnames";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { StepContext } from "../step";
-import styles from "./icon.module.css";
+import { StepContext } from "./step";
+import styles from "./css/icon.module.css";
 
-import foxIcon from "../../images/suits/fox.png";
-import mouseIcon from "../../images/suits/mouse.png";
-import rabbitIcon from "../../images/suits/rabbit.png";
+import foxIcon from "../images/suits/fox.png";
+import mouseIcon from "../images/suits/mouse.png";
+import rabbitIcon from "../images/suits/rabbit.png";
 
-import bagImage from "../../images/items/bag.png";
-import bootImage from "../../images/items/boot.png";
-import coinImage from "../../images/items/coin.png";
-import crossbowImage from "../../images/items/crossbow.png";
-import hammerImage from "../../images/items/hammer.png";
-import swordImage from "../../images/items/sword.png";
-import teaImage from "../../images/items/tea.png";
-import torchImage from "../../images/items/torch.png";
-import { ClearingSuit, Item } from "../../types";
+import bagImage from "../images/items/bag.png";
+import bootImage from "../images/items/boot.png";
+import coinImage from "../images/items/coin.png";
+import crossbowImage from "../images/items/crossbow.png";
+import hammerImage from "../images/items/hammer.png";
+import swordImage from "../images/items/sword.png";
+import teaImage from "../images/items/tea.png";
+import torchImage from "../images/items/torch.png";
+import { ClearingSuit, Item } from "../types";
 
 const iconDict: Record<Item | ClearingSuit, { key: string; image: string }> = {
   fox: {
@@ -87,3 +87,5 @@ export const Icon: React.FC<ItemProps> = ({ icon, children }) => {
     </>
   );
 };
+
+export default Icon;

@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { Trans } from "react-i18next";
-import { selectSetupParameters } from "../../features";
+import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
-import { StepContext } from "../step";
-import styles from "./numberSelector.module.css";
+import { StepContext } from "./step";
+import styles from "./css/numberSelector.module.css";
 
 interface NumberSelectorProps {
   id: string;
@@ -81,3 +81,5 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
     </div>
   );
 };
+
+export default NumberSelector;

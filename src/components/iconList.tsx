@@ -1,5 +1,5 @@
-import { ClearingSuit, Item } from "../../types";
-import Icon from "../icon";
+import { ClearingSuit, Item } from "../types";
+import Icon from "./icon";
 
 interface ItemListProps {
   list: (Item | ClearingSuit)[];
@@ -19,3 +19,5 @@ export const IconList: React.FC<ItemListProps> = ({ list, children }) => (
 IconList.defaultProps = {
   children: ", ",
 };
+
+export default IconList;

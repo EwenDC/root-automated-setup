@@ -2,43 +2,46 @@ import { useTranslation } from "react-i18next";
 import {
   enableMapLandmark,
   fixFirstPlayer,
+  setLandmarkCount,
+  setPlayerCount,
+} from "../features/setupSlice";
+import {
   selectDeckArray,
   selectExpansionArray,
+  selectFactionArray,
   selectFactionCodeArray,
   selectHirelingArray,
   selectLandmarkArray,
   selectMapArray,
   selectSetupParameters,
-  setLandmarkCount,
-  setPlayerCount,
-  skipSteps,
+  selectFlowState,
+  selectFactionPool,
+  selectSetupMap,
+  selectVagabondArray,
+} from "../features/selectors";
+import { skipSteps, resetFlow } from "../features/flowSlice";
+import {
   toggleDeck,
   toggleExpansion,
   toggleHireling,
   toggleLandmark,
   toggleMap,
-  selectFactionArray,
   toggleFaction,
-  selectVagabondArray,
   toggleVagabond,
-  selectFlowState,
-  selectFactionPool,
-  selectSetupMap,
-  resetFlow,
-} from "../../features";
-import { SetupStep } from "../../types";
-import Checkbox from "../checkbox";
-import ComponentToggle from "../componentToggle";
-import { FactionSelect } from "../factionSelect";
+} from "../features/componentsSlice";
+import { SetupStep } from "../types";
+import Checkbox from "./checkbox";
+import ComponentToggle from "./componentToggle";
+import { FactionSelect } from "./factionSelect";
 import { useAppDispatch, useAppSelector, useNthLastPlayer } from "../hooks";
-import NumberSelector from "../numberSelector";
-import Radiogroup from "../radiogroup";
-import Step from "../step";
-import styles from "./stepList.module.css";
-import { ReactComponent as RestartIcon } from "../../images/icons/restart.svg";
-import Button from "../button";
-import IconList from "../iconList";
-import Icon from "../icon";
+import NumberSelector from "./numberSelector";
+import Radiogroup from "./radiogroup";
+import Step from "./step";
+import styles from "./css/stepList.module.css";
+import { ReactComponent as RestartIcon } from "../images/icons/restart.svg";
+import Button from "./button";
+import IconList from "./iconList";
+import Icon from "./icon";
 
 export const StepList: React.FC = () => {
   const {
@@ -335,3 +338,5 @@ export const StepList: React.FC = () => {
     </main>
   );
 };
+
+export default StepList;
