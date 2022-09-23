@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { ComponentInfo, ComponentsState } from "../types";
+import { ComponentsState, Togglable } from "../types";
 
 const isTrue = "1";
 const isFalse = "0";
@@ -98,5 +98,5 @@ export const generateComponentSelectors = <D>(
 });
 
 /** Filters out disabled components from a given component array */
-export const selectEnabled = <T extends ComponentInfo>(array: T[]) =>
+export const selectEnabled = <T extends Togglable>(array: T[]) =>
   array.filter((value) => value.enabled);

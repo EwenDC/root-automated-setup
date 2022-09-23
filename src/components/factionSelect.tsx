@@ -5,7 +5,6 @@ import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import styles from "./css/factionSelect.module.css";
-import defaultImage from "../images/componentDefault.png";
 import { useContext } from "react";
 import { StepContext } from "./step";
 import { ReactComponent as MilitantIcon } from "../images/icons/militant.svg";
@@ -105,7 +104,7 @@ export const FactionSelect: React.FC = () => {
             >
               <img
                 className={styles.image}
-                src={factionImage || defaultImage}
+                src={factionImage}
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />

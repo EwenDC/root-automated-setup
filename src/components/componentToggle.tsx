@@ -1,12 +1,11 @@
 import classNames from "classnames";
 import { useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ComponentInfo, GameComponent, WithCode } from "../types";
+import { CodeObject, GameComponent, Togglable } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { StepContext } from "./step";
 import { AppThunk, RootState } from "../store";
 import styles from "./css/componentToggle.module.css";
-import defaultImage from "../images/componentDefault.png";
 import { selectSetupParameters } from "../features/selectors";
 import { setErrorMessage } from "../features/setupSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -19,9 +18,7 @@ interface ComponentListProps<T> {
   unsorted?: boolean;
 }
 
-export const ComponentToggle = <
-  T extends WithCode<Omit<ComponentInfo, "expansionCode"> & GameComponent>
->({
+export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   selector,
   toggleComponent,
   getLabelKey,
@@ -94,7 +91,7 @@ export const ComponentToggle = <
             >
               <img
                 className={styles.image}
-                src={component.image || defaultImage}
+                src={component.image}
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />

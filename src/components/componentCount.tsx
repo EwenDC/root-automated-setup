@@ -5,7 +5,6 @@ import { selectFactionPool, selectFlowState } from "../features/selectors";
 import classNames from "classnames";
 import { StepContext } from "./step";
 import { useContext } from "react";
-import defaultImage from "../images/componentDefault.png";
 
 const imageSource: {
   [component: string]: "image" | "buildingImage" | "tokenImage";
@@ -39,7 +38,7 @@ export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => 
       >
         <img
           className={styles.image}
-          src={componentImage || defaultImage}
+          src={componentImage}
           alt="" // Image is just decoration, so hide from screen readers
           aria-hidden="true"
         />{" "}

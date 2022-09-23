@@ -1,6 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
-import { ComponentInfo, SetupStep, WithCode } from "../types";
+import { SetupStep, Togglable, WithCode } from "../types";
 import { toggleFaction, toggleHireling, toggleLandmark } from "./componentsSlice";
 import {
   addToFactionPool,
@@ -44,7 +44,7 @@ import { selectEnabled, takeRandom } from "./utils";
  * @param toggleComponent Action creator for dispatching the toggle component action for the given components
  */
 export const massComponentToggle =
-  <T extends ComponentInfo>(
+  <T extends Togglable>(
     selectComponentArray: (state: RootState) => WithCode<T>[],
     componentEnable: boolean | ((component: WithCode<T>) => boolean),
     toggleComponent: (code: string, enabled?: boolean) => PayloadAction<any>

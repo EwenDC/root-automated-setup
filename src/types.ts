@@ -14,7 +14,7 @@ export type ClearingSuit = "fox" | "mouse" | "rabbit";
 
 /** A basic game component, with an associated image */
 export interface GameComponent {
-  image?: string;
+  image: string;
 }
 
 /** An object representing an Expansion or Base Box for the Root board game */
@@ -70,16 +70,18 @@ export interface ToggleComponentPayload {
   shouldEnable?: boolean;
 }
 
-/** Generic information about an expansion, namely whether it is enabled and if it is a base copy */
-export interface ExpansionInfo {
+/** An object with an associated enable/disable state */
+export interface Togglable {
   enabled: boolean;
+}
+
+/** Generic information about an expansion, namely whether it is enabled and if it is a base copy */
+export interface ExpansionInfo extends Togglable, GameComponent {
   base: boolean;
-  image?: string;
 }
 
 /** Generic information about a game component, namely whether it is enabled and what expansion it is from */
-export interface ComponentInfo {
-  enabled: boolean;
+export interface ComponentInfo extends Togglable {
   expansionCode: string;
 }
 
