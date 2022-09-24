@@ -25,7 +25,7 @@ interface StepProps {
   textKey?: string;
   textBelowChildren?: boolean;
   translationOptions?: TOptions;
-  components?: readonly React.ReactNode[] | { readonly [tagName: string]: React.ReactNode };
+  components?: readonly React.ReactElement[] | { readonly [tagName: string]: React.ReactElement };
   children?: React.ReactNode;
 }
 

@@ -29,7 +29,7 @@ import { registerServiceWorker } from "../serviceWorkerRegistration";
         loadPath: process.env.PUBLIC_URL + "/locales/{{ns}}-{{lng}}.json",
       },
       react: {
-        transKeepBasicHtmlNodesFor: ["br", "strong", "i", "p", "b"],
+        transKeepBasicHtmlNodesFor: ["br", "i", "p", "b"],
       },
     });
 

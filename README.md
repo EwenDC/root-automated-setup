@@ -93,24 +93,24 @@ To add a new language translation, simply copy and paste the `auset-en.json` fil
 
 ## Adding content
 
-This app was designed from the ground up to easily support the addition of new Root content without any code changes (with the obvious exception of new types of content, e.g. the hirelings in the marauder expansion). The game content is loaded from a file called [content.json](https://github.com/EwenDC/root-automated-setup/blob/main/src/content.json), which contains a list of all expansions, and what components are included in each expansion. I don't currently have a formal specification for this file format, but you should be able to add new content following the example of how existing content is defined.
+This app was designed from the ground up to easily support the addition of new Root content without any code changes (with the obvious exception of new types of content, e.g. the hirelings in the marauder expansion). The game content is loaded from a file called [content.ts](https://github.com/EwenDC/root-automated-setup/blob/main/src/content.ts), which contains a list of all expansions, and what components are included in each expansion. Since it is a TypeScript file, the correct format is enforced by TypeScript. You can see what the expected format is in the [types.ts](https://github.com/EwenDC/root-automated-setup/blob/main/src/types.ts#L21) file. The associated images of new content should be imported into the file as per the example set by existing content. This allows the images to be processed by the compiler.
 
-I am willing to accept contributions for fan-made print-and-play content, provided that there is enough demand from users to do so. Remember, this app is designed specifically for the physical game, so included fan-made content would have to also have a decent amount of people, who did not help create it, who have printed it off and use it in their physical games. Content that only exists on Tabletop Simulator would not be eligible to be added. If fan-made content is added in the future, it will most likely be hidden by default behind a checkbox on the expansion selection screen.
+I am willing to accept contributions for fan-made print-and-play content, provided that there is enough demand from users to do so. Remember, this app is designed specifically for the physical game, so included fan-made content would also have to have a decent amount of people (not involved in it's creation) who have printed it off and use it in their physical games. Content that only exists on Tabletop Simulator would not be eligible to be added. If fan-made content is added in the future, it will most likely be hidden by default behind a checkbox on the expansion selection screen.
 
 ### Content Text
 
 All content text is defined within the translation files, using dynamic key lookup based on the code you assigned to the component. For example, if you define the Lake map like so:
 
-```JSON
-"underworld": {
-  "base": false,
-  "image": "boxes/underworld.png",
-  "maps": {
-    "lake": {
-      "landmark": "ferry",
-      "image": "maps/lake.png"
-    }
-  }
+```JavaScript
+underworld: {
+  base: false,
+  image: underworldBox,
+  maps: {
+    lake: {
+      landmark: "ferry",
+      image: lakeMap,
+    },
+  },
 },
 ```
 
@@ -127,7 +127,14 @@ The app will attempt to load all relevant text for this map from the `map.lake` 
 },
 ```
 
-Most text you define (with the exception of title/subtitle text) can support basic HTML formatting. More information is avaliable in the [react-i18next documentation](https://react.i18next.com/latest/trans-component#usage-with-simple-html-elements-like-less-than-br-greater-than-and-others-v10.4.0). The following list of custom tags are also supported for the purpose of displaying inline suit and item icons:
+Most text you define (with the exception of title/subtitle text) can support the following basic HTML tags (More information in the [react-i18next documentation](https://react.i18next.com/latest/trans-component#usage-with-simple-html-elements-like-less-than-br-greater-than-and-others-v10.4.0)):
+
+- `<br/>`
+- `<i></i>`
+- `<p></p>`
+- `<b></b>`
+
+The following list of custom tags are also supported for the purpose of displaying inline suit and item icons:
 
 - `<Fox/>`
 - `<Mouse/>`
@@ -143,8 +150,6 @@ Most text you define (with the exception of title/subtitle text) can support bas
 
 ### Content Images
 
-All images for the content are loaded dynamically at run-time on the browser. All component images are located within the [/public/images](https://github.com/EwenDC/root-automated-setup/tree/main/public/images) folder of the repository. This path is preappened to the path you define in content.json, so don't include `public/images/` or `images/` in your path. While all content should have an attached image, all images are actually optional and can be excluded from the content definition, in which case a fallback image will be displayed. (Please only use this fallback for development, content will not be added to the production build without an associated image unless the circumstances are extenuating).
-
 All images used in the app are sourced from official sources, including the [Leder Games Website](https://ledergames.com/pages/resources) and [Board Game Geek](https://boardgamegeek.com/boardgame/237182/root) (specifically images uploaded by Leder Games employees and ex-employees), and also from semi-official sources including the [Tabletop Simulator Mod](https://boardgamegeek.com/boardgame/237182/root) (in the case where we need an image that is printed on a component). When adding images for components, please try to maintain the same image quality standards as the existing content images (fan made content images are excepted). Save your images in a square (1:1) aspect ratio, at a resolution no greater than 512x512, as PNG files with an 8-bit Bit Depth and the Octree Quantization algorithm, with a Dithering level of 0 and Transparency threshold of 128. This is to ensure the images have a minimal file size while maintiaing transparency support, with an acceptable quality level, while supporting devices that do not support the webp image format.
 
 ## Contributing Code
@@ -154,7 +159,6 @@ Over on the [issues page](https://github.com/EwenDC/root-automated-setup/issues)
 ### Code Standards
 
 1. Before submitting code for review, please ensure it has been formatted using [Prettier](https://prettier.io/). If you are using Visual Studio Code, and you have installed the workspace recommended Prettier editor extension, then this should happen automatically whenever you save a file.
-2. As of me writing this, there are currently no automated tests set up for this project, but I would like to add them in the future. When submitting a change, please ensure that you maintain or raise the current level of test coverage.
 
 ### Frameworks
 
@@ -167,10 +171,6 @@ In the project directory, you can run:
 ### `yarn start`
 
 Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode. See the Create React App documentation about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `yarn build`
 

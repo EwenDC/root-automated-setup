@@ -7,7 +7,7 @@ const App = React.lazy(
   () => import(/* webpackPreload: true, webpackChunkName: "auset" */ "./components/app") // Preload since we require it ASAP
 );
 
-const root = createRoot(document.getElementById("root")!);
+const root = createRoot(document.body);
 root.render(
   <React.StrictMode>
     <React.Suspense fallback={<div id="loading" />}>

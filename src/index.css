@@ -17,14 +17,13 @@ body {
   background-size: 80rem;
 }
 
-#root {
-  min-height: 100vh;
-}
-
 #loading {
   width: 10rem;
   height: 10rem;
-  margin: auto;
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  margin: -5.375rem -5.375rem 0 0;
   border: 0.75rem solid transparent;
   border-radius: 50%;
   border-right-color: black;
@@ -33,7 +32,10 @@ body {
 
 noscript {
   text-align: center;
-  margin-bottom: auto;
+  position: fixed;
+  top: 50%;
+  width: 100%;
+  margin-top: 10rem;
 }
 
 @keyframes rotate {

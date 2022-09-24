@@ -13,9 +13,8 @@ const minifyJSON = (filePath) => {
 
 // Minify locale files
 const localesPath = join(__dirname, "build", "locales");
-readdir(localesPath, (err, files) => {
-  if (err)
-    console.error(`Unable to scan directory at path "${localesPath}":`, err);
+readdir(localesPath, (error, files) => {
+  if (error) console.error(`Unable to scan directory at path "${localesPath}":`, error);
   else
     files.forEach((file) => {
       minifyJSON(join(localesPath, file));

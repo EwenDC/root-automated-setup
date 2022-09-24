@@ -57,7 +57,7 @@ registerRoute(
   new StaleWhileRevalidate({
     cacheName: "translations",
     // Limit how many translations can be cached, as we don't expect the user to be switching between lots of them
-    plugins: [new ExpirationPlugin({ maxEntries: 5 })],
+    plugins: [new ExpirationPlugin({ maxEntries: 4 })],
   })
 );
 
