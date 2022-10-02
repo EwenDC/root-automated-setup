@@ -1,13 +1,13 @@
-.container {
+.number-container {
   margin-top: 0.75rem;
   display: flex;
 }
 
-.label {
+.number-label {
   padding-right: 0.5rem;
 }
 
-.button {
+.number-button {
   font-size: 1.25rem;
   border: none;
   padding: 0;
@@ -18,21 +18,15 @@
   transition: background-color 80ms ease-out;
 }
 
-@media (prefers-reduced-motion) {
-  .button {
-    transition: none;
-  }
-}
-
-.button:hover {
+.number-button:hover {
   background-color: ivory;
 }
 
-.button:active {
+.number-button:active {
   background-color: cornsilk;
 }
 
-.input {
+.number {
   font-size: 1.25rem;
   text-align: center;
   width: 2rem;
@@ -42,14 +36,14 @@
   border-radius: 0.25rem;
 }
 
-.value {
+.number-value {
   font-size: 1.25rem;
   text-align: center;
   width: 2rem;
   padding: 0 1rem;
 }
 
-.button:focus-visible,
-.input:focus-visible {
+.number-button:focus-visible,
+.number:focus-visible {
   outline: 0.15rem dotted black;
 }

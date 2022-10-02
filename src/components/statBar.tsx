@@ -1,10 +1,7 @@
-import styles from "./css/statBar.module.css";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../hooks";
 import { selectFactionPool, selectFlowState } from "../features/selectors";
 import classNames from "classnames";
-import { StepContext } from "./step";
-import { useContext } from "react";
 
 interface StatBarProps {
   stat: "complexity" | "wealth" | "aggression" | "crafting";
@@ -13,22 +10,17 @@ interface StatBarProps {
 export const StatBar: React.FC<StatBarProps> = ({ stat }) => {
   const { currentFactionIndex } = useAppSelector(selectFlowState);
   const factionPool = useAppSelector(selectFactionPool);
-  const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
 
   const statValue = currentFactionIndex != null ? factionPool[currentFactionIndex][stat] : 0;
   return (
-    <div
-      className={classNames(styles.container, {
-        [styles.inactive]: !stepActive,
-      })}
-    >
-      <span className={styles.label}>{t("label." + stat)}</span>
+    <div className="stat">
+      <span className="stat-label">{t("label." + stat)}</span>
       <span
         className={classNames({
-          [styles.barLow]: statValue < 1,
-          [styles.barModerate]: statValue === 1,
-          [styles.barHigh]: statValue > 1,
+          "stat-low": statValue < 1,
+          "stat-moderate": statValue === 1,
+          "stat-high": statValue > 1,
         })}
       >
         {t("label.factionRating." + statValue)}

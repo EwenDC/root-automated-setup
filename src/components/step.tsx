@@ -6,7 +6,6 @@ import { selectFlowState } from "../features/selectors";
 import { SetupStep } from "../types";
 import { useAppSelector } from "../hooks";
 import iconComponents from "../iconComponents";
-import styles from "./css/step.module.css";
 import { createContext } from "react";
 
 interface StepContextValue {
@@ -89,14 +88,9 @@ export const Step: React.FC<StepProps> = ({
 
   return stepRendered ? (
     <StepProvider value={{ stepActive }}>
-      <section
-        className={classNames(styles.container, {
-          [styles.inactive]: !stepActive,
-        })}
-        ref={sectionElement}
-      >
-        {titleText && <h1 className={styles.title}>{titleText}</h1>}
-        {subtitleText && <h2 className={styles.subtitle}>{subtitleText}.</h2>}
+      <section className={classNames({ "step-inactive": !stepActive })} ref={sectionElement}>
+        {titleText && <h2>{titleText}</h2>}
+        {subtitleText && <h3>{subtitleText}.</h3>}
         {textBelowChildren ? children : null}
         <Trans
           i18nKey={textKey ?? "setupStep." + SetupStep[step] + ".body"}

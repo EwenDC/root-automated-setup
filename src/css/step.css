@@ -1,24 +1,25 @@
-.container {
+section {
   line-height: 1.5rem;
   margin: 1rem;
 }
 
-.container.inactive {
+.step-inactive {
   color: darkgray;
 }
 
-.container p {
-  margin: 0.5rem 0;
-}
-
-.title {
+section h2 {
   line-height: 2.2rem;
+  font-size: 2rem;
   font-weight: 400;
   font-variant: small-caps;
   margin: 0 0 0.5rem;
 }
 
-.subtitle {
+section h3 {
   font-size: 1rem;
   margin: 0 0 0.5rem;
+}
+
+section p {
+  margin: 0.5rem 0;
 }

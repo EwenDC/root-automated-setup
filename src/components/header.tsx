@@ -1,13 +1,12 @@
-import styles from "./css/header.module.css";
 import rootLogo from "../images/logo.png";
 import { useTranslation } from "react-i18next";
 
 export const Header: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <header className={styles.container}>
-      <img src={rootLogo} alt={t("label.logoAlt")} className={styles.logo} />
-      <div className={styles.subtitle}>{t("label.logoText")}</div>
+    <header>
+      <img src={rootLogo} alt={t("label.logoAlt")} className="logo" />
+      <h1>{t("label.logoText")}</h1>
     </header>
   );
 };

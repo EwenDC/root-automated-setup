@@ -5,7 +5,6 @@ import { CodeObject, GameComponent, Togglable } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { StepContext } from "./step";
 import { AppThunk, RootState } from "../store";
-import styles from "./css/componentToggle.module.css";
 import { selectSetupParameters } from "../features/selectors";
 import { setErrorMessage } from "../features/setupSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -57,12 +56,7 @@ export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent
   }, [components, t, getLabelKey, unsorted, i18n.language]);
 
   return (
-    <div
-      className={classNames(styles.carousel, {
-        [styles.largeLabels]: largeLabels,
-        [styles.inactive]: !stepActive,
-      })}
-    >
+    <div className={classNames("toggle-carousel", { "toggle-large-labels": largeLabels })}>
       {sortedComponents.map((component) => {
         if (component.enabled || stepActive) {
           const componentLockedKey = getLockedKey ? getLockedKey(component) : null;
@@ -70,9 +64,9 @@ export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent
           return (
             <button
               key={component.code}
-              className={classNames(styles.component, {
-                [styles.enabled]: stepActive && component.enabled,
-                [styles.locked]: stepActive && componentLocked,
+              className={classNames("toggle-component", {
+                enabled: stepActive && component.enabled,
+                locked: stepActive && componentLocked,
               })}
               onClick={() =>
                 componentLocked
@@ -90,12 +84,12 @@ export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent
               aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
             >
               <img
-                className={styles.image}
+                className="toggle-image"
                 src={component.image}
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />
-              <div className={styles.label}>
+              <div>
                 <span>{component.label}</span>
               </div>
             </button>

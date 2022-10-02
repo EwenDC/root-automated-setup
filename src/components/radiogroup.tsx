@@ -1,10 +1,8 @@
-import classNames from "classnames";
 import { useContext } from "react";
 import { Trans } from "react-i18next";
 import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { StepContext } from "./step";
-import styles from "./css/radiogroup.module.css";
 
 interface RadiogroupProps {
   id: string;
@@ -18,40 +16,38 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue, onChan
   return (
     <fieldset
       name={id}
-      className={classNames(styles.container, {
-        [styles.inactive]: !stepActive,
-      })}
+      className="radio-container"
       disabled={!stepActive}
       aria-required="true"
       aria-invalid={stepActive && errorMessage ? true : undefined}
       aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
     >
       {!defaultValue || stepActive ? (
-        <div className={styles.option}>
+        <div className="radio-option">
           <input
             name={id}
             id={id + "False"}
             type="radio"
-            className={styles.radio}
+            className="radio"
             checked={!defaultValue}
             onChange={() => onChange(false)}
           />
-          <label htmlFor={id + "False"} className={styles.label}>
+          <label htmlFor={id + "False"} className="radio-label">
             <Trans i18nKey={"label." + id + ".false"} />
           </label>
         </div>
       ) : null}
       {defaultValue || stepActive ? (
-        <div className={styles.option}>
+        <div className="radio-option">
           <input
             name={id}
             id={id + "True"}
             type="radio"
-            className={styles.radio}
+            className="radio"
             checked={defaultValue}
             onChange={() => onChange(true)}
           />
-          <label htmlFor={id + "True"} className={styles.label}>
+          <label htmlFor={id + "True"} className="radio-label">
             <Trans i18nKey={"label." + id + ".true"} />
           </label>
         </div>

@@ -1,4 +1,4 @@
-.carousel {
+.toggle-carousel {
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -19,16 +19,16 @@
   background-attachment: local, local, scroll, scroll;
 }
 
-.carousel.inactive {
+.step-inactive .toggle-carousel {
   margin: 0;
 }
 
-.carousel:focus-visible {
+.toggle-carousel:focus-visible {
   outline: 0.15rem dotted black;
   border-radius: 1rem;
 }
 
-.component {
+.toggle-component {
   font-size: 1rem;
   flex: 0 0;
   background-color: transparent;
@@ -48,102 +48,54 @@
   transition-timing-function: ease-out;
 }
 
-@media (prefers-reduced-motion) {
-  .component {
-    transition: none;
-  }
-}
-
-.component:focus-visible {
+.toggle-component:focus-visible {
   outline-offset: 0.15rem;
   border-color: black;
 }
 
-.component.enabled {
+.toggle-component.enabled {
   color: black;
   outline-color: black;
 }
 
-.component.locked {
+.toggle-component.locked {
   outline: 0.15rem solid darkgray;
 }
 
-.component.enabled.locked {
+.toggle-component.enabled.locked {
   outline-color: black;
 }
 
-.component:hover:not(.locked):not(:disabled) {
+.toggle-component:hover:not(.locked):not(:disabled) {
   background-color: white;
 }
 
-.component.locked,
-.component:disabled {
+.toggle-component.locked,
+.toggle-component:disabled {
   cursor: auto;
 }
 
-.carousel.inactive .component {
+.step-inactive .toggle-carousel .toggle-component {
   margin: 0;
   transition: none;
 }
 
-.image {
+.toggle-image {
   width: 3rem;
   height: 3rem;
   mix-blend-mode: multiply;
   /* Transitioned properties */
-  filter: grayscale();
+  filter: grayscale(100%);
   transition-property: filter;
   transition-duration: inherit;
   transition-timing-function: inherit;
 }
 
-.largeLabels .image {
+.toggle-large-labels .toggle-image {
   width: 2.5rem;
   height: 2.5rem;
 }
 
-.component.enabled .image {
+.toggle-component.enabled .toggle-image {
   filter: none;
-}
-
-@media (min-width: 992px) {
-  .carousel {
-    flex-wrap: wrap;
-    overflow: hidden;
-    margin: 0.1rem 0rem;
-    background: none;
-  }
-
-  .component {
-    height: 10rem;
-    min-width: 10rem;
-    margin: 0.9rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .component:hover:not(.locked):not(:disabled) {
-    background-color: ivory;
-  }
-
-  .image {
-    width: 6rem;
-    height: 6rem;
-    flex: 0 0;
-    margin: 0.5rem auto;
-    mix-blend-mode: normal;
-  }
-
-  .largeLabels .image {
-    width: 5rem;
-    height: 5rem;
-  }
-
-  .label {
-    flex: 1 0;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-  }
 }

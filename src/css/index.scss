@@ -1,0 +1,271 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+
+* {
+  font-family: "Libre Baskerville", serif;
+
+  &::selection {
+    color: black;
+    background: lightgray;
+  }
+}
+
+body {
+  margin: 0;
+  font-size: 16px;
+  background: ivory url("../images/background.jpg") top;
+  background-size: 80rem;
+}
+
+.loading {
+  width: 10rem;
+  height: 10rem;
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  margin: -5.375rem -5.375rem 0 0;
+  border: 0.75rem solid transparent;
+  border-radius: 50%;
+  border-right-color: black;
+  animation: rotate 1s infinite linear;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+noscript {
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  width: 100%;
+  margin-top: 10rem;
+}
+
+@import url("./button.css");
+@import url("./checkbox.css");
+@import url("./componentCount.css");
+@import url("./componentToggle.css");
+@import "./factionSelect.scss";
+@import url("./header.css");
+@import url("./icon.css");
+@import url("./numberSelector.css");
+@import url("./radiogroup.css");
+@import url("./statBar.css");
+@import url("./step.css");
+@import url("./stepList.css");
+@import url("./toast.css");
+@import url("./toolbar.css");
+
+@media (min-width: 992px) {
+  /* Button */
+  .button {
+    border-radius: 0.66rem;
+    font-size: 2rem;
+    border-bottom: 0.2rem black solid;
+    outline: 0.2rem dotted transparent;
+
+    > .label-left {
+      margin-right: 0.5rem;
+    }
+
+    > .label-right {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .button-icon {
+    height: 1.5rem;
+  }
+
+  /* Component Count */
+  .count {
+    flex-direction: row;
+  }
+
+  .count-image {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 0.5rem;
+  }
+
+  /* Component Toggle */
+  .toggle-carousel {
+    flex-wrap: wrap;
+    overflow: hidden;
+    margin: 0.1rem 0rem;
+    background: none;
+  }
+
+  .toggle-component {
+    height: 10rem;
+    min-width: 10rem;
+    margin: 0.9rem;
+    display: flex;
+    flex-direction: column;
+
+    &:hover:not(.locked):not(:disabled) {
+      background-color: ivory;
+    }
+  }
+
+  .toggle-image {
+    width: 6rem;
+    height: 6rem;
+    flex: 0 0;
+    margin: 0.5rem auto;
+    mix-blend-mode: normal;
+  }
+
+  .toggle-large-labels .toggle-image {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .toggle-label {
+    flex: 1 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Faction Select */
+  .faction-carousel {
+    > button {
+      height: 10.5rem;
+      min-width: 10.5rem;
+
+      > img {
+        width: 6rem;
+        height: 6rem;
+      }
+
+      > .title {
+        border-radius: 1rem;
+
+        > .label {
+          margin: 0 0.25rem;
+        }
+      }
+    }
+  }
+
+  .faction-info {
+    flex-direction: row;
+
+    .stats {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+  }
+
+  /* Radio Group */
+  .radio-container {
+    flex-direction: row;
+  }
+
+  .radio-option {
+    &:not(:first-child) {
+      margin-top: 0;
+    }
+
+    &:not(:last-child) .radio-label {
+      padding-right: 0.5rem;
+    }
+  }
+
+  /* Stat Bar */
+  .stat {
+    min-width: 14rem;
+    flex: 0 0;
+    padding-bottom: 0.66rem;
+  }
+
+  .stat-label {
+    font-size: 1.2rem;
+    margin: 0 0 0.2rem 0.33rem;
+  }
+
+  .stat-low,
+  .stat-moderate,
+  .stat-high {
+    font-size: 1rem;
+    padding: 0.25rem 0 0.2rem 0.33rem;
+    width: 4rem;
+  }
+
+  .stat-moderate {
+    width: 8rem;
+  }
+
+  .stat-high {
+    width: 12rem;
+  }
+
+  /* Step List */
+  main {
+    margin-bottom: 5rem;
+  }
+
+  /* Toast */
+  .toast {
+    > .message {
+      font-size: 2rem;
+      margin: 0.5rem auto;
+      padding: 0 2.25rem;
+    }
+
+    > .close {
+      height: 2.25rem;
+      width: 2.25rem;
+      margin-left: -2.25rem;
+      padding: 0.5rem;
+    }
+  }
+
+  /* Toolbar */
+  .toolbar {
+    > .left:not(:last-child),
+    > .right:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion) {
+  /* Button */
+  .button,
+  /* Checkbox */
+  .checkbox,
+  /* Component Toggle */
+  .toggle-component,
+  /* Faction Select */
+  .faction-carousel > button,
+  /* Number Selector */
+  .number-button,
+  /* Radiogroup */
+  .radio,
+  /* Stat Bar */
+  .stat-low,
+  .stat-moderate,
+  .stat-high,
+  /* Toast */
+  .toast-anchor,
+  .toast > .close {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  /* Checkbox */
+  .checkbox::before,
+  /* Radio Group */
+  .radio::before {
+    background-color: CanvasText;
+  }
+}

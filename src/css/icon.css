@@ -1,4 +1,4 @@
-.item {
+.icon {
   width: 1.5rem;
   height: 1.5rem;
   transform: translate(0, 0.33rem);
@@ -7,6 +7,6 @@
   font-style: italic;
 }
 
-.inactive {
-  filter: grayscale();
+.step-inactive .icon {
+  filter: grayscale(100%);
 }

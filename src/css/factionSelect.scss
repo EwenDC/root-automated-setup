@@ -1,0 +1,159 @@
+.faction-carousel {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  overflow: auto;
+  padding: 0.3rem 0;
+  border-radius: 1rem;
+  /* Scroll Shadow */
+  background: linear-gradient(90deg, white 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0), white 70%) 0 100%,
+    radial-gradient(farthest-side at 0% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)),
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)) 0 100%;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: top left, top right, top left, top right;
+  background-size: 2.5rem 100%, 2.5rem 100%, 1.25rem 100%, 1.25rem 100%;
+  background-attachment: local, local, scroll, scroll;
+
+  &:focus-visible {
+    outline: 0.15rem dotted black;
+    border-radius: 1rem;
+  }
+
+  > button {
+    font-size: 1rem;
+    flex: 0 0;
+    display: flex;
+    flex-direction: column;
+    background: none;
+    border-radius: 1rem;
+    padding: 0.1rem;
+    cursor: pointer;
+    height: 9rem;
+    min-width: 9rem;
+    color: black;
+    margin: 0 0.3rem;
+    mix-blend-mode: multiply;
+    will-change: opacity;
+    /* Transitioned properties */
+    outline: 0.15rem solid transparent;
+    outline-offset: 0;
+    border: 0.15rem dotted transparent;
+    background-color: white;
+    transition-property: outline, outline-offset, border, background-color;
+    transition-duration: 80ms;
+    transition-timing-function: ease-out;
+
+    &:focus-visible {
+      border-color: black;
+      outline-offset: 0.15rem;
+    }
+
+    &.selected {
+      outline-color: black;
+    }
+
+    &:hover {
+      background-color: ivory;
+    }
+
+    &:active {
+      background-color: cornsilk;
+    }
+
+    &.locked {
+      background-color: gainsboro;
+
+      > img {
+        filter: grayscale(50%);
+      }
+    }
+
+    &.locked,
+    &:disabled {
+      cursor: auto;
+      color: darkgray;
+    }
+
+    &:disabled {
+      background-color: transparent;
+
+      &.selected {
+        outline-color: darkgray;
+      }
+
+      > img {
+        filter: grayscale(100%);
+      }
+    }
+
+    &:not(:disabled) {
+      > .title {
+        color: white;
+        background-color: #5a5b5f;
+      }
+
+      &.militant > .title {
+        color: white;
+        background-color: #a4153b;
+      }
+    }
+
+    > img {
+      width: 5rem;
+      height: 5rem;
+      flex: 0 0;
+      margin: 0.25rem auto;
+      /* Transitioned properties */
+      transition-property: filter;
+      transition-duration: inherit;
+      transition-timing-function: inherit;
+    }
+
+    > .title {
+      flex: 1 0;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      > .label {
+        margin: 0 0.1rem;
+
+        > .militant-icon {
+          height: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.faction-info {
+  display: flex;
+  flex-direction: column;
+
+  .stats {
+    margin: 0.75rem 0 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stats,
+  .counts {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .counts {
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  .summary-title {
+    font-size: 1.17rem;
+    margin: 0.5rem 0;
+  }
+}

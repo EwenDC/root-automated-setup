@@ -4,7 +4,6 @@ import { selectFactionPool, selectFlowState, selectSetupParameters } from "../fe
 import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import styles from "./css/factionSelect.module.css";
 import { useContext } from "react";
 import { StepContext } from "./step";
 import { ReactComponent as MilitantIcon } from "../images/icons/militant.svg";
@@ -47,7 +46,7 @@ export const FactionSelect: React.FC = () => {
   return (
     <>
       <div
-        className={styles.carousel}
+        className="faction-carousel"
         role="radiogroup"
         aria-label={t("setupStep.selectFaction.subtitle")}
         aria-required="true"
@@ -68,10 +67,10 @@ export const FactionSelect: React.FC = () => {
           return (
             <button
               key={faction.code}
-              className={classNames(styles.faction, {
-                [styles.militant]: faction.militant,
-                [styles.selected]: index === currentFactionIndex,
-                [styles.locked]: lastFactionLocked && index === lastIndex,
+              className={classNames({
+                militant: faction.militant,
+                selected: index === currentFactionIndex,
+                locked: lastFactionLocked && index === lastIndex,
               })}
               onClick={() => {
                 if (index !== currentFactionIndex) {
@@ -103,16 +102,15 @@ export const FactionSelect: React.FC = () => {
               onKeyDown={onKeyDownHandler}
             >
               <img
-                className={styles.image}
                 src={factionImage}
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />
-              <div className={styles.title}>
-                <span className={styles.label}>
+              <div className="title">
+                <span className="label">
                   {faction.militant ? (
                     <>
-                      <MilitantIcon className={styles.icon} title={t("label.militant")} />{" "}
+                      <MilitantIcon className="militant-icon" title={t("label.militant")} />{" "}
                     </>
                   ) : null}
                   {factionName}
@@ -123,15 +121,15 @@ export const FactionSelect: React.FC = () => {
         })}
       </div>
       {stepActive && selectedFaction ? (
-        <div className={styles.factionInfo}>
-          <div className={styles.stats}>
+        <div className="faction-info">
+          <div className="stats">
             <StatBar stat="complexity" />
             <StatBar stat="wealth" />
             <StatBar stat="aggression" />
             <StatBar stat="crafting" />
           </div>
           <div>
-            <div className={styles.componentCounts}>
+            <div className="counts">
               <ComponentCount component="warriors" />
               <ComponentCount component="buildings" />
               <ComponentCount component="tokens" />
@@ -154,9 +152,9 @@ export const FactionSelect: React.FC = () => {
                 </p>
               </>
             )}
-            <h3 className={styles.summaryTitle}>
+            <h4 className="summary-title">
               {t("faction." + selectedFaction.key + ".summaryTitle")}
-            </h3>
+            </h4>
             <Trans i18nKey={"faction." + selectedFaction.key + ".summary"} />
           </div>
         </div>

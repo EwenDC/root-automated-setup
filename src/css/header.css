@@ -1,4 +1,4 @@
-.container {
+header {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -7,7 +7,7 @@
   padding-top: 1rem;
 }
 
-.logo {
+header > .logo {
   /* Allow the logo to shrink if the screen is smaller than 24rem */
   width: 100%;
   max-width: 24rem;
@@ -17,20 +17,21 @@
   text-align: center;
 }
 
-.subtitle {
+header > h1 {
   font-size: 8.5vw;
   font-variant: small-caps;
   font-weight: 400;
   text-align: center;
+  margin: 0;
 }
 
 /* If the screen is large enough for the logo to be at max size, then set the logo alt and subtitle to full size */
 @media (min-width: 24rem) {
-  .logo {
+  header > .logo {
     font-size: 6rem;
   }
 
-  .subtitle {
+  header > h1 {
     font-size: 2rem;
   }
 }

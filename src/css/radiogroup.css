@@ -1,4 +1,4 @@
-.container {
+.radio-container {
   margin-top: 0.75rem;
   display: flex;
   align-items: flex-start;
@@ -7,11 +7,11 @@
   padding: 0;
 }
 
-.option {
+.radio-option {
   display: flex;
 }
 
-.option:not(:first-child) {
+.radio-option:not(:first-child) {
   margin-top: 0.5rem;
 }
 
@@ -29,12 +29,6 @@
   place-content: center;
   background-color: transparent;
   transition: 80ms background-color ease-out;
-}
-
-@media (prefers-reduced-motion) {
-  .radio {
-    transition: none;
-  }
 }
 
 .radio:hover:not(:disabled) {
@@ -67,12 +61,6 @@
   transition-timing-function: inherit;
 }
 
-@media (forced-colors: active) {
-  .radio::before {
-    background-color: CanvasText;
-  }
-}
-
 .radio:checked::before {
   box-shadow: inset 1rem 1rem black;
 }
@@ -81,29 +69,15 @@
   box-shadow: inset 1rem 1rem darkgray;
 }
 
-.label {
+.radio-label {
   cursor: pointer;
   padding-left: 0.5rem;
 }
 
-@media (min-width: 992px) {
-  .container {
-    flex-direction: row;
-  }
-
-  .option:not(:first-child) {
-    margin-top: 0;
-  }
-
-  .option:not(:last-child) .label {
-    padding-right: 0.5rem;
-  }
-}
-
-.inactive .radio::before {
+.step-inactive .radio::before {
   transition: none;
 }
 
-.inactive .label {
+.step-inactive .radio-label {
   cursor: auto;
 }

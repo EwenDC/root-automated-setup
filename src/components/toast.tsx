@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import styles from "./css/toast.module.css";
 import { ReactComponent as CloseIcon } from "../images/icons/close.svg";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { selectSetupParameters } from "../features/selectors";
@@ -21,16 +20,16 @@ export const Toast: React.FC = () => {
 
   return (
     <div
-      className={classNames(styles.anchor, { [styles.hidden]: !errorMessage })}
+      className={classNames("toast-anchor", { hidden: !errorMessage })}
       aria-hidden={!errorMessage}
       aria-live="assertive"
     >
-      <div className={styles.container}>
-        <span id="appError" className={styles.message}>
+      <div className="toast">
+        <span id="appError" className="message">
           {cachedMessage && t(cachedMessage)}.
         </span>
         <button
-          className={styles.close}
+          className="close"
           title={t("label.closeMessage")}
           onClick={() => dispatch(setErrorMessage(null))}
           disabled={!errorMessage}

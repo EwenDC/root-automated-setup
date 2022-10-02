@@ -3,7 +3,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { generateComponentSelectors, typedEntries, typedKeys } from "./utils";
 import content from "../content";
 
-export const { select: selectDeck, selectArray: selectDeckArray } = generateComponentSelectors(
+export const [selectDeck, selectDeckArray] = generateComponentSelectors(
   "decks",
   (expansionCode, componentCode) => content[expansionCode].decks![componentCode]
 );
@@ -24,11 +24,10 @@ export const selectExpansionArray = createSelector(
   }
 );
 
-export const { select: selectFaction, selectArray: selectFactionArray } =
-  generateComponentSelectors(
-    "factions",
-    (expansionCode, componentCode) => content[expansionCode].factions![componentCode]
-  );
+export const [selectFaction, selectFactionArray] = generateComponentSelectors(
+  "factions",
+  (expansionCode, componentCode) => content[expansionCode].factions![componentCode]
+);
 
 /** Redux Selector for returning an array of included faction codes */
 export const selectFactionCodeArray = (state: RootState) => typedKeys(state.components.factions);
@@ -54,11 +53,10 @@ export const selectFactionPool = (state: RootState) =>
 /** Returns the flow information (including current step) from redux state */
 export const selectFlowState = (state: RootState) => state.flow;
 
-export const { select: selectHireling, selectArray: selectHirelingArray } =
-  generateComponentSelectors(
-    "hirelings",
-    (expansionCode, componentCode) => content[expansionCode].hirelings![componentCode]
-  );
+export const [selectHireling, selectHirelingArray] = generateComponentSelectors(
+  "hirelings",
+  (expansionCode, componentCode) => content[expansionCode].hirelings![componentCode]
+);
 
 /** Redux Selector for returning an array of all hirelings that replace an included faction */
 export const selectFactionHirelingArray = (state: RootState) =>
@@ -76,13 +74,12 @@ export const selectEnabledIndependentHirelings = (state: RootState) =>
       hireling.factions.every((factionCode) => !selectFactionCodeArray(state).includes(factionCode))
   );
 
-export const { select: selectLandmark, selectArray: selectLandmarkArray } =
-  generateComponentSelectors(
-    "landmarks",
-    (expansionCode, componentCode) => content[expansionCode].landmarks![componentCode]
-  );
+export const [selectLandmark, selectLandmarkArray] = generateComponentSelectors(
+  "landmarks",
+  (expansionCode, componentCode) => content[expansionCode].landmarks![componentCode]
+);
 
-export const { select: selectMap, selectArray: selectMapArray } = generateComponentSelectors(
+export const [selectMap, selectMapArray] = generateComponentSelectors(
   "maps",
   (expansionCode, componentCode) => content[expansionCode].maps![componentCode]
 );
@@ -145,8 +142,7 @@ export const selectSetupHireling3 = (state: RootState) =>
 /** Returns the setup parameters from redux state */
 export const selectSetupParameters = (state: RootState) => state.setup;
 
-export const { select: selectVagabond, selectArray: selectVagabondArray } =
-  generateComponentSelectors(
-    "vagabonds",
-    (expansionCode, componentCode) => content[expansionCode].vagabonds![componentCode]
-  );
+export const [selectVagabond, selectVagabondArray] = generateComponentSelectors(
+  "vagabonds",
+  (expansionCode, componentCode) => content[expansionCode].vagabonds![componentCode]
+);

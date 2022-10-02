@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import React from "react";
-import styles from "./css/button.module.css";
 
 interface ButtonProps
   extends React.DetailedHTMLProps<
@@ -15,22 +14,20 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, disabled, onClick, Icon, iconLeft, children, ...props }, ref) => {
     const renderIconLeft = Icon && iconLeft;
     const renderIconRight = Icon && !iconLeft;
-    const buttonIcon = Icon && <Icon className={styles.icon} />;
+    const buttonIcon = Icon && <Icon className="button-icon" />;
     return (
       <button
         {...props}
         ref={ref}
-        className={classNames(styles.wrapper, className, {
-          [styles.disabled]: disabled,
-        })}
+        className={classNames("button", { disabled }, className)}
         onClick={disabled ? undefined : onClick}
       >
         {renderIconLeft ? buttonIcon : null}
         {children && (
           <span
             className={classNames({
-              [styles.labelRight]: renderIconLeft,
-              [styles.labelLeft]: renderIconRight,
+              "label-right": renderIconLeft,
+              "label-left": renderIconRight,
             })}
           >
             {children}

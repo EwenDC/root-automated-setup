@@ -1,4 +1,4 @@
-.wrapper {
+.button {
   background-color: ivory;
   border: none;
   font-size: 1.5rem;
@@ -15,60 +15,33 @@
   transition-timing-function: ease-out;
 }
 
-@media (prefers-reduced-motion) {
-  .wrapper {
-    transition: none;
-  }
-}
-
-.wrapper:hover {
+.button:hover {
   background-color: white;
 }
 
-.wrapper:active {
+.button:active {
   background-color: cornsilk;
 }
 
-.wrapper.disabled {
+.button.disabled {
   cursor: auto;
   color: darkgray;
   border-bottom-color: transparent;
   background-color: ivory;
 }
 
-.wrapper:focus-visible {
+.button:focus-visible {
   outline-color: black;
 }
 
-.icon {
+.button-icon {
   height: 1rem;
 }
 
-.labelLeft {
+.button > .label-left {
   margin-right: 0.3rem;
 }
 
-.labelRight {
+.button > .label-right {
   margin-left: 0.3rem;
-}
-
-@media (min-width: 992px) {
-  .wrapper {
-    border-radius: 0.66rem;
-    font-size: 2rem;
-    border-bottom: 0.2rem black solid;
-    outline: 0.2rem dotted transparent;
-  }
-
-  .icon {
-    height: 1.5rem;
-  }
-
-  .labelLeft {
-    margin-right: 0.5rem;
-  }
-
-  .labelRight {
-    margin-left: 0.5rem;
-  }
 }

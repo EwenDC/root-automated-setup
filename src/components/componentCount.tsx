@@ -1,10 +1,6 @@
-import styles from "./css/componentCount.module.css";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../hooks";
 import { selectFactionPool, selectFlowState } from "../features/selectors";
-import classNames from "classnames";
-import { StepContext } from "./step";
-import { useContext } from "react";
 
 const imageSource: {
   [component: string]: "image" | "buildingImage" | "tokenImage";
@@ -21,7 +17,6 @@ interface ComponentCountProps {
 export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
   const { currentFactionIndex } = useAppSelector(selectFlowState);
   const factionPool = useAppSelector(selectFactionPool);
-  const { stepActive } = useContext(StepContext);
   const { t } = useTranslation();
 
   const componentCount =
@@ -31,13 +26,9 @@ export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => 
     // We know currentFactionIndex is not null because if it was componentCount defaults to 0
     const componentImage = factionPool[currentFactionIndex!][imageSource[component]];
     return (
-      <div
-        className={classNames(styles.container, {
-          [styles.inactive]: !stepActive,
-        })}
-      >
+      <div className="count">
         <img
-          className={styles.image}
+          className="count-image"
           src={componentImage}
           alt="" // Image is just decoration, so hide from screen readers
           aria-hidden="true"

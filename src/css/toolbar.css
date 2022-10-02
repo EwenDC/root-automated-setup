@@ -1,0 +1,25 @@
+footer {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.toolbar {
+  width: 80rem;
+  padding: 1rem;
+}
+
+.toolbar > .left {
+  float: left;
+}
+
+.toolbar > .right {
+  float: right;
+}
+
+.toolbar > .left:not(:last-child),
+.toolbar > .right:not(:last-child) {
+  margin-right: 0.5rem;
+}

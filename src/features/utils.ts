@@ -67,6 +67,9 @@ export const takeRandom = <T>(list: T[]): T => {
   return returnVal;
 };
 
+/** Generate a tuple type from arbritrary inputs */
+export const tuple = <A, B>(a: A, b: B): [A, B] => [a, b];
+
 /**
  * Function for create Redux Selectors for returning a single component or a
  * component list as an array, moving the component key to the component field "code"
@@ -76,26 +79,27 @@ export const takeRandom = <T>(list: T[]): T => {
 export const generateComponentSelectors = <D>(
   componentType: keyof Omit<ComponentsState, "expansions">,
   getComponentData: (expansion: string, componentCode: string) => D
-) => ({
-  select(state: RootState, code: string) {
-    const componentInfo = state.components[componentType][code];
-    return { ...getComponentData(componentInfo.expansionCode, code), ...componentInfo };
-  },
-  selectArray: createSelector(
-    (state: RootState) => state.components[componentType],
-    (componentList) => {
-      const array = [];
-      for (const [code, componentInfo] of typedEntries(componentList)) {
-        array.push({
-          ...getComponentData(componentInfo.expansionCode, code),
-          ...componentInfo,
-          code,
-        });
+) =>
+  tuple(
+    (state: RootState, code: string) => {
+      const componentInfo = state.components[componentType][code];
+      return { ...getComponentData(componentInfo.expansionCode, code), ...componentInfo };
+    },
+    createSelector(
+      (state: RootState) => state.components[componentType],
+      (componentList) => {
+        const array = [];
+        for (const [code, componentInfo] of typedEntries(componentList)) {
+          array.push({
+            ...getComponentData(componentInfo.expansionCode, code),
+            ...componentInfo,
+            code,
+          });
+        }
+        return array;
       }
-      return array;
-    }
-  ),
-});
+    )
+  );
 
 /** Filters out disabled components from a given component array */
 export const selectEnabled = <T extends Togglable>(array: T[]) =>

@@ -4,7 +4,6 @@ import { redoStep, undoStep } from "../features/flowSlice";
 import { selectFlowState } from "../features/selectors";
 import { SetupStep } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import styles from "./css/toolbar.module.css";
 import { ReactComponent as UndoIcon } from "../images/icons/undo.svg";
 import { ReactComponent as RedoIcon } from "../images/icons/redo.svg";
 import { ReactComponent as NextIcon } from "../images/icons/next.svg";
@@ -52,12 +51,12 @@ export const Toolbar: React.FC = () => {
   const nextStepDisabled = currentStep >= SetupStep.setupEnd;
 
   return (
-    <footer className={styles.container}>
-      <div className={styles.bar} role="toolbar">
+    <footer>
+      <div className="toolbar" role="toolbar">
         <Button
           Icon={UndoIcon}
           disabled={undoDisabled}
-          className={styles.left}
+          className="left"
           ref={buttonRefs[0]}
           onClick={() => {
             dispatch(undoStep());
@@ -72,7 +71,7 @@ export const Toolbar: React.FC = () => {
         <Button
           Icon={RedoIcon}
           disabled={redoDisabled}
-          className={styles.left}
+          className="left"
           ref={buttonRefs[1]}
           onClick={() => {
             dispatch(redoStep());
@@ -87,7 +86,7 @@ export const Toolbar: React.FC = () => {
         <Button
           Icon={NextIcon}
           disabled={nextStepDisabled}
-          className={styles.right}
+          className="right"
           ref={buttonRefs[2]}
           onClick={() => {
             dispatch(nextStep());

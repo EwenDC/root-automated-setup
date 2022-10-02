@@ -37,7 +37,6 @@ import { useAppDispatch, useAppSelector, useNthLastPlayer } from "../hooks";
 import NumberSelector from "./numberSelector";
 import Radiogroup from "./radiogroup";
 import Step from "./step";
-import styles from "./css/stepList.module.css";
 import { ReactComponent as RestartIcon } from "../images/icons/restart.svg";
 import Button from "./button";
 import IconList from "./iconList";
@@ -75,7 +74,7 @@ export const StepList: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <main className={styles.container}>
+    <main>
       <Step step={SetupStep.chooseExpansions}>
         <ComponentToggle
           selector={selectExpansionArray}
