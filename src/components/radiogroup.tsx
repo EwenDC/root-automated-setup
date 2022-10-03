@@ -16,38 +16,36 @@ export const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue, onChan
   return (
     <fieldset
       name={id}
-      className="radio-container"
+      className="radio"
       disabled={!stepActive}
       aria-required="true"
       aria-invalid={stepActive && errorMessage ? true : undefined}
       aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
     >
       {!defaultValue || stepActive ? (
-        <div className="radio-option">
+        <div className="option">
           <input
             name={id}
             id={id + "False"}
             type="radio"
-            className="radio"
             checked={!defaultValue}
             onChange={() => onChange(false)}
           />
-          <label htmlFor={id + "False"} className="radio-label">
+          <label htmlFor={id + "False"}>
             <Trans i18nKey={"label." + id + ".false"} />
           </label>
         </div>
       ) : null}
       {defaultValue || stepActive ? (
-        <div className="radio-option">
+        <div className="option">
           <input
             name={id}
             id={id + "True"}
             type="radio"
-            className="radio"
             checked={defaultValue}
             onChange={() => onChange(true)}
           />
-          <label htmlFor={id + "True"} className="radio-label">
+          <label htmlFor={id + "True"}>
             <Trans i18nKey={"label." + id + ".true"} />
           </label>
         </div>

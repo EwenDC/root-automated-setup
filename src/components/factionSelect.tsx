@@ -46,7 +46,7 @@ export const FactionSelect: React.FC = () => {
   return (
     <>
       <div
-        className="faction-carousel"
+        className="faction-select"
         role="radiogroup"
         aria-label={t("setupStep.selectFaction.subtitle")}
         aria-required="true"
@@ -122,14 +122,14 @@ export const FactionSelect: React.FC = () => {
       </div>
       {stepActive && selectedFaction ? (
         <div className="faction-info">
-          <div className="stats">
+          <div className="stat-list">
             <StatBar stat="complexity" />
             <StatBar stat="wealth" />
             <StatBar stat="aggression" />
             <StatBar stat="crafting" />
           </div>
           <div>
-            <div className="counts">
+            <div className="count-list">
               <ComponentCount component="warriors" />
               <ComponentCount component="buildings" />
               <ComponentCount component="tokens" />

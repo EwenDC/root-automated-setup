@@ -5,7 +5,7 @@ export const Header: React.FC = () => {
   const { t } = useTranslation();
   return (
     <header>
-      <img src={rootLogo} alt={t("label.logoAlt")} className="logo" />
+      <img src={rootLogo} alt={t("label.logoAlt")} />
       <h1>{t("label.logoText")}</h1>
     </header>
   );

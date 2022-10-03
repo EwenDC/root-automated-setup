@@ -6,6 +6,5 @@
   "prettier.useEditorConfig": false,
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
-  "css.lint.unknownAtRules": "ignore",
   "editor.wordWrap": "on"
 }

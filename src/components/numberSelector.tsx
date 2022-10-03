@@ -50,31 +50,26 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
   };
 
   return (
-    <div className="number-container">
-      <label htmlFor={id} className="number-label">
+    <div className="number">
+      <label htmlFor={id}>
         <Trans i18nKey={"label." + id} />
       </label>
       {stepActive ? (
         <>
-          <button className="number-button" onClick={() => buttonHandler(-1)}>
-            -
-          </button>
+          <button onClick={() => buttonHandler(-1)}>-</button>
           <input
             id={id}
             inputMode="numeric"
-            className="number"
             value={value}
             size={size}
             onChange={typingHandler}
             aria-invalid={stepActive && errorMessage ? true : undefined}
             aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
           />
-          <button className="number-button" onClick={() => buttonHandler(+1)}>
-            +
-          </button>
+          <button onClick={() => buttonHandler(+1)}>+</button>
         </>
       ) : (
-        <span id={id} className="number-value">
+        <span id={id} className="value">
           {value}
         </span>
       )}

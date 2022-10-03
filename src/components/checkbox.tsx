@@ -14,18 +14,17 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, defaultValue, onChange }
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const { stepActive } = useContext(StepContext);
   return defaultValue || stepActive ? (
-    <div className="checkbox-container">
+    <div className="checkbox">
       <input
         id={id}
         type="checkbox"
-        className="checkbox"
         defaultChecked={defaultValue ?? false}
         disabled={!stepActive}
         onChange={(e) => onChange(e.target.checked)}
         aria-invalid={stepActive && errorMessage ? true : undefined}
         aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
       />
-      <label htmlFor={id} className="checkbox-label">
+      <label htmlFor={id}>
         <Trans i18nKey={"label." + id} />
       </label>
     </div>

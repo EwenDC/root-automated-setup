@@ -13,35 +13,37 @@
   transition-property: background-color, color, border, outline;
   transition-duration: 80ms;
   transition-timing-function: ease-out;
-}
 
-.button:hover {
-  background-color: white;
-}
+  &:hover {
+    background-color: white;
+  }
 
-.button:active {
-  background-color: cornsilk;
-}
+  &:active {
+    background-color: cornsilk;
+  }
 
-.button.disabled {
-  cursor: auto;
-  color: darkgray;
-  border-bottom-color: transparent;
-  background-color: ivory;
-}
+  &.disabled {
+    cursor: auto;
+    color: darkgray;
+    border-bottom-color: transparent;
+    background-color: ivory;
+  }
 
-.button:focus-visible {
-  outline-color: black;
-}
+  &:focus-visible {
+    outline-color: black;
+  }
 
-.button-icon {
-  height: 1rem;
-}
+  > .label-icon {
+    height: 1rem;
+  }
 
-.button > .label-left {
-  margin-right: 0.3rem;
-}
+  > .label {
+    &.left {
+      margin-right: 0.3rem;
+    }
 
-.button > .label-right {
-  margin-left: 0.3rem;
+    &.right {
+      margin-left: 0.3rem;
+    }
+  }
 }

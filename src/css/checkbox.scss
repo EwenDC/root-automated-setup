@@ -1,0 +1,76 @@
+.checkbox {
+  display: flex;
+  margin-top: 0.5rem;
+  align-items: flex-start;
+
+  > input {
+    cursor: pointer;
+    /* Override the default checkbox appearance */
+    appearance: none;
+    display: grid;
+    place-content: center;
+    width: 1rem;
+    height: 1rem;
+    border: 0.15rem solid black;
+    border-radius: 0.15rem;
+    transform: translateY(0.2rem);
+    background-color: transparent;
+    transition: 80ms background-color ease-out;
+
+    &:hover:not(:disabled) {
+      background-color: white;
+    }
+
+    &:checked::before {
+      box-shadow: inset 1rem 1rem black;
+    }
+
+    &:disabled {
+      border-color: darkgray;
+      cursor: auto;
+
+      &::before {
+        box-shadow: inset 1rem 1rem darkgray;
+        transition: none;
+      }
+
+      + label {
+        cursor: auto;
+      }
+    }
+
+    &:focus-visible {
+      outline: 0.15rem dotted black;
+      outline-offset: 0.05rem;
+    }
+
+    &::before {
+      content: "";
+      width: 0.65rem;
+      height: 0.65rem;
+      clip-path: polygon(
+        20% 0%,
+        0% 20%,
+        30% 50%,
+        0% 80%,
+        20% 100%,
+        50% 70%,
+        80% 100%,
+        100% 80%,
+        70% 50%,
+        100% 20%,
+        80% 0%,
+        50% 30%
+      );
+      box-shadow: inset 1rem 1rem transparent;
+      transition-property: box-shadow;
+      transition-duration: inherit;
+      transition-timing-function: inherit;
+    }
+  }
+
+  > label {
+    padding-left: 0.4rem;
+    cursor: pointer;
+  }
+}

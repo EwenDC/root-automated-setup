@@ -1,0 +1,25 @@
+section {
+  line-height: 1.5rem;
+  margin: 1rem;
+
+  &.inactive {
+    color: darkgray;
+  }
+
+  > h2 {
+    line-height: 2.2rem;
+    font-size: 2rem;
+    font-weight: 400;
+    font-variant: small-caps;
+    margin: 0 0 0.5rem;
+  }
+
+  > h3 {
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+  }
+}

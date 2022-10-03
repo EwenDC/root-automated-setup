@@ -1,0 +1,49 @@
+.number {
+  margin-top: 0.75rem;
+  display: flex;
+
+  > label {
+    padding-right: 0.5rem;
+  }
+
+  > button {
+    font-size: 1.25rem;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 1rem;
+    border-radius: 0.25rem;
+    background-color: transparent;
+    transition: background-color 80ms ease-out;
+
+    &:hover {
+      background-color: ivory;
+    }
+
+    &:active {
+      background-color: cornsilk;
+    }
+  }
+
+  > input {
+    font-size: 1.25rem;
+    text-align: center;
+    width: 2rem;
+    background: none;
+    border: none;
+    padding: 0;
+    border-radius: 0.25rem;
+  }
+
+  > button:focus-visible,
+  > input:focus-visible {
+    outline: 0.15rem dotted black;
+  }
+
+  > .value {
+    font-size: 1.25rem;
+    text-align: center;
+    width: 2rem;
+    padding: 0 1rem;
+  }
+}

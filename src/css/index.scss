@@ -46,20 +46,20 @@ noscript {
   margin-top: 10rem;
 }
 
-@import url("./button.css");
-@import url("./checkbox.css");
-@import url("./componentCount.css");
-@import url("./componentToggle.css");
+@import "./button.scss";
+@import "./checkbox.scss";
+@import "./componentCount.scss";
+@import "./componentToggle.scss";
 @import "./factionSelect.scss";
-@import url("./header.css");
-@import url("./icon.css");
-@import url("./numberSelector.css");
-@import url("./radiogroup.css");
-@import url("./statBar.css");
-@import url("./step.css");
-@import url("./stepList.css");
-@import url("./toast.css");
-@import url("./toolbar.css");
+@import "./header.scss";
+@import "./icon.scss";
+@import "./numberSelector.scss";
+@import "./radiogroup.scss";
+@import "./statBar.scss";
+@import "./step.scss";
+@import "./stepList.scss";
+@import "./toast.scss";
+@import "./toolbar.scss";
 
 @media (min-width: 992px) {
   /* Button */
@@ -69,73 +69,75 @@ noscript {
     border-bottom: 0.2rem black solid;
     outline: 0.2rem dotted transparent;
 
-    > .label-left {
-      margin-right: 0.5rem;
+    > .label-icon {
+      height: 1.5rem;
     }
 
-    > .label-right {
-      margin-left: 0.5rem;
-    }
-  }
+    > .label {
+      &.left {
+        margin-right: 0.5rem;
+      }
 
-  .button-icon {
-    height: 1.5rem;
+      &.right {
+        margin-left: 0.5rem;
+      }
+    }
   }
 
   /* Component Count */
   .count {
     flex-direction: row;
-  }
 
-  .count-image {
-    width: 5rem;
-    height: 5rem;
-    margin-right: 0.5rem;
+    > img {
+      width: 5rem;
+      height: 5rem;
+      margin-right: 0.5rem;
+    }
   }
 
   /* Component Toggle */
-  .toggle-carousel {
+  .component-toggle {
     flex-wrap: wrap;
     overflow: hidden;
     margin: 0.1rem 0rem;
     background: none;
-  }
 
-  .toggle-component {
-    height: 10rem;
-    min-width: 10rem;
-    margin: 0.9rem;
-    display: flex;
-    flex-direction: column;
+    > button {
+      height: 10rem;
+      min-width: 10rem;
+      margin: 0.9rem;
+      display: flex;
+      flex-direction: column;
 
-    &:hover:not(.locked):not(:disabled) {
-      background-color: ivory;
+      &:hover:not(.locked):not(:disabled) {
+        background-color: ivory;
+      }
+
+      > img {
+        width: 6rem;
+        height: 6rem;
+        flex: 0 0;
+        margin: 0.5rem auto;
+        mix-blend-mode: normal;
+      }
+
+      > .label {
+        flex: 1 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    &.large-labels > button > img {
+      width: 5rem;
+      height: 5rem;
     }
   }
 
-  .toggle-image {
-    width: 6rem;
-    height: 6rem;
-    flex: 0 0;
-    margin: 0.5rem auto;
-    mix-blend-mode: normal;
-  }
-
-  .toggle-large-labels .toggle-image {
-    width: 5rem;
-    height: 5rem;
-  }
-
-  .toggle-label {
-    flex: 1 0;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-  }
-
   /* Faction Select */
-  .faction-carousel {
+  .faction-select {
     > button {
       height: 10.5rem;
       min-width: 10.5rem;
@@ -158,24 +160,24 @@ noscript {
   .faction-info {
     flex-direction: row;
 
-    .stats {
+    .stat-list {
       flex-direction: column;
       flex-wrap: nowrap;
     }
   }
 
   /* Radio Group */
-  .radio-container {
+  .radio {
     flex-direction: row;
-  }
 
-  .radio-option {
-    &:not(:first-child) {
-      margin-top: 0;
-    }
+    > .option {
+      &:not(:first-child) {
+        margin-top: 0;
+      }
 
-    &:not(:last-child) .radio-label {
-      padding-right: 0.5rem;
+      &:not(:last-child) > label {
+        padding-right: 0.5rem;
+      }
     }
   }
 
@@ -184,27 +186,27 @@ noscript {
     min-width: 14rem;
     flex: 0 0;
     padding-bottom: 0.66rem;
-  }
 
-  .stat-label {
-    font-size: 1.2rem;
-    margin: 0 0 0.2rem 0.33rem;
-  }
+    > .label {
+      font-size: 1.2rem;
+      margin: 0 0 0.2rem 0.33rem;
+    }
 
-  .stat-low,
-  .stat-moderate,
-  .stat-high {
-    font-size: 1rem;
-    padding: 0.25rem 0 0.2rem 0.33rem;
-    width: 4rem;
-  }
+    > .low,
+    > .moderate,
+    > .high {
+      font-size: 1rem;
+      padding: 0.25rem 0 0.2rem 0.33rem;
+      width: 4rem;
+    }
 
-  .stat-moderate {
-    width: 8rem;
-  }
+    > .moderate {
+      width: 8rem;
+    }
 
-  .stat-high {
-    width: 12rem;
+    > .high {
+      width: 12rem;
+    }
   }
 
   /* Step List */
@@ -213,14 +215,14 @@ noscript {
   }
 
   /* Toast */
-  .toast {
+  .toast > .container {
     > .message {
       font-size: 2rem;
       margin: 0.5rem auto;
       padding: 0 2.25rem;
     }
 
-    > .close {
+    > button {
       height: 2.25rem;
       width: 2.25rem;
       margin-left: -2.25rem;
@@ -229,11 +231,8 @@ noscript {
   }
 
   /* Toolbar */
-  .toolbar {
-    > .left:not(:last-child),
-    > .right:not(:last-child) {
-      margin-right: 1rem;
-    }
+  footer > .toolbar > :not(:last-child) {
+    margin-right: 1rem;
   }
 }
 
@@ -241,31 +240,31 @@ noscript {
   /* Button */
   .button,
   /* Checkbox */
-  .checkbox,
+  .checkbox > input,
   /* Component Toggle */
-  .toggle-component,
+  .component-toggle > button,
   /* Faction Select */
-  .faction-carousel > button,
+  .faction-select > button,
   /* Number Selector */
-  .number-button,
+  .number > button,
   /* Radiogroup */
-  .radio,
+  .radio > .option > input,
   /* Stat Bar */
-  .stat-low,
-  .stat-moderate,
-  .stat-high,
+  .stat > .low,
+  .stat > .moderate,
+  .stat > .high,
   /* Toast */
-  .toast-anchor,
-  .toast > .close {
+  .toast,
+  .toast > .container > button {
     transition: none;
   }
 }
 
 @media (forced-colors: active) {
   /* Checkbox */
-  .checkbox::before,
+  .checkbox > input::before,
   /* Radio Group */
-  .radio::before {
+  .radio > .option > input::before {
     background-color: CanvasText;
   }
 }

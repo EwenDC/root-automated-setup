@@ -20,16 +20,15 @@ export const Toast: React.FC = () => {
 
   return (
     <div
-      className={classNames("toast-anchor", { hidden: !errorMessage })}
+      className={classNames("toast", { hidden: !errorMessage })}
       aria-hidden={!errorMessage}
       aria-live="assertive"
     >
-      <div className="toast">
+      <div className="container">
         <span id="appError" className="message">
           {cachedMessage && t(cachedMessage)}.
         </span>
         <button
-          className="close"
           title={t("label.closeMessage")}
           onClick={() => dispatch(setErrorMessage(null))}
           disabled={!errorMessage}

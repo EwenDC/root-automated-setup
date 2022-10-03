@@ -28,7 +28,6 @@ export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => 
     return (
       <div className="count">
         <img
-          className="count-image"
           src={componentImage}
           alt="" // Image is just decoration, so hide from screen readers
           aria-hidden="true"

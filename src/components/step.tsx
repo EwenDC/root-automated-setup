@@ -88,7 +88,7 @@ export const Step: React.FC<StepProps> = ({
 
   return stepRendered ? (
     <StepProvider value={{ stepActive }}>
-      <section className={classNames({ "step-inactive": !stepActive })} ref={sectionElement}>
+      <section className={classNames({ inactive: !stepActive })} ref={sectionElement}>
         {titleText && <h2>{titleText}</h2>}
         {subtitleText && <h3>{subtitleText}.</h3>}
         {textBelowChildren ? children : null}

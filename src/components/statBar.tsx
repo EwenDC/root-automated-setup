@@ -15,12 +15,12 @@ export const StatBar: React.FC<StatBarProps> = ({ stat }) => {
   const statValue = currentFactionIndex != null ? factionPool[currentFactionIndex][stat] : 0;
   return (
     <div className="stat">
-      <span className="stat-label">{t("label." + stat)}</span>
+      <span className="label">{t("label." + stat)}</span>
       <span
         className={classNames({
-          "stat-low": statValue < 1,
-          "stat-moderate": statValue === 1,
-          "stat-high": statValue > 1,
+          low: statValue < 1,
+          moderate: statValue === 1,
+          high: statValue > 1,
         })}
       >
         {t("label.factionRating." + statValue)}

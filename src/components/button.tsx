@@ -14,7 +14,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, disabled, onClick, Icon, iconLeft, children, ...props }, ref) => {
     const renderIconLeft = Icon && iconLeft;
     const renderIconRight = Icon && !iconLeft;
-    const buttonIcon = Icon && <Icon className="button-icon" />;
+    const buttonIcon = Icon && <Icon className="label-icon" />;
     return (
       <button
         {...props}
@@ -25,9 +25,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {renderIconLeft ? buttonIcon : null}
         {children && (
           <span
-            className={classNames({
-              "label-right": renderIconLeft,
-              "label-left": renderIconRight,
+            className={classNames("label", {
+              right: renderIconLeft,
+              left: renderIconRight,
             })}
           >
             {children}

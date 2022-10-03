@@ -56,7 +56,7 @@ export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent
   }, [components, t, getLabelKey, unsorted, i18n.language]);
 
   return (
-    <div className={classNames("toggle-carousel", { "toggle-large-labels": largeLabels })}>
+    <div className={classNames("component-toggle", { "large-labels": largeLabels })}>
       {sortedComponents.map((component) => {
         if (component.enabled || stepActive) {
           const componentLockedKey = getLockedKey ? getLockedKey(component) : null;
@@ -64,7 +64,7 @@ export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent
           return (
             <button
               key={component.code}
-              className={classNames("toggle-component", {
+              className={classNames({
                 enabled: stepActive && component.enabled,
                 locked: stepActive && componentLocked,
               })}
@@ -84,12 +84,11 @@ export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent
               aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
             >
               <img
-                className="toggle-image"
                 src={component.image}
                 alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />
-              <div>
+              <div className="label">
                 <span>{component.label}</span>
               </div>
             </button>

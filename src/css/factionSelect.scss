@@ -1,4 +1,4 @@
-.faction-carousel {
+.faction-select {
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -136,18 +136,18 @@
   display: flex;
   flex-direction: column;
 
-  .stats {
+  .stat-list {
     margin: 0.75rem 0 0.5rem;
     flex-wrap: wrap;
   }
 
-  .stats,
-  .counts {
+  .stat-list,
+  .count-list {
     display: flex;
     flex-direction: row;
   }
 
-  .counts {
+  .count-list {
     max-width: 100%;
     overflow: auto;
   }
