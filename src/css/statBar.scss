@@ -38,3 +38,42 @@
     width: 9rem;
   }
 }
+
+@mixin large-screen {
+  .stat {
+    min-width: 14rem;
+    flex: 0 0;
+    padding-bottom: 0.66rem;
+
+    > .label {
+      font-size: 1.2rem;
+      margin: 0 0 0.2rem 0.33rem;
+    }
+
+    > .low,
+    > .moderate,
+    > .high {
+      font-size: 1rem;
+      padding: 0.25rem 0 0.2rem 0.33rem;
+      width: 4rem;
+    }
+
+    > .moderate {
+      width: 8rem;
+    }
+
+    > .high {
+      width: 12rem;
+    }
+  }
+}
+
+@mixin reduced-motion {
+  .stat {
+    > .low,
+    > .moderate,
+    > .high {
+      transition: none;
+    }
+  }
+}

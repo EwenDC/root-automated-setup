@@ -99,3 +99,51 @@
     height: 2.5rem;
   }
 }
+
+@mixin large-screen {
+  .component-toggle {
+    flex-wrap: wrap;
+    overflow: hidden;
+    margin: 0.1rem 0rem;
+    background: none;
+
+    > button {
+      height: 10rem;
+      min-width: 10rem;
+      margin: 0.9rem;
+      display: flex;
+      flex-direction: column;
+
+      &:hover:not(.locked):not(:disabled) {
+        background-color: ivory;
+      }
+
+      > img {
+        width: 6rem;
+        height: 6rem;
+        flex: 0 0;
+        margin: 0.5rem auto;
+        mix-blend-mode: normal;
+      }
+
+      > .label {
+        flex: 1 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    &.large-labels > button > img {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+}
+
+@mixin reduced-motion {
+  .component-toggle > button {
+    transition: none;
+  }
+}

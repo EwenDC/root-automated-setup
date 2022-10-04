@@ -1,10 +1,14 @@
 main {
   max-width: 100%;
   margin: 0 auto 4rem;
+
+  @media (min-width: 80rem) {
+    max-width: 80rem;
+  }
 }
 
-@media (min-width: 80rem) {
+@mixin large-screen {
   main {
-    max-width: 80rem;
+    margin-bottom: 5rem;
   }
 }

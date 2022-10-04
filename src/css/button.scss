@@ -47,3 +47,32 @@
     }
   }
 }
+
+@mixin large-screen {
+  .button {
+    border-radius: 0.66rem;
+    font-size: 2rem;
+    border-bottom: 0.2rem black solid;
+    outline: 0.2rem dotted transparent;
+
+    > .label-icon {
+      height: 1.5rem;
+    }
+
+    > .label {
+      &.left {
+        margin-right: 0.5rem;
+      }
+
+      &.right {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}
+
+@mixin reduced-motion {
+  .button {
+    transition: none;
+  }
+}

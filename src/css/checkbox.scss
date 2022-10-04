@@ -74,3 +74,15 @@
     cursor: pointer;
   }
 }
+
+@mixin reduced-motion {
+  .checkbox > input {
+    transition: none;
+  }
+}
+
+@mixin forced-colors {
+  .checkbox > input::before {
+    background-color: CanvasText;
+  }
+}

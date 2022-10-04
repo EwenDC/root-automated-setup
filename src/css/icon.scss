@@ -5,8 +5,8 @@
   margin-top: -1.5rem;
   display: inline;
   font-style: italic;
-}
 
-section.inactive .icon {
-  filter: grayscale(100%);
+  section.inactive & {
+    filter: grayscale(100%);
+  }
 }

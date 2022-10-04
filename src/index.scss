@@ -1,0 +1,90 @@
+@use "css/button";
+@use "css/checkbox";
+@use "css/componentCount";
+@use "css/componentToggle";
+@use "css/factionSelect";
+@use "css/header";
+@use "css/icon";
+@use "css/numberSelector";
+@use "css/radiogroup";
+@use "css/statBar";
+@use "css/step";
+@use "css/stepList";
+@use "css/toast";
+@use "css/toolbar";
+
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+
+* {
+  font-family: "Libre Baskerville", serif;
+
+  &::selection {
+    color: black;
+    background: lightgray;
+  }
+}
+
+body {
+  margin: 0;
+  font-size: 16px;
+  background: ivory url("./images/background.jpg") top;
+  background-size: 80rem;
+}
+
+.loading {
+  width: 10rem;
+  height: 10rem;
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  margin: -5.375rem -5.375rem 0 0;
+  border: 0.75rem solid transparent;
+  border-radius: 50%;
+  border-right-color: black;
+  animation: rotate 1s infinite linear;
+}
+
+noscript {
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  width: 100%;
+  margin-top: 10rem;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 992px) {
+  @include button.large-screen;
+  @include componentCount.large-screen;
+  @include componentToggle.large-screen;
+  @include factionSelect.large-screen;
+  @include radiogroup.large-screen;
+  @include statBar.large-screen;
+  @include stepList.large-screen;
+  @include toast.large-screen;
+  @include toolbar.large-screen;
+}
+
+@media (prefers-reduced-motion) {
+  @include button.reduced-motion;
+  @include checkbox.reduced-motion;
+  @include componentToggle.reduced-motion;
+  @include factionSelect.reduced-motion;
+  @include numberSelector.reduced-motion;
+  @include radiogroup.reduced-motion;
+  @include statBar.reduced-motion;
+  @include toast.reduced-motion;
+}
+
+@media (forced-colors: active) {
+  @include checkbox.forced-colors;
+  @include radiogroup.forced-colors;
+}

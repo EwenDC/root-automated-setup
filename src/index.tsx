@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "@csstools/normalize.css";
-import "./css/index.scss";
+import "./index.scss";
 
 // Since we have to suspend for i18next anyway, may as well lazy load the entire app
 const App = React.lazy(

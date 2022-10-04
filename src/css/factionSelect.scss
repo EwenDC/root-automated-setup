@@ -157,3 +157,40 @@
     margin: 0.5rem 0;
   }
 }
+
+@mixin large-screen {
+  .faction-select {
+    > button {
+      height: 10.5rem;
+      min-width: 10.5rem;
+
+      > img {
+        width: 6rem;
+        height: 6rem;
+      }
+
+      > .title {
+        border-radius: 1rem;
+
+        > .label {
+          margin: 0 0.25rem;
+        }
+      }
+    }
+  }
+
+  .faction-info {
+    flex-direction: row;
+
+    .stat-list {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+@mixin reduced-motion {
+  .faction-select > button {
+    transition: none;
+  }
+}

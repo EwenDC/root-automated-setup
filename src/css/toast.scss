@@ -57,3 +57,30 @@
     }
   }
 }
+
+@mixin large-screen {
+  .toast > .container {
+    > .message {
+      font-size: 2rem;
+      margin: 0.5rem auto;
+      padding: 0 2.25rem;
+    }
+
+    > button {
+      height: 2.25rem;
+      width: 2.25rem;
+      margin-left: -2.25rem;
+      padding: 0.5rem;
+    }
+  }
+}
+
+@mixin reduced-motion {
+  .toast {
+    transition: none;
+
+    > .container > button {
+      transition: none;
+    }
+  }
+}

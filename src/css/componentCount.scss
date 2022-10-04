@@ -23,3 +23,15 @@
     }
   }
 }
+
+@mixin large-screen {
+  .count {
+    flex-direction: row;
+
+    > img {
+      width: 5rem;
+      height: 5rem;
+      margin-right: 0.5rem;
+    }
+  }
+}

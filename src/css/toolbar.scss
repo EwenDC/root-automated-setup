@@ -22,3 +22,9 @@ footer {
     }
   }
 }
+
+@mixin large-screen {
+  footer > .toolbar > :not(:last-child) {
+    margin-right: 1rem;
+  }
+}
