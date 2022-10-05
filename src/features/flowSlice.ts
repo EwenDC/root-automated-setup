@@ -9,8 +9,8 @@ import {
   SkipStepsPayload,
   CodeObject,
 } from "../types";
-import { takeRandom } from "./utils";
 import { setErrorMessage } from "./setupSlice";
+import { takeRandom } from "./utils";
 
 const initialState: FlowState = {
   pastSteps: [],

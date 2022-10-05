@@ -1,4 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
+import content from "../content";
 import { RootState } from "../store";
 import { ComponentsState, Togglable } from "../types";
 
@@ -77,21 +78,22 @@ export const tuple = <A, B>(a: A, b: B): [A, B] => [a, b];
  * @param getComponentData Function for retreiving the extra data about the component from the content file
  */
 export const generateComponentSelectors = <D>(
-  componentType: keyof Omit<ComponentsState, "expansions">,
-  getComponentData: (expansion: string, componentCode: string) => D
+  componentType: keyof Omit<ComponentsState, "expansions">
 ) =>
   tuple(
     (state: RootState, code: string) => {
       const componentInfo = state.components[componentType][code];
-      return { ...getComponentData(componentInfo.expansionCode, code), ...componentInfo };
+      const componentData: unknown = content[componentInfo.expansionCode][componentType]?.[code];
+      return { ...(componentData as D), ...componentInfo };
     },
     createSelector(
       (state: RootState) => state.components[componentType],
       (componentList) => {
         const array = [];
         for (const [code, componentInfo] of typedEntries(componentList)) {
+          const componentData: unknown = content[componentInfo.expansionCode][componentType]![code];
           array.push({
-            ...getComponentData(componentInfo.expansionCode, code),
+            ...(componentData as D),
             ...componentInfo,
             code,
           });

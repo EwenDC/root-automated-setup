@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import content from "../content";
-import { expansionEnabled, persistExpansionEnabled, typedEntries, typedKeys } from "./utils";
 import { ComponentsState, Expansion, ToggleComponentPayload } from "../types";
+import { expansionEnabled, persistExpansionEnabled, typedEntries, typedKeys } from "./utils";
 
 const addExpansionComponents = (
   state: ComponentsState,

@@ -2,9 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../hooks";
 import { selectFactionPool, selectFlowState } from "../features/selectors";
 
-const imageSource: {
-  [component: string]: "image" | "buildingImage" | "tokenImage";
-} = {
+const imageSource: Record<string, "image" | "buildingImage" | "tokenImage"> = {
   warriors: "image",
   buildings: "buildingImage",
   tokens: "tokenImage",
