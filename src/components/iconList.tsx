@@ -1,12 +1,12 @@
+import { PropsWithChildren } from "react";
 import { ClearingSuit, Item } from "../types";
 import Icon from "./icon";
 
-interface ItemListProps {
+interface ItemListProps extends PropsWithChildren {
   list: (Item | ClearingSuit)[];
-  children?: React.ReactNode;
 }
 
-export const IconList: React.FC<ItemListProps> = ({ list, children }) => (
+export const IconList: React.FC<ItemListProps> = ({ list, children = ", " }) => (
   <>
     {list.map((item, index) => (
       <Icon key={index} icon={item}>
@@ -15,9 +15,5 @@ export const IconList: React.FC<ItemListProps> = ({ list, children }) => (
     ))}
   </>
 );
-
-IconList.defaultProps = {
-  children: ", ",
-};
 
 export default IconList;

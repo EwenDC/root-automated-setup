@@ -15,8 +15,8 @@ import {
   selectEnabledInsurgentFactions,
   selectEnabledMilitantFactions,
   selectFactionArray,
-  selectFactionCodeArray,
-  selectFactionHirelingArray,
+  selectFactionCodes,
+  selectFactionHirelings,
   selectFlowState,
   selectHirelingArray,
   selectLandmarkArray,
@@ -88,7 +88,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (setupParameters.playerCount < 2 && flowState.skippedSteps[SetupStep.setUpBots]) {
         dispatch(setPlayerCount(2));
       } else {
-        const maxPlayerCount = selectFactionCodeArray(getState()).length - 1;
+        const maxPlayerCount = selectFactionCodes(getState()).length - 1;
         if (setupParameters.playerCount > maxPlayerCount) {
           dispatch(setPlayerCount(maxPlayerCount));
         }
@@ -142,8 +142,8 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
       dispatch(
         massComponentToggle(
-          selectFactionHirelingArray,
-          setupParameters.playerCount < selectFactionCodeArray(getState()).length - 1,
+          selectFactionHirelings,
+          setupParameters.playerCount < selectFactionCodes(getState()).length - 1,
           toggleHireling
         )
       );
@@ -243,10 +243,10 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (!flowState.skippedSteps[SetupStep.setUpHireling1]) {
         // Get our lists of independent & faction hirelings which are avaliable for selection
         let hirelingPool = selectEnabledIndependentHirelings(getState());
-        let factionHirelings = selectEnabled(selectFactionHirelingArray(getState()));
+        let factionHirelings = selectEnabled(selectFactionHirelings(getState()));
 
         // Calculate how many factions we can spare for hirelings (i.e. total factions minus setup faction count)
-        const factionCodes = selectFactionCodeArray(getState());
+        const factionCodes = selectFactionCodes(getState());
         let spareFactionCount = factionCodes.length - (setupParameters.playerCount + 1);
 
         // If we can only spare 3 or less factions then limit the amount of faction hirelings

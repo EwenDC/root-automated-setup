@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import content from "../content";
 import { RootState } from "../store";
-import { ComponentsState, Togglable } from "../types";
+import { ComponentsState, GameComponent, Togglable } from "../types";
 
 const isTrue = "1";
 const isFalse = "0";
@@ -68,30 +68,27 @@ export const takeRandom = <T>(list: T[]): T => {
   return returnVal;
 };
 
-/** Generate a tuple type from arbritrary inputs */
-export const tuple = <A, B>(a: A, b: B): [A, B] => [a, b];
-
 /**
  * Function for create Redux Selectors for returning a single component or a
  * component list as an array, moving the component key to the component field "code"
  * @param componentType The key the list of components is stored under in the "components" redux slice
  * @param getComponentData Function for retreiving the extra data about the component from the content file
  */
-export const generateComponentSelectors = <D>(
+export const generateComponentSelectors = <D extends GameComponent>(
   componentType: keyof Omit<ComponentsState, "expansions">
 ) =>
-  tuple(
+  [
     (state: RootState, code: string) => {
       const componentInfo = state.components[componentType][code];
-      const componentData: unknown = content[componentInfo.expansionCode][componentType]?.[code];
-      return { ...(componentData as D), ...componentInfo };
+      const componentData = content[componentInfo.expansionCode][componentType]![code];
+      return { ...(componentData as D), ...componentInfo, code };
     },
     createSelector(
       (state: RootState) => state.components[componentType],
       (componentList) => {
         const array = [];
         for (const [code, componentInfo] of typedEntries(componentList)) {
-          const componentData: unknown = content[componentInfo.expansionCode][componentType]![code];
+          const componentData = content[componentInfo.expansionCode][componentType]![code];
           array.push({
             ...(componentData as D),
             ...componentInfo,
@@ -100,8 +97,8 @@ export const generateComponentSelectors = <D>(
         }
         return array;
       }
-    )
-  );
+    ),
+  ] as const;
 
 /** Filters out disabled components from a given component array */
 export const selectEnabled = <T extends Togglable>(array: T[]) =>

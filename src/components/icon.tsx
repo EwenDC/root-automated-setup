@@ -13,6 +13,7 @@ import hammerImage from "../images/items/hammer.png";
 import swordImage from "../images/items/sword.png";
 import teaImage from "../images/items/tea.png";
 import torchImage from "../images/items/torch.png";
+import { PropsWithChildren } from "react";
 
 const iconDict: Record<Item | ClearingSuit, { key: string; image: string }> = {
   fox: {
@@ -61,9 +62,8 @@ const iconDict: Record<Item | ClearingSuit, { key: string; image: string }> = {
   },
 };
 
-interface ItemProps {
+interface ItemProps extends PropsWithChildren {
   icon: Item | ClearingSuit;
-  children?: React.ReactNode;
 }
 
 export const Icon: React.FC<ItemProps> = ({ icon, children }) => {

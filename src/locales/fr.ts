@@ -1,0 +1,516 @@
+/* eslint-disable import/no-anonymous-default-export */
+export default {
+  label: {
+    aggression: "Agressivité",
+    changeLanguage: "Changer de langue ",
+    closeMessage: "Fermer le message",
+    complexity: "Difficulté",
+    crafting: "Fabrication",
+    factionRating: ["FAIBLE", "MODÉRÉE", "ÉLEVÉE"],
+    fixedFirstPlayer: {
+      false:
+        "Rendre aléatoire le premier joueur <i>(Joueur 1 est la personne utilisant cette application, Joueur 2 est la personne à côté dans le sens des aiguilles d’une montre, etc.)</i>",
+      true: "Fixer le premier joueur <i>(Joueur 1 est la première personne, Joueur 2 est la seconde, etc.)</i>",
+    },
+    fox: "Renard",
+    includeBotStep: "Inclure la mise en place des robots",
+    includeHirelings: "Inclure les recrues",
+    landmarkCount: "Nombre de lieux",
+    logoAlt: "ROOT",
+    logoText: "Mise en place automatique",
+    militant: "Militaire",
+    mouse: "Souris",
+    nextStep: "Étape suivante",
+    pageTitle: "Mise en place automatique de Root",
+    playerCount: "Nombre de joueurs",
+    rabbit: "Lapin",
+    redo: "Refaire",
+    restartSetup: "Recommencer la mise en place",
+    selectVagabonds:
+      "Sélectionnez les personnages Vagabond que vous souhaitez inclure dans le draft de factions.",
+    specialAction: "Action spéciale ",
+    startingItems: "Objets de départ",
+    undo: "Annuler",
+    useMapLandmark:
+      "Utiliser le lieu inclus avec le plateau sélectionné <i>(remplace la mise en place de ce lieu par celle spécifique au plateau sélectionné)</i>",
+    wealth: "Main de cartes",
+  },
+  component: {
+    buildings: "{{count}} Bâtiments",
+    bag: "Sac",
+    boot: "Botte",
+    coin: "Pièce",
+    crossbow: "Arbalète",
+    hammer: "Marteau",
+    sword: "Épée",
+    tea: "Café",
+    tokens: "{{count}} Jetons",
+    torch: "Torche",
+    warriors_one: "1 Pion",
+    warriors_other: "{{count}} Guerriers",
+  },
+  error: {
+    baseExpansionRequired: "Un exemplaire du jeu de base de Root est requis pour la mise en place",
+    factionHirelingExcluded: "La faction associée à cette recrue est requise pour la mise en place",
+    hirelingSelected: "Une recrue équivalente à cette faction est déjà en jeu",
+    landmarkNotEnoughPlayers: "Pas assez de joueurs pour jouer avec ce lieu",
+    lockedFaction:
+      "Impossible de sélectionner la dernière faction tant qu’une faction militaire n’a pas été sélectionnée",
+    mapLandmarkUsed: "Lieu déjà inclus dans la mise en place du plateau",
+    noDeck: "Aucun paquet sélectionné ! Veuillez sélectionner au moins un paquet",
+    noFaction: "Aucune faction sélectionnée ! Veuillez sélectionner une faction pour jouer",
+    noLandmark:
+      "Aucun lieu sélectionné ! Veuillez sélectionner au moins un lieu ou mettre le nombre de lieux à zéro",
+    noMap: "Aucun plateau sélectionné ! Veuillez sélectionner au moins un plateau",
+    noMilitantFaction:
+      "Aucune faction militaire sélectionnée ! Veuillez sélectionner au moins une faction militaire",
+    tooFewFaction:
+      "Pas assez de factions sélectionnées ! Veuillez sélectionner plus de factions ou réduire le nombre de joueurs",
+    tooFewHireling:
+      "Pas assez de recrues pour mettre en place les recrues ! Cela peut être dû au fait que la sélection actuelle de recrues nécessite de supprimer trop de factions du draft",
+    tooFewLandmark:
+      "Pas assez de lieux sélectionnés ! Veuillez sélectionner plus de lieux ou réduire le nombre de lieux",
+    tooFewPlayerInsurgent:
+      "Impossible d’utiliser des factions non militaires avec moins de 3 joueurs et sans robot ni recrue",
+    tooFewVagabond:
+      "Pas assez de personnages Vagabond sélectionnés ! Veuillez inclure plus de personnages Vagabond ou exclure des factions Vagabond",
+  },
+  setupStep: {
+    chooseExpansions: {
+      body: "Bienvenue dans la mise en place automatique de Root. Cette page vous guidera à travers les règles de mise en place avancée du jeu de société populaire Root, avec peu de mélange de cartes et aucune carte de mise en place nécessaire ! Pour commencer, sélectionnez le contenu de Root avec lequel vous jouez. Lorsque vous êtes prêt à passer à l’étape suivante, utilisez les boutons en bas de la page.",
+    },
+    seatPlayers: {
+      title: "Placer les Joueurs",
+      body: "Déterminez les positions des joueurs autour de la table, puis sélectionnez le nombre de joueurs avec lesquels vous jouez et si vous souhaitez que l’application choisisse aléatoirement un premier joueur.",
+    },
+    chooseMap: {
+      title: "Choisir et mettre en place le Plateau",
+      body: "Décidez ensemble avec quel plateau vous souhaitez jouer. Si vous sélectionnez plusieurs plateaux, un plateau sera choisi aléatoirement parmi ceux sélectionnés.",
+    },
+    chooseDeck: {
+      title: "Choisir et mettre en place le Paquet",
+      body: "Décidez ensemble quel paquet de cartes vous souhaitez utiliser. Si vous sélectionnez plusieurs paquets, un paquet sera choisi aléatoirement parmi ceux sélectionnés.",
+    },
+    setUpDeck: {
+      title: "Mettre en place le Paquet",
+    },
+    setUpBots: {
+      title: "Mettre en place les Robots",
+      body: "Décidez ensemble avec quels robots vous souhaitez jouer, en suivant leurs instructions de mise en place comme décrit dans les Lois de la Rootbotique.",
+    },
+    chooseLandmarks: {
+      title: "Mettre en place les Lieux",
+      body: "Décidez ensemble avec combien de lieux vous souhaitez jouer et lesquels inclure dans la sélection.",
+      body_mapLandmark:
+        "Décidez ensemble avec combien de lieux vous souhaitez jouer <i>(en plus du lieu déjà inclus avec le plateau)</i>, et lesquels inclure dans la sélection.",
+    },
+    chooseHirelings: {
+      title: "Mettre en place les Recrues",
+      body: "Décidez ensemble si vous souhaitez jouer avec des recrues et lesquelles inclure dans la sélection.",
+    },
+    postHirelingSetup: {
+      subtitle: "Placer les marqueurs Recrue",
+      body: "Placez les trois marqueurs Recrue — marqués « 4 », « 8 », et « 12 » — sur les cases « 4 », « 8 », et « 12 » de la piste de score sur le plateau.",
+    },
+    drawCards: {
+      title: "Piochez cinq cartes",
+      body: "Chaque joueur pioche cinq cartes du paquet. <i>(Vous choisirez trois cartes à conserver plus tard.)</i>",
+    },
+    chooseFactions: {
+      title: "Mettre en place les Factions",
+      body: "Sélectionnez ensemble les factions que vous souhaitez inclure dans le draft de factions.",
+    },
+    selectFaction: {
+      subtitle: "Choisir une Faction",
+      body: "Joueur {{count}}, choisissez la faction que vous souhaitez jouer dans la liste de factions ci-dessous. Vous pouvez sélectionner librement des factions dans la liste pour consulter leurs informations, avant de confirmer votre sélection en appuyant sur « Étape suivante ».",
+    },
+    placeScoreMarkers: {
+      title: "Placer les marqueurs de score",
+      title_vagabondSetUp: "Placer les marqueurs de score et de relation",
+      body: "Chaque joueur place le marqueur de score de la faction qu’il a choisie sur la case « 0 » de la piste de score.",
+      body_vagabondSetUp:
+        "Chaque joueur place le marqueur de score de la faction qu’il a choisie sur la case « 0 » de la piste de score. Chaque joueur Vagabond place un marqueur de relation pour chaque faction non-Vagabond en jeu sur la case Indifférent de sa piste de relations.",
+    },
+    chooseHand: {
+      title: "Choisissez les mains de départ",
+      body: "Chaque joueur choisit trois cartes dans sa main qu’il souhaite conserver et place les deux autres cartes face cachée sur le paquet. Ensuite, mélangez le paquet.",
+    },
+    setupEnd: {
+      title: "Commencer à jouer",
+      body: "La mise en place est maintenant terminée. La partie commencera avec le Joueur {{count}}. Si vous souhaitez recommencer le processus de mise en place, utilisez le bouton ci-dessous.<p><i>« Mise en place automatique de Root » développé par Ewen Cameron</i><br/><i>Traduction française par Romain Storai et Steeve Fontaine</i><br/><i>Basé sur le jeu de société « Root » publié par Leder Games</i><br/><i>Application sous licence CC BY-NC-SA 4.0</i></p>",
+    },
+  },
+  deck: {
+    exiles: {
+      name: "Exilés et Partisans",
+      setupTitle: "Mettre en place le paquet Exilés et Partisans",
+      setup:
+        "Prenez le paquet de cartes Exilés et Partisans dans la boîte de jeu et placez-le à côté du plateau. Mélangez le paquet.",
+      setup_twoPlayer:
+        "Prenez le paquet de cartes Exilés et Partisans dans la boîte de jeu et placez-le à côté du plateau. Retirez les quatre cartes Domination du paquet. Mélangez le paquet.",
+    },
+    standard: {
+      name: "Base",
+      setupTitle: "Mettre en place le paquet de base",
+      setup:
+        "Prenez le paquet de cartes de base dans la boîte de jeu et placez-le à côté du plateau. Mélangez le paquet.",
+      setup_twoPlayer:
+        "Prenez le paquet de cartes de base dans la boîte de jeu et placez-le à côté du plateau. Retirez les quatre cartes Domination du paquet. Mélangez le paquet.",
+    },
+  },
+  expansion: {
+    exilesDeck: "Paquet de cartes Exilés et Partisans",
+    landmarkPack: "Pack de Lieux",
+    marauder: "Extension Maraudeur",
+    marauderHirelings: "Pack de Recrues Maraudeur",
+    riverfolk: "Extension Rivière",
+    riverfolkHirelings: "Pack de Recrues Rivière",
+    root: "Root",
+    underworld: "Extension Monde Souterrain",
+    underworldHirelings: "Pack de Recrues Monde Souterrain",
+    vagabondPack: "Pack Vagabond",
+  },
+  faction: {
+    alliance: {
+      name: "Alliance de la Forêt",
+      summaryTitle: "Jouer l’Alliance",
+      summary:
+        "<p>En jouant l’Alliance de la Forêt, vous faites votre possible pour vous attirer la sympathie des créatures opprimées de la Forêt. Chaque fois que vous placez un <b>jeton de Sympathie</b> sur le plateau, vous marquez des points. Plus vous en avez placé, plus vous gagnez de points.</p><p>Gagner la sympathie des peuples nécessite des <b>partisans</b>, des cartes placées sur votre plateau de faction, de la couleur des clairières où vous souhaitez agir. Vous pouvez ajouter vos propres cartes à vos partisans, mais vous pouvez aussi inciter vos adversaires à en faire autant en provoquant l’<b>Indignation</b> : lorsqu’une autre faction retire de la sympathie ou déplace des guerriers dans une clairière sympathisante, elle doit ajouter une carte à votre pile de partisans.</p><p>N’hésitez pas à mettre en place des points d’étranglement, car vous êtes expert en <b>Guérilla</b> : lorsque vous défendez en combat, vous utilisez le plus grand résultat. Placez votre Sympathie là où les conflits sont les plus probables, et forcez vos adversaires à vous affronter !</p><p>Les partisans peuvent être poussés à une violente <b>révolte</b>, ce qui détruit <i>toutes</i> les pièces adverses d’une clairière et vous permet d’y placer une <b>base</b> et des guerriers. Les bases améliorent votre pioche et vous permettent d’entraîner des <b>officiers</b>, qui vous donnent des actions gratuites chaque tour. Protégez vos bases ! Si vous en perdez une, vous perdrez de nombreux partisans et officiers.</p>",
+      setupTitle: "Mettre en place l’Alliance de la Forêt",
+      setup:
+        "<i>1.</i> Piochez 3 cartes et placez-les face cachée dans votre pile de <b>partisans</b>.<br/><i>2.</i> Placez vos <b>bases</b> sur leurs emplacements réservés.<br/><i>3.</i> Remplissez votre piste de sympathie avec vos <b>jetons de Sympathie</b>.",
+    },
+    corvid: {
+      name: "Conspiration des Corvidés",
+      summaryTitle: "Jouer les Corvidés",
+      summary:
+        "<p>En tant que membre de la Conspiration des Corvidés, vous voulez prouver que c’est vous qui détenez le pouvoir et qui tirez les ficelles du conflit qui agite les Sous-Bois. Vous marquez des points chaque fois que vous retournez un jeton de <b>Complot</b> précédemment placé sur le plateau. Et plus il y a de Complots face visible sur le plateau lorsque vous le faites, plus vous marquez de points.</p><p>Pour placer et retourner des Complots, vous devez recruter des guerriers et les placer stratégiquement. Votre faction est une des meilleures lorsqu’il s’agit de rallier des guerriers à sa cause, mais ces derniers ont tendance à s’éparpiller et vous déplacer trop souvent n’est pas forcément une bonne idée. De plus, vous ne pouvez pas vous permettre de beaucoup combattre, étant donné qu’il vous faut retirer au moins un de vos guerriers pour placer un Complot, mais qu’il faut aussi des guerriers Corvidés sur la clairière d’un Complot pour le retourner.</p><p>Heureusement, vos guerriers sont particulièrement <b>Agiles</b>, ce qui en facilite le déplacement. Vos <b>Agents Secrets</b> quant à eux protègent efficacement vos Complots des attaques en infligeant une perte supplémentaire en combat lorsque vous êtes le défenseur et avez un jeton de Complot face cachée.</p><p>Soyez cependant vigilant à ne pas laisser d’opportunité à vos adversaires de <b>déjouer vos Complots</b>. Un adversaire dans une clairière avec un jeton de Complot face cachée peut vous montrer une carte de la couleur de la clairière pour tenter de deviner de quel type de Complot il s’agit. S’il a raison, c’est qu’il est parvenu à infiltrer la Conspiration et à déjouer votre Complot ! Il retire alors le Complot et ignore son effet. S’il se trompe et que vous avez réussi à démasquer son espion, votre Complot reste en place et il doit vous donner la carte qu’il vous a montrée. Il va falloir bluffer…",
+      setupTitle: "Mettre en place la Conspiration des Corvidés",
+      setup:
+        "<i>1.</i> Choisissez une clairière en tant que territoire. Placez-y 1 <b>guerrier</b> et 1 <b>complot</b> de votre choix, face cachée.<br/><i>2.</i> Placez 1 <b>guerrier</b> dans une clairière de chaque couleur <i>(en comptant l’étape précédente, vous placerez donc 4 guerriers en tout)</i>.",
+    },
+    cult: {
+      name: "Culte des Lézards",
+      summaryTitle: "Jouer le Culte des Lézards",
+      summary:
+        "<p>En jouant le Culte des Lézards, vous vous occupez des créatures rejetées par les autres factions. Vous marquez des points de victoire en exécutant les <b>rituels</b> appropriés, en révélant des cartes de votre main de la même couleur que les clairières où vous possédez des <b>jardins</b>, et en défaussant des cartes pour compléter le rite. Plus vous avez de jardins de la couleur de la carte révélée, plus vous marquez de points.</p><p>Cette approche vous empêche de combattre vos adversaires en début de partie. Pour cela vous devez radicaliser vos membres et en faire des <b>acolytes</b>. Vous pourrez ainsi effectuer des <b>conspirations</b> dans les clairières de <b>Parias</b>, la couleur de carte la plus défaussée lors de la manche précédente.</p><p>Votre <b>Haine des oiseaux</b> vous empêche d’utiliser vos cartes Oiseau comme jokers pour vos rituels. Vos jardins répandent la parole de votre seigneur dragon, attirant des foules de <b>Pèlerins</b>. Vous contrôlez une clairière dès que vous y avez au moins un jardin. Enfin, vos acolytes obtiennent toujours <b>Vengeance</b> sur vos adversaires : lorsqu’un de vos guerriers est retiré alors qu’il défend en combat, vous gagnez un nouvel acolyte.</p>",
+      setupTitle: "Mettre en place le Culte des Lézards",
+      setup:
+        "<i>1.</i> Choisissez une clairière en tant que territoire, si possible non adjacente à un territoire adverse.<br/><i>2.</i> Placez 4 <b>guerriers</b> et 1 <b>jardin</b> de la couleur correspondante dans la clairière de votre territoire. Placez 3 <b>guerriers</b> parmi les clairières adjacentes à votre territoire, répartis de la façon la plus équitable possible.<br/><i>3.</i> Placez 2 <b>guerriers</b> sur votre case Acolytes.<br/><i>4.</i> Placez vos <b>jardins</b> sur leurs pistes respectives, en laissant vide la case la plus à gauche du jardin que vous avez placé. Placez votre <b>marqueur de parias</b>, face Parias visible, sur la case de votre choix de votre piste de Parias.",
+    },
+    duchy: {
+      name: "Duché Souterrain",
+      summaryTitle: "Jouer le Duché",
+      summary:
+        "<p>En tant que membre du Duché Souterrain vous souhaitez asservir toutes les autres créatures des Sous-Bois. Chaque fois que vous ralliez un de vos <b>Ministres</b> à votre cause <i>(mettre fin à la guerre et unifier les terres au-dessus de vous)</i>, vous marquez des points. Plus le rang du Ministre Rallié est élevé, plus vous marquez de points.</p><p>Pour rallier un Ministre, vous devez révéler des cartes, qui représentent les membres des Sous-Bois qui vous soutiennent. Plus le rang du Ministre est élevé, plus vous devez révéler de cartes. Cependant, vous ne pouvez révéler que des cartes de la couleur des clairières où vous possédez des pièces, car elles témoignent de votre emprise sur cette zone chaotique. Chaque Ministre Rallié vous octroie une action supplémentaire par tour. Certains Ministres vous permettent de marquer des points de victoire en tirant parti de votre développement dans les Sous-Bois.</p><p>Vos taupes sont bien protégées dans <b>le Terrier</b>, une clairière où vous êtes le seul à pouvoir pénétrer et que vous contrôlez toujours. Depuis le Terrier, vous pouvez vous déplacer grâce aux <b>Tunnels</b> que vous avez creusés dans les Sous-Bois. Si vous parvenez à apaiser les tensions dans une clairière et à vous y établir, vous pourrez y construire des <b>Citadelles</b> et des <b>Marchés</b> afin de rallier encore plus de créatures à votre cause. Cependant, vous devez payer le <b>Prix de l’Échec</b>, c’est-à-dire perdre le soutien d’un de vos Ministres de plus haut rang et défausser une carte au hasard, lorsque vous perdez des bâtiments.</p>",
+      setupTitle: "Mettre en place le Duché Souterrain",
+      setup:
+        "<i>1.</i> Choisissez une clairière en tant que territoire, si possible non adjacente à un territoire adverse.<br/><i>2.</i> Placez 2 <b>guerriers</b> et 1 <b>tunnel</b> dans la clairière de votre territoire. Placez 5 <b>guerriers</b> parmi les clairières adjacentes à votre territoire, répartis de la façon la plus équitable possible.<br/><i>3.</i> Placez <b>le Terrier</b> à côté du plateau. Remplissez vos pistes de Bâtiments avec vos <b>Citadelles</b> et vos <b>Marchés</b>, placez vos 9 <b>cartes de Ministre</b> face visible sur votre pile de Ministres Non-Ralliés et vos 9 <b>Couronnes</b> sur les cases carrées avec des points de victoire.",
+    },
+    eyrie: {
+      name: "Dynasties de la Canopée",
+      summaryTitle: "Jouer la Canopée",
+      summary:
+        "<p>En jouant les Dynasties de la Canopée, vous souhaitez redonner à votre espèce sa gloire d’antan au sein de la Forêt en reprenant le contrôle de ses clairières. À chaque tour, vous marquerez des points selon le nombre de <b>perchoirs</b> sur le plateau. Plus il y en a, plus vous gagnez de points.</p><p>Vous êtes cependant lié par votre <b>Décret</b>, mandaté par votre <b>dirigeant</b>. À chaque tour, vous devez y ajouter des cartes, puis effectuer une action pour chaque carte s’y trouvant. Chaque action doit s’effectuer dans une clairière de la couleur de la carte, planifiez donc en conséquence. C’est au début assez simple, mais lorsque le Décret grossit, vous devrez vous démener pour pouvoir accomplir chaque action. Si vous ne pouvez pas en accomplir une, vous subissez une <b>crise</b>, perdez des points, remplacez votre dirigeant et défaussez votre Décret.</p><p>N’oubliez pas que les créatures terrestres tremblent à votre arrivée. Vous êtes les <b>Seigneurs de la Forêt</b>. Vous contrôlez les clairières en cas d’égalité. Mais votre peuple éprouve le <b>Mépris du commerce</b>, et vous marquerez souvent moins de points lorsque vous fabriquerez des objets.</p>",
+      setupTitle: "Mettre en place les Dynasties de la Canopée",
+      setup:
+        "<i>1.</i> Choisissez une clairière, en tant que territoire, en bordure et qui a au moins 2 clairières entre elle et les territoires adverses si possible.<br/><i>2.</i> Placez 1 <b>perchoir</b> et 6 <b>guerriers</b> dans la clairière de votre territoire.<br/><i>3.</i> Choisissez un <b>dirigeant</b>, et gardez les autres à portée. Placez votre dirigeant sur votre emplacement Dirigeant. Glissez vos 2 <b>Vizirs Fidèles</b> dans les colonnes du Décret indiquées par votre dirigeant. Remplissez votre piste de perchoirs avec vos <b>perchoirs</b>, en laissant vide la case la plus à gauche.",
+    },
+    keepers: {
+      name: "Gardiens d’Airain",
+      summaryTitle: "Jouer les Gardiens",
+      summary:
+        "<p>En tant que Gardiens d’Airain, vous marquez des points en récupérant des <b>reliques</b> perdues lors de conflits passés. Vous devrez <b>fouiller</b> les bois à la recherche des reliques, les déplacer vers un <b>relais</b> du même type, puis <b>récupérez</b> ces reliques. Que ces reliques vous appartiennent ou appartiennent aux Sous-Bois, cependant, est une autre question.</p><p>Comme <b>Chevaliers Dévots</b> d’un ordre exilé, vous ignorez la première perte que vous subissez au combat si vous avez à la fois un guerrier et une relique, en attaque ou en défense. Vous pouvez également déplacer des reliques avec vos guerriers.</p><p>Vos reliques sont des <b>Trophées Prisés</b>, alors gardez-les en sécurité. À chaque fois qu’un adversaire retire une relique de quelque manière que ce soit, il marque deux points de victoire au lieu d’un et replace la relique dans n’importe quel bois.</p><p>Au fil du temps, vous développerez votre <b>escorte</b>, trois colonnes de cartes qui vous permettent d’effectuer des actions. Cependant, fouiller et récupérer des reliques mettra votre escorte en danger. Vous aurez besoin de planifier et agir avec prudence pour réussir.</p>",
+      setupTitle: "Mettre en place les Gardiens d’Airain",
+      setup:
+        "<i>1.</i> Mélangez les 12 <b>jetons Relique</b> face cachée. Placez-en un au hasard dans chaque bois, face cachée.<br/><i>2.</i> Choisissez deux clairières adjacentes, en tant que territoire, en bordure et qui ont au moins 2 clairières entre elles et les territoires adverses si possible. Placez 4 <b>guerriers</b> dans chaque clairière de votre territoire.<br/><i>3.</i> Placez les éventuelles <b>reliques</b> restantes dans les bois non adjacents à votre territoire, réparties de la façon la plus équitable possible.<br/><i>4.</i> Glissez une carte <b>Escorte Fidèle</b> dans chaque colonne de votre Escorte.",
+    },
+    marquise: {
+      name: "Marquise de Chat",
+      summaryTitle: "Jouer la Marquise",
+      summary:
+        "<p>En jouant la Marquise de Chat, vous cherchez à transformer la Forêt en puissance militaire et industrielle. Chaque fois que vous construisez un <b>bâtiment</b>, vous marquez des points. Plus vous possédez de bâtiments du même type sur le plateau, plus cela vous rapporte de points.</p><p>Cependant pour pouvoir continuer à construire, vous devez maintenir et protéger une production de <b>bois</b> forte et interconnectée. Construire des infrastructures rend vos tours plus efficaces et vous aide à piocher plus de cartes, faites donc en sorte de protéger votre expansion. Vos forces sont légion, vous permettant de faire appliquer votre règne par la force, si nécessaire.</p><p>Le siège de votre pouvoir est le <b>Donjon</b>, une structure si imposante qu’aucune autre faction ne peut placer de pièces dans sa clairière. De plus vos <b>Hôpitaux de campagne</b> vous aideront à rester au cœur des combats. Lorsque vos guerriers sont retirés, vous pouvez dépenser une carte de la couleur de la clairière où se trouvent ces guerriers pour les placer dans la clairière du Donjon, tant qu’il n’est pas détruit. Protégez-le à tout prix !</p>",
+      setupTitle: "Mettre en place la Marquise de Chat",
+      setup:
+        "<i>1.</i> Choisissez 3 clairières adjacentes qui formeront votre territoire.<br/><i>2.</i> Placez 2 <b>guerriers</b> dans chaque clairière de votre territoire. Placez 1 <b>guerrier</b> dans chaque autre clairière.<br/><i>3.</i> Placez votre <b>jeton Donjon</b> dans l’une des 3 clairières de votre territoire, non adjacente à un territoire adverse si possible. Placez 1 <b>scierie</b>, 1 <b>atelier</b> et 1 <b>recruteur</b> parmi les 3 clairières de votre territoire, 1 par clairière.<br/><i>4.</i> Remplissez votre piste de bâtiments avec vos <b>scieries</b>, <b>ateliers</b> et <b>recruteurs</b>, en laissant vides les cases les plus à gauche.",
+    },
+    riverfolk: {
+      name: "Compagnie de la Rivière",
+      summaryTitle: "Jouer la Compagnie de la Rivière",
+      summary:
+        "<p>En jouant la Compagnie de la Rivière, vous parcourez les rivières qui traversent la grande Forêt et offrez vos services à toute faction qui en a les moyens. Vous marquez des points de victoire en établissant des <b>comptoirs commerciaux</b> dans les clairières et en faisant fructifier vos fonds.</p><p>Bien que la construction de comptoirs commerciaux soit un moyen efficace de marquer des points, il en va de même pour l’accumulation de richesses. À chaque Aurore, vous marquez des points en fonction des <b>fonds</b> que vous avez économisés et gagnés lors du tour précédent. Mais vous devrez également investir ou dépenser ces fonds pour étendre et protéger votre réseau commercial, en trouvant un équilibre entre dividendes et croissance.</p><p>Vous gagnez des fonds lorsque les autres factions achètent vos <b>services</b>, que ce soit vos bateaux, vos guerriers mercenaires, ou bien vos cartes en main qui sont toutes <b>À vendre</b>. Vous pouvez fixer les prix de vos services à chaque tour, essayez donc d’anticiper les besoins des autres factions.</p><p>Construire des comptoirs commerciaux vous aide à développer votre clientèle, car une faction peut vous acheter plus de services s’ils sont dans des clairières où vous avez des comptoirs. Mais attention, lorsqu’un comptoir est détruit, il ne peut plus être reconstruit ! Vous ne contrôlez pas beaucoup de clairières, mais vous pouvez toujours vous déplacer le long des rivières, car vous êtes d’excellents <b>Nageurs</b>.</p>",
+      setupTitle: "Mettre en place la Compagnie de la Rivière",
+      setup:
+        "<i>1.</i> Placez 4 <b>guerriers</b> sur une ou plusieurs clairières le long de la rivière.<br/><i>2.</i> Placez 3 <b>guerriers</b> dans votre case Paiements.<br/><i>3.</i> Placez vos <b>marqueurs de service</b> sur votre piste de services pour fixer vos prix de départ pour chaque service.<br/><i>4.</i> Placez vos <b>comptoirs commerciaux</b> sur vos pistes de comptoirs correspondantes.",
+    },
+    vagabond: {
+      name: "Vagabond",
+      summaryTitle: "Jouer le Vagabond",
+      summary:
+        "<p>En jouant le Vagbond, vous participez au conflit sans prendre parti, et vous faites des amis ou des ennmis selon vos intérêts. Vous marquez des points en améliorant vos <b>relations</b>, en aidant les factions amicales en leur donnant des cartes, et en retirant du jeu les pièces des factions hostiles. Vous pouvez également marquer des points en effectuant des <b>quêtes</b> afin d’accroître votre popularité auprès des créatures de la Forêt.</p><p>Pour agir efficacement, vous devez gérer vos <b>objets</b> et élargir votre collection en explorant les <b>ruines</b> de la Forêt et en apportant votre aide aux autres factions. Vous êtes un <b>Voyageur Solitaire</b>, vous ne pouvez jamais contrôler de clairière ni empêcher un joueur d’en contrôler une, mais vous êtes <b>Agile</b> et vous pouvez toujours vous déplacer, peu importe qui contrôle votre clairière.</p>",
+      setupTitle: "Mettre en place le Vagabond",
+      setup:
+        "<i>1.</i> Placez votre <b>pion</b> dans n’importe quel bois.<br/><i>2.</i> Mélangez le paquet de quêtes, piochez 3 <b>quêtes</b> et placez-les à proximité, face visible.<br/><i>3.</i> Placez aléatoirement les <b>objets de ruine</b> <Bag/>, <Boot/>, <Hammer/> et <Sword/> <i>(marqués avec un « R »)</i> sous les ruines, sauf si cela a déjà été fait.<br/><i>4.</i> Placez la carte <b>Personnage</b> « {{vagabond}} » sur votre emplacement de carte de personnage. Placez les <b>objets de départ</b> <InitialStartingItems>, </InitialStartingItems> et <FinalStartingItem/> <i>(marqués avec un « D »)</i> dans votre sacoche ou sur les pistes correspondantes.",
+      setup_vagabondSetUp:
+        "<i>1.</i> Placez votre <b>pion</b> dans n’importe quel bois.<br/><i>2.</i> Mélangez le paquet de quêtes, piochez 3 <b>quêtes</b> et placez-les à proximité, face visible.<br/><i>3.</i> Placez aléatoirement les <b>objets de ruine</b> supplémentaires <Bag/>, <Boot/>, <Hammer/> et <Sword/> <i>(marquées avec un « R »)</i> sous les ruines <i>(avec les objets existants)</i>.<br/><i>4.</i> Placez la carte <b>Personnage</b> « {{vagabond}} » sur votre emplacement de carte de personnage. Placez les <b>objets de départ</b> <InitialStartingItems>, </InitialStartingItems> et <FinalStartingItem/> <i>(marqués avec un « D »)</i> dans votre sacoche ou sur les pistes correspondantes.",
+    },
+    warlord: {
+      name: "Seigneur des Nuées",
+      summaryTitle: "Jouer le Seigneur des Nuées",
+      summary:
+        "<p>En tant que Seigneur des Nuées, vous marquez des points lorsque vous <b>opprimez</b> vos ennemis. À la fin de votre tour, plus vous contrôlez de clairières qui n’ont <i>aucune</i> pièce adverse — pas de guerrier, pas de bâtiment, rien — plus vous marquez de points.</p><p>Pour gagner en puissance et attirer des guerriers, vous devez acquérir des objets et les ajouter à votre imposant <b>Butin</b>. Les bottes, les sacs et les pièces augmentent votre <b>Autorité</b>, tandis que les marteaux, le café, les épées et l’arbalète augmentent votre <b>Prouesse</b>. Votre <b>Dédain du commerce</b> vous fait rarement marquer des points en fabriquant des objets, mais vous pouvez voler des objets à vos adversaires avec vos <b>pilleurs</b> !</p><p>À la tête des Nuées se trouve votre seigneur de guerre, un guerrier-démagogue dont l’<b>humeur</b> inconstante vous donne une capacité pour le tour. Votre seigneur de guerre est obsédé par la thésaurisation, donc plus vous acquérez d’objets, moins vous aurez le choix pour son humeur.</p><p>En vous déclarant être la vraie voix des Sous-Bois, vous pouvez provoquer les <b>cohues</b>, qui détruisent les bâtiments et les jetons adverses, et pillent les ruines pour leurs objets.</p>",
+      setupTitle: "Mettre en place le Seigneur des Nuées",
+      setup:
+        "<i>1.</i> Choisissez une clairière, en tant que territoire, en bordure et qui a au moins 2 clairières entre elle et les territoires adverses si possible.<br/><i>2.</i> Placez votre <b>Seigneur de guerre</b>, 4 <b>guerriers</b> et 1 <b>bastion</b> dans la clairière de votre territoire.<br/><i>3.</i> Placez la <b>carte d’humeur</b> « Tenace » dans votre emplacement d’humeur.<br/><i>4.</i> Placez aléatoirement les <b>objets de ruine</b> <Bag/>, <Boot/>, <Hammer/> et <Sword/> <i>(marqués avec un « R »)</i> sous les ruines, sauf si cela a déjà été fait.",
+      setup_vagabondSetUp:
+        "<i>1.</i> Choisissez une clairière, en tant que territoire, en bordure et qui a au moins 2 clairières entre elle et les territoires adverses.<br/><i>2.</i> Placez votre <b>Seigneur de guerre</b>, 4 <b>guerriers</b> et 1 <b>bastion</b> dans la clairière de votre territoire.<br/><i>3.</i> Placez la <b>carte d’humeur</b> « Tenace » dans votre emplacement d’humeur.",
+    },
+  },
+  hireling: {
+    band: {
+      name: "Groupe Populaire",
+      setupTitle: "Mettre en place le Groupe Populaire",
+      setupTitle_demoted: "Mettre en place le Groupe de Rue",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et les 5 guerriers du Groupe Populaire dans la boîte de jeu. Placez 2 guerriers, chacun dans une clairière différente. Placez les guerriers restants et la carte Recrue <i>(face non-reléguée « Groupe Populaire » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue et les 5 guerriers du Groupe Populaire dans la boîte de jeu. Placez-les à côté du plateau <i>(avec la carte Recrue face reléguée « Groupe de Rue » visible)</i>.",
+    },
+    bandits: {
+      name: "Bandits de Grand Chemin",
+      setupTitle: "Mettre en place les Bandits de Grand Chemin",
+      setupTitle_demoted: "Mettre en place les Gangs de Bandits",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et les 4 guerriers des Bandits de Grand Chemin dans la boîte de jeu. Placez 2 guerriers, chacun sur un chemin différent. Placez les guerriers restants et la carte Recrue <i>(face non-reléguée « Bandits de Grand Chemin » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue et les 4 guerriers des Bandits de Grand Chemin dans la boîte de jeu. Placez-les à côté du plateau <i>(avec la carte Recrue face reléguée « Gangs de Bandits » visible)</i>.",
+    },
+    dynasty: {
+      name: "Dernière Dynastie",
+      setupTitle: "Mettre en place la Dernière Dynastie",
+      setupTitle_demoted: "Mettre en place les Nobles Merles",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et les 5 guerriers de la Dernière Dynastie dans la boîte de jeu. Placez les 5 guerriers dans une clairière en bordure. Placez la carte Recrue <i>(face non-reléguée « Dernière Dynastie » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue de la Dernière Dynastie dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Nobles Merles » visible)</i>.",
+    },
+    exile: {
+      name: "L’Exilé",
+      setupTitle: "Mettre en place l’Exilé",
+      setupTitle_demoted: "Mettre en place le Hors-la-Loi",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue, le pion et les 3 objets Gourdin de l’Exilé dans la boîte de jeu. Placez le pion dans n’importe quel bois. Placez la carte Recrue <i>(face non-reléguée « Exilé » visible)</i> à côté du plateau et placez les 3 objets Gourdin dessus <i>(face visible)</i>.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue de l’Exilé dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Hors-la-Loi » visible)</i>. Placez aléatoirement les <b>objets de ruine</b> <Bag/>, <Boot/>, <Hammer/> et <Sword/> <i>(marqués d’un « R »)</i> sous les ruines, comme si le Vagabond était en jeu.",
+    },
+    expedition: {
+      name: "Expédition du Soleil",
+      setupTitle: "Mettre en place l’Expédition du Soleil",
+      setupTitle_demoted: "Mettre en place les Artisans Taupes",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue, les 8 guerriers et les 3 jetons Mine de l’Expédition du Soleil dans la boîte de jeu. Placez 1 jeton Mine et 3 guerriers dans n’importe quelle clairière. Placez les guerriers et jetons restants et la carte Recrue <i>(face non-reléguée « Expédition du Soleil » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue de l’Expédition du Soleil dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Artisans Taupes » visible)</i>.",
+    },
+    flamebearers: {
+      name: "Porteurs de Flammes",
+      setupTitle: "Mettre en place les Porteurs de Flammes",
+      setupTitle_demoted: "Mettre en place les Contrebandiers Rats",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et les 6 guerriers des Porteurs de Flammes dans la boîte de jeu. Placez 2 guerriers dans une ou plusieurs clairières. Placez les guerriers restants et la carte Recrue <i>(face non-reléguée « Porteurs de Flammes » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue des Porteurs de Flammes dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Contrebandiers Rats » visible)</i>.",
+    },
+    flotilla: {
+      name: "Flotille Marchande",
+      setupTitle: "Mettre en place la Flotille Marchande",
+      setupTitle_demoted: "Mettre en place les Plongeurs Loutres",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et le pion de la Flotille Marchande dans la boîte de jeu. Placez le pion dans une clairière en bordure, le long de la rivière. Placez la carte Recrue <i>(face non-reléguée « Flotille Marchande » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue de la Flotille Marchande dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Plongeurs Loutres » visible)</i>.",
+    },
+    patrol: {
+      name: "Patrouille de la Forêt",
+      setupTitle: "Mettre en place la Patrouille de la Forêt",
+      setupTitle_demoted: "Mettre en place les Médecins Félins",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et les 12 guerriers de la Patrouille de la Forêt dans la boîte de jeu. Placez 1 guerrier dans chaque clairière. Placez la carte Recrue <i>(face non-reléguée « Patrouille de la Forêt » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue de la Patrouille de la Forêt dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Médecins Félins » visible)</i>.",
+    },
+    prophets: {
+      name: "Prophètes du Levant",
+      setupTitle: "Mettre en place les Prophètes du Levant",
+      setupTitle_demoted: "Mettre en place les Messagers Lézards",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et les 4 guerriers des Prophètes du Levant dans la boîte de jeu. Placez 1 guerrier dans chaque clairière avec une ruine. Placez la carte Recrue <i>(face non-reléguée « Prophètes du Levant » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue des Prophètes du Levant dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Messagers Lézards » visible)</i>.",
+    },
+    protector: {
+      name: "Protecteur Courroucé",
+      setupTitle: "Mettre en place le Protecteur Courroucé",
+      setupTitle_demoted: "Mettre en place le Protecteur Stoïque",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et le pion du Protecteur Courroucé dans la boîte de jeu. Placez le pion dans n’importe quelle clairière. Placez la carte Recrue <i>(face non-reléguée « Protecteur Courroucé » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue et le pion du Protecteur Courroucé dans la boîte de jeu. Placez-les à côté du plateau <i>(avec la carte Recrue face reléguée « Protecteur Stoïque » visible)</i>.",
+    },
+    spies: {
+      name: "Espions Corvidés",
+      setupTitle: "Mettre en place les Espions Corvidés",
+      setupTitle_demoted: "Mettre en place les Sentinelles Corbeaux",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue et les 6 guerriers des Espions Corvidés dans la boîte de jeu. Placez 2 guerriers, un chacun dans deux clairières de la même couleur. Placez les guerriers restants et la carte Recrue <i>(face non-reléguée « Espions Corvidés » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue des Espions Corvidés dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Sentinelles Corbeaux » visible)</i>.",
+    },
+    uprising: {
+      name: "Printemps des Souris",
+      setupTitle: "Mettre en place le Printemps des Souris",
+      setupTitle_demoted: "Mettre en place les Éclaireurs Lapins",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue, les 4 guerriers et le dé Soulèvement du Printemps des Souris dans la boîte de jeu. Lancez le dé Soulèvement deux fois et placez 1 guerrier dans les clairières correspondantes. Placez les guerriers restants, le dé et la carte Recrue <i>(face non-reléguée « Printemps des Souris » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue du Printemps des Souris dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Éclaireurs Lapins » visible)</i>.",
+    },
+    vaultkeepers: {
+      name: "Gardiens du Caveau",
+      setupTitle: "Mettre en place les Gardiens du Caveau",
+      setupTitle_demoted: "Mettre en place les Gardes du Corps Blaireaux",
+      setup:
+        "Joueur {{count}}, prenez la carte Recrue, les 6 guerriers et les 6 bâtiments Caveau des Gardiens du Caveau dans la boîte de jeu. Placez 2 guerriers et 1 bâtiment Caveau dans n’importe quelle clairière avec un emplacement de bâtiment libre. Placez les guerriers et les bâtiments restants et la carte Recrue <i>(face non-reléguée « Gardiens du Caveau » visible)</i> à côté du plateau.",
+      setup_demoted:
+        "Joueur {{count}}, prenez la carte Recrue des Gardiens du Caveau dans la boîte de jeu. Placez-la à côté du plateau <i>(face reléguée « Gardes du Corps Blaireaux » visible).",
+    },
+  },
+  landmark: {
+    city: {
+      name: "Cité Perdue",
+      setupTitle: "Mettre en place la Cité Perdue",
+      setup:
+        "Joueur {{count}}, placez la Cité Perdue dans une clairière le long de la rivière. Cette clairière ne doit pas contenir un autre Lieu ou être adjacente à une clairière contenant un autre Lieu. Prenez la carte de lieu « Cité Perdue » dans la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.",
+      setup_lake:
+        "Joueur {{count}}, placez la Cité Perdue dans une clairière côtière. Cette clairière ne doit pas contenir un autre Lieu ou être adjacente à une clairière contenant un autre Lieu. Prenez la carte de lieu « Cité Perdue » dans la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.",
+    },
+    ferry: {
+      name: "Radeau",
+      setupTitle: "Mettre en place le Radeau",
+      setup:
+        "Joueur {{count}}, placez le Radeau dans une clairière le long de la rivière. Cette clairière ne doit pas contenir un autre Lieu ou être adjacente à une clairière contenant un autre Lieu. Si vous avez la carte de lieu « Radeau », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible. Si vous n’avez pas la carte, le Radeau a la règle suivante pendant la partie :<p>« Une fois par tour, un joueur se déplaçant depuis la clairière comportant le Radeau peut se déplacer avec le Radeau vers une clairière adjacente le long de la rivière. <i>(Et ce selon les règles de déplacement habituelles.)</i> Après s’être ainsi déplacé, ce joueur pioche une carte. »</p>",
+      setup_lake:
+        "Joueur {{count}}, placez le Radeau dans une clairière côtière. Cette clairière ne doit pas contenir un autre Lieu ou être adjacente à une clairière contenant un autre Lieu. Si vous avez la carte de lieu « Radeau », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible. Si vous n’avez pas la carte, le Radeau a la règle suivante pendant la partie :<p>« Une fois par tour, un joueur se déplaçant depuis la clairière côtière comportant le Radeau peut se déplacer avec le Radeau vers une autre clairière côtière. <i>(Et ce selon les règles de déplacement habituelles.)</i> Après s’être ainsi déplacé, ce joueur pioche une carte. »</p>",
+    },
+    forge: {
+      name: "Forge Légendaire",
+      setupTitle: "Mettre en place la Forge Légendaire",
+      setup:
+        "Joueur {{count}}, placez la Forge Légendaire dans une clairière. Cette clairière ne doit pas contenir un autre Lieu ou être adjacente à une clairière contenant un autre Lieu. Prenez la carte de lieu « Forge Légendaire » de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.<br/>Selon la couleur de la clairière de la Forge Légendaire, retirez les objets suivants de la réserve d’objets du plateau, et placez-les sur la carte « Forge Légendaire » :<p><Fox/> : <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/> : <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/> : <Boot/> <Boot/> <Coin/> <Coin/></p>",
+    },
+    market: {
+      name: "Marché Noir",
+      setupTitle: "Mettre en place le Marché Noir",
+      setup:
+        "Joueur {{count}}, placez le Marché Noir dans une clairière qui a exactement un emplacement de bâtiment et aucune ruine. Cette clairière ne doit pas contenir un autre Lieu ou être adjacente à une clairière contenant un autre Lieu. Prenez la carte de lieu « Marché Noir » dans la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.<br/>Piochez 3 cartes sans les regarder et placez-les face cachée à côté de la carte « Marché Noir ».",
+    },
+    tower: {
+      name: "Tour",
+      setupTitle: "Mettre en place la Tour",
+      setup:
+        "Joueur {{count}}, placez la Tour dans une clairière avec une ruine. Cette clairière ne doit pas contenir un autre Lieu. Si vous avez la carte de lieu « Tour », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible. Si vous n’avez pas la carte, la Tour a la règle suivante pendant la partie :<p>« À la fin du Crépuscule d’un joueur, s’il contrôle la clairière avec la Tour, il marque 1 point de victoire. »</p>",
+    },
+    treetop: {
+      name: "Arbre Vénérable",
+      setupTitle: "Mettre en place l’Arbre Vénérable",
+      setup:
+        "Joueur {{count}}, placez l’Arbre Vénérable dans une clairière en coin. Cette clairière ne doit pas contenir un autre Lieu ou être adjacente à une clairière contenant un autre Lieu. Prenez la carte de lieu « Arbre Vénérable » dans la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.",
+    },
+  },
+  map: {
+    autumn: {
+      name: "Automne",
+      setupTitle: "Mettre en place le plateau Automne",
+      setup:
+        "<i>1.</i> Prenez le plateau Automne/Hiver dans la boîte de jeu et placez-le avec la face Automne visible.<br/><i>2.</i> Prenez les 12 marqueurs de clairière, mélangez-les face cachée, puis placez-les un par un sur chaque clairière, en recouvrant les symboles de couleur imprimés.<br/><i>3.</i> Placez une ruine sur chaque emplacement du plateau marqué d’un « R » <i>(4 au total)</i>.<br/><i>4.</i> Placez ces objets sur leurs emplacements correspondants dans la réserve d’objets de la partie supérieure du plateau : 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Placez les deux dés à côté du plateau.",
+    },
+    lake: {
+      name: "Lac",
+      setupTitle: "Mettre en place le plateau Lac",
+      setup:
+        "<i>1.</i> Prenez le plateau Lac/Montagne dans la boîte de jeu et placez-le avec la face Lac visible.<br/><i>2.</i> Prenez les 12 marqueurs de clairière, mélangez-les face cachée, puis placez-les un par un sur chaque clairière.<br/><i>3.</i> Placez une ruine sur chaque emplacement du plateau marqué d’un « R » <i>(4 au total)</i>.<br/><i>4.</i> Placez ces objets sur leurs emplacements correspondants dans la réserve d’objets de la partie supérieure du plateau : 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Placez les deux dés à côté du plateau.",
+      landmarkSetup:
+        "Placez le Radeau dans la clairière côtière du coin inférieur droit. Si vous avez la carte de lieu « Radeau », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.",
+    },
+    mountain: {
+      name: "Montagne",
+      setupTitle: "Mettre en place le plateau Montagne",
+      setup:
+        "<i>1.</i> Prenez le plateau Lac/Montagne dans la boîte de jeu et placez-le avec la face Montagne visible.<br/><i>2.</i> Placez les 6 marqueurs de chemin fermé sur les 6 chemins plus foncés creusés dans la terre.<br/><i>3.</i> Prenez les 12 marqueurs de clairière, mélangez-les face cachée, puis placez-les un par un sur chaque clairière.<br/><i>4.</i> Placez une ruine sur chaque emplacement du plateau marqué d’un « R » <i>(4 au total)</i>.<br/><i>5.</i> Placez ces objets sur leurs emplacements correspondants dans la réserve d’objets de la partie supérieure du plateau : 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>6.</i> Placez les deux dés à côté du plateau.",
+      landmarkSetup:
+        "Placez la Tour dans la clairière centrale représentant deux tours. Si vous avez la carte de lieu « Tour », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.",
+    },
+    winter: {
+      name: "Hiver",
+      setupTitle: "Mettre en place le plateau Hiver",
+      setup:
+        "<i>1.</i> Prenez le plateau Automne/Hiver dans la boîte de jeu et placez-le avec la face Hiver visible.<br/><i>2.</i> Prenez les 12 marqueurs de clairière, mélangez-les face cachée, puis placez-les un par un sur chaque clairière.<br/><i>3.</i> Placez une ruine sur chaque emplacement du plateau marqué d’un « R » <i>(4 au total)</i>.<br/><i>4.</i> Placez ces objets sur leurs emplacements correspondants dans la réserve d’objets de la partie supérieure du plateau : 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Placez les deux dés à côté du plateau.",
+    },
+  },
+  vagabond: {
+    adventurer: {
+      name: "Aventurier",
+      action: "Improvisation",
+      effect:
+        "Une fois par tour, lorsque vous effectuez l’action Quête, vous pouvez considérer un objet non épuisé comme s’il s’agissait de n’importe quel autre objet. Lorsque vous épuisez cet objet pour accomplir la quête, endommagez-le aussi.",
+    },
+    arbiter: {
+      name: "Médiateur",
+      action: "Protection",
+      effect:
+        "Avant de lancer les dés pour un combat, le défenseur peut enrôler le Médiateur dans la clairière du combat. Le Médiateur marque 1 point de victoire et ajoute toutes ses <Sword/> intactes au maximum de pertes infligées par le défenseur. Le Médiateur ne peut pas s’enrôler lui-même.",
+    },
+    harrier: {
+      name: "Chasseur",
+      action: "Vol plané",
+      effect:
+        "Épuisez une <Torch/> pour déplacer votre pion Vagabond <i>(pas d’autres pièces)</i> dans n’importe quelle clairière <i>(même Hostile)</i> du plateau sans épuiser de <Boot/>.",
+    },
+    ranger: {
+      name: "Rôdeur",
+      action: "Refuge",
+      effect:
+        "Épuisez une <Torch/> pour réparer 3 objets. Mettez ensuite immédiatement fin au Jour et passez au Crépuscule.",
+    },
+    ronin: {
+      name: "Ronin",
+      action: "Frappe rapide",
+      effect:
+        "Vous pouvez épuiser une <Sword/> pour infliger 1 perte additionnelle au combat <i>(après avoir lancé les dés)</i>.",
+    },
+    scoundrel: {
+      name: "Brigand",
+      action: "Terre brûlée",
+      effect:
+        "Épuisez une <Torch/> et placez-la dans votre clairière. Retirez toutes les pièces adverses de cette clairière. Pour le reste de la partie, il n’est plus possible de placer de pièces dans cette clairière ni d’en déplacer vers celle-ci. <i>(Vous restez dans cette clairière. Une fois que vous en sortez, vous ne pouvez plus y entrer.)</i>",
+    },
+    thief: {
+      name: "Voleur",
+      action: "Larcin",
+      effect:
+        "Épuisez une <Torch/> pour prendre une carte au hasard dans la main d’un joueur de votre clairière.",
+    },
+    tinker: {
+      name: "Bricoleur",
+      action: "Travailleur",
+      effect:
+        "Épuisez une <Torch/> pour prendre une carte de la défausse de la même couleur que votre clairière. <i>(Vous pouvez toujours prendre une carte Oiseau.)</i>",
+    },
+    vagrant: {
+      name: "Miséreux",
+      action: "Provocation",
+      effect:
+        "Épuisez une <Torch/> pour initier un combat dans votre clairière. Vous choisissez l’attaquant et le défenseur, ainsi que l’ordre dans lequel chacun retire des bâtiments et des jetons. Vous retirez également les pièces. <i>(Marquez 1 point de victoire par bâtiment ou jeton de chaque joueur retiré, ainsi que par pièce hostile des joueurs retirée.)</i>",
+    },
+  },
+};

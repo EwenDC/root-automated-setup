@@ -1,0 +1,73 @@
+.language-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  margin: 0.5rem 0;
+
+  > .label {
+    display: inline-block;
+  }
+
+  > button {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0 0.33rem;
+    cursor: pointer;
+
+    > img {
+      margin-top: 0.25rem;
+      height: 1rem;
+      text-decoration: underline;
+      border-radius: 0.1rem;
+      filter: grayscale(50%);
+      outline: 0.15rem solid transparent;
+      transition: outline 80ms ease-out;
+
+      &:hover {
+        text-decoration: none;
+        outline-color: darkgray;
+      }
+
+      &:active {
+        outline-color: lightgray;
+      }
+    }
+
+    &.active {
+      cursor: default;
+
+      > img {
+        filter: none;
+        outline-color: transparent;
+      }
+    }
+  }
+}
+
+@mixin large-screen {
+  .language-select {
+    justify-content: flex-end;
+    margin: -0.5rem 0;
+    font-size: 1rem;
+
+    > button {
+      margin: 0 0 0 1rem;
+
+      &:last-child {
+        margin-right: 1rem;
+      }
+
+      > img {
+        height: 1.4rem;
+      }
+    }
+  }
+}
+
+@mixin reduced-motion {
+  .language-select > button > img {
+    transition: none;
+  }
+}

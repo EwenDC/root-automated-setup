@@ -5,6 +5,7 @@
 @use "css/factionSelect";
 @use "css/header";
 @use "css/icon";
+@use "css/languageSelect";
 @use "css/numberSelector";
 @use "css/radiogroup";
 @use "css/statBar";
@@ -66,6 +67,7 @@ noscript {
   @include componentCount.large-screen;
   @include componentToggle.large-screen;
   @include factionSelect.large-screen;
+  @include languageSelect.large-screen;
   @include radiogroup.large-screen;
   @include statBar.large-screen;
   @include stepList.large-screen;
@@ -78,6 +80,7 @@ noscript {
   @include checkbox.reduced-motion;
   @include componentToggle.reduced-motion;
   @include factionSelect.reduced-motion;
+  @include languageSelect.reduced-motion;
   @include numberSelector.reduced-motion;
   @include radiogroup.reduced-motion;
   @include statBar.reduced-motion;

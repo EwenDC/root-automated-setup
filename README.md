@@ -22,69 +22,99 @@ This project was built from the ground up with translation support using [i18nex
 
 ### Updating a Translation
 
-All translations are located in the `/public/locales/` folder of the repo. You can learn more about the .json translation file format [here](https://www.i18next.com/misc/json-format#i18next-json-v4). To summarise the basics, the file is formatted as a set of nested translation keys and translation values like this:
+All translations are located in the `/src/locales/` folder of the repo. You can learn more about the translation format [here](https://www.i18next.com/misc/json-format#i18next-json-v4). To summarise the basics, the file is formatted as a set of nested translation keys and translation values like this:
 
-```JSON
-{
-  "deck": {
-    "exiles": "Exiles and Partisans",
-    "standard": "Standard"
-  }
+```JavaScript
+export default {
+  deck: {
+    exiles: "Exiles and Partisans",
+    standard: "Standard"
+  },
 }
 ```
 
-The translation keys are required for the application to know what translation to use, so you will (mostly\*) not change the keys (or the file's structure in general) when translating. Instead, you will edit the values to match the translated text for the given language. i.e. if the previous example came from `auset-en.json`, this is what that same example would look like in `auset-nl.json` (translation is for demonstration purposes, and is not accurate):
+The translation keys are required for the application to know what translation to use, so you will (mostly\*) not change the keys (or the file's structure in general) when translating. Instead, you will edit the values to match the translated text for the given language. i.e. if the previous example came from `en.ts`, this is what that same example would look like in `nl.ts` (translation is for demonstration purposes, and is not accurate):
 
-```JSON
-{
-  "deck": {
-    "exiles": "Ballingen en Partizanen",
-    "standard": "Standaard"
-  }
+```JavaScript
+export default {
+  deck: {
+    exiles: "Ballingen en Partizanen",
+    standard: "Standaard"
+  },
 }
 ```
 
 Some translated text will include formatting using HTML or HTML-Like tags like so:
 
-```JSON
-"forge": {
-  "setup": "Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side.<br/>Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>"
-},
+```JavaScript
+export default {
+  forge: {
+    setup:
+      "Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side.<br/>Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>"
+  },
+}
 ```
 
 When translating, please edit the text around these tags, but not the tags themselves, like so:
 
-```JSON
-"forge": {
-  "setup": "Speler {{count}}, plaats het Legendary Forge-oriëntatiepunt op een open plek. Het mag geen oriëntatiepunt hebben of er aan grenzen. Pak de oriëntatiepuntkaart \"Legendarische Smederij\" uit de doos en plaats deze naast het bord op de niet-opgezette kant.<br/>Gebaseerd op de kleur van de ontruiming van de Legendary Forge, verwijder je de volgende items uit de itemvoorraad op de kaart en plaats ze op de Legendary Forge-kaart:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>"
-},
+```JavaScript
+export default {
+  forge: {
+    setup:
+      "Speler {{count}}, plaats het Legendary Forge-oriëntatiepunt op een open plek. Het mag geen oriëntatiepunt hebben of er aan grenzen. Pak de oriëntatiepuntkaart \"Legendarische Smederij\" uit de doos en plaats deze naast het bord op de niet-opgezette kant.<br/>Gebaseerd op de kleur van de ontruiming van de Legendary Forge, verwijder je de volgende items uit de itemvoorraad op de kaart en plaats ze op de Legendary Forge-kaart:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>"
+  },
+}
 ```
 
 Some translated text will include substitutions, demoted by double curly braces like so:
 
-```JSON
-"setUpMapLandmark": {
-  "subtitle": "Set up the {{landmark}}"
-},
+```JavaScript
+export default {
+  setUpMapLandmark: {
+    subtitle: "Set up the {{landmark}}"
+  },
+}
 ```
 
 When translating, place the substitution (as-is) in the correct place in your text like so:
 
-```JSON
-"setUpMapLandmark": {
-  "subtitle": "Het {{landmark}} instellen"
-},
+```JavaScript
+export default {
+  setUpMapLandmark: {
+    subtitle: "Het {{landmark}} instellen"
+  },
+}
 ```
 
 \*If the substitution is `{{count}}`, that represents a contextual number for the text. You can provide plural forms of the text for your language in separate keys, even if the English translation does not include those keys. See the [i18next documentation](https://www.i18next.com/translation-function/plurals) for more information. This is the only situation in which you will modify the structure/keys of the translation file
 
-### Testing a Translation
-
-Open the command line program for your operating system and navigate to the folder you cloned this repository to. Execute the `yarn start` command, then navigate to [http://localhost:3000?lng=en](http://localhost:3000?lng=en) (changing en to your language code). When you make changes and save the .json translation file, the webpage should refresh with your changes reflected in the app.
-
 ### Adding a New Language
 
-To add a new language translation, simply copy and paste the `auset-en.json` file located in the `/public/locales/` folder of the repo. Rename your new file to match the format of `auset-`[[Two letter language code]](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)`.json`. Open the file and change any of the English strings, then run the app and navigate to [http://localhost:3000?lng=en](http://localhost:3000?lng=en) (changing en to your language code). You should see your changes reflected in the app text.
+To add a new language translation, simply copy and paste the `en.ts` file located in the `/src/locales/` folder of the repo. Rename your new file to match the format of [[Two letter language code]](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)`.ts`. Then, you need to add your language to the list of langauges contained in `/src/i18nSetup.ts`. Go to the top of the file and look for the section that matches this format:
+
+```JavaScript
+import EnglishFlag from "./images/languages/english.png";
+
+export const languages = [
+  { name: "English", locale: "en", image: EnglishFlag },
+];
+```
+
+You will need to add a new entry for your added language inside of the `languages` list. Copy an existing line and replace the name and locale with your language's name and the same [two letter language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) you used for the file. You will also need to provide a flag image for the language selector. I reccommend finding an appropriate flag SVG on wikimedia and downloading the lowest resolution png proxy provided. Save it to the `/src/images/languages` folder with an appropriate name, then add an import for it to the above section as per the other languages. You changes should end up looking something like this:
+
+```JavaScript
+import EnglishFlag from "./images/languages/english.png";
+import DutchFlag from "./images/languages/dutch.png";
+
+export const languages = [
+  { name: "English", locale: "en", image: EnglishFlag },
+  { name: "Nederlands", locale: "nl", image: DutchFlag },
+];
+```
+
+### Testing a Translation
+
+Open the command line program for your operating system and navigate to the folder you cloned this repository to. Execute the `yarn start` command, then navigate to [http://localhost:3000](http://localhost:3000). When you make changes to the translation file inside of `/src/locales/`, the webpage should refresh with your changes reflected in the app.
 
 ### Translation Standards
 
@@ -102,29 +132,35 @@ I am willing to accept contributions for fan-made print-and-play content, provid
 All content text is defined within the translation files, using dynamic key lookup based on the code you assigned to the component. For example, if you define the Lake map like so:
 
 ```JavaScript
-underworld: {
-  base: false,
-  image: underworldBox,
-  maps: {
-    lake: {
-      landmark: "ferry",
-      image: lakeMap,
+const content = {
+  underworld: {
+    base: false,
+    image: underworldBox,
+    maps: {
+      lake: {
+        landmark: "ferry",
+        image: lakeMap,
+      },
     },
   },
-},
+}
 ```
 
-The app will attempt to load all relevant text for this map from the `map.lake` key, which you would define in `auset-en.json` like so:
+The app will attempt to load all relevant text for this map from the `map.lake` key, which you would define in `/src/locales/en.ts` like so:
 
-```JSON
-"map": {
-  "lake": {
-    "name": "Lake",
-    "setupTitle": "Set up the Lake Map",
-    "setup": "<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an \"R\" <i>(four in total)</i>.<br/><i>4.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Place the two dice near the map.",
-    "landmarkSetup": "Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have \"The Ferry\" landmark card, take it from the game box and place it next to the board on it's non-setup side."
+```JavaScript
+export default {
+  map: {
+    lake: {
+      name: "Lake",
+      setupTitle: "Set up the Lake Map",
+      setup:
+        '<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an "R" <i>(four in total)</i>.<br/><i>4.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Place the two dice near the map.',
+      landmarkSetup:
+        'Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.',
+    },
   },
-},
+}
 ```
 
 Most text you define (with the exception of title/subtitle text) can support the following basic HTML tags (More information in the [react-i18next documentation](https://react.i18next.com/latest/trans-component#usage-with-simple-html-elements-like-less-than-br-greater-than-and-others-v10.4.0)):

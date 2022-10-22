@@ -9,7 +9,7 @@ import {
   selectDeckArray,
   selectExpansionArray,
   selectFactionArray,
-  selectFactionCodeArray,
+  selectFactionCodes,
   selectHirelingArray,
   selectLandmarkArray,
   selectMapArray,
@@ -41,6 +41,7 @@ import { ReactComponent as RestartIcon } from "../images/icons/restart.svg";
 import Button from "./button";
 import IconList from "./iconList";
 import Icon from "./icon";
+import LanguageSelect from "./languageSelect";
 
 export const StepList: React.FC = () => {
   const {
@@ -64,7 +65,7 @@ export const StepList: React.FC = () => {
   const factions = useAppSelector(selectFactionArray);
   const maps = useAppSelector(selectMapArray);
   const map = useAppSelector(selectSetupMap);
-  const factionCodes = useAppSelector(selectFactionCodeArray);
+  const factionCodes = useAppSelector(selectFactionCodes);
   const factionPool = useAppSelector(selectFactionPool);
   const selectedVagabond =
     currentFactionIndex != null ? factionPool[currentFactionIndex].vagabond : undefined;
@@ -75,6 +76,8 @@ export const StepList: React.FC = () => {
 
   return (
     <main>
+      <LanguageSelect />
+
       <Step step={SetupStep.chooseExpansions}>
         <ComponentToggle
           selector={selectExpansionArray}
@@ -92,6 +95,7 @@ export const StepList: React.FC = () => {
           onChange={(checked) => dispatch(skipSteps(SetupStep.setUpBots, !checked))}
         />
       </Step>
+
       <Step step={SetupStep.seatPlayers}>
         <NumberSelector
           id="playerCount"
@@ -106,6 +110,7 @@ export const StepList: React.FC = () => {
           onChange={(value) => dispatch(fixFirstPlayer(value))}
         />
       </Step>
+
       <Step step={SetupStep.chooseMap}>
         <ComponentToggle
           selector={selectMapArray}
@@ -120,17 +125,20 @@ export const StepList: React.FC = () => {
           />
         ) : null}
       </Step>
+
       <Step
         step={SetupStep.setUpMap}
         subtitleKey={"map." + map?.code + ".setupTitle"}
         textKey={"map." + map?.code + ".setup"}
       />
+
       <Step
         step={SetupStep.setUpMapLandmark}
         subtitleKey={"landmark." + map?.landmark + ".setupTitle"}
         textKey={"map." + map?.code + ".landmarkSetup"}
         translationOptions={{ context: map?.code }}
       />
+
       <Step step={SetupStep.chooseDeck}>
         <ComponentToggle
           selector={selectDeckArray}
@@ -138,6 +146,7 @@ export const StepList: React.FC = () => {
           getLabelKey={(deck) => "deck." + deck.code + ".name"}
         />
       </Step>
+
       <Step
         step={SetupStep.setUpDeck}
         renderTitle={skippedSteps[SetupStep.chooseDeck]}
@@ -148,7 +157,9 @@ export const StepList: React.FC = () => {
           context: playerCount < 3 ? "twoPlayer" : undefined,
         }}
       />
+
       <Step step={SetupStep.setUpBots} />
+
       <Step
         step={SetupStep.chooseLandmarks}
         translationOptions={{
@@ -179,6 +190,7 @@ export const StepList: React.FC = () => {
           />
         ) : null}
       </Step>
+
       <Step
         step={SetupStep.setUpLandmark1}
         subtitleKey={"landmark." + landmark1 + ".setupTitle"}
@@ -188,6 +200,7 @@ export const StepList: React.FC = () => {
           count: nthLastPlayer(1),
         }}
       />
+
       <Step
         step={SetupStep.setUpLandmark2}
         subtitleKey={"landmark." + landmark2 + ".setupTitle"}
@@ -197,6 +210,7 @@ export const StepList: React.FC = () => {
           count: nthLastPlayer(2),
         }}
       />
+
       <Step step={SetupStep.chooseHirelings}>
         <Checkbox
           id="includeHirelings"
@@ -231,6 +245,7 @@ export const StepList: React.FC = () => {
           />
         ) : null}
       </Step>
+
       <Step
         step={SetupStep.setUpHireling1}
         subtitleKey={"hireling." + hireling1?.code + ".setupTitle"}
@@ -240,6 +255,7 @@ export const StepList: React.FC = () => {
           count: nthLastPlayer(1),
         }}
       />
+
       <Step
         step={SetupStep.setUpHireling2}
         subtitleKey={"hireling." + hireling2?.code + ".setupTitle"}
@@ -249,6 +265,7 @@ export const StepList: React.FC = () => {
           count: nthLastPlayer(2),
         }}
       />
+
       <Step
         step={SetupStep.setUpHireling3}
         subtitleKey={"hireling." + hireling3?.code + ".setupTitle"}
@@ -258,8 +275,11 @@ export const StepList: React.FC = () => {
           count: nthLastPlayer(3),
         }}
       />
+
       <Step step={SetupStep.postHirelingSetup} />
+
       <Step step={SetupStep.drawCards} />
+
       <Step step={SetupStep.chooseFactions}>
         <ComponentToggle
           selector={selectFactionArray}
@@ -289,12 +309,14 @@ export const StepList: React.FC = () => {
           </>
         ) : null}
       </Step>
+
       <Step
         step={SetupStep.selectFaction}
         translationOptions={{ count: playerOrder[currentPlayerIndex] }}
       >
         <FactionSelect />
       </Step>
+
       <Step
         step={SetupStep.setUpFaction}
         subtitleKey={
@@ -322,13 +344,16 @@ export const StepList: React.FC = () => {
           }
         }
       />
+
       <Step
         step={SetupStep.placeScoreMarkers}
         translationOptions={{
           context: vagabondSetUp ? "vagabondSetUp" : undefined,
         }}
       />
+
       <Step step={SetupStep.chooseHand} />
+
       <Step step={SetupStep.setupEnd} translationOptions={{ count: playerOrder[0] }}>
         <Button Icon={RestartIcon} iconLeft={true} onClick={() => dispatch(resetFlow())}>
           {t("label.restartSetup")}

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { TOptions } from "i18next";
-import { useEffect, useRef } from "react";
+import { PropsWithChildren, useEffect, useRef } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { selectFlowState } from "../features/selectors";
 import { SetupStep } from "../types";
@@ -16,7 +16,7 @@ const defaultValue: StepContextValue = {
   stepActive: false,
 };
 
-interface StepProps {
+interface StepProps extends PropsWithChildren {
   step: SetupStep;
   renderTitle?: boolean;
   renderSubtitle?: boolean;
@@ -25,7 +25,6 @@ interface StepProps {
   textBelowChildren?: boolean;
   translationOptions?: TOptions;
   components?: readonly React.ReactElement[] | { readonly [tagName: string]: React.ReactElement };
-  children?: React.ReactNode;
 }
 
 export const StepContext = createContext(defaultValue);
@@ -37,7 +36,7 @@ export const Step: React.FC<StepProps> = ({
   renderSubtitle,
   subtitleKey,
   textKey,
-  textBelowChildren,
+  textBelowChildren = false,
   translationOptions,
   components,
   children,
@@ -102,10 +101,6 @@ export const Step: React.FC<StepProps> = ({
       </section>
     </StepProvider>
   ) : null;
-};
-
-Step.defaultProps = {
-  textBelowChildren: false,
 };
 
 export default Step;
