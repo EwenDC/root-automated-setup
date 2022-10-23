@@ -2,6 +2,7 @@
 export default {
   label: {
     aggression: "Agressivité",
+    changeLanguage: "Changer de langue ",
     closeMessage: "Fermer le message",
     complexity: "Difficulté",
     crafting: "Fabrication",
@@ -436,6 +437,7 @@ export default {
       setupTitle: "Mettre en place le plateau Lac",
       setup:
         "<i>1.</i> Prenez le plateau Lac/Montagne dans la boîte de jeu et placez-le avec la face Lac visible.<br/><i>2.</i> Prenez les 12 marqueurs de clairière, mélangez-les face cachée, puis placez-les un par un sur chaque clairière.<br/><i>3.</i> Placez une ruine sur chaque emplacement du plateau marqué d’un « R » <i>(4 au total)</i>.<br/><i>4.</i> Placez ces objets sur leurs emplacements correspondants dans la réserve d’objets de la partie supérieure du plateau : 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Placez les deux dés à côté du plateau.",
+      useLandmark: "Sur le plateau Lac, utiliser la mise en place du Radeau spécifique à ce plateau",
       landmarkSetup:
         "Placez le Radeau dans la clairière côtière du coin inférieur droit. Si vous avez la carte de lieu « Radeau », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.",
     },
@@ -444,6 +446,7 @@ export default {
       setupTitle: "Mettre en place le plateau Montagne",
       setup:
         "<i>1.</i> Prenez le plateau Lac/Montagne dans la boîte de jeu et placez-le avec la face Montagne visible.<br/><i>2.</i> Placez les 6 marqueurs de chemin fermé sur les 6 chemins plus foncés creusés dans la terre.<br/><i>3.</i> Prenez les 12 marqueurs de clairière, mélangez-les face cachée, puis placez-les un par un sur chaque clairière.<br/><i>4.</i> Placez une ruine sur chaque emplacement du plateau marqué d’un « R » <i>(4 au total)</i>.<br/><i>5.</i> Placez ces objets sur leurs emplacements correspondants dans la réserve d’objets de la partie supérieure du plateau : 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>6.</i> Placez les deux dés à côté du plateau.",
+      useLandmark: "Sur le plateau Montagne, utiliser la mise en place de la Tour spécifique à ce plateau",
       landmarkSetup:
         "Placez la Tour dans la clairière centrale représentant deux tours. Si vous avez la carte de lieu « Tour », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.",
     },
