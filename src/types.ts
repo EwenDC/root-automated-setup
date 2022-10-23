@@ -70,6 +70,12 @@ export interface ToggleComponentPayload {
   shouldEnable?: boolean;
 }
 
+/** Payload for Enable Map Landmark redux action */
+export interface EnableMapLandmarkPayload {
+  mapCode: string;
+  enableLandmark: boolean;
+}
+
 /** An object with an associated enable/disable state */
 export interface Togglable {
   enabled: boolean;
@@ -85,6 +91,11 @@ export interface ComponentInfo extends Togglable {
   expansionCode: string;
 }
 
+/** Generic information about a map component, namely whether to use it's included landmark (if it has one) */
+export interface MapInfo extends ComponentInfo {
+  useLandmark?: boolean;
+}
+
 /** Object tracking which components are avaliable for selection */
 export interface ComponentsState {
   expansions: Record<string, ExpansionInfo>;
@@ -92,7 +103,7 @@ export interface ComponentsState {
   factions: Record<string, ComponentInfo>;
   hirelings: Record<string, ComponentInfo>;
   landmarks: Record<string, ComponentInfo>;
-  maps: Record<string, ComponentInfo>;
+  maps: Record<string, MapInfo>;
   vagabonds: Record<string, ComponentInfo>;
 }
 
@@ -117,7 +128,6 @@ export interface SetupState {
   errorMessage: string | null;
   // Map
   map: string | null;
-  useMapLandmark: boolean;
   // Deck
   deck: string | null;
   // Landmarks

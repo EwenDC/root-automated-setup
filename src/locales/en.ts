@@ -31,8 +31,6 @@ export default {
     specialAction: "Special Action",
     startingItems: "Starting Items",
     undo: "Undo",
-    useMapLandmark:
-      "Use the included Landmark for the selected Map <i>(overriding the landmark's default set up with the map-specific version)</i>",
     wealth: "Card Wealth",
   },
   component: {
@@ -437,6 +435,7 @@ export default {
       setupTitle: "Set up the Lake Map",
       setup:
         '<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an "R" <i>(four in total)</i>.<br/><i>4.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Place the two dice near the map.',
+      useLandmark: "Use the map-specific setup for the Ferry landmark on the Lake map",
       landmarkSetup:
         'Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.',
     },
@@ -445,6 +444,7 @@ export default {
       setupTitle: "Set up the Mountain Map",
       setup:
         '<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.<br/><i>2.</i> Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.<br/><i>3.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>4.</i> Place a ruin in each slot on the map marked with an "R" <i>(four in total)</i>.<br/><i>5.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>6.</i> Place the two dice near the map.',
+      useLandmark: "Use the map-specific setup for the Tower landmark on the Mountain map",
       landmarkSetup:
         'Place the Tower piece in the central clearing showing two towers. If you have "The Tower" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.',
     },

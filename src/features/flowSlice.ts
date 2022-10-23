@@ -128,7 +128,8 @@ export const flowSlice = createSlice({
           skip,
         },
       }),
-      reducer: (state, { payload: { steps, skip } }: PayloadAction<SkipStepsPayload>) => {
+      reducer: (state, { payload }: PayloadAction<SkipStepsPayload>) => {
+        const { steps, skip } = payload;
         steps.forEach((step) => {
           state.skippedSteps[step] = skip;
         });

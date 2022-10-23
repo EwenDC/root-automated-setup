@@ -1,12 +1,11 @@
 import { createSelector } from "@reduxjs/toolkit";
 import content from "../content";
 import { RootState } from "../store";
-import { ComponentsState, GameComponent, Togglable } from "../types";
+import { ComponentInfo, ComponentsState, GameComponent, Togglable } from "../types";
 
 const isTrue = "1";
 const isFalse = "0";
 
-export const typedKeys = Object.keys as <T extends object>(o: T) => (keyof T)[];
 export const typedEntries = Object.entries as <T extends { [s: string]: any } | ArrayLike<any>>(
   o: T
 ) => [keyof T, T[keyof T]][];
@@ -74,14 +73,19 @@ export const takeRandom = <T>(list: T[]): T => {
  * @param componentType The key the list of components is stored under in the "components" redux slice
  * @param getComponentData Function for retreiving the extra data about the component from the content file
  */
-export const generateComponentSelectors = <D extends GameComponent>(
+export const generateComponentSelectors = <
+  D extends GameComponent,
+  I extends ComponentInfo = ComponentInfo
+>(
   componentType: keyof Omit<ComponentsState, "expansions">
 ) =>
   [
+    // This selector error's if selecting a component that doesn't exist
+    // We avoid this by just doing our best to not select a non-existant component
     (state: RootState, code: string) => {
       const componentInfo = state.components[componentType][code];
       const componentData = content[componentInfo.expansionCode][componentType]![code];
-      return { ...(componentData as D), ...componentInfo, code };
+      return { ...(componentData as D), ...(componentInfo as I), code };
     },
     createSelector(
       (state: RootState) => state.components[componentType],
@@ -91,7 +95,7 @@ export const generateComponentSelectors = <D extends GameComponent>(
           const componentData = content[componentInfo.expansionCode][componentType]![code];
           array.push({
             ...(componentData as D),
-            ...componentInfo,
+            ...(componentInfo as I),
             code,
           });
         }
@@ -102,4 +106,4 @@ export const generateComponentSelectors = <D extends GameComponent>(
 
 /** Filters out disabled components from a given component array */
 export const selectEnabled = <T extends Togglable>(array: T[]) =>
-  array.filter((value) => value.enabled);
+  array.filter(({ enabled }) => enabled);

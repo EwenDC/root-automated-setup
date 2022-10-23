@@ -6,11 +6,12 @@ import { StepContext } from "./step";
 
 interface CheckboxProps {
   id: string;
+  labelKey?: string;
   defaultValue?: boolean;
   onChange: (checked: boolean) => void;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({ id, defaultValue, onChange }) => {
+export const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChange }) => {
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const { stepActive } = useContext(StepContext);
   return defaultValue || stepActive ? (
@@ -25,7 +26,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, defaultValue, onChange }
         aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
       />
       <label htmlFor={id}>
-        <Trans i18nKey={"label." + id} />
+        <Trans i18nKey={labelKey ?? "label." + id} />
       </label>
     </div>
   ) : null;

@@ -1,10 +1,5 @@
 import { useTranslation } from "react-i18next";
-import {
-  enableMapLandmark,
-  fixFirstPlayer,
-  setLandmarkCount,
-  setPlayerCount,
-} from "../features/setupSlice";
+import { fixFirstPlayer, setLandmarkCount, setPlayerCount } from "../features/setupSlice";
 import {
   selectDeckArray,
   selectExpansionArray,
@@ -18,9 +13,11 @@ import {
   selectFactionPool,
   selectSetupMap,
   selectVagabondArray,
+  selectEnabledLandmarkMaps,
 } from "../features/selectors";
 import { skipSteps, resetFlow } from "../features/flowSlice";
 import {
+  enableMapLandmark,
   toggleDeck,
   toggleExpansion,
   toggleHireling,
@@ -47,7 +44,6 @@ export const StepList: React.FC = () => {
   const {
     playerCount,
     fixedFirstPlayer,
-    useMapLandmark,
     deck,
     landmarkCount,
     landmark1,
@@ -63,8 +59,8 @@ export const StepList: React.FC = () => {
   const { skippedSteps } = useAppSelector(selectFlowState);
 
   const factions = useAppSelector(selectFactionArray);
-  const maps = useAppSelector(selectMapArray);
-  const map = useAppSelector(selectSetupMap);
+  const landmarkMaps = useAppSelector(selectEnabledLandmarkMaps);
+  const setupMap = useAppSelector(selectSetupMap);
   const factionCodes = useAppSelector(selectFactionCodes);
   const factionPool = useAppSelector(selectFactionPool);
   const selectedVagabond =
@@ -72,7 +68,7 @@ export const StepList: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const nthLastPlayer = useNthLastPlayer();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <main>
@@ -117,26 +113,37 @@ export const StepList: React.FC = () => {
           toggleComponent={toggleMap}
           getLabelKey={(map) => "map." + map.code + ".name"}
         />
-        {maps.some((map) => map.landmark && map.enabled) ? (
-          <Checkbox
-            id="useMapLandmark"
-            defaultValue={useMapLandmark}
-            onChange={(checked) => dispatch(enableMapLandmark(checked))}
-          />
-        ) : null}
+        {landmarkMaps
+          .map(({ code, useLandmark }) => ({
+            code,
+            label: t("map." + code + ".name"),
+            useLandmark,
+          }))
+          .sort((a, b) => {
+            return a.label.localeCompare(b.label, i18n.language);
+          })
+          .map(({ code, useLandmark }) => (
+            <Checkbox
+              key={code}
+              id={code + "UseLandmark"}
+              labelKey={"map." + code + ".useLandmark"}
+              defaultValue={useLandmark}
+              onChange={(checked) => dispatch(enableMapLandmark(code, checked))}
+            />
+          ))}
       </Step>
 
       <Step
         step={SetupStep.setUpMap}
-        subtitleKey={"map." + map?.code + ".setupTitle"}
-        textKey={"map." + map?.code + ".setup"}
+        subtitleKey={"map." + setupMap?.code + ".setupTitle"}
+        textKey={"map." + setupMap?.code + ".setup"}
       />
 
       <Step
         step={SetupStep.setUpMapLandmark}
-        subtitleKey={"landmark." + map?.landmark + ".setupTitle"}
-        textKey={"map." + map?.code + ".landmarkSetup"}
-        translationOptions={{ context: map?.code }}
+        subtitleKey={"landmark." + setupMap?.landmark + ".setupTitle"}
+        textKey={"map." + setupMap?.code + ".landmarkSetup"}
+        translationOptions={{ context: setupMap?.code }}
       />
 
       <Step step={SetupStep.chooseDeck}>
@@ -163,7 +170,7 @@ export const StepList: React.FC = () => {
       <Step
         step={SetupStep.chooseLandmarks}
         translationOptions={{
-          context: useMapLandmark && map?.landmark ? "mapLandmark" : undefined,
+          context: setupMap?.useLandmark ? "mapLandmark" : undefined,
         }}
       >
         <NumberSelector
@@ -183,7 +190,7 @@ export const StepList: React.FC = () => {
               landmark.minPlayers > playerCount
                 ? "error.landmarkNotEnoughPlayers"
                 : // Disable this landmark if it was already used in map setup
-                useMapLandmark && landmark.code === map?.landmark
+                setupMap?.useLandmark && landmark.code === setupMap?.landmark
                 ? "error.mapLandmarkUsed"
                 : null
             }
@@ -196,7 +203,7 @@ export const StepList: React.FC = () => {
         subtitleKey={"landmark." + landmark1 + ".setupTitle"}
         textKey={"landmark." + landmark1 + ".setup"}
         translationOptions={{
-          context: map?.code,
+          context: setupMap?.code,
           count: nthLastPlayer(1),
         }}
       />
@@ -206,7 +213,7 @@ export const StepList: React.FC = () => {
         subtitleKey={"landmark." + landmark2 + ".setupTitle"}
         textKey={"landmark." + landmark2 + ".setup"}
         translationOptions={{
-          context: map?.code,
+          context: setupMap?.code,
           count: nthLastPlayer(2),
         }}
       />

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CodeObject, Hireling, SetHirelingPayload, SetupState, WithCode } from "../types";
+import { toggleExpansion } from "./componentsSlice";
 
 const initialState: SetupState = {
   playerCount: 4,
@@ -8,7 +9,6 @@ const initialState: SetupState = {
   errorMessage: null,
   // Map
   map: null,
-  useMapLandmark: true,
   // Deck
   deck: null,
   // Landmarks
@@ -62,14 +62,12 @@ export const setupSlice = createSlice({
     setErrorMessage: (state, { payload: errorMessage }: PayloadAction<string | null>) => {
       state.errorMessage = errorMessage;
     },
-    enableMapLandmark: (state, { payload: useMapLandmark }: PayloadAction<boolean>) => {
-      state.useMapLandmark = useMapLandmark;
-      state.errorMessage = null;
-    },
-    setMap: (state, { payload: { code: mapCode } }: PayloadAction<CodeObject>) => {
+    setMap: (state, { payload }: PayloadAction<CodeObject>) => {
+      const { code: mapCode } = payload;
       state.map = mapCode;
     },
-    setDeck: (state, { payload: { code: deckCode } }: PayloadAction<CodeObject>) => {
+    setDeck: (state, { payload }: PayloadAction<CodeObject>) => {
+      const { code: deckCode } = payload;
       state.deck = deckCode;
     },
     setLandmarkCount: (state, { payload: landmarkCount }: PayloadAction<number>) => {
@@ -83,7 +81,9 @@ export const setupSlice = createSlice({
         );
       }
     },
-    setLandmark1: (state, { payload: { code: landmarkCode } }: PayloadAction<CodeObject>) => {
+    setLandmark1: (state, { payload }: PayloadAction<CodeObject>) => {
+      const { code: landmarkCode } = payload;
+
       if (state.landmarkCount >= 1) {
         state.landmark1 = landmarkCode;
       } else if (process.env.NODE_ENV !== "production") {
@@ -92,7 +92,9 @@ export const setupSlice = createSlice({
         );
       }
     },
-    setLandmark2: (state, { payload: { code: landmarkCode } }: PayloadAction<CodeObject>) => {
+    setLandmark2: (state, { payload }: PayloadAction<CodeObject>) => {
+      const { code: landmarkCode } = payload;
+
       if (state.landmarkCount >= 2) {
         state.landmark2 = landmarkCode;
       } else if (process.env.NODE_ENV !== "production") {
@@ -112,19 +114,19 @@ export const setupSlice = createSlice({
           factions: hireling.factions,
         },
       }),
-      reducer: (
-        state,
-        { payload: { number, hirelingEntry, factions } }: PayloadAction<SetHirelingPayload>
-      ) => {
+      reducer: (state, { payload }: PayloadAction<SetHirelingPayload>) => {
+        const { number, hirelingEntry, factions } = payload;
+
         if (number >= 1 && number <= 3) {
           if (number === 1) state.hireling1 = hirelingEntry;
           if (number === 2) state.hireling2 = hirelingEntry;
           if (number === 3) state.hireling3 = hirelingEntry;
-
           state.excludedFactions.push(...factions);
         } else if (process.env.NODE_ENV !== "production") {
           console.warn(
-            `Invalid payload.number for setHireling action: ${number} (Must be a number between 1 and 3)`
+            "Invalid payload for setHireling action:",
+            payload,
+            '("number" must be a number between 1 and 3)'
           );
         }
       },
@@ -134,10 +136,21 @@ export const setupSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // This allows us to always reset the displayed error if the user makes a seperate input
-    builder.addDefaultCase((state) => {
-      state.errorMessage = null;
-    });
+    builder
+      // Ensure we don't reference codes for components that may have been removed with the toggled expansion
+      .addCase(toggleExpansion, (state) => {
+        state.map = null;
+        state.deck = null;
+        state.landmark1 = null;
+        state.landmark2 = null;
+        state.hireling1 = null;
+        state.hireling2 = null;
+        state.hireling3 = null;
+      })
+      // This allows us to always reset the displayed error if the user makes a seperate input
+      .addDefaultCase((state) => {
+        state.errorMessage = null;
+      });
   },
 });
 
@@ -146,7 +159,6 @@ export const {
   fixFirstPlayer,
   setFirstPlayer,
   setErrorMessage,
-  enableMapLandmark,
   setMap,
   setDeck,
   setLandmarkCount,

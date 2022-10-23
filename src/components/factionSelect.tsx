@@ -54,21 +54,19 @@ export const FactionSelect: React.FC = () => {
         aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
         aria-disabled={!stepActive}
       >
-        {factionPool.map((faction, index) => {
+        {factionPool.map(({ code, key, image, militant, vagabond }, index) => {
           // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
-          const factionName = faction.vagabond
-            ? t("vagabond." + faction.vagabond.code + ".name") +
-              " (" +
-              t("faction." + faction.key + ".name") +
-              ")"
-            : t("faction." + faction.key + ".name");
+          let factionName = t("faction." + key + ".name");
+          if (vagabond)
+            factionName = t("vagabond." + vagabond.code + ".name") + " (" + factionName + ")";
+
           // Swap out the faction image for the vagabond image (if we have one)
-          const factionImage = faction.vagabond ? faction.vagabond.image : faction.image;
+          const factionImage = vagabond ? vagabond.image : image;
           return (
             <button
-              key={faction.code}
+              key={code}
               className={classNames({
-                militant: faction.militant,
+                militant: militant,
                 selected: index === currentFactionIndex,
                 locked: lastFactionLocked && index === lastIndex,
               })}
@@ -92,7 +90,7 @@ export const FactionSelect: React.FC = () => {
               aria-disabled={stepActive ? lastFactionLocked && index === lastIndex : undefined}
               aria-label={
                 stepActive
-                  ? factionName + faction.militant
+                  ? factionName + militant
                     ? " (" + t("label.militant") + ")"
                     : ""
                   : undefined
@@ -108,7 +106,7 @@ export const FactionSelect: React.FC = () => {
               />
               <div className="title">
                 <span className="label">
-                  {faction.militant ? (
+                  {militant ? (
                     <>
                       <MilitantIcon className="militant-icon" title={t("label.militant")} />{" "}
                     </>

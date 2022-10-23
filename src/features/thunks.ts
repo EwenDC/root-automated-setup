@@ -160,9 +160,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         dispatch(setMap(map));
 
         // Do the map landmark setup if we have one
-        dispatch(
-          skipSteps(SetupStep.setUpMapLandmark, !setupParameters.useMapLandmark || !map.landmark)
-        );
+        dispatch(skipSteps(SetupStep.setUpMapLandmark, !map.useLandmark));
 
         // Ensure that any landmarks not supported at this player count or used by map setup are disabled
         dispatch(
@@ -170,7 +168,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             selectLandmarkArray,
             (landmark) =>
               landmark.minPlayers <= setupParameters.playerCount &&
-              (!setupParameters.useMapLandmark || map.landmark !== landmark.code),
+              (!map.useLandmark || map.landmark !== landmark.code),
             toggleLandmark
           )
         );

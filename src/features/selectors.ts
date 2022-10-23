@@ -1,7 +1,15 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { Faction, GameComponent, Hireling, Landmark, MapComponent, Vagabond } from "../types";
-import { generateComponentSelectors, typedEntries, typedKeys } from "./utils";
+import {
+  Faction,
+  GameComponent,
+  Hireling,
+  Landmark,
+  MapComponent,
+  MapInfo,
+  Vagabond,
+} from "../types";
+import { generateComponentSelectors, typedEntries } from "./utils";
 
 export const [selectDeck, selectDeckArray] = generateComponentSelectors<GameComponent>("decks");
 
@@ -24,21 +32,21 @@ export const selectExpansionArray = createSelector(
 export const [selectFaction, selectFactionArray] = generateComponentSelectors<Faction>("factions");
 
 /** Redux Selector for returning an array of included faction codes */
-export const selectFactionCodes = (state: RootState) => typedKeys(state.components.factions);
+export const selectFactionCodes = (state: RootState) => Object.keys(state.components.factions);
 
 /** Redux Selector for returning an array of enabled militant factions */
 export const selectEnabledMilitantFactions = (state: RootState) =>
-  selectFactionArray(state).filter((value) => value.enabled && value.militant);
+  selectFactionArray(state).filter(({ enabled, militant }) => enabled && militant);
 
 /** Redux Selector for returning an array of enabled non-militant factions */
 export const selectEnabledInsurgentFactions = (state: RootState) =>
-  selectFactionArray(state).filter((value) => value.enabled && !value.militant);
+  selectFactionArray(state).filter(({ enabled, militant }) => enabled && !militant);
 
 /** Returns the faction pool, joining the original faction and vagabond objects into the entries */
 export const selectFactionPool = (state: RootState) =>
-  state.flow.factionPool.map((entry) => ({
-    ...selectFaction(state, entry.code),
-    vagabond: entry.vagabond ? selectVagabond(state, entry.vagabond) : undefined,
+  state.flow.factionPool.map(({ code, vagabond }) => ({
+    ...selectFaction(state, code),
+    vagabond: vagabond ? selectVagabond(state, vagabond) : undefined,
   }));
 
 /** Returns the flow information (including current step) from redux state */
@@ -49,24 +57,29 @@ export const [selectHireling, selectHirelingArray] =
 
 /** Redux Selector for returning an array of all hirelings that replace an included faction */
 export const selectFactionHirelings = (state: RootState) =>
-  selectHirelingArray(state).filter((hireling) =>
+  selectHirelingArray(state).filter(({ factions }) =>
     // Only include a hireling if at least one of it's faction codes matches an included faction
-    hireling.factions.some((factionCode) => selectFactionCodes(state).includes(factionCode))
+    factions.some((factionCode) => selectFactionCodes(state).includes(factionCode))
   );
 
 /** Redux Selector for returning an array of enabled hirelings that do not replace an included faction */
 export const selectEnabledIndependentHirelings = (state: RootState) =>
   selectHirelingArray(state).filter(
-    (hireling) =>
-      hireling.enabled &&
+    ({ enabled, factions }) =>
+      enabled &&
       // Only include a hireling if none of it's faction codes matches an included faction
-      hireling.factions.every((factionCode) => !selectFactionCodes(state).includes(factionCode))
+      factions.every((factionCode) => !selectFactionCodes(state).includes(factionCode))
   );
 
 export const [selectLandmark, selectLandmarkArray] =
   generateComponentSelectors<Landmark>("landmarks");
 
-export const [selectMap, selectMapArray] = generateComponentSelectors<MapComponent>("maps");
+export const [selectMap, selectMapArray] = generateComponentSelectors<MapComponent, MapInfo>(
+  "maps"
+);
+
+export const selectEnabledLandmarkMaps = (state: RootState) =>
+  selectMapArray(state).filter(({ enabled, landmark }) => enabled && landmark);
 
 /** Returns the object for the map selected in setup */
 export const selectSetupMap = (state: RootState) =>

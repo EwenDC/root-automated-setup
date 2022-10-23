@@ -15,7 +15,7 @@ i18n
     type: "backend",
     init() {},
     read(language, _namespace, callback) {
-      import(/* webpackChunkName: "[request]" */ "./locales/" + language + ".ts")
+      import(/* webpackChunkName: "[request]" */ "./locales/" + language)
         .then((module) => {
           callback(null, module.default);
         })

@@ -2,7 +2,6 @@
 export default {
   label: {
     aggression: "Agressivité",
-    changeLanguage: "Changer de langue ",
     closeMessage: "Fermer le message",
     complexity: "Difficulté",
     crafting: "Fabrication",
@@ -31,8 +30,6 @@ export default {
     specialAction: "Action spéciale ",
     startingItems: "Objets de départ",
     undo: "Annuler",
-    useMapLandmark:
-      "Utiliser le lieu inclus avec le plateau sélectionné <i>(remplace la mise en place de ce lieu par celle spécifique au plateau sélectionné)</i>",
     wealth: "Main de cartes",
   },
   component: {
