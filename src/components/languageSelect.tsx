@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import languageList from "../i18nSetup";
+import { languages } from "../i18nSetup";
 
 export const LanguageSelect: React.FC = () => {
   const { i18n, t } = useTranslation();
@@ -14,7 +14,7 @@ export const LanguageSelect: React.FC = () => {
   return (
     <div className="language-select" role="radiogroup">
       <span className="label">{t("label.changeLanguage")}:</span>
-      {languageList.map(({ name, locale, image }) => {
+      {languages.map(({ name, locale, image }) => {
         const active = i18n.language === locale;
         return (
           <button
