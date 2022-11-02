@@ -1,28 +1,42 @@
 import classNames from "classnames";
 import { Trans, useTranslation } from "react-i18next";
-import { selectFactionPool, selectFlowState, selectSetupParameters } from "../features/selectors";
+import { selectFactionPool, selectSetupParameters } from "../features/selectors";
 import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { useContext } from "react";
-import { StepContext } from "./step";
+import { createContext, memo, useContext } from "react";
+import { stepContext } from "./step";
 import { ReactComponent as MilitantIcon } from "../images/icons/militant.svg";
-import { StatBar } from "./statBar";
+import StatBar from "./statBar";
 import iconComponents from "../iconComponents";
 import IconList from "./iconList";
-import { ComponentCount } from "./componentCount";
+import ComponentCount from "./componentCount";
+import { Faction, FlowSlice } from "../types";
 
-export const FactionSelect: React.FC = () => {
-  const { currentFactionIndex, lastFactionLocked } = useAppSelector(selectFlowState);
-  const factionPool = useAppSelector(selectFactionPool);
+interface FactionSelectContextType {
+  selectedFaction: Faction | null;
+}
+
+const factionSelectContextValue: FactionSelectContextType = {
+  selectedFaction: null,
+};
+
+export const factionSelectContext = createContext(factionSelectContextValue);
+
+interface FactionSelectProps {
+  flowSlice: FlowSlice;
+}
+
+const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
+  const factionPool = useAppSelector((state) => selectFactionPool(state, flowSlice.factionPool));
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
-  const { stepActive } = useContext(StepContext);
+  const { stepActive } = useContext(stepContext);
   const { t } = useTranslation();
 
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    const focusedIndex = currentFactionIndex ?? 0;
-    const maxIndex = factionPool.length - (lastFactionLocked ? 2 : 1);
+    const focusedIndex = flowSlice.factionIndex ?? 0;
+    const maxIndex = factionPool.length - (flowSlice.lastFactionLocked ? 2 : 1);
     let newIndex: number | undefined;
 
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
@@ -42,7 +56,8 @@ export const FactionSelect: React.FC = () => {
   };
 
   const lastIndex = factionPool.length - 1;
-  const selectedFaction = currentFactionIndex != null ? factionPool[currentFactionIndex] : null;
+  const selectedFaction =
+    flowSlice.factionIndex != null ? factionPool[flowSlice.factionIndex] : null;
   return (
     <>
       <div
@@ -67,12 +82,12 @@ export const FactionSelect: React.FC = () => {
               key={code}
               className={classNames({
                 militant: militant,
-                selected: index === currentFactionIndex,
-                locked: lastFactionLocked && index === lastIndex,
+                selected: index === flowSlice.factionIndex,
+                locked: flowSlice.lastFactionLocked && index === lastIndex,
               })}
               onClick={() => {
-                if (index !== currentFactionIndex) {
-                  if (!lastFactionLocked || index < lastIndex) {
+                if (index !== flowSlice.factionIndex) {
+                  if (!flowSlice.lastFactionLocked || index < lastIndex) {
                     dispatch(setCurrentFactionIndex(index));
                   } else {
                     dispatch(setErrorMessage("error.lockedFaction"));
@@ -81,13 +96,15 @@ export const FactionSelect: React.FC = () => {
               }}
               disabled={!stepActive}
               title={
-                stepActive && lastFactionLocked && index === lastIndex
+                stepActive && flowSlice.lastFactionLocked && index === lastIndex
                   ? t("error.lockedFaction")
                   : undefined
               }
               role="radio"
-              aria-checked={index === currentFactionIndex}
-              aria-disabled={stepActive ? lastFactionLocked && index === lastIndex : undefined}
+              aria-checked={index === flowSlice.factionIndex}
+              aria-disabled={
+                stepActive ? flowSlice.lastFactionLocked && index === lastIndex : undefined
+              }
               aria-label={
                 stepActive
                   ? factionName + militant
@@ -96,7 +113,7 @@ export const FactionSelect: React.FC = () => {
                   : undefined
               }
               // We have to override the tabbing logic to meet the standard of role "radio"
-              tabIndex={stepActive ? (index === (currentFactionIndex ?? 0) ? 0 : -1) : undefined}
+              tabIndex={stepActive ? (index === (flowSlice.factionIndex ?? 0) ? 0 : -1) : undefined}
               onKeyDown={onKeyDownHandler}
             >
               <img
@@ -120,45 +137,47 @@ export const FactionSelect: React.FC = () => {
       </div>
       {stepActive && selectedFaction ? (
         <div className="faction-info">
-          <div className="stat-list">
-            <StatBar stat="complexity" />
-            <StatBar stat="wealth" />
-            <StatBar stat="aggression" />
-            <StatBar stat="crafting" />
-          </div>
-          <div>
-            <div className="count-list">
-              <ComponentCount component="warriors" />
-              <ComponentCount component="buildings" />
-              <ComponentCount component="tokens" />
+          <factionSelectContext.Provider value={{ selectedFaction }}>
+            <div className="stat-list">
+              <StatBar stat="complexity" />
+              <StatBar stat="wealth" />
+              <StatBar stat="aggression" />
+              <StatBar stat="crafting" />
             </div>
-            {selectedFaction.vagabond && (
-              <>
-                <p>
-                  <strong>{t("label.startingItems")}.</strong>{" "}
-                  <IconList list={selectedFaction.vagabond.startingItems} />.
-                </p>
-                <p>
-                  <strong>
-                    {t("label.specialAction")}:{" "}
-                    {t("vagabond." + selectedFaction.vagabond.code + ".action")}.
-                  </strong>{" "}
-                  <Trans
-                    i18nKey={"vagabond." + selectedFaction.vagabond.code + ".effect"}
-                    components={iconComponents}
-                  />
-                </p>
-              </>
-            )}
-            <h4 className="summary-title">
-              {t("faction." + selectedFaction.key + ".summaryTitle")}
-            </h4>
-            <Trans i18nKey={"faction." + selectedFaction.key + ".summary"} />
-          </div>
+            <div>
+              <div className="count-list">
+                <ComponentCount component="warriors" />
+                <ComponentCount component="buildings" />
+                <ComponentCount component="tokens" />
+              </div>
+              {selectedFaction.vagabond && (
+                <>
+                  <p>
+                    <strong>{t("label.startingItems")}.</strong>{" "}
+                    <IconList list={selectedFaction.vagabond.startingItems} />.
+                  </p>
+                  <p>
+                    <strong>
+                      {t("label.specialAction")}:{" "}
+                      {t("vagabond." + selectedFaction.vagabond.code + ".action")}.
+                    </strong>{" "}
+                    <Trans
+                      i18nKey={"vagabond." + selectedFaction.vagabond.code + ".effect"}
+                      components={iconComponents}
+                    />
+                  </p>
+                </>
+              )}
+              <h4 className="summary-title">
+                {t("faction." + selectedFaction.key + ".summaryTitle")}
+              </h4>
+              <Trans i18nKey={"faction." + selectedFaction.key + ".summary"} />
+            </div>
+          </factionSelectContext.Provider>
         </div>
       ) : null}
     </>
   );
 };
 
-export default FactionSelect;
+export default memo(FactionSelect);

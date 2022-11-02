@@ -149,6 +149,7 @@ export enum SetupStep {
   chooseMap,
   setUpMap,
   setUpMapLandmark,
+  setUpMapPriority,
   chooseDeck,
   setUpDeck,
   setUpBots,

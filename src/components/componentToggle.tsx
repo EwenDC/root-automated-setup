@@ -3,7 +3,7 @@ import { useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CodeObject, GameComponent, Togglable } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { StepContext } from "./step";
+import { stepContext } from "./step";
 import { AppThunk, RootState } from "../store";
 import { selectSetupParameters } from "../features/selectors";
 import { setErrorMessage } from "../features/setupSlice";
@@ -17,7 +17,7 @@ interface ComponentListProps<T> {
   unsorted?: boolean;
 }
 
-export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
+const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   selector,
   toggleComponent,
   getLabelKey,
@@ -27,7 +27,7 @@ export const ComponentToggle = <T extends CodeObject & Togglable & GameComponent
   const components = useAppSelector(selector);
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
-  const { stepActive } = useContext(StepContext);
+  const { stepActive } = useContext(stepContext);
   const [largeLabels, setLargeLabels] = useState(false);
   const { t, i18n } = useTranslation();
 

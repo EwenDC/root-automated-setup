@@ -2,6 +2,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import {
   Faction,
+  FactionEntry,
   GameComponent,
   Hireling,
   Landmark,
@@ -9,7 +10,7 @@ import {
   MapInfo,
   Vagabond,
 } from "../types";
-import { generateComponentSelectors, typedEntries } from "./utils";
+import { generateComponentSelectors, getFlowSlice, typedEntries } from "./utils";
 
 export const [selectDeck, selectDeckArray] = generateComponentSelectors<GameComponent>("decks");
 
@@ -42,12 +43,18 @@ export const selectEnabledMilitantFactions = (state: RootState) =>
 export const selectEnabledInsurgentFactions = (state: RootState) =>
   selectFactionArray(state).filter(({ enabled, militant }) => enabled && !militant);
 
+/** Returns a faction pool entry with the original faction and vagabond objects merged in */
+export const selectFactionPoolEntry = (state: RootState, { code, vagabond }: FactionEntry) => ({
+  ...selectFaction(state, code),
+  vagabond: vagabond ? selectVagabond(state, vagabond) : undefined,
+});
+
 /** Returns the faction pool, joining the original faction and vagabond objects into the entries */
-export const selectFactionPool = (state: RootState) =>
-  state.flow.factionPool.map(({ code, vagabond }) => ({
-    ...selectFaction(state, code),
-    vagabond: vagabond ? selectVagabond(state, vagabond) : undefined,
-  }));
+export const selectFactionPool = (state: RootState, factionPool: FactionEntry[]) =>
+  factionPool.map((entry) => selectFactionPoolEntry(state, entry));
+
+/** Returns the current slice of flow state from redux state */
+export const selectFlowSlice = (state: RootState) => getFlowSlice(state.flow);
 
 /** Returns the flow information (including current step) from redux state */
 export const selectFlowState = (state: RootState) => state.flow;
@@ -78,6 +85,7 @@ export const [selectMap, selectMapArray] = generateComponentSelectors<MapCompone
   "maps"
 );
 
+/** Selects a list of enabled maps with an associated landmark */
 export const selectEnabledLandmarkMaps = (state: RootState) =>
   selectMapArray(state).filter(({ enabled, landmark }) => enabled && landmark);
 
@@ -126,6 +134,9 @@ export const selectSetupHireling3 = (state: RootState) =>
 
 /** Returns the setup parameters from redux state */
 export const selectSetupParameters = (state: RootState) => state.setup;
+
+/** Returns an array of booleans indicating if the step at a given index is skipped */
+export const selectSkippedSteps = (state: RootState) => state.flow.skippedSteps;
 
 export const [selectVagabond, selectVagabondArray] =
   generateComponentSelectors<Vagabond>("vagabonds");

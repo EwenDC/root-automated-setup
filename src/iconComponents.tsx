@@ -1,6 +1,6 @@
-import { Icon } from "./components/icon";
+import Icon from "./components/icon";
 
-export const iconComponents = {
+const iconComponents = {
   Bag: <Icon icon="bag" />,
   Boot: <Icon icon="boot" />,
   Coin: <Icon icon="coin" />,

@@ -10,7 +10,7 @@ import {
   CodeObject,
 } from "../types";
 import { setErrorMessage } from "./setupSlice";
-import { takeRandom } from "./utils";
+import { getFlowSlice, takeRandom } from "./utils";
 
 const initialState: FlowState = {
   pastSteps: [],
@@ -26,20 +26,11 @@ const initialState: FlowState = {
 };
 // Default to skipping bot & hireling setup steps
 initialState.skippedSteps[SetupStep.setUpBots] = true;
+initialState.skippedSteps[SetupStep.setUpMapPriority] = true;
 initialState.skippedSteps[SetupStep.setUpHireling1] = true;
 initialState.skippedSteps[SetupStep.setUpHireling2] = true;
 initialState.skippedSteps[SetupStep.setUpHireling3] = true;
 initialState.skippedSteps[SetupStep.postHirelingSetup] = true;
-
-const getSlice = (state: FlowState): FlowSlice => ({
-  step: state.currentStep,
-  // This prevents changes we make to the faction pool in the draft state being reflected in already generated slices
-  factionPool: [...state.factionPool],
-  lastFactionLocked: state.lastFactionLocked,
-  vagabondSetUp: state.vagabondSetUp,
-  playerIndex: state.currentPlayerIndex,
-  factionIndex: state.currentFactionIndex,
-});
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentStep = slice.step;
@@ -57,7 +48,7 @@ export const flowSlice = createSlice({
     incrementStep: (state) => {
       if (state.currentStep < SetupStep.setupEnd) {
         // Add our current state to the undo queue and clear the redo queue
-        state.pastSteps.push(getSlice(state));
+        state.pastSteps.push(getFlowSlice(state));
         state.futureSteps = [];
 
         // Flag that we set up a vagabond
@@ -98,7 +89,7 @@ export const flowSlice = createSlice({
       const previousStep = state.pastSteps.pop();
       if (previousStep != null) {
         // Add our current state to the redo queue
-        state.futureSteps.unshift(getSlice(state));
+        state.futureSteps.unshift(getFlowSlice(state));
         // Override current state with state from previous step
         applySlice(state, previousStep);
       } else if (process.env.NODE_ENV !== "production") {
@@ -112,7 +103,7 @@ export const flowSlice = createSlice({
       const nextStep = state.futureSteps.shift();
       if (nextStep != null) {
         // Add our current state to the undo queue
-        state.pastSteps.push(getSlice(state));
+        state.pastSteps.push(getFlowSlice(state));
         // Override current state with state from next step
         applySlice(state, nextStep);
       } else if (process.env.NODE_ENV !== "production") {

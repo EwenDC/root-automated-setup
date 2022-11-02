@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
 import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
-import { StepContext } from "./step";
+import { stepContext } from "./step";
 
 interface CheckboxProps {
   id: string;
@@ -11,9 +11,9 @@ interface CheckboxProps {
   onChange: (checked: boolean) => void;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChange }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChange }) => {
   const { errorMessage } = useAppSelector(selectSetupParameters);
-  const { stepActive } = useContext(StepContext);
+  const { stepActive } = useContext(stepContext);
   return defaultValue || stepActive ? (
     <div className="checkbox">
       <input
@@ -32,4 +32,4 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, 
   ) : null;
 };
 
-export default Checkbox;
+export default memo(Checkbox);

@@ -1,31 +1,17 @@
 import { createSelector } from "@reduxjs/toolkit";
 import content from "../content";
 import { RootState } from "../store";
-import { ComponentInfo, ComponentsState, GameComponent, Togglable } from "../types";
+import {
+  ComponentInfo,
+  ComponentsState,
+  FlowSlice,
+  FlowState,
+  GameComponent,
+  Togglable,
+} from "../types";
 
 const isTrue = "1";
 const isFalse = "0";
-
-export const typedEntries = Object.entries as <T extends { [s: string]: any } | ArrayLike<any>>(
-  o: T
-) => [keyof T, T[keyof T]][];
-
-/**
- * Saves the enable/disable state of the specified expansion to localStorage
- * @param expansionCode
- * @param enabled
- */
-export const persistExpansionEnabled = (expansionCode: string, enabled: boolean) => {
-  try {
-    localStorage.setItem(expansionCode, enabled ? isTrue : isFalse);
-  } catch (error: any) {
-    if (process.env.NODE_ENV !== "production")
-      console.warn(
-        `Failed to persist enable state of ${enabled} for expansion ${expansionCode}`,
-        error
-      );
-  }
-};
 
 /**
  * Function to return the enabled state of a given expansion in localStorage, for the purpose of setting up the initial redux state
@@ -51,20 +37,6 @@ export const expansionEnabled = (expansionCode: string, base: boolean): boolean 
   }
 
   return enabled;
-};
-
-/**
- * Removes a random element from a given list, and then returns it
- * @param list The list of elements to be randomly selected
- */
-export const takeRandom = <T>(list: T[]): T => {
-  // Get a random index in the given list (i.e. between 0 inclusive and list.length exclusive)
-  const i = Math.floor(Math.random() * list.length);
-  // Save value at given index so we can return it
-  const returnVal = list[i];
-  // Delete 1 element starting at chosen index
-  list.splice(i, 1);
-  return returnVal;
 };
 
 /**
@@ -104,6 +76,56 @@ export const generateComponentSelectors = <
     ),
   ] as const;
 
+/**
+ * Generates a state slice from the current flow state
+ * @param flowState The current flow state
+ * @returns A slice representation of the flow state
+ */
+export const getFlowSlice = (flowState: FlowState): FlowSlice => ({
+  step: flowState.currentStep,
+  // This prevents changes we make to the faction pool in the draft state being reflected in already generated slices
+  factionPool: [...flowState.factionPool],
+  lastFactionLocked: flowState.lastFactionLocked,
+  vagabondSetUp: flowState.vagabondSetUp,
+  playerIndex: flowState.currentPlayerIndex,
+  factionIndex: flowState.currentFactionIndex,
+});
+
+/**
+ * Saves the enable/disable state of the specified expansion to localStorage
+ * @param expansionCode
+ * @param enabled
+ */
+export const persistExpansionEnabled = (expansionCode: string, enabled: boolean) => {
+  try {
+    localStorage.setItem(expansionCode, enabled ? isTrue : isFalse);
+  } catch (error: any) {
+    if (process.env.NODE_ENV !== "production")
+      console.warn(
+        `Failed to persist enable state of ${enabled} for expansion ${expansionCode}`,
+        error
+      );
+  }
+};
+
 /** Filters out disabled components from a given component array */
 export const selectEnabled = <T extends Togglable>(array: T[]) =>
   array.filter(({ enabled }) => enabled);
+
+/**
+ * Removes a random element from a given list, and then returns it
+ * @param list The list of elements to be randomly selected
+ */
+export const takeRandom = <T>(list: T[]): T => {
+  // Get a random index in the given list (i.e. between 0 inclusive and list.length exclusive)
+  const i = Math.floor(Math.random() * list.length);
+  // Save value at given index so we can return it
+  const returnVal = list[i];
+  // Delete 1 element starting at chosen index
+  list.splice(i, 1);
+  return returnVal;
+};
+
+export const typedEntries = Object.entries as <T extends { [s: string]: any } | ArrayLike<any>>(
+  o: T
+) => [keyof T, T[keyof T]][];

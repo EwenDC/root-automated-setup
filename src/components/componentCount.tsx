@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../hooks";
-import { selectFactionPool, selectFlowState } from "../features/selectors";
+import { memo, useContext } from "react";
+import { factionSelectContext } from "./factionSelect";
 
 const imageSource: Record<string, "image" | "buildingImage" | "tokenImage"> = {
   warriors: "image",
@@ -12,17 +12,15 @@ interface ComponentCountProps {
   component: "warriors" | "buildings" | "tokens";
 }
 
-export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
-  const { currentFactionIndex } = useAppSelector(selectFlowState);
-  const factionPool = useAppSelector(selectFactionPool);
+const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
+  const { selectedFaction } = useContext(factionSelectContext);
   const { t } = useTranslation();
 
-  const componentCount =
-    currentFactionIndex != null ? factionPool[currentFactionIndex][component] : 0;
+  const componentCount = selectedFaction != null ? selectedFaction[component] : 0;
 
   if (componentCount > 0) {
     // We know currentFactionIndex is not null because if it was componentCount defaults to 0
-    const componentImage = factionPool[currentFactionIndex!][imageSource[component]];
+    const componentImage = selectedFaction![imageSource[component]];
     return (
       <div className="count">
         <img
@@ -40,4 +38,4 @@ export const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => 
   return null;
 };
 
-export default ComponentCount;
+export default memo(ComponentCount);

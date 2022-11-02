@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { languages } from "../i18nSetup";
 
-export const LanguageSelect: React.FC = () => {
+const LanguageSelect: React.FC = () => {
   const { i18n, t } = useTranslation();
 
   // Make sure the HTML lang attribute is set correctly
@@ -33,4 +33,4 @@ export const LanguageSelect: React.FC = () => {
   );
 };
 
-export default LanguageSelect;
+export default memo(LanguageSelect);

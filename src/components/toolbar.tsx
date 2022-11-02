@@ -7,10 +7,10 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { ReactComponent as UndoIcon } from "../images/icons/undo.svg";
 import { ReactComponent as RedoIcon } from "../images/icons/redo.svg";
 import { ReactComponent as NextIcon } from "../images/icons/next.svg";
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import Button from "./button";
 
-export const Toolbar: React.FC = () => {
+const Toolbar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { pastSteps, futureSteps, currentStep } = useAppSelector(selectFlowState);
@@ -103,4 +103,4 @@ export const Toolbar: React.FC = () => {
   );
 };
 
-export default Toolbar;
+export default memo(Toolbar);

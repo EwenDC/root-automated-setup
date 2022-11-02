@@ -83,6 +83,10 @@ export default {
       title: "Choose and Set up Map",
       body: "As a group, decide which map you would like to play on. If you select multiple maps, a random map will be chosen from the selected.",
     },
+    setUpMapPriority: {
+      subtitle: "Place Priority Markers",
+      body: "Place a priority marker in each clearing as shown in the Law of Rootbotics.",
+    },
     chooseDeck: {
       title: "Choose and Set up Deck",
       body: "As a group, decide which deck you would like to use. If you select multiple decks, a random deck will be chosen from the selected.",

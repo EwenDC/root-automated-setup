@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
 import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
-import { StepContext } from "./step";
+import { stepContext } from "./step";
 
 interface NumberSelectorProps {
   id: string;
@@ -12,18 +12,12 @@ interface NumberSelectorProps {
   onChange: (value: number) => void;
 }
 
-// This used to be dynamic but we've effectivley constrained this via CSS
+// This used to be dynamic but we've effectively constrained this via CSS
 const size = 2;
 
-export const NumberSelector: React.FC<NumberSelectorProps> = ({
-  id,
-  value,
-  minVal,
-  maxVal,
-  onChange,
-}) => {
+const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxVal, onChange }) => {
   const { errorMessage } = useAppSelector(selectSetupParameters);
-  const { stepActive } = useContext(StepContext);
+  const { stepActive } = useContext(stepContext);
 
   const buttonHandler = (amount: number) => {
     const newValue = value + amount;
@@ -77,4 +71,4 @@ export const NumberSelector: React.FC<NumberSelectorProps> = ({
   );
 };
 
-export default NumberSelector;
+export default memo(NumberSelector);

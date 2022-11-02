@@ -64,13 +64,16 @@ export const massComponentToggle =
 /** Advances to the next step in setup, performing all validation logic and state changes required for each step */
 export const nextStep = (): AppThunk => (dispatch, getState) => {
   // Retrieve our setup state
-  const setupParameters = selectSetupParameters(getState());
-  const flowState = selectFlowState(getState());
+  let { errorMessage, excludedFactions, landmarkCount, fixedFirstPlayer, playerCount } =
+    selectSetupParameters(getState());
+  const { currentFactionIndex, currentStep, factionPool, skippedSteps } = selectFlowState(
+    getState()
+  );
   let doIncrementStep = true;
   let validationError: string | null = null;
 
   // Handle any special logic that fires at the end of a step
-  switch (flowState.currentStep) {
+  switch (currentStep) {
     case SetupStep.chooseExpansions:
       // After locking in the Choosen expansions, we need to calculate which steps can be skipped
       // Do we need to choose a deck?
@@ -85,11 +88,11 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
 
       // Correct our current playercount if it is too low or high (this can occur with undo/redo)
-      if (setupParameters.playerCount < 2 && flowState.skippedSteps[SetupStep.setUpBots]) {
+      if (playerCount < 2 && skippedSteps[SetupStep.setUpBots]) {
         dispatch(setPlayerCount(2));
       } else {
         const maxPlayerCount = selectFactionCodes(getState()).length - 1;
-        if (setupParameters.playerCount > maxPlayerCount) {
+        if (playerCount > maxPlayerCount) {
           dispatch(setPlayerCount(maxPlayerCount));
         }
       }
@@ -119,7 +122,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         );
         // Clear the exlcude faction pool of any potential stale data from previous setups
         // We need to do this here since we're skipping the chooseHirelings step
-        if (setupParameters.excludedFactions.length > 0) dispatch(clearExcludedFactions());
+        if (excludedFactions.length > 0) dispatch(clearExcludedFactions());
       } else {
         // By default we still skip the actual hireling setup, as per other optional components
         dispatch(skipSteps(SetupStep.chooseHirelings, false));
@@ -130,12 +133,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       let firstPlayer: number;
 
       // Do we need to randomise the first player
-      if (setupParameters.fixedFirstPlayer) {
+      if (fixedFirstPlayer) {
         // First player is always "1" as the player number represents turn order
         firstPlayer = 1;
       } else {
         // Randomly pick a first player between 1 and playerCount, as the player number represents table seating order
-        firstPlayer = Math.floor(Math.random() * setupParameters.playerCount) + 1;
+        firstPlayer = Math.floor(Math.random() * playerCount) + 1;
       }
       dispatch(setFirstPlayer(firstPlayer));
 
@@ -143,7 +146,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       dispatch(
         massComponentToggle(
           selectFactionHirelings,
-          setupParameters.playerCount < selectFactionCodes(getState()).length - 1,
+          playerCount < selectFactionCodes(getState()).length - 1,
           toggleHireling
         )
       );
@@ -167,7 +170,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           massComponentToggle(
             selectLandmarkArray,
             (landmark) =>
-              landmark.minPlayers <= setupParameters.playerCount &&
+              landmark.minPlayers <= playerCount &&
               (!map.useLandmark || map.landmark !== landmark.code),
             toggleLandmark
           )
@@ -199,14 +202,14 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       let landmarkPool = selectEnabled(selectLandmarkArray(getState()));
 
       // Check that there are enough enabled landmarks for how many we want to set up
-      if (landmarkPool.length >= setupParameters.landmarkCount) {
+      if (landmarkPool.length >= landmarkCount) {
         // Select the first landmark
-        if (setupParameters.landmarkCount >= 1) {
+        if (landmarkCount >= 1) {
           // Choose a random landmark
           dispatch(setLandmark1(takeRandom(landmarkPool)));
 
           // Select the second landmark
-          if (setupParameters.landmarkCount >= 2) {
+          if (landmarkCount >= 2) {
             // Choose a random landmark
             dispatch(setLandmark2(takeRandom(landmarkPool)));
             // Ensure we don't skip the setup steps
@@ -235,17 +238,17 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
     case SetupStep.chooseHirelings:
       // Clear the exclude faction pool of any potential stale data from previous hireling setups
-      if (setupParameters.excludedFactions.length > 0) dispatch(clearExcludedFactions());
+      if (excludedFactions.length > 0) dispatch(clearExcludedFactions());
 
       // Did we skip the hireling setup?
-      if (!flowState.skippedSteps[SetupStep.setUpHireling1]) {
+      if (!skippedSteps[SetupStep.setUpHireling1]) {
         // Get our lists of independent & faction hirelings which are avaliable for selection
         let hirelingPool = selectEnabledIndependentHirelings(getState());
         let factionHirelings = selectEnabled(selectFactionHirelings(getState()));
 
         // Calculate how many factions we can spare for hirelings (i.e. total factions minus setup faction count)
         const factionCodes = selectFactionCodes(getState());
-        let spareFactionCount = factionCodes.length - (setupParameters.playerCount + 1);
+        let spareFactionCount = factionCodes.length - (playerCount + 1);
 
         // If we can only spare 3 or less factions then limit the amount of faction hirelings
         if (spareFactionCount <= 3) {
@@ -275,13 +278,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         if (hirelingPool.length >= 3) {
           // Choose three random hirelings
           for (let number = 1; number <= 3; number++) {
-            dispatch(
-              setHireling(
-                number,
-                takeRandom(hirelingPool),
-                setupParameters.playerCount + number > 5
-              )
-            );
+            dispatch(setHireling(number, takeRandom(hirelingPool), playerCount + number > 5));
           }
         } else {
           // Invalid state, do not proceed
@@ -292,16 +289,16 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Disable the factions that are mutually exclusive with the selected hirelings
       // Also disable insurgent factions if we're only playing with 2 people and no bots or hirelings
-      const excludedFactions = selectSetupParameters(getState()).excludedFactions;
+      ({ excludedFactions } = selectSetupParameters(getState()));
       dispatch(
         massComponentToggle(
           selectFactionArray,
           (faction) =>
             !excludedFactions.includes(faction.code) &&
-            (setupParameters.playerCount > 2 ||
+            (playerCount > 2 ||
               faction.militant ||
-              !flowState.skippedSteps[SetupStep.setUpHireling1] ||
-              !flowState.skippedSteps[SetupStep.setUpBots]),
+              !skippedSteps[SetupStep.setUpHireling1] ||
+              !skippedSteps[SetupStep.setUpBots]),
           toggleFaction
         )
       );
@@ -309,7 +306,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
     case SetupStep.chooseFactions:
       // Clear the faction pool of any potential stale data from previous setups
-      if (flowState.factionPool.length > 0) dispatch(clearFactionPool());
+      if (factionPool.length > 0) dispatch(clearFactionPool());
 
       // Get our list of militant factions and vagabonds which are avaliable for selection
       let workingFactionPool = selectEnabledMilitantFactions(getState());
@@ -326,19 +323,19 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (
         workingFactionPool.length > 0 &&
         vagabondPool.length >= vagabondFactionCount &&
-        workingFactionPool.length + insurgentFactions.length >= setupParameters.playerCount + 1
+        workingFactionPool.length + insurgentFactions.length >= playerCount + 1
       ) {
         // Start by adding a random militant faction
         dispatch(addToFactionPool(takeRandom(workingFactionPool), vagabondPool));
         // Add the insurgent factions to the mix
         workingFactionPool = workingFactionPool.concat(insurgentFactions);
         // Add enough factions to make the total pool playerCount + 1
-        for (let i = 0; i < setupParameters.playerCount; i++) {
+        for (let i = 0; i < playerCount; i++) {
           dispatch(addToFactionPool(takeRandom(workingFactionPool), vagabondPool));
         }
 
         // Begin the setup at the bottom of player order
-        dispatch(setCurrentPlayerIndex(setupParameters.playerCount - 1));
+        dispatch(setCurrentPlayerIndex(playerCount - 1));
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
@@ -356,7 +353,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
     case SetupStep.selectFaction:
       // Ensure the user has actually selected a faction
-      if (flowState.currentFactionIndex == null) {
+      if (currentFactionIndex == null) {
         doIncrementStep = false;
         validationError = "error.noFaction";
       }
@@ -369,7 +366,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
   }
 
   // Set the error message if it's changed
-  if (setupParameters.errorMessage !== validationError) {
+  if (errorMessage !== validationError) {
     dispatch(setErrorMessage(validationError));
   }
 
