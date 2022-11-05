@@ -1,29 +1,29 @@
-import { memo } from "react";
+import { createContext, memo } from "react";
 import { selectFlowSlice, selectFlowState } from "../features/selectors";
 import { useAppSelector } from "../hooks";
-import getStepComponent from "../stepComponents";
 import LanguageSelect from "./languageSelect";
+import StepSwitch from "./stepSwitch";
+
+export const stepActiveContext = createContext(false);
 
 const StepList: React.FC = () => {
-  const { currentStep, futureSteps, pastSteps } = useAppSelector(selectFlowState);
+  const { futureSteps, pastSteps } = useAppSelector(selectFlowState);
   const currentFlowSlice = useAppSelector(selectFlowSlice);
-  const ActiveStep = getStepComponent(currentStep);
   return (
     <main>
       <LanguageSelect />
 
-      {pastSteps.map((slice, index) => {
-        const PastStep = getStepComponent(slice.step);
-        return <PastStep flowSlice={slice} key={index} />;
-      })}
+      {pastSteps.map((slice, index) => (
+        <StepSwitch flowSlice={slice} key={index} />
+      ))}
 
-      <ActiveStep flowSlice={currentFlowSlice} active />
+      <stepActiveContext.Provider value={true}>
+        <StepSwitch flowSlice={currentFlowSlice} />
+      </stepActiveContext.Provider>
 
-      {futureSteps.map((slice, index, array) => {
-        const FutureStep = getStepComponent(slice.step);
-        // Invert the index for the key as we're removing/replacing elements from the start first
-        return <FutureStep flowSlice={slice} key={array.length - index} />;
-      })}
+      {futureSteps.map((slice, index, array) => (
+        <StepSwitch flowSlice={slice} key={array.length - index} />
+      ))}
     </main>
   );
 };

@@ -1,13 +1,13 @@
 import classNames from "classnames";
-import { useContext, useMemo, useState } from "react";
+import { memo, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CodeObject, GameComponent, Togglable } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { stepContext } from "./step";
 import { AppThunk, RootState } from "../store";
 import { selectSetupParameters } from "../features/selectors";
 import { setErrorMessage } from "../features/setupSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { stepActiveContext } from "./stepList";
 
 interface ComponentListProps<T> {
   selector: (state: RootState) => T[];
@@ -21,13 +21,13 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   selector,
   toggleComponent,
   getLabelKey,
-  getLockedKey,
-  unsorted,
+  getLockedKey = () => null,
+  unsorted = false,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
-  const { stepActive } = useContext(stepContext);
+  const stepActive = useContext(stepActiveContext);
   const [largeLabels, setLargeLabels] = useState(false);
   const { t, i18n } = useTranslation();
 
@@ -59,7 +59,7 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
     <div className={classNames("component-toggle", { "large-labels": largeLabels })}>
       {sortedComponents.map((component) => {
         if (component.enabled || stepActive) {
-          const componentLockedKey = getLockedKey ? getLockedKey(component) : null;
+          const componentLockedKey = getLockedKey(component);
           const componentLocked = componentLockedKey != null;
           return (
             <button
@@ -100,4 +100,4 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   );
 };
 
-export default ComponentToggle;
+export default memo(ComponentToggle) as typeof ComponentToggle;

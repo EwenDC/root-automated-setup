@@ -2,7 +2,7 @@ import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
 import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
-import { stepContext } from "./step";
+import { stepActiveContext } from "./stepList";
 
 interface CheckboxProps {
   id: string;
@@ -13,7 +13,7 @@ interface CheckboxProps {
 
 const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChange }) => {
   const { errorMessage } = useAppSelector(selectSetupParameters);
-  const { stepActive } = useContext(stepContext);
+  const stepActive = useContext(stepActiveContext);
   return defaultValue || stepActive ? (
     <div className="checkbox">
       <input

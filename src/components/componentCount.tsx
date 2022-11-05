@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { memo, useContext } from "react";
-import { factionSelectContext } from "./factionSelect";
+import { selectedFactionContext } from "./factionSelect";
 
 const imageSource: Record<string, "image" | "buildingImage" | "tokenImage"> = {
   warriors: "image",
@@ -13,7 +13,7 @@ interface ComponentCountProps {
 }
 
 const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
-  const { selectedFaction } = useContext(factionSelectContext);
+  const selectedFaction = useContext(selectedFactionContext);
   const { t } = useTranslation();
 
   const componentCount = selectedFaction != null ? selectedFaction[component] : 0;

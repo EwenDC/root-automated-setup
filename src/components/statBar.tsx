@@ -1,14 +1,14 @@
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import { memo, useContext } from "react";
-import { factionSelectContext } from "./factionSelect";
+import { selectedFactionContext } from "./factionSelect";
 
 interface StatBarProps {
   stat: "complexity" | "wealth" | "aggression" | "crafting";
 }
 
 const StatBar: React.FC<StatBarProps> = ({ stat }) => {
-  const { selectedFaction } = useContext(factionSelectContext);
+  const selectedFaction = useContext(selectedFactionContext);
   const { t } = useTranslation();
 
   const statValue = selectedFaction != null ? selectedFaction[stat] : 0;

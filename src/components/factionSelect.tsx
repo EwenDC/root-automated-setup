@@ -5,23 +5,15 @@ import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { createContext, memo, useContext } from "react";
-import { stepContext } from "./step";
 import { ReactComponent as MilitantIcon } from "../images/icons/militant.svg";
 import StatBar from "./statBar";
 import iconComponents from "../iconComponents";
 import IconList from "./iconList";
 import ComponentCount from "./componentCount";
 import { Faction, FlowSlice } from "../types";
+import { stepActiveContext } from "./stepList";
 
-interface FactionSelectContextType {
-  selectedFaction: Faction | null;
-}
-
-const factionSelectContextValue: FactionSelectContextType = {
-  selectedFaction: null,
-};
-
-export const factionSelectContext = createContext(factionSelectContextValue);
+export const selectedFactionContext = createContext<Faction | null>(null);
 
 interface FactionSelectProps {
   flowSlice: FlowSlice;
@@ -31,7 +23,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const factionPool = useAppSelector((state) => selectFactionPool(state, flowSlice.factionPool));
   const { errorMessage } = useAppSelector(selectSetupParameters);
   const dispatch = useAppDispatch();
-  const { stepActive } = useContext(stepContext);
+  const stepActive = useContext(stepActiveContext);
   const { t } = useTranslation();
 
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
@@ -137,7 +129,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
       </div>
       {stepActive && selectedFaction ? (
         <div className="faction-info">
-          <factionSelectContext.Provider value={{ selectedFaction }}>
+          <selectedFactionContext.Provider value={selectedFaction}>
             <div className="stat-list">
               <StatBar stat="complexity" />
               <StatBar stat="wealth" />
@@ -173,7 +165,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
               </h4>
               <Trans i18nKey={"faction." + selectedFaction.key + ".summary"} />
             </div>
-          </factionSelectContext.Provider>
+          </selectedFactionContext.Provider>
         </div>
       ) : null}
     </>
