@@ -30,15 +30,15 @@ const Section: React.FC<SectionProps> = ({
 
   // Trigger a scroll-to effect when we become active
   useEffect(() => {
-    if (active)
-      sectionElement.current?.scrollIntoView({
+    if (active && sectionElement.current)
+      sectionElement.current.scrollIntoView({
         behavior: window.matchMedia("(prefers-reduced-motion)").matches ? "auto" : "smooth",
       });
   });
 
   // Generate the (sub)title text in advance so we can use it to rename the window (if required)
-  let titleText = titleKey ? t(titleKey, translationOptions) : null;
-  let subtitleText = subtitleKey ? t(subtitleKey, translationOptions) : null;
+  let titleText = titleKey && t(titleKey, translationOptions);
+  let subtitleText = subtitleKey && t(subtitleKey, translationOptions);
 
   // Rename the window to match our step (if we are the active step)
   useEffect(() => {

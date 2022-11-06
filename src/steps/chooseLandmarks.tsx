@@ -15,7 +15,7 @@ const ChooseLandmarksStep: React.FC = () => {
       titleKey="setupStep.chooseLandmarks.title"
       textKey="setupStep.chooseLandmarks.body"
       translationOptions={{
-        context: setupMap?.useLandmark ? "mapLandmark" : undefined,
+        context: setupMap && setupMap.useLandmark ? "mapLandmark" : undefined,
       }}
     >
       <NumberSelector
@@ -35,7 +35,7 @@ const ChooseLandmarksStep: React.FC = () => {
             landmark.minPlayers > playerCount
               ? "error.landmarkNotEnoughPlayers"
               : // Disable this landmark if it was already used in map setup
-              setupMap?.useLandmark && landmark.code === setupMap?.landmark
+              setupMap && setupMap.useLandmark && landmark.code === setupMap?.landmark
               ? "error.mapLandmarkUsed"
               : null
           }

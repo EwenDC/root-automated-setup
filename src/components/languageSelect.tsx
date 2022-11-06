@@ -21,7 +21,7 @@ const LanguageSelect: React.FC = () => {
             className={classNames({ active })}
             key={locale}
             title={name}
-            onClick={() => i18n.changeLanguage(locale)}
+            onClick={active ? undefined : () => i18n.changeLanguage(locale)}
             role="radio"
             aria-checked={active}
           >

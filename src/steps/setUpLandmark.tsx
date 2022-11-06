@@ -1,6 +1,6 @@
 import { memo } from "react";
 import Section from "../components/section";
-import { selectSetupMap, selectSetupParameters } from "../features/selectors";
+import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector, useNthLastPlayer } from "../hooks";
 
 interface SetUpLandmarkStepProps {
@@ -8,15 +8,16 @@ interface SetUpLandmarkStepProps {
 }
 
 const SetUpLandmarkStep: React.FC<SetUpLandmarkStepProps> = ({ number }) => {
-  const landmark = useAppSelector(selectSetupParameters)[`landmark${number}`];
-  const setupMap = useAppSelector(selectSetupMap);
+  // Typescript is bad at inferring the limited range of dynamic keys, so we have to spell it out
+  const { [("landmark" + number) as `landmark${typeof number}`]: landmark, map } =
+    useAppSelector(selectSetupParameters);
   const nthLastPlayer = useNthLastPlayer();
   return (
     <Section
       subtitleKey={"landmark." + landmark + ".setupTitle"}
       textKey={"landmark." + landmark + ".setup"}
       translationOptions={{
-        context: setupMap?.code,
+        context: map,
         count: nthLastPlayer(number),
       }}
     />
