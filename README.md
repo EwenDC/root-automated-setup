@@ -18,7 +18,7 @@ The application is now ready to be run on your computer. To run it, execute the 
 
 ## Translations
 
-This project was built from the ground up with translation support using [i18next](https://www.i18next.com/), more specifically with the [react-i18next](https://react.i18next.com/) and [i18next-http-backend](https://github.com/i18next/i18next-http-backend) plugins. This means that translations are loaded from a .json file on the webserver at runtime.
+This project was built from the ground up with translation support using [i18next](https://www.i18next.com/), more specifically with the [react-i18next](https://react.i18next.com/) plugin. This means that translations are loaded from javascript at runtime.
 
 ### Updating a Translation
 
