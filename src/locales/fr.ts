@@ -85,6 +85,10 @@ export default {
       title: "Choisir et mettre en place le Plateau",
       body: "Décidez ensemble avec quel plateau vous souhaitez jouer. Si vous sélectionnez plusieurs plateaux, un plateau sera choisi aléatoirement parmi ceux sélectionnés.",
     },
+    setUpMapPriority: {
+      subtitle: "Placer les Marqueurs de Priorité",
+      body: "Placez un marqueur de priorité dans chaque clairière comme indiqué dans la Loi de la Rootbotique.",
+    },
     chooseDeck: {
       title: "Choisir et mettre en place le Paquet",
       body: "Décidez ensemble quel paquet de cartes vous souhaitez utiliser. Si vous sélectionnez plusieurs paquets, un paquet sera choisi aléatoirement parmi ceux sélectionnés.",
