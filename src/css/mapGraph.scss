@@ -1,0 +1,8 @@
+.map {
+  display: block;
+  max-width: 50rem;
+
+  section.inactive & > image {
+    filter: grayscale(100%);
+  }
+}

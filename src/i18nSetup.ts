@@ -49,6 +49,6 @@ i18n
       escapeValue: false, // not needed for react as it escapes by default
     },
     react: {
-      transKeepBasicHtmlNodesFor: ["br", "i", "p", "b"],
+      transKeepBasicHtmlNodesFor: ["br", "i", "p", "b", "ol", "li"],
     },
   });

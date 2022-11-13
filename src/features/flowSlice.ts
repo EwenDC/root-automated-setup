@@ -26,7 +26,6 @@ const initialState: FlowState = {
 };
 // Default to skipping bot & hireling setup steps
 initialState.skippedSteps[SetupStep.setUpBots] = true;
-initialState.skippedSteps[SetupStep.setUpMapPriority] = true;
 initialState.skippedSteps[SetupStep.setUpHireling1] = true;
 initialState.skippedSteps[SetupStep.setUpHireling2] = true;
 initialState.skippedSteps[SetupStep.setUpHireling3] = true;

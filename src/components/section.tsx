@@ -54,12 +54,14 @@ const Section: React.FC<SectionProps> = ({
       {titleText && <h2>{titleText}</h2>}
       {subtitleText && <h3>{subtitleText}.</h3>}
       {textBelowChildren ? children : null}
-      <Trans
-        i18nKey={textKey}
-        count={translationOptions?.count} // For Trans component count cannot be passed in with options
-        tOptions={translationOptions}
-        components={{ ...iconComponents, ...components }}
-      />
+      {textKey && (
+        <Trans
+          i18nKey={textKey}
+          count={translationOptions?.count} // For Trans component count cannot be passed in with options
+          tOptions={translationOptions}
+          components={{ ...iconComponents, ...components }}
+        />
+      )}
       {!textBelowChildren ? children : null}
     </section>
   );

@@ -1,6 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CodeObject, Hireling, SetHirelingPayload, SetupState, WithCode } from "../types";
+import {
+  ClearingSuit,
+  CodeObject,
+  Hireling,
+  MapComponent,
+  SetHirelingPayload,
+  SetupState,
+  SuitDistribution,
+  WithCode,
+} from "../types";
 import { toggleExpansion } from "./componentsSlice";
+import { takeRandom } from "./utils";
 
 const initialState: SetupState = {
   playerCount: 4,
@@ -9,6 +19,8 @@ const initialState: SetupState = {
   errorMessage: null,
   // Map
   map: null,
+  suitDistribution: SuitDistribution.random,
+  clearingSuits: {},
   // Deck
   deck: null,
   // Landmarks
@@ -62,9 +74,37 @@ export const setupSlice = createSlice({
     setErrorMessage: (state, { payload: errorMessage }: PayloadAction<string | null>) => {
       state.errorMessage = errorMessage;
     },
-    setMap: (state, { payload }: PayloadAction<CodeObject>) => {
-      const { code: mapCode } = payload;
+    setMap: (state, { payload }: PayloadAction<CodeObject & MapComponent>) => {
+      const { code: mapCode, clearings } = payload;
       state.map = mapCode;
+
+      // Also assign the clearing suits
+      switch (state.suitDistribution) {
+        case SuitDistribution.random:
+          const suitPool: ClearingSuit[] = [
+            "fox",
+            "fox",
+            "fox",
+            "fox",
+            "mouse",
+            "mouse",
+            "mouse",
+            "mouse",
+            "rabbit",
+            "rabbit",
+            "rabbit",
+            "rabbit",
+          ];
+          clearings.forEach(({ no }) => {
+            state.clearingSuits[no] = takeRandom(suitPool);
+          });
+          break;
+
+        case SuitDistribution.fixed:
+          clearings.forEach(({ no, suit }) => {
+            state.clearingSuits[no] = suit;
+          });
+      }
     },
     setDeck: (state, { payload }: PayloadAction<CodeObject>) => {
       const { code: deckCode } = payload;

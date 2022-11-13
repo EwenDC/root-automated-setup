@@ -54,8 +54,20 @@ export interface Landmark extends GameComponent {
   minPlayers: number;
 }
 
+export interface Clearing {
+  no: number;
+  x: number;
+  y: number;
+  suit: ClearingSuit;
+}
+
+export type Path = [number, number];
+
 /** An object representing a Map from the Root board game */
 export interface MapComponent extends GameComponent {
+  clearings: Clearing[];
+  paths: Path[];
+  backImage: string;
   landmark?: string;
 }
 
@@ -107,6 +119,12 @@ export interface ComponentsState {
   vagabonds: Record<string, ComponentInfo>;
 }
 
+export const enum SuitDistribution {
+  random,
+  balanced,
+  fixed,
+}
+
 /** An object representing an promoted or demoted Hireling */
 export interface HirelingEntry {
   code: string;
@@ -128,6 +146,8 @@ export interface SetupState {
   errorMessage: string | null;
   // Map
   map: string | null;
+  suitDistribution: SuitDistribution;
+  clearingSuits: Record<number, ClearingSuit>;
   // Deck
   deck: string | null;
   // Landmarks
@@ -148,8 +168,6 @@ export enum SetupStep {
   seatPlayers,
   chooseMap,
   setUpMap,
-  setUpMapPriority,
-  setUpMapLandmark,
   chooseDeck,
   setUpDeck,
   setUpBots,

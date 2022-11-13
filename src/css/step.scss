@@ -19,6 +19,15 @@ section {
     margin: 0 0 0.5rem;
   }
 
+  > ol {
+    margin: 0.5rem 0;
+    padding-left: 1rem;
+
+    > li::marker {
+      font-style: italic;
+    }
+  }
+
   p {
     margin: 0.5rem 0;
   }

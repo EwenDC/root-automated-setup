@@ -17,7 +17,6 @@ import SetUpFaction from "../steps/setUpFaction";
 import SetUpHireling from "../steps/setUpHireling";
 import SetUpLandmark from "../steps/setUpLandmark";
 import SetUpMap from "../steps/setUpMap";
-import SetUpMapLandmark from "../steps/setUpMapLandmark";
 import Section from "./section";
 import ComponentToggle from "./componentToggle";
 
@@ -40,9 +39,6 @@ const StepSwitch: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
 
     case SetupStep.setUpMap:
       return <SetUpMap />;
-
-    case SetupStep.setUpMapLandmark:
-      return <SetUpMapLandmark />;
 
     case SetupStep.chooseDeck:
       return (

@@ -1,3 +1,4 @@
+import { memo, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { ClearingSuit, Item } from "../types";
 
@@ -13,9 +14,8 @@ import hammerImage from "../images/items/hammer.png";
 import swordImage from "../images/items/sword.png";
 import teaImage from "../images/items/tea.png";
 import torchImage from "../images/items/torch.png";
-import { memo, PropsWithChildren } from "react";
 
-const iconDict: Record<Item | ClearingSuit, { key: string; image: string }> = {
+export const iconDict: Record<Item | ClearingSuit, { key: string; image: string }> = {
   fox: {
     key: "label.fox",
     image: foxIcon,

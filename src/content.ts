@@ -35,9 +35,9 @@ import treetopLandmark from "./images/landmarks/treetop.png";
 
 // Map Images
 import autumnMap from "./images/maps/autumn.png";
-import lakeMap from "./images/maps/lake.png";
-import mountainMap from "./images/maps/mountain.png";
-import winterMap from "./images/maps/winter.png";
+// import lakeMap from "./images/maps/lake.png";
+// import mountainMap from "./images/maps/mountain.png";
+// import winterMap from "./images/maps/winter.png";
 
 // Meeple Images
 import adventurerMeeple from "./images/meeples/adventurer.png";
@@ -71,6 +71,9 @@ import uprisingMeeple from "./images/meeples/uprising.png";
 import vagrantMeeple from "./images/meeples/vagrant.png";
 import vaultkeepersMeeple from "./images/meeples/vaultkeepers.png";
 import warlordMeeple from "./images/meeples/warlord.png";
+
+// Path Images
+import autumnPaths from "./images/paths/autumn.png";
 
 // Token Images
 import marquiseTokens from "./images/tokens/marquise.png";
@@ -152,10 +155,45 @@ const content: Record<string, Expansion> = {
     maps: {
       autumn: {
         image: autumnMap,
+        clearings: [
+          { no: 1, x: 11.75, y: 14.25, suit: "fox" },
+          { no: 2, x: 87.1, y: 28.2, suit: "mouse" },
+          { no: 3, x: 88.05, y: 88.4, suit: "rabbit" },
+          { no: 4, x: 12.1, y: 80.7, suit: "rabbit" },
+          { no: 5, x: 59.45, y: 14.25, suit: "rabbit" },
+          { no: 6, x: 89.6, y: 53.6, suit: "fox" },
+          { no: 7, x: 63.3, y: 79.1, suit: "mouse" },
+          { no: 8, x: 39.67, y: 89.46, suit: "fox" },
+          { no: 9, x: 12.1, y: 39.7, suit: "mouse" },
+          { no: 10, x: 42.75, y: 28.75, suit: "rabbit" },
+          { no: 11, x: 66.6, y: 51.2, suit: "mouse" },
+          { no: 12, x: 35.83, y: 59.55, suit: "fox" },
+        ],
+        paths: [
+          [1, 5],
+          [1, 9],
+          [1, 10],
+          [2, 5],
+          [2, 6],
+          [2, 10],
+          [3, 6],
+          [3, 7],
+          [3, 11],
+          [4, 8],
+          [4, 9],
+          [4, 12],
+          [6, 11],
+          [7, 8],
+          [7, 12],
+          [9, 12],
+          [10, 12],
+          [11, 12],
+        ],
+        backImage: autumnPaths,
       },
-      winter: {
-        image: winterMap,
-      },
+      // winter: {
+      //   image: winterMap,
+      // },
     },
     vagabonds: {
       thief: {
@@ -277,16 +315,16 @@ const content: Record<string, Expansion> = {
         minPlayers: 0,
       },
     },
-    maps: {
-      lake: {
-        landmark: "ferry",
-        image: lakeMap,
-      },
-      mountain: {
-        landmark: "tower",
-        image: mountainMap,
-      },
-    },
+    // maps: {
+    //   lake: {
+    //     landmark: "ferry",
+    //     image: lakeMap,
+    //   },
+    //   mountain: {
+    //     landmark: "tower",
+    //     image: mountainMap,
+    //   },
+    // },
   },
   marauder: {
     base: false,

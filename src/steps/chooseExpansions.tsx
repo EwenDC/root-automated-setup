@@ -25,9 +25,7 @@ const ChooseExpansionsStep: React.FC = () => {
       <Checkbox
         id="includeBotStep"
         defaultValue={!skippedSteps[SetupStep.setUpBots]}
-        onChange={(checked) =>
-          dispatch(skipSteps([SetupStep.setUpMapPriority, SetupStep.setUpBots], !checked))
-        }
+        onChange={(checked) => dispatch(skipSteps(SetupStep.setUpBots, !checked))}
       />
     </Section>
   );

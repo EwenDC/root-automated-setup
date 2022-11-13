@@ -15,10 +15,8 @@ const SetUpFactionStep: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
   const { t } = useTranslation();
   return (
     <Section
-      subtitleKey={
-        factionIndex != null ? "faction." + factionPoolEntry.key + ".setupTitle" : undefined
-      }
-      textKey={factionIndex != null ? "faction." + factionPoolEntry.key + ".setup" : undefined}
+      subtitleKey={"faction." + factionPoolEntry.key + ".setupTitle"}
+      textKey={"faction." + factionPoolEntry.key + ".setup"}
       translationOptions={{
         context: vagabondSetUp ? "vagabondSetUp" : undefined,
         vagabond:

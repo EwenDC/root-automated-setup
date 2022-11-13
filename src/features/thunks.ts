@@ -162,9 +162,6 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         const map = takeRandom(mapPool);
         dispatch(setMap(map));
 
-        // Do the map landmark setup if we have one
-        dispatch(skipSteps(SetupStep.setUpMapLandmark, !map.useLandmark));
-
         // Ensure that any landmarks not supported at this player count or used by map setup are disabled
         dispatch(
           massComponentToggle(

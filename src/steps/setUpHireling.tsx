@@ -12,12 +12,15 @@ const SetUpHirelingStep: React.FC<SetUpHirelingStepProps> = ({ number }) => {
   const { [("hireling" + number) as `hireling${typeof number}`]: hireling } =
     useAppSelector(selectSetupParameters);
   const nthLastPlayer = useNthLastPlayer();
+
+  if (!hireling) return null;
+
   return (
     <Section
-      subtitleKey={"hireling." + hireling?.code + ".setupTitle"}
-      textKey={"hireling." + hireling?.code + ".setup"}
+      subtitleKey={"hireling." + hireling.code + ".setupTitle"}
+      textKey={"hireling." + hireling.code + ".setup"}
       translationOptions={{
-        context: hireling && hireling.demoted ? "demoted" : undefined,
+        context: hireling.demoted ? "demoted" : undefined,
         count: nthLastPlayer(number),
       }}
     />
