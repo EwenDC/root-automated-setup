@@ -2,7 +2,7 @@ import { Fragment, memo } from "react";
 import { selectSetupMap, selectSetupParameters, selectSkippedSteps } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { iconDict } from "./icon";
-import hexIcon from "../images/icons/hex.png";
+import hexIcon from "../images/tokens/priority.png";
 import { SetupStep } from "../types";
 
 const MapGraph: React.FC = () => {

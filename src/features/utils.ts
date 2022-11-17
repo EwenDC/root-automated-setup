@@ -10,35 +10,6 @@ import {
   Togglable,
 } from "../types";
 
-const isTrue = "1";
-const isFalse = "0";
-
-/**
- * Function to return the enabled state of a given expansion in localStorage, for the purpose of setting up the initial redux state
- * @param expansionCode The code of the expansion to check. Also the key of the value stored in localStorage
- * @param base If the given expansion is actually the base game, and thus is always enabled regardless of localStorage
- */
-export const expansionEnabled = (expansionCode: string, base: boolean): boolean => {
-  // Base game is always enabled, so no need to save or load localStorage
-  if (base) return true;
-
-  // Load the current enable state from localStorage so we remember user settings
-  let storedVal = localStorage.getItem(expansionCode);
-  let enabled: boolean;
-
-  // Was there a value stored in localStorage?
-  if (storedVal != null) {
-    // Convert the string stored in localStorage to a boolean
-    enabled = storedVal === isTrue;
-  } else {
-    // Default to false, then save that state to localStorage for future
-    enabled = false;
-    persistExpansionEnabled(expansionCode, enabled);
-  }
-
-  return enabled;
-};
-
 /**
  * Function for create Redux Selectors for returning a single component or a
  * component list as an array, moving the component key to the component field "code"
@@ -92,17 +63,46 @@ export const getFlowSlice = (flowState: FlowState): FlowSlice => ({
 });
 
 /**
- * Saves the enable/disable state of the specified expansion to localStorage
- * @param expansionCode
- * @param enabled
+ * Function to return the state of a given setup setting from localStorage, for the purpose of setting up the initial redux state
+ * @param settingKey The key of the setting to check, as stored in localStorage
+ * @param defaultValue The default setting value to use if no setting is in localStorage
  */
-export const persistExpansionEnabled = (expansionCode: string, enabled: boolean) => {
+export const loadPersistedSetting = <T>(settingKey: string, defaultValue: T) => {
+  // Load the current enable state from localStorage so we remember user settings
+  let storedVal = localStorage.getItem(settingKey);
+
+  // Was there a value stored in localStorage?
+  if (storedVal != null) {
+    try {
+      // Parse the string stored in localStorage
+      return JSON.parse(storedVal) as T;
+    } catch (error: any) {
+      if (process.env.NODE_ENV !== "production")
+        console.warn(
+          `Failed to parse saved state of ${storedVal} for setting ${settingKey}`,
+          error
+        );
+    }
+  }
+
+  // Default value, then save that state to localStorage for future
+  let returnVal = defaultValue;
+  savePersistedSetting(settingKey, returnVal);
+  return returnVal;
+};
+
+/**
+ * Saves the enable/disable state of the specified setting to localStorage
+ * @param settingKey The key of the setting to save, as stored in localStorage
+ * @param value the value to save
+ */
+export const savePersistedSetting = <T>(settingKey: string, value: T) => {
   try {
-    localStorage.setItem(expansionCode, enabled ? isTrue : isFalse);
+    localStorage.setItem(settingKey, JSON.stringify(value));
   } catch (error: any) {
     if (process.env.NODE_ENV !== "production")
       console.warn(
-        `Failed to persist enable state of ${enabled} for expansion ${expansionCode}`,
+        `Failed to persist state of ${JSON.stringify(value)} for setting ${settingKey}`,
         error
       );
   }

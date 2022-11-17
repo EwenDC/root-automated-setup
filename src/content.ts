@@ -37,7 +37,7 @@ import treetopLandmark from "./images/landmarks/treetop.png";
 import autumnMap from "./images/maps/autumn.png";
 // import lakeMap from "./images/maps/lake.png";
 // import mountainMap from "./images/maps/mountain.png";
-// import winterMap from "./images/maps/winter.png";
+import winterMap from "./images/maps/winter.png";
 
 // Meeple Images
 import adventurerMeeple from "./images/meeples/adventurer.png";
@@ -74,6 +74,7 @@ import warlordMeeple from "./images/meeples/warlord.png";
 
 // Path Images
 import autumnPaths from "./images/paths/autumn.png";
+import winterPaths from "./images/paths/winter.png";
 
 // Token Images
 import marquiseTokens from "./images/tokens/marquise.png";
@@ -156,18 +157,18 @@ const content: Record<string, Expansion> = {
       autumn: {
         image: autumnMap,
         clearings: [
-          { no: 1, x: 11.75, y: 14.25, suit: "fox" },
-          { no: 2, x: 87.1, y: 28.2, suit: "mouse" },
-          { no: 3, x: 88.05, y: 88.4, suit: "rabbit" },
-          { no: 4, x: 12.1, y: 80.7, suit: "rabbit" },
-          { no: 5, x: 59.45, y: 14.25, suit: "rabbit" },
-          { no: 6, x: 89.6, y: 53.6, suit: "fox" },
-          { no: 7, x: 63.3, y: 79.1, suit: "mouse" },
-          { no: 8, x: 39.67, y: 89.46, suit: "fox" },
-          { no: 9, x: 12.1, y: 39.7, suit: "mouse" },
-          { no: 10, x: 42.75, y: 28.75, suit: "rabbit" },
-          { no: 11, x: 66.6, y: 51.2, suit: "mouse" },
-          { no: 12, x: 35.83, y: 59.55, suit: "fox" },
+          { no: 1, x: 11.75, y: 14.25 },
+          { no: 2, x: 87.1, y: 28.2 },
+          { no: 3, x: 88.05, y: 88.4 },
+          { no: 4, x: 12.1, y: 80.7 },
+          { no: 5, x: 59.45, y: 14.25 },
+          { no: 6, x: 89.6, y: 53.6 },
+          { no: 7, x: 63.3, y: 79.1 },
+          { no: 8, x: 39.67, y: 89.46 },
+          { no: 9, x: 12.1, y: 39.7 },
+          { no: 10, x: 42.75, y: 28.75 },
+          { no: 11, x: 66.6, y: 51.2 },
+          { no: 12, x: 35.83, y: 59.55 },
         ],
         paths: [
           [1, 5],
@@ -190,10 +191,59 @@ const content: Record<string, Expansion> = {
           [11, 12],
         ],
         backImage: autumnPaths,
+        printedSuits: true,
+        defaultSuits: {
+          1: "fox",
+          2: "mouse",
+          3: "rabbit",
+          4: "rabbit",
+          5: "rabbit",
+          6: "fox",
+          7: "mouse",
+          8: "fox",
+          9: "mouse",
+          10: "rabbit",
+          11: "mouse",
+          12: "fox",
+        },
       },
-      // winter: {
-      //   image: winterMap,
-      // },
+      winter: {
+        image: winterMap,
+        clearings: [
+          { no: 1, x: 10.85, y: 11.3 },
+          { no: 2, x: 90.35, y: 11.55 },
+          { no: 3, x: 89.3, y: 87.65 },
+          { no: 4, x: 11.15, y: 79.7 },
+          { no: 5, x: 38.6, y: 13.5 },
+          { no: 6, x: 62.75, y: 18.6 },
+          { no: 7, x: 90.95, y: 51.8 },
+          { no: 8, x: 63.85, y: 78 },
+          { no: 9, x: 39.55, y: 88.7 },
+          { no: 10, x: 9.1, y: 46.3 },
+          { no: 11, x: 40.35, y: 47.75 },
+          { no: 12, x: 67.3, y: 49.3 },
+        ],
+        paths: [
+          [1, 5],
+          [1, 10],
+          [1, 11],
+          [2, 6],
+          [2, 7],
+          [2, 12],
+          [3, 7],
+          [3, 8],
+          [3, 12],
+          [4, 9],
+          [4, 10],
+          [4, 11],
+          [5, 6],
+          [8, 9],
+          [8, 12],
+          [9, 11],
+        ],
+        backImage: winterPaths,
+        printedSuits: false,
+      },
     },
     vagabonds: {
       thief: {

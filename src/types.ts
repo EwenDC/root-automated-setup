@@ -58,7 +58,6 @@ export interface Clearing {
   no: number;
   x: number;
   y: number;
-  suit: ClearingSuit;
 }
 
 export type Path = [number, number];
@@ -68,7 +67,9 @@ export interface MapComponent extends GameComponent {
   clearings: Clearing[];
   paths: Path[];
   backImage: string;
+  printedSuits: boolean;
   landmark?: string;
+  defaultSuits?: Record<number, ClearingSuit>;
 }
 
 /** An object representing a Vagabond character from the Root board game */
@@ -80,6 +81,12 @@ export interface Vagabond extends GameComponent {
 export interface ToggleComponentPayload {
   componentCode: string;
   shouldEnable?: boolean;
+}
+
+/** Payload for Map Fixed Suits redux action */
+export interface MapFixedSuitsPayload {
+  mapCode: string;
+  fixedSuits: boolean;
 }
 
 /** Payload for Enable Map Landmark redux action */
@@ -103,8 +110,9 @@ export interface ComponentInfo extends Togglable {
   expansionCode: string;
 }
 
-/** Generic information about a map component, namely whether to use it's included landmark (if it has one) */
+/** Generic information about a map component, namely whether to use it's default suits or included landmark (if it has them) */
 export interface MapInfo extends ComponentInfo {
+  fixedSuits?: boolean;
   useLandmark?: boolean;
 }
 
@@ -117,12 +125,6 @@ export interface ComponentsState {
   landmarks: Record<string, ComponentInfo>;
   maps: Record<string, MapInfo>;
   vagabonds: Record<string, ComponentInfo>;
-}
-
-export const enum SuitDistribution {
-  random,
-  balanced,
-  fixed,
 }
 
 /** An object representing an promoted or demoted Hireling */
@@ -146,7 +148,7 @@ export interface SetupState {
   errorMessage: string | null;
   // Map
   map: string | null;
-  suitDistribution: SuitDistribution;
+  balancedSuits: boolean;
   clearingSuits: Record<number, ClearingSuit>;
   // Deck
   deck: string | null;

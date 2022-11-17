@@ -4,27 +4,27 @@ import {
   CodeObject,
   Hireling,
   MapComponent,
+  MapInfo,
   SetHirelingPayload,
   SetupState,
-  SuitDistribution,
   WithCode,
 } from "../types";
 import { toggleExpansion } from "./componentsSlice";
-import { takeRandom } from "./utils";
+import { loadPersistedSetting, savePersistedSetting, takeRandom } from "./utils";
 
 const initialState: SetupState = {
-  playerCount: 4,
-  fixedFirstPlayer: false,
+  playerCount: loadPersistedSetting("playerCount", 4),
+  fixedFirstPlayer: loadPersistedSetting("fixedFirstPlayer", false),
   playerOrder: [],
   errorMessage: null,
   // Map
   map: null,
-  suitDistribution: SuitDistribution.random,
+  balancedSuits: loadPersistedSetting("balancedSuits", false),
   clearingSuits: {},
   // Deck
   deck: null,
   // Landmarks
-  landmarkCount: 0,
+  landmarkCount: loadPersistedSetting("landmarkCount", 0),
   landmark1: null,
   landmark2: null,
   // Hirelings
@@ -44,6 +44,7 @@ export const setupSlice = createSlice({
       if (playerCount >= 1) {
         state.playerCount = playerCount;
         state.errorMessage = null;
+        savePersistedSetting("playerCount", playerCount);
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `Invalid payload for setPlayerCount action: ${playerCount} (Payload must be a number above 0)`
@@ -53,6 +54,7 @@ export const setupSlice = createSlice({
     fixFirstPlayer: (state, { payload: fixedFirstPlayer }: PayloadAction<boolean>) => {
       state.fixedFirstPlayer = fixedFirstPlayer;
       state.errorMessage = null;
+      savePersistedSetting("fixedFirstPlayer", fixedFirstPlayer);
     },
     setFirstPlayer: (state, { payload: firstPlayer }: PayloadAction<number>) => {
       // Make sure the player count is valid (i.e. between 1 and playerCount)
@@ -74,37 +76,56 @@ export const setupSlice = createSlice({
     setErrorMessage: (state, { payload: errorMessage }: PayloadAction<string | null>) => {
       state.errorMessage = errorMessage;
     },
-    setMap: (state, { payload }: PayloadAction<CodeObject & MapComponent>) => {
-      const { code: mapCode, clearings } = payload;
+    setMap: (state, { payload }: PayloadAction<CodeObject & MapComponent & MapInfo>) => {
+      const { code: mapCode, defaultSuits, clearings, fixedSuits } = payload;
       state.map = mapCode;
 
       // Also assign the clearing suits
-      switch (state.suitDistribution) {
-        case SuitDistribution.random:
-          const suitPool: ClearingSuit[] = [
-            "fox",
-            "fox",
-            "fox",
-            "fox",
-            "mouse",
-            "mouse",
-            "mouse",
-            "mouse",
-            "rabbit",
-            "rabbit",
-            "rabbit",
-            "rabbit",
-          ];
-          clearings.forEach(({ no }) => {
-            state.clearingSuits[no] = takeRandom(suitPool);
-          });
-          break;
-
-        case SuitDistribution.fixed:
-          clearings.forEach(({ no, suit }) => {
-            state.clearingSuits[no] = suit;
-          });
+      if (fixedSuits && defaultSuits) {
+        state.clearingSuits = defaultSuits;
+      } else if (state.balancedSuits) {
+        // TODO: ACTUALLY CHANGE THE IMPLEMENTATION
+        const suitPool: ClearingSuit[] = [
+          "fox",
+          "fox",
+          "fox",
+          "fox",
+          "mouse",
+          "mouse",
+          "mouse",
+          "mouse",
+          "rabbit",
+          "rabbit",
+          "rabbit",
+          "rabbit",
+        ];
+        clearings.forEach(({ no }) => {
+          state.clearingSuits[no] = takeRandom(suitPool);
+        });
+      } else {
+        const suitPool: ClearingSuit[] = [
+          "fox",
+          "fox",
+          "fox",
+          "fox",
+          "mouse",
+          "mouse",
+          "mouse",
+          "mouse",
+          "rabbit",
+          "rabbit",
+          "rabbit",
+          "rabbit",
+        ];
+        clearings.forEach(({ no }) => {
+          state.clearingSuits[no] = takeRandom(suitPool);
+        });
       }
+    },
+    balanceMapSuits: (state, { payload: balancedSuits }: PayloadAction<boolean>) => {
+      state.balancedSuits = balancedSuits;
+      state.errorMessage = null;
+      savePersistedSetting("balancedSuits", balancedSuits);
     },
     setDeck: (state, { payload }: PayloadAction<CodeObject>) => {
       const { code: deckCode } = payload;
@@ -115,6 +136,7 @@ export const setupSlice = createSlice({
       if (landmarkCount === 0 || landmarkCount === 1 || landmarkCount === 2) {
         state.landmarkCount = landmarkCount;
         state.errorMessage = null;
+        savePersistedSetting("landmarkCount", landmarkCount);
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and 2)`
@@ -200,6 +222,7 @@ export const {
   setFirstPlayer,
   setErrorMessage,
   setMap,
+  balanceMapSuits,
   setDeck,
   setLandmarkCount,
   setLandmark1,

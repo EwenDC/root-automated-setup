@@ -1,6 +1,6 @@
 .checkbox {
   display: flex;
-  margin-top: 0.5rem;
+  margin: 0.5rem 0 0 0.2rem;
   align-items: flex-start;
 
   > input {
@@ -70,7 +70,7 @@
   }
 
   > label {
-    padding-left: 0.4rem;
+    padding-left: 0.55rem;
     cursor: pointer;
   }
 }

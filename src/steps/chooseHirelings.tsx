@@ -9,6 +9,7 @@ import {
   selectSetupParameters,
   selectSkippedSteps,
 } from "../features/selectors";
+import { savePersistedSetting } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { SetupStep } from "../types";
 
@@ -22,7 +23,7 @@ const ChooseHirelingsStep: React.FC = () => {
       <Checkbox
         id="includeHirelings"
         defaultValue={!skippedSteps[SetupStep.setUpHireling1]}
-        onChange={(checked) =>
+        onChange={(checked) => {
           dispatch(
             skipSteps(
               [
@@ -33,8 +34,9 @@ const ChooseHirelingsStep: React.FC = () => {
               ],
               !checked
             )
-          )
-        }
+          );
+          savePersistedSetting("includeHirelings", checked);
+        }}
       />
       {!skippedSteps[SetupStep.setUpHireling1] ? (
         <ComponentToggle

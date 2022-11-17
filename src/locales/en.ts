@@ -2,6 +2,10 @@
 export default {
   label: {
     aggression: "Aggression",
+    balancedSuits: {
+      false: "Random clearing suit placement",
+      true: "Balanced clearing suit placement",
+    },
     changeLanguage: "Change Language",
     closeMessage: "Close Message",
     complexity: "Complexity",
@@ -18,20 +22,17 @@ export default {
     landmarkCount: "Landmark Count",
     logoAlt: "ROOT",
     logoText: "Automated Setup",
-    mapSetup: {
-      markers:
-        "Collect the 12 suit markers, then place one in each clearing as shown in the chart below.",
-      markers_botSetUp:
-        "Collect the 12 suit and 12 priority markers, then place one of each in each clearing as shown in the chart below.",
-      ruins: 'Place a ruin in each slot on the map marked with an "R" <i>(four in total)</i>.',
-      items:
-        "Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.",
-      dice: "Place the two dice near the map.",
-    },
     militant: "Militant",
     mouse: "Mouse",
     nextStep: "Next Step",
     pageTitle: "Root Automated Setup",
+    placeMarkers: {
+      priority:
+        "<li>Collect the 12 priority markers, then place one in each clearing as shown in the chart below.</li>",
+      suit: "<li>Collect the 12 suit markers, then place one in each clearing as shown in the chart below.</li>",
+      suitPriority:
+        "<li>Collect the 12 suit and 12 priority markers, then place one of each in each clearing as shown in the chart below.</li>",
+    },
     playerCount: "Player Count",
     rabbit: "Rabbit",
     redo: "Redo",
@@ -92,6 +93,9 @@ export default {
     chooseMap: {
       title: "Choose and Set up Map",
       body: "As a group, decide which map you would like to play on. If you select multiple maps, a random map will be chosen from the selected.",
+    },
+    setUpMap: {
+      body: '<li>Place a ruin in each slot on the map marked with an "R" <i>(four in total)</i>.</li><li>Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.</li><li>Place the two dice near the map.</li>',
     },
     chooseDeck: {
       title: "Choose and Set up Deck",
@@ -437,37 +441,35 @@ export default {
     autumn: {
       name: "Autumn",
       setupTitle: "Set up the Autumn Map",
-      setup: [
-        "Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.",
-      ],
+      setup:
+        "<li>Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.</li>",
+      fixedSuits: "Use the printed clearing suits for the Autumn Map",
     },
     lake: {
       name: "Lake",
       setupTitle: "Set up the Lake Map",
-      setup: [
-        "Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.",
-      ],
+      setup:
+        "<li>Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.</li>",
+      fixedSuits: "Use the recommended clearing suits for the Lake Map",
       useLandmark: "Use the map-specific setup for the Ferry landmark on the Lake map",
       landmarkSetup:
-        'Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.',
+        '<li>Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.</li>',
     },
     mountain: {
       name: "Mountain",
       setupTitle: "Set up the Mountain Map",
-      setup: [
-        "Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.",
-        "Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.",
-      ],
+      setup:
+        "<li>Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.</li><li>Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.</li>",
+      fixedSuits: "Use the recommended clearing suits for the Mountain Map",
       useLandmark: "Use the map-specific setup for the Tower landmark on the Mountain map",
       landmarkSetup:
-        'Place the Tower piece in the central clearing showing two towers. If you have "The Tower" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.',
+        '<li>Place the Tower piece in the central clearing showing two towers. If you have "The Tower" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.</li>',
     },
     winter: {
       name: "Winter",
       setupTitle: "Set up the Winter Map",
-      setup: [
-        "Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.",
-      ],
+      setup:
+        "<li>Grab the Autumn/Winter map board from the game box and place it down with the Winter side facing up.</li>",
     },
   },
   vagabond: {

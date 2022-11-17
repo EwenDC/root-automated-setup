@@ -10,7 +10,7 @@ import {
   CodeObject,
 } from "../types";
 import { setErrorMessage } from "./setupSlice";
-import { getFlowSlice, takeRandom } from "./utils";
+import { getFlowSlice, loadPersistedSetting, takeRandom } from "./utils";
 
 const initialState: FlowState = {
   pastSteps: [],
@@ -24,12 +24,16 @@ const initialState: FlowState = {
   skippedSteps: Array(SetupStep.setupEnd + 1).fill(false),
   futureSteps: [],
 };
-// Default to skipping bot & hireling setup steps
-initialState.skippedSteps[SetupStep.setUpBots] = true;
-initialState.skippedSteps[SetupStep.setUpHireling1] = true;
-initialState.skippedSteps[SetupStep.setUpHireling2] = true;
-initialState.skippedSteps[SetupStep.setUpHireling3] = true;
-initialState.skippedSteps[SetupStep.postHirelingSetup] = true;
+// Skip bot & hireling setup steps as required
+if (!loadPersistedSetting("includeBotStep", false)) {
+  initialState.skippedSteps[SetupStep.setUpBots] = true;
+}
+if (!loadPersistedSetting("includeHirelings", false)) {
+  initialState.skippedSteps[SetupStep.setUpHireling1] = true;
+  initialState.skippedSteps[SetupStep.setUpHireling2] = true;
+  initialState.skippedSteps[SetupStep.setUpHireling3] = true;
+  initialState.skippedSteps[SetupStep.postHirelingSetup] = true;
+}
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentStep = slice.step;

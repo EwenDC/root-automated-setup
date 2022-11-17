@@ -85,10 +85,6 @@ export const [selectMap, selectMapArray] = generateComponentSelectors<MapCompone
   "maps"
 );
 
-/** Selects a list of enabled maps with an associated landmark */
-export const selectEnabledLandmarkMaps = (state: RootState) =>
-  selectMapArray(state).filter(({ enabled, landmark }) => enabled && landmark);
-
 /** Returns the object for the map selected in setup */
 export const selectSetupMap = (state: RootState) =>
   state.setup.map != null ? selectMap(state, state.setup.map) : null;
