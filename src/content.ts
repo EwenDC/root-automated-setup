@@ -35,7 +35,7 @@ import treetopLandmark from "./images/landmarks/treetop.png";
 
 // Map Images
 import autumnMap from "./images/maps/autumn.png";
-// import lakeMap from "./images/maps/lake.png";
+import lakeMap from "./images/maps/lake.png";
 // import mountainMap from "./images/maps/mountain.png";
 import winterMap from "./images/maps/winter.png";
 
@@ -74,6 +74,7 @@ import warlordMeeple from "./images/meeples/warlord.png";
 
 // Path Images
 import autumnPaths from "./images/paths/autumn.png";
+import lakePaths from "./images/paths/lake.png";
 import winterPaths from "./images/paths/winter.png";
 
 // Token Images
@@ -158,17 +159,17 @@ const content: Record<string, Expansion> = {
         image: autumnMap,
         clearings: [
           { no: 1, x: 11.75, y: 14.25 },
-          { no: 2, x: 87.1, y: 28.2 },
-          { no: 3, x: 88.05, y: 88.4 },
-          { no: 4, x: 12.1, y: 80.7 },
           { no: 5, x: 59.45, y: 14.25 },
-          { no: 6, x: 89.6, y: 53.6 },
-          { no: 7, x: 63.3, y: 79.1 },
-          { no: 8, x: 39.67, y: 89.46 },
-          { no: 9, x: 12.1, y: 39.7 },
           { no: 10, x: 42.75, y: 28.75 },
-          { no: 11, x: 66.6, y: 51.2 },
+          { no: 2, x: 87.1, y: 28.2 },
+          { no: 9, x: 12.1, y: 39.7 },
           { no: 12, x: 35.83, y: 59.55 },
+          { no: 11, x: 66.6, y: 51.2 },
+          { no: 6, x: 89.6, y: 53.6 },
+          { no: 4, x: 12.1, y: 80.7 },
+          { no: 8, x: 39.67, y: 89.46 },
+          { no: 7, x: 63.3, y: 79.1 },
+          { no: 3, x: 88.05, y: 88.4 },
         ],
         paths: [
           [1, 5],
@@ -194,34 +195,34 @@ const content: Record<string, Expansion> = {
         printedSuits: true,
         defaultSuits: {
           1: "fox",
-          2: "mouse",
-          3: "rabbit",
-          4: "rabbit",
           5: "rabbit",
-          6: "fox",
-          7: "mouse",
-          8: "fox",
-          9: "mouse",
           10: "rabbit",
-          11: "mouse",
+          2: "mouse",
+          9: "mouse",
           12: "fox",
+          11: "mouse",
+          6: "fox",
+          4: "rabbit",
+          8: "fox",
+          7: "mouse",
+          3: "rabbit",
         },
       },
       winter: {
         image: winterMap,
         clearings: [
           { no: 1, x: 10.85, y: 11.3 },
-          { no: 2, x: 90.35, y: 11.55 },
-          { no: 3, x: 89.3, y: 87.65 },
-          { no: 4, x: 11.15, y: 79.7 },
           { no: 5, x: 38.6, y: 13.5 },
           { no: 6, x: 62.75, y: 18.6 },
-          { no: 7, x: 90.95, y: 51.8 },
-          { no: 8, x: 63.85, y: 78 },
-          { no: 9, x: 39.55, y: 88.7 },
+          { no: 2, x: 90.35, y: 11.55 },
           { no: 10, x: 9.1, y: 46.3 },
           { no: 11, x: 40.35, y: 47.75 },
           { no: 12, x: 67.3, y: 49.3 },
+          { no: 7, x: 90.95, y: 51.8 },
+          { no: 4, x: 11.15, y: 79.7 },
+          { no: 9, x: 39.55, y: 88.7 },
+          { no: 8, x: 63.85, y: 78 },
+          { no: 3, x: 89.3, y: 87.65 },
         ],
         paths: [
           [1, 5],
@@ -365,16 +366,69 @@ const content: Record<string, Expansion> = {
         minPlayers: 0,
       },
     },
-    // maps: {
-    //   lake: {
-    //     landmark: "ferry",
-    //     image: lakeMap,
-    //   },
-    //   mountain: {
-    //     landmark: "tower",
-    //     image: mountainMap,
-    //   },
-    // },
+    maps: {
+      lake: {
+        image: lakeMap,
+        clearings: [
+          { no: 2, x: 11.2, y: 11.65 },
+          { no: 7, x: 43.15, y: 13.85 },
+          { no: 6, x: 67.1, y: 18.9 },
+          { no: 4, x: 90.15, y: 11.9 },
+          { no: 8, x: 9.5, y: 46.4 },
+          { no: 10, x: 36.75, y: 40.95 },
+          { no: 11, x: 67.25, y: 49.4 },
+          { no: 5, x: 90.7, y: 51.85 },
+          { no: 12, x: 40.6, y: 69.65 },
+          { no: 3, x: 11.5, y: 79.6 },
+          { no: 9, x: 58.5, y: 88.45 },
+          { no: 1, x: 86.7, y: 83.55 },
+        ],
+        paths: [
+          [1, 5],
+          [1, 9],
+          [2, 7],
+          [2, 8],
+          [2, 10],
+          [3, 8],
+          [3, 9],
+          [3, 12],
+          [4, 5],
+          [4, 6],
+          [5, 11],
+          [6, 7],
+          [6, 11],
+          [7, 10],
+          [7, 11],
+          [8, 10],
+          [9, 12],
+        ],
+        backImage: lakePaths,
+        printedSuits: false,
+        landmark: {
+          code: "ferry",
+          x: 71.5,
+          y: 67.5,
+        },
+        defaultSuits: {
+          2: "fox",
+          7: "mouse",
+          6: "fox",
+          4: "rabbit",
+          8: "rabbit",
+          10: "mouse",
+          11: "rabbit",
+          5: "mouse",
+          12: "rabbit",
+          3: "mouse",
+          9: "fox",
+          1: "fox",
+        },
+      },
+      //   mountain: {
+      //     landmark: "tower",
+      //     image: mountainMap,
+      //   },
+    },
   },
   marauder: {
     base: false,

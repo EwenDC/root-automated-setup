@@ -168,7 +168,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             selectLandmarkArray,
             (landmark) =>
               landmark.minPlayers <= playerCount &&
-              (!map.useLandmark || map.landmark !== landmark.code),
+              (!map.useLandmark || !map.landmark || map.landmark.code !== landmark.code),
             toggleLandmark
           )
         );

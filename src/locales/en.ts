@@ -7,6 +7,11 @@ export default {
       true: "Balanced clearing suit placement",
     },
     changeLanguage: "Change Language",
+    clearing: {
+      fox: "Fox clearing",
+      mouse: "Mouse clearing",
+      rabbit: "Rabbit clearing",
+    },
     closeMessage: "Close Message",
     complexity: "Complexity",
     crafting: "Crafting Ability",
@@ -22,6 +27,7 @@ export default {
     landmarkCount: "Landmark Count",
     logoAlt: "ROOT",
     logoText: "Automated Setup",
+    mapChart: "Chart of the map clearings, ordered left-to-right and top-to-bottom",
     militant: "Militant",
     mouse: "Mouse",
     nextStep: "Next Step",
@@ -34,6 +40,7 @@ export default {
         "<li>Collect the 12 suit and 12 priority markers, then place one of each in each clearing as shown in the chart below.</li>",
     },
     playerCount: "Player Count",
+    priority: "Priority {{count}}",
     rabbit: "Rabbit",
     redo: "Redo",
     restartSetup: "Restart Setup",
@@ -450,20 +457,20 @@ export default {
       setupTitle: "Set up the Lake Map",
       setup:
         "<li>Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.</li>",
-      fixedSuits: "Use the recommended clearing suits for the Lake Map",
+      fixedSuits: "Use the suggested clearing suits for the Lake Map",
       useLandmark: "Use the map-specific setup for the Ferry landmark on the Lake map",
       landmarkSetup:
-        '<li>Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.</li>',
+        '<li>Place the Ferry piece as shown in the chart below. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.</li>',
     },
     mountain: {
       name: "Mountain",
       setupTitle: "Set up the Mountain Map",
       setup:
         "<li>Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.</li><li>Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.</li>",
-      fixedSuits: "Use the recommended clearing suits for the Mountain Map",
+      fixedSuits: "Use the suggested clearing suits for the Mountain Map",
       useLandmark: "Use the map-specific setup for the Tower landmark on the Mountain map",
       landmarkSetup:
-        '<li>Place the Tower piece in the central clearing showing two towers. If you have "The Tower" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.</li>',
+        '<li>Place the Tower piece as shown in the chart below. If you have "The Tower" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.</li>',
     },
     winter: {
       name: "Winter",

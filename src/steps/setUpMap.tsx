@@ -1,5 +1,5 @@
 import { Trans } from "react-i18next";
-import MapGraph from "../components/mapGraph";
+import MapChart from "../components/mapChart";
 import Section from "../components/section";
 import { selectSetupMap, selectSkippedSteps } from "../features/selectors";
 import { useAppSelector } from "../hooks";
@@ -31,7 +31,7 @@ const SetUpMapStep: React.FC = () => {
         {markerKey && <Trans i18nKey={"label.placeMarkers." + markerKey} />}
         <Trans i18nKey="setupStep.setUpMap.body" components={iconComponents} />
       </ol>
-      <MapGraph />
+      <MapChart />
     </Section>
   );
 };

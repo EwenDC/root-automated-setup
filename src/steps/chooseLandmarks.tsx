@@ -38,7 +38,7 @@ const ChooseLandmarksStep: React.FC = () => {
             landmark.minPlayers > playerCount
               ? "error.landmarkNotEnoughPlayers"
               : // Disable this landmark if it was already used in map setup
-              setupMap.useLandmark && landmark.code === setupMap.landmark
+              setupMap.useLandmark && setupMap.landmark && landmark.code === setupMap.landmark.code
               ? "error.mapLandmarkUsed"
               : null
           }

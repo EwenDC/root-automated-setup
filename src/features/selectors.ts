@@ -6,7 +6,7 @@ import {
   GameComponent,
   Hireling,
   Landmark,
-  MapComponent,
+  Map,
   MapInfo,
   Vagabond,
 } from "../types";
@@ -81,13 +81,21 @@ export const selectEnabledIndependentHirelings = (state: RootState) =>
 export const [selectLandmark, selectLandmarkArray] =
   generateComponentSelectors<Landmark>("landmarks");
 
-export const [selectMap, selectMapArray] = generateComponentSelectors<MapComponent, MapInfo>(
-  "maps"
-);
+export const [selectMap, selectMapArray] = generateComponentSelectors<Map, MapInfo>("maps");
 
 /** Returns the object for the map selected in setup */
-export const selectSetupMap = (state: RootState) =>
-  state.setup.map != null ? selectMap(state, state.setup.map) : null;
+export const selectSetupMap = (state: RootState) => {
+  if (state.setup.map == null) return null;
+  const setupMap = selectMap(state, state.setup.map);
+  // Inject the landmark data too
+  return {
+    ...setupMap,
+    landmark: setupMap.landmark && {
+      ...selectLandmark(state, setupMap.landmark.code),
+      ...setupMap.landmark,
+    },
+  };
+};
 
 /** Returns the object for the deck selected in setup */
 export const selectSetupDeck = (state: RootState) =>

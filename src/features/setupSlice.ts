@@ -3,7 +3,7 @@ import {
   ClearingSuit,
   CodeObject,
   Hireling,
-  MapComponent,
+  Map,
   MapInfo,
   SetHirelingPayload,
   SetupState,
@@ -76,7 +76,7 @@ export const setupSlice = createSlice({
     setErrorMessage: (state, { payload: errorMessage }: PayloadAction<string | null>) => {
       state.errorMessage = errorMessage;
     },
-    setMap: (state, { payload }: PayloadAction<CodeObject & MapComponent & MapInfo>) => {
+    setMap: (state, { payload }: PayloadAction<CodeObject & Map & MapInfo>) => {
       const { code: mapCode, defaultSuits, clearings, fixedSuits } = payload;
       state.map = mapCode;
 

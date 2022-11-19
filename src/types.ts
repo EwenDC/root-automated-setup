@@ -24,7 +24,7 @@ export interface Expansion extends GameComponent {
   factions?: Record<string, Faction>;
   hirelings?: Record<string, Hireling>;
   landmarks?: Record<string, Landmark>;
-  maps?: Record<string, MapComponent>;
+  maps?: Record<string, Map>;
   vagabonds?: Record<string, Vagabond>;
 }
 
@@ -54,21 +54,30 @@ export interface Landmark extends GameComponent {
   minPlayers: number;
 }
 
+/** An object representing a Map Clearing and it's position in the Map Chart */
 export interface Clearing {
   no: number;
   x: number;
   y: number;
 }
 
+/** A tuple representing a path connecting two clearings, as referenced by their priority numbers */
 export type Path = [number, number];
 
+/** An object representing details for a Landmark as it appears on a specific map */
+export interface MapLandmark {
+  code: string;
+  x: number;
+  y: number;
+}
+
 /** An object representing a Map from the Root board game */
-export interface MapComponent extends GameComponent {
+export interface Map extends GameComponent {
   clearings: Clearing[];
   paths: Path[];
   backImage: string;
   printedSuits: boolean;
-  landmark?: string;
+  landmark?: MapLandmark;
   defaultSuits?: Record<number, ClearingSuit>;
 }
 

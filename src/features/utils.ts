@@ -75,7 +75,16 @@ export const loadPersistedSetting = <T>(settingKey: string, defaultValue: T) => 
   if (storedVal != null) {
     try {
       // Parse the string stored in localStorage
-      return JSON.parse(storedVal) as T;
+      const parsedValue = JSON.parse(storedVal);
+
+      // Only use it if it matches the expected type
+      if (typeof parsedValue === typeof defaultValue) {
+        return parsedValue as T;
+      } else if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          `Saved state of ${storedVal} for setting ${settingKey} is of incorrect type (expected ${typeof defaultValue} got ${typeof parsedValue})`
+        );
+      }
     } catch (error: any) {
       if (process.env.NODE_ENV !== "production")
         console.warn(
@@ -86,9 +95,8 @@ export const loadPersistedSetting = <T>(settingKey: string, defaultValue: T) => 
   }
 
   // Default value, then save that state to localStorage for future
-  let returnVal = defaultValue;
-  savePersistedSetting(settingKey, returnVal);
-  return returnVal;
+  savePersistedSetting(settingKey, defaultValue);
+  return defaultValue;
 };
 
 /**

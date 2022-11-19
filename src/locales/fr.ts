@@ -442,8 +442,6 @@ export default {
         "<li>Prenez le plateau Lac/Montagne dans la boîte de jeu et placez-le avec la face Lac visible.</li>",
       useLandmark:
         "Sur le plateau Lac, utiliser la mise en place du Radeau spécifique à ce plateau",
-      landmarkSetup:
-        "<li>Placez le Radeau dans la clairière côtière du coin inférieur droit. Si vous avez la carte de lieu « Radeau », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.</li>",
     },
     mountain: {
       name: "Montagne",
@@ -452,8 +450,6 @@ export default {
         "<li>Prenez le plateau Lac/Montagne dans la boîte de jeu et placez-le avec la face Montagne visible.</li><li>Placez les 6 marqueurs de chemin fermé sur les 6 chemins plus foncés creusés dans la terre.</li>",
       useLandmark:
         "Sur le plateau Montagne, utiliser la mise en place de la Tour spécifique à ce plateau",
-      landmarkSetup:
-        "<li>Placez la Tour dans la clairière centrale représentant deux tours. Si vous avez la carte de lieu « Tour », sortez-la de la boîte de jeu et placez-la à côté du plateau, face non-mise en place visible.</li>",
     },
     winter: {
       name: "Hiver",
