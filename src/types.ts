@@ -136,6 +136,13 @@ export interface ComponentsState {
   vagabonds: Record<string, ComponentInfo>;
 }
 
+/** Object storing information pertitent to solving map clearing suit distribution */
+export interface ClearingSolveState {
+  no: number;
+  links: number[];
+  options: ClearingSuit[];
+}
+
 /** An object representing an promoted or demoted Hireling */
 export interface HirelingEntry {
   code: string;
