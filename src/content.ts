@@ -36,7 +36,7 @@ import treetopLandmark from "./images/landmarks/treetop.png";
 // Map Images
 import autumnMap from "./images/maps/autumn.png";
 import lakeMap from "./images/maps/lake.png";
-// import mountainMap from "./images/maps/mountain.png";
+import mountainMap from "./images/maps/mountain.png";
 import winterMap from "./images/maps/winter.png";
 
 // Meeple Images
@@ -75,6 +75,7 @@ import warlordMeeple from "./images/meeples/warlord.png";
 // Path Images
 import autumnPaths from "./images/paths/autumn.png";
 import lakePaths from "./images/paths/lake.png";
+import mountainPaths from "./images/paths/mountain.png";
 import winterPaths from "./images/paths/winter.png";
 
 // Token Images
@@ -406,8 +407,10 @@ const content: Record<string, Expansion> = {
         printedSuits: false,
         landmark: {
           code: "ferry",
+          clearing: 1,
           x: 71.5,
           y: 67.5,
+          angle: 42,
         },
         defaultSuits: {
           2: "fox",
@@ -424,10 +427,68 @@ const content: Record<string, Expansion> = {
           1: "fox",
         },
       },
-      //   mountain: {
-      //     landmark: "tower",
-      //     image: mountainMap,
-      //   },
+      mountain: {
+        image: mountainMap,
+        clearings: [
+          { no: 1, x: 11.5, y: 12.2 },
+          { no: 5, x: 58.8, y: 14.65 },
+          { no: 2, x: 89.8, y: 12.45 },
+          { no: 8, x: 9.8, y: 46.65 },
+          { no: 9, x: 33.3, y: 37.7 },
+          { no: 10, x: 53.25, y: 41.15 },
+          { no: 12, x: 34.75, y: 60.75 },
+          { no: 11, x: 64.1, y: 61.47 },
+          { no: 6, x: 90.37, y: 52.07 },
+          { no: 4, x: 11.82, y: 79.57 },
+          { no: 7, x: 48.95, y: 87.5 },
+          { no: 3, x: 88.77, y: 87.4 },
+        ],
+        paths: [
+          [1, 8],
+          [1, 9],
+          [2, 5],
+          [2, 6],
+          [2, 11],
+          [3, 6],
+          [3, 7],
+          [3, 11],
+          [4, 8],
+          [4, 12],
+          [5, 9],
+          [5, 10],
+          [5, 11],
+          [6, 11],
+          [7, 12],
+          [8, 9],
+          [9, 10],
+          [9, 12],
+          [10, 11],
+          [10, 12],
+          [11, 12],
+        ],
+        backImage: mountainPaths,
+        printedSuits: false,
+        landmark: {
+          code: "tower",
+          clearing: 10,
+          x: 43,
+          y: 36,
+        },
+        defaultSuits: {
+          1: "fox",
+          5: "mouse",
+          2: "rabbit",
+          8: "rabbit",
+          9: "rabbit",
+          10: "fox",
+          12: "fox",
+          11: "mouse",
+          6: "mouse",
+          4: "mouse",
+          7: "rabbit",
+          3: "fox",
+        },
+      },
     },
   },
   marauder: {

@@ -15,7 +15,7 @@ const LanguageSelect: React.FC = () => {
     <div className="language-select" role="radiogroup">
       <span className="label">{t("label.changeLanguage")}:</span>
       {languages.map(({ name, locale, image }) => {
-        const active = i18n.language === locale;
+        const active = i18n.resolvedLanguage === locale;
         return (
           <button
             className={classNames({ active })}

@@ -120,11 +120,11 @@ export const setupSlice = createSlice({
             }, []);
 
             // If we've hit 0 entropy then the solver failed
-            if (lowestEntropy <= 0) {
+            if (lowestEntropy === 0) {
               if (process.env.NODE_ENV !== "production")
                 console.info(
                   "Failed to solve for balanced suits. Fail state:",
-                  state.clearingSuits,
+                  { ...state.clearingSuits },
                   unassignedClearings
                 );
               state.clearingSuits = {};
@@ -151,7 +151,7 @@ export const setupSlice = createSlice({
               ),
             }));
           }
-        } while (Object.keys(state.clearingSuits).length <= 0);
+        } while (Object.keys(state.clearingSuits).length === 0);
       } else {
         const suitPool: ClearingSuit[] = [
           "fox",

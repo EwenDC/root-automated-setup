@@ -67,8 +67,10 @@ export type Path = [number, number];
 /** An object representing details for a Landmark as it appears on a specific map */
 export interface MapLandmark {
   code: string;
+  clearing: number;
   x: number;
   y: number;
+  angle?: number;
 }
 
 /** An object representing a Map from the Root board game */

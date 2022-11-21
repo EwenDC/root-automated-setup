@@ -34,20 +34,31 @@ const MapChart: React.FC = () => {
                 </text>
               </g>
             ) : null}
+            {map.useLandmark && map.landmark && map.landmark.clearing === no ? (
+              <image
+                x={map.landmark.x}
+                y={map.landmark.y}
+                width="10"
+                height="10"
+                transform={
+                  map.landmark.angle != null
+                    ? "rotate(" +
+                      map.landmark.angle +
+                      " " +
+                      (map.landmark.x + 5) +
+                      " " +
+                      (map.landmark.y + 5) +
+                      ")"
+                    : undefined
+                }
+                href={map.landmark.image}
+              >
+                <title>{t("landmark." + map.landmark.code + ".name")}</title>
+              </image>
+            ) : null}
           </g>
         );
       })}
-      {map.useLandmark && map.landmark ? (
-        <image
-          x={map.landmark.x}
-          y={map.landmark.y}
-          width="10"
-          height="10"
-          href={map.landmark.image}
-        >
-          <title>{t("landmark." + map.landmark.code + ".name")}</title>
-        </image>
-      ) : null}
     </svg>
   );
 };
