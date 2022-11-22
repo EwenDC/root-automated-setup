@@ -1,4 +1,4 @@
-import { Fragment, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
@@ -7,7 +7,6 @@ import Section from "../components/section";
 import { enableMapLandmark, mapFixedSuits, toggleMap } from "../features/componentsSlice";
 import { selectMapArray, selectSetupParameters } from "../features/selectors";
 import { balanceMapSuits } from "../features/setupSlice";
-import { selectEnabled } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 const ChooseMapStep: React.FC = () => {
@@ -18,7 +17,11 @@ const ChooseMapStep: React.FC = () => {
 
   const sortedMaps = useMemo(
     () =>
-      selectEnabled(mapArray)
+      mapArray
+        .filter(
+          ({ enabled, fixedSuits, useLandmark }) =>
+            enabled && (fixedSuits != null || useLandmark != null)
+        )
         .map(({ code, fixedSuits, useLandmark }) => ({
           code,
           label: t("map." + code + ".name"),
@@ -41,26 +44,28 @@ const ChooseMapStep: React.FC = () => {
         defaultValue={balancedSuits}
         onChange={(value) => dispatch(balanceMapSuits(value))}
       />
-      {sortedMaps.map(({ code, fixedSuits, useLandmark }) => (
-        <Fragment key={code}>
-          {fixedSuits != null ? (
-            <Checkbox
-              id={code + "FixedSuits"}
-              labelKey={"map." + code + ".fixedSuits"}
-              defaultValue={fixedSuits}
-              onChange={(checked) => dispatch(mapFixedSuits(code, checked))}
-            />
-          ) : null}
-          {useLandmark != null ? (
-            <Checkbox
-              id={code + "UseLandmark"}
-              labelKey={"map." + code + ".useLandmark"}
-              defaultValue={useLandmark}
-              onChange={(checked) => dispatch(enableMapLandmark(code, checked))}
-            />
-          ) : null}
-        </Fragment>
-      ))}
+      {sortedMaps
+        .filter(({ fixedSuits }) => fixedSuits != null)
+        .map(({ code, fixedSuits }) => (
+          <Checkbox
+            key={code}
+            id={code + "FixedSuits"}
+            labelKey={"map." + code + ".fixedSuits"}
+            defaultValue={fixedSuits}
+            onChange={(checked) => dispatch(mapFixedSuits(code, checked))}
+          />
+        ))}
+      {sortedMaps
+        .filter(({ useLandmark }) => useLandmark != null)
+        .map(({ code, useLandmark }) => (
+          <Checkbox
+            key={code}
+            id={code + "UseLandmark"}
+            labelKey={"map." + code + ".useLandmark"}
+            defaultValue={useLandmark}
+            onChange={(checked) => dispatch(enableMapLandmark(code, checked))}
+          />
+        ))}
     </Section>
   );
 };
