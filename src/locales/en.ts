@@ -460,7 +460,7 @@ export default {
       fixedSuits: "Use the suggested clearing suits for the Lake Map",
       useLandmark: "Use the map-specific setup for the Ferry landmark on the Lake map",
       landmarkSetup:
-        '<li>Place the Ferry piece as shown in the chart below. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.</li>',
+        '<li>Place the Ferry piece as shown in the chart below. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side.</li>',
     },
     mountain: {
       name: "Mountain",
@@ -470,7 +470,7 @@ export default {
       fixedSuits: "Use the suggested clearing suits for the Mountain Map",
       useLandmark: "Use the map-specific setup for the Tower landmark on the Mountain map",
       landmarkSetup:
-        '<li>Place the Tower piece as shown in the chart below. If you have "The Tower" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.</li>',
+        '<li>Place the Tower piece as shown in the chart below. If you have "The Tower" landmark card, take it from the game box and place it next to the board on its non-setup side.</li>',
     },
     winter: {
       name: "Winter",
