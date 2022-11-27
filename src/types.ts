@@ -31,6 +31,8 @@ export interface Expansion extends GameComponent {
 /** An object representing a Faction from the Root board game */
 export interface Faction extends GameComponent {
   key: string;
+  order: number;
+  reach: number;
   militant: boolean;
   isVagabond: boolean;
   warriors: number;
@@ -217,6 +219,7 @@ export interface SkipStepsPayload {
 /** An object representing a faction in the faction pool, along with it's assigned vagabond character (if it has one) */
 export interface FactionEntry {
   code: string;
+  order: number;
   militant: boolean;
   vagabond?: string;
 }
@@ -240,6 +243,8 @@ export interface FlowState {
   vagabondSetUp: boolean;
   currentPlayerIndex: number;
   currentFactionIndex: number | null;
+  vagabondPool: string[];
+  useDraft: boolean;
   skippedSteps: boolean[];
   futureSteps: FlowSlice[];
 }

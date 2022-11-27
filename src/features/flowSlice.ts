@@ -10,7 +10,7 @@ import {
   CodeObject,
 } from "../types";
 import { setErrorMessage } from "./setupSlice";
-import { getFlowSlice, loadPersistedSetting, takeRandom } from "./utils";
+import { getFlowSlice, loadPersistedSetting, savePersistedSetting, takeRandom } from "./utils";
 
 const initialState: FlowState = {
   pastSteps: [],
@@ -20,6 +20,8 @@ const initialState: FlowState = {
   vagabondSetUp: false,
   currentPlayerIndex: 0,
   currentFactionIndex: null,
+  vagabondPool: [],
+  useDraft: loadPersistedSetting("useDraft", true),
   // Create an array with as many elements as there are setup steps
   skippedSteps: Array(SetupStep.setupEnd + 1).fill(false),
   futureSteps: [],
@@ -58,21 +60,32 @@ export const flowSlice = createSlice({
         if (
           state.currentStep === SetupStep.setUpFaction &&
           !state.vagabondSetUp &&
-          state.factionPool[state.currentFactionIndex ?? 0].vagabond
+          state.factionPool[state.currentFactionIndex || 0].vagabond
         )
           state.vagabondSetUp = true;
 
         // Handle special case for faction setup
-        if (state.currentStep === SetupStep.setUpFaction && state.currentPlayerIndex > 0) {
+        if (
+          state.currentStep === SetupStep.setUpFaction &&
+          state.useDraft &&
+          state.currentPlayerIndex > 0
+        ) {
           // If we still have players left over, move on to the next player
           state.currentPlayerIndex--;
           // Remove the faction we just set up from the pool
-          const [removedFaction] = state.factionPool.splice(state.currentFactionIndex ?? 0, 1);
+          const [removedFaction] = state.factionPool.splice(state.currentFactionIndex || 0, 1);
           state.currentFactionIndex = null;
           // Clear the last faction lock if the removed faction was militant
           if (state.lastFactionLocked && removedFaction.militant) state.lastFactionLocked = false;
           // Return to the faction selection step
           state.currentStep = SetupStep.selectFaction;
+        } else if (
+          state.currentStep === SetupStep.setUpFaction &&
+          !state.useDraft &&
+          state.factionPool.length > 1
+        ) {
+          // Move on to setting up the next faction in the list
+          state.factionPool.shift();
         } else {
           // Go to the next non-skipped step
           let skipStep = false;
@@ -115,6 +128,10 @@ export const flowSlice = createSlice({
         );
       }
     },
+    useFactionDraft: (state, { payload: useDraft }: PayloadAction<boolean>) => {
+      state.useDraft = useDraft;
+      savePersistedSetting("useDraft", useDraft);
+    },
     skipSteps: {
       prepare: (steps: SetupStep | SetupStep[], skip: boolean) => ({
         payload: {
@@ -130,24 +147,31 @@ export const flowSlice = createSlice({
         state.futureSteps = [];
       },
     },
+    setVagabondPool: (state, { payload: vagabondPool }: PayloadAction<CodeObject[]>) => {
+      state.vagabondPool = vagabondPool.map(({ code }) => code);
+    },
     clearFactionPool: (state) => {
+      state.vagabondPool = [];
       state.factionPool = [];
       state.lastFactionLocked = false;
       state.currentFactionIndex = null;
     },
-    addToFactionPool: {
-      prepare: (faction: WithCode<Faction>, vagabondPool: CodeObject[]) => ({
-        payload: {
-          code: faction.code,
-          militant: faction.militant,
-          vagabond: faction.isVagabond ? takeRandom(vagabondPool).code : undefined,
-        },
-      }),
-      reducer: (state, { payload: factionEntry }: PayloadAction<FactionEntry>) => {
-        // Add to our pool, and set it to locked if insurgent
-        state.factionPool.push(factionEntry);
-        state.lastFactionLocked = !factionEntry.militant;
-      },
+    addToFactionPool: (state, { payload: faction }: PayloadAction<WithCode<Faction>>) => {
+      const factionEntry: FactionEntry = {
+        code: faction.code,
+        order: faction.order,
+        militant: faction.militant,
+      };
+      if (faction.isVagabond && state.useDraft)
+        factionEntry.vagabond = takeRandom(state.vagabondPool);
+
+      state.factionPool.push(factionEntry);
+
+      if (state.useDraft) {
+        state.lastFactionLocked = !faction.militant;
+      } else {
+        state.factionPool.sort(({ order: a }, { order: b }) => a - b);
+      }
     },
     setCurrentPlayerIndex: (state, { payload: currentPlayerIndex }: PayloadAction<number>) => {
       if (currentPlayerIndex >= 0) {
@@ -189,7 +213,9 @@ export const {
   incrementStep,
   undoStep,
   redoStep,
+  useFactionDraft,
   skipSteps,
+  setVagabondPool,
   clearFactionPool,
   addToFactionPool,
   setCurrentPlayerIndex,

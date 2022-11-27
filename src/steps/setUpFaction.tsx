@@ -10,7 +10,7 @@ import { useAppSelector } from "../hooks";
 const SetUpFactionStep: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
   const { factionIndex, factionPool, vagabondSetUp } = flowSlice;
   const factionPoolEntry = useAppSelector((state) =>
-    selectFactionPoolEntry(state, factionPool[factionIndex ?? 0])
+    selectFactionPoolEntry(state, factionPool[factionIndex || 0])
   );
   const { t } = useTranslation();
   return (

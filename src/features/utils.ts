@@ -11,6 +11,16 @@ import {
 } from "../types";
 
 /**
+ * Function for clamping a number within a value range
+ * @param value The number to be clamped
+ * @param min The minimum number in the acceptable range
+ * @param max The maximum number in the acceptable range
+ * @returns The inputted value if it is within the desired range, or the closest number in the range
+ */
+export const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
+
+/**
  * Function for create Redux Selectors for returning a single component or a
  * component list as an array, moving the component key to the component field "code"
  * @param componentType The key the list of components is stored under in the "components" redux slice

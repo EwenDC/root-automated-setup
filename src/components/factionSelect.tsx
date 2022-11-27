@@ -27,7 +27,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const { t } = useTranslation();
 
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    const focusedIndex = flowSlice.factionIndex ?? 0;
+    const focusedIndex = flowSlice.factionIndex || 0;
     const maxIndex = factionPool.length - (flowSlice.lastFactionLocked ? 2 : 1);
     let newIndex: number | undefined;
 
@@ -105,7 +105,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
                   : undefined
               }
               // We have to override the tabbing logic to meet the standard of role "radio"
-              tabIndex={stepActive ? (index === (flowSlice.factionIndex ?? 0) ? 0 : -1) : undefined}
+              tabIndex={stepActive ? (index === (flowSlice.factionIndex || 0) ? 0 : -1) : undefined}
               onKeyDown={onKeyDownHandler}
             >
               <img

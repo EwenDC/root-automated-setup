@@ -97,7 +97,7 @@ export const setupSlice = createSlice({
             }, []),
             options: ["fox", "mouse", "rabbit"],
           }));
-          const suitCounts: Record<ClearingSuit, number> = {
+          let suitCounts: Record<ClearingSuit, number> = {
             fox: 0,
             mouse: 0,
             rabbit: 0,
@@ -106,7 +106,7 @@ export const setupSlice = createSlice({
           // Assign each clearing one-by-one, favouring clearings with the least amount of valid options
           while (unassignedClearings.length > 0) {
             let lowestEntropy = Infinity;
-            const candidates = unassignedClearings.reduce((list: number[], { options }, index) => {
+            let candidates = unassignedClearings.reduce((list: number[], { options }, index) => {
               // If our entropy is higher don't include as candidate
               if (options.length > lowestEntropy) return list;
               // If our entropy is the same add as a candidate
@@ -133,7 +133,7 @@ export const setupSlice = createSlice({
 
             // Randomly pick a candidate and remove it from the remaining clearings
             const nextClearingIndex = takeRandom(candidates);
-            const nextClearing = unassignedClearings[nextClearingIndex];
+            let nextClearing = unassignedClearings[nextClearingIndex];
             unassignedClearings.splice(nextClearingIndex, 1);
 
             // Assign a suit based off the valid options for the chosen clearing, and keep track of how many of each we've assigned

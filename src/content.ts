@@ -99,6 +99,8 @@ const content: Record<string, Expansion> = {
     factions: {
       marquise: {
         key: "marquise",
+        order: 1,
+        reach: 10,
         image: marquiseMeeple,
         militant: true,
         isVagabond: false,
@@ -114,6 +116,8 @@ const content: Record<string, Expansion> = {
       },
       eyrie: {
         key: "eyrie",
+        order: 2,
+        reach: 7,
         image: eyrieMeeple,
         militant: true,
         isVagabond: false,
@@ -128,6 +132,8 @@ const content: Record<string, Expansion> = {
       },
       alliance: {
         key: "alliance",
+        order: 3,
+        reach: 3,
         image: allianceMeeple,
         militant: false,
         isVagabond: false,
@@ -143,6 +149,8 @@ const content: Record<string, Expansion> = {
       },
       vagabond: {
         key: "vagabond",
+        order: 4,
+        reach: 5,
         image: thiefMeeple,
         militant: false,
         isVagabond: true,
@@ -266,8 +274,25 @@ const content: Record<string, Expansion> = {
     base: false,
     image: riverfolkBox,
     factions: {
+      vagabond2: {
+        key: "vagabond",
+        order: 5,
+        reach: 2,
+        image: roninMeeple,
+        militant: false,
+        isVagabond: true,
+        warriors: 1,
+        buildings: 0,
+        tokens: 0,
+        complexity: 1,
+        wealth: 1,
+        aggression: 1,
+        crafting: 0,
+      },
       cult: {
         key: "cult",
+        order: 6,
+        reach: 2,
         image: cultMeeple,
         militant: false,
         isVagabond: false,
@@ -282,6 +307,8 @@ const content: Record<string, Expansion> = {
       },
       riverfolk: {
         key: "riverfolk",
+        order: 7,
+        reach: 5,
         image: riverfolkMeeple,
         militant: false,
         isVagabond: false,
@@ -293,19 +320,6 @@ const content: Record<string, Expansion> = {
         wealth: 2,
         aggression: 0,
         crafting: 1,
-      },
-      vagabond2: {
-        key: "vagabond",
-        image: roninMeeple,
-        militant: false,
-        isVagabond: true,
-        warriors: 1,
-        buildings: 0,
-        tokens: 0,
-        complexity: 1,
-        wealth: 1,
-        aggression: 1,
-        crafting: 0,
       },
     },
     vagabonds: {
@@ -329,6 +343,8 @@ const content: Record<string, Expansion> = {
     factions: {
       duchy: {
         key: "duchy",
+        order: 8,
+        reach: 8,
         image: duchyMeeple,
         militant: true,
         isVagabond: false,
@@ -344,6 +360,8 @@ const content: Record<string, Expansion> = {
       },
       corvid: {
         key: "corvid",
+        order: 9,
+        reach: 3,
         image: corvidMeeple,
         militant: false,
         isVagabond: false,
@@ -497,6 +515,8 @@ const content: Record<string, Expansion> = {
     factions: {
       warlord: {
         key: "warlord",
+        order: 10,
+        reach: 9,
         image: warlordMeeple,
         militant: true,
         isVagabond: false,
@@ -512,6 +532,8 @@ const content: Record<string, Expansion> = {
       },
       keepers: {
         key: "keepers",
+        order: 11,
+        reach: 8,
         image: keepersMeeple,
         militant: true,
         isVagabond: false,

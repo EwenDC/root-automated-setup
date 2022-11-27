@@ -19,7 +19,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChang
       <input
         id={id}
         type="checkbox"
-        defaultChecked={defaultValue ?? false}
+        defaultChecked={defaultValue || false}
         disabled={!stepActive}
         onChange={(e) => onChange(e.target.checked)}
         aria-invalid={stepActive && errorMessage ? true : undefined}
