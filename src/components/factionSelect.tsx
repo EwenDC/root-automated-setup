@@ -127,7 +127,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
           );
         })}
       </div>
-      {stepActive && selectedFaction ? (
+      {selectedFaction ? (
         <div className="faction-info">
           <selectedFactionContext.Provider value={selectedFaction}>
             <div className="stat-list">

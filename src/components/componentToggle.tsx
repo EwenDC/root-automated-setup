@@ -50,10 +50,11 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
     });
 
     // Sort it by default (unless asked explicitly not to)
-    if (!unsorted) returnValue.sort((a, b) => a.label.localeCompare(b.label, i18n.language));
+    if (!unsorted)
+      returnValue.sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage));
 
     return returnValue;
-  }, [components, t, getLabelKey, unsorted, i18n.language]);
+  }, [components, t, getLabelKey, unsorted, i18n.resolvedLanguage]);
 
   return (
     <div className={classNames("component-toggle", { "large-labels": largeLabels })}>

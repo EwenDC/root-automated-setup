@@ -32,7 +32,6 @@ export interface Expansion extends GameComponent {
 export interface Faction extends GameComponent {
   key: string;
   order: number;
-  reach: number;
   militant: boolean;
   isVagabond: boolean;
   warriors: number;
@@ -221,7 +220,7 @@ export interface FactionEntry {
   code: string;
   order: number;
   militant: boolean;
-  vagabond?: string;
+  vagabond?: string | true;
 }
 
 /** An object representing a slice of history for the flow state */

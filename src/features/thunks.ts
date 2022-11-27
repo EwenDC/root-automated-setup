@@ -6,7 +6,9 @@ import {
   addToFactionPool,
   clearFactionPool,
   incrementStep,
+  setCurrentFactionIndex,
   setCurrentPlayerIndex,
+  setUseDraft,
   setVagabondPool,
   skipSteps,
 } from "./flowSlice";
@@ -36,7 +38,7 @@ import {
   setMap,
   setPlayerCount,
 } from "./setupSlice";
-import { clamp, selectEnabled, takeRandom } from "./utils";
+import { selectEnabled, takeRandom } from "./utils";
 
 /**
  * Thunk action for mass updating the enable/disable state of multiple components, dispatching the minimum amount of actions to do so
@@ -143,14 +145,15 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
       dispatch(setFirstPlayer(firstPlayer));
 
+      const includedFactions = selectFactionCodes(getState()).length;
+
       // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
       dispatch(
-        massComponentToggle(
-          selectFactionHirelings,
-          playerCount < selectFactionCodes(getState()).length - 1,
-          toggleHireling
-        )
+        massComponentToggle(selectFactionHirelings, playerCount < includedFactions, toggleHireling)
       );
+
+      // Don't allow draft setup if we can't spare an extra faction
+      if (playerCount === includedFactions) dispatch(setUseDraft(false));
       break;
 
     case SetupStep.chooseMap:
@@ -306,71 +309,68 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Clear the faction pool of any potential stale data from previous setups
       if (factionPool.length > 0) dispatch(clearFactionPool());
 
-      if (useDraft) {
-        // Get our list of militant factions and vagabonds which are avaliable for selection
-        let workingFactionPool = selectEnabledMilitantFactions(getState());
-        let vagabondPool = selectEnabled(selectVagabondArray(getState()));
+      // Get our list of militant and insurgent factions which are avaliable for selection
+      let workingFactionPool = selectEnabledMilitantFactions(getState());
+      const insurgentFactions = selectEnabledInsurgentFactions(getState());
 
-        // Get our list of insurgent factions to be added to the working faction pool during setup
-        const insurgentFactions = selectEnabledInsurgentFactions(getState());
+      // Validate and set up the vagabond pool for draft setup
+      if (useDraft) {
+        let vagabondPool = selectEnabled(selectVagabondArray(getState()));
         // Get our vagabond faction count to validate our vagabondPool against
         const vagabondFactionCount = workingFactionPool
           .concat(insurgentFactions)
-          .reduce((count, faction) => (faction.isVagabond ? count + 1 : count), 0);
+          .reduce((count, { isVagabond }) => (isVagabond ? count + 1 : count), 0);
 
-        // Check that there are enough factions avaliable for setup
-        if (
-          workingFactionPool.length > 0 &&
-          vagabondPool.length >= vagabondFactionCount &&
-          workingFactionPool.length + insurgentFactions.length >= playerCount + 1
-        ) {
-          // Start by populating the vagabond pool then adding a random militant faction
+        if (vagabondPool.length >= vagabondFactionCount) {
           dispatch(setVagabondPool(vagabondPool));
-          dispatch(addToFactionPool(takeRandom(workingFactionPool)));
-          // Add the insurgent factions to the mix
-          workingFactionPool = workingFactionPool.concat(insurgentFactions);
-          // Add enough factions to make the total pool playerCount + 1
-          for (let i = 0; i < playerCount; i++) {
-            dispatch(addToFactionPool(takeRandom(workingFactionPool)));
-          }
-          // Begin the setup at the bottom of player order
-          dispatch(setCurrentPlayerIndex(playerCount - 1));
         } else {
-          // Set the correct error message
-          if (workingFactionPool.length === 0) {
-            validationError = "error.noMilitantFaction";
-          } else if (vagabondPool.length < vagabondFactionCount) {
-            validationError = "error.tooFewVagabond";
-          } else {
-            validationError = "error.tooFewFaction";
-          }
+          doIncrementStep = false;
+          validationError = "error.tooFewVagabond";
+          break;
         }
+      }
+
+      // Set the appropriate number of factions for setup
+      const factionCount = useDraft ? playerCount + 1 : playerCount;
+
+      // Check that there are enough factions avaliable for setup
+      if (
+        workingFactionPool.length > 0 &&
+        workingFactionPool.length + insurgentFactions.length >= factionCount
+      ) {
+        // Start by adding a random militant faction
+        dispatch(addToFactionPool(takeRandom(workingFactionPool)));
+        // Add the insurgent factions to the mix
+        workingFactionPool = workingFactionPool.concat(insurgentFactions);
+        // Add enough factions to make the total pool equal factionCount
+        for (let i = 1; i < factionCount; i++) {
+          dispatch(addToFactionPool(takeRandom(workingFactionPool)));
+        }
+        // For draft setup, begin the setup at the bottom of player order
+        if (useDraft) dispatch(setCurrentPlayerIndex(playerCount - 1));
       } else {
-        const allFactions = selectFactionArray(getState());
-        let factionPool = selectEnabled(allFactions);
+        // Invalid state, do not proceed
+        doIncrementStep = false;
 
-        if (factionPool.length >= playerCount) {
-          // Calculate our target reach
-          const targetReach = clamp(playerCount, 2, 6);
-
-          // Check that we have enough reach for setup by checking the ideal setup (chosing all of the highest reach factions)
-          const topReachFactions = [...factionPool].sort(({ reach: a }, { reach: b }) => b - a);
-          topReachFactions.length = playerCount;
-          const highestReach = topReachFactions.reduce((total, { reach }) => total + reach, 0);
+        // Set the correct error message
+        if (workingFactionPool.length === 0) {
+          validationError = "error.noMilitantFaction";
         } else {
           validationError = "error.tooFewFaction";
         }
       }
-
-      // Invalid state, do not proceed
-      if (validationError != null) doIncrementStep = false;
       break;
 
     case SetupStep.selectFaction:
-      // Ensure the user has actually selected a faction
-      if (currentFactionIndex == null) {
-        doIncrementStep = false;
-        validationError = "error.noFaction";
+      if (useDraft) {
+        // Ensure the user has actually selected a faction
+        if (currentFactionIndex == null) {
+          doIncrementStep = false;
+          validationError = "error.noFaction";
+        }
+      } else {
+        // Clear any selected faction as it's not used for standard setup
+        dispatch(setCurrentFactionIndex(null));
       }
       break;
 

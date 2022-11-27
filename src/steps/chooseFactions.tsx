@@ -1,24 +1,34 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
 import { toggleFaction, toggleVagabond } from "../features/componentsSlice";
+import { setUseDraft } from "../features/flowSlice";
 import {
   selectFactionArray,
+  selectFlowState,
   selectSetupParameters,
-  selectSkippedSteps,
   selectVagabondArray,
 } from "../features/selectors";
-import { useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { SetupStep } from "../types";
 
 const ChooseFactionsStep: React.FC = () => {
   const { playerCount, excludedFactions } = useAppSelector(selectSetupParameters);
-  const skippedSteps = useAppSelector(selectSkippedSteps);
+  const { skippedSteps, useDraft } = useAppSelector(selectFlowState);
   const factions = useAppSelector(selectFactionArray);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   return (
     <Section titleKey="setupStep.chooseFactions.title" textKey="setupStep.chooseFactions.body">
+      {playerCount < factions.length ? (
+        <Checkbox
+          id="useDraft"
+          defaultValue={useDraft}
+          onChange={(checked) => dispatch(setUseDraft(checked))}
+        />
+      ) : null}
       <ComponentToggle
         selector={selectFactionArray}
         toggleComponent={toggleFaction}
@@ -36,7 +46,7 @@ const ChooseFactionsStep: React.FC = () => {
             : null
         }
       />
-      {factions.some((faction) => faction.isVagabond && faction.enabled) ? (
+      {useDraft && factions.some((faction) => faction.isVagabond && faction.enabled) ? (
         <>
           {t("label.selectVagabonds")}
           <ComponentToggle

@@ -8,8 +8,8 @@ const LanguageSelect: React.FC = () => {
 
   // Make sure the HTML lang attribute is set correctly
   useEffect(() => {
-    document.documentElement.lang = i18n.language;
-  }, [i18n.language]);
+    document.documentElement.lang = i18n.resolvedLanguage;
+  }, [i18n.resolvedLanguage]);
 
   return (
     <div className="language-select" role="radiogroup">

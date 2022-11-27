@@ -28,8 +28,8 @@ const ChooseMapStep: React.FC = () => {
           fixedSuits,
           useLandmark,
         }))
-        .sort((a, b) => a.label.localeCompare(b.label, i18n.language)),
-    [mapArray, t, i18n.language]
+        .sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage)),
+    [mapArray, t, i18n.resolvedLanguage]
   );
 
   return (

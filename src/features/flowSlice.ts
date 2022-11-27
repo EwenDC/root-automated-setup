@@ -64,7 +64,7 @@ export const flowSlice = createSlice({
         )
           state.vagabondSetUp = true;
 
-        // Handle special case for faction setup
+        // Handle special cases for faction setup
         if (
           state.currentStep === SetupStep.setUpFaction &&
           state.useDraft &&
@@ -118,6 +118,8 @@ export const flowSlice = createSlice({
       // Get the next step from the redo queue
       const nextStep = state.futureSteps.shift();
       if (nextStep != null) {
+        // Make sure that you can't use undo/redo to select a faction during standard setup
+        if (!state.useDraft) state.currentFactionIndex = null;
         // Add our current state to the undo queue
         state.pastSteps.push(getFlowSlice(state));
         // Override current state with state from next step
@@ -128,8 +130,9 @@ export const flowSlice = createSlice({
         );
       }
     },
-    useFactionDraft: (state, { payload: useDraft }: PayloadAction<boolean>) => {
+    setUseDraft: (state, { payload: useDraft }: PayloadAction<boolean>) => {
       state.useDraft = useDraft;
+      state.futureSteps = [];
       savePersistedSetting("useDraft", useDraft);
     },
     skipSteps: {
@@ -162,8 +165,8 @@ export const flowSlice = createSlice({
         order: faction.order,
         militant: faction.militant,
       };
-      if (faction.isVagabond && state.useDraft)
-        factionEntry.vagabond = takeRandom(state.vagabondPool);
+      if (faction.isVagabond)
+        factionEntry.vagabond = state.useDraft ? takeRandom(state.vagabondPool) : true;
 
       state.factionPool.push(factionEntry);
 
@@ -182,10 +185,17 @@ export const flowSlice = createSlice({
         );
       }
     },
-    setCurrentFactionIndex: (state, { payload: currentFactionIndex }: PayloadAction<number>) => {
-      if (currentFactionIndex >= 0 && currentFactionIndex < state.factionPool.length) {
+    setCurrentFactionIndex: (
+      state,
+      { payload: currentFactionIndex }: PayloadAction<number | null>
+    ) => {
+      if (
+        currentFactionIndex == null ||
+        (currentFactionIndex >= 0 && currentFactionIndex < state.factionPool.length)
+      ) {
         state.currentFactionIndex = currentFactionIndex;
-        state.futureSteps = [];
+        // Don't wipe redo queue during standard setup since it's just visual
+        if (state.useDraft) state.futureSteps = [];
       } else if (process.env.NODE_ENV !== "production") {
         console.warn(
           `Invalid payload for setCurrentFactionIndex action: ${currentFactionIndex} (Payload must be a number larger than or equal to 0 but smaller than the faction pool length [${state.factionPool.length}])`
@@ -213,7 +223,7 @@ export const {
   incrementStep,
   undoStep,
   redoStep,
-  useFactionDraft,
+  setUseDraft,
   skipSteps,
   setVagabondPool,
   clearFactionPool,

@@ -1,18 +1,14 @@
 import NumberSelector from "../components/numberSelector";
 import Radiogroup from "../components/radiogroup";
 import Section from "../components/section";
-import {
-  selectFactionArray,
-  selectSetupParameters,
-  selectSkippedSteps,
-} from "../features/selectors";
+import { selectFactionArray, selectFlowState, selectSetupParameters } from "../features/selectors";
 import { fixFirstPlayer, setPlayerCount } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { SetupStep } from "../types";
 
 const SeatPlayersStep: React.FC = () => {
   const { playerCount, fixedFirstPlayer } = useAppSelector(selectSetupParameters);
-  const skippedSteps = useAppSelector(selectSkippedSteps);
+  const { skippedSteps } = useAppSelector(selectFlowState);
   const factions = useAppSelector(selectFactionArray);
   const dispatch = useAppDispatch();
   return (
@@ -21,7 +17,7 @@ const SeatPlayersStep: React.FC = () => {
         id="playerCount"
         value={playerCount}
         minVal={skippedSteps[SetupStep.setUpBots] ? 2 : 1}
-        maxVal={factions.length - 1}
+        maxVal={factions.length}
         onChange={(value) => dispatch(setPlayerCount(value))}
       />
       <Radiogroup

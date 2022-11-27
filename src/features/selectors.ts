@@ -46,7 +46,7 @@ export const selectEnabledInsurgentFactions = (state: RootState) =>
 /** Returns a faction pool entry with the original faction and vagabond objects merged in */
 export const selectFactionPoolEntry = (state: RootState, { code, vagabond }: FactionEntry) => ({
   ...selectFaction(state, code),
-  vagabond: vagabond ? selectVagabond(state, vagabond) : undefined,
+  vagabond: typeof vagabond === "string" ? selectVagabond(state, vagabond) : undefined,
 });
 
 /** Returns the faction pool, joining the original faction and vagabond objects into the entries */
@@ -138,9 +138,6 @@ export const selectSetupHireling3 = (state: RootState) =>
 
 /** Returns the setup parameters from redux state */
 export const selectSetupParameters = (state: RootState) => state.setup;
-
-/** Returns an array of booleans indicating if the step at a given index is skipped */
-export const selectSkippedSteps = (state: RootState) => state.flow.skippedSteps;
 
 export const [selectVagabond, selectVagabondArray] =
   generateComponentSelectors<Vagabond>("vagabonds");

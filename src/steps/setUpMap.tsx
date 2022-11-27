@@ -1,14 +1,14 @@
 import { Trans } from "react-i18next";
 import MapChart from "../components/mapChart";
 import Section from "../components/section";
-import { selectSetupMap, selectSkippedSteps } from "../features/selectors";
+import { selectFlowState, selectSetupMap } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import iconComponents from "../iconComponents";
 import { SetupStep } from "../types";
 
 const SetUpMapStep: React.FC = () => {
   const setupMap = useAppSelector(selectSetupMap);
-  const skippedSteps = useAppSelector(selectSkippedSteps);
+  const { skippedSteps } = useAppSelector(selectFlowState);
 
   if (!setupMap) return null;
 

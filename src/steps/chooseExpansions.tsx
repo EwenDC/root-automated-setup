@@ -3,13 +3,13 @@ import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
 import { toggleExpansion } from "../features/componentsSlice";
 import { skipSteps } from "../features/flowSlice";
-import { selectExpansionArray, selectSkippedSteps } from "../features/selectors";
+import { selectExpansionArray, selectFlowState } from "../features/selectors";
 import { savePersistedSetting } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { SetupStep } from "../types";
 
 const ChooseExpansionsStep: React.FC = () => {
-  const skippedSteps = useAppSelector(selectSkippedSteps);
+  const { skippedSteps } = useAppSelector(selectFlowState);
   const dispatch = useAppDispatch();
   return (
     <Section textKey="setupStep.chooseExpansions.body">

@@ -5,9 +5,9 @@ import { toggleHireling } from "../features/componentsSlice";
 import { skipSteps } from "../features/flowSlice";
 import {
   selectFactionCodes,
+  selectFlowState,
   selectHirelingArray,
   selectSetupParameters,
-  selectSkippedSteps,
 } from "../features/selectors";
 import { savePersistedSetting } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
@@ -15,7 +15,7 @@ import { SetupStep } from "../types";
 
 const ChooseHirelingsStep: React.FC = () => {
   const { playerCount } = useAppSelector(selectSetupParameters);
-  const skippedSteps = useAppSelector(selectSkippedSteps);
+  const { skippedSteps } = useAppSelector(selectFlowState);
   const factionCodes = useAppSelector(selectFactionCodes);
   const dispatch = useAppDispatch();
   return (
@@ -45,7 +45,7 @@ const ChooseHirelingsStep: React.FC = () => {
           getLabelKey={(hireling) => "hireling." + hireling.code + ".name"}
           getLockedKey={(hireling) =>
             // Are we at the max player count (i.e. there are no factions to spare for an equivilent hireling)?
-            playerCount >= factionCodes.length - 1 &&
+            playerCount >= factionCodes.length &&
             // Is this hireling one of the faction equivilents?
             hireling.factions.some((faction) => factionCodes.includes(faction))
               ? "error.factionHirelingExcluded"

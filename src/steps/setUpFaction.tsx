@@ -4,11 +4,12 @@ import Icon from "../components/icon";
 import IconList from "../components/iconList";
 import Section from "../components/section";
 import { SetupSwitchProps } from "../components/stepSwitch";
-import { selectFactionPoolEntry } from "../features/selectors";
+import { selectFactionPoolEntry, selectFlowState } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 
 const SetUpFactionStep: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
   const { factionIndex, factionPool, vagabondSetUp } = flowSlice;
+  const { useDraft } = useAppSelector(selectFlowState);
   const factionPoolEntry = useAppSelector((state) =>
     selectFactionPoolEntry(state, factionPool[factionIndex || 0])
   );
@@ -16,7 +17,7 @@ const SetUpFactionStep: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
   return (
     <Section
       subtitleKey={"faction." + factionPoolEntry.key + ".setupTitle"}
-      textKey={"faction." + factionPoolEntry.key + ".setup"}
+      textKey={"faction." + factionPoolEntry.key + (useDraft ? ".advancedSetup" : ".setup")}
       translationOptions={{
         context: vagabondSetUp ? "vagabondSetUp" : undefined,
         vagabond:

@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { selectSetupMap, selectSetupParameters, selectSkippedSteps } from "../features/selectors";
+import { selectFlowState, selectSetupMap, selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { iconDict } from "./icon";
 import hexIcon from "../images/tokens/priority.png";
@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 const MapChart: React.FC = () => {
   const map = useAppSelector(selectSetupMap);
   const { clearingSuits } = useAppSelector(selectSetupParameters);
-  const skippedSteps = useAppSelector(selectSkippedSteps);
+  const { skippedSteps } = useAppSelector(selectFlowState);
   const { t } = useTranslation();
 
   if (!map) return null;
