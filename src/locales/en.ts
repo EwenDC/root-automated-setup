@@ -309,7 +309,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card and 5 warriors for the Last Dynasty from the game box. Place all 5 Dynasty warriors in a clearing on the map edge. Place the card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Last Dynasty hireling card from the game box. Place it next to the map with it\'s demoted "Bluebird Nobles" side up.',
+        'Player {{count}}, grab the Last Dynasty hireling card from the game box. Place it next to the map with its demoted "Bluebird Nobles" side up.',
     },
     exile: {
       name: "The Exile",
@@ -318,7 +318,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card, pawn, and 3 club items for the Exile from the game box. Place the Exile pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 Club items on top of it <i>(unexhaused side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with it\'s demoted "The Bandit" side up. Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with "R")</i> under the ruins randomly as if the Vagabond were in play.',
+        'Player {{count}}, grab the Exile hireling card from the game box. Place it next to the map with its demoted "The Bandit" side up. Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with "R")</i> under the ruins randomly as if the Vagabond were in play.',
     },
     expedition: {
       name: "Sunward Expedition",
@@ -327,7 +327,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card, 8 warriors, and 3 foothold tokens for the Sunward Expedition from the game box. Place a foothold token and 3 Expedition warriors in any clearing. Place the remaining warriors, tokens, and card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Sunward Expedition hireling card from the game box. Place it next to the map with it\'s demoted "Mole Artisans" side up.',
+        'Player {{count}}, grab the Sunward Expedition hireling card from the game box. Place it next to the map with its demoted "Mole Artisans" side up.',
     },
     flamebearers: {
       name: "Flame Bearers",
@@ -336,7 +336,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card and 6 warriors for the Flame Bearers from the game box. Place 2 Bearer warriors among any clearings (even the same). Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Flame Bearers hireling card from the game box. Place it next to the map with it\'s demoted "Rat Smugglers" side up.',
+        'Player {{count}}, grab the Flame Bearers hireling card from the game box. Place it next to the map with its demoted "Rat Smugglers" side up.',
     },
     flotilla: {
       name: "Riverfolk Flotilla",
@@ -345,7 +345,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card and pawn for the Riverfolk Flotilla from the game box. Place the Flotilla pawn in a clearing on the map edge and river. Place the card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Riverfolk Flotilla hireling card from the game box. Place it next to the map with it\'s demoted "Otter Divers" side up.',
+        'Player {{count}}, grab the Riverfolk Flotilla hireling card from the game box. Place it next to the map with its demoted "Otter Divers" side up.',
     },
     patrol: {
       name: "Forest Patrol",
@@ -354,7 +354,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card and 12 warriors for the Forest Patrol from the game box. Place a Patrol warrior in each clearing. Place the card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Forest Patrol hireling card from the game box. Place it next to the map with it\'s demoted "Feline Physicians" side up.',
+        'Player {{count}}, grab the Forest Patrol hireling card from the game box. Place it next to the map with its demoted "Feline Physicians" side up.',
     },
     prophets: {
       name: "Warm Sun Prophets",
@@ -363,7 +363,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card and 4 warriors for the Warm Sun Prophets from the game box. Place a Prophet warrior in each clearing with a ruin. Place the card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Warm Sun Prophets hireling card from the game box. Place it next to the map with it\'s demoted "Lizard Envoys" side up.',
+        'Player {{count}}, grab the Warm Sun Prophets hireling card from the game box. Place it next to the map with its demoted "Lizard Envoys" side up.',
     },
     protector: {
       name: "Furious Protector",
@@ -381,7 +381,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card and 6 warriors for the Corvid Spies from the game box. Place 2 Spy warriors, one each in two clearings of matching suit. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Corvid Spies hireling card from the game box. Place it next to the map with it\'s demoted "Raven Sentinels" side up.',
+        'Player {{count}}, grab the Corvid Spies hireling card from the game box. Place it next to the map with its demoted "Raven Sentinels" side up.',
     },
     uprising: {
       name: "Spring Uprising",
@@ -390,7 +390,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card, 4 warriors, and uprising die for the Spring Uprising from the game box. Roll the uprising die twice and place an Uprising warrior in matching clearings. Place the remaining warriors, die, and card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Spring Uprising hireling card from the game box. Place it next to the map with it\'s demoted "Rabbit Scouts" side up.',
+        'Player {{count}}, grab the Spring Uprising hireling card from the game box. Place it next to the map with its demoted "Rabbit Scouts" side up.',
     },
     vaultkeepers: {
       name: "Vault Keepers",
@@ -399,7 +399,7 @@ export default {
       setup:
         "Player {{count}}, grab the hireling card, 6 warriors, and 6 vault buildings for the Vault Keepers from the game box. Place 2 Keeper warriors and a vault building in any clearing with an open building slot. Place the remaining warriors, buildings, and card next to the map <i>(non-demoted side up)</i>.",
       setup_demoted:
-        'Player {{count}}, grab the Vault Keepers hireling card from the game box. Place it next to the map with it\'s demoted "Badger Bodyguards" side up.',
+        'Player {{count}}, grab the Vault Keepers hireling card from the game box. Place it next to the map with its demoted "Badger Bodyguards" side up.',
     },
   },
   landmark: {
@@ -407,41 +407,41 @@ export default {
       name: "Lost City",
       setupTitle: "Set up the Lost City",
       setup:
-        'Player {{count}}, place the Lost City landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. Grab the "Lost City" landmark card from the game box and place it next to the board on it\'s non-setup side.',
+        'Player {{count}}, place the Lost City landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. Grab the "Lost City" landmark card from the game box and place it next to the board on its non-setup side.',
       setup_lake:
-        'Player {{count}}, place the Lost City landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. Grab the "Lost City" landmark card from the game box and place it next to the board on it\'s non-setup side.',
+        'Player {{count}}, place the Lost City landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. Grab the "Lost City" landmark card from the game box and place it next to the board on its non-setup side.',
     },
     ferry: {
       name: "Ferry",
       setupTitle: "Set up the Ferry",
       setup:
-        'Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>"Once per turn, a player taking a move from the Ferry\'s clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card."</p>',
+        'Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>"Once per turn, a player taking a move from the Ferry\'s clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card."</p>',
       setup_lake:
-        'Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>"Once per turn, a player taking a move from the Ferry\'s clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card."</p>',
+        'Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>"Once per turn, a player taking a move from the Ferry\'s clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card."</p>',
     },
     forge: {
       name: "Legendary Forge",
       setupTitle: "Set up the Legendary Forge",
       setup:
-        "Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side.<br/>Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>",
+        'Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the "Legendary Forge" landmark card from the game box and place it next to the board on its non-setup side.<br/>Based on the suit of the Legendary Forge\'s clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>',
     },
     market: {
       name: "Black Market",
       setupTitle: "Set up the Black Market",
       setup:
-        'Player {{count}}, place the Black Market landmark in a clearing that has exactly one building slot and no ruin. It cannot have a landmark or be adjacent to one. Grab the "Black Market" landmark card from the game box and place it next to the board on it\'s non-setup side.<br/>Draw three cards but do not look at them. Place them face down next to the Black Market card.',
+        'Player {{count}}, place the Black Market landmark in a clearing that has exactly one building slot and no ruin. It cannot have a landmark or be adjacent to one. Grab the "Black Market" landmark card from the game box and place it next to the board on its non-setup side.<br/>Draw three cards but do not look at them. Place them face down next to the Black Market card.',
     },
     tower: {
       name: "Tower",
       setupTitle: "Set up the Tower",
       setup:
-        'Player {{count}}, place the Tower landmark in a clearing that has a ruin. It cannot have a landmark. If you have "The Tower" landmark card, take it from the game box and place it next to the board on it\'s non-setup side. If you do not have the card, the Tower has the following rule during play:<p>"At the end of a player\'s Evening, if they rule the Tower\'s clearing, they score one point."</p>',
+        'Player {{count}}, place the Tower landmark in a clearing that has a ruin. It cannot have a landmark. If you have "The Tower" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Tower has the following rule during play:<p>"At the end of a player\'s Evening, if they rule the Tower\'s clearing, they score one point."</p>',
     },
     treetop: {
       name: "Elder Treetop",
       setupTitle: "Set up the Elder Treetop",
       setup:
-        'Player {{count}}, place the Elder Treetop in a corner clearing. It cannot have a landmark or be adjacent to one. Grab the "Elder Treetop" landmark card from the game box and place it next to the board on it\'s non-setup side.',
+        'Player {{count}}, place the Elder Treetop in a corner clearing. It cannot have a landmark or be adjacent to one. Grab the "Elder Treetop" landmark card from the game box and place it next to the board on its non-setup side.',
     },
   },
   map: {
