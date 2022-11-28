@@ -20,11 +20,9 @@ import {
   selectFactionArray,
   selectFactionCodes,
   selectFactionHirelings,
-  selectFlowState,
   selectHirelingArray,
   selectLandmarkArray,
   selectMapArray,
-  selectSetupParameters,
   selectVagabondArray,
 } from "./selectors";
 import {
@@ -67,11 +65,9 @@ export const massComponentToggle =
 /** Advances to the next step in setup, performing all validation logic and state changes required for each step */
 export const nextStep = (): AppThunk => (dispatch, getState) => {
   // Retrieve our setup state
-  let { errorMessage, excludedFactions, landmarkCount, fixedFirstPlayer, playerCount } =
-    selectSetupParameters(getState());
-  const { currentFactionIndex, currentStep, factionPool, skippedSteps, useDraft } = selectFlowState(
-    getState()
-  );
+  const { flow, setup } = getState();
+  const { currentFactionIndex, currentStep, factionPool, skippedSteps, useDraft } = flow;
+  let { errorMessage, excludedFactions, landmarkCount, fixedFirstPlayer, playerCount } = setup;
   let doIncrementStep = true;
   let validationError: string | null = null;
 
@@ -290,7 +286,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Disable the factions that are mutually exclusive with the selected hirelings
       // Also disable insurgent factions if we're only playing with 2 people and no bots or hirelings
-      ({ excludedFactions } = selectSetupParameters(getState()));
+      excludedFactions = getState().setup.excludedFactions;
       dispatch(
         massComponentToggle(
           selectFactionArray,

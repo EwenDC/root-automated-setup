@@ -4,15 +4,15 @@ import Button from "../components/button";
 import Section from "../components/section";
 import { stepActiveContext } from "../components/stepList";
 import { resetFlow } from "../features/flowSlice";
-import { selectSetupParameters } from "../features/selectors";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { ReactComponent as RestartIcon } from "../images/icons/restart.svg";
 
 const SetupEndStep: React.FC = () => {
-  const { playerOrder } = useAppSelector(selectSetupParameters);
+  const playerOrder = useAppSelector((state) => state.setup.playerOrder);
   const dispatch = useAppDispatch();
   const stepActive = useContext(stepActiveContext);
   const { t } = useTranslation();
+
   return (
     <Section
       titleKey="setupStep.setupEnd.title"

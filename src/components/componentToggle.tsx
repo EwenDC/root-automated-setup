@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { CodeObject, GameComponent, Togglable } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { AppThunk, RootState } from "../store";
-import { selectSetupParameters } from "../features/selectors";
 import { setErrorMessage } from "../features/setupSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { stepActiveContext } from "./stepList";
@@ -25,7 +24,7 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   unsorted = false,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
-  const { errorMessage } = useAppSelector(selectSetupParameters);
+  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
   const dispatch = useAppDispatch();
   const stepActive = useContext(stepActiveContext);
   const [largeLabels, setLargeLabels] = useState(false);

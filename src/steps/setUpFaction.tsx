@@ -1,19 +1,22 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import { shallowEqual } from "react-redux";
 import Icon from "../components/icon";
 import IconList from "../components/iconList";
 import Section from "../components/section";
 import { SetupSwitchProps } from "../components/stepSwitch";
-import { selectFactionPoolEntry, selectFlowState } from "../features/selectors";
+import { selectFactionPoolEntry } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 
 const SetUpFactionStep: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
   const { factionIndex, factionPool, vagabondSetUp } = flowSlice;
-  const { useDraft } = useAppSelector(selectFlowState);
-  const factionPoolEntry = useAppSelector((state) =>
-    selectFactionPoolEntry(state, factionPool[factionIndex || 0])
+  const useDraft = useAppSelector((state) => state.flow.useDraft);
+  const factionPoolEntry = useAppSelector(
+    (state) => selectFactionPoolEntry(state, factionPool[factionIndex || 0]),
+    shallowEqual
   );
   const { t } = useTranslation();
+
   return (
     <Section
       subtitleKey={"faction." + factionPoolEntry.key + ".setupTitle"}

@@ -5,21 +5,19 @@ import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
 import { toggleFaction, toggleVagabond } from "../features/componentsSlice";
 import { setUseDraft } from "../features/flowSlice";
-import {
-  selectFactionArray,
-  selectFlowState,
-  selectSetupParameters,
-  selectVagabondArray,
-} from "../features/selectors";
+import { selectFactionArray, selectVagabondArray } from "../features/selectors";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { SetupStep } from "../types";
 
 const ChooseFactionsStep: React.FC = () => {
-  const { playerCount, excludedFactions } = useAppSelector(selectSetupParameters);
-  const { skippedSteps, useDraft } = useAppSelector(selectFlowState);
+  const playerCount = useAppSelector((state) => state.setup.playerCount);
+  const excludedFactions = useAppSelector((state) => state.setup.excludedFactions);
+  const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
+  const useDraft = useAppSelector((state) => state.flow.useDraft);
   const factions = useAppSelector(selectFactionArray);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
   return (
     <Section titleKey="setupStep.chooseFactions.title" textKey="setupStep.chooseFactions.body">
       {playerCount < factions.length ? (

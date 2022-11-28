@@ -1,12 +1,13 @@
 import { memo } from "react";
 import Section from "../components/section";
-import { selectFlowState, selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { SetupStep } from "../types";
 
 const SetUpDeckStep: React.FC = () => {
-  const { playerCount, deck } = useAppSelector(selectSetupParameters);
-  const { skippedSteps } = useAppSelector(selectFlowState);
+  const deck = useAppSelector((state) => state.setup.deck);
+  const playerCount = useAppSelector((state) => state.setup.playerCount);
+  const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
+
   return (
     <Section
       titleKey={skippedSteps[SetupStep.chooseDeck] ? "setupStep.setUpDeck.title" : undefined}

@@ -2,12 +2,12 @@ import { memo } from "react";
 import FactionSelect from "../components/factionSelect";
 import Section from "../components/section";
 import { SetupSwitchProps } from "../components/stepSwitch";
-import { selectFlowState, selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 
 const SelectFactionStep: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
-  const { playerOrder } = useAppSelector(selectSetupParameters);
-  const { useDraft } = useAppSelector(selectFlowState);
+  const playerOrder = useAppSelector((state) => state.setup.playerOrder);
+  const useDraft = useAppSelector((state) => state.flow.useDraft);
+
   return (
     <Section
       subtitleKey="setupStep.selectFaction.subtitle"

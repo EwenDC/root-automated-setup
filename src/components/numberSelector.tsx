@@ -1,6 +1,5 @@
 import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
-import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { stepActiveContext } from "./stepList";
 
@@ -16,7 +15,7 @@ interface NumberSelectorProps {
 const size = 2;
 
 const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxVal, onChange }) => {
-  const { errorMessage } = useAppSelector(selectSetupParameters);
+  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
   const stepActive = useContext(stepActiveContext);
 
   const buttonHandler = (amount: number) => {

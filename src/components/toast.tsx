@@ -1,13 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { ReactComponent as CloseIcon } from "../images/icons/close.svg";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { selectSetupParameters } from "../features/selectors";
 import { setErrorMessage } from "../features/setupSlice";
 import { memo, useEffect, useState } from "react";
 import classNames from "classnames";
 
 const Toast: React.FC = () => {
-  const { errorMessage } = useAppSelector(selectSetupParameters);
+  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
   // Cache the error message to allow us to continue displaying it as we transition
   const [cachedMessage, setCachedMessage] = useState(errorMessage);
   const dispatch = useAppDispatch();

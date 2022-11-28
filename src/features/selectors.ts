@@ -33,7 +33,10 @@ export const selectExpansionArray = createSelector(
 export const [selectFaction, selectFactionArray] = generateComponentSelectors<Faction>("factions");
 
 /** Redux Selector for returning an array of included faction codes */
-export const selectFactionCodes = (state: RootState) => Object.keys(state.components.factions);
+export const selectFactionCodes = createSelector(
+  (state: RootState) => state.components.factions,
+  (factions) => Object.keys(factions)
+);
 
 /** Redux Selector for returning an array of enabled militant factions */
 export const selectEnabledMilitantFactions = (state: RootState) =>
@@ -55,9 +58,6 @@ export const selectFactionPool = (state: RootState, factionPool: FactionEntry[])
 
 /** Returns the current slice of flow state from redux state */
 export const selectFlowSlice = (state: RootState) => getFlowSlice(state.flow);
-
-/** Returns the flow information (including current step) from redux state */
-export const selectFlowState = (state: RootState) => state.flow;
 
 export const [selectHireling, selectHirelingArray] =
   generateComponentSelectors<Hireling>("hirelings");
@@ -135,9 +135,6 @@ export const selectSetupHireling3 = (state: RootState) =>
         ...state.setup.hireling3,
       }
     : null;
-
-/** Returns the setup parameters from redux state */
-export const selectSetupParameters = (state: RootState) => state.setup;
 
 export const [selectVagabond, selectVagabondArray] =
   generateComponentSelectors<Vagabond>("vagabonds");

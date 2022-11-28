@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { Trans, useTranslation } from "react-i18next";
-import { selectFactionPool, selectSetupParameters } from "../features/selectors";
+import { selectFactionPool } from "../features/selectors";
 import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
@@ -21,7 +21,7 @@ interface FactionSelectProps {
 
 const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const factionPool = useAppSelector((state) => selectFactionPool(state, flowSlice.factionPool));
-  const { errorMessage } = useAppSelector(selectSetupParameters);
+  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
   const dispatch = useAppDispatch();
   const stepActive = useContext(stepActiveContext);
   const { t } = useTranslation();

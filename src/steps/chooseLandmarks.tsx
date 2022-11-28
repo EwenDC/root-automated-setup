@@ -1,18 +1,23 @@
+import { memo } from "react";
+import { useTranslation } from "react-i18next";
+import { shallowEqual } from "react-redux";
 import ComponentToggle from "../components/componentToggle";
 import NumberSelector from "../components/numberSelector";
 import Section from "../components/section";
 import { toggleLandmark } from "../features/componentsSlice";
-import { selectLandmarkArray, selectSetupMap, selectSetupParameters } from "../features/selectors";
+import { selectLandmarkArray, selectSetupMap } from "../features/selectors";
 import { setLandmarkCount } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 const ChooseLandmarksStep: React.FC = () => {
-  const { playerCount, landmarkCount } = useAppSelector(selectSetupParameters);
-  const setupMap = useAppSelector(selectSetupMap);
+  const landmarkCount = useAppSelector((state) => state.setup.landmarkCount);
+  const playerCount = useAppSelector((state) => state.setup.playerCount);
+  const setupMap = useAppSelector(selectSetupMap, shallowEqual);
   const dispatch = useAppDispatch();
+  // Ensure the component re-renders when the language changes
+  useTranslation();
 
   if (!setupMap) return null;
-
   return (
     <Section
       titleKey="setupStep.chooseLandmarks.title"
@@ -48,5 +53,4 @@ const ChooseLandmarksStep: React.FC = () => {
   );
 };
 
-// Memo intentionally omitted due to rendering bugs with switch language
-export default ChooseLandmarksStep;
+export default memo(ChooseLandmarksStep);

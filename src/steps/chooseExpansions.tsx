@@ -1,16 +1,21 @@
+import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
 import { toggleExpansion } from "../features/componentsSlice";
 import { skipSteps } from "../features/flowSlice";
-import { selectExpansionArray, selectFlowState } from "../features/selectors";
+import { selectExpansionArray } from "../features/selectors";
 import { savePersistedSetting } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { SetupStep } from "../types";
 
 const ChooseExpansionsStep: React.FC = () => {
-  const { skippedSteps } = useAppSelector(selectFlowState);
+  const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   const dispatch = useAppDispatch();
+  // Ensure the component re-renders when the language changes
+  useTranslation();
+
   return (
     <Section textKey="setupStep.chooseExpansions.body">
       <ComponentToggle
@@ -35,5 +40,4 @@ const ChooseExpansionsStep: React.FC = () => {
   );
 };
 
-// Memo intentionally omitted due to rendering bugs with switch language
-export default ChooseExpansionsStep;
+export default memo(ChooseExpansionsStep);

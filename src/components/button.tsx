@@ -15,6 +15,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const renderIconLeft = Icon && iconLeft;
     const renderIconRight = Icon && !iconLeft;
     const buttonIcon = Icon && <Icon className="label-icon" />;
+
     return (
       <button
         {...props}

@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { nextStep } from "../features/thunks";
 import { redoStep, undoStep } from "../features/flowSlice";
-import { selectFlowState } from "../features/selectors";
 import { SetupStep } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { ReactComponent as UndoIcon } from "../images/icons/undo.svg";
@@ -13,7 +12,9 @@ import Button from "./button";
 const Toolbar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { pastSteps, futureSteps, currentStep } = useAppSelector(selectFlowState);
+  const pastSteps = useAppSelector((state) => state.flow.pastSteps);
+  const currentStep = useAppSelector((state) => state.flow.currentStep);
+  const futureSteps = useAppSelector((state) => state.flow.futureSteps);
   const [focusedIndex, setFocusedIndex] = useState(0);
 
   const buttonRefs = [

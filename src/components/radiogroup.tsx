@@ -1,6 +1,5 @@
 import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
-import { selectSetupParameters } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { stepActiveContext } from "./stepList";
 
@@ -11,8 +10,9 @@ interface RadiogroupProps {
 }
 
 const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onChange }) => {
-  const { errorMessage } = useAppSelector(selectSetupParameters);
+  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
   const stepActive = useContext(stepActiveContext);
+
   return (
     <fieldset
       name={id}

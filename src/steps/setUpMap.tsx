@@ -1,14 +1,18 @@
-import { Trans } from "react-i18next";
+import { memo } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { shallowEqual } from "react-redux";
 import MapChart from "../components/mapChart";
 import Section from "../components/section";
-import { selectFlowState, selectSetupMap } from "../features/selectors";
+import { selectSetupMap } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import iconComponents from "../iconComponents";
 import { SetupStep } from "../types";
 
 const SetUpMapStep: React.FC = () => {
-  const setupMap = useAppSelector(selectSetupMap);
-  const { skippedSteps } = useAppSelector(selectFlowState);
+  const setupMap = useAppSelector(selectSetupMap, shallowEqual);
+  const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
+  // Ensure the component re-renders when the language changes
+  useTranslation();
 
   if (!setupMap) return null;
 
@@ -36,5 +40,4 @@ const SetUpMapStep: React.FC = () => {
   );
 };
 
-// Memo intentionally omitted due to rendering bugs with switch language
-export default SetUpMapStep;
+export default memo(SetUpMapStep);

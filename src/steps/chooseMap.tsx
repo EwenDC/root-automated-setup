@@ -5,13 +5,13 @@ import ComponentToggle from "../components/componentToggle";
 import Radiogroup from "../components/radiogroup";
 import Section from "../components/section";
 import { enableMapLandmark, mapFixedSuits, toggleMap } from "../features/componentsSlice";
-import { selectMapArray, selectSetupParameters } from "../features/selectors";
+import { selectMapArray } from "../features/selectors";
 import { balanceMapSuits } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 const ChooseMapStep: React.FC = () => {
   const mapArray = useAppSelector(selectMapArray);
-  const { balancedSuits } = useAppSelector(selectSetupParameters);
+  const balancedSuits = useAppSelector((state) => state.setup.balancedSuits);
   const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
 

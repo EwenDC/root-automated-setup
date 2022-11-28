@@ -1,23 +1,23 @@
+import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
 import { toggleHireling } from "../features/componentsSlice";
 import { skipSteps } from "../features/flowSlice";
-import {
-  selectFactionCodes,
-  selectFlowState,
-  selectHirelingArray,
-  selectSetupParameters,
-} from "../features/selectors";
+import { selectFactionCodes, selectHirelingArray } from "../features/selectors";
 import { savePersistedSetting } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { SetupStep } from "../types";
 
 const ChooseHirelingsStep: React.FC = () => {
-  const { playerCount } = useAppSelector(selectSetupParameters);
-  const { skippedSteps } = useAppSelector(selectFlowState);
+  const playerCount = useAppSelector((state) => state.setup.playerCount);
+  const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   const factionCodes = useAppSelector(selectFactionCodes);
   const dispatch = useAppDispatch();
+  // Ensure the component re-renders when the language changes
+  useTranslation();
+
   return (
     <Section titleKey="setupStep.chooseHirelings.title" textKey="setupStep.chooseHirelings.body">
       <Checkbox
@@ -57,5 +57,4 @@ const ChooseHirelingsStep: React.FC = () => {
   );
 };
 
-// Memo intentionally omitted due to rendering bugs with switch language
-export default ChooseHirelingsStep;
+export default memo(ChooseHirelingsStep);
