@@ -27,8 +27,8 @@ All translations are located in the `/src/locales/` folder of the repo. You can 
 ```JavaScript
 export default {
   deck: {
-    exiles: "Exiles and Partisans",
-    standard: "Standard"
+    exiles: `Exiles and Partisans`,
+    standard: `Standard`
   },
 }
 ```
@@ -38,8 +38,8 @@ The translation keys are required for the application to know what translation t
 ```JavaScript
 export default {
   deck: {
-    exiles: "Ballingen en Partizanen",
-    standard: "Standaard"
+    exiles: `Ballingen en Partizanen`,
+    standard: `Standaard`
   },
 }
 ```
@@ -49,8 +49,7 @@ Some translated text will include formatting using HTML or HTML-Like tags like s
 ```JavaScript
 export default {
   forge: {
-    setup:
-      "Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the \"Legendary Forge\" landmark card from the game box and place it next to the board on it's non-setup side.<br/>Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>"
+    setup: `Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the "Legendary Forge" landmark card from the game box and place it next to the board on it's non-setup side.<br/>Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>`
   },
 }
 ```
@@ -60,8 +59,7 @@ When translating, please edit the text around these tags, but not the tags thems
 ```JavaScript
 export default {
   forge: {
-    setup:
-      "Speler {{count}}, plaats het Legendary Forge-oriëntatiepunt op een open plek. Het mag geen oriëntatiepunt hebben of er aan grenzen. Pak de oriëntatiepuntkaart \"Legendarische Smederij\" uit de doos en plaats deze naast het bord op de niet-opgezette kant.<br/>Gebaseerd op de kleur van de ontruiming van de Legendary Forge, verwijder je de volgende items uit de itemvoorraad op de kaart en plaats ze op de Legendary Forge-kaart:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>"
+    setup: `Speler {{count}}, plaats het Legendary Forge-oriëntatiepunt op een open plek. Het mag geen oriëntatiepunt hebben of er aan grenzen. Pak de oriëntatiepuntkaart "Legendarische Smederij" uit de doos en plaats deze naast het bord op de niet-opgezette kant.<br/>Gebaseerd op de kleur van de ontruiming van de Legendary Forge, verwijder je de volgende items uit de itemvoorraad op de kaart en plaats ze op de Legendary Forge-kaart:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>`
   },
 }
 ```
@@ -71,7 +69,7 @@ Some translated text will include substitutions, demoted by double curly braces 
 ```JavaScript
 export default {
   setUpMapLandmark: {
-    subtitle: "Set up the {{landmark}}"
+    subtitle: `Set up the {{landmark}}`
   },
 }
 ```
@@ -81,7 +79,7 @@ When translating, place the substitution (as-is) in the correct place in your te
 ```JavaScript
 export default {
   setUpMapLandmark: {
-    subtitle: "Het {{landmark}} instellen"
+    subtitle: `Het {{landmark}} instellen`
   },
 }
 ```
@@ -152,12 +150,10 @@ The app will attempt to load all relevant text for this map from the `map.lake` 
 export default {
   map: {
     lake: {
-      name: "Lake",
-      setupTitle: "Set up the Lake Map",
-      setup:
-        '<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an "R" <i>(four in total)</i>.<br/><i>4.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Place the two dice near the map.',
-      landmarkSetup:
-        'Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on it\'s non-setup side.',
+      name: `Lake`,
+      setupTitle: `Set up the Lake Map`,
+      setup: `<i>1.</i> Grab the Lake/Mountain map board from the game box and place it down with the Lake side facing up.<br/><i>2.</i> Collect the 12 suit markers, flip them face down, and shuffle them, then place one on each clearing.<br/><i>3.</i> Place a ruin in each slot on the map marked with an "R" <i>(four in total)</i>.<br/><i>4.</i> Place these items on the matching spaces of the item supply near the top of the map: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.<br/><i>5.</i> Place the two dice near the map.`,
+      landmarkSetup: `Place the Ferry piece in the corner clearing that is also a coastal clearing. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side.`,
     },
   },
 }
