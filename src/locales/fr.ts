@@ -74,8 +74,6 @@ export default {
     noLandmark: `Aucun lieu sélectionné ! Veuillez sélectionner au moins un lieu ou mettre le nombre de lieux à zéro`,
     noMap: `Aucun plateau sélectionné ! Veuillez sélectionner au moins un plateau`,
     noMilitantFaction: `Aucune faction militaire sélectionnée ! Veuillez sélectionner au moins une faction militaire`,
-    tooFewFaction: `Pas assez de factions sélectionnées ! Veuillez sélectionner plus de factions ou réduire le nombre de joueurs`,
-    tooFewHireling: `Pas assez de recrues pour mettre en place les recrues ! Cela peut être dû au fait que la sélection actuelle de recrues nécessite de supprimer trop de factions du draft`,
     tooFewLandmark: `Pas assez de lieux sélectionnés ! Veuillez sélectionner plus de lieux ou réduire le nombre de lieux`,
     tooFewPlayerInsurgent: `Impossible d’utiliser des factions non militaires avec moins de 3 joueurs et sans robot ni recrue`,
     tooFewVagabond: `Pas assez de personnages Vagabond sélectionnés ! Veuillez inclure plus de personnages Vagabond ou exclure des factions Vagabond`,
@@ -129,8 +127,8 @@ export default {
       body: `Sélectionnez ensemble les factions que vous souhaitez inclure dans le draft de factions.`,
     },
     selectFaction: {
-      subtitle: `Choix de Faction`,
-      body: `Joueur {{count}}, choisissez la faction que vous souhaitez jouer dans la liste de factions ci-dessous. Vous pouvez sélectionner librement des factions dans la liste pour consulter leurs informations, avant de confirmer votre sélection en appuyant sur « Étape suivante ».`,
+      subtitle_useDraft: `Choix de Faction`,
+      body_useDraft: `Joueur {{count}}, choisissez la faction que vous souhaitez jouer dans la liste de factions ci-dessous. Vous pouvez sélectionner librement des factions dans la liste pour consulter leurs informations, avant de confirmer votre sélection en appuyant sur « Étape suivante ».`,
     },
     /* Loi de Root v2@5.1.2 + 9.3.6 */
     placeScoreMarkers: {

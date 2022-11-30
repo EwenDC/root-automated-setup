@@ -74,11 +74,12 @@ export default {
     noLandmark: `No Landmarks selected! Please select at least one Landmark, or set the Landmark count to zero`,
     noMap: `No Maps selected! Please select at least one Map`,
     noMilitantFaction: `No Militant Factions selected! Please select at least one Militant Faction`,
-    tooFewFaction: `Not enough Factions selected! Please select more Factions, or lower the player count`,
-    tooFewHireling: `Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection requires removing too many factions from the draft`,
+    tooFewFaction: `Not enough Factions selected! Please select more Factions, disable draft faction selection, or lower the player count`,
+    tooFewHireling: `Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection requires removing too many factions from set up`,
     tooFewLandmark: `Not enough Landmarks selected! Please select more Landmarks, or lower the Landmark count`,
     tooFewPlayerInsurgent: `Cannot use non-militant factions with less than 3 players and no bots or hirelings`,
     tooFewVagabond: `Not enough Vagabond characters selected! Please include more Vagabond characters, or exclude some Vagabond Factions`,
+    tooManyCornerSetup: `Too many selected factions require a corner clearing for set up! Please increase the faction selection or enable draft faction selection`,
   },
   setupStep: {
     chooseExpansions: {

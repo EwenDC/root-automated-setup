@@ -32,7 +32,7 @@ const Toast: React.FC = () => {
           onClick={() => dispatch(setErrorMessage(null))}
           disabled={!errorMessage}
         >
-          <CloseIcon />
+          <CloseIcon className="close-icon" />
         </button>
       </div>
     </div>

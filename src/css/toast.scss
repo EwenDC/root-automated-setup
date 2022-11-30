@@ -54,6 +54,10 @@
       &:active {
         color: darkgray;
       }
+
+      > .close-icon {
+        width: 100%;
+      }
     }
   }
 }

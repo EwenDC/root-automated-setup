@@ -32,6 +32,7 @@ export interface Expansion extends GameComponent {
 export interface Faction extends GameComponent {
   key: string;
   order: number;
+  cornerSetup: boolean;
   militant: boolean;
   isVagabond: boolean;
   warriors: number;

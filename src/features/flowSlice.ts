@@ -104,6 +104,8 @@ export const flowSlice = createSlice({
       // Get the previous step from the undo queue
       const previousStep = state.pastSteps.pop();
       if (previousStep != null) {
+        // Make sure that you can't use undo/redo to select a faction during standard setup
+        if (!state.useDraft) state.currentFactionIndex = null;
         // Add our current state to the redo queue
         state.futureSteps.unshift(getFlowSlice(state));
         // Override current state with state from previous step

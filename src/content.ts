@@ -100,6 +100,7 @@ const content: Record<string, Expansion> = {
       marquise: {
         key: "marquise",
         order: 1,
+        cornerSetup: true,
         image: marquiseMeeple,
         militant: true,
         isVagabond: false,
@@ -116,6 +117,7 @@ const content: Record<string, Expansion> = {
       eyrie: {
         key: "eyrie",
         order: 2,
+        cornerSetup: true,
         image: eyrieMeeple,
         militant: true,
         isVagabond: false,
@@ -131,6 +133,7 @@ const content: Record<string, Expansion> = {
       alliance: {
         key: "alliance",
         order: 3,
+        cornerSetup: false,
         image: allianceMeeple,
         militant: false,
         isVagabond: false,
@@ -147,6 +150,7 @@ const content: Record<string, Expansion> = {
       vagabond: {
         key: "vagabond",
         order: 4,
+        cornerSetup: false,
         image: thiefMeeple,
         militant: false,
         isVagabond: true,
@@ -273,6 +277,7 @@ const content: Record<string, Expansion> = {
       vagabond2: {
         key: "vagabond",
         order: 5,
+        cornerSetup: false,
         image: roninMeeple,
         militant: false,
         isVagabond: true,
@@ -287,6 +292,7 @@ const content: Record<string, Expansion> = {
       cult: {
         key: "cult",
         order: 6,
+        cornerSetup: true,
         image: cultMeeple,
         militant: false,
         isVagabond: false,
@@ -302,6 +308,7 @@ const content: Record<string, Expansion> = {
       riverfolk: {
         key: "riverfolk",
         order: 7,
+        cornerSetup: false,
         image: riverfolkMeeple,
         militant: false,
         isVagabond: false,
@@ -337,6 +344,7 @@ const content: Record<string, Expansion> = {
       duchy: {
         key: "duchy",
         order: 8,
+        cornerSetup: true,
         image: duchyMeeple,
         militant: true,
         isVagabond: false,
@@ -353,6 +361,7 @@ const content: Record<string, Expansion> = {
       corvid: {
         key: "corvid",
         order: 9,
+        cornerSetup: false,
         image: corvidMeeple,
         militant: false,
         isVagabond: false,
@@ -507,6 +516,7 @@ const content: Record<string, Expansion> = {
       warlord: {
         key: "warlord",
         order: 10,
+        cornerSetup: true,
         image: warlordMeeple,
         militant: true,
         isVagabond: false,
@@ -523,6 +533,7 @@ const content: Record<string, Expansion> = {
       keepers: {
         key: "keepers",
         order: 11,
+        cornerSetup: true,
         image: keepersMeeple,
         militant: true,
         isVagabond: false,

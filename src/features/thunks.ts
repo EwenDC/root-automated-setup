@@ -90,7 +90,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (playerCount < 2 && skippedSteps[SetupStep.setUpBots]) {
         dispatch(setPlayerCount(2));
       } else {
-        const maxPlayerCount = selectFactionCodes(getState()).length - 1;
+        const maxPlayerCount = selectFactionCodes(getState()).length;
         if (playerCount > maxPlayerCount) {
           dispatch(setPlayerCount(maxPlayerCount));
         }
@@ -245,7 +245,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
         // Calculate how many factions we can spare for hirelings (i.e. total factions minus setup faction count)
         const factionCodes = selectFactionCodes(getState());
-        let spareFactionCount = factionCodes.length - (playerCount + 1);
+        let spareFactionCount = factionCodes.length - playerCount;
 
         // If we can only spare 3 or less factions then limit the amount of faction hirelings
         if (spareFactionCount <= 3) {
@@ -334,16 +334,34 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         workingFactionPool.length > 0 &&
         workingFactionPool.length + insurgentFactions.length >= factionCount
       ) {
-        // Start by adding a random militant faction
-        dispatch(addToFactionPool(takeRandom(workingFactionPool)));
+        // Start by adding a random militant faction, keeping track of if it used a corner in standard setup
+        const firstFaction = takeRandom(workingFactionPool);
+        dispatch(addToFactionPool(firstFaction));
+        let factionsSetUp = 1;
+        let cornerSetupCount = firstFaction.cornerSetup ? 1 : 0;
+
         // Add the insurgent factions to the mix
         workingFactionPool = workingFactionPool.concat(insurgentFactions);
         // Add enough factions to make the total pool equal factionCount
-        for (let i = 1; i < factionCount; i++) {
-          dispatch(addToFactionPool(takeRandom(workingFactionPool)));
+        while (factionsSetUp < factionCount && workingFactionPool.length > 0) {
+          const candidateFaction = takeRandom(workingFactionPool);
+
+          // Make sure we don't include more than 4 corner clearing factions in standard setup
+          if (useDraft || !candidateFaction.cornerSetup || cornerSetupCount < 4) {
+            dispatch(addToFactionPool(candidateFaction));
+            factionsSetUp++;
+            if (candidateFaction.cornerSetup) cornerSetupCount++;
+          }
         }
-        // For draft setup, begin the setup at the bottom of player order
-        if (useDraft) dispatch(setCurrentPlayerIndex(playerCount - 1));
+        // Proceed if we were able to meet the faction quota
+        if (factionsSetUp === factionCount) {
+          // For draft setup, begin the setup at the bottom of player order
+          if (useDraft) dispatch(setCurrentPlayerIndex(playerCount - 1));
+        } else {
+          // We weren't able to set up due to too many corner clearing setups required
+          doIncrementStep = false;
+          validationError = "error.tooManyCornerSetup";
+        }
       } else {
         // Invalid state, do not proceed
         doIncrementStep = false;
