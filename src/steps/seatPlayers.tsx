@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import NumberSelector from "../components/numberSelector";
 import Radiogroup from "../components/radiogroup";
@@ -17,6 +17,15 @@ const SeatPlayersStep: React.FC = () => {
   // Ensure the component re-renders when the language changes
   useTranslation();
 
+  const onPlayerCountChange = useCallback(
+    (value: number) => dispatch(setPlayerCount(value)),
+    [dispatch]
+  );
+  const onFixedFirstPlayerChange = useCallback(
+    (value: boolean) => dispatch(fixFirstPlayer(value)),
+    [dispatch]
+  );
+
   return (
     <Section titleKey="setupStep.seatPlayers.title" textKey="setupStep.seatPlayers.body">
       <NumberSelector
@@ -24,12 +33,12 @@ const SeatPlayersStep: React.FC = () => {
         value={playerCount}
         minVal={skippedSteps[SetupStep.setUpBots] ? 2 : 1}
         maxVal={factions.length}
-        onChange={(value) => dispatch(setPlayerCount(value))}
+        onChange={onPlayerCountChange}
       />
       <Radiogroup
         id="fixedFirstPlayer"
         defaultValue={fixedFirstPlayer}
-        onChange={(value) => dispatch(fixFirstPlayer(value))}
+        onChange={onFixedFirstPlayerChange}
       />
     </Section>
   );

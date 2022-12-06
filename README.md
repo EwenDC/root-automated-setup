@@ -210,7 +210,7 @@ Builds the app for production to the `build` folder. It correctly bundles React 
 
 ### `yarn deploy`
 
-Builds the app for production to the `build` folder, then deploys it to GitHub pages. It is unlikely that you will execute this command yourself, unless you host your own version of the app.
+Builds the app for production to the `build` folder, then deploys it to GitHub pages. Unless you host your own version of the app, you should never run this command. The deployment of new versions to [https://ewendc.github.io/root-automated-setup/](https://ewendc.github.io/root-automated-setup/) is handled automatically by GitHub Actions on commit to the main branch.
 
 ## License
 

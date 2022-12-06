@@ -10,7 +10,7 @@ import {
   CodeObject,
 } from "../types";
 import { setErrorMessage } from "./setupSlice";
-import { getFlowSlice, loadPersistedSetting, savePersistedSetting, takeRandom } from "./utils";
+import { loadPersistedSetting, savePersistedSetting, takeRandom } from "./utils";
 
 const initialState: FlowState = {
   pastSteps: [],
@@ -37,6 +37,15 @@ if (!loadPersistedSetting("includeHirelings", false)) {
   initialState.skippedSteps[SetupStep.postHirelingSetup] = true;
 }
 
+const getSlice = (flowState: FlowState): FlowSlice => ({
+  step: flowState.currentStep,
+  // This prevents changes we make to the faction pool in the draft state being reflected in already generated slices
+  factionPool: [...flowState.factionPool],
+  lastFactionLocked: flowState.lastFactionLocked,
+  vagabondSetUp: flowState.vagabondSetUp,
+  playerIndex: flowState.currentPlayerIndex,
+  factionIndex: flowState.currentFactionIndex,
+});
 const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentStep = slice.step;
   state.factionPool = slice.factionPool;
@@ -53,7 +62,7 @@ export const flowSlice = createSlice({
     incrementStep: (state) => {
       if (state.currentStep < SetupStep.setupEnd) {
         // Add our current state to the undo queue and clear the redo queue
-        state.pastSteps.push(getFlowSlice(state));
+        state.pastSteps.push(getSlice(state));
         state.futureSteps = [];
 
         // Flag that we set up a vagabond
@@ -107,7 +116,7 @@ export const flowSlice = createSlice({
         // Make sure that you can't use undo/redo to select a faction during standard setup
         if (!state.useDraft) state.currentFactionIndex = null;
         // Add our current state to the redo queue
-        state.futureSteps.unshift(getFlowSlice(state));
+        state.futureSteps.unshift(getSlice(state));
         // Override current state with state from previous step
         applySlice(state, previousStep);
       } else if (process.env.NODE_ENV !== "production") {
@@ -123,7 +132,7 @@ export const flowSlice = createSlice({
         // Make sure that you can't use undo/redo to select a faction during standard setup
         if (!state.useDraft) state.currentFactionIndex = null;
         // Add our current state to the undo queue
-        state.pastSteps.push(getFlowSlice(state));
+        state.pastSteps.push(getSlice(state));
         // Override current state with state from next step
         applySlice(state, nextStep);
       } else if (process.env.NODE_ENV !== "production") {

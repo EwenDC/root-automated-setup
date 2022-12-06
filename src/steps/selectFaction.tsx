@@ -1,21 +1,26 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import FactionSelect from "../components/factionSelect";
 import Section from "../components/section";
-import { SetupSwitchProps } from "../components/stepSwitch";
+import { StepSwitchProps } from "../components/stepSwitch";
 import { useAppSelector } from "../hooks";
 
-const SelectFactionStep: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
+const SelectFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
   const playerOrder = useAppSelector((state) => state.setup.playerOrder);
   const useDraft = useAppSelector((state) => state.flow.useDraft);
+
+  const translationOptions = useMemo(
+    () => ({
+      count: playerOrder[flowSlice.playerIndex],
+      context: useDraft ? "useDraft" : undefined,
+    }),
+    [flowSlice.playerIndex, playerOrder, useDraft]
+  );
 
   return (
     <Section
       subtitleKey="setupStep.selectFaction.subtitle"
       textKey="setupStep.selectFaction.body"
-      translationOptions={{
-        count: playerOrder[flowSlice.playerIndex],
-        context: useDraft ? "useDraft" : undefined,
-      }}
+      translationOptions={translationOptions}
     >
       <FactionSelect flowSlice={flowSlice} />
     </Section>

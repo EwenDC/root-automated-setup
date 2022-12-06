@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
@@ -8,6 +8,9 @@ import { enableMapLandmark, mapFixedSuits, toggleMap } from "../features/compone
 import { selectMapArray } from "../features/selectors";
 import { balanceMapSuits } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import { CodeObject } from "../types";
+
+const getMapLabelKey = (map: CodeObject) => "map." + map.code + ".name";
 
 const ChooseMapStep: React.FC = () => {
   const mapArray = useAppSelector(selectMapArray);
@@ -31,18 +34,22 @@ const ChooseMapStep: React.FC = () => {
         .sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage)),
     [mapArray, t, i18n.resolvedLanguage]
   );
+  const onBalancedSuitsChange = useCallback(
+    (value: boolean) => dispatch(balanceMapSuits(value)),
+    [dispatch]
+  );
 
   return (
     <Section titleKey="setupStep.chooseMap.title" textKey="setupStep.chooseMap.body">
       <ComponentToggle
         selector={selectMapArray}
         toggleComponent={toggleMap}
-        getLabelKey={(map) => "map." + map.code + ".name"}
+        getLabelKey={getMapLabelKey}
       />
       <Radiogroup
         id="balancedSuits"
         defaultValue={balancedSuits}
-        onChange={(value) => dispatch(balanceMapSuits(value))}
+        onChange={onBalancedSuitsChange}
       />
       {sortedMaps
         .filter(({ fixedSuits }) => fixedSuits != null)

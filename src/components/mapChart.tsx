@@ -14,7 +14,6 @@ const MapChart: React.FC = () => {
   const { t } = useTranslation();
 
   if (!map) return null;
-
   return (
     <svg className="map" viewBox="-1 -1 102 102">
       <desc>{t("label.mapChart")}</desc>

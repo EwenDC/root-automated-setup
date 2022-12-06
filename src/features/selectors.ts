@@ -3,6 +3,7 @@ import { RootState } from "../store";
 import {
   Faction,
   FactionEntry,
+  FlowSlice,
   GameComponent,
   Hireling,
   Landmark,
@@ -10,7 +11,7 @@ import {
   MapInfo,
   Vagabond,
 } from "../types";
-import { generateComponentSelectors, getFlowSlice, typedEntries } from "./utils";
+import { generateComponentSelectors, typedEntries } from "./utils";
 
 export const [selectDeck, selectDeckArray] = generateComponentSelectors<GameComponent>("decks");
 
@@ -57,7 +58,22 @@ export const selectFactionPool = (state: RootState, factionPool: FactionEntry[])
   factionPool.map((entry) => selectFactionPoolEntry(state, entry));
 
 /** Returns the current slice of flow state from redux state */
-export const selectFlowSlice = (state: RootState) => getFlowSlice(state.flow);
+export const selectFlowSlice = createSelector(
+  (state: RootState) => state.flow.currentStep,
+  (state: RootState) => state.flow.factionPool,
+  (state: RootState) => state.flow.lastFactionLocked,
+  (state: RootState) => state.flow.vagabondSetUp,
+  (state: RootState) => state.flow.currentPlayerIndex,
+  (state: RootState) => state.flow.currentFactionIndex,
+  (step, factionPool, lastFactionLocked, vagabondSetUp, playerIndex, factionIndex): FlowSlice => ({
+    step,
+    factionPool,
+    lastFactionLocked,
+    vagabondSetUp,
+    playerIndex,
+    factionIndex,
+  })
+);
 
 export const [selectHireling, selectHirelingArray] =
   generateComponentSelectors<Hireling>("hirelings");

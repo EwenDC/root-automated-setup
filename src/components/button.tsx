@@ -21,6 +21,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         ref={ref}
         className={classNames("button", { disabled }, className)}
+        aria-disabled={disabled}
         onClick={disabled ? undefined : onClick}
       >
         {renderIconLeft ? buttonIcon : null}

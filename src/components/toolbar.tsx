@@ -6,27 +6,26 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { ReactComponent as UndoIcon } from "../images/icons/undo.svg";
 import { ReactComponent as RedoIcon } from "../images/icons/redo.svg";
 import { ReactComponent as NextIcon } from "../images/icons/next.svg";
-import { memo, useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import Button from "./button";
 
 const Toolbar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const pastSteps = useAppSelector((state) => state.flow.pastSteps);
-  const currentStep = useAppSelector((state) => state.flow.currentStep);
-  const futureSteps = useAppSelector((state) => state.flow.futureSteps);
   const [focusedIndex, setFocusedIndex] = useState(0);
+  const undoDisabled = useAppSelector((state) => state.flow.pastSteps.length === 0);
+  const redoDisabled = useAppSelector((state) => state.flow.futureSteps.length === 0);
+  const nextStepDisabled = useAppSelector((state) => state.flow.currentStep >= SetupStep.setupEnd);
 
-  const buttonRefs = [
-    useRef<HTMLButtonElement>(null),
-    useRef<HTMLButtonElement>(null),
-    useRef<HTMLButtonElement>(null),
-  ];
+  const undoButtonRef = useRef<HTMLButtonElement>(null);
+  const redoButtonRef = useRef<HTMLButtonElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const onKeyDownHandler = (
     event: React.KeyboardEvent<HTMLButtonElement>,
     focusedIndex: number
   ) => {
+    const buttonRefs = [undoButtonRef, redoButtonRef, nextButtonRef];
     const maxIndex = buttonRefs.length - 1;
     let newIndex: number | undefined;
 
@@ -47,9 +46,30 @@ const Toolbar: React.FC = () => {
     }
   };
 
-  const undoDisabled = pastSteps.length === 0;
-  const redoDisabled = futureSteps.length === 0;
-  const nextStepDisabled = currentStep >= SetupStep.setupEnd;
+  const onUndoClick = useCallback(() => {
+    dispatch(undoStep());
+    setFocusedIndex(0);
+  }, [dispatch]);
+  const onUndoKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLButtonElement>) => onKeyDownHandler(event, 0),
+    []
+  );
+  const onRedoClick = useCallback(() => {
+    dispatch(redoStep());
+    setFocusedIndex(1);
+  }, [dispatch]);
+  const onRedoKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLButtonElement>) => onKeyDownHandler(event, 1),
+    []
+  );
+  const onNextClick = useCallback(() => {
+    dispatch(nextStep());
+    setFocusedIndex(2);
+  }, [dispatch]);
+  const onNextKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLButtonElement>) => onKeyDownHandler(event, 2),
+    []
+  );
 
   return (
     <footer>
@@ -58,44 +78,33 @@ const Toolbar: React.FC = () => {
           Icon={UndoIcon}
           disabled={undoDisabled}
           className="left"
-          ref={buttonRefs[0]}
-          onClick={() => {
-            dispatch(undoStep());
-            setFocusedIndex(0);
-          }}
+          ref={undoButtonRef}
+          onClick={onUndoClick}
           title={t("label.undo")}
-          aria-disabled={undoDisabled}
           // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 0 ? 0 : -1}
-          onKeyDown={(e) => onKeyDownHandler(e, 0)}
+          onKeyDown={onUndoKeyDown}
         />
         <Button
           Icon={RedoIcon}
           disabled={redoDisabled}
           className="left"
-          ref={buttonRefs[1]}
-          onClick={() => {
-            dispatch(redoStep());
-            setFocusedIndex(1);
-          }}
+          ref={redoButtonRef}
+          onClick={onRedoClick}
           title={t("label.redo")}
-          aria-disabled={redoDisabled}
           // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 1 ? 0 : -1}
-          onKeyDown={(e) => onKeyDownHandler(e, 1)}
+          onKeyDown={onRedoKeyDown}
         />
         <Button
           Icon={NextIcon}
           disabled={nextStepDisabled}
           className="right"
-          ref={buttonRefs[2]}
-          onClick={() => {
-            dispatch(nextStep());
-            setFocusedIndex(2);
-          }}
+          ref={nextButtonRef}
+          onClick={onNextClick}
           // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 2 ? 0 : -1}
-          onKeyDown={(e) => onKeyDownHandler(e, 2)}
+          onKeyDown={onNextKeyDown}
         >
           {t("label.nextStep")}
         </Button>

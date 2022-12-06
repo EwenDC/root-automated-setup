@@ -1,14 +1,14 @@
 import { memo } from "react";
 import { FlowSlice, SetupStep } from "../types";
-import { selectDeckArray } from "../features/selectors";
-import { toggleDeck } from "../features/componentsSlice";
 import { useTranslation } from "react-i18next";
 
+import ChooseDeck from "../steps/chooseDeck";
 import ChooseExpansions from "../steps/chooseExpansions";
 import ChooseFactions from "../steps/chooseFactions";
 import ChooseHirelings from "../steps/chooseHirelings";
 import ChooseLandmarks from "../steps/chooseLandmarks";
 import ChooseMap from "../steps/chooseMap";
+import PlaceScoreMarkers from "../steps/placeScoreMarkers";
 import SeatPlayers from "../steps/seatPlayers";
 import SelectFaction from "../steps/selectFaction";
 import SetUpDeck from "../steps/setUpDeck";
@@ -18,13 +18,12 @@ import SetUpHireling from "../steps/setUpHireling";
 import SetUpLandmark from "../steps/setUpLandmark";
 import SetUpMap from "../steps/setUpMap";
 import Section from "./section";
-import ComponentToggle from "./componentToggle";
 
-export interface SetupSwitchProps {
+export interface StepSwitchProps {
   flowSlice: FlowSlice;
 }
 
-const StepSwitch: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
+const StepSwitch: React.FC<StepSwitchProps> = ({ flowSlice }) => {
   const { i18n } = useTranslation();
 
   switch (flowSlice.step) {
@@ -41,15 +40,7 @@ const StepSwitch: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
       return <SetUpMap />;
 
     case SetupStep.chooseDeck:
-      return (
-        <Section titleKey="setupStep.chooseDeck.title" textKey="setupStep.chooseDeck.body">
-          <ComponentToggle
-            selector={selectDeckArray}
-            toggleComponent={toggleDeck}
-            getLabelKey={(deck) => "deck." + deck.code + ".name"}
-          />
-        </Section>
-      );
+      return <ChooseDeck />;
 
     case SetupStep.setUpDeck:
       return <SetUpDeck />;
@@ -85,15 +76,7 @@ const StepSwitch: React.FC<SetupSwitchProps> = ({ flowSlice }) => {
       return <SetUpFaction flowSlice={flowSlice} />;
 
     case SetupStep.placeScoreMarkers:
-      return (
-        <Section
-          titleKey="setupStep.placeScoreMarkers.title"
-          textKey="setupStep.placeScoreMarkers.body"
-          translationOptions={{
-            context: flowSlice.vagabondSetUp ? "vagabondSetUp" : undefined,
-          }}
-        />
-      );
+      return <PlaceScoreMarkers flowSlice={flowSlice} />;
 
     case SetupStep.setupEnd:
       return <SetupEnd />;
