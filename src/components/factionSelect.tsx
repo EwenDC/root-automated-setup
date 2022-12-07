@@ -1,9 +1,8 @@
 import classNames from "classnames";
 import { Trans, useTranslation } from "react-i18next";
-import { selectFactionPool } from "../features/selectors";
 import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector, useSelectFactionPool } from "../hooks";
 import { createContext, memo, useContext } from "react";
 import { ReactComponent as MilitantIcon } from "../images/icons/militant.svg";
 import StatBar from "./statBar";
@@ -12,6 +11,7 @@ import IconList from "./iconList";
 import ComponentCount from "./componentCount";
 import { Faction, FlowSlice } from "../types";
 import { stepActiveContext } from "./stepList";
+import { selectInvalid } from "../features/selectors";
 
 export const selectedFactionContext = createContext<Faction | null>(null);
 
@@ -20,10 +20,11 @@ interface FactionSelectProps {
 }
 
 const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
-  const factionPool = useAppSelector((state) => selectFactionPool(state, flowSlice.factionPool));
-  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
-  const dispatch = useAppDispatch();
+  const selectFactionPool = useSelectFactionPool(flowSlice.factionPool);
+  const factionPool = useAppSelector(selectFactionPool);
   const stepActive = useContext(stepActiveContext);
+  const invalid = useAppSelector(selectInvalid(stepActive));
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
@@ -57,8 +58,8 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
         role="radiogroup"
         aria-label={t("setupStep.selectFaction.subtitle")}
         aria-required="true"
-        aria-invalid={stepActive && errorMessage ? true : undefined}
-        aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
+        aria-invalid={invalid ? true : undefined}
+        aria-errormessage={invalid ? "appError" : undefined}
         aria-disabled={!stepActive}
       >
         {factionPool.map(({ code, key, image, militant, vagabond }, index) => {

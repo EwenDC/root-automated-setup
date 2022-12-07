@@ -5,10 +5,9 @@ import { iconDict } from "./icon";
 import hexIcon from "../images/tokens/priority.png";
 import { SetupStep } from "../types";
 import { useTranslation } from "react-i18next";
-import { shallowEqual } from "react-redux";
 
 const MapChart: React.FC = () => {
-  const map = useAppSelector(selectSetupMap, shallowEqual);
+  const map = useAppSelector(selectSetupMap);
   const clearingSuits = useAppSelector((state) => state.setup.clearingSuits);
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   const { t } = useTranslation();

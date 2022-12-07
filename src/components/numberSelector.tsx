@@ -1,5 +1,6 @@
 import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
+import { selectInvalid } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { stepActiveContext } from "./stepList";
 
@@ -15,8 +16,8 @@ interface NumberSelectorProps {
 const size = 2;
 
 const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxVal, onChange }) => {
-  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
   const stepActive = useContext(stepActiveContext);
+  const invalid = useAppSelector(selectInvalid(stepActive));
 
   const buttonHandler = (amount: number) => {
     const newValue = value + amount;
@@ -56,8 +57,8 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
             value={value}
             size={size}
             onChange={typingHandler}
-            aria-invalid={stepActive && errorMessage ? true : undefined}
-            aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
+            aria-invalid={invalid ? true : undefined}
+            aria-errormessage={invalid ? "appError" : undefined}
           />
           <button onClick={() => buttonHandler(+1)}>+</button>
         </>

@@ -1,5 +1,6 @@
 import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
+import { selectInvalid } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { stepActiveContext } from "./stepList";
 
@@ -10,8 +11,8 @@ interface RadiogroupProps {
 }
 
 const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onChange }) => {
-  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
   const stepActive = useContext(stepActiveContext);
+  const invalid = useAppSelector(selectInvalid(stepActive));
 
   return (
     <fieldset
@@ -19,8 +20,8 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
       className="radio"
       disabled={!stepActive}
       aria-required="true"
-      aria-invalid={stepActive && errorMessage ? true : undefined}
-      aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
+      aria-invalid={invalid ? true : undefined}
+      aria-errormessage={invalid ? "appError" : undefined}
     >
       {!defaultValue || stepActive ? (
         <div className="option">

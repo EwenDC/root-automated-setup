@@ -1,5 +1,4 @@
 import { createContext, memo } from "react";
-import { shallowEqual } from "react-redux";
 import { selectFlowSlice } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import LanguageSelect from "./languageSelect";
@@ -9,7 +8,7 @@ export const stepActiveContext = createContext(false);
 
 const StepList: React.FC = () => {
   const pastSteps = useAppSelector((state) => state.flow.pastSteps);
-  const currentFlowSlice = useAppSelector(selectFlowSlice, shallowEqual);
+  const currentFlowSlice = useAppSelector(selectFlowSlice);
   const futureSteps = useAppSelector((state) => state.flow.futureSteps);
 
   return (

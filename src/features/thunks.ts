@@ -14,12 +14,8 @@ import {
 } from "./flowSlice";
 import {
   selectDeckArray,
-  selectEnabledIndependentHirelings,
-  selectEnabledInsurgentFactions,
-  selectEnabledMilitantFactions,
   selectFactionArray,
   selectFactionCodes,
-  selectFactionHirelings,
   selectHirelingArray,
   selectLandmarkArray,
   selectMapArray,
@@ -145,7 +141,13 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
       dispatch(
-        massComponentToggle(selectFactionHirelings, playerCount < includedFactions, toggleHireling)
+        massComponentToggle(
+          selectHirelingArray,
+          ({ factions }) =>
+            playerCount < includedFactions ||
+            !factions.some((factionCode) => selectFactionCodes(getState()).includes(factionCode)),
+          toggleHireling
+        )
       );
 
       // Don't allow draft setup if we can't spare an extra faction
@@ -240,8 +242,18 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Did we skip the hireling setup?
       if (!skippedSteps[SetupStep.setUpHireling1]) {
         // Get our lists of independent & faction hirelings which are avaliable for selection
-        let hirelingPool = selectEnabledIndependentHirelings(getState());
-        let factionHirelings = selectEnabled(selectFactionHirelings(getState()));
+        let hirelingPool = selectHirelingArray(getState()).filter(
+          ({ enabled, factions }) =>
+            enabled &&
+            // Only include a hireling if none of it's faction codes matches an included faction
+            factions.every((factionCode) => !selectFactionCodes(getState()).includes(factionCode))
+        );
+        let factionHirelings = selectHirelingArray(getState()).filter(
+          ({ enabled, factions }) =>
+            // Only include a hireling if at least one of it's faction codes matches an included faction
+            enabled &&
+            factions.some((factionCode) => selectFactionCodes(getState()).includes(factionCode))
+        );
 
         // Calculate how many factions we can spare for hirelings (i.e. total factions minus setup faction count)
         const factionCodes = selectFactionCodes(getState());
@@ -306,8 +318,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (factionPool.length > 0) dispatch(clearFactionPool());
 
       // Get our list of militant and insurgent factions which are avaliable for selection
-      let workingFactionPool = selectEnabledMilitantFactions(getState());
-      const insurgentFactions = selectEnabledInsurgentFactions(getState());
+      let workingFactionPool = selectFactionArray(getState()).filter(
+        ({ enabled, militant }) => enabled && militant
+      );
+      const insurgentFactions = selectFactionArray(getState()).filter(
+        ({ enabled, militant }) => enabled && !militant
+      );
 
       // Validate and set up the vagabond pool for draft setup
       if (useDraft) {

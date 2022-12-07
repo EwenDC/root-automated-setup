@@ -7,6 +7,7 @@ import { AppThunk, RootState } from "../store";
 import { setErrorMessage } from "../features/setupSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { stepActiveContext } from "./stepList";
+import { selectInvalid } from "../features/selectors";
 
 interface ComponentListProps<T> {
   selector: (state: RootState) => T[];
@@ -24,9 +25,9 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   unsorted = false,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
-  const errorMessage = useAppSelector((state) => state.setup.errorMessage);
-  const dispatch = useAppDispatch();
   const stepActive = useContext(stepActiveContext);
+  const invalid = useAppSelector(selectInvalid(stepActive));
+  const dispatch = useAppDispatch();
   const [largeLabels, setLargeLabels] = useState(false);
   const { t, i18n } = useTranslation();
 
@@ -80,8 +81,8 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
               aria-checked={component.enabled}
               aria-disabled={stepActive ? componentLocked : undefined}
               aria-label={stepActive ? component.label : undefined}
-              aria-invalid={stepActive && errorMessage ? true : undefined}
-              aria-errormessage={stepActive && errorMessage ? "appError" : undefined}
+              aria-invalid={invalid ? true : undefined}
+              aria-errormessage={invalid ? "appError" : undefined}
             >
               <img
                 src={component.image}

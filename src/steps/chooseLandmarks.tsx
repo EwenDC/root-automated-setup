@@ -1,6 +1,5 @@
 import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { shallowEqual } from "react-redux";
 import ComponentToggle from "../components/componentToggle";
 import NumberSelector from "../components/numberSelector";
 import Section from "../components/section";
@@ -15,7 +14,7 @@ const getLandmarkLabelKey = (landmark: CodeObject) => "landmark." + landmark.cod
 const ChooseLandmarksStep: React.FC = () => {
   const landmarkCount = useAppSelector((state) => state.setup.landmarkCount);
   const playerCount = useAppSelector((state) => state.setup.playerCount);
-  const setupMap = useAppSelector(selectSetupMap, shallowEqual);
+  const setupMap = useAppSelector(selectSetupMap);
   const dispatch = useAppDispatch();
   // Ensure the component re-renders when the language changes
   useTranslation();

@@ -11,41 +11,31 @@ import {
 } from "../types";
 
 /**
- * Function for create Redux Selectors for returning a single component or a
- * component list as an array, moving the component key to the component field "code"
+ * Function for creating a Redux Selector for returning a component list
+ * as an array, moving the component key to the component field "code"
  * @param componentType The key the list of components is stored under in the "components" redux slice
- * @param getComponentData Function for retreiving the extra data about the component from the content file
  */
-export const generateComponentSelectors = <
+export const generateArraySelector = <
   D extends GameComponent,
   I extends ComponentInfo = ComponentInfo
 >(
   componentType: keyof Omit<ComponentsState, "expansions">
 ) =>
-  [
-    // This selector error's if selecting a component that doesn't exist
-    // We avoid this by just doing our best to not select a non-existant component
-    (state: RootState, code: string) => {
-      const componentInfo = state.components[componentType][code];
-      const componentData = content[componentInfo.expansionCode][componentType]![code];
-      return { ...(componentData as D), ...(componentInfo as I), code };
-    },
-    createSelector(
-      (state: RootState) => state.components[componentType],
-      (componentList) => {
-        const array = [];
-        for (const [code, componentInfo] of typedEntries(componentList)) {
-          const componentData = content[componentInfo.expansionCode][componentType]![code];
-          array.push({
-            ...(componentData as D),
-            ...(componentInfo as I),
-            code,
-          });
-        }
-        return array;
+  createSelector(
+    (state: RootState) => state.components[componentType],
+    (componentList) => {
+      const array = [];
+      for (const [code, componentInfo] of typedEntries(componentList)) {
+        const componentData = content[componentInfo.expansionCode][componentType]![code];
+        array.push({
+          ...(componentData as D),
+          ...(componentInfo as I),
+          code,
+        });
       }
-    ),
-  ] as const;
+      return array;
+    }
+  );
 
 /**
  * Generates a state slice from the current flow state
