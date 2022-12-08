@@ -14,10 +14,6 @@ import { generateArraySelector, typedEntries } from "./utils";
 
 export const selectDeckArray = generateArraySelector<GameComponent>("decks");
 
-/** Redux Selector for returning a specified Expansion from state */
-export const selectExpansion = (state: RootState, code: string) =>
-  state.components.expansions[code];
-
 /** Redux Selector for returning the expansion list as an array, moving the object key to the object field "code" */
 export const selectExpansionArray = createSelector(
   (state: RootState) => state.components.expansions,
@@ -58,8 +54,8 @@ export const selectFlowSlice = createSelector(
 
 export const selectHirelingArray = generateArraySelector<Hireling>("hirelings");
 
-export const selectInvalid = (stepActive: boolean) => (state: RootState) =>
-  stepActive && !!state.setup.errorMessage;
+export const selectStepInvalid = (stepActive: boolean) => (state: RootState) =>
+  stepActive && state.setup.errorMessage != null;
 
 export const selectLandmarkArray = generateArraySelector<Landmark>("landmarks");
 

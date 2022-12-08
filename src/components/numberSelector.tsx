@@ -1,6 +1,6 @@
 import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
-import { selectInvalid } from "../features/selectors";
+import { selectStepInvalid } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { stepActiveContext } from "./stepList";
 
@@ -17,7 +17,7 @@ const size = 2;
 
 const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxVal, onChange }) => {
   const stepActive = useContext(stepActiveContext);
-  const invalid = useAppSelector(selectInvalid(stepActive));
+  const invalid = useAppSelector(selectStepInvalid(stepActive));
 
   const buttonHandler = (amount: number) => {
     const newValue = value + amount;

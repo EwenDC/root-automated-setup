@@ -7,7 +7,7 @@ import { AppThunk, RootState } from "../store";
 import { setErrorMessage } from "../features/setupSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { stepActiveContext } from "./stepList";
-import { selectInvalid } from "../features/selectors";
+import { selectStepInvalid } from "../features/selectors";
 
 interface ComponentListProps<T> {
   selector: (state: RootState) => T[];
@@ -26,7 +26,7 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
   const stepActive = useContext(stepActiveContext);
-  const invalid = useAppSelector(selectInvalid(stepActive));
+  const invalid = useAppSelector(selectStepInvalid(stepActive));
   const dispatch = useAppDispatch();
   const [largeLabels, setLargeLabels] = useState(false);
   const { t, i18n } = useTranslation();

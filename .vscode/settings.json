@@ -6,5 +6,6 @@
   "prettier.useEditorConfig": false,
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

@@ -11,6 +11,15 @@ import {
 } from "../types";
 
 /**
+ * Function for counting how many elements in an array match a condition
+ * @param array The array to count the matching elements of
+ * @param matcher A matching function returning a boolean to indicate if a value should be counted
+ * @returns The number of elements in the array that return true when passed into the matcher function
+ */
+export const countMatches = <T>(array: T[], matcher: (value: T) => boolean) =>
+  array.reduce((count, value) => count + (matcher(value) ? 1 : 0), 0);
+
+/**
  * Function for creating a Redux Selector for returning a component list
  * as an array, moving the component key to the component field "code"
  * @param componentType The key the list of components is stored under in the "components" redux slice
@@ -124,6 +133,10 @@ export const takeRandom = <T>(list: T[]): T => {
   return returnVal;
 };
 
+/**
+ * Returns a typed array of key/values of the enumerable properties of an object
+ * @param o Object that contains the properties and methods. This can be an object that you created or an existing Document Object Model (DOM) object.
+ */
 export const typedEntries = Object.entries as <T extends { [s: string]: any } | ArrayLike<any>>(
   o: T
 ) => [keyof T, T[keyof T]][];

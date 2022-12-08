@@ -1,6 +1,6 @@
 import { memo, useContext } from "react";
 import { Trans } from "react-i18next";
-import { selectInvalid } from "../features/selectors";
+import { selectStepInvalid } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { stepActiveContext } from "./stepList";
 
@@ -13,7 +13,7 @@ interface CheckboxProps {
 
 const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChange }) => {
   const stepActive = useContext(stepActiveContext);
-  const invalid = useAppSelector(selectInvalid(stepActive));
+  const invalid = useAppSelector(selectStepInvalid(stepActive));
 
   return defaultValue || stepActive ? (
     <div className="checkbox">

@@ -11,7 +11,7 @@ import IconList from "./iconList";
 import ComponentCount from "./componentCount";
 import { Faction, FlowSlice } from "../types";
 import { stepActiveContext } from "./stepList";
-import { selectInvalid } from "../features/selectors";
+import { selectStepInvalid } from "../features/selectors";
 
 export const selectedFactionContext = createContext<Faction | null>(null);
 
@@ -23,7 +23,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const selectFactionPool = useSelectFactionPool(flowSlice.factionPool);
   const factionPool = useAppSelector(selectFactionPool);
   const stepActive = useContext(stepActiveContext);
-  const invalid = useAppSelector(selectInvalid(stepActive));
+  const invalid = useAppSelector(selectStepInvalid(stepActive));
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
