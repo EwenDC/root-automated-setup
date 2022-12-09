@@ -4,9 +4,9 @@ import {
   ComponentsState,
   EnableMapLandmarkPayload,
   Expansion,
+  LockComponentPayload,
   MapFixedSuitsPayload,
   MapInfo,
-  ToggleComponentPayload,
 } from "../types";
 import { loadPersistedSetting, savePersistedSetting, typedEntries } from "./utils";
 
@@ -22,6 +22,7 @@ const addExpansionComponents = (
     for (const [componentCode, componentData] of typedEntries(componentList!)) {
       const componentInfo: MapInfo = {
         enabled: loadPersistedSetting(componentType + "." + componentCode, true),
+        locked: false,
         expansionCode,
       };
       if ("defaultSuits" in componentData)
@@ -55,8 +56,8 @@ const setupInitialState = () => {
     const enabled = expansion.base || loadPersistedSetting("expansions." + expansionCode, false);
 
     initialState.expansions[expansionCode] = {
-      base: expansion.base,
       enabled,
+      locked: expansion.base && "error.baseExpansionRequired",
       image: expansion.image,
     };
     // Add expansion components to state if the expansion is enabled
@@ -65,18 +66,29 @@ const setupInitialState = () => {
   return initialState;
 };
 
-const toggleComponent = (componentType: keyof ComponentsState) => ({
-  prepare: (componentCode: string, shouldEnable?: boolean) => ({
-    payload: { componentCode, shouldEnable },
+const toggleComponent =
+  (componentType: keyof ComponentsState) =>
+  (state: ComponentsState, { payload: componentCode }: PayloadAction<string>) => {
+    const newState = !state[componentType][componentCode].enabled;
+    state[componentType][componentCode].enabled = newState;
+    savePersistedSetting(componentType + "." + componentCode, newState);
+  };
+
+const lockComponent = (componentType: keyof ComponentsState) => ({
+  prepare: (componentCode: string, locked: string | false) => ({
+    payload: { componentCode, locked },
   }),
-  reducer: (state: ComponentsState, { payload }: PayloadAction<ToggleComponentPayload>) => {
-    const { componentCode, shouldEnable } = payload;
-    state[componentType][componentCode].enabled =
-      shouldEnable ?? !state[componentType][componentCode].enabled;
-    savePersistedSetting(
-      componentType + "." + componentCode,
-      state[componentType][componentCode].enabled
-    );
+  reducer: (state: ComponentsState, { payload }: PayloadAction<LockComponentPayload>) => {
+    const { componentCode, locked } = payload;
+    state[componentType][componentCode].locked = locked;
+    if (locked) {
+      state[componentType][componentCode].enabled = false;
+    } else {
+      state[componentType][componentCode].enabled = loadPersistedSetting(
+        componentType + "." + componentCode,
+        true
+      );
+    }
   },
 });
 
@@ -87,7 +99,7 @@ export const componentsSlice = createSlice({
     toggleExpansion: (state, { payload: expansionCode }: PayloadAction<string>) => {
       const expansion = state.expansions[expansionCode];
       // Do not allow changing the enabled state of base game
-      if (expansion && !expansion.base) {
+      if (expansion && !expansion.locked) {
         // Toggle enable state and persist change
         expansion.enabled = !expansion.enabled;
         savePersistedSetting("expansions." + expansionCode, expansion.enabled);
@@ -120,10 +132,12 @@ export const componentsSlice = createSlice({
     },
     toggleDeck: toggleComponent("decks"),
     toggleFaction: toggleComponent("factions"),
+    lockFaction: lockComponent("factions"),
     toggleHireling: toggleComponent("hirelings"),
+    lockHireling: lockComponent("hirelings"),
     toggleLandmark: toggleComponent("landmarks"),
+    lockLandmark: lockComponent("landmarks"),
     toggleMap: toggleComponent("maps"),
-    toggleVagabond: toggleComponent("vagabonds"),
     enableMapLandmark: {
       prepare: (mapCode: string, enableLandmark: boolean) => ({
         payload: { mapCode, enableLandmark },
@@ -144,11 +158,15 @@ export const componentsSlice = createSlice({
         savePersistedSetting("maps." + mapCode + fixedSuitKey, fixedSuits);
       },
     },
+    toggleVagabond: toggleComponent("vagabonds"),
   },
 });
 
 export const {
   enableMapLandmark,
+  lockFaction,
+  lockHireling,
+  lockLandmark,
   mapFixedSuits,
   toggleExpansion,
   toggleDeck,

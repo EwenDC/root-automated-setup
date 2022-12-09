@@ -1,7 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../store";
 import { SetupStep, Togglable, WithCode } from "../types";
-import { toggleFaction, toggleHireling, toggleLandmark } from "./componentsSlice";
+import { lockFaction, lockHireling, lockLandmark } from "./componentsSlice";
 import {
   addToFactionPool,
   clearFactionPool,
@@ -38,25 +38,24 @@ import { countMatches, selectEnabled, takeRandom } from "./utils";
 const MAX_CORNER_SETUPS = 4;
 
 /**
- * Thunk action for mass updating the enable/disable state of multiple components, dispatching the minimum amount of actions to do so
+ * Thunk action for (un)locking multiple components at a time, dispatching the minimum amount of actions to do so
  * @param selectComponentArray Selector for the list of components you wish to update
- * @param componentEnable Either a function returning the desired enable state for a given component, or a boolean which sets the enable state of all given components
- * @param toggleComponent Action creator for dispatching the toggle component action for the given components
+ * @param componentLock A function returning the lock state for a given component
+ * @param lockComponent Action creator for dispatching the toggle component action for the given components
  */
-export const massComponentToggle =
+export const massComponentLock =
   <T extends Togglable>(
     selectComponentArray: (state: RootState) => WithCode<T>[],
-    componentEnable: boolean | ((component: WithCode<T>) => boolean),
-    toggleComponent: (code: string, enabled?: boolean) => PayloadAction<any>
+    componentLock: (component: WithCode<T>) => string | false,
+    lockComponent: (code: string, locked: string | false) => PayloadAction<any>
   ): AppThunk =>
   (dispatch, getState) => {
     selectComponentArray(getState()).forEach((component) => {
-      // Calculate what the enable state of the component should be
-      const shouldEnable =
-        typeof componentEnable === "function" ? componentEnable(component) : componentEnable;
+      // Calculate what the locked state of the component should be
+      const locked = componentLock(component);
       // If the desired state does not match the actual state, fix it
-      if (component.enabled !== shouldEnable) {
-        dispatch(toggleComponent(component.code, shouldEnable));
+      if (component.locked !== locked) {
+        dispatch(lockComponent(component.code, locked));
       }
     });
   };
@@ -146,21 +145,26 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       }
       dispatch(setFirstPlayer(firstPlayer));
 
-      const includedFactions = selectFactionArray(state).length;
+      const factionCodes = selectFactionCodes(state);
+      const noSpareFactions = playerCount >= factionCodes.length;
 
       // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
       dispatch(
-        massComponentToggle(
+        massComponentLock(
           selectHirelingArray,
           ({ factions }) =>
-            playerCount < includedFactions ||
-            !factions.some((factionCode) => selectFactionCodes(state).includes(factionCode)),
-          toggleHireling
+            // Are we at the max player count (i.e. there are no factions to spare for an equivilent hireling)?
+            noSpareFactions &&
+            // Is this hireling one of the faction equivilents?
+            factions.some((faction) => factionCodes.includes(faction))
+              ? "error.factionHirelingExcluded"
+              : false,
+          lockHireling
         )
       );
 
       // Don't allow draft setup if we can't spare an extra faction
-      if (playerCount === includedFactions) dispatch(setUseDraft(false));
+      if (noSpareFactions) dispatch(setUseDraft(false));
       break;
 
     ////////////////
@@ -178,12 +182,17 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
         // Ensure that any landmarks not supported at this player count or used by map setup are disabled
         dispatch(
-          massComponentToggle(
+          massComponentLock(
             selectLandmarkArray,
-            (landmark) =>
-              landmark.minPlayers <= playerCount &&
-              (!map.useLandmark || !map.landmark || map.landmark.code !== landmark.code),
-            toggleLandmark
+            ({ code, minPlayers }) =>
+              // Lock this landmark if it requires more players to include
+              minPlayers > playerCount
+                ? "error.landmarkNotEnoughPlayers"
+                : // Lock this landmark if it will be used in map setup
+                map.useLandmark && map.landmark && code === map.landmark.code
+                ? "error.mapLandmarkUsed"
+                : false,
+            lockLandmark
           )
         );
       } else {
@@ -312,15 +321,20 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Also disable insurgent factions if we're only playing with 2 people and no bots or hirelings
       excludedFactions = getState().setup.excludedFactions;
       dispatch(
-        massComponentToggle(
+        massComponentLock(
           selectFactionArray,
-          (faction) =>
-            !excludedFactions.includes(faction.code) &&
-            (playerCount > 2 ||
-              faction.militant ||
-              !skippedSteps[SetupStep.setUpHireling1] ||
-              !skippedSteps[SetupStep.setUpBots]),
-          toggleFaction
+          ({ code, militant }) =>
+            // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
+            playerCount < 3 &&
+            !militant &&
+            skippedSteps[SetupStep.setUpHireling1] &&
+            skippedSteps[SetupStep.setUpBots]
+              ? "error.tooFewPlayerInsurgent"
+              : // Disable a faction if it was replaced by an equivilent hireling
+              excludedFactions.includes(code)
+              ? "error.hirelingSelected"
+              : false,
+          lockFaction
         )
       );
       break;

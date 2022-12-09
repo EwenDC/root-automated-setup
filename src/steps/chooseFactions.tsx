@@ -7,15 +7,13 @@ import { toggleFaction, toggleVagabond } from "../features/componentsSlice";
 import { setUseDraft } from "../features/flowSlice";
 import { selectFactionArray, selectVagabondArray } from "../features/selectors";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { CodeObject, Faction, SetupStep } from "../types";
+import { CodeObject, Faction } from "../types";
 
 const getFactionLabelKey = (faction: Faction) => "faction." + faction.key + ".name";
 const getVagabondLabelKey = (vagabond: CodeObject) => "vagabond." + vagabond.code + ".name";
 
 const ChooseFactionsStep: React.FC = () => {
   const playerCount = useAppSelector((state) => state.setup.playerCount);
-  const excludedFactions = useAppSelector((state) => state.setup.excludedFactions);
-  const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   const useDraft = useAppSelector((state) => state.flow.useDraft);
   const factions = useAppSelector(selectFactionArray);
   const dispatch = useAppDispatch();
@@ -24,20 +22,6 @@ const ChooseFactionsStep: React.FC = () => {
   const onUseDraftChange = useCallback(
     (checked: boolean) => dispatch(setUseDraft(checked)),
     [dispatch]
-  );
-  const getFactionLockedKey = useCallback(
-    (faction: Faction & CodeObject) =>
-      // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
-      playerCount < 3 &&
-      !faction.militant &&
-      skippedSteps[SetupStep.setUpHireling1] &&
-      skippedSteps[SetupStep.setUpBots]
-        ? "error.tooFewPlayerInsurgent"
-        : // Disable a faction if it was replaced by an equivilent hireling
-        excludedFactions.includes(faction.code)
-        ? "error.hirelingSelected"
-        : null,
-    [excludedFactions, playerCount, skippedSteps]
   );
 
   return (
@@ -49,7 +33,6 @@ const ChooseFactionsStep: React.FC = () => {
         selector={selectFactionArray}
         toggleComponent={toggleFaction}
         getLabelKey={getFactionLabelKey}
-        getLockedKey={getFactionLockedKey}
       />
       {useDraft && factions.some((faction) => faction.isVagabond && faction.enabled) ? (
         <>

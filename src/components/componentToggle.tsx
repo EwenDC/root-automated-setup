@@ -13,7 +13,6 @@ interface ComponentListProps<T> {
   selector: (state: RootState) => T[];
   toggleComponent: (code: string) => PayloadAction<any> | AppThunk;
   getLabelKey: (component: T) => string;
-  getLockedKey?: (component: T) => string | null;
   unsorted?: boolean;
 }
 
@@ -21,7 +20,6 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   selector,
   toggleComponent,
   getLabelKey,
-  getLockedKey = () => null,
   unsorted = false,
 }: ComponentListProps<T>) => {
   const components = useAppSelector(selector);
@@ -58,45 +56,36 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
 
   return (
     <div className={classNames("component-toggle", { "large-labels": largeLabels })}>
-      {sortedComponents.map((component) => {
-        if (component.enabled || stepActive) {
-          const componentLockedKey = getLockedKey(component);
-          const componentLocked = componentLockedKey != null;
-          return (
-            <button
-              key={component.code}
-              className={classNames({
-                enabled: stepActive && component.enabled,
-                locked: stepActive && componentLocked,
-              })}
-              onClick={() =>
-                componentLocked
-                  ? dispatch(setErrorMessage(componentLockedKey))
-                  : dispatch(toggleComponent(component.code))
-              }
-              disabled={!stepActive}
-              title={stepActive && componentLocked ? t(componentLockedKey) : undefined}
-              tabIndex={stepActive && componentLocked ? -1 : undefined}
-              role="switch"
-              aria-checked={component.enabled}
-              aria-disabled={stepActive ? componentLocked : undefined}
-              aria-label={stepActive ? component.label : undefined}
-              aria-invalid={invalid ? true : undefined}
-              aria-errormessage={invalid ? "appError" : undefined}
-            >
-              <img
-                src={component.image}
-                alt="" // We're including the alt text in the button itself so don't bother reading out the image
-                aria-hidden="true"
-              />
-              <div className="label">
-                <span>{component.label}</span>
-              </div>
-            </button>
-          );
-        }
-        return null;
-      })}
+      {sortedComponents.map(({ code, enabled, image, label, locked }) =>
+        enabled || stepActive ? (
+          <button
+            key={code}
+            className={classNames({
+              enabled: stepActive && enabled,
+              locked: stepActive && locked !== false,
+            })}
+            onClick={() => dispatch(locked ? setErrorMessage(locked) : toggleComponent(code))}
+            disabled={!stepActive}
+            title={stepActive && locked ? t(locked) : undefined}
+            tabIndex={stepActive && locked ? -1 : undefined}
+            role="switch"
+            aria-checked={enabled}
+            aria-disabled={stepActive ? locked !== false : undefined}
+            aria-label={stepActive ? label : undefined}
+            aria-invalid={invalid ? true : undefined}
+            aria-errormessage={invalid ? "appError" : undefined}
+          >
+            <img
+              src={image}
+              alt="" // We're including the alt text in the button itself so don't bother reading out the image
+              aria-hidden="true"
+            />
+            <div className="label">
+              <span>{label}</span>
+            </div>
+          </button>
+        ) : null
+      )}
     </div>
   );
 };

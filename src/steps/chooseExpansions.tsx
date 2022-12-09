@@ -8,12 +8,9 @@ import { skipSteps } from "../features/flowSlice";
 import { selectExpansionArray } from "../features/selectors";
 import { savePersistedSetting } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { CodeObject, ExpansionInfo, SetupStep } from "../types";
+import { CodeObject, SetupStep } from "../types";
 
 const getExpansionLabelKey = (expansion: CodeObject) => "expansion." + expansion.code;
-const getExpansionLockedKey = (expansion: ExpansionInfo) =>
-  // Prevent the player from deselecting the Root base game
-  expansion.base ? "error.baseExpansionRequired" : null;
 
 const ChooseExpansionsStep: React.FC = () => {
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
@@ -35,7 +32,6 @@ const ChooseExpansionsStep: React.FC = () => {
         selector={selectExpansionArray}
         toggleComponent={toggleExpansion}
         getLabelKey={getExpansionLabelKey}
-        getLockedKey={getExpansionLockedKey}
         unsorted={true}
       />
       <Checkbox

@@ -7,13 +7,12 @@ import { toggleLandmark } from "../features/componentsSlice";
 import { selectLandmarkArray, selectSetupMap } from "../features/selectors";
 import { setLandmarkCount } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { CodeObject, Landmark } from "../types";
+import { CodeObject } from "../types";
 
 const getLandmarkLabelKey = (landmark: CodeObject) => "landmark." + landmark.code + ".name";
 
 const ChooseLandmarksStep: React.FC = () => {
   const landmarkCount = useAppSelector((state) => state.setup.landmarkCount);
-  const playerCount = useAppSelector((state) => state.setup.playerCount);
   const setupMap = useAppSelector(selectSetupMap);
   const dispatch = useAppDispatch();
   // Ensure the component re-renders when the language changes
@@ -28,20 +27,6 @@ const ChooseLandmarksStep: React.FC = () => {
   const onLandmarkCountChange = useCallback(
     (value: number) => dispatch(setLandmarkCount(value)),
     [dispatch]
-  );
-  const getLandmarkLockedKey = useCallback(
-    (landmark: Landmark & CodeObject) =>
-      // Disable this landmark if it requires more players to include
-      landmark.minPlayers > playerCount
-        ? "error.landmarkNotEnoughPlayers"
-        : // Disable this landmark if it was already used in map setup
-        setupMap &&
-          setupMap.useLandmark &&
-          setupMap.landmark &&
-          landmark.code === setupMap.landmark.code
-        ? "error.mapLandmarkUsed"
-        : null,
-    [playerCount, setupMap]
   );
 
   if (!setupMap) return null;
@@ -63,7 +48,6 @@ const ChooseLandmarksStep: React.FC = () => {
           selector={selectLandmarkArray}
           toggleComponent={toggleLandmark}
           getLabelKey={getLandmarkLabelKey}
-          getLockedKey={getLandmarkLockedKey}
         />
       ) : null}
     </Section>

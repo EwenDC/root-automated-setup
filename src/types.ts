@@ -90,10 +90,10 @@ export interface Vagabond extends GameComponent {
   startingItems: Item[];
 }
 
-/** Payload for Toggle Component redux action */
-export interface ToggleComponentPayload {
+/** Payload for Lock Component redux action */
+export interface LockComponentPayload {
   componentCode: string;
-  shouldEnable?: boolean;
+  locked: string | false;
 }
 
 /** Payload for Map Fixed Suits redux action */
@@ -111,11 +111,7 @@ export interface EnableMapLandmarkPayload {
 /** An object with an associated enable/disable state */
 export interface Togglable {
   enabled: boolean;
-}
-
-/** Generic information about an expansion, namely whether it is enabled and if it is a base copy */
-export interface ExpansionInfo extends Togglable, GameComponent {
-  base: boolean;
+  locked: string | false;
 }
 
 /** Generic information about a game component, namely whether it is enabled and what expansion it is from */
@@ -131,7 +127,7 @@ export interface MapInfo extends ComponentInfo {
 
 /** Object tracking which components are avaliable for selection */
 export interface ComponentsState {
-  expansions: Record<string, ExpansionInfo>;
+  expansions: Record<string, Togglable & GameComponent>;
   decks: Record<string, ComponentInfo>;
   factions: Record<string, ComponentInfo>;
   hirelings: Record<string, ComponentInfo>;
