@@ -21,7 +21,7 @@ const MapChart: React.FC = () => {
         const suit = clearingSuits[no];
         return (
           <g key={no}>
-            <title>{t("label.clearing." + suit)}</title>
+            <title>{t(`label.clearing.${suit}`)}</title>
             <circle cx={x} cy={y} r="8.25" fill="none" stroke="#7E7C74" strokeWidth="0.3" />
             <image x={x - 4} y={y - 12} width="8" height="8" href={iconDict[suit].image} />
             {!skippedSteps[SetupStep.setUpBots] ? (
@@ -41,18 +41,12 @@ const MapChart: React.FC = () => {
                 height="10"
                 transform={
                   map.landmark.angle != null
-                    ? "rotate(" +
-                      map.landmark.angle +
-                      " " +
-                      (map.landmark.x + 5) +
-                      " " +
-                      (map.landmark.y + 5) +
-                      ")"
+                    ? `rotate(${map.landmark.angle} ${map.landmark.x + 5} ${map.landmark.y + 5})`
                     : undefined
                 }
                 href={map.landmark.image}
               >
-                <title>{t("landmark." + map.landmark.code + ".name")}</title>
+                <title>{t(`landmark.${map.landmark.code}.name`)}</title>
               </image>
             ) : null}
           </g>

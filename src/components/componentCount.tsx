@@ -29,7 +29,7 @@ const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
           aria-hidden="true"
         />{" "}
         &#215;
-        {t("component." + component, {
+        {t(`component.${component}`, {
           count: componentCount,
         })}
       </div>

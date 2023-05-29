@@ -7,10 +7,7 @@ interface SetUpLandmarkStepProps {
 }
 
 const SetUpLandmarkStep: React.FC<SetUpLandmarkStepProps> = ({ number }) => {
-  // Typescript is bad at inferring the limited range of dynamic keys, so we have to spell it out
-  const landmark = useAppSelector(
-    (state) => state.setup[("landmark" + number) as `landmark${typeof number}`]
-  );
+  const landmark = useAppSelector((state) => state.setup[`landmark${number}`]);
   const map = useAppSelector((state) => state.setup.map);
   const nthLastPlayer = useNthLastPlayer();
 
@@ -24,8 +21,8 @@ const SetUpLandmarkStep: React.FC<SetUpLandmarkStepProps> = ({ number }) => {
 
   return (
     <Section
-      subtitleKey={"landmark." + landmark + ".setupTitle"}
-      textKey={"landmark." + landmark + ".setup"}
+      subtitleKey={`landmark.${landmark}.setupTitle`}
+      textKey={`landmark.${landmark}.setup`}
       translationOptions={translationOptions}
     />
   );

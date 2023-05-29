@@ -10,14 +10,13 @@ const SetUpFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
   const { factionIndex, factionPool, vagabondSetUp } = flowSlice;
   const useDraft = useAppSelector((state) => state.flow.useDraft);
   const selectFactionPool = useSelectFactionPool(factionPool);
-  const factionPoolEntry = useAppSelector((state) => selectFactionPool(state)[factionIndex || 0]);
+  const factionPoolEntry = useAppSelector((state) => selectFactionPool(state)[factionIndex ?? 0]);
   const { t } = useTranslation();
 
   const translationOptions = useMemo(
     () => ({
       context: vagabondSetUp ? "vagabondSetUp" : undefined,
-      vagabond:
-        factionPoolEntry.vagabond && t("vagabond." + factionPoolEntry.vagabond.code + ".name"),
+      vagabond: factionPoolEntry.vagabond && t(`vagabond.${factionPoolEntry.vagabond.code}.name`),
     }),
     [factionPoolEntry.vagabond, t, vagabondSetUp]
   );
@@ -42,8 +41,8 @@ const SetUpFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
 
   return (
     <Section
-      subtitleKey={"faction." + factionPoolEntry.key + ".setupTitle"}
-      textKey={"faction." + factionPoolEntry.key + (useDraft ? ".advancedSetup" : ".setup")}
+      subtitleKey={`faction.${factionPoolEntry.key}.setupTitle`}
+      textKey={`faction.${factionPoolEntry.key}${useDraft ? ".advancedSetup" : ".setup"}`}
       translationOptions={translationOptions}
       components={components}
     />

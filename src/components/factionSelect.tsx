@@ -28,7 +28,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const { t } = useTranslation();
 
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    const focusedIndex = flowSlice.factionIndex || 0;
+    const focusedIndex = flowSlice.factionIndex ?? 0;
     const maxIndex = factionPool.length - (flowSlice.lastFactionLocked ? 2 : 1);
     let newIndex: number | undefined;
 
@@ -64,9 +64,8 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
       >
         {factionPool.map(({ code, key, image, militant, vagabond }, index) => {
           // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
-          let factionName = t("faction." + key + ".name");
-          if (vagabond)
-            factionName = t("vagabond." + vagabond.code + ".name") + " (" + factionName + ")";
+          let factionName = t(`faction.${key}.name`);
+          if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`;
 
           // Swap out the faction image for the vagabond image (if we have one)
           const factionImage = vagabond ? vagabond.image : image;
@@ -100,13 +99,11 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
               }
               aria-label={
                 stepActive
-                  ? factionName + militant
-                    ? " (" + t("label.militant") + ")"
-                    : ""
+                  ? `${factionName}${militant ? ` (${t("label.militant")})` : ""}`
                   : undefined
               }
               // We have to override the tabbing logic to meet the standard of role "radio"
-              tabIndex={stepActive ? (index === (flowSlice.factionIndex || 0) ? 0 : -1) : undefined}
+              tabIndex={stepActive ? (index === (flowSlice.factionIndex ?? 0) ? 0 : -1) : undefined}
               onKeyDown={onKeyDownHandler}
             >
               <img
@@ -152,19 +149,17 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
                   <p>
                     <strong>
                       {t("label.specialAction")}:{" "}
-                      {t("vagabond." + selectedFaction.vagabond.code + ".action")}.
+                      {t(`vagabond.${selectedFaction.vagabond.code}.action`)}.
                     </strong>{" "}
                     <Trans
-                      i18nKey={"vagabond." + selectedFaction.vagabond.code + ".effect"}
+                      i18nKey={`vagabond.${selectedFaction.vagabond.code}.effect`}
                       components={iconComponents}
                     />
                   </p>
                 </>
               )}
-              <h4 className="summary-title">
-                {t("faction." + selectedFaction.key + ".summaryTitle")}
-              </h4>
-              <Trans i18nKey={"faction." + selectedFaction.key + ".summary"} />
+              <h4 className="summary-title">{t(`faction.${selectedFaction.key}.summaryTitle`)}</h4>
+              <Trans i18nKey={`faction.${selectedFaction.key}.summary`} />
             </div>
           </selectedFactionContext.Provider>
         </div>

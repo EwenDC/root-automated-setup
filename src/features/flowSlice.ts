@@ -69,7 +69,7 @@ export const flowSlice = createSlice({
         if (
           state.currentStep === SetupStep.setUpFaction &&
           !state.vagabondSetUp &&
-          state.factionPool[state.currentFactionIndex || 0].vagabond
+          state.factionPool[state.currentFactionIndex ?? 0].vagabond
         )
           state.vagabondSetUp = true;
 
@@ -82,7 +82,7 @@ export const flowSlice = createSlice({
           // If we still have players left over, move on to the next player
           state.currentPlayerIndex--;
           // Remove the faction we just set up from the pool
-          const [removedFaction] = state.factionPool.splice(state.currentFactionIndex || 0, 1);
+          const [removedFaction] = state.factionPool.splice(state.currentFactionIndex ?? 0, 1);
           state.currentFactionIndex = null;
           // Clear the last faction lock if the removed faction was militant
           if (state.lastFactionLocked && removedFaction.militant) state.lastFactionLocked = false;
@@ -103,7 +103,7 @@ export const flowSlice = createSlice({
             skipStep = state.skippedSteps[state.currentStep];
           } while (skipStep && state.currentStep < SetupStep.setupEnd);
         }
-      } else if (process.env.NODE_ENV !== "production") {
+      } else if (import.meta.env.DEV) {
         console.warn(
           `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`
         );
@@ -119,7 +119,7 @@ export const flowSlice = createSlice({
         state.futureSteps.unshift(getSlice(state));
         // Override current state with state from previous step
         applySlice(state, previousStep);
-      } else if (process.env.NODE_ENV !== "production") {
+      } else if (import.meta.env.DEV) {
         console.warn(
           `Invalid undoStep action: pastSteps array returned empty value (${previousStep})`
         );
@@ -135,7 +135,7 @@ export const flowSlice = createSlice({
         state.pastSteps.push(getSlice(state));
         // Override current state with state from next step
         applySlice(state, nextStep);
-      } else if (process.env.NODE_ENV !== "production") {
+      } else if (import.meta.env.DEV) {
         console.warn(
           `Invalid redoStep action: futureSteps array returned empty value (${nextStep})`
         );
@@ -190,7 +190,7 @@ export const flowSlice = createSlice({
     setCurrentPlayerIndex: (state, { payload: currentPlayerIndex }: PayloadAction<number>) => {
       if (currentPlayerIndex >= 0) {
         state.currentPlayerIndex = currentPlayerIndex;
-      } else if (process.env.NODE_ENV !== "production") {
+      } else if (import.meta.env.DEV) {
         console.warn(
           `Invalid payload for setCurrentPlayerIndex action: ${currentPlayerIndex} (Payload must be a number larger than or equal to 0)`
         );
@@ -207,7 +207,7 @@ export const flowSlice = createSlice({
         state.currentFactionIndex = currentFactionIndex;
         // Don't wipe redo queue during standard setup since it's just visual
         if (state.useDraft) state.futureSteps = [];
-      } else if (process.env.NODE_ENV !== "production") {
+      } else if (import.meta.env.DEV) {
         console.warn(
           `Invalid payload for setCurrentFactionIndex action: ${currentFactionIndex} (Payload must be a number larger than or equal to 0 but smaller than the faction pool length [${state.factionPool.length}])`
         );

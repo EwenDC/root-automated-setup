@@ -165,6 +165,8 @@ Most text you define (with the exception of title/subtitle text) can support the
 - `<i></i>`
 - `<p></p>`
 - `<b></b>`
+- `<ol></ol>`
+- `<li></li>`
 
 The following list of custom tags are also supported for the purpose of displaying inline suit and item icons:
 

@@ -27,13 +27,13 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
         <div className="option">
           <input
             name={id}
-            id={id + "False"}
+            id={`${id}False`}
             type="radio"
             checked={!defaultValue}
             onChange={() => onChange(false)}
           />
-          <label htmlFor={id + "False"}>
-            <Trans i18nKey={"label." + id + ".false"} />
+          <label htmlFor={`${id}False`}>
+            <Trans i18nKey={`label.${id}.false`} />
           </label>
         </div>
       ) : null}
@@ -41,13 +41,13 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
         <div className="option">
           <input
             name={id}
-            id={id + "True"}
+            id={`${id}True`}
             type="radio"
             checked={defaultValue}
             onChange={() => onChange(true)}
           />
-          <label htmlFor={id + "True"}>
-            <Trans i18nKey={"label." + id + ".true"} />
+          <label htmlFor={`${id}True`}>
+            <Trans i18nKey={`label.${id}.true`} />
           </label>
         </div>
       ) : null}

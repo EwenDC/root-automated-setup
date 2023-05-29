@@ -79,13 +79,13 @@ export const loadPersistedSetting = <T>(settingKey: string, defaultValue: T) => 
       // Only use it if it matches the expected type
       if (typeof parsedValue === typeof defaultValue) {
         return parsedValue as T;
-      } else if (process.env.NODE_ENV !== "production") {
+      } else if (import.meta.env.DEV) {
         console.warn(
           `Saved state of ${storedVal} for setting ${settingKey} is of incorrect type (expected ${typeof defaultValue} got ${typeof parsedValue})`
         );
       }
     } catch (error: any) {
-      if (process.env.NODE_ENV !== "production")
+      if (import.meta.env.DEV)
         console.warn(
           `Failed to parse saved state of ${storedVal} for setting ${settingKey}`,
           error
@@ -107,7 +107,7 @@ export const savePersistedSetting = <T>(settingKey: string, value: T) => {
   try {
     localStorage.setItem(settingKey, JSON.stringify(value));
   } catch (error: any) {
-    if (process.env.NODE_ENV !== "production")
+    if (import.meta.env.DEV)
       console.warn(
         `Failed to persist state of ${JSON.stringify(value)} for setting ${settingKey}`,
         error

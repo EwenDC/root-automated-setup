@@ -10,7 +10,7 @@ import { balanceMapSuits } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { CodeObject } from "../types";
 
-const getMapLabelKey = (map: CodeObject) => "map." + map.code + ".name";
+const getMapLabelKey = (map: CodeObject) => `map.${map.code}.name`;
 
 const ChooseMapStep: React.FC = () => {
   const mapArray = useAppSelector(selectMapArray);
@@ -27,7 +27,7 @@ const ChooseMapStep: React.FC = () => {
         )
         .map(({ code, fixedSuits, useLandmark }) => ({
           code,
-          label: t("map." + code + ".name"),
+          label: t(`map.${code}.name`),
           fixedSuits,
           useLandmark,
         }))
@@ -56,8 +56,8 @@ const ChooseMapStep: React.FC = () => {
         .map(({ code, fixedSuits }) => (
           <Checkbox
             key={code}
-            id={code + "FixedSuits"}
-            labelKey={"map." + code + ".fixedSuits"}
+            id={`${code}FixedSuits`}
+            labelKey={`map.${code}.fixedSuits`}
             defaultValue={fixedSuits}
             onChange={(checked) => dispatch(mapFixedSuits(code, checked))}
           />
@@ -67,8 +67,8 @@ const ChooseMapStep: React.FC = () => {
         .map(({ code, useLandmark }) => (
           <Checkbox
             key={code}
-            id={code + "UseLandmark"}
-            labelKey={"map." + code + ".useLandmark"}
+            id={`${code}UseLandmark`}
+            labelKey={`map.${code}.useLandmark`}
             defaultValue={useLandmark}
             onChange={(checked) => dispatch(enableMapLandmark(code, checked))}
           />

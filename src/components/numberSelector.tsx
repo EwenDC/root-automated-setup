@@ -46,7 +46,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
   return (
     <div className="number">
       <label htmlFor={id}>
-        <Trans i18nKey={"label." + id} />
+        <Trans i18nKey={`label.${id}`} />
       </label>
       {stepActive ? (
         <>

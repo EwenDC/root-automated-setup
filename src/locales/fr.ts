@@ -15,7 +15,7 @@ export default {
     closeMessage: `Fermer le message`,
     complexity: `Difficulté`,
     crafting: `Fabrication`,
-    factionRating: [`FAIBLE`, `MODÉRÉE`, `ÉLEVÉE`],
+    factionRating: [`Faible`, `Modérée`, `Élevée`],
     fixedFirstPlayer: {
       false: `Rendre aléatoire le premier joueur <i>(Joueur 1 est la personne utilisant cette application, Joueur 2 est la personne à côté dans le sens des aiguilles d’une montre, etc.)</i>`,
       true: `Fixer le premier joueur <i>(Joueur 1 est la première personne, Joueur 2 est la seconde, etc.)</i>`,

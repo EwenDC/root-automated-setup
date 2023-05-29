@@ -25,13 +25,11 @@ const SetUpMapStep: React.FC = () => {
       : "suitPriority";
 
   return (
-    <Section subtitleKey={"map." + setupMap.code + ".setupTitle"}>
+    <Section subtitleKey={`map.${setupMap.code}.setupTitle`}>
       <ol>
-        <Trans i18nKey={"map." + setupMap.code + ".setup"} />
-        {setupMap.useLandmark ? (
-          <Trans i18nKey={"map." + setupMap.code + ".landmarkSetup"} />
-        ) : null}
-        {markerKey && <Trans i18nKey={"label.placeMarkers." + markerKey} />}
+        <Trans i18nKey={`map.${setupMap.code}.setup`} />
+        {setupMap.useLandmark ? <Trans i18nKey={`map.${setupMap.code}.landmarkSetup`} /> : null}
+        {markerKey && <Trans i18nKey={`label.placeMarkers.${markerKey}`} />}
         <Trans i18nKey="setupStep.setUpMap.body" components={iconComponents} />
       </ol>
       <MapChart />

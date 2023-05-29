@@ -15,7 +15,7 @@ export default {
     closeMessage: `Close Message`,
     complexity: `Complexity`,
     crafting: `Crafting Ability`,
-    factionRating: [`LOW`, `MODERATE`, `HIGH`],
+    factionRating: [`Low`, `Moderate`, `High`],
     fixedFirstPlayer: {
       false: `Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>`,
       true: `Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>`,

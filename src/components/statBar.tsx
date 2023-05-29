@@ -14,7 +14,7 @@ const StatBar: React.FC<StatBarProps> = ({ stat }) => {
   const statValue = selectedFaction != null ? selectedFaction[stat] : 0;
   return (
     <div className="stat">
-      <span className="label">{t("label." + stat)}</span>
+      <span className="label">{t(`label.${stat}`)}</span>
       <span
         className={classNames({
           low: statValue < 1,
@@ -22,7 +22,7 @@ const StatBar: React.FC<StatBarProps> = ({ stat }) => {
           high: statValue > 1,
         })}
       >
-        {t("label.factionRating." + statValue)}
+        {t(`label.factionRating.${statValue}`)}
       </span>
     </div>
   );

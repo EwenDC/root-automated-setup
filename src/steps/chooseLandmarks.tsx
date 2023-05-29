@@ -9,7 +9,7 @@ import { setLandmarkCount } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { CodeObject } from "../types";
 
-const getLandmarkLabelKey = (landmark: CodeObject) => "landmark." + landmark.code + ".name";
+const getLandmarkLabelKey = (landmark: CodeObject) => `landmark.${landmark.code}.name`;
 
 const ChooseLandmarksStep: React.FC = () => {
   const landmarkCount = useAppSelector((state) => state.setup.landmarkCount);

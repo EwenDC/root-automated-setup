@@ -9,8 +9,8 @@ import { selectFactionArray, selectVagabondArray } from "../features/selectors";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { CodeObject, Faction } from "../types";
 
-const getFactionLabelKey = (faction: Faction) => "faction." + faction.key + ".name";
-const getVagabondLabelKey = (vagabond: CodeObject) => "vagabond." + vagabond.code + ".name";
+const getFactionLabelKey = (faction: Faction) => `faction.${faction.key}.name`;
+const getVagabondLabelKey = (vagabond: CodeObject) => `vagabond.${vagabond.code}.name`;
 
 const ChooseFactionsStep: React.FC = () => {
   const playerCount = useAppSelector((state) => state.setup.playerCount);

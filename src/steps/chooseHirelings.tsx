@@ -10,7 +10,7 @@ import { savePersistedSetting } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { CodeObject, SetupStep } from "../types";
 
-const getHirelingLabelKey = (hireling: CodeObject) => "hireling." + hireling.code + ".name";
+const getHirelingLabelKey = (hireling: CodeObject) => `hireling.${hireling.code}.name`;
 
 const ChooseHirelingsStep: React.FC = () => {
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);

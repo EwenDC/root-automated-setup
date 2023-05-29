@@ -44,9 +44,9 @@ const Section: React.FC<SectionProps> = ({
   useEffect(() => {
     if (active)
       // Preappend the step title or subtitle if our step has one
-      document.title =
-        (titleText || subtitleText ? (titleText || subtitleText) + " - " : "") +
-        t("label.pageTitle");
+      document.title = `${titleText || subtitleText ? `${titleText || subtitleText} - ` : ""}${t(
+        "label.pageTitle"
+      )}`;
   }, [active, titleText, subtitleText, t]);
 
   return (

@@ -82,13 +82,13 @@ const StepSwitch: React.FC<StepSwitchProps> = ({ flowSlice }) => {
       return <SetupEnd />;
 
     default:
-      const defaultTitleKey = "setupStep." + SetupStep[flowSlice.step] + ".title";
-      const defaultSubtitleKey = "setupStep." + SetupStep[flowSlice.step] + ".subtitle";
+      const defaultTitleKey = `setupStep.${SetupStep[flowSlice.step]}.title`;
+      const defaultSubtitleKey = `setupStep.${SetupStep[flowSlice.step]}.subtitle`;
       return (
         <Section
           titleKey={i18n.exists(defaultTitleKey) ? defaultTitleKey : undefined}
           subtitleKey={i18n.exists(defaultSubtitleKey) ? defaultSubtitleKey : undefined}
-          textKey={"setupStep." + SetupStep[flowSlice.step] + ".body"}
+          textKey={`setupStep.${SetupStep[flowSlice.step]}.body`}
         />
       );
   }

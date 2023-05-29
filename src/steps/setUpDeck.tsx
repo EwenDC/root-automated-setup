@@ -18,8 +18,8 @@ const SetUpDeckStep: React.FC = () => {
   return (
     <Section
       titleKey={skippedSteps[SetupStep.chooseDeck] ? "setupStep.setUpDeck.title" : undefined}
-      subtitleKey={skippedSteps[SetupStep.chooseDeck] ? undefined : "deck." + deck + ".setupTitle"}
-      textKey={"deck." + deck + ".setup"}
+      subtitleKey={skippedSteps[SetupStep.chooseDeck] ? undefined : `deck.${deck}.setupTitle`}
+      textKey={`deck.${deck}.setup`}
       translationOptions={translationOptions}
     />
   );

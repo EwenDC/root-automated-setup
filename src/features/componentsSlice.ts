@@ -21,18 +21,18 @@ const addExpansionComponents = (
   for (const [componentType, componentList] of typedEntries(components)) {
     for (const [componentCode, componentData] of typedEntries(componentList!)) {
       const componentInfo: MapInfo = {
-        enabled: loadPersistedSetting(componentType + "." + componentCode, true),
+        enabled: loadPersistedSetting(`${componentType}.${componentCode}`, true),
         locked: false,
         expansionCode,
       };
       if ("defaultSuits" in componentData)
         componentInfo.fixedSuits = loadPersistedSetting(
-          componentType + "." + componentCode + fixedSuitKey,
+          `${componentType}.${componentCode}${fixedSuitKey}`,
           false
         );
       if ("landmark" in componentData)
         componentInfo.useLandmark = loadPersistedSetting(
-          componentType + "." + componentCode + useLandmarkKey,
+          `${componentType}.${componentCode}${useLandmarkKey}`,
           true
         );
 
@@ -53,7 +53,7 @@ const setupInitialState = () => {
   };
 
   for (const [expansionCode, expansion] of typedEntries(content)) {
-    const enabled = expansion.base || loadPersistedSetting("expansions." + expansionCode, false);
+    const enabled = expansion.base || loadPersistedSetting(`expansions.${expansionCode}`, false);
 
     initialState.expansions[expansionCode] = {
       enabled,
@@ -71,7 +71,7 @@ const toggleComponent =
   (state: ComponentsState, { payload: componentCode }: PayloadAction<string>) => {
     const newState = !state[componentType][componentCode].enabled;
     state[componentType][componentCode].enabled = newState;
-    savePersistedSetting(componentType + "." + componentCode, newState);
+    savePersistedSetting(`${componentType}.${componentCode}`, newState);
   };
 
 const lockComponent = (componentType: keyof ComponentsState) => ({
@@ -85,7 +85,7 @@ const lockComponent = (componentType: keyof ComponentsState) => ({
       state[componentType][componentCode].enabled = false;
     } else {
       state[componentType][componentCode].enabled = loadPersistedSetting(
-        componentType + "." + componentCode,
+        `${componentType}.${componentCode}`,
         true
       );
     }
@@ -102,7 +102,7 @@ export const componentsSlice = createSlice({
       if (expansion && !expansion.locked) {
         // Toggle enable state and persist change
         expansion.enabled = !expansion.enabled;
-        savePersistedSetting("expansions." + expansionCode, expansion.enabled);
+        savePersistedSetting(`expansions.${expansionCode}`, expansion.enabled);
 
         if (expansion.enabled) {
           // The expansion was just enabled, add it's components to our component list
@@ -118,7 +118,7 @@ export const componentsSlice = createSlice({
             }
           }
         }
-      } else if (process.env.NODE_ENV !== "production") {
+      } else if (import.meta.env.DEV) {
         if (expansion) {
           console.warn(
             `Invalid payload for toggleExpansion action: ${expansionCode} (Cannot disable expansion flagged as base)`
@@ -145,7 +145,7 @@ export const componentsSlice = createSlice({
       reducer: (state, { payload }: PayloadAction<EnableMapLandmarkPayload>) => {
         const { mapCode, enableLandmark } = payload;
         state.maps[mapCode].useLandmark = enableLandmark;
-        savePersistedSetting("maps." + mapCode + useLandmarkKey, enableLandmark);
+        savePersistedSetting(`maps.${mapCode}${useLandmarkKey}`, enableLandmark);
       },
     },
     mapFixedSuits: {
@@ -155,7 +155,7 @@ export const componentsSlice = createSlice({
       reducer: (state, { payload }: PayloadAction<MapFixedSuitsPayload>) => {
         const { mapCode, fixedSuits } = payload;
         state.maps[mapCode].fixedSuits = fixedSuits;
-        savePersistedSetting("maps." + mapCode + fixedSuitKey, fixedSuits);
+        savePersistedSetting(`maps.${mapCode}${fixedSuitKey}`, fixedSuits);
       },
     },
     toggleVagabond: toggleComponent("vagabonds"),

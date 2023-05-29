@@ -20,14 +20,14 @@ const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChang
       <input
         id={id}
         type="checkbox"
-        defaultChecked={defaultValue || false}
+        defaultChecked={defaultValue ?? false}
         disabled={!stepActive}
         onChange={(e) => onChange(e.target.checked)}
         aria-invalid={invalid ? true : undefined}
         aria-errormessage={invalid ? "appError" : undefined}
       />
       <label htmlFor={id}>
-        <Trans i18nKey={labelKey ?? "label." + id} />
+        <Trans i18nKey={labelKey ?? `label.${id}`} />
       </label>
     </div>
   ) : null;

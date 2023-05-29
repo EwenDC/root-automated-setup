@@ -7,10 +7,7 @@ interface SetUpHirelingStepProps {
 }
 
 const SetUpHirelingStep: React.FC<SetUpHirelingStepProps> = ({ number }) => {
-  // Typescript is bad at inferring the limited range of dynamic keys, so we have to spell it out
-  const hireling = useAppSelector(
-    (state) => state.setup[("hireling" + number) as `hireling${typeof number}`]
-  );
+  const hireling = useAppSelector((state) => state.setup[`hireling${number}`]);
   const nthLastPlayer = useNthLastPlayer();
 
   const translationOptions = useMemo(
@@ -24,8 +21,8 @@ const SetUpHirelingStep: React.FC<SetUpHirelingStepProps> = ({ number }) => {
   if (!hireling) return null;
   return (
     <Section
-      subtitleKey={"hireling." + hireling.code + ".setupTitle"}
-      textKey={"hireling." + hireling.code + ".setup"}
+      subtitleKey={`hireling.${hireling.code}.setupTitle`}
+      textKey={`hireling.${hireling.code}.setup`}
       translationOptions={translationOptions}
     />
   );

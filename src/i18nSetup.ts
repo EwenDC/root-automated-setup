@@ -15,7 +15,7 @@ i18n
     type: "backend",
     init() {},
     read(language, _namespace, callback) {
-      import(/* webpackChunkName: "[request]" */ "./locales/" + language)
+      import(`./locales/${language}.ts`)
         .then((module) => {
           callback(null, module.default);
         })
@@ -29,7 +29,7 @@ i18n
   .init({
     // Since the fallback language is always loaded, just inline the english translations
     fallbackLng: "en",
-    debug: process.env.NODE_ENV === "development",
+    debug: import.meta.env.DEV,
     supportedLngs: languages.map(({ locale }) => locale),
     // Support language locales by just always loading the base language. Can be removed in the future to support explicit locales
     nonExplicitSupportedLngs: true,

@@ -10,7 +10,7 @@ import { savePersistedSetting } from "../features/utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { CodeObject, SetupStep } from "../types";
 
-const getExpansionLabelKey = (expansion: CodeObject) => "expansion." + expansion.code;
+const getExpansionLabelKey = (expansion: CodeObject) => `expansion.${expansion.code}`;
 
 const ChooseExpansionsStep: React.FC = () => {
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
