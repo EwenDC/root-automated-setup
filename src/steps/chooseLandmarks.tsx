@@ -20,7 +20,7 @@ const ChooseLandmarksStep: React.FC = () => {
 
   const translationOptions = useMemo(
     () => ({
-      context: setupMap && setupMap.useLandmark ? "mapLandmark" : undefined,
+      context: setupMap?.useLandmark ? "mapLandmark" : undefined,
     }),
     [setupMap]
   );

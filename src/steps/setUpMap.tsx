@@ -15,14 +15,12 @@ const SetUpMapStep: React.FC = () => {
 
   if (!setupMap) return null;
 
-  const markerKey =
-    setupMap.fixedSuits && setupMap.printedSuits
-      ? skippedSteps[SetupStep.setUpBots]
-        ? null
-        : "priority"
-      : skippedSteps[SetupStep.setUpBots]
-      ? "suit"
-      : "suitPriority";
+  let markerKey = null;
+  if (!setupMap.fixedSuits || !setupMap.printedSuits) {
+    markerKey = skippedSteps[SetupStep.setUpBots] ? "suit" : "suitPriority";
+  } else if (!skippedSteps[SetupStep.setUpBots]) {
+    markerKey = "priority";
+  }
 
   return (
     <Section subtitleKey={`map.${setupMap.code}.setupTitle`}>

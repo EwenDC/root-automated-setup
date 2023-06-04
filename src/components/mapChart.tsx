@@ -33,7 +33,7 @@ const MapChart: React.FC = () => {
                 </text>
               </g>
             ) : null}
-            {map.useLandmark && map.landmark && map.landmark.clearing === no ? (
+            {map.useLandmark && map.landmark?.clearing === no ? (
               <image
                 x={map.landmark.x}
                 y={map.landmark.y}

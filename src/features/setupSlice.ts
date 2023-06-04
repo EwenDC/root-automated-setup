@@ -40,7 +40,7 @@ export const setupSlice = createSlice({
   name: "setup",
   initialState,
   reducers: {
-    setPlayerCount: (state, { payload: playerCount }: PayloadAction<number>) => {
+    setPlayerCount(state, { payload: playerCount }: PayloadAction<number>) {
       // Make sure the player count is valid (i.e. above 0)
       if (playerCount >= 1) {
         state.playerCount = playerCount;
@@ -52,12 +52,12 @@ export const setupSlice = createSlice({
         );
       }
     },
-    fixFirstPlayer: (state, { payload: fixedFirstPlayer }: PayloadAction<boolean>) => {
+    fixFirstPlayer(state, { payload: fixedFirstPlayer }: PayloadAction<boolean>) {
       state.fixedFirstPlayer = fixedFirstPlayer;
       state.errorMessage = null;
       savePersistedSetting("fixedFirstPlayer", fixedFirstPlayer);
     },
-    setFirstPlayer: (state, { payload: firstPlayer }: PayloadAction<number>) => {
+    setFirstPlayer(state, { payload: firstPlayer }: PayloadAction<number>) {
       // Make sure the player count is valid (i.e. between 1 and playerCount)
       if (firstPlayer >= 1 && firstPlayer <= state.playerCount) {
         state.playerOrder = [];
@@ -74,10 +74,10 @@ export const setupSlice = createSlice({
         );
       }
     },
-    setErrorMessage: (state, { payload: errorMessage }: PayloadAction<string | null>) => {
+    setErrorMessage(state, { payload: errorMessage }: PayloadAction<string | null>) {
       state.errorMessage = errorMessage;
     },
-    setMap: (state, { payload }: PayloadAction<CodeObject & Map & MapInfo>) => {
+    setMap(state, { payload }: PayloadAction<CodeObject & Map & MapInfo>) {
       const { code: mapCode, defaultSuits, clearings, paths, fixedSuits } = payload;
       state.map = mapCode;
 
@@ -172,16 +172,16 @@ export const setupSlice = createSlice({
         });
       }
     },
-    balanceMapSuits: (state, { payload: balancedSuits }: PayloadAction<boolean>) => {
+    balanceMapSuits(state, { payload: balancedSuits }: PayloadAction<boolean>) {
       state.balancedSuits = balancedSuits;
       state.errorMessage = null;
       savePersistedSetting("balancedSuits", balancedSuits);
     },
-    setDeck: (state, { payload }: PayloadAction<CodeObject>) => {
+    setDeck(state, { payload }: PayloadAction<CodeObject>) {
       const { code: deckCode } = payload;
       state.deck = deckCode;
     },
-    setLandmarkCount: (state, { payload: landmarkCount }: PayloadAction<number>) => {
+    setLandmarkCount(state, { payload: landmarkCount }: PayloadAction<number>) {
       // We use === instead of >= or <= to ensure typescript can infer the correct payload type
       if (landmarkCount === 0 || landmarkCount === 1 || landmarkCount === 2) {
         state.landmarkCount = landmarkCount;
@@ -193,7 +193,7 @@ export const setupSlice = createSlice({
         );
       }
     },
-    setLandmark1: (state, { payload }: PayloadAction<CodeObject>) => {
+    setLandmark1(state, { payload }: PayloadAction<CodeObject>) {
       const { code: landmarkCode } = payload;
 
       if (state.landmarkCount >= 1) {
@@ -204,7 +204,7 @@ export const setupSlice = createSlice({
         );
       }
     },
-    setLandmark2: (state, { payload }: PayloadAction<CodeObject>) => {
+    setLandmark2(state, { payload }: PayloadAction<CodeObject>) {
       const { code: landmarkCode } = payload;
 
       if (state.landmarkCount >= 2) {
@@ -226,7 +226,7 @@ export const setupSlice = createSlice({
           factions: hireling.factions,
         },
       }),
-      reducer: (state, { payload }: PayloadAction<SetHirelingPayload>) => {
+      reducer(state, { payload }: PayloadAction<SetHirelingPayload>) {
         const { number, hirelingEntry, factions } = payload;
 
         if (number >= 1 && number <= 3) {
@@ -243,11 +243,11 @@ export const setupSlice = createSlice({
         }
       },
     },
-    clearExcludedFactions: (state) => {
+    clearExcludedFactions(state) {
       state.excludedFactions = [];
     },
   },
-  extraReducers: (builder) => {
+  extraReducers(builder) {
     builder
       // Ensure we don't reference codes for components that may have been removed with the toggled expansion
       .addCase(toggleExpansion, (state) => {

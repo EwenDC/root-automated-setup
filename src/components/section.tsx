@@ -37,16 +37,16 @@ const Section: React.FC<SectionProps> = ({
   });
 
   // Generate the (sub)title text in advance so we can use it to rename the window (if required)
-  let titleText = titleKey && t(titleKey, translationOptions);
-  let subtitleText = subtitleKey && t(subtitleKey, translationOptions);
+  const titleText = titleKey && t(titleKey, translationOptions);
+  const subtitleText = subtitleKey && t(subtitleKey, translationOptions);
 
   // Rename the window to match our step (if we are the active step)
   useEffect(() => {
-    if (active)
+    if (active) {
+      const stepTitle = titleText || subtitleText;
       // Preappend the step title or subtitle if our step has one
-      document.title = `${titleText || subtitleText ? `${titleText || subtitleText} - ` : ""}${t(
-        "label.pageTitle"
-      )}`;
+      document.title = `${stepTitle ? `${stepTitle} - ` : ""}${t("label.pageTitle")}`;
+    }
   }, [active, titleText, subtitleText, t]);
 
   return (

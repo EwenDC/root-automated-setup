@@ -36,6 +36,8 @@ export default defineConfig({
     }),
     VitePWA({
       injectRegister: "inline",
+      // Must maintain compatibility with the existing CRA web worker by having the same output filename
+      filename: "service-worker.js",
       workbox: {
         globPatterns: ["**/*.{js,css,html,png,ico,svg}"],
         // Don't automatically precache the legacy bundles, as only a small amount of web-worker enabled browsers can't handle ESM
@@ -59,7 +61,7 @@ export default defineConfig({
           },
           // Cache any JS we need that wasn't precached. This is specifically for those legacy bundles we excluded from precaching
           {
-            urlPattern: /\.js$/,
+            urlPattern: /\/assets\/.+\.js$/,
             handler: "CacheFirst",
             options: {
               cacheName: "legacy-js",

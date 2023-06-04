@@ -78,7 +78,7 @@ const lockComponent = (componentType: keyof ComponentsState) => ({
   prepare: (componentCode: string, locked: string | false) => ({
     payload: { componentCode, locked },
   }),
-  reducer: (state: ComponentsState, { payload }: PayloadAction<LockComponentPayload>) => {
+  reducer(state: ComponentsState, { payload }: PayloadAction<LockComponentPayload>) {
     const { componentCode, locked } = payload;
     state[componentType][componentCode].locked = locked;
     if (locked) {
@@ -96,7 +96,7 @@ export const componentsSlice = createSlice({
   name: "components",
   initialState: setupInitialState,
   reducers: {
-    toggleExpansion: (state, { payload: expansionCode }: PayloadAction<string>) => {
+    toggleExpansion(state, { payload: expansionCode }: PayloadAction<string>) {
       const expansion = state.expansions[expansionCode];
       // Do not allow changing the enabled state of base game
       if (expansion && !expansion.locked) {
@@ -142,7 +142,7 @@ export const componentsSlice = createSlice({
       prepare: (mapCode: string, enableLandmark: boolean) => ({
         payload: { mapCode, enableLandmark },
       }),
-      reducer: (state, { payload }: PayloadAction<EnableMapLandmarkPayload>) => {
+      reducer(state, { payload }: PayloadAction<EnableMapLandmarkPayload>) {
         const { mapCode, enableLandmark } = payload;
         state.maps[mapCode].useLandmark = enableLandmark;
         savePersistedSetting(`maps.${mapCode}${useLandmarkKey}`, enableLandmark);
@@ -152,7 +152,7 @@ export const componentsSlice = createSlice({
       prepare: (mapCode: string, fixedSuits: boolean) => ({
         payload: { mapCode, fixedSuits },
       }),
-      reducer: (state, { payload }: PayloadAction<MapFixedSuitsPayload>) => {
+      reducer(state, { payload }: PayloadAction<MapFixedSuitsPayload>) {
         const { mapCode, fixedSuits } = payload;
         state.maps[mapCode].fixedSuits = fixedSuits;
         savePersistedSetting(`maps.${mapCode}${fixedSuitKey}`, fixedSuits);

@@ -12,7 +12,7 @@ const SetUpHirelingStep: React.FC<SetUpHirelingStepProps> = ({ number }) => {
 
   const translationOptions = useMemo(
     () => ({
-      context: hireling && hireling.demoted ? "demoted" : undefined,
+      context: hireling?.demoted ? "demoted" : undefined,
       count: nthLastPlayer(number),
     }),
     [hireling, nthLastPlayer, number]

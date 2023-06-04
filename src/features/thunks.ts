@@ -184,14 +184,13 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         dispatch(
           massComponentLock(
             selectLandmarkArray,
-            ({ code, minPlayers }) =>
+            ({ code, minPlayers }) => {
               // Lock this landmark if it requires more players to include
-              minPlayers > playerCount
-                ? "error.landmarkNotEnoughPlayers"
-                : // Lock this landmark if it will be used in map setup
-                map.useLandmark && map.landmark && code === map.landmark.code
-                ? "error.mapLandmarkUsed"
-                : false,
+              if (minPlayers > playerCount) return "error.landmarkNotEnoughPlayers";
+              // Lock this landmark if it will be used in map setup
+              if (map.useLandmark && code === map.landmark?.code) return "error.mapLandmarkUsed";
+              return false;
+            },
             lockLandmark
           )
         );
@@ -323,17 +322,19 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       dispatch(
         massComponentLock(
           selectFactionArray,
-          ({ code, militant }) =>
+          ({ code, militant }) => {
             // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
-            playerCount < 3 &&
-            !militant &&
-            skippedSteps[SetupStep.setUpHireling1] &&
-            skippedSteps[SetupStep.setUpBots]
-              ? "error.tooFewPlayerInsurgent"
-              : // Disable a faction if it was replaced by an equivilent hireling
-              excludedFactions.includes(code)
-              ? "error.hirelingSelected"
-              : false,
+            if (
+              playerCount < 3 &&
+              !militant &&
+              skippedSteps[SetupStep.setUpHireling1] &&
+              skippedSteps[SetupStep.setUpBots]
+            )
+              return "error.tooFewPlayerInsurgent";
+            // Disable a faction if it was replaced by an equivilent hireling
+            if (excludedFactions.includes(code)) return "error.hirelingSelected";
+            return false;
+          },
           lockFaction
         )
       );

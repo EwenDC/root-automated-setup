@@ -10,11 +10,12 @@ If you have encountered a bug or unexpected behaviour when running the app, or y
 
 If you wish to contribute code or translations to this project, you will be required to run it on your local machine. To get started:
 
-1. Download [Node.js](https://nodejs.org/) and the [Yarn](https://yarnpkg.com/) package manager. If you wish to contribute code, it is also recommended that you download [Visual Studio Code](https://code.visualstudio.com/) to take advantage of the pre-existing workplace configuration.
-2. Once you have installed Node and Yarn, [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repository to your computer.
-3. Open the command line program for your operating system, navigate to the folder you cloned the repository to, and execute the `yarn install` command.
+1. Download [Node.js](https://nodejs.org/). If you wish to contribute code, it is also recommended that you download [Visual Studio Code](https://code.visualstudio.com/) to take advantage of the pre-existing workplace configuration.
+2. Open the command line program for your operating system, then install [Pnpm](https://pnpm.io/) by executing the command `npm install -g pnpm`.
+3. Once you have installed Node and Pnpm, [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repository to your computer.
+4. In the opened command line program, navigate to the folder you cloned the repository to, and execute the `pnpm install` command.
 
-The application is now ready to be run on your computer. To run it, execute the `yarn start` command, then navigate to [http://localhost:3000](http://localhost:3000) in your web browser.
+The application is now ready to be run on your computer. To run it, execute the `pnpm dev` command, then navigate to [http://localhost:5173/root-automated-setup/](http://localhost:5173/root-automated-setup/) in your web browser.
 
 ## Translations
 
@@ -123,7 +124,7 @@ Open the command line program for your operating system and navigate to the fold
 
 This app was designed from the ground up to easily support the addition of new Root content without any code changes (with the obvious exception of new types of content, e.g. the hirelings in the marauder expansion). The game content is loaded from a file called [content.ts](https://github.com/EwenDC/root-automated-setup/blob/main/src/content.ts), which contains a list of all expansions, and what components are included in each expansion. Since it is a TypeScript file, the correct format is enforced by TypeScript. You can see what the expected format is in the [types.ts](https://github.com/EwenDC/root-automated-setup/blob/main/src/types.ts#L21) file. The associated images of new content should be imported into the file as per the example set by existing content. This allows the images to be processed by the compiler.
 
-I am willing to accept contributions for fan-made print-and-play content, provided that there is enough demand from users to do so. Remember, this app is designed specifically for the physical game, so included fan-made content would also have to have a decent amount of people (not involved in it's creation) who have printed it off and use it in their physical games. Content that only exists on Tabletop Simulator would not be eligible to be added. If fan-made content is added in the future, it will most likely be hidden by default behind a checkbox on the expansion selection screen.
+I am willing to accept contributions for fan-made print-and-play content, provided that there is enough demand from users to do so. Remember, this app is designed specifically for the physical game, so included fan-made content would also have to have a decent amount of people who have printed it off and use it in their physical games. Content that only exists on Tabletop Simulator would not be eligible to be added. If fan-made content is added in the future, it will most likely be hidden by default behind a checkbox on the expansion selection screen.
 
 ### Content Text
 
@@ -184,7 +185,7 @@ The following list of custom tags are also supported for the purpose of displayi
 
 ### Content Images
 
-All images used in the app are sourced from official sources, including the [Leder Games Website](https://ledergames.com/pages/resources) and [Board Game Geek](https://boardgamegeek.com/boardgame/237182/root) (specifically images uploaded by Leder Games employees and ex-employees), and also from semi-official sources including the [Tabletop Simulator Mod](https://boardgamegeek.com/boardgame/237182/root) (in the case where we need an image that is printed on a component). When adding images for components, please try to maintain the same image quality standards as the existing content images (fan made content images are excepted). Save your images in a square (1:1) aspect ratio, at a resolution no greater than 512x512, as PNG files with an 8-bit Bit Depth and the Octree Quantization algorithm, with a Dithering level of 0 and Transparency threshold of 128. This is to ensure the images have a minimal file size while maintiaing transparency support, with an acceptable quality level, while supporting devices that do not support the webp image format.
+All images used in the app are sourced from official sources, including the [Leder Games Website](https://ledergames.com/pages/resources) and [Board Game Geek](https://boardgamegeek.com/boardgame/237182/root) (specifically images uploaded by Leder Games staff), and also from semi-official sources including the [Tabletop Simulator Mod](https://boardgamegeek.com/boardgame/237182/root) (in the case where we need an image that is printed on a component). When adding images for components, please try to maintain the same image quality standards as the existing content images (fan made content images are excepted). Save your images in a square (1:1) aspect ratio, at a resolution no greater than 512x512, as PNG files with an 8-bit Bit Depth and the Octree Quantization algorithm, with a Dithering level of 0 and Transparency threshold of 128. This is to ensure the images have a minimal file size while maintiaing transparency support, with an acceptable quality level, while supporting devices that do not support the webp image format.
 
 ## Contributing Code
 
@@ -196,23 +197,19 @@ Over on the [issues page](https://github.com/EwenDC/root-automated-setup/issues)
 
 ### Frameworks
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template. You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started). To learn React, check out the [React documentation](https://reactjs.org/).
+This project was built using [React](https://reactjs.org/), [Redux](https://redux.js.org/), and [Redux Toolkit](https://redux-toolkit.js.org/).
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `pnpm dev`
 
-Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
+Runs the app in the development mode. Open [http://localhost:5173/root-automated-setup/](http://localhost:5173/root-automated-setup/) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
 
-### `yarn build`
+### `pnpm build`
 
-Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance (minifying it and adding hashes to the filenames).
-
-### `yarn deploy`
-
-Builds the app for production to the `build` folder, then deploys it to GitHub pages. Unless you host your own version of the app, you should never run this command. The deployment of new versions to [https://ewendc.github.io/root-automated-setup/](https://ewendc.github.io/root-automated-setup/) is handled automatically by GitHub Actions on commit to the main branch.
+Builds the app for production to the `dist` folder. It correctly bundles React in production mode and optimizes the build for the best performance (minifying it and adding hashes to the filenames).
 
 ## License
 

@@ -31,10 +31,7 @@
     "typescript": "~5.0.4",
     "vite": "^4.3.9",
     "vite-plugin-pwa": "^0.15.1",
-    "vite-plugin-svgr": "^3.2.0",
-    "workbox-core": "^6.5.4",
-    "workbox-precaching": "^6.5.4",
-    "workbox-recipes": "^6.5.4"
+    "vite-plugin-svgr": "^3.2.0"
   },
   "pnpm": {
     "peerDependencyRules": {

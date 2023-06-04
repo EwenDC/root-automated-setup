@@ -59,7 +59,7 @@ export const flowSlice = createSlice({
   name: "flow",
   initialState,
   reducers: {
-    incrementStep: (state) => {
+    incrementStep(state) {
       if (state.currentStep < SetupStep.setupEnd) {
         // Add our current state to the undo queue and clear the redo queue
         state.pastSteps.push(getSlice(state));
@@ -109,7 +109,7 @@ export const flowSlice = createSlice({
         );
       }
     },
-    undoStep: (state) => {
+    undoStep(state) {
       // Get the previous step from the undo queue
       const previousStep = state.pastSteps.pop();
       if (previousStep != null) {
@@ -125,7 +125,7 @@ export const flowSlice = createSlice({
         );
       }
     },
-    redoStep: (state) => {
+    redoStep(state) {
       // Get the next step from the redo queue
       const nextStep = state.futureSteps.shift();
       if (nextStep != null) {
@@ -141,7 +141,7 @@ export const flowSlice = createSlice({
         );
       }
     },
-    setUseDraft: (state, { payload: useDraft }: PayloadAction<boolean>) => {
+    setUseDraft(state, { payload: useDraft }: PayloadAction<boolean>) {
       state.useDraft = useDraft;
       state.futureSteps = [];
       savePersistedSetting("useDraft", useDraft);
@@ -153,7 +153,7 @@ export const flowSlice = createSlice({
           skip,
         },
       }),
-      reducer: (state, { payload }: PayloadAction<SkipStepsPayload>) => {
+      reducer(state, { payload }: PayloadAction<SkipStepsPayload>) {
         const { steps, skip } = payload;
         steps.forEach((step) => {
           state.skippedSteps[step] = skip;
@@ -161,16 +161,16 @@ export const flowSlice = createSlice({
         state.futureSteps = [];
       },
     },
-    setVagabondPool: (state, { payload: vagabondPool }: PayloadAction<CodeObject[]>) => {
+    setVagabondPool(state, { payload: vagabondPool }: PayloadAction<CodeObject[]>) {
       state.vagabondPool = vagabondPool.map(({ code }) => code);
     },
-    clearFactionPool: (state) => {
+    clearFactionPool(state) {
       state.vagabondPool = [];
       state.factionPool = [];
       state.lastFactionLocked = false;
       state.currentFactionIndex = null;
     },
-    addToFactionPool: (state, { payload: faction }: PayloadAction<WithCode<Faction>>) => {
+    addToFactionPool(state, { payload: faction }: PayloadAction<WithCode<Faction>>) {
       const factionEntry: FactionEntry = {
         code: faction.code,
         order: faction.order,
@@ -187,7 +187,7 @@ export const flowSlice = createSlice({
         state.factionPool.sort(({ order: a }, { order: b }) => a - b);
       }
     },
-    setCurrentPlayerIndex: (state, { payload: currentPlayerIndex }: PayloadAction<number>) => {
+    setCurrentPlayerIndex(state, { payload: currentPlayerIndex }: PayloadAction<number>) {
       if (currentPlayerIndex >= 0) {
         state.currentPlayerIndex = currentPlayerIndex;
       } else if (import.meta.env.DEV) {
@@ -196,10 +196,7 @@ export const flowSlice = createSlice({
         );
       }
     },
-    setCurrentFactionIndex: (
-      state,
-      { payload: currentFactionIndex }: PayloadAction<number | null>
-    ) => {
+    setCurrentFactionIndex(state, { payload: currentFactionIndex }: PayloadAction<number | null>) {
       if (
         currentFactionIndex == null ||
         (currentFactionIndex >= 0 && currentFactionIndex < state.factionPool.length)
@@ -213,13 +210,13 @@ export const flowSlice = createSlice({
         );
       }
     },
-    resetFlow: (state) => {
+    resetFlow(state) {
       state.pastSteps = [];
       state.currentStep = SetupStep.chooseExpansions;
       state.futureSteps = [];
     },
   },
-  extraReducers: (builder) => {
+  extraReducers(builder) {
     // This allows us to always reset the redo queue if the setup state changes
     builder
       // Don't wipe redo queue when the only thing that happened was displaying an error
