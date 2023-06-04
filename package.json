@@ -3,6 +3,11 @@
   "version": "1.0.1",
   "private": true,
   "homepage": "https://ewendc.github.io/root-automated-setup/",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@csstools/normalize.css": "^12.0.0",
     "@reduxjs/toolkit": "^1.9.5",
@@ -10,8 +15,9 @@
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.0.0",
     "classnames": "^2.3.2",
+    "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-react": "^7.32.2",
+    "eslint-config-react-app": "^7.0.1",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^7.0.1",
     "prettier": "^2.8.8",
@@ -19,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^12.3.1",
     "react-redux": "^8.0.5",
+    "rollup-plugin-no-emit": "^0.0.1",
     "sass": "^1.62.1",
     "typescript": "~5.0.4",
     "vite": "^4.3.9",
@@ -28,10 +35,12 @@
     "workbox-precaching": "^6.5.4",
     "workbox-recipes": "^6.5.4"
   },
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "rollup-plugin-no-emit>rollup": "3"
+      }
+    }
   },
   "eslintConfig": {
     "extends": [
