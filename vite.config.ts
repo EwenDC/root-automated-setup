@@ -2,7 +2,18 @@ import { defineConfig, splitVendorChunkPlugin } from "vite";
 import react from "@vitejs/plugin-react";
 import svgrPlugin from "vite-plugin-svgr";
 import noEmit from "rollup-plugin-no-emit";
+import legacy from "@vitejs/plugin-legacy";
 import { VitePWA } from "vite-plugin-pwa";
+
+const staticAssetCacheSettings = {
+  cacheableResponse: {
+    statuses: [0, 200],
+  },
+  expiration: {
+    maxAgeSeconds: 60 * 60 * 24 * 365,
+    maxEntries: 30,
+  },
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,11 +31,17 @@ export default defineConfig({
       match: (file) => /.svg$/.test(file) && !/mask-icon/.test(file),
     }),
     splitVendorChunkPlugin(),
+    legacy({
+      targets: [">0.2%", "not dead", "not op_mini all"],
+    }),
     VitePWA({
       injectRegister: "inline",
       workbox: {
         globPatterns: ["**/*.{js,css,html,png,ico,svg}"],
+        // Don't automatically precache the legacy bundles, as only a small amount of web-worker enabled browsers can't handle ESM
+        globIgnores: ["**/node_modules/**/*", "**/*-legacy-*.js"],
         runtimeCaching: [
+          // Google fonts cache based on https://developer.chrome.com/docs/workbox/modules/workbox-recipes/#google-fonts-cache
           {
             urlPattern: ({ url }) => url.origin === "https://fonts.googleapis.com",
             handler: "StaleWhileRevalidate",
@@ -37,13 +54,16 @@ export default defineConfig({
             handler: "CacheFirst",
             options: {
               cacheName: "google-fonts-webfonts",
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-              expiration: {
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-                maxEntries: 30,
-              },
+              ...staticAssetCacheSettings,
+            },
+          },
+          // Cache any JS we need that wasn't precached. This is specifically for those legacy bundles we excluded from precaching
+          {
+            urlPattern: /\.js$/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "legacy-js",
+              ...staticAssetCacheSettings,
             },
           },
         ],
