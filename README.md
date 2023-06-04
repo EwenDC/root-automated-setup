@@ -11,8 +11,8 @@ If you have encountered a bug or unexpected behaviour when running the app, or y
 If you wish to contribute code or translations to this project, you will be required to run it on your local machine. To get started:
 
 1. Download [Node.js](https://nodejs.org/). If you wish to contribute code, it is also recommended that you download [Visual Studio Code](https://code.visualstudio.com/) to take advantage of the pre-existing workplace configuration.
-2. Open the command line program for your operating system, then install [Pnpm](https://pnpm.io/) by executing the command `npm install -g pnpm`.
-3. Once you have installed Node and Pnpm, [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repository to your computer.
+2. Open the command line program for your operating system, then install [pnpm](https://pnpm.io/) by executing the command `npm install -g pnpm`.
+3. Once you have installed Node and pnpm, [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repository to your computer.
 4. In the opened command line program, navigate to the folder you cloned the repository to, and execute the `pnpm install` command.
 
 The application is now ready to be run on your computer. To run it, execute the `pnpm dev` command, then navigate to [http://localhost:5173/root-automated-setup/](http://localhost:5173/root-automated-setup/) in your web browser.
