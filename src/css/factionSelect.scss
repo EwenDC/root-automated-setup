@@ -30,29 +30,30 @@
     flex-direction: column;
     background: none;
     border-radius: 1rem;
-    padding: 0.1rem;
+    padding: 0.2rem;
     cursor: pointer;
     height: 9rem;
     min-width: 9rem;
     color: black;
     margin: 0 0.3rem;
     mix-blend-mode: multiply;
+    will-change: opacity;
     /* Transitioned properties */
-    outline: 0.15rem solid transparent;
-    outline-offset: 0;
-    border: 0.15rem dotted transparent;
+    outline: 0.15rem dotted transparent;
+    outline-offset: -0.15rem;
+    border: 0.15rem solid transparent;
     background-color: white;
     transition-property: outline, outline-offset, border, background-color;
     transition-duration: 80ms;
     transition-timing-function: ease-out;
 
     &:focus-visible {
-      border-color: black;
-      outline-offset: 0.15rem;
+      outline-color: black;
+      outline-offset: -0.35rem;
     }
 
     &.selected {
-      outline-color: black;
+      border-color: black;
     }
 
     &:hover {
@@ -123,7 +124,7 @@
         margin: 0 0.1rem;
 
         > .militant-icon {
-          height: 1rem;
+          height: 0.75rem;
         }
       }
     }
