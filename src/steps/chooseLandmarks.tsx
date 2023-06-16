@@ -1,5 +1,4 @@
 import { memo, useCallback, useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import ComponentToggle from "../components/componentToggle";
 import NumberSelector from "../components/numberSelector";
 import Section from "../components/section";
@@ -15,8 +14,6 @@ const ChooseLandmarksStep: React.FC = () => {
   const landmarkCount = useAppSelector((state) => state.setup.landmarkCount);
   const setupMap = useAppSelector(selectSetupMap);
   const dispatch = useAppDispatch();
-  // Ensure the component re-renders when the language changes
-  useTranslation();
 
   const translationOptions = useMemo(
     () => ({

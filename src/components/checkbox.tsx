@@ -1,5 +1,5 @@
 import { memo, useContext } from "react";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { selectStepInvalid } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { stepActiveContext } from "./stepList";
@@ -14,6 +14,8 @@ interface CheckboxProps {
 const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChange }) => {
   const stepActive = useContext(stepActiveContext);
   const invalid = useAppSelector(selectStepInvalid(stepActive));
+  // Ensure the component re-renders when the language changes
+  useTranslation();
 
   return defaultValue || stepActive ? (
     <div className="checkbox">

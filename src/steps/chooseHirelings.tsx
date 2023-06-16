@@ -1,5 +1,4 @@
 import { memo, useCallback } from "react";
-import { useTranslation } from "react-i18next";
 import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
@@ -15,8 +14,6 @@ const getHirelingLabelKey = (hireling: CodeObject) => `hireling.${hireling.code}
 const ChooseHirelingsStep: React.FC = () => {
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   const dispatch = useAppDispatch();
-  // Ensure the component re-renders when the language changes
-  useTranslation();
 
   const onIncludeHirelingsChange = useCallback(
     (checked: boolean) => {

@@ -1,5 +1,4 @@
 import { memo, useCallback } from "react";
-import { useTranslation } from "react-i18next";
 import NumberSelector from "../components/numberSelector";
 import Radiogroup from "../components/radiogroup";
 import Section from "../components/section";
@@ -14,8 +13,6 @@ const SeatPlayersStep: React.FC = () => {
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   const factions = useAppSelector(selectFactionArray);
   const dispatch = useAppDispatch();
-  // Ensure the component re-renders when the language changes
-  useTranslation();
 
   const onPlayerCountChange = useCallback(
     (value: number) => dispatch(setPlayerCount(value)),

@@ -8,6 +8,10 @@
   &:not(:first-child) {
     border-left: 0.15rem solid black;
     padding-left: 1rem;
+
+    section.inactive & {
+      border-left-color: darkgray;
+    }
   }
 
   &:not(:last-child) {

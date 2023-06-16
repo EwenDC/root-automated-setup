@@ -36,7 +36,7 @@ export default defineConfig({
     }),
     VitePWA({
       injectRegister: "inline",
-      // Must maintain compatibility with the existing CRA web worker by having the same output filename
+      // Maintain compatibility with the old CRA web worker by having the same output filename
       filename: "service-worker.js",
       workbox: {
         globPatterns: ["**/*.{js,css,html,png,ico,svg}"],
@@ -61,7 +61,7 @@ export default defineConfig({
           },
           // Cache any JS we need that wasn't precached. This is specifically for those legacy bundles we excluded from precaching
           {
-            urlPattern: /\/assets\/.+\.js$/,
+            urlPattern: ({ sameOrigin, request }) => sameOrigin && request.destination === "script",
             handler: "CacheFirst",
             options: {
               cacheName: "legacy-js",
@@ -86,12 +86,6 @@ export default defineConfig({
             src: "logo512.png",
             sizes: "512x512",
             type: "image/png",
-          },
-          {
-            src: "logo512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable",
           },
         ],
       },
