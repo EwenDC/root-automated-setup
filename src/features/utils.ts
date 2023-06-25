@@ -1,14 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import content from "../content";
 import { RootState } from "../store";
-import {
-  ComponentInfo,
-  ComponentsState,
-  FlowSlice,
-  FlowState,
-  GameComponent,
-  Togglable,
-} from "../types";
+import { ComponentInfo, ComponentsState, GameComponent, Togglable } from "../types";
 
 /**
  * Function for counting how many elements in an array match a condition
@@ -47,21 +40,6 @@ export const generateArraySelector = <
   );
 
 /**
- * Generates a state slice from the current flow state
- * @param flowState The current flow state
- * @returns A slice representation of the flow state
- */
-export const getFlowSlice = (flowState: FlowState): FlowSlice => ({
-  step: flowState.currentStep,
-  // This prevents changes we make to the faction pool in the draft state being reflected in already generated slices
-  factionPool: [...flowState.factionPool],
-  lastFactionLocked: flowState.lastFactionLocked,
-  vagabondSetUp: flowState.vagabondSetUp,
-  playerIndex: flowState.currentPlayerIndex,
-  factionIndex: flowState.currentFactionIndex,
-});
-
-/**
  * Function to return the state of a given setup setting from localStorage, for the purpose of setting up the initial redux state
  * @param settingKey The key of the setting to check, as stored in localStorage
  * @param defaultValue The default setting value to use if no setting is in localStorage
@@ -79,17 +57,13 @@ export const loadPersistedSetting = <T>(settingKey: string, defaultValue: T) => 
       // Only use it if it matches the expected type
       if (typeof parsedValue === typeof defaultValue) {
         return parsedValue as T;
-      } else if (import.meta.env.DEV) {
+      } else {
         console.warn(
           `Saved state of ${storedVal} for setting ${settingKey} is of incorrect type (expected ${typeof defaultValue} got ${typeof parsedValue})`
         );
       }
     } catch (error: any) {
-      if (import.meta.env.DEV)
-        console.warn(
-          `Failed to parse saved state of ${storedVal} for setting ${settingKey}`,
-          error
-        );
+      console.warn(`Failed to parse saved state of ${storedVal} for setting ${settingKey}`, error);
     }
   }
 
@@ -107,11 +81,10 @@ export const savePersistedSetting = <T>(settingKey: string, value: T) => {
   try {
     localStorage.setItem(settingKey, JSON.stringify(value));
   } catch (error: any) {
-    if (import.meta.env.DEV)
-      console.warn(
-        `Failed to persist state of ${JSON.stringify(value)} for setting ${settingKey}`,
-        error
-      );
+    console.warn(
+      `Failed to persist state of ${JSON.stringify(value)} for setting ${settingKey}`,
+      error
+    );
   }
 };
 

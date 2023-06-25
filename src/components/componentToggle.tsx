@@ -8,6 +8,7 @@ import { setErrorMessage } from "../features/setupSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { stepActiveContext } from "./stepList";
 import { selectStepInvalid } from "../features/selectors";
+import { massComponentToggle } from "../features/thunks";
 
 interface ComponentListProps<T> {
   selector: (state: RootState) => T[];
@@ -27,19 +28,23 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   const invalid = useAppSelector(selectStepInvalid(stepActive));
   const dispatch = useAppDispatch();
   const [largeLabels, setLargeLabels] = useState(false);
+  const [allEnabled, setAllEnabled] = useState(false);
   const { t, i18n } = useTranslation();
 
   // Sort our component list, then memoize the result for performance
   const sortedComponents = useMemo(() => {
-    // Reset large labels flag in case we changed language
+    // Reset our data flags
     setLargeLabels(false);
+    setAllEnabled(true);
 
     // For sorting purposes, generate the final label text in advance
     const returnValue = components.map((component) => {
       // If any label in our list is longer than 30 characters then we give more room for the labels
-      // In the future I'd really like to replace this with a CSS only solution
       const label = t(getLabelKey(component));
       if (label.length > 30) setLargeLabels(true);
+
+      // Clear the all enabled flag if there's a disabled and not locked component
+      if (!component.enabled && !component.locked) setAllEnabled(false);
 
       return {
         ...component,
@@ -56,6 +61,14 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
 
   return (
     <div className={classNames("component-toggle", { "large-labels": largeLabels })}>
+      {stepActive ? (
+        <button
+          className="toggle"
+          onClick={() => dispatch(massComponentToggle(selector, !allEnabled, toggleComponent))}
+        >
+          {t(allEnabled ? "label.disableAll" : "label.enableAll")}
+        </button>
+      ) : null}
       {sortedComponents.map(({ code, enabled, image, label, locked }) =>
         enabled || stepActive ? (
           <button

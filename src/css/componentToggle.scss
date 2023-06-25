@@ -32,49 +32,20 @@
     flex: 0 0;
     background-color: transparent;
     border-radius: 1rem;
-    padding: 0.1rem;
     cursor: pointer;
     height: 8rem;
-    min-width: 8rem;
     margin: 0.4rem;
     /* Transitioned properties */
-    color: darkgray;
-    outline: 0.2rem dashed transparent;
-    outline-offset: 0;
-    border: 0.15rem dotted transparent;
     transition-property: background-color, color, outline, outline-offset, border;
     transition-duration: 80ms;
     transition-timing-function: ease-out;
 
-    &:focus-visible {
-      outline-offset: 0.15rem;
-      border-color: black;
-    }
-
-    &.enabled {
-      color: black;
-      outline-color: black;
-
-      &.locked {
-        outline-color: black;
-      }
-
-      > img {
-        filter: none;
-      }
-    }
-
-    &.locked {
-      outline: 0.15rem solid darkgray;
-    }
-
-    &.locked,
-    &:disabled {
-      cursor: auto;
-    }
-
     &:hover:not(.locked):not(:disabled) {
       background-color: white;
+    }
+
+    &:disabled {
+      cursor: auto;
     }
 
     section.inactive & {
@@ -91,6 +62,57 @@
       transition-property: filter;
       transition-duration: inherit;
       transition-timing-function: inherit;
+    }
+
+    /* Enable/Disable All Button */
+    &.toggle {
+      min-width: 5rem;
+      padding: 0rem 0.25rem;
+      overflow-wrap: break-word;
+      color: black;
+      outline: 0.15rem dotted transparent;
+      outline-offset: -0.2rem;
+      border: 0.15rem solid black;
+      border-top: none;
+      border-bottom: none;
+
+      &:focus-visible {
+        outline-offset: -0.35rem;
+        outline-color: black;
+      }
+    }
+
+    /* Toggle Component Button */
+    &:not(.toggle) {
+      min-width: 8rem;
+      padding: 0.1rem;
+      color: darkgray;
+      outline: 0.2rem dashed transparent;
+      outline-offset: 0;
+      border: 0.15rem dotted transparent;
+
+      &:focus-visible {
+        outline-offset: 0.15rem;
+        border-color: black;
+      }
+
+      &.enabled {
+        color: black;
+        outline-color: black;
+
+        &.locked {
+          outline-color: black;
+        }
+
+        > img {
+          filter: none;
+        }
+      }
+
+      &.locked {
+        cursor: auto;
+        outline: 0.15rem solid darkgray;
+      }
     }
   }
 
@@ -109,10 +131,7 @@
 
     > button {
       height: 10rem;
-      min-width: 10rem;
       margin: 0.9rem;
-      display: flex;
-      flex-direction: column;
 
       &:hover:not(.locked):not(:disabled) {
         background-color: ivory;
@@ -132,6 +151,18 @@
         align-items: flex-start;
         justify-content: center;
         width: 100%;
+      }
+
+      /* Enable/Disable All Button */
+      &.toggle {
+        min-width: 10rem;
+      }
+
+      /* Toggle Component Button */
+      &:not(.toggle) {
+        min-width: 10rem;
+        display: flex;
+        flex-direction: column;
       }
     }
 

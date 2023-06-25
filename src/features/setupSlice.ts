@@ -46,7 +46,7 @@ export const setupSlice = createSlice({
         state.playerCount = playerCount;
         state.errorMessage = null;
         savePersistedSetting("playerCount", playerCount);
-      } else if (import.meta.env.DEV) {
+      } else {
         console.warn(
           `Invalid payload for setPlayerCount action: ${playerCount} (Payload must be a number above 0)`
         );
@@ -68,7 +68,7 @@ export const setupSlice = createSlice({
           if (nextPlayer > state.playerCount) nextPlayer -= state.playerCount;
           state.playerOrder.push(nextPlayer);
         }
-      } else if (import.meta.env.DEV) {
+      } else {
         console.warn(
           `Invalid payload for setFirstPlayer action: ${firstPlayer} (Payload must be a number between 1 and playerCount [${state.playerCount}])`
         );
@@ -121,12 +121,11 @@ export const setupSlice = createSlice({
 
             // If we've hit 0 entropy then the solver failed
             if (lowestEntropy === 0) {
-              if (import.meta.env.DEV)
-                console.info(
-                  "Failed to solve for balanced suits. Fail state:",
-                  { ...state.clearingSuits },
-                  unassignedClearings
-                );
+              console.info(
+                "Failed to solve for balanced suits. Fail state:",
+                { ...state.clearingSuits },
+                unassignedClearings
+              );
               state.clearingSuits = {};
               break;
             }
@@ -187,7 +186,7 @@ export const setupSlice = createSlice({
         state.landmarkCount = landmarkCount;
         state.errorMessage = null;
         savePersistedSetting("landmarkCount", landmarkCount);
-      } else if (import.meta.env.DEV) {
+      } else {
         console.warn(
           `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and 2)`
         );
@@ -198,7 +197,7 @@ export const setupSlice = createSlice({
 
       if (state.landmarkCount >= 1) {
         state.landmark1 = landmarkCode;
-      } else if (import.meta.env.DEV) {
+      } else {
         console.warn(
           "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1"
         );
@@ -209,7 +208,7 @@ export const setupSlice = createSlice({
 
       if (state.landmarkCount >= 2) {
         state.landmark2 = landmarkCode;
-      } else if (import.meta.env.DEV) {
+      } else {
         console.warn(
           "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2"
         );
@@ -234,7 +233,7 @@ export const setupSlice = createSlice({
           if (number === 2) state.hireling2 = hirelingEntry;
           if (number === 3) state.hireling3 = hirelingEntry;
           state.excludedFactions.push(...factions);
-        } else if (import.meta.env.DEV) {
+        } else {
           console.warn(
             "Invalid payload for setHireling action:",
             payload,

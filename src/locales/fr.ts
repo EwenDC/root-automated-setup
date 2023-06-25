@@ -24,7 +24,7 @@ export default {
     includeBotStep: `Inclure la mise en place des robots`,
     includeHirelings: `Inclure les recrues`,
     landmarkCount: `Nombre de lieux`,
-    logoAlt: `ROOT`,
+    logoAlt: `Root`,
     logoText: `Mise en place automatique`,
     mapChart: `Schéma des clairières du plateau, ordonnées de gauche à droite et de haut en bas`,
     militant: `Militaire`,

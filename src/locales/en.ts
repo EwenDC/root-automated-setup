@@ -15,6 +15,8 @@ export default {
     closeMessage: `Close Message`,
     complexity: `Complexity`,
     crafting: `Crafting Ability`,
+    disableAll: `Disable All`,
+    enableAll: `Enable All`,
     factionRating: [`Low`, `Moderate`, `High`],
     fixedFirstPlayer: {
       false: `Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>`,
@@ -24,7 +26,7 @@ export default {
     includeBotStep: `Include bot set up`,
     includeHirelings: `Include Hirelings`,
     landmarkCount: `Landmark Count`,
-    logoAlt: `ROOT`,
+    logoAlt: `Root`,
     logoText: `Automated Setup`,
     mapChart: `Chart of the map clearings, ordered left-to-right and top-to-bottom`,
     militant: `Militant`,

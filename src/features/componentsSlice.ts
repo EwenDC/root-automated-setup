@@ -118,16 +118,14 @@ export const componentsSlice = createSlice({
             }
           }
         }
-      } else if (import.meta.env.DEV) {
-        if (expansion) {
-          console.warn(
-            `Invalid payload for toggleExpansion action: ${expansionCode} (Cannot disable expansion flagged as base)`
-          );
-        } else {
-          console.warn(
-            `Invalid payload for toggleExpansion action: ${expansionCode} (No expansion exists with provided code)`
-          );
-        }
+      } else if (expansion) {
+        console.warn(
+          `Invalid payload for toggleExpansion action: ${expansionCode} (Cannot disable expansion flagged as base)`
+        );
+      } else {
+        console.warn(
+          `Invalid payload for toggleExpansion action: ${expansionCode} (No expansion exists with provided code)`
+        );
       }
     },
     toggleDeck: toggleComponent("decks"),

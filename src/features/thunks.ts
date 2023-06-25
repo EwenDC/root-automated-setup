@@ -38,16 +38,37 @@ import { countMatches, selectEnabled, takeRandom } from "./utils";
 const MAX_CORNER_SETUPS = 4;
 
 /**
+ * Thunk action for toggling all unlocked components of a type, ensuring they match the desired enable state
+ * @param selectComponentArray Selector for the list of components you wish to toggle
+ * @param enabled What enable state you wish for all of the unlocked components in the array to have
+ * @param toggleComponent Action creator for dispatching the toggle component action for the given components
+ */
+export const massComponentToggle =
+  <T extends Togglable>(
+    selectComponentArray: (state: RootState) => WithCode<T>[],
+    enabled: boolean,
+    toggleComponent: (code: string) => PayloadAction<any> | AppThunk
+  ): AppThunk =>
+  (dispatch, getState) => {
+    selectComponentArray(getState()).forEach((component) => {
+      // If the component is not locked and does not match the desired enable state, then toggle it
+      if (!component.locked && component.enabled !== enabled) {
+        dispatch(toggleComponent(component.code));
+      }
+    });
+  };
+
+/**
  * Thunk action for (un)locking multiple components at a time, dispatching the minimum amount of actions to do so
  * @param selectComponentArray Selector for the list of components you wish to update
  * @param componentLock A function returning the lock state for a given component
- * @param lockComponent Action creator for dispatching the toggle component action for the given components
+ * @param lockComponent Action creator for dispatching the lock component action for the given components
  */
 export const massComponentLock =
   <T extends Togglable>(
     selectComponentArray: (state: RootState) => WithCode<T>[],
     componentLock: (component: WithCode<T>) => string | false,
-    lockComponent: (code: string, locked: string | false) => PayloadAction<any>
+    lockComponent: (code: string, locked: string | false) => PayloadAction<any> | AppThunk
   ): AppThunk =>
   (dispatch, getState) => {
     selectComponentArray(getState()).forEach((component) => {

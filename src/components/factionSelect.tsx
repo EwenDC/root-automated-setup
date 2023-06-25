@@ -27,6 +27,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
+  // We use this event handler to simulate the keyboard behaviour of a real radio group, to comply with accessibility requirements
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
     const focusedIndex = flowSlice.factionIndex ?? 0;
     const maxIndex = factionPool.length - (flowSlice.lastFactionLocked ? 2 : 1);
@@ -43,8 +44,14 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
     if (newIndex != null) {
       event.preventDefault();
       dispatch(setCurrentFactionIndex(newIndex));
-      // @ts-expect-error focus function is incorrectly excluded from children typing
-      event.currentTarget.parentNode?.children[newIndex].focus();
+
+      if (event.currentTarget.parentNode) {
+        // TypeScript types incorrectly types this as just "Element" instead of "HTMLElement"
+        const selectedHTMLElement = event.currentTarget.parentNode.children[
+          newIndex
+        ] as HTMLElement;
+        selectedHTMLElement.focus();
+      }
     }
   };
 

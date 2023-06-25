@@ -1,8 +1,9 @@
 import { defineConfig, splitVendorChunkPlugin } from "vite";
+import { createHtmlPlugin } from "vite-plugin-html";
+import legacy from "@vitejs/plugin-legacy";
+import noEmit from "rollup-plugin-no-emit";
 import react from "@vitejs/plugin-react";
 import svgrPlugin from "vite-plugin-svgr";
-import noEmit from "rollup-plugin-no-emit";
-import legacy from "@vitejs/plugin-legacy";
 import { VitePWA } from "vite-plugin-pwa";
 
 const staticAssetCacheSettings = {
@@ -18,21 +19,23 @@ const staticAssetCacheSettings = {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
-    // Allow importing SVG as react components
-    svgrPlugin({
-      svgrOptions: {
-        memo: true,
-      },
+    // Only need this so the HTML is minified since Vite doesn't minify it by default :(
+    createHtmlPlugin(),
+    legacy({
+      targets: [">0.2%", "not dead", "not op_mini all"],
     }),
     // Exclude most SVG files from the output since we just use them to generate react components
     // (mask-icon.svg is the exception as it's used for the safari mask image)
     noEmit({
       match: (file) => /.svg$/.test(file) && !/mask-icon/.test(file),
     }),
+    react(),
     splitVendorChunkPlugin(),
-    legacy({
-      targets: [">0.2%", "not dead", "not op_mini all"],
+    // Allow importing SVG as react components
+    svgrPlugin({
+      svgrOptions: {
+        memo: true,
+      },
     }),
     VitePWA({
       injectRegister: "inline",
@@ -97,6 +100,20 @@ export default defineConfig({
   },
   build: {
     assetsInlineLimit: 0,
+    // Since createHtmlPlugin is already using terser may as well use it for the rest of the project too
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        // Only unsafe if you're doing things you shouldn't, which we aren't
+        unsafe: true,
+        unsafe_arrows: true,
+        unsafe_comps: true,
+        unsafe_math: true,
+        unsafe_methods: true,
+        unsafe_proto: true,
+      },
+    },
     sourcemap: true,
   },
 });
