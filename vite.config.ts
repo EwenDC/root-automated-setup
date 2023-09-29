@@ -1,7 +1,6 @@
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import legacy from "@vitejs/plugin-legacy";
-import noEmit from "rollup-plugin-no-emit";
 import react from "@vitejs/plugin-react";
 import svgrPlugin from "vite-plugin-svgr";
 import { VitePWA } from "vite-plugin-pwa";
@@ -24,17 +23,17 @@ export default defineConfig({
     legacy({
       targets: [">0.2%", "not dead", "not op_mini all"],
     }),
-    // Exclude most SVG files from the output since we just use them to generate react components
-    // (mask-icon.svg is the exception as it's used for the safari mask image)
-    noEmit({
-      match: (file) => /.svg$/.test(file) && !/mask-icon/.test(file),
-    }),
     react(),
     splitVendorChunkPlugin(),
     // Allow importing SVG as react components
     svgrPlugin({
       svgrOptions: {
+        prettier: false,
         memo: true,
+      },
+      esbuildOptions: {
+        jsx: "automatic",
+        jsxImportSource: "react",
       },
     }),
     VitePWA({
@@ -91,6 +90,9 @@ export default defineConfig({
             type: "image/png",
           },
         ],
+        launch_handler: {
+          client_mode: "focus-existing",
+        },
       },
     }),
   ],

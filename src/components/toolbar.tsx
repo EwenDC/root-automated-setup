@@ -3,9 +3,9 @@ import { nextStep } from "../features/thunks";
 import { redoStep, undoStep } from "../features/flowSlice";
 import { SetupStep } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { ReactComponent as UndoIcon } from "../images/icons/undo.svg";
-import { ReactComponent as RedoIcon } from "../images/icons/redo.svg";
-import { ReactComponent as NextIcon } from "../images/icons/next.svg";
+import UndoIcon from "../images/icons/undo.svg?react";
+import RedoIcon from "../images/icons/redo.svg?react";
+import NextIcon from "../images/icons/next.svg?react";
 import { memo, useCallback, useRef, useState } from "react";
 import Button from "./button";
 

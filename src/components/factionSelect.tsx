@@ -4,7 +4,7 @@ import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector, useSelectFactionPool } from "../hooks";
 import { createContext, memo, useContext } from "react";
-import { ReactComponent as MilitantIcon } from "../images/icons/militant.svg";
+import MilitantIcon from "../images/icons/militant.svg?react";
 import StatBar from "./statBar";
 import iconComponents from "../iconComponents";
 import IconList from "./iconList";

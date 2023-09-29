@@ -5,7 +5,7 @@ import Section from "../components/section";
 import { stepActiveContext } from "../components/stepList";
 import { resetFlow } from "../features/flowSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { ReactComponent as RestartIcon } from "../images/icons/restart.svg";
+import RestartIcon from "../images/icons/restart.svg?react";
 
 const SetupEndStep: React.FC = () => {
   const playerOrder = useAppSelector((state) => state.setup.playerOrder);

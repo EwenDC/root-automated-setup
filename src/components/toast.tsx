@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { ReactComponent as CloseIcon } from "../images/icons/close.svg";
+import CloseIcon from "../images/icons/close.svg?react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { setErrorMessage } from "../features/setupSlice";
 import { memo, useEffect, useState } from "react";
