@@ -23,7 +23,7 @@
     border-radius: 1rem;
   }
 
-  section.inactive & {
+  section[inert] & {
     margin: 0;
   }
 
@@ -48,7 +48,7 @@
       cursor: auto;
     }
 
-    section.inactive & {
+    section[inert] & {
       margin: 0;
       transition: none;
     }

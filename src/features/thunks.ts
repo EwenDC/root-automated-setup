@@ -96,7 +96,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     // CHOOSE EXPANSIONS //
     ///////////////////////
     case SetupStep.chooseExpansions:
-      // After locking in the Choosen expansions, we need to calculate which steps can be skipped
+      // After locking in the chosen expansions, we need to calculate which steps can be skipped
       // Do we need to choose a deck?
       const decks = selectDeckArray(state);
       if (decks.length === 1) {
@@ -108,7 +108,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         dispatch(skipSteps(SetupStep.chooseDeck, false));
       }
 
-      // Correct our current playercount if it is too low or high (this can occur with undo/redo)
+      // Correct our current player count if it is too low or high (this can occur with undo/redo)
       if (playerCount < 2 && skippedSteps[SetupStep.setUpBots]) {
         dispatch(setPlayerCount(2));
       } else {
@@ -141,7 +141,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             true
           )
         );
-        // Clear the exlcude faction pool of any potential stale data from previous setups
+        // Clear the exclude faction pool of any potential stale data from previous setups
         // We need to do this here since we're skipping the chooseHirelings step
         if (excludedFactions.length > 0) dispatch(clearExcludedFactions());
       } else {
@@ -174,9 +174,9 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         massComponentLock(
           selectHirelingArray,
           ({ factions }) =>
-            // Are we at the max player count (i.e. there are no factions to spare for an equivilent hireling)?
+            // Are we at the max player count (i.e. there are no factions to spare for an equivalent hireling)?
             noSpareFactions &&
-            // Is this hireling one of the faction equivilents?
+            // Is this hireling one of the faction equivalents?
             factions.some((faction) => factionCodes.includes(faction))
               ? "error.factionHirelingExcluded"
               : false,
@@ -192,7 +192,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     // CHOOSE MAP //
     ////////////////
     case SetupStep.chooseMap:
-      // Get our list of maps which are avaliable for selection
+      // Get our list of maps which are available for selection
       let mapPool = selectEnabled(selectMapArray(state));
 
       // Check that there is even a map to be selected...
@@ -225,7 +225,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     // CHOOSE DECK //
     /////////////////
     case SetupStep.chooseDeck:
-      // Get our list of decks which are avaliable for selection
+      // Get our list of decks which are available for selection
       let deckPool = selectEnabled(selectDeckArray(state));
 
       // Check that there is even a deck to be selected...
@@ -242,7 +242,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     // CHOOSE LANDMARKS //
     //////////////////////
     case SetupStep.chooseLandmarks:
-      // Get our list of landmarks which are avaliable for selection
+      // Get our list of landmarks which are available for selection
       let landmarkPool = selectEnabled(selectLandmarkArray(state));
 
       // Check that there are enough enabled landmarks for how many we want to set up
@@ -284,7 +284,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (!skippedSteps[SetupStep.setUpHireling1]) {
         const factionCodes = selectFactionCodes(state);
 
-        // Get our lists of independent & faction hirelings which are avaliable for selection
+        // Get our lists of independent & faction hirelings which are available for selection
         let hirelingPool = selectHirelingArray(state).filter(
           ({ enabled, factions }) =>
             enabled &&
@@ -314,7 +314,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
                   hireling.factions.filter((factionCode) => factionCodes.includes(factionCode))
                     .length
                 : 1;
-            // Ensure that we don't exclude too many factions by addding this hireling (The Exile can cause this edge case)
+            // Ensure that we don't exclude too many factions by adding this hireling (The Exile can cause this edge case)
             if (spareFactionCount - excludeCount >= 0) {
               hirelingPool.push(hireling);
               spareFactionCount -= excludeCount;
@@ -352,7 +352,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
               skippedSteps[SetupStep.setUpBots]
             )
               return "error.tooFewPlayerInsurgent";
-            // Disable a faction if it was replaced by an equivilent hireling
+            // Disable a faction if it was replaced by an equivalent hireling
             if (excludedFactions.includes(code)) return "error.hirelingSelected";
             return false;
           },
@@ -368,7 +368,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Clear the faction pool of any potential stale data from previous setups
       if (factionPool.length > 0) dispatch(clearFactionPool());
 
-      // Get our list of militant and insurgent factions which are avaliable for selection
+      // Get our list of militant and insurgent factions which are available for selection
       let workingFactionPool = selectFactionArray(state).filter(
         ({ enabled, militant }) => enabled && militant
       );
@@ -396,7 +396,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       // Set the appropriate number of factions for setup
       const factionCount = useDraft ? playerCount + 1 : playerCount;
 
-      // Check that there are enough factions avaliable for setup
+      // Check that there are enough factions available for setup
       if (
         workingFactionPool.length > 0 &&
         workingFactionPool.length + insurgentFactions.length >= factionCount

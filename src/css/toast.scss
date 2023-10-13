@@ -11,7 +11,7 @@
   transform: translateY(0%);
   transition: 250ms transform ease-in-out;
 
-  &.hidden {
+  &[inert] {
     transform: translateY(-100%);
   }
 

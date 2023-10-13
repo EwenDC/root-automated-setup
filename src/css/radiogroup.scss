@@ -65,7 +65,7 @@
         transition-duration: inherit;
         transition-timing-function: inherit;
 
-        section.inactive & {
+        section[inert] & {
           transition: none;
         }
       }
@@ -75,7 +75,7 @@
       cursor: pointer;
       padding-left: 0.5rem;
 
-      section.inactive & {
+      section[inert] & {
         cursor: auto;
       }
     }

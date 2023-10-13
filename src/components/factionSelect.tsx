@@ -93,6 +93,8 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
                   }
                 }
               }}
+              // The inert attribute on the section already disables the button for us, but we do
+              // it manually anyway for older browsers that don't understand inert
               disabled={!stepActive}
               title={
                 stepActive && flowSlice.lastFactionLocked && index === lastIndex

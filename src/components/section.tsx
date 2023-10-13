@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { TOptions } from "i18next";
 import { memo, PropsWithChildren, useContext, useEffect, useRef } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -44,13 +43,13 @@ const Section: React.FC<SectionProps> = ({
   useEffect(() => {
     if (active) {
       const stepTitle = titleText || subtitleText;
-      // Preappend the step title or subtitle if our step has one
+      // Prepend the step title or subtitle if our step has one
       document.title = `${stepTitle ? `${stepTitle} - ` : ""}${t("label.pageTitle")}`;
     }
   }, [active, titleText, subtitleText, t]);
 
   return (
-    <section className={classNames({ inactive: !active })} ref={sectionElement}>
+    <section inert={active ? undefined : ""} ref={sectionElement}>
       {titleText && <h2>{titleText}</h2>}
       {subtitleText && <h3>{subtitleText}.</h3>}
       {textBelowChildren ? children : null}

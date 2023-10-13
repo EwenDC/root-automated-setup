@@ -31,7 +31,7 @@ export const useSelectFactionPool = (factionPool: FactionEntry[]) =>
     [factionPool]
   );
 
-/** Returns a function for returning the player number for a specifed point in turn order */
+/** Returns a function for returning the player number for a specified point in turn order */
 export const useNthLastPlayer = () => {
   const playerOrder = useAppSelector((state) => state.setup.playerOrder);
   return useCallback(

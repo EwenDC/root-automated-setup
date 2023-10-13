@@ -89,7 +89,7 @@ export default {
 
 ### Adding a New Language
 
-To add a new language translation, simply copy and paste the `en.ts` file located in the `/src/locales/` folder of the repo. Rename your new file to match the format of [[Two letter language code]](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)`.ts`. Then, you need to add your language to the list of langauges contained in `/src/i18nSetup.ts`. Go to the top of the file and look for the section that matches this format:
+To add a new language translation, simply copy and paste the `en.ts` file located in the `/src/locales/` folder of the repo. Rename your new file to match the format of [[Two letter language code]](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)`.ts`. Then, you need to add your language to the list of languages contained in `/src/i18nSetup.ts`. Go to the top of the file and look for the section that matches this format:
 
 ```JavaScript
 import EnglishFlag from "./images/languages/english.png";
@@ -99,7 +99,7 @@ export const languages = [
 ];
 ```
 
-You will need to add a new entry for your added language inside of the `languages` list. Copy an existing line and replace the name and locale with your language's name and the same [two letter language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) you used for the file. You will also need to provide a flag image for the language selector. I reccommend finding an appropriate flag SVG on wikimedia and downloading the lowest resolution png proxy provided. Save it to the `/src/images/languages` folder with an appropriate name, then add an import for it to the above section as per the other languages. You changes should end up looking something like this:
+You will need to add a new entry for your added language inside of the `languages` list. Copy an existing line and replace the name and locale with your language's name and the same [two letter language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) you used for the file. You will also need to provide a flag image for the language selector. I recommend finding an appropriate flag SVG on wikimedia and downloading the lowest resolution png proxy provided. Save it to the `/src/images/languages` folder with an appropriate name, then add an import for it to the above section as per the other languages. You changes should end up looking something like this:
 
 ```JavaScript
 import EnglishFlag from "./images/languages/english.png";
@@ -118,7 +118,7 @@ Open the command line program for your operating system and navigate to the fold
 ### Translation Standards
 
 1. As much as possible, please copy the punctuation of the original English text. (e.g. If a sentence ends without a full stop, don't include a full stop in your translation, and vice-versa).
-2. Match the translation of your language’s official Root localization where possible (this includes the name of cards in instances where they are referenced in text).
+2. Match the translation of your language’s official Root localisation where possible (this includes the name of cards in instances where they are referenced in text).
 
 ## Adding content
 
@@ -185,7 +185,7 @@ The following list of custom tags are also supported for the purpose of displayi
 
 ### Content Images
 
-All images used in the app are sourced from official sources, including the [Leder Games Website](https://ledergames.com/pages/resources) and [Board Game Geek](https://boardgamegeek.com/boardgame/237182/root) (specifically images uploaded by Leder Games staff), and also from semi-official sources including the [Tabletop Simulator Mod](https://boardgamegeek.com/boardgame/237182/root) (in the case where we need an image that is printed on a component). When adding images for components, please try to maintain the same image quality standards as the existing content images (fan made content images are excepted). Save your images in a square (1:1) aspect ratio, at a resolution no greater than 512x512, as PNG files with an 8-bit Bit Depth and the Octree Quantization algorithm, with a Dithering level of 0 and Transparency threshold of 128. This is to ensure the images have a minimal file size while maintiaing transparency support, with an acceptable quality level, while supporting devices that do not support the webp image format.
+All images used in the app are sourced from official sources, including the [Leder Games Website](https://ledergames.com/pages/resources) and [Board Game Geek](https://boardgamegeek.com/boardgame/237182/root) (specifically images uploaded by Leder Games staff), and also from semi-official sources including the [Tabletop Simulator Mod](https://boardgamegeek.com/boardgame/237182/root) (in the case where we need an image that is printed on a component). When adding images for components, please try to maintain the same image quality standards as the existing content images (fan made content images are excepted). Save your images in a square (1:1) aspect ratio, at a resolution no greater than 512x512, as PNG files with an 8-bit Bit Depth and the Octree Quantisation algorithm, with a Dithering level of 0 and Transparency threshold of 128. This is to ensure the images have a minimal file size while maintaining transparency support, with an acceptable quality level, while supporting devices that do not support the webp image format.
 
 ## Contributing Code
 
@@ -209,7 +209,7 @@ Runs the app in the development mode. Open [http://localhost:5173/root-automated
 
 ### `pnpm build`
 
-Builds the app for production to the `dist` folder. It correctly bundles React in production mode and optimizes the build for the best performance (minifying it and adding hashes to the filenames).
+Builds the app for production to the `dist` folder. It correctly bundles React in production mode and optimises the build for the best performance (minifying it and adding hashes to the filenames).
 
 ## License
 

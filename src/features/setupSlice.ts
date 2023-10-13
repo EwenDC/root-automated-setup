@@ -140,7 +140,7 @@ export const setupSlice = createSlice({
             state.clearingSuits[nextClearing.no] = nextSuit;
             suitCounts[nextSuit]++;
 
-            // Remove the assigned suit from all neighboring clearings, or all clearings if we've hit the maximum amount for one suit
+            // Remove the assigned suit from all neighbouring clearings, or all clearings if we've hit the maximum amount for one suit
             unassignedClearings = unassignedClearings.map(({ no, links, options }) => ({
               no,
               links,
@@ -258,7 +258,7 @@ export const setupSlice = createSlice({
         state.hireling2 = null;
         state.hireling3 = null;
       })
-      // This allows us to always reset the displayed error if the user makes a seperate input
+      // This allows us to always reset the displayed error if the user makes a separate input
       .addDefaultCase((state) => {
         state.errorMessage = null;
       });

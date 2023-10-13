@@ -125,7 +125,7 @@ export interface MapInfo extends ComponentInfo {
   useLandmark?: boolean;
 }
 
-/** Object tracking which components are avaliable for selection */
+/** Object tracking which components are available for selection */
 export interface ComponentsState {
   expansions: Record<string, Togglable & GameComponent>;
   decks: Record<string, ComponentInfo>;
@@ -136,7 +136,7 @@ export interface ComponentsState {
   vagabonds: Record<string, ComponentInfo>;
 }
 
-/** Object storing information pertitent to solving map clearing suit distribution */
+/** Object storing information pertinent to solving map clearing suit distribution */
 export interface ClearingSolveState {
   no: number;
   links: number[];

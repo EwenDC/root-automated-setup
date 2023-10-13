@@ -2,7 +2,7 @@
   display: block;
   max-width: 50rem;
 
-  section.inactive & image {
+  section[inert] & image {
     filter: grayscale(100%);
   }
 }
