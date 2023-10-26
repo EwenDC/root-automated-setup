@@ -134,7 +134,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
           );
         })}
       </div>
-      {selectedFaction ? (
+      {selectedFaction && (
         <div className="faction-info">
           <selectedFactionContext.Provider value={selectedFaction}>
             <div className="stat-list">
@@ -172,7 +172,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
             </div>
           </selectedFactionContext.Provider>
         </div>
-      ) : null}
+      )}
     </>
   );
 };

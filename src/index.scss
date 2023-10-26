@@ -28,7 +28,6 @@
 
 body {
   margin: 0;
-  font-size: 16px;
   background: ivory url("./images/background.jpg") top;
   background-size: 80rem;
 }
@@ -63,7 +62,7 @@ noscript {
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 62rem) {
   @include button.large-screen;
   @include componentCount.large-screen;
   @include componentToggle.large-screen;
