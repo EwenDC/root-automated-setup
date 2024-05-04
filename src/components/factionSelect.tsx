@@ -3,7 +3,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector, useSelectFactionPool } from "../hooks";
-import { createContext, memo, useContext } from "react";
+import { createContext, memo, useContext, useMemo, useState } from "react";
 import MilitantIcon from "../images/icons/militant.svg?react";
 import StatBar from "./statBar";
 import iconComponents from "../iconComponents";
@@ -26,6 +26,31 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const invalid = useAppSelector(selectStepInvalid(stepActive));
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const [largeLabels, setLargeLabels] = useState(false);
+
+  const labelledFactionPool = useMemo(() => {
+    // Reset our large label flag
+    setLargeLabels(false);
+
+    return factionPool.map(({ code, key, image, militant, vagabond }) => {
+      // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
+      let factionName = t(`faction.${key}.name`);
+      if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`;
+
+      // If any label in our list is longer than 23 characters then we give more room for the labels
+      if (factionName.length > 23) setLargeLabels(true);
+
+      // Swap out the faction image for the vagabond image (if we have one)
+      const factionImage = vagabond ? vagabond.image : image;
+
+      return {
+        code,
+        factionImage,
+        factionName,
+        militant,
+      };
+    });
+  }, [factionPool, t]);
 
   // We use this event handler to simulate the keyboard behaviour of a real radio group, to comply with accessibility requirements
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
@@ -61,7 +86,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   return (
     <>
       <div
-        className="faction-select"
+        className={classNames("faction-select", { "large-labels": largeLabels })}
         role="radiogroup"
         aria-label={t("setupStep.selectFaction.subtitle")}
         aria-required="true"
@@ -69,70 +94,62 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
         aria-errormessage={invalid ? "appError" : undefined}
         aria-disabled={!stepActive}
       >
-        {factionPool.map(({ code, key, image, militant, vagabond }, index) => {
-          // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
-          let factionName = t(`faction.${key}.name`);
-          if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`;
-
-          // Swap out the faction image for the vagabond image (if we have one)
-          const factionImage = vagabond ? vagabond.image : image;
-          return (
-            <button
-              key={code}
-              className={classNames({
-                militant: militant,
-                selected: index === flowSlice.factionIndex,
-                locked: flowSlice.lastFactionLocked && index === lastIndex,
-              })}
-              onClick={() => {
-                if (index !== flowSlice.factionIndex) {
-                  if (!flowSlice.lastFactionLocked || index < lastIndex) {
-                    dispatch(setCurrentFactionIndex(index));
-                  } else {
-                    dispatch(setErrorMessage("error.lockedFaction"));
-                  }
+        {labelledFactionPool.map(({ code, factionImage, factionName, militant }, index) => (
+          <button
+            key={code}
+            className={classNames({
+              militant: militant,
+              selected: index === flowSlice.factionIndex,
+              locked: flowSlice.lastFactionLocked && index === lastIndex,
+            })}
+            onClick={() => {
+              if (index !== flowSlice.factionIndex) {
+                if (!flowSlice.lastFactionLocked || index < lastIndex) {
+                  dispatch(setCurrentFactionIndex(index));
+                } else {
+                  dispatch(setErrorMessage("error.lockedFaction"));
                 }
-              }}
-              // The inert attribute on the section already disables the button for us, but we do
-              // it manually anyway for older browsers that don't understand inert
-              disabled={!stepActive}
-              title={
-                stepActive && flowSlice.lastFactionLocked && index === lastIndex
-                  ? t("error.lockedFaction")
-                  : undefined
               }
-              role="radio"
-              aria-checked={index === flowSlice.factionIndex}
-              aria-disabled={
-                stepActive ? flowSlice.lastFactionLocked && index === lastIndex : undefined
-              }
-              aria-label={
-                stepActive
-                  ? `${factionName}${militant ? ` (${t("label.militant")})` : ""}`
-                  : undefined
-              }
-              // We have to override the tabbing logic to meet the standard of role "radio"
-              tabIndex={stepActive ? (index === (flowSlice.factionIndex ?? 0) ? 0 : -1) : undefined}
-              onKeyDown={onKeyDownHandler}
-            >
-              <img
-                src={factionImage}
-                alt="" // We're including the alt text in the button itself so don't bother reading out the image
-                aria-hidden="true"
-              />
-              <div className="title">
-                <span className="label">
-                  {militant ? (
-                    <>
-                      <MilitantIcon className="militant-icon" title={t("label.militant")} />{" "}
-                    </>
-                  ) : null}
-                  {factionName}
-                </span>
-              </div>
-            </button>
-          );
-        })}
+            }}
+            // The inert attribute on the section already disables the button for us, but we do
+            // it manually anyway for older browsers that don't understand inert
+            disabled={!stepActive}
+            title={
+              stepActive && flowSlice.lastFactionLocked && index === lastIndex
+                ? t("error.lockedFaction")
+                : undefined
+            }
+            role="radio"
+            aria-checked={index === flowSlice.factionIndex}
+            aria-disabled={
+              stepActive ? flowSlice.lastFactionLocked && index === lastIndex : undefined
+            }
+            aria-label={
+              stepActive
+                ? `${factionName}${militant ? ` (${t("label.militant")})` : ""}`
+                : undefined
+            }
+            // We have to override the tabbing logic to meet the standard of role "radio"
+            tabIndex={stepActive ? (index === (flowSlice.factionIndex ?? 0) ? 0 : -1) : undefined}
+            onKeyDown={onKeyDownHandler}
+          >
+            <img
+              src={factionImage}
+              alt="" // We're including the alt text in the button itself so don't bother reading out the image
+              aria-hidden="true"
+            />
+            <div className="title">
+              <span className="label">
+                {militant ? (
+                  <>
+                    <MilitantIcon className="militant-icon" title={t("label.militant")} />{" "}
+                  </>
+                ) : null}
+                {factionName}
+              </span>
+            </div>
+          </button>
+        ))}
       </div>
       {selectedFaction && (
         <div className="faction-info">

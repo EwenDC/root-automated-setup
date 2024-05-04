@@ -129,6 +129,11 @@
       }
     }
   }
+
+  &.large-labels > button > img {
+    width: 4rem;
+    height: 4rem;
+  }
 }
 
 .faction-info {
@@ -175,6 +180,11 @@
           margin: 0 0.25rem;
         }
       }
+    }
+
+    &.large-labels > button > img {
+      width: 5.5rem;
+      height: 5.5rem;
     }
   }
 
