@@ -113,7 +113,7 @@ export const languages = [
 
 ### Testing a Translation
 
-Open the command line program for your operating system and navigate to the folder you cloned this repository to. Execute the `yarn start` command, then navigate to [http://localhost:3000](http://localhost:3000). When you make changes to the translation file inside of `/src/locales/`, the webpage should refresh with your changes reflected in the app.
+Open the command line program for your operating system and navigate to the folder you cloned this repository to. Execute the `pnpm dev` command, then navigate to [http://localhost:5173/root-automated-setup/](http://localhost:5173/root-automated-setup/). When you make changes to the translation file inside of `/src/locales/`, the webpage should refresh with your changes reflected in the app.
 
 ### Translation Standards
 
