@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { TOptions } from "i18next";
 import { memo, PropsWithChildren, useContext, useEffect, useRef } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -49,7 +50,7 @@ const Section: React.FC<SectionProps> = ({
   }, [active, titleText, subtitleText, t]);
 
   return (
-    <section inert={active ? undefined : ""} ref={sectionElement}>
+    <section className={classNames({ inactive: !active })} ref={sectionElement}>
       {titleText && <h2>{titleText}</h2>}
       {subtitleText && <h3>{subtitleText}.</h3>}
       {textBelowChildren ? children : null}

@@ -20,8 +20,6 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
     <fieldset
       name={id}
       className="radio"
-      // The inert attribute on the section already disables the inputs for us, but we do it
-      // manually anyway for older browsers that don't understand inert
       disabled={!stepActive}
       aria-required="true"
       aria-invalid={invalid ? true : undefined}

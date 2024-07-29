@@ -64,8 +64,8 @@ export const selectMapArray = generateArraySelector<Map, MapInfo>("maps");
 /** Returns the object for the map selected in setup */
 export const selectSetupMap = createSelector(
   (state: RootState) => state.setup.map,
-  (state: RootState) => selectMapArray(state),
-  (state: RootState) => selectLandmarkArray(state),
+  selectMapArray,
+  selectLandmarkArray,
   (mapCode, mapArray, landmarkArray) => {
     const setupMap = mapArray.find(({ code }) => code === mapCode);
     // Inject the landmark data too
@@ -84,28 +84,28 @@ export const selectSetupMap = createSelector(
 /** Returns the object for the deck selected in setup */
 export const selectSetupDeck = createSelector(
   (state: RootState) => state.setup.deck,
-  (state: RootState) => selectDeckArray(state),
+  selectDeckArray,
   (deckCode, deckArray) => deckArray.find(({ code }) => code === deckCode)
 );
 
 /** Returns the object for the first landmark selected in setup */
 export const selectSetupLandmark1 = createSelector(
   (state: RootState) => state.setup.landmark1,
-  (state: RootState) => selectLandmarkArray(state),
+  selectLandmarkArray,
   (landmarkCode, landmarkArray) => landmarkArray.find(({ code }) => code === landmarkCode)
 );
 
 /** Returns the object for the second landmark selected in setup */
 export const selectSetupLandmark2 = createSelector(
   (state: RootState) => state.setup.landmark2,
-  (state: RootState) => selectLandmarkArray(state),
+  selectLandmarkArray,
   (landmarkCode, landmarkArray) => landmarkArray.find(({ code }) => code === landmarkCode)
 );
 
 /** Returns the object for the first hireling selected in setup */
 export const selectSetupHireling1 = createSelector(
   (state: RootState) => state.setup.hireling1,
-  (state: RootState) => selectHirelingArray(state),
+  selectHirelingArray,
   (hirelingEntry, hirelingArray) =>
     hirelingEntry && {
       ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,
@@ -116,7 +116,7 @@ export const selectSetupHireling1 = createSelector(
 /** Returns the object for the second hireling selected in setup */
 export const selectSetupHireling2 = createSelector(
   (state: RootState) => state.setup.hireling2,
-  (state: RootState) => selectHirelingArray(state),
+  selectHirelingArray,
   (hirelingEntry, hirelingArray) =>
     hirelingEntry && {
       ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,
@@ -127,7 +127,7 @@ export const selectSetupHireling2 = createSelector(
 /** Returns the object for the third hireling selected in setup */
 export const selectSetupHireling3 = createSelector(
   (state: RootState) => state.setup.hireling3,
-  (state: RootState) => selectHirelingArray(state),
+  selectHirelingArray,
   (hirelingEntry, hirelingArray) =>
     hirelingEntry && {
       ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,

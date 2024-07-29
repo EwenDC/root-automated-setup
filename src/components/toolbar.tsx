@@ -30,9 +30,11 @@ const Toolbar: React.FC = () => {
     let newIndex: number | undefined;
 
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      newIndex = focusedIndex + 1 > maxIndex ? 0 : focusedIndex + 1;
+      newIndex = focusedIndex + 1;
+      if (newIndex > maxIndex) newIndex = 0;
     } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      newIndex = focusedIndex - 1 < 0 ? maxIndex : focusedIndex - 1;
+      newIndex = focusedIndex - 1;
+      if (newIndex < 0) newIndex = maxIndex;
     } else if (event.key === "Home") {
       newIndex = 0;
     } else if (event.key === "End") {

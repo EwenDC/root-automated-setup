@@ -78,8 +78,6 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
               locked: stepActive && locked !== false,
             })}
             onClick={() => dispatch(locked ? setErrorMessage(locked) : toggleComponent(code))}
-            // The inert attribute on the section already disables the button for us, but we do it
-            // manually anyway for older browsers that don't understand inert
             disabled={!stepActive}
             title={stepActive && locked ? t(locked) : undefined}
             tabIndex={stepActive && locked ? -1 : undefined}

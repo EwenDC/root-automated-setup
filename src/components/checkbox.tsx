@@ -23,8 +23,6 @@ const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChang
         id={id}
         type="checkbox"
         defaultChecked={defaultValue ?? false}
-        // The inert attribute on the section already disables the input for us, but we do it
-        // manually anyway for older browsers that don't understand inert
         disabled={!stepActive}
         onChange={(e) => onChange(e.target.checked)}
         aria-invalid={invalid ? true : undefined}

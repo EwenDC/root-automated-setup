@@ -6,7 +6,7 @@
   display: inline;
   font-style: italic;
 
-  section[inert] & {
+  section.inactive & {
     filter: grayscale(100%);
   }
 }

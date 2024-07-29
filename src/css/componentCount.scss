@@ -9,7 +9,7 @@
     border-left: 0.15rem solid black;
     padding-left: 1rem;
 
-    section[inert] & {
+    section.inactive & {
       border-left-color: darkgray;
     }
   }
@@ -22,7 +22,7 @@
     width: 3rem;
     height: 3rem;
 
-    section[inert] & {
+    section.inactive & {
       filter: grayscale(100%);
     }
   }
