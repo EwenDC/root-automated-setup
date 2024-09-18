@@ -5,11 +5,13 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import EnglishFlag from "./images/languages/english.png";
 import SpanishFlag from "./images/languages/spanish.png";
 import FrenchFlag from "./images/languages/french.png";
+import ItalianFlag from "./images/languages/italian.png";
 
 export const languages = [
   { name: "English", locale: "en", image: EnglishFlag },
   { name: "Español", locale: "es", image: SpanishFlag },
   { name: "Français", locale: "fr", image: FrenchFlag },
+  { name: "Italiano", locale: "it", image: ItalianFlag },
 ];
 
 i18n
