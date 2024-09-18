@@ -148,7 +148,7 @@ export default {
     },
     setupEnd: {
       title: `Cominciare a Giocare`,
-      body: `La preparazione è conclusa. La partita inizia dal Giocatore {{count}}. Se vuoi ricominciare la preparazione, usa il pulsante qua sotto.<p><i>"Root Automated Setup" Sviluppato da Ewen Cameron</i><br/><i>Basato sul gioco da tavolo "Root" pubblicato da Leder Games</i><br/><i>Applicazione concessa in licenza sotto CC BY-NC-SA 4.0</i></p>`,
+      body: `La preparazione è conclusa. La partita inizia dal Giocatore {{count}}. Se vuoi ricominciare la preparazione, usa il pulsante qua sotto.<p><i>"Root Automated Setup" Sviluppato da Ewen Cameron</i><br/><i>Traduzione italiana a cura di Valerio Lanziani</i><br/><i>Basato sul gioco da tavolo "Root" pubblicato da Leder Games</i><br/><i>Applicazione concessa in licenza sotto CC BY-NC-SA 4.0</i></p>`,
     },
   },
   deck: {
