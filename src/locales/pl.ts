@@ -421,4 +421,60 @@ export default {
       setup: `<li>Weź planszę mapy Jesień/Zima z pudełka gry i umieść ją stroną Zima do góry.</li>`,
     },
   },
+  vagabond: {
+    adventurer: {
+      name: `Poszukiwacz Przygód`,
+      action: `Improwizacja`,
+      effect:
+        `Raz na turę, podczas wykonywania akcji Misji, możesz traktować jeden niewyczerpany przedmiot jako dowolny inny przedmiot. Kiedy wyczerpiesz go, aby ukończyć misję, uszkodź również ten przedmiot.`,
+    },
+    arbiter: {
+      name: `Arbiter`,
+      action: `Obrońca`,
+      effect:
+        `Przed rzutem kośćmi w walce, obrońca może zaciągnąć Arbitra w polanie walki. Arbiter zdobywa jeden punkt zwycięstwa i dodaje wszystkie swoje nieuszkodzone <Sword/> do maksymalnej liczby obrażeń zadawanych przez obrońcę. Arbiter nie może zaciągnąć siebie ani zostać zaciągniętym przeciwko sobie.`,
+    },
+    harrier: {
+      name: `Zwiadowca`,
+      action: `Szybowanie`,
+      effect:
+        `Wyczerp <Torch/>, aby przemieścić tylko swój pionek Włóczęgi <i>(nie inne elementy)</i> do dowolnej polany <i>(nawet Wrogiej)</i> na mapie, bez wyczerpywania żadnych <Boot/>.`,
+    },
+    ranger: {
+      name: `Leśniczy`,
+      action: `Kryjówka`,
+      effect:
+        `Wyczerp jedną <Torch/>, aby naprawić trzy przedmioty. Następnie natychmiast zakończ Dzień i rozpocznij Wieczór.`,
+    },
+    ronin: {
+      name: `Ronin`,
+      action: `Szybki Cios`,
+      effect:
+        `Możesz wyczerpać <Sword/>, aby zadać dodatkowe obrażenie w walce <i>(po rzucie)</i>.`,
+    },
+    scoundrel: {
+      name: `Łotr`,
+      action: `Spalona Ziemia`,
+      effect:
+        `Wyczerp <Torch/> i umieść ją w swojej polanie. Usuń wszystkie elementy wroga z tej polany. Elementy nie mogą być umieszczane ani przemieszczane do polany z <Torch/>. <i>(Pozostajesz w tej polanie. Gdy się z niej przemieścisz, nie możesz do niej wrócić. <Torch/> nie może zostać usunięta kartą „Przychylność...” ponieważ nie jest elementem wroga.)</i>`,
+    },
+    thief: {
+      name: `Złodziej`,
+      action: `Kradzież`,
+      effect:
+        `Wyczerp jedną <Torch/>, aby wziąć losową kartę od dowolnego gracza w twojej polanie.`,
+    },
+    tinker: {
+      name: `Majster`,
+      action: `Dzień Pracy`,
+      effect:
+        `Wyczerp jedną <Torch/>, aby wziąć kartę ze stosu kart odrzuconych, której symbol odpowiada twojej polanie. <i>(Zawsze możesz wziąć ptasią kartę.)</i>`,
+    },
+    vagrant: {
+      name: `Wędrowiec`,
+      action: `Podżeganie`,
+      effect:
+        `Wyczerp <Torch/>, aby zainicjować walkę w swojej polanie. Ty wybierasz atakującego i obrońcę, ty wybierasz kolejność, w jakiej każdy z nich usuwa swoje budynki i żetony, i ty usuwasz elementy za każdego. <i>(Zdobywasz jeden punkt zwycięstwa za każdy usunięty budynek lub żeton dowolnego gracza oraz za każdy usunięty element wrogi dowolnego gracza.)</i>`,
+    },
+  },
 };
