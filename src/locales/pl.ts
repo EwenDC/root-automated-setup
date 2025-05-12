@@ -392,4 +392,33 @@ export default {
       setup: `Gracz {{count}}, umieść Starszy Wierzchołek Drzewa w narożnej polanie. Nie może zawierać punktu terenu ani z nim sąsiadować. Weź kartę punktu terenu „Starszy Wierzchołek Drzewa” z pudełka gry i umieść ją obok mapy stroną gry do góry.`,
     },
   },
+  map: {
+    autumn: {
+      name: `Jesień`,
+      setupTitle: `Skonfiguruj Mapę Jesień`,
+      setup: `<li>Weź planszę mapy Jesień/Zima z pudełka gry i umieść ją stroną Jesień do góry.</li>`,
+      fixedSuits: `Użyj nadrukowanych symboli polan dla Mapy Jesień`,
+    },
+    lake: {
+      name: `Jezioro`,
+      setupTitle: `Skonfiguruj Mapę Jezioro`,
+      setup: `<li>Weź planszę mapy Jezioro/Góry z pudełka gry i umieść ją stroną Jezioro do góry.</li>`,
+      fixedSuits: `Użyj sugerowanych symboli polan dla Mapy Jezioro`,
+      useLandmark: `Użyj konfiguracji specyficznej dla mapy dla punktu terenu Prom na mapie Jezioro`,
+      landmarkSetup: `<li>Umieść element Promu zgodnie z poniższym wykresem. Jeśli posiadasz kartę punktu terenu „Prom”, weź ją z pudełka gry i umieść obok mapy stroną gry do góry.</li>`,
+    },
+    mountain: {
+      name: `Góry`,
+      setupTitle: `Skonfiguruj Mapę Góry`,
+      setup: `<li>Weź planszę mapy Jezioro/Góry z pudełka gry i umieść ją stroną Góry do góry.</li><li>Umieść 6 żetonów zamkniętych ścieżek, aby zakryć 6 ścieżek o ciemniejszym kolorze z wykopaną ziemią.</li>`,
+      fixedSuits: `Użyj sugerowanych symboli polan dla Mapy Góry`,
+      useLandmark: `Użyj konfiguracji specyficznej dla mapy dla punktu terenu Wieża na mapie Góry`,
+      landmarkSetup: `<li>Umieść element Wieży zgodnie z poniższym wykresem. Jeśli posiadasz kartę punktu terenu „Wieża”, weź ją z pudełka gry i umieść obok mapy stroną gry do góry.</li>`,
+    },
+    winter: {
+      name: `Zima`,
+      setupTitle: `Skonfiguruj Mapę Zima`,
+      setup: `<li>Weź planszę mapy Jesień/Zima z pudełka gry i umieść ją stroną Zima do góry.</li>`,
+    },
+  },
 };
