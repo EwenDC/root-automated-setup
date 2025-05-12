@@ -358,4 +358,38 @@ export default {
       setup_demoted: `Gracz {{count}}, weź kartę Zaciężnych Strażników Skarbca z pudełka gry. Umieść ją obok mapy stroną zdegradowaną „Borsuczy Ochroniarze” do góry.`,
     },
   },
+  landmark: {
+    city: {
+      name: `Zaginione Miasto`,
+      setupTitle: `Skonfiguruj Zaginione Miasto`,
+      setup: `Gracz {{count}}, umieść punkt terenu Zaginione Miasto w polanie nad rzeką. Nie może zawierać punktu terenu ani z nim sąsiadować. Weź kartę punktu terenu „Zaginione Miasto” z pudełka gry i umieść ją obok mapy stroną gry do góry.`,
+      setup_lake: `Gracz {{count}}, umieść punkt terenu Zaginione Miasto w polanie nad jeziorem. Nie może zawierać punktu terenu ani z nim sąsiadować. Weź kartę punktu terenu „Zaginione Miasto” z pudełka gry i umieść ją obok mapy stroną gry do góry.`,
+    },
+    ferry: {
+      name: `Prom`,
+      setupTitle: `Skonfiguruj Prom`,
+      setup: `Gracz {{count}}, umieść punkt terenu Prom w polanie nad rzeką. Nie może zawierać punktu terenu ani z nim sąsiadować. Jeśli posiadasz kartę punktu terenu „Prom”, weź ją z pudełka gry i umieść obok mapy stroną gry do góry. Jeśli nie posiadasz tej karty, Prom ma następującą zasadę podczas gry:<p>„Raz na turę, gracz wykonujący ruch z polany Promu może przemieścić się do sąsiedniej polany wzdłuż rzeki, przemieszczając również Prom. <i>(Przestrzega to normalnych zasad ruchu.)</i> Po wykonaniu tego ruchu, ten gracz dobiera jedną kartę.”</p>`,
+      setup_lake: `Gracz {{count}}, umieść punkt terenu Prom w polanie nad jeziorem. Nie może zawierać punktu terenu ani z nim sąsiadować. Jeśli posiadasz kartę punktu terenu „Prom”, weź ją z pudełka gry i umieść obok mapy stroną gry do góry. Jeśli nie posiadasz tej karty, Prom ma następującą zasadę podczas gry:<p>„Raz na turę, gracz wykonujący ruch z polany Promu może przemieścić się do innej polany nad jeziorem, przemieszczając również Prom. <i>(Przestrzega to normalnych zasad ruchu.)</i> Po wykonaniu tego ruchu, ten gracz dobiera jedną kartę.”</p>`,
+    },
+    forge: {
+      name: `Legendarna Kuźnia`,
+      setupTitle: `Skonfiguruj Legendarną Kuźnię`,
+      setup: `Gracz {{count}}, umieść punkt terenu Legendarna Kuźnia w polanie. Nie może zawierać punktu terenu ani z nim sąsiadować. Weź kartę punktu terenu „Legendarna Kuźnia” z pudełka gry i umieść ją obok mapy stroną gry do góry.<br/>W zależności od symbolu polany Legendarniej Kuźni, usuń następujące przedmioty z puli przedmiotów na mapie i umieść je na karcie Legendarna Kuźnia:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>`,
+    },
+    market: {
+      name: `Czarny Rynek`,
+      setupTitle: `Skonfiguruj Czarny Rynek`,
+      setup: `Gracz {{count}}, umieść punkt terenu Czarny Rynek w polanie, która ma dokładnie jeden slot na budynek i żadnej ruiny. Nie może zawierać punktu terenu ani z nim sąsiadować. Weź kartę punktu terenu „Czarny Rynek” z pudełka gry i umieść ją obok mapy stroną gry do góry.<br/>Dobierz trzy karty, ale na nie nie patrz. Umieść je zakryte obok karty Czarnego Rynku.`,
+    },
+    tower: {
+      name: `Wieża`,
+      setupTitle: `Skonfiguruj Wieżę`,
+      setup: `Gracz {{count}}, umieść punkt terenu Wieża w polanie, która ma ruinę. Nie może zawierać punktu terenu. Jeśli posiadasz kartę punktu terenu „Wieża”, weź ją z pudełka gry i umieść obok mapy stroną gry do góry. Jeśli nie posiadasz tej karty, Wieża ma następującą zasadę podczas gry:<p>„Na koniec Wieczoru gracza, jeśli kontroluje polanę Wieży, zdobywa jeden punkt.”</p>`,
+    },
+    treetop: {
+      name: `Starszy Wierzchołek Drzewa`,
+      setupTitle: `Skonfiguruj Starszy Wierzchołek Drzewa`,
+      setup: `Gracz {{count}}, umieść Starszy Wierzchołek Drzewa w narożnej polanie. Nie może zawierać punktu terenu ani z nim sąsiadować. Weź kartę punktu terenu „Starszy Wierzchołek Drzewa” z pudełka gry i umieść ją obok mapy stroną gry do góry.`,
+    },
+  },
 };
