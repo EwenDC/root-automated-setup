@@ -4,13 +4,13 @@ export default {
     aggression: `Agresja`,
     balancedSuits: {
       false: `Losowe rozmieszczenie symboli polan`,
-      true: `Zrównoważone rozmieszczenie symboli polan`
+      true: `Zrównoważone rozmieszczenie symboli polan`,
     },
     changeLanguage: `Zmień język`,
     clearing: {
       fox: `Polana Lisów`,
       mouse: `Polana Myszy`,
-      rabbit: `Polana Królików`
+      rabbit: `Polana Królików`,
     },
     closeMessage: `Zamknij wiadomość`,
     complexity: `Złożoność`,
@@ -20,7 +20,7 @@ export default {
     factionRating: [`Niska`, `Umiarkowana`, `Wysoka`],
     fixedFirstPlayer: {
       false: `Losowy wybór gracza rozpoczynającego grę <i>(Gracz 1 to osoba obsługująca aplikację, Gracz 2 to osoba siedząca zgodnie z ruchem wskazówek zegara, itd.)</i>`,
-      true: `Ustalony pierwszy gracz <i>(Gracz 1 to pierwszy gracz w kolejności tur, Gracz 2 to drugi, itd.)</i>`
+      true: `Ustalony pierwszy gracz <i>(Gracz 1 to pierwszy gracz w kolejności tur, Gracz 2 to drugi, itd.)</i>`,
     },
     fox: `Lis`,
     includeBotStep: `Uwzględnij konfigurację botów`,
@@ -36,7 +36,7 @@ export default {
     placeMarkers: {
       priority: `<li>Zbierz 12 znaczników priorytetu, a następnie umieść po jednym w każdej polanie, jak pokazano na poniższym wykresie.</li>`,
       suit: `<li>Zbierz 12 znaczników symboli, a następnie umieść po jednym w każdej polanie, jak pokazano na poniższym wykresie.</li>`,
-      suitPriority: `<li>Zbierz 12 znaczników symboli i 12 znaczników priorytetu, a następnie umieść po jednym z każdego w każdej polanie, jak pokazano na poniższym wykresie.</li>`
+      suitPriority: `<li>Zbierz 12 znaczników symboli i 12 znaczników priorytetu, a następnie umieść po jednym z każdego w każdej polanie, jak pokazano na poniższym wykresie.</li>`,
     },
     playerCount: `Liczba Graczy`,
     priority: `Priorytet {{count}}`,
@@ -48,7 +48,7 @@ export default {
     startingItems: `Przedmioty Startowe`,
     useDraft: `Użyj wyboru frakcji przez draft`,
     undo: `Cofnij`,
-    wealth: `Zasobność w karty`
+    wealth: `Zasobność w karty`,
   },
   component: {
     buildings: `{{count}} Budynków`, //TODO odmiana
@@ -62,7 +62,7 @@ export default {
     tokens: `{{count}} Żetonów`, //TODO: odmiana
     torch: `Pochodnia`,
     warriors_one: `1 Pionek`,
-    warriors_other: `{{count}} Wojowników`
+    warriors_other: `{{count}} Wojowników`,
   },
   error: {
     baseExpansionRequired: `Do konfiguracji wymagana jest podstawowa kopia gry Root`,
@@ -81,91 +81,91 @@ export default {
     tooFewLandmark: `Wybrano za mało punktów terenu! Proszę wybrać więcej punktów terenu lub zmniejszyć ich liczbę`,
     tooFewPlayerInsurgent: `Nie można używać frakcji niemilitarnych z mniej niż 3 graczami i bez botów lub zaciężnych`,
     tooFewVagabond: `Wybrano za mało postaci Włóczęgi! Proszę uwzględnić więcej postaci Włóczęgi lub wykluczyć niektóre Frakcje Włóczęgi`,
-    tooManyCornerSetup: `Zbyt wiele wybranych frakcji wymaga polany narożnej do konfiguracji! Proszę zwiększyć wybór frakcji lub włączyć wybór frakcji przez draft`
+    tooManyCornerSetup: `Zbyt wiele wybranych frakcji wymaga polany narożnej do konfiguracji! Proszę zwiększyć wybór frakcji lub włączyć wybór frakcji przez draft`,
   },
   setupStep: {
     chooseExpansions: {
       body: `Witaj w Zautomatyzowanej Konfiguracji Root. Ta strona poprowadzi Cię przez zaawansowane zasady konfiguracji popularnej gry planszowej Root, z minimalnym tasowaniem i bez kart konfiguracji! Aby rozpocząć, wybierz zawartość Root, w którą grasz. Gdy będziesz gotowy do przejścia do następnego kroku, użyj przycisków na dole strony, aby to zrobić.`,
-      title: `Wybierz Rozszerzenia`
+      title: `Wybierz Rozszerzenia`,
     },
     seatPlayers: {
       body: `Ustal kolejność siedzenia graczy, a następnie wybierz, ilu graczy bierze udział w grze i czy chcesz, aby aplikacja wybrała losowego gracza rozpoczynającego.`,
-      title: `Rozmieść Graczy`
+      title: `Rozmieść Graczy`,
     },
     chooseMap: {
       body: `W grupie zdecydujcie, na której mapie chcecie grać. Jeśli wybierzecie wiele map, zostanie wybrana losowa mapa.`,
-      title: `Wybierz i Skonfiguruj Mapę`
+      title: `Wybierz i Skonfiguruj Mapę`,
     },
     setUpMap: {
       body: `<li>Umieść ruinę w każdym slocie na mapie oznaczonym literą „R” <i>(łącznie cztery)</i>.</li><li>Umieść następujące przedmioty na pasujących polach puli przedmiotów w górnej części mapy: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.</li><li>Umieść dwie kości obok mapy.</li>`,
-      title: `Skonfiguruj Mapę`
+      title: `Skonfiguruj Mapę`,
     },
     chooseDeck: {
       body: `W grupie zdecydujcie, której talii chcecie użyć. Jeśli wybierzecie wiele talii, zostanie wybrana losowa talia.`,
-      title: `Wybierz i Skonfiguruj Talię`
+      title: `Wybierz i Skonfiguruj Talię`,
     },
     setUpDeck: {
-      title: `Skonfiguruj Talię`
+      title: `Skonfiguruj Talię`,
     },
     setUpBots: {
       body: `W grupie zdecydujcie, z którymi botami chcecie grać, postępując zgodnie z ich instrukcjami konfiguracji, opisanymi w Księdze Praw Rootbotyki.`,
-      title: `Skonfiguruj Boty`
+      title: `Skonfiguruj Boty`,
     },
     chooseLandmarks: {
       body: `W grupie zdecydujcie, z iloma punktami terenu chcecie grać i które z nich mają zostać uwzględnione w puli wyboru.`,
       body_mapLandmark: `W grupie zdecydujcie, z iloma punktami terenu chcecie grać <i>(oprócz już uwzględnionego punktu terenu mapy)</i> i które z nich mają zostać uwzględnione w puli wyboru.`,
-      title: `Skonfiguruj Punkty Terenu`
+      title: `Skonfiguruj Punkty Terenu`,
     },
     chooseHirelings: {
       body: `W grupie zdecydujcie, czy chcecie grać z Zaciężnymi i które z nich mają zostać uwzględnione w puli wyboru.`,
-      title: `Skonfiguruj Zaciężnych`
+      title: `Skonfiguruj Zaciężnych`,
     },
     postHirelingSetup: {
       body: `Umieść trzy znaczniki Zaciężnych - oznaczone „4”, „8” i „12” - na polach „4”, „8” i „12” toru punktacji na mapie.`,
-      subtitle: `Rozmieść Znaczniki Zaciężnych`
+      subtitle: `Rozmieść Znaczniki Zaciężnych`,
     },
     drawCards: {
       body: `Każdy gracz dobiera pięć kart ze wspólnej talii. <i>(Trzy karty do zatrzymania wybierzesz później.)</i>`,
-      title: `Dobierz Pięć Kart`
+      title: `Dobierz Pięć Kart`,
     },
     chooseFactions: {
       body: `W grupie wybierzcie, które frakcje chcecie uwzględnić w konfiguracji.`,
-      title: `Skonfiguruj Frakcje`
+      title: `Skonfiguruj Frakcje`,
     },
     selectFaction: {
       body: `Przydziel jedną z poniższych frakcji każdemu graczowi w dowolny sposób. Frakcje zostaną skonfigurowane od lewej do prawej. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki.`,
       body_useDraft: `Gracz {{count}}, wybierz frakcję, którą chcesz zagrać z poniższej puli frakcji. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki, zanim potwierdzisz swój wybór, naciskając „Następny Krok”.`,
       subtitle: `Przydziel Frakcje`,
-      subtitle_useDraft: `Wybierz Frakcję`
+      subtitle_useDraft: `Wybierz Frakcję`,
     },
     placeScoreMarkers: {
       body: `Każdy gracz umieszcza znacznik punktacji swojej wybranej frakcji na polu „0” toru Punktacji.`,
       body_vagabondSetUp: `Każdy gracz umieszcza znacznik punktacji swojej wybranej frakcji na polu „0” toru Punktacji. Każdy gracz Włóczęgi umieszcza znacznik relacji dla każdej frakcji innej niż Włóczęga w grze na polu Neutralnym na swojej tabeli Relacji.`,
       title: `Rozmieść Znaczniki Punktacji`,
-      title_vagabondSetUp: `Rozmieść Znaczniki Punktacji i Relacji`
+      title_vagabondSetUp: `Rozmieść Znaczniki Punktacji i Relacji`,
     },
     chooseHand: {
       body: `Każdy gracz wybiera trzy karty z ręki do zatrzymania i kładzie pozostałe dwie karty zakryte na wspólnym stosie. Po zakończeniu, potasuj wspólną talię.`,
-      title: `Wybierz Rękę Startową`
+      title: `Wybierz Rękę Startową`,
     },
     setupEnd: {
       body: `Konfiguracja została zakończona. Gra rozpocznie się od Gracza {{count}}. Jeśli chcesz ponownie uruchomić proces konfiguracji, użyj poniższego przycisku.<p><i>„Root Automated Setup” stworzone przez Ewena Camerona</i><br/><i>Na podstawie gry planszowej „Root” wydanej przez Leder Games</i><br/><i>Aplikacja licencjonowana na CC BY-NC-SA 4.0</i></p>`,
-      title: `Rozpocznij Grę`
-    }
+      title: `Rozpocznij Grę`,
+    },
   },
   deck: {
     exiles: {
       name: `Wygnańcy i Partyzanci`,
       setup: `Weź talię Wygnańców i Partyzantów z pudełka gry i umieść ją obok mapy. Potasuj talię.`,
       setup_twoPlayer: `Weź talię Wygnańców i Partyzantów z pudełka gry i umieść ją obok mapy. Usuń wszystkie cztery karty Dominacji z talii. Potasuj talię.`,
-      setupTitle: `Skonfiguruj Talię Wygnańców i Partyzantów`
+      setupTitle: `Skonfiguruj Talię Wygnańców i Partyzantów`,
     },
     standard: {
       name: `Standardowa`,
       setup: `Weź talię Standardową z pudełka gry i umieść ją obok mapy. Potasuj talię.`,
       setup_twoPlayer: `Weź talię Standardową z pudełka gry i umieść ją obok mapy. Usuń wszystkie cztery karty Dominacji z talii. Potasuj talię.`,
-      setupTitle: `Skonfiguruj Talię Standardową`
-    }
+      setupTitle: `Skonfiguruj Talię Standardową`,
+    },
   },
   expansion: {
     exilesDeck: `Talia Wygnańców i Partyzantów`,
@@ -177,80 +177,92 @@ export default {
     root: `Root`,
     underworld: `Rozszerzenie Podziemia`,
     underworldHirelings: `Pakiet Zaciężnych Podziemia`,
-    vagabondPack: `Pakiet Włóczęgi`
+    vagabondPack: `Pakiet Włóczęgi`,
   },
   faction: {
     alliance: {
-      name: `Sojusz Stworzeń Leśnych`,
-      summary: `<p>Jako Sojusz Stworzeń Leśnych, starasz się pozyskać sympatię uciśnionych stworzeń leśnych. Za każdym razem, gdy umieścisz <b>żeton Sympatyków</b> na mapie, zdobywasz punkty. Im więcej żetonów Sympatyków na mapie, tym więcej punktów zdobywasz.</p><p>Aby zdobyć sympatię, potrzebujesz jednak <b>Stronników</b> — kart umieszczonych na twojej planszy frakcji — pasujących do polan, na których chcesz zdobyć sympatię. Chociaż możesz dodawać własne karty do swoich Stronników, możesz też sprowokować swoich wrogów, aby zrobili to samo, wywołując <b>Bunt</b>: za każdym razem, gdy inna frakcja usuwa sympatyków lub przemieszcza wojowników na polanę z Sympatykami, musi dodać jedną ze swoich kart do twoich Stronników.</p><p>Nie bój się tworzyć punktów strategicznych, ponieważ jesteś ekspertem w <b>Wojnie Partyzanckiej</b>: broniąc się w walce, używasz wyższego wyniku z kości. Umieszczaj swoich sympatyków na polanach, gdzie prawdopodobny jest konflikt, i zmuszaj przeciwnika do stawienia ci czoła!</p><p>Stronników można również wykorzystać do gwałtownej <b>Rewolty</b>, która niszczy <i>wszystkie</i> elementy twoich wrogów na polanie i umieszcza tam wojowników oraz nową <b>Bazę</b>. Bazy nie tylko zwiększają dobieranie kart, ale także pozwalają szkolić <b>Oficerów</b>, którzy dają darmowe akcje w każdej turze. Chroń swoje Bazy dobrze! Jeśli stracisz Bazę, stracisz również wielu Stronników i Oficerów.</p>`,
+      name: `Sojusz Leśnych Stworzeń`,
       summaryTitle: `Gra Sojuszem`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b> i dodaj je zakryte do stosu Stronników.</li><li>Uzupełnij swój tor Sympatyków <b>żetonami Sympatyków</b>.</li><li>Umieść swoje 3 <b>Bazy</b> na pasujących polach w swoim pudełku Baz.</li></ol>`,
+      summary: `<p>Jako Sojusz Leśnych Stworzeń, starasz się pozyskać sympatię uciśnionych stworzeń leśnych. Za każdym razem, gdy umieścisz <b>żeton Sympatyków</b> na mapie, zdobywasz punkty. Im więcej żetonów Sympatyków na mapie, tym więcej punktów zdobywasz.</p><p>Aby zdobyć sympatię, potrzebujesz jednak <b>Stronników</b> — kart umieszczonych na twojej planszy frakcji — pasujących do polan, na których chcesz zdobyć sympatię. Chociaż możesz dodawać własne karty do swoich Stronników, możesz też sprowokować swoich wrogów, aby zrobili to samo, wywołując <b>Bunt</b>: za każdym razem, gdy inna frakcja usuwa sympatyków lub przemieszcza wojowników na polanę z Sympatykami, muszą dodać jedną ze swoich kart do twoich Stronników.</p><p>Nie bój się tworzyć punktów strategicznych, ponieważ jesteś ekspertem w <b>Wojnie Partyzanckiej</b>: broniąc się w walce, używasz wyższego wyniku z kości. Umieszczaj swoich sympatyków na polanach, gdzie prawdopodobny jest konflikt, i zmuszaj przeciwnika do stawienia ci czoła!</p><p>Stronników można również wykorzystać do gwałtownej <b>Rewolty</b>, która niszczy <i>wszystkie</i> elementy twoich wrogów na polanie i umieszcza tam wojowników oraz nową <b>Bazę</b>. Bazy nie tylko zwiększają dobieranie kart, ale także pozwalają szkolić <b>Oficerów</b>, którzy dają darmowe akcje w każdej turze. Chroń swoje Bazy dobrze! Jeśli stracisz Bazę, stracisz również wielu Stronników i Oficerów.</p>`,
+      setupTitle: `Konfiguracja Sojuszu Leśnych Stworzeń`,
       setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 10 wojowników.</li><li><b>Rozmieszczenie Baz.</b> Umieść 3 Bazy na pasujących polach w swoim pudełku Baz.</li><li><b>Uzupełnienie Toru Sympatyków.</b> Umieść 10 żetonów Sympatyków na swoim torze Sympatyków.</li><li><b>Pozyskanie Stronników.</b> Dobierz 3 karty i umieść je zakryte na swoim stosie Stronników.</li></ol>`,
-      setupTitle: `Konfiguracja Sojuszu Stworzeń Leśnych`
+      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b> i dodaj je zakryte do stosu Stronników.</li><li>Uzupełnij swój tor Sympatyków <b>żetonami Sympatyków</b>.</li><li>Umieść swoje 3 <b>Bazy</b> na pasujących polach w swoim pudełku Baz.</li></ol>`,
     },
     corvid: {
       name: `Krucza Konspiracja`,
       summaryTitle: `Gra Kruczą Konspiracją`,
-      summary: `<p>Krucza Konspiracja działa w ukryciu, wplatając się w sieć intryg i rozprzestrzeniając chaos w Lesie. Każda z czterech akcji Konspiracji – <b>Przymus</b>, <b>Rabunek</b>, <b>Pułapka</b> i <b>Groźba</b> – pozwala ci stawiać żetony na mapie, które przynoszą ci punkty zwycięstwa, jeśli zostaną ujawnione. Ale pamiętaj, każda twoja akcja jest widoczna dla przeciwników, którzy mogą udaremnić twoje plany, jeśli odgadną symbol polany, na której zamierzasz działać. Za to, jeśli twój przeciwnik pomyli się, twój żeton przyniesie podwójne punkty.</p><p>Z każdym nowo umieszczonym żetonem, Konspiracja staje się silniejsza, zwiększając swoje możliwości dzięki <b>Ujawnionym Akcjom</b>, które dają ci więcej akcji do wykonania w Dzień. Użyj swojej zdolności <b>Ukryte Wiadomości</b>, aby zdobyć karty z ręki przeciwników, co pomoże ci w twoich tajnych operacjach. Pamiętaj, że twoja siła leży w manipulacji i zaskoczeniu.</p><p>Jeśli udaremnisz czyjąś akcję, otrzymujesz Punkty Zwycięstwa. Wykorzystaj to, aby podwójnie czerpać korzyści ze swojej ukrytej działalności. Konspiracja ma także zdolność <b>Bomby</b>, która pozwala zadać natychmiastowe obrażenia wszystkim wojownikom na polanie, niszcząc strategiczne punkty przeciwnika. To potężne narzędzie, które możesz użyć w najmniej spodziewanym momencie.</p>`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b> i umieść je zakryte w swoim obszarze rozgrywki.</li><li>Umieść 3 <b>żetony intrygi</b> (jeden z każdego typu: Przymus, Rabunek, Pułapka) na swojej planszy frakcji, tak aby symbol Przymusu był po lewej, a symbol Pułapki po prawej.</li><li>Umieść pozostałe <b>żetony intrygi</b> na swoim torze Intryg.</li></ol>`,
-      setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 20 wojowników.</li><li><b>Rozmieszczenie Żetonów Intrygi.</b> Umieść 3 żetony intrygi (po jednym z każdego typu: Przymus, Rabunek, Pułapka) na swojej planszy frakcji, tak aby symbol Przymusu był po lewej, a symbol Pułapki po prawej.</li><li><b>Uzupełnienie Toru Intryg.</b> Umieść pozostałe żetony intrygi na swoim torze Intryg.</li><li><b>Pozyskanie Kart.</b> Dobierz 3 karty i umieść je zakryte w swoim obszarze rozgrywki.</li></ol>`,
-      setupTitle: `Konfiguracja Kruczej Konspiracji`
+      summary: `<p>Jako Krucza Konspiracja, chcesz pokazać, że to ty jesteś prawdziwą siłą działającą za kulisami, kontrolującą pływy wojny w Leśnogrodzie. Za każdym razem, gdy odwracasz <b>żeton intrygi</b>, który umieściłeś na mapie, zdobywasz punkty. Im więcej odkrytych intryg na mapie, tym więcej punktów zdobywasz.</p><p>Aby umieszczać i odwracać intrygi, musisz mądrze rekrutować i pozycjonować swoich wojowników. Twoja frakcja jest jedną z najlepszych w rekrutowaniu wojowników do twojej sprawy, ale będą oni rozproszeni, ponieważ rzadko będziesz mógł się zbyt często poruszać. Co więcej, nie możesz zbyt często walczyć, ponieważ umieszczenie intrygi wymaga usunięcia jednego lub więcej wojowników Kruczej Konspiracji, a nie możesz odwrócić intrygi, jeśli w jej polanie nie ma wojownika Kruczej Konspiracji.</p><p>Na szczęście twoi wojownicy są niezwykle <b>Zwinni</b>, co pozwala im poruszać się niezależnie od zasad. Dodatkowo, twoi <b>Ukryci Agenci</b> sprawiają, że twoje intrygi są niebezpieczne do stłumienia siłą — broniąc się w walce z zakrytym żetonem intrygi, zadajesz dodatkowe obrażenie.</p><p>Jednak uważaj, aby nie pozostawić swoich intryg otwartych na <b>Zdemaskowanie</b>. Każda wroga frakcja na polanie z zakrytym żetonem intrygi może pokazać ci pasującą kartę, aby odgadnąć, jaka to intryga. Jeśli mają rację, przeniknęli cię i udaremnili twoją intrygę! Usuwają intrygę i ignorują jej efekt. Jeśli jednak się mylą, łapiesz ich szpiega na gorącym uczynku. Twoja intryga pozostaje, a oni oddają ci kartę, którą ci pokazali. Dobrze blefuj.</p>`,
+      setupTitle: `Konfiguracja Kruczej Konspiracji`,
+      setup: `<ol><li><b>Przygotowanie Wojowników i Intryg.</b> Stwórz pulę 15 wojowników i 8 zakrytych żetonów Intryg.</li><li><b>Rozproszenie.</b> Umieść 1 wojownika w dowolnej polanie każdego symbolu <i>(łącznie 3)</i>.</li></ol>`,
+      advancedSetup: `<ol><li>Wybierz polanę ojczystą. Umieść tam 1 <b>wojownika</b> i 1 <b>żeton intrygi</b> wybranego przez siebie, zakryte.</li><li>Umieść 1 <b>wojownika</b> w polanie każdego symbolu. <i>(Licząc poprzedni krok, umieść łącznie 4 wojowników.)</i></li></ol>`,
     },
-    duchess: {
-      name: `Księżna`,
-      summaryTitle: `Gra Księżną`,
-      summary: `<p>Jako Księżna, dowodzisz podziemnym wojskiem, które koncentruje się na ekspansji i kontroli. Twoja główna siła tkwi w liczebności i zdolności do szybkiego przemieszczania swoich wojowników. Akcje Księżnej skupiają się na strategicznym rozmieszczaniu i ruchu, co pozwala na dynamiczne reagowanie na zagrożenia i zdobywanie kontroli nad polanami. Twoi wojownicy są nieustępliwi w dążeniu do celu, dążąc do dominacji nad Leśnogrodem.</p><p>Księżna zdobywa Punkty Zwycięstwa za każde usunięcie budynków i żetonów przeciwnika, co promuje agresywną grę. Możesz także zdobywać punkty za przekuwanie kart, co daje elastyczność w dostosowywaniu się do sytuacji na mapie. Twoja frakcja ma dostęp do unikalnych zdolności, które wspierają militarne działania i pozwalają na szybkie odzyskiwanie utraconych pozycji.</p><p>Twoim celem jest utrzymanie kontroli nad jak największą liczbą polan, co wzmacnia twoją pozycję i umożliwia rekrutowanie nowych wojowników. Wykorzystaj swoje zasoby, aby budować silną armię i dominować na polu bitwy. Kluczowe dla Księżnej jest utrzymywanie ciągłej presji na przeciwników i wykorzystywanie ich słabych punktów, aby osiągnąć zwycięstwo.</p>`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b>.</li><li>Umieść 1 <b>Tartak</b>, 1 <b>Warsztat</b> i 1 <b>Koszary</b> na swoich planszach frakcji.</li><li>Umieść pozostałe <b>budynki</b> na swoich torach budynków.</li></ol>`,
-      setup: `<ol><li><b>Przygotowanie Wojowników i Drewna.</b> Stwórz pulę 25 wojowników i 8 żetonów drewna.</li><li><b>Gracz wybiera dowolną narożną polanę i rozmieszcza na niej żeton Twierdzy.</b> Jest to startowa polana Księżnej.</li><li><b>Garnizon.</b> Gracz rozmieszcza po jednym wojowniku na każdej polanie, oprócz narożnej polany leżącej po przekątnej od polany z Twierdzą.</li><li><b>Rozmieszczenie Startowych Budynków.</b> Gracz rozmieszcza 1 Tartak, 1 Warsztat oraz 1 Koszary na polanie z Twierdzą i/lub na dowolnych sąsiadujących z nią polanach, w dowolnej kombinacji.</li><li><b>Uzupełnienie Torów Budynków.</b> Pozostałe 5 Tartaków, 5 Warsztatów i 5 Koszar gracz rozmieszcza od prawej do lewej na odpowiednich torach budynków na planszy Frakcji.</li></ol>`,
-      setupTitle: `Konfiguracja Księżnej`
+    cult: {
+      name: `Jaszczurzy Kultyści`,
+      summaryTitle: `Gra Jaszczurzymi Kultystami`,
+      summary: `<p>Jako Jaszczurzy Kultyści, zaspokajacie potrzeby tych stworzeń, które zostały odrzucone przez inne frakcje. Zdobywasz punkty zwycięstwa, wykonując odpowiednie <b>Rytuały</b>, ujawniając karty z ręki odpowiadające polanom, na których masz <b>Ogrody</b>, i odrzucając karty, aby dokończyć rytuał. Im więcej Ogrodów masz na polanach odpowiadających ujawnionej karcie, tym więcej punktów zdobywasz.</p><p>Twoje łagodniejsze podejście oznacza, że na początku nie możesz walczyć ze swoimi wrogami; aby to zrobić, musisz radykalizować swoich wyznawców w <b>Akolitów</b>. Dzięki temu możesz przeprowadzać <b>Spiski</b> na polanach <b>Wygnańców</b>, symbolu najczęściej odrzucanego w poprzedniej rundzie.</p><p>Twoja <b>Nienawiść do Ptaków</b> oznacza, że twoje ptasie karty nie działają jak jokery w twoich Rytuałach. Twoje Ogrody rozprzestrzeniają wieści o twoim smoczym panu, przyciągając rzesze <b>Pielgrzymów</b>, więc rządzisz polaną, jeśli masz tam choćby jeden Ogród. Wreszcie, twoi Akolici zawsze dostają <b>Zemstę</b> na niegodziwcach: za każdym razem, gdy jeden z twoich wojowników zostaje usunięty podczas obrony w walce, zyskujesz kolejnego Akolitę.</p>`,
+      setupTitle: `Konfiguracja Jaszczurzych Kultystów`,
+      setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 25 wojowników.</li><li><b>Rozmieszczenie Ogrodu i Wojowników.</b> Rozmieść 4 wojowników i 1 Ogród o symbolu odpowiadającym wybranej polanie na narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od innej startowej polany. Następnie umieść 1 wojownika w każdej sąsiedniej polanie.</li><li><b>Wybór Wygnańców.</b> Umieść znacznik Wygnańców na dowolnym polu symbolu w tabeli Wygnańców. Symbol tego pola nazywany jest <i>Wygnańcem</i>.</li><li><b>Uzupełnienie Torów Ogrodów.</b> Umieść swoje 14 pozostałych Ogrodów na pasujących polach swoich torów Ogrodów od prawej do lewej.</li></ol>`,
+      advancedSetup: `<ol><li>Wybierz polanę ojczystą, która nie sąsiaduje z ojczystymi polanami wroga.</li><li>Umieść 4 <b>wojowników</b> i 1 pasujący <b>ogród</b> w swojej polanie ojczystej. Rozmieść 3 <b>wojowników</b> w polanach sąsiadujących z nią tak równomiernie, jak to możliwe.</li><li>Umieść 2 <b>wojowników</b> w swoim pudełku Akolitów.</li><li>Wypełnij swoje tory Ogrodów <b>Ogrodami</b>, z wyjątkiem najbardziej lewego pola ogrodu na mapie.</li><li>Umieść swój <b>znacznik Wygnańców</b> na stronie Wygnańców na dowolnym polu pudełka Wygnańców.</li></ol>`,
+    },
+    duchy: {
+      name: `Podziemne Księstwo`,
+      summaryTitle: `Gra Podziemnym Księstwem`,
+      summary: `<p>Jako Podziemne Księstwo, chcesz pokazać obcym stworzeniom Leśnogrodu, że lepiej by im było jako poddanym Księcia. Za każdym razem, gdy przekonujesz jednego ze swoich <b>Ministrów</b> do sprawy pacyfikacji i zjednoczenia krainy powyżej, zdobywasz punkty. Im wyższa ranga Ministra, którego przekonujesz, tym więcej punktów zdobywasz.</p><p>Aby przekonać Ministra, musisz ujawnić karty, reprezentujące twoje poparcie wśród separatystów Leśnogrodu. Im wyższa ranga Ministra, tym więcej kart musisz ujawnić. Jednak możesz ujawniać tylko karty, które odpowiadają polanom z dowolną liczbą elementów Księstwa, pokazując swoje przyczółki w wirującym chaosie. Każdy przekonany Minister daje ci dodatkową akcję w każdej turze. Niektórzy Ministrowie nawet pozwalają ci zdobywać punkty zwycięstwa, reklamując twoje inwestycje w Leśnogrodzie.</p><p>Twoje krety są dobrze chronione w <b>Norze</b>, polanie, na którą tylko ty możesz wejść i którą zawsze rządzisz. Z Nory możesz przenieść się do dowolnego <b>Tunelu</b>, który wykopiesz w całym Leśnogrodzie. Gdy uspokoisz polany i ustanowisz władzę, możesz budować <b>Cytadele</b> i <b>Targi</b>, aby przyciągnąć więcej stworzeń do swojej sprawy. Jednak za każdym razem, gdy tracisz budynki, musisz ponieść <b>Cenę Porażki</b>, tracąc wpływy z Ministrem o najwyższej randze i odrzucając losową kartę.</p>`,
+      setupTitle: `Konfiguracja Podziemnego Księstwa`,
+      setup: `<ol><li><b>Przygotowanie Wojowników i Tuneli.</b> Stwórz pulę 20 wojowników i 3 żetonów Tuneli.</li><li><b>Przygotowanie Nory.</b> Umieść planszę Nory obok mapy.</li><li><b>Na Powierzchni.</b> Umieść 2 wojowników i 1 tunel w narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od polany startowej. Następnie umieść 2 wojowników w każdej polanie sąsiadującej z wybraną polaną narożną, z wyjątkiem Nory.</li><li><b>Uzupełnienie Torów Budynków.</b> Umieść 3 Cytadele i 3 Targi na pasujących polach swoich torów Budynków.</li><li><b>Zebranie Ministrów.</b> Umieść 9 kart Ministrów odkrytych na swoim stosie Nieprzekonanych Ministrów.</li><li><b>Uzupełnienie Pól Koron.</b> Umieść 9 koron na polach z punktami zwycięstwa na swojej planszy frakcji.</li></ol>`,
+      advancedSetup: `<ol><li>Wybierz polanę ojczystą, która nie sąsiaduje z ojczystymi polanami wroga.</li><li>Umieść 2 <b>wojowników</b> i 1 <b>tunel</b> w swojej polanie ojczystej. Rozmieść 5 <b>wojowników</b> w polanach sąsiadujących z nią tak równomiernie, jak to możliwe.</li><li>Umieść swoją <b>planszę Nory</b> obok mapy. Wypełnij swoje tory Budynków swoimi <b>cytadelami</b> i <b>targami</b>. Umieść swoje 9 <b>kart Ministrów</b> na swoim stosie Nieprzekonanych Ministrów. Umieść swoje 9 <b>koron</b> na polach kwadratowych pokazujących punkty zwycięstwa.</li></ol>`,
     },
     eyrie: {
       name: `Dynastie Orlich Gniazd`,
       summaryTitle: `Gra Dynastiami Orlich Gniazd`,
-      summary: `<p>Dynastie Orlich Gniazd dążą do przejęcia kontroli nad polanami i odzyskania chwały, jaką niegdyś cieszył się ich ród w Leśnogrodzie. Podczas swojego Wieczoru gracz Dynastii otrzymuje Punkty Zwycięstwa w oparciu o liczbę <b>Gniazd</b> posiadanych na Mapie. Im więcej Gniazd w Leśnogrodzie, tym więcej Punktów Zwycięstwa otrzymuje.</p><p>Niemniej poczynania Orlich Gniazd wiąże <b>Dekret</b>, stale rozrastający się zestaw akcji obowiązkowych obiecanych przez ich Przywódcę. W trakcie każdej tury gracz musi przeprowadzić wszystkie akcje wymienione w Dekrecie. W przeciwnym wypadku wybuchają <b>Zamieszki</b>. Gdy dochodzi do Zamieszek, tracisz Punkty Zwycięstwa, odrzucasz większość kart z Dekretu, a twój Przywódca zostaje usunięty z urzędu, zmuszając cię do wybrania nowego. To zmusza cię do ciągłego dostosowywania się do nowych warunków i nieprzewidzianych okoliczności.</p><p>Orle Gniazda kontrolują polanę również wtedy, gdy posiadają na niej łącznie tyle samo wojowników i budynków, co gracz posiadający ich na tej polanie najwięcej. Oznacza to, że łatwiej im utrzymać kontrolę, co jest kluczowe dla realizacji ich celów.</p>`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b>.</li><li>Wybierz jednego z czterech <b>Przywódców</b> Dynastii Orlich Gniazd i połóż jego kartę na polu „Karta Przywódcy”. Pozostałe karty Przywódców połóż odkryte w swoim obszarze rozgrywki.</li><li>Wsuń 2 karty <b>Lojalnych Wezyrów</b> pod swoją planszę Frakcji tak, aby ich symbole były widoczne w kolumnach Dekretu wskazanych przez wybraną kartę Przywódcy.</li><li>Pozostałe <b>Gniazda</b> rozmieść od prawej do lewej na torze Gniazd.</li></ol>`,
-      setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 20 wojowników.</li><li><b>Rozmieszczenie Gniazda i Wojowników.</b> Rozmieść 1 Gniazdo i 6 wojowników na narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, po przekątnej od innej startowej polany.</li><li><b>Wybór Przywódcy.</b> Wybierz jednego spośród czterech Przywódców Dynastii Orlich Gniazd i połóż jego kartę na polu „Karta Przywódcy”. Pozostałe karty Przywódców połóż odkryte w swoim obszarze rozgrywki.</li><li><b>Lojalni Wezyrowie.</b> Wsuń 2 karty Lojalnych Wezyrów pod swoją planszę Frakcji tak, aby ich symbole były widoczne w kolumnach Dekretu wskazanych przez wybraną kartę Przywódcy.</li><li><b>Uzupełnienie Toru Gniazd.</b> Pozostałe Gniazda rozmieść od prawej do lewej na torze Gniazd.</li></ol>`,
-      setupTitle: `Konfiguracja Dynastii Orlich Gniazd`
+      summary: `<p>Jako Dynastie Orlich Gniazd, pragniesz przywrócić swojemu niegdyś dumnemu rodzajowi dawną chwałę, odzyskując kontrolę nad Leśnogrodem. W każdej turze zdobywasz punkty za swoje <b>Gniazda</b> na mapie. Im więcej Gniazd, tym więcej punktów zdobywasz.</p><p>Jednakże, jesteś związany <b>Dekretem</b>, mandatem od <b>Przywódcy</b> Orlich Gniazd. W każdej turze musisz dodawać karty do Dekretu, a następnie wykonywać akcję dla każdej karty w nim. Każda akcja musi odbywać się w polanie odpowiadającej jej karcie, więc planuj mądrze. Początkowo jest to proste, ale gdy Dekret wzrośnie do 10 lub 12 kart, będziesz musiał walczyć, aby wykonać każdą akcję. Jeśli nie możesz jej wykonać, wpadniesz w <b>Zamieszki</b>, tracąc punkty, zastępując Przywódcę i odrzucając Dekret.</p><p>Przede wszystkim pamiętaj: stworzenia naziemne drżą i rozpraszają się na twoje przybycie. Jesteś <b>Władcami Lasu</b> – rządzisz polaną nawet wtedy, gdy masz taką samą liczbę elementów. Jednakże, twoi ludzie odczuwają <b>Niechęć do Handlu</b>, więc często będziesz zdobywać mniej punktów za przekuwanie przedmiotów.</p>`,
+      setupTitle: `Konfiguracja Dynastii Orlich Gniazd`,
+      setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 20 wojowników.</li><li><b>Rozmieszczenie Gniazda i Startowych Wojowników.</b> Umieść 1 Gniazdo i 6 wojowników w narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od polany startowej.</li><li><b>Wybór Przywódcy.</b> Wybierz 1 z 4 kart Przywódców Orlich Gniazd i umieść ją w swoim slocie Karty Przywódcy. Zbierz pozostałych Przywódców odkrytych obok siebie.</li><li><b>Wsunięcie Wezyrów.</b> Wsuń swoje 2 karty Lojalnych Wezyrów, pokazując ich symbol, do kolumn Dekretu nad swoją planszą frakcji, zgodnie z listą na twoim Przywódcy.</li><li><b>Uzupełnienie Toru Gniazd.</b> Umieść swoje 6 pozostałych Gniazd na swoim torze Gniazd od prawej do lewej.</li></ol>`,
+      advancedSetup: `<ol><li>Wybierz polanę ojczystą na krawędzi mapy, która ma 2+ polan między nią a ojczystymi polanami wroga.</li><li>Umieść 6 <b>wojowników</b> i 1 <b>gniazdo</b> w swojej polanie ojczystej.</li><li>Umieść dowolną <b>kartę Przywódcy</b> w swoim slocie Karty Przywódcy. Pozostałych 3 Przywódców trzymaj odkrytych w pobliżu.</li><li>Wsuń swoje 2 <b>Lojalnych Wezyrów</b> pod sloty kolumn Dekretu, zgodnie z listą na twoim obecnym Przywódcy.</li><li>Wypełnij swoje pola Gniazd <b>Gniazdami</b>, z wyjątkiem najbardziej lewego.</li></ol>`,
     },
-    lizards: {
-      name: `Jaszczurzy Kultyści`,
-      summaryTitle: `Gra Jaszczurzymi Kultystami`,
-      summary: `<p>Jaszczurzy Kultyści to sekta dążąca do nawrócenia całego Leśnogrodu. Ich siła rośnie wraz z liczbą <b>Ogrodów</b>, które rozmieszczają na mapie. Za każdy Ogród zdobywasz Punkty Zwycięstwa, a im więcej Ogrodów, tym więcej punktów. Jednak, aby wznieść Ogród, musisz kontrolować polanę i symbol na karcie musi odpowiadać symbolowi polany. Wasza wiara i oddanie są kluczem do sukcesu.</p><p>Każdego Świtu ogłaszacie <b>Wojnę Świętą</b> na polanie z najmniejszą liczbą wojowników, a jeśli uda wam się usunąć stamtąd przeciwnika, zdobywasz Punkty Zwycięstwa. To zmusza przeciwników do stałego monitorowania waszych działań. W walce, jako atakujący, zawsze zadajecie jedno dodatkowe obrażenie za każdego wojownika Jaszczurzych Kultystów, który został usunięty podczas tego ataku. To jest <b>Wojna Święta</b>.</p><p>Jaszczurzy Kultyści posiadają unikalne mechaniki zarządzania kartami. Możecie <b>Prorokować</b>, zagrywając ptasią kartę, aby manipulować kartami na stosie kart odrzuconych. To pozwala wam planować swoje ruchy z wyprzedzeniem i kontrolować talii. Waszym celem jest rozprzestrzenianie wiary i zdobywanie dominacji nad Leśnogrodem poprzez nawracanie i militaryzację.</p>`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b>.</li><li>Umieść 1 <b>Ogród</b> na swojej planszy frakcji.</li><li>Umieść pozostałe <b>Ogrodów</b> na swoim torze Ogrodów.</li></ol>`,
-      setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 25 wojowników.</li><li><b>Rozmieszczenie Wojowników.</b> Rozmieść 10 wojowników na planszy gry: po 2 wojowników na każdej narożnej polanie i po 1 wojowniku na każdej polanie sąsiadującej z polaną z ruinami.</li><li><b>Rozmieszczenie Ogrodów.</b> Umieść 1 Ogród na swojej planszy frakcji.</li><li><b>Uzupełnienie Toru Ogrodów.</b> Pozostałe Ogrody rozmieść od prawej do lewej na torze Ogrodów.</li></ol>`,
-      setupTitle: `Konfiguracja Jaszczurzych Kultystów`
+    keepers: {
+      name: `Żelazna Straż`,
+      summaryTitle: `Gra Żelazną Strażą`,
+      summary: `<p>Jako Żelazna Straż, zdobywasz punkty, odzyskując <b>Relikty</b> utracone w przeszłych konfliktach. Będziesz musiał <b>Odnajdywać</b> Relikty w lasach, przemieszczać je do <b>Posterunku</b> tego samego typu, a następnie je <b>Odzyskiwać</b>. Pytanie jednak, czy te Relikty należą do ciebie, czy do Leśnogrodu?</p><p>Jako <b>Oddani Rycerze</b> wygnanego zakonu, ignorujecie pierwsze obrażenie, które otrzymacie w walce, jeśli macie w niej zarówno wojownika, jak i relikt, niezależnie od tego, czy atakujecie, czy bronicie się. Możecie również przemieszczać Relikty swoimi wojownikami.</p><p>Twoje Relikty to <b>Cenne Trofea</b>, więc dbaj o nie. Ilekroć wróg usunie Relikt w jakikolwiek sposób, zdobywa dwa punkty zamiast jednego i umieszcza go z powrotem w dowolnym lesie.</p><p>Z czasem rozbudujesz swoją <b>Świtę</b>, trzy kolumny kart, które pozwalają ci wykonywać akcje. Odnajdywanie i odzyskiwanie Reliktów narazi twoją Świtę na ryzyko, więc będziesz musiał planować z wyprzedzeniem i podejmować rozsądne ryzyko, aby odnieść sukces.</p>`,
+      setupTitle: `Konfiguracja Żelaznej Straży`,
+      setup: `<ol><li><b>Początkowe Relikty.</b> Zbierz wszystkie dwanaście żetonów Reliktów i potasuj je zakryte <i>(bez pokazywania wartości)</i>. Umieść po jednym losowo w każdym lesie. <i>(Zalecamy, abyś po prostu przesuwał Relikty zakryte po planszy, a następnie umieszczał je tak szybko, jak to możliwe w grupie. W przeciwnym razie możesz użyć tej bardziej losowej, ale trudniejszej metody: Strażnik układa stos losowych Reliktów, a następnie inny gracz przecina stos, podnosi go i upuszcza Relikty jeden po drugim od dołu na lasy.)</i></li><li><b>Rozmieszczenie Wojowników.</b> Umieść czterech wojowników w narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od polany startowej. Następnie umieść czterech wojowników w polanie na krawędzi mapy, która sąsiaduje z wybraną polaną.</li><li><b>Rozmieszczenie Pozostałych Reliktów.</b> Rozmieść wszystkie pozostałe Relikty losowo, tak równomiernie, jak to możliwe, w lasach niesąsiadujących z polanami zawierającymi twoich wojowników.</li><li><b>Wsunięcie Wiernych Sług.</b> Wsuń jedną kartę Wiernego Sługi w każdy slot Świty na swojej planszy frakcji.</li><li><b>Rozmieszczenie Posterunków.</b> Umieść swoje trzy budynki Posterunków na pasujących polach swoich Posterunków na planszy frakcji.</li></ol>`,
+      advancedSetup: `<ol><li>Potasuj wszystkie 12 <b>żetonów Reliktów</b> zakryte. Umieść jeden zakryty losowo w każdym lesie.</li><li>Wybierz 2 sąsiadujące polany ojczyste na krawędzi mapy, które mają 2+ polan między nimi a ojczystymi polanami wroga. Umieść 4 <b>wojowników</b> w każdej polanie ojczystej.</li><li>Umieść wszelkie pozostałe <b>Relikty</b> losowo, tak równomiernie, jak to możliwe, w dowolnych lasach, które nie sąsiadują z twoimi polanami ojczystymi.</li><li>Wsuń kartę <b>Wiernego Sługi</b> w każdy z twoich slotów kolumn Świty. Umieść swoje 3 <b>Posterunki</b> na pasujących polach Posterunków.</li></ol>`,
     },
     marquise: {
       name: `Markiza de Kot`,
-      summaryTitle: `Gra Markizą de Kot`,
-      summary: `<p>Markiza de Kot rezyduje w Leśnogrodzie, który planuje zamienić w potęgę przemysłową i militarną. Za każdym razem, gdy Markiza wznosi jeden ze swoich <b>Budynków</b> – Warsztat, Tartak albo Koszary – otrzymuje Punkty Zwycięstwa. Im więcej budynków danego typu znajduje się na Mapie, tym więcej Punktów Zwycięstwa otrzymuje. Jednak aby napędzać ciągłą rozbudowę, Markiza musi utrzymać i chronić potężną, wzajemnie połączoną gospodarkę <b>Drzewną</b>.</p><p>Markiza ma zdolność <b>Twierdzy</b>, co oznacza, że tylko ona może rozmieszczać swoje komponenty na polanie z żetonem Twierdzy. Inni gracze mogą jednak przemieszczać swoje komponenty na tę polanę. To daje Markizie strategiczną przewagę w obronie kluczowych pozycji. Dodatkowo, dzięki <b>Szpitalom Polowym</b>, Markiza może wydać kartę z odpowiadającym polanie symbolem, aby rozmieścić wszystkich usuniętych wojowników na polanie z Twierdzą. To umożliwia szybkie wzmocnienie obrony i utrzymanie przewagi liczebnej.</p><p>Twoim celem jest dominacja poprzez budowę i rozbudowę, kontrolując przepływ drewna, który jest paliwem twojej machiny wojennej. Każdy Tartak zwiększa produkcję drewna, co jest kluczowe dla wznoszenia kolejnych budynków i zdobywania Punktów Zwycięstwa.</p>`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b>.</li><li>Umieść 1 <b>Tartak</b>, 1 <b>Warsztat</b> i 1 <b>Koszary</b> na swoich planszach frakcji.</li><li>Umieść pozostałe <b>budynki</b> na swoich torach budynków.</li></ol>`,
-      setup: `<ol><li><b>Przygotowanie Wojowników i Drewna.</b> Stwórz pulę 25 wojowników i 8 żetonów drewna.</li><li><b>Gracz wybiera dowolną narożną polanę i rozmieszcza na niej żeton Twierdzy.</b> Jest to startowa polana Markizy.</li><li><b>Garnizon.</b> Gracz rozmieszcza po jednym wojowniku na każdej polanie, oprócz narożnej polany leżącej po przekątnej od polany z Twierdzą.</li><li><b>Rozmieszczenie Startowych Budynków.</b> Gracz rozmieszcza 1 Tartak, 1 Warsztat oraz 1 Koszary na polanie z Twierdzą i/lub na dowolnych sąsiadujących z nią polanach, w dowolnej kombinacji.</li><li><b>Uzupełnienie Torów Budynków.</b> Pozostałe 5 Tartaków, 5 Warsztatów i 5 Koszar gracz rozmieszcza od prawej do lewej na odpowiednich torach budynków na planszy Frakcji.</li></ol>`,
-      setupTitle: `Konfiguracja Markizy de Kot`
+      summaryTitle: `Gra Markizą`,
+      summary: `<p>Jako Markiza de Kot, chcesz przekształcić Leśnogród w przemysłową i militarną potęgę. Za każdym razem, gdy umieścisz <b>budynek</b> na mapie, zdobywasz punkty. Im więcej budynków danego typu znajduje się na mapie, tym więcej punktów zdobywasz.</p><p>Aby napędzić tę budowę, musisz rozwijać i chronić połączoną gospodarkę <b>drewnianą</b>. Budowa infrastruktury sprawia, że twoje tury są bardziej efektywne i pomaga ci dobierać więcej kart, więc dąż do zapewnienia sobie prawa do ekspansji. Twoja armia jest legionem, co pozwala ci egzekwować swoje rządy żelazną pięścią, jeśli to konieczne.</p><p>Siedziba twojej władzy to <b>Twierdza Markizy de Kot</b>, struktura tak imponująca, że żadna inna frakcja nie może umieszczać elementów w jej polanie. Co więcej, twoje <b>Szpitale Polowe</b> pomogą ci utrzymać się w walce. Ilekroć którykolwiek z twoich wojowników zostanie usunięty, możesz wydać kartę odpowiadającą polanie wojowników, aby umieścić ich z powrotem w swojej twierdzy - dopóki stoi. Dobrze ją chroń!</p>`,
+      setupTitle: `Konfiguracja Markizy de Kot`,
+      setup: `<ol><li><b>Przygotowanie Wojowników i Drewna.</b> Stwórz pulę 25 wojowników i 8 żetonów drewna.</li><li><b>Umieść Twierdzę.</b> Umieść żeton Twierdzy w dowolnej narożnej polanie.</li><li><b>Garnizon.</b> Umieść wojownika w każdej polanie, z wyjątkiem polany leżącej po przekątnej od polany z żetonem Twierdzy.</li><li><b>Rozmieszczenie Startowych Budynków.</b> Umieść 1 Tartak, 1 Warsztat i 1 Koszary. Możesz je rozmieścić między polaną z żetonem Twierdzy a dowolnymi sąsiadującymi polanami, w dowolnej kombinacji.</li><li><b>Uzupełnienie Torów Budynków.</b> Umieść swoje pozostałe 5 Tartaków, 5 Warsztatów i 5 Koszar na pasujących torach Budynków od prawej do lewej. <i>(Pozostaw najbardziej lewe pole każdego toru puste.)</i></li></ol>`,
+      advancedSetup: `<ol><li>Wybierz 3 polany ojczyste, z których każda sąsiaduje z inną.</li><li>Umieść 2 <b>wojowników</b> w każdej ze swoich polan ojczystych. Umieść 1 <b>wojownika</b> w każdej innej polanie.</li><li>Umieść <b>żeton twierdzy</b> w jednej ze swoich polan ojczystych, jeśli to możliwe, niesąsiadującej z polaną ojczystą wroga. Umieść 1 <b>tartak</b>, <b>warsztat</b> i <b>koszary</b> na mapie, każdy w innej polanie ojczystej.</li><li>Wypełnij swój tor Budynków swoimi <b>budynkami</b>, z wyjątkiem najbardziej lewych pól.</li></ol>`,
     },
     riverfolk: {
       name: `Kompania Plemion Rzecznych`,
       summaryTitle: `Gra Kompanią Plemion Rzecznych`,
-      summary: `<p>Kompania Plemion Rzecznych to frakcja handlowa, która rozwija się dzięki oferowaniu różnorodnych usług innym graczom. Twoja strategia opiera się na <b>Transakcjach</b>: inni gracze mogą płacić ci kartami, aby korzystać z twoich zdolności, takich jak ruch rzekami, handel przedmiotami, czy korzystanie z zaciężnych. Im więcej usług oferujesz, tym więcej zyskujesz, co przekłada się na Punkty Zwycięstwa.</p><p>Kiedy inny gracz wykonuje transakcję, umieszczasz znaczniki usług na torze punktacji, co zwiększa twoje punkty zwycięstwa na koniec tury. Pamiętaj, że każda transakcja to dla ciebie zysk, a dla przeciwników koszt. Twoje <b>Przekuwanie</b> odbywa się poprzez aktywację <b>Kantorów Handlowych</b>, co umożliwia ci zdobywanie przedmiotów i innych efektów z kart.</p><p>Kompania Plemion Rzecznych posiada zdolność <b>Wiosenne Powodzie</b>, która pozwala im poruszać się między polanami połączonymi rzekami, nawet jeśli nie są one sąsiadujące. To daje ci niesamowitą elastyczność w przemieszczaniu się po mapie i docieraniu do kluczowych miejsc. Twoja frakcja może również rekrutować <b>Zaciężnych</b>, którzy są dodatkowymi wojownikami, którzy mogą być aktywowani przez karty, co zwiększa twoje militarne możliwości.</p><p>Twoim celem jest stworzenie prosperującej sieci handlowej, która kontroluje przepływ dóbr i usług w Leśnogrodzie, co ostatecznie doprowadzi cię do zwycięstwa.</p>`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b>.</li><li>Umieść 1 <b>Kantor Handlowy</b>, 1 <b>Port Rzeczny</b> i 1 <b>Punkt Zaciężnych</b> na swoich planszach frakcji.</li><li>Umieść pozostałe <b>budynki</b> na swoich torach budynków.</li></ol>`,
-      setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 15 wojowników.</li><li><b>Rozmieszczenie Kantorów Handlowych.</b> Umieść po jednym Kantorze Handlowym na każdej polanie z rzeką.</li><li><b>Rozmieszczenie Punktów Zaciężnych.</b> Umieść po jednym Punkcie Zaciężnych na każdej polanie z ruinami.</li><li><b>Uzupełnienie Torów Budynków.</b> Pozostałe 5 Kantorów Handlowych, 5 Portów Rzecznych i 5 Punktów Zaciężnych gracz rozmieszcza od prawej do lewej na odpowiednich torach budynków na planszy Frakcji.</li><li><b>Pozyskanie Kart.</b> Dobierz 3 karty.</li></ol>`,
-      setupTitle: `Konfiguracja Kompanii Plemion Rzecznych`
+      summary: `<p>Jako Kompania Plemion Rzecznych, pływasz po rzekach wijących się przez wielki Leśnogród, oferując swoje usługi każdej frakcji, która może zapłacić. Zdobywasz punkty zwycięstwa, zakładając <b>Faktorie Handlowe</b> w polanach.</p><p>Chociaż budowa Faktorii Handlowych jest opłacalnym sposobem na zdobywanie punktów, to samo dotyczy surowej akumulacji bogactwa. Każdego Świtu zdobywasz punkty w zależności od tego, ile <b>Funduszy</b> zgromadziłeś i zarobiłeś w poprzedniej rundzie. Będziesz jednak musiał również zainwestować i wydać swoje Fundusze, aby rozwinąć i chronić swoją sieć handlową, zachowując równowagę między dywidendami a wzrostem.</p><p>Będziesz zarabiać Fundusze, gdy inne frakcje kupią twoje <b>Usługi</b>, czy to korzystanie z twoich łodzi rzecznych, czy wojowników najemników, a nawet jedną z kart w twojej publicznej ręce, która jest cała <b>Na Sprzedaż</b>. Możesz ustalać ceny swoich Usług w każdej turze, więc staraj się przewidzieć, których Usług będą potrzebować inne frakcje.</p><p>Budowanie Faktorii Handlowych pomaga ci rozszerzyć bazę klientów i sprzedawać więcej Usług, ponieważ frakcja może kupić od ciebie więcej Usług, jeśli rozszerzy się na więcej polan, na których masz Faktorie Handlowe. Ale bądź ostrożny, gdy twoje Faktorie Handlowe zostaną zniszczone, nie można ich odbudować! Chociaż możesz nie rządzić wieloma polanami, zawsze możesz poruszać się wzdłuż ścieżek rzecznych, ponieważ jesteś frakcją <b>Pływaków</b>.</p>`,
+      setupTitle: `Konfiguracja Kompanii Plemion Rzecznych`,
+      setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 15 wojowników.</li><li><b>Rozmieszczenie Wojowników.</b> Umieść 4 wojowników w dowolnych polanach graniczących z rzeką.</li><li><b>Uzupełnienie Torów Faktorii.</b> Umieść 9 Faktorii na pasujących polach swoich torów Faktorii.</li><li><b>Pozyskanie Startowych Funduszy.</b> Umieść 3 wojowników w swoim pudełku Płatności.</li><li><b>Ustalenie Cen Początkowych.</b> Umieść 1 znacznik Usługi na dowolnym polu każdego ze swoich torów Usług.</li></ol>`,
+      advancedSetup: `<ol><li>Umieść 4 <b>wojowników</b> w dowolnych polanach wzdłuż rzeki.</li><li>Umieść 3 <b>wojowników</b> w swoim pudełku Płatności.</li><li>Wypełnij swoje tory Faktorii pasującymi <b>Faktoriami</b>.</li><li>Umieść swoje 3 <b>znaczniki Usług</b> na torze Usług, ustalając cenę dla każdej usługi.</li></ol>`,
     },
     vagabond: {
       name: `Włóczęga`,
       summaryTitle: `Gra Włóczęgą`,
-      summary: `<p>Włóczęga gra po każdej stronie konfliktu, wykonując różne zadania, aby zwiększyć swoją sławę w Leśnogrodzie. Za każdym razem, gdy Włóczęga poprawia swoją <b>Relację</b> z inną Frakcją albo usuwa komponent należący do swojego Wroga, otrzymuje Punkty Zwycięstwa. Może także otrzymać Punkty Zwycięstwa za wykonanie <b>Misji</b>.</p><p>Aby efektywnie działać i poruszać się po Leśnogrodzie, Włóczęga musi zarządzać swoimi <b>Przedmiotami</b> i zwiększać ich liczbę poprzez eksplorację Ruin Leśnogrodu oraz udzielanie pomocy pozostałym Frakcjom. Pionek Włóczęgi nie jest wojownikiem i nie może kontrolować polany ani powstrzymać innego gracza przed kontrolą polan. Jest jednak <b>Samotnym Wędrowcem</b>, który może poruszać się między polanami bez względu na to, które Frakcje kontrolują początkową i docelową polanę.</p><p>Włóczęga jest <b>Zwinny</b> i może poruszać się między polanami bez względu na kontrolę. Jednak w walce, jeśli Włóczęga nie posiada żadnego nieuszkodzonego, jest <b>Bezbronny</b>. Każde obrażenie, jakie Włóczęga otrzymuje, powoduje uszkodzenie jednego nieuszkodzonego przedmiotu. Kluczem do sukcesu Włóczęgi jest budowanie relacji z innymi frakcjami i wykorzystywanie przedmiotów do wykonywania akcji.</p>`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b>.</li><li>Umieść 1 <b>Latarnię</b>, 1 <b>Torczycę</b> i 1 <b>But</b> na swoich planszach frakcji.</li><li>Umieść pozostałe <b>przedmioty</b> na swoich torach przedmiotów.</li></ol>`,
-      setup: `<ol><li><b>Przygotowanie Wojowników i Pionka.</b> Stwórz pulę 1 pionka i 5 wojowników.</li><li><b>Rozmieszczenie Pionka Włóczęgi.</b> Umieść pionek Włóczęgi na dowolnej polanie z ruinami.</li><li><b>Przygotowanie Przedmiotów.</b> Umieść po 1 latarni, 1 torczycy, 1 bucie, 1 torbie i 1 mieczu na polu Plecak na swojej planszy Frakcji.</li><li><b>Uzupełnienie Torów Przedmiotów.</b> Pozostałe przedmioty rozmieść od prawej do lewej na odpowiednich torach przedmiotów na planszy Frakcji.</li><li><b>Dobranie Misji.</b> Dobierz 2 karty Misji.</li></ol>`,
-      setupTitle: `Konfiguracja Włóczęgi`
+      summary: `<p>Jako Włóczęga, będziesz grać po wszystkich stronach konfliktu, nawiązując przyjaźnie i wrogów w zależności od tego, co ci pasuje. Zdobywasz punkty poprzez swoje <b>Relacje</b>, pomagając przyjaznym frakcjom, dając im karty, oraz zwiększając swoją niesławę u wrogich frakcji, usuwając ich elementy w walce. Będziesz również zdobywać punkty, wyruszając na <b>Misje</b>, aby szerzyć swoją dobrą opinię wśród stworzeń Leśnogrodu.</p><p>Aby skutecznie poruszać się i działać, będziesz musiał zarządzać swoim plecakiem <b>Przedmiotów</b>, rozszerzając swój wybór poprzez eksplorację starożytnych <b>Ruin</b> i udzielanie pomocy innym frakcjom. Będąc <b>Samotnym Wędrowcem</b>, nie możesz rządzić polaną ani uniemożliwić innej frakcji rządzenia nią, ale jesteś <b>Zwinny</b>, więc możesz poruszać się niezależnie od tego, kto rządzi twoją polaną.</p>`,
+      setupTitle: `Konfiguracja Włóczęgi`,
+      setup: `<ol><li><b>Wybór Postaci.</b> Wybierz kartę Postaci i umieść ją w swoim slocie Karty Postaci.</li><li><b>Rozmieszczenie Pionka.</b> Umieść swój pionek Włóczęgi w dowolnym lesie.</li><li><b>Pozyskanie Misji.</b> Potasuj talię Misji, dobierz 3 karty Misji i umieść je odkryte obok siebie.</li><li><b>Zaludnij Ruiny.</b> Umieść przedmioty <Bag/>, <Boot/>, <Hammer/> i <Sword/> oznaczone literą „R” pod ruinami losowo, chyba że zostało to już zrobione.</li><li><b>Weź Przedmioty Startowe.</b> Weź przedmioty oznaczone literą „S” wymienione na twojej karcie Postaci. Umieść wszystkie wymienione przedmioty <Tea/>, <Coin/> i <Bag/> odkryte na pasujących torach swojej planszy frakcji. Umieść wszystkie inne wymienione przedmioty odkryte w swoim Plecaku. Zwróć wszelkie pozostałe przedmioty oznaczone literą „S” do pudełka.</li></ol>`,
+      setup_vagabondSetUp: `<ol><li><b>Wybór Postaci.</b> Wybierz kartę Postaci i umieść ją w swoim slocie Karty Postaci.</li><li><b>Rozmieszczenie Pionka.</b> Umieść swój pionek Włóczęgi w dowolnym lesie.</li><li><b>Zaludnij Ruiny.</b> Umieść przedmioty <Bag/>, <Boot/>, <Hammer/> i <Sword/> oznaczone literą „R” pod ruinami losowo <i>(wraz z istniejącymi przedmiotami)</i>.</li><li><b>Weź Przedmioty Startowe.</b> Weź przedmioty oznaczone literą „S” wymienione na twojej karcie Postaci. Umieść wszystkie wymienione przedmioty <Tea/>, <Coin/> i <Bag/> odkryte na pasujących torach swojej planszy frakcji. Umieść wszystkie inne wymienione przedmioty odkryte w swoim Plecaku. Zwróć wszelkie pozostałe przedmioty oznaczone literą „S” do pudełka.</li></ol>`,
+      advancedSetup: `<ol><li>Umieść swój <b>pionek</b> w dowolnym lesie.</li><li>Potasuj talię Misji. Dobierz 3 <b>Misje</b>, aby rozdać w pobliżu.</li><li>Umieść <b>przedmioty ruin</b> <Bag/>, <Boot/>, <Hammer/> i <Sword/> <i>(oznaczone literą „R”)</i> pod ruinami losowo, chyba że zostało to już zrobione.</li><li>Umieść <b>kartę postaci</b> „{{vagabond}}” w swoim slocie Karty Postaci. Umieść <b>przedmioty startowe</b> <InitialStartingItems>, </InitialStartingItems> i <FinalStartingItem/> <i>(oznaczone literą „S”)</i> w swoim Plecaku i na pasujących torach, zgodnie z potrzebą.</li></ol>`,
+      advancedSetup_vagabondSetUp: `<ol><li>Umieść swój <b>pionek</b> w dowolnym lesie.</li><li>Umieść dodatkowe <b>przedmioty ruin</b> <Bag/>, <Boot/>, <Hammer/> i <Sword/> <i>(oznaczone literą „R”)</i> pod ruinami losowo <i>(wraz z istniejącymi przedmiotami)</i>.</li><li>Umieść <b>kartę postaci</b> „{{vagabond}}” w swoim slocie Karty Postaci. Umieść <b>przedmioty startowe</b> <InitialStartingItems>, </InitialStartingItems> i <FinalStartingItem/> <i>(oznaczone literą „S”)</i> w swoim Plecaku i na pasujących torach, zgodnie z potrzebą.</li></ol>`,
     },
     warlord: {
-      name: `Wódz`,
-      summaryTitle: `Gra Wodzem`,
-      summary: `<p>Wódz to frakcja nastawiona na brutalną siłę i podbój. Twoje działania skupiają się na nieustannym przemieszczaniu wojowników i inicjowaniu walki. Za każdym razem, gdy usuniesz budynek lub żeton przeciwnika, zdobywasz Punkty Zwycięstwa, a twoja militarne działania są nagradzane. Twoim celem jest rozprzestrzenianie paniki i kontrola nad jak największą liczbą polan.</p><p>Wódz posiada zdolność <b>Wojna Totalna</b>, co oznacza, że w każdej walce zadaje dodatkowe obrażenia, niezależnie od liczby wojowników na polanie. To czyni twoje ataki niezwykle skutecznymi i przerażającymi dla przeciwników. Możesz także wykorzystać swoją zdolność <b>Piorunująca Szarża</b>, aby przemieszczać się z dużą szybkością i zaskakiwać przeciwników, co daje ci przewagę strategiczną na polu bitwy.</p><p>Twoja frakcja ma dostęp do unikalnych <b>Zaciężnych</b>, którzy zwiększają twoje militarne możliwości i pozwalają na jeszcze bardziej agresywną grę. Wódz może również rekrutować <b>Elitarne Oddziały</b>, które są silniejszymi wojownikami, zwiększającymi twoją moc bojową. Kluczem do zwycięstwa Wodza jest ciągła agresja i utrzymywanie przewagi militarnej na mapie.</p>`,
-      advancedSetup: `<ol><li>Dobierz 3 <b>karty</b>.</li><li>Umieść 1 <b>Wojenny Obóz</b>, 1 <b>Punkt Zaciężnych</b> i 1 <b>Punkt Zaciężnych</b> na swoich planszach frakcji.</li><li>Umieść pozostałe <b>budynki</b> na swoich torach budynków.</li></ol>`,
-      setup: `<ol><li><b>Przygotowanie Wojowników.</b> Stwórz pulę 25 wojowników.</li><li><b>Rozmieszczenie Wojowników.</b> Umieść po 2 wojowników na każdej narożnej polanie i po 1 wojowniku na każdej polanie sąsiadującej z polaną z ruinami.</li><li><b>Rozmieszczenie Budynków.</b> Umieść po 1 Wojennym Obozie na każdej polanie z rzeką i po 1 Punkcie Zaciężnych na każdej polanie z ruinami.</li><li><b>Uzupełnienie Torów Budynków.</b> Pozostałe 5 Wojennych Obozów i 5 Punktów Zaciężnych gracz rozmieszcza od prawej do lewej na odpowiednich torach budynków na planszy Frakcji.</li><li><b>Pozyskanie Kart.</b> Dobierz 3 karty.</li></ol>`,
-      setupTitle: `Konfiguracja Wodza`
-    }
-  }
-}
+      name: `Władca Szczurów`,
+      summaryTitle: `Gra Władcą Szczurów`,
+      summary: `<p>Jako Władca Szczurów, zdobywasz punkty, <b>nękając</b> swoich wrogów. Na koniec swojej tury, im więcej polan, którymi rządzisz, nie ma żadnych elementów wroga – żadnych wojowników, żadnych budynków, niczego – tym więcej punktów zdobywasz.</p><p>Aby rosnąć w siłę i przyciągać wojowników, musisz zdobywać przedmioty i dodawać je do swojego piętrzącego się <b>Skarbca</b>. Buty, torby i monety zwiększają twoje <b>Dowództwo</b>, podczas gdy młotki, herbaty, miecze i kusze zwiększają twoją <b>Waleczność</b>. Twoja <b>Pogarda dla Handlu</b> oznacza, że rzadko zdobywasz punkty za przekuwanie przedmiotów, ale możesz kraść przedmioty wrogom dzięki swoim <b>Szabrownikom</b>!</p><p>Władcą Setek jest twój wódz, wojownik-demagog, którego kapryśny <b>Nastrój</b> daje ci zdolność na turę. Twój wódz ma obsesję na punkcie gromadzenia, więc im więcej zdobywasz przedmiotów, tym mniej Nastrojów masz do wyboru.</p><p>Deklarując się jako prawdziwy głos Leśnogrodu, możesz wzniecać <b>Szturmy</b>, które niszczą wrogie budynki i żetony oraz plądrują ruiny w poszukiwaniu przedmiotów.</p>`,
+      setupTitle: `Konfiguracja Władcy Szczurów`,
+      setup: `<ol><li><b>Garnizon.</b> Umieść swojego wodza, czterech wojowników i jedną twierdzę w narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od polany startowej.</li><li><b>Rozmieszczenie Przedmiotów.</b> Umieść przedmioty <Bag/>, <Boot/>, <Hammer/> i <Sword/> oznaczone literą „R” pod ruinami losowo, chyba że zostało to już zrobione.</li><li><b>Pozyskanie Upartego.</b> Umieść swoją kartę Nastroju „Uparty” w swoim slocie Karty Nastroju.</li></ol>`,
+      setup_vagabondSetUp: `<ol><li><b>Garnizon.</b> Umieść swojego wodza, czterech wojowników i jedną twierdzę w narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od polany startowej.</li><li><b>Pozyskanie Upartego.</b> Umieść swoją kartę Nastroju „Uparty” w swoim slocie Karty Nastroju.</li></ol>`,
+      advancedSetup: `<ol><li>Wybierz polanę ojczystą na krawędzi mapy, która ma 2+ polan między nią a ojczystymi polanami wroga.</li><li>Umieść swojego <b>wodza</b>, 4 <b>wojowników</b> i 1 <b>twierdzę</b> w swojej polanie ojczystej.</li><li>Umieść swoją <b>kartę Nastroju „Uparty”</b> w swoim slocie Karty Nastroju.</li><li>Umieść <b>przedmioty ruin</b> <Bag/>, <Boot/>, <Hammer/> i <Sword/> <i>(oznaczone literą „R”)</i> pod ruinami losowo, chyba że zostało to już zrobione.</li></ol>`,
+      advancedSetup_vagabondSetUp: `<ol><li>Wybierz polanę ojczystą na krawędzi mapy, która ma 2+ polan między nią a ojczystymi polanami wroga.</li><li>Umieść swojego <b>wodza</b>, 4 <b>wojowników</b> i 1 <b>twierdzę</b> w swojej polanie ojczystej.</li><li>Umieść swoją <b>kartę Nastroju „Uparty”</b> w swoim slocie Karty Nastroju.</li></ol>`,
+    },
+  },
+};
