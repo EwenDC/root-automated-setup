@@ -51,7 +51,9 @@ export default {
     wealth: `Zasobność w karty`,
   },
   component: {
-    buildings: `{{count}} Budynków`, //TODO odmiana
+    buildings_one: `{{count}} Budynek`,
+    buildings_few: `{{count}} Budynki`,
+    buildings_many: `{{count}} Budynków`,
     bag: `Torba`,
     boot: `But`,
     coin: `Moneta`,
@@ -59,7 +61,9 @@ export default {
     hammer: `Młotek`,
     sword: `Miecz`,
     tea: `Herbata`,
-    tokens: `{{count}} Żetonów`, //TODO: odmiana
+    tokens_one: `{{count}} Żeton`,
+    tokens_few: `{{count}} Żetony`,
+    tokens_many: `{{count}} Żetonów`,
     torch: `Pochodnia`,
     warriors_one: `1 Pionek`,
     warriors_other: `{{count}} Wojowników`,
@@ -73,7 +77,7 @@ export default {
     mapLandmarkUsed: `Punkt terenu mapy już został uwzględniony w konfiguracji mapy`,
     noDeck: `Nie wybrano żadnej talii! Proszę wybrać przynajmniej jedną talię`,
     noFaction: `Nie wybrano żadnej Frakcji! Proszę wybrać frakcję do gry`,
-    noLandmark: `Nie wybrano żadnych punktów terenu! Proszę wybrać przynajmniej jeden punkt orientacyjny lub ustawić ich liczbę na zero`,
+    noLandmark: `Nie wybrano żadnych punktów terenu! Proszę wybrać przynajmniej jeden punkt terenowy lub ustawić ich liczbę na zero`,
     noMap: `Nie wybrano żadnych map! Proszę wybrać przynajmniej jedną mapę`,
     noMilitantFaction: `Nie wybrano żadnych frakcji Militarnych! Proszę wybrać przynajmniej jedną frakcję Militarną`,
     tooFewFaction: `Wybrano za mało Frakcji! Proszę wybrać więcej Frakcji, wyłączyć wybór frakcji przez draft, lub zmniejszyć liczbę graczy`,
@@ -85,7 +89,7 @@ export default {
   },
   setupStep: {
     chooseExpansions: {
-      body: `Witaj w Zautomatyzowanej Konfiguracji Root. Ta strona poprowadzi Cię przez zaawansowane zasady konfiguracji popularnej gry planszowej Root, z minimalnym tasowaniem i bez kart konfiguracji! Aby rozpocząć, wybierz zawartość Root, w którą grasz. Gdy będziesz gotowy do przejścia do następnego kroku, użyj przycisków na dole strony, aby to zrobić.`,
+      body: `Witaj w Zautomatyzowanej Konfiguracji Root. Ta strona poprowadzi Cię przez zaawansowane zasady przygotowania rozgrywki popularnej gry planszowej Root, z minimalnym tasowaniem i bez kart konfiguracji! Aby rozpocząć, wybierz zawartość Root, w którą grasz. Gdy będziesz gotowy do przejścia do następnego kroku, użyj przycisków na dole strony, aby to zrobić.`,
       title: `Wybierz Rozszerzenia`,
     },
     seatPlayers: {
@@ -155,10 +159,10 @@ export default {
   },
   deck: {
     exiles: {
-      name: `Wygnańcy i Partyzanci`,
-      setup: `Weź talię Wygnańców i Partyzantów z pudełka gry i umieść ją obok mapy. Potasuj talię.`,
-      setup_twoPlayer: `Weź talię Wygnańców i Partyzantów z pudełka gry i umieść ją obok mapy. Usuń wszystkie cztery karty Dominacji z talii. Potasuj talię.`,
-      setupTitle: `Skonfiguruj Talię Wygnańców i Partyzantów`,
+      name: `Banitów i Partyzantów `,
+      setup: `Weź talię Banitów i Partyzantów  z pudełka gry i umieść ją obok mapy. Potasuj talię.`,
+      setup_twoPlayer: `Weź talię Banitów i Partyzantów  z pudełka gry i umieść ją obok mapy. Usuń wszystkie cztery karty Dominacji z talii. Potasuj talię.`,
+      setupTitle: `Skonfiguruj Talię Banitów i Partyzantów `,
     },
     standard: {
       name: `Standardowa`,
@@ -168,16 +172,16 @@ export default {
     },
   },
   expansion: {
-    exilesDeck: `Talia Wygnańców i Partyzantów`,
-    landmarkPack: `Pakiet Punktów Terenu`,
+    exilesDeck: `Talia Banitów i Partyzantów`,
+    landmarkPack: `Punkty Terenu`,
     marauder: `Rozszerzenie Maruderzy`,
-    marauderHirelings: `Pakiet Zaciężnych Maruderzy`,
-    riverfolk: `Rozszerzenie Plemiona Rzecznych`,
-    riverfolkHirelings: `Pakiet Zaciężnych Plemiona Rzecznych`,
+    marauderHirelings: `Paczka Zaciężnych Maruderów`,
+    riverfolk: `Rozszerzenie Plemiona Rzeczne`,
+    riverfolkHirelings: `Paczka Zaciężnych Plemion Rzecznych`,
     root: `Root`,
     underworld: `Rozszerzenie Podziemia`,
-    underworldHirelings: `Pakiet Zaciężnych Podziemia`,
-    vagabondPack: `Pakiet Włóczęgi`,
+    underworldHirelings: `Paczka Zaciężnych Podziemia`,
+    vagabondPack: `Paczka Włóczęgów`,
   },
   faction: {
     alliance: {
@@ -429,19 +433,19 @@ export default {
         `Raz na turę, podczas wykonywania akcji Misji, możesz traktować jeden niewyczerpany przedmiot jako dowolny inny przedmiot. Kiedy wyczerpiesz go, aby ukończyć misję, uszkodź również ten przedmiot.`,
     },
     arbiter: {
-      name: `Arbiter`,
-      action: `Obrońca`,
+      name: `Rozjemca`,
+      action: `Ochrona`,
       effect:
-        `Przed rzutem kośćmi w walce, obrońca może zaciągnąć Arbitra w polanie walki. Arbiter zdobywa jeden punkt zwycięstwa i dodaje wszystkie swoje nieuszkodzone <Sword/> do maksymalnej liczby obrażeń zadawanych przez obrońcę. Arbiter nie może zaciągnąć siebie ani zostać zaciągniętym przeciwko sobie.`,
+        `Przed rzutem kośćmi w walce, obrońca może zaciągnąć Rozjemce w polanie walki. Rozjemca zdobywa jeden punkt zwycięstwa i dodaje wszystkie swoje nieuszkodzone <Sword/> do maksymalnej liczby obrażeń zadawanych przez obrońcę. Rozjemca nie może zaciągnąć siebie ani zostać zaciągniętym przeciwko sobie.`,
     },
     harrier: {
-      name: `Zwiadowca`,
+      name: `Lotnik`,
       action: `Szybowanie`,
       effect:
         `Wyczerp <Torch/>, aby przemieścić tylko swój pionek Włóczęgi <i>(nie inne elementy)</i> do dowolnej polany <i>(nawet Wrogiej)</i> na mapie, bez wyczerpywania żadnych <Boot/>.`,
     },
     ranger: {
-      name: `Leśniczy`,
+      name: `Strażnik`,
       action: `Kryjówka`,
       effect:
         `Wyczerp jedną <Torch/>, aby naprawić trzy przedmioty. Następnie natychmiast zakończ Dzień i rozpocznij Wieczór.`,
@@ -465,14 +469,14 @@ export default {
         `Wyczerp jedną <Torch/>, aby wziąć losową kartę od dowolnego gracza w twojej polanie.`,
     },
     tinker: {
-      name: `Majster`,
-      action: `Dzień Pracy`,
+      name: `Majsterkowicz`,
+      action: `Dniówka`,
       effect:
         `Wyczerp jedną <Torch/>, aby wziąć kartę ze stosu kart odrzuconych, której symbol odpowiada twojej polanie. <i>(Zawsze możesz wziąć ptasią kartę.)</i>`,
     },
     vagrant: {
-      name: `Wędrowiec`,
-      action: `Podżeganie`,
+      name: `Przybłęda`,
+      action: `Namowa`,
       effect:
         `Wyczerp <Torch/>, aby zainicjować walkę w swojej polanie. Ty wybierasz atakującego i obrońcę, ty wybierasz kolejność, w jakiej każdy z nich usuwa swoje budynki i żetony, i ty usuwasz elementy za każdego. <i>(Zdobywasz jeden punkt zwycięstwa za każdy usunięty budynek lub żeton dowolnego gracza oraz za każdy usunięty element wrogi dowolnego gracza.)</i>`,
     },
