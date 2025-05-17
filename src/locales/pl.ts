@@ -90,85 +90,83 @@ export default {
   setupStep: {
     chooseExpansions: {
       body: `Witaj w Zautomatyzowanej Konfiguracji Root. Ta strona poprowadzi Cię przez zaawansowane zasady przygotowania rozgrywki popularnej gry planszowej Root, z minimalnym tasowaniem i bez kart konfiguracji! Aby rozpocząć, wybierz zawartość Root, w którą grasz. Gdy będziesz gotowy do przejścia do następnego kroku, użyj przycisków na dole strony, aby to zrobić.`,
-      title: `Wybierz Rozszerzenia`,
     },
     seatPlayers: {
-      body: `Ustal kolejność siedzenia graczy, a następnie wybierz, ilu graczy bierze udział w grze i czy chcesz, aby aplikacja wybrała losowego gracza rozpoczynającego.`,
       title: `Rozmieść Graczy`,
+      body: `Ustal kolejność siedzenia graczy, a następnie wybierz, ilu graczy bierze udział w grze i czy chcesz, aby aplikacja wybrała losowego gracza rozpoczynającego.`,
     },
     chooseMap: {
-      body: `W grupie zdecydujcie, na której mapie chcecie grać. Jeśli wybierzecie wiele map, zostanie wybrana losowa mapa.`,
       title: `Wybierz i Skonfiguruj Mapę`,
+      body: `W grupie zdecydujcie, na której mapie chcecie grać. Jeśli wybierzecie wiele map, zostanie wybrana losowa mapa.`,
     },
     setUpMap: {
       body: `<li>Umieść ruinę w każdym slocie na mapie oznaczonym literą „R” <i>(łącznie cztery)</i>.</li><li>Umieść następujące przedmioty na pasujących polach puli przedmiotów w górnej części mapy: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.</li><li>Umieść dwie kości obok mapy.</li>`,
-      title: `Skonfiguruj Mapę`,
     },
     chooseDeck: {
-      body: `W grupie zdecydujcie, której talii chcecie użyć. Jeśli wybierzecie wiele talii, zostanie wybrana losowa talia.`,
       title: `Wybierz i Skonfiguruj Talię`,
+      body: `W grupie zdecydujcie, której talii chcecie użyć. Jeśli wybierzecie wiele talii, zostanie wybrana losowa talia.`,
     },
     setUpDeck: {
       title: `Skonfiguruj Talię`,
     },
     setUpBots: {
-      body: `W grupie zdecydujcie, z którymi botami chcecie grać, postępując zgodnie z ich instrukcjami konfiguracji, opisanymi w Księdze Praw Rootbotyki.`,
       title: `Skonfiguruj Boty`,
+      body: `W grupie zdecydujcie, z którymi botami chcecie grać, postępując zgodnie z ich instrukcjami konfiguracji, opisanymi w Księdze Praw Rootbotyki.`,
     },
     chooseLandmarks: {
+      title: `Skonfiguruj Punkty Terenu`,
       body: `W grupie zdecydujcie, z iloma punktami terenu chcecie grać i które z nich mają zostać uwzględnione w puli wyboru.`,
       body_mapLandmark: `W grupie zdecydujcie, z iloma punktami terenu chcecie grać <i>(oprócz już uwzględnionego punktu terenu mapy)</i> i które z nich mają zostać uwzględnione w puli wyboru.`,
-      title: `Skonfiguruj Punkty Terenu`,
     },
     chooseHirelings: {
-      body: `W grupie zdecydujcie, czy chcecie grać z Zaciężnymi i które z nich mają zostać uwzględnione w puli wyboru.`,
       title: `Skonfiguruj Zaciężnych`,
+      body: `W grupie zdecydujcie, czy chcecie grać z Zaciężnymi i które z nich mają zostać uwzględnione w puli wyboru.`,
     },
     postHirelingSetup: {
-      body: `Umieść trzy znaczniki Zaciężnych - oznaczone „4”, „8” i „12” - na polach „4”, „8” i „12” toru punktacji na mapie.`,
       subtitle: `Rozmieść Znaczniki Zaciężnych`,
+      body: `Umieść trzy znaczniki Zaciężnych - oznaczone „4”, „8” i „12” - na polach „4”, „8” i „12” toru punktacji na mapie.`,
     },
     drawCards: {
-      body: `Każdy gracz dobiera pięć kart ze wspólnej talii. <i>(Trzy karty do zatrzymania wybierzesz później.)</i>`,
       title: `Dobierz Pięć Kart`,
+      body: `Każdy gracz dobiera pięć kart ze wspólnej talii. <i>(Trzy karty do zatrzymania wybierzesz później.)</i>`,
     },
     chooseFactions: {
-      body: `W grupie wybierzcie, które frakcje chcecie uwzględnić w konfiguracji.`,
       title: `Skonfiguruj Frakcje`,
+      body: `W grupie wybierzcie, które frakcje chcecie uwzględnić w konfiguracji.`,
     },
     selectFaction: {
-      body: `Przydziel jedną z poniższych frakcji każdemu graczowi w dowolny sposób. Frakcje zostaną skonfigurowane od lewej do prawej. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki.`,
-      body_useDraft: `Gracz {{count}}, wybierz frakcję, którą chcesz zagrać z poniższej puli frakcji. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki, zanim potwierdzisz swój wybór, naciskając „Następny Krok”.`,
       subtitle: `Przydziel Frakcje`,
       subtitle_useDraft: `Wybierz Frakcję`,
+      body: `Przydziel jedną z poniższych frakcji każdemu graczowi w dowolny sposób. Frakcje zostaną skonfigurowane od lewej do prawej. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki.`,
+      body_useDraft: `Gracz {{count}}, wybierz frakcję, którą chcesz zagrać z poniższej puli frakcji. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki, zanim potwierdzisz swój wybór, naciskając „Następny Krok”.`,
     },
     placeScoreMarkers: {
-      body: `Każdy gracz umieszcza znacznik punktacji swojej wybranej frakcji na polu „0” toru Punktacji.`,
-      body_vagabondSetUp: `Każdy gracz umieszcza znacznik punktacji swojej wybranej frakcji na polu „0” toru Punktacji. Każdy gracz Włóczęgi umieszcza znacznik relacji dla każdej frakcji innej niż Włóczęga w grze na polu Neutralnym na swojej tabeli Relacji.`,
       title: `Rozmieść Znaczniki Punktacji`,
       title_vagabondSetUp: `Rozmieść Znaczniki Punktacji i Relacji`,
+      body: `Każdy gracz umieszcza znacznik punktacji swojej wybranej frakcji na polu „0” toru Punktacji.`,
+      body_vagabondSetUp: `Każdy gracz umieszcza znacznik punktacji swojej wybranej frakcji na polu „0” toru Punktacji. Każdy gracz Włóczęgi umieszcza znacznik relacji dla każdej frakcji innej niż Włóczęga w grze na polu Neutralnym na swojej tabeli Relacji.`,
     },
     chooseHand: {
-      body: `Każdy gracz wybiera trzy karty z ręki do zatrzymania i kładzie pozostałe dwie karty zakryte na wspólnym stosie. Po zakończeniu, potasuj wspólną talię.`,
       title: `Wybierz Rękę Startową`,
+      body: `Każdy gracz wybiera trzy karty z ręki do zatrzymania i kładzie pozostałe dwie karty zakryte na wspólnym stosie. Po zakończeniu, potasuj wspólną talię.`,
     },
     setupEnd: {
-      body: `Konfiguracja została zakończona. Gra rozpocznie się od Gracza {{count}}. Jeśli chcesz ponownie uruchomić proces konfiguracji, użyj poniższego przycisku.<p><i>„Root Automated Setup” stworzone przez Ewena Camerona</i><br/><i>Na podstawie gry planszowej „Root” wydanej przez Leder Games</i><br/><i>Aplikacja licencjonowana na CC BY-NC-SA 4.0</i></p>`,
       title: `Rozpocznij Grę`,
+      body: `Konfiguracja została zakończona. Gra rozpocznie się od Gracza {{count}}. Jeśli chcesz ponownie uruchomić proces konfiguracji, użyj poniższego przycisku.<p><i>„Root Automated Setup” stworzone przez Ewena Camerona</i><br/><i>Na podstawie gry planszowej „Root” wydanej przez Leder Games</i><br/><i>Aplikacja licencjonowana na CC BY-NC-SA 4.0</i></p>`,
     },
   },
   deck: {
     exiles: {
       name: `Banitów i Partyzantów `,
+      setupTitle: `Skonfiguruj Talię Banitów i Partyzantów `,
       setup: `Weź talię Banitów i Partyzantów  z pudełka gry i umieść ją obok mapy. Potasuj talię.`,
       setup_twoPlayer: `Weź talię Banitów i Partyzantów  z pudełka gry i umieść ją obok mapy. Usuń wszystkie cztery karty Dominacji z talii. Potasuj talię.`,
-      setupTitle: `Skonfiguruj Talię Banitów i Partyzantów `,
     },
     standard: {
       name: `Standardowa`,
+      setupTitle: `Skonfiguruj Talię Standardową`,
       setup: `Weź talię Standardową z pudełka gry i umieść ją obok mapy. Potasuj talię.`,
       setup_twoPlayer: `Weź talię Standardową z pudełka gry i umieść ją obok mapy. Usuń wszystkie cztery karty Dominacji z talii. Potasuj talię.`,
-      setupTitle: `Skonfiguruj Talię Standardową`,
     },
   },
   expansion: {
