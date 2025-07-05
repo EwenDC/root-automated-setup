@@ -1,4 +1,3 @@
-import { memo, useMemo } from "react";
 import Section from "../components/section";
 import { useAppSelector, useNthLastPlayer } from "../hooks";
 
@@ -11,21 +10,16 @@ const SetUpLandmarkStep: React.FC<SetUpLandmarkStepProps> = ({ number }) => {
   const map = useAppSelector((state) => state.setup.map);
   const nthLastPlayer = useNthLastPlayer();
 
-  const translationOptions = useMemo(
-    () => ({
-      context: map,
-      count: nthLastPlayer(number),
-    }),
-    [map, nthLastPlayer, number],
-  );
-
   return (
     <Section
       subtitleKey={`landmark.${landmark}.setupTitle`}
       textKey={`landmark.${landmark}.setup`}
-      translationOptions={translationOptions}
+      translationOptions={{
+        context: map,
+        count: nthLastPlayer(number),
+      }}
     />
   );
 };
 
-export default memo(SetUpLandmarkStep);
+export default SetUpLandmarkStep;

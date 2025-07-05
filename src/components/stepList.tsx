@@ -1,4 +1,4 @@
-import { createContext, memo } from "react";
+import { createContext } from "react";
 import { selectFlowSlice } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import LanguageSelect from "./languageSelect";
@@ -32,4 +32,4 @@ const StepList: React.FC = () => {
   );
 };
 
-export default memo(StepList);
+export default StepList;

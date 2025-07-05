@@ -1,5 +1,4 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { useCallback, useMemo } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { selectFactionArray, selectVagabondArray } from "./features/selectors";
 import type { RootState, AppDispatch } from "./store";
@@ -14,34 +13,27 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
  * @returns The faction pool, with all faction and vagabond information included
  */
 export const useSelectFactionPool = (factionPool: FactionEntry[]) =>
-  useMemo(
-    () =>
-      createSelector(selectFactionArray, selectVagabondArray, (factionArray, vagabondArray) =>
-        factionPool.map(({ code, vagabond }) => ({
-          ...factionArray.find(({ code: factionCode }) => factionCode === code)!,
-          vagabond:
-            typeof vagabond === "string"
-              ? vagabondArray.find(({ code: vagabondCode }) => vagabondCode === vagabond)
-              : undefined,
-        }))
-      ),
-    [factionPool]
+  createSelector(selectFactionArray, selectVagabondArray, (factionArray, vagabondArray) =>
+    factionPool.map(({ code, vagabond }) => ({
+      ...factionArray.find(({ code: factionCode }) => factionCode === code)!,
+      vagabond:
+        typeof vagabond === "string"
+          ? vagabondArray.find(({ code: vagabondCode }) => vagabondCode === vagabond)
+          : undefined,
+    })),
   );
 
 /** Returns a function for returning the player number for a specified point in turn order */
 export const useNthLastPlayer = () => {
   const playerOrder = useAppSelector((state) => state.setup.playerOrder);
-  return useCallback(
-    (position: number) => {
-      if (playerOrder.length > 0) {
-        let index = -position;
-        do {
-          index += playerOrder.length;
-        } while (index < 0);
-        return playerOrder[index];
-      }
-      return 0;
-    },
-    [playerOrder]
-  );
+  return (position: number) => {
+    if (playerOrder.length > 0) {
+      let index = -position;
+      do {
+        index += playerOrder.length;
+      } while (index < 0);
+      return playerOrder[index];
+    }
+    return 0;
+  };
 };

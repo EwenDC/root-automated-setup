@@ -1,4 +1,3 @@
-import { memo, useCallback } from "react";
 import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
@@ -15,14 +14,6 @@ const ChooseExpansionsStep: React.FC = () => {
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   const dispatch = useAppDispatch();
 
-  const onIncludeBotChange = useCallback(
-    (checked: boolean) => {
-      dispatch(skipSteps(SetupStep.setUpBots, !checked));
-      savePersistedSetting("includeBotStep", checked);
-    },
-    [dispatch]
-  );
-
   return (
     <Section textKey="setupStep.chooseExpansions.body">
       <ComponentToggle
@@ -34,10 +25,13 @@ const ChooseExpansionsStep: React.FC = () => {
       <Checkbox
         id="includeBotStep"
         defaultValue={!skippedSteps[SetupStep.setUpBots]}
-        onChange={onIncludeBotChange}
+        onChange={(checked) => {
+          dispatch(skipSteps(SetupStep.setUpBots, !checked));
+          savePersistedSetting("includeBotStep", checked);
+        }}
       />
     </Section>
   );
 };
 
-export default memo(ChooseExpansionsStep);
+export default ChooseExpansionsStep;

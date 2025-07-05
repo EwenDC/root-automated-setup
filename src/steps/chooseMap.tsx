@@ -1,4 +1,3 @@
-import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
@@ -18,26 +17,18 @@ const ChooseMapStep: React.FC = () => {
   const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const sortedMaps = useMemo(
-    () =>
-      mapArray
-        .filter(
-          ({ enabled, fixedSuits, useLandmark }) =>
-            enabled && (fixedSuits != null || useLandmark != null),
-        )
-        .map(({ code, fixedSuits, useLandmark }) => ({
-          code,
-          label: t(`map.${code}.name`),
-          fixedSuits,
-          useLandmark,
-        }))
-        .sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage)),
-    [mapArray, t, i18n.resolvedLanguage],
-  );
-  const onBalancedSuitsChange = useCallback(
-    (value: boolean) => dispatch(balanceMapSuits(value)),
-    [dispatch],
-  );
+  const sortedMaps = mapArray
+    .filter(
+      ({ enabled, fixedSuits, useLandmark }) =>
+        enabled && (fixedSuits != null || useLandmark != null),
+    )
+    .map(({ code, fixedSuits, useLandmark }) => ({
+      code,
+      label: t(`map.${code}.name`),
+      fixedSuits,
+      useLandmark,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage));
 
   return (
     <Section titleKey="setupStep.chooseMap.title" textKey="setupStep.chooseMap.body">
@@ -49,7 +40,7 @@ const ChooseMapStep: React.FC = () => {
       <Radiogroup
         id="balancedSuits"
         defaultValue={balancedSuits}
-        onChange={onBalancedSuitsChange}
+        onChange={(value) => dispatch(balanceMapSuits(value))}
       />
       {sortedMaps
         .filter(({ fixedSuits }) => fixedSuits != null)
@@ -77,4 +68,4 @@ const ChooseMapStep: React.FC = () => {
   );
 };
 
-export default memo(ChooseMapStep);
+export default ChooseMapStep;

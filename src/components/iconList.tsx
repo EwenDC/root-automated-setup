@@ -1,4 +1,4 @@
-import { memo, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { ClearingSuit, Item } from "../types";
 import Icon from "./icon";
 
@@ -16,4 +16,4 @@ const IconList: React.FC<ItemListProps> = ({ list, children = ", " }) => (
   </>
 );
 
-export default memo(IconList);
+export default IconList;

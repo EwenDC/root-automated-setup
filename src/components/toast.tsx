@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import CloseIcon from "../images/icons/close.svg?react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { setErrorMessage } from "../features/setupSlice";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Toast: React.FC = () => {
   const errorMessage = useAppSelector((state) => state.setup.errorMessage);
@@ -42,4 +42,4 @@ const Toast: React.FC = () => {
   );
 };
 
-export default memo(Toast);
+export default Toast;

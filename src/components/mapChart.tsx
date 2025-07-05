@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { selectSetupMap } from "../features/selectors";
 import { useAppSelector } from "../hooks";
 import { iconDict } from "./icon";
@@ -57,4 +56,4 @@ const MapChart: React.FC = () => {
   );
 };
 
-export default memo(MapChart);
+export default MapChart;

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { memo, useContext, useMemo, useState } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { CodeObject, GameComponent, Togglable } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
@@ -17,7 +17,7 @@ interface ComponentListProps<T> {
   unsorted?: boolean;
 }
 
-const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
+const ComponentToggle = (<T extends CodeObject & Togglable & GameComponent>({
   selector,
   toggleComponent,
   getLabelKey,
@@ -27,37 +27,18 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
   const stepActive = useContext(stepActiveContext);
   const invalid = useAppSelector(selectStepInvalid(stepActive));
   const dispatch = useAppDispatch();
-  const [largeLabels, setLargeLabels] = useState(false);
-  const [allEnabled, setAllEnabled] = useState(false);
   const { t, i18n } = useTranslation();
 
-  // Sort our component list, then memoize the result for performance
-  const sortedComponents = useMemo(() => {
-    // Reset our data flags
-    setLargeLabels(false);
-    setAllEnabled(true);
-
-    // For sorting purposes, generate the final label text in advance
-    const returnValue = components.map((component) => {
-      // If any label in our list is longer than 30 characters then we give more room for the labels
-      const label = t(getLabelKey(component));
-      if (label.length > 30) setLargeLabels(true);
-
-      // Clear the all enabled flag if there's a disabled and not locked component
-      if (!component.enabled && !component.locked) setAllEnabled(false);
-
-      return {
-        ...component,
-        label,
-      };
-    });
-
-    // Sort it by default (unless asked explicitly not to)
-    if (!unsorted)
-      returnValue.sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage));
-
-    return returnValue;
-  }, [components, t, getLabelKey, unsorted, i18n.resolvedLanguage]);
+  const sortedComponents = components.map((component) => ({
+    ...component,
+    label: t(getLabelKey(component)),
+  }));
+  // Sort our components list by default (unless asked explicitly not to)
+  if (!unsorted) {
+    sortedComponents.sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage));
+  }
+  const largeLabels = sortedComponents.some((component) => component.label.length > 30);
+  const allEnabled = sortedComponents.every((component) => component.enabled || component.locked);
 
   return (
     <div className={classNames("component-toggle", { "large-labels": largeLabels })}>
@@ -103,6 +84,6 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
       )}
     </div>
   );
-};
+}) satisfies React.FC<ComponentListProps<CodeObject & Togglable & GameComponent>>;
 
-export default memo(ComponentToggle) as typeof ComponentToggle;
+export default ComponentToggle;

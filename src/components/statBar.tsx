@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
-import { memo, useContext } from "react";
+import { useContext } from "react";
 import { selectedFactionContext } from "./factionSelect";
 
 interface StatBarProps {
@@ -28,4 +28,4 @@ const StatBar: React.FC<StatBarProps> = ({ stat }) => {
   );
 };
 
-export default memo(StatBar);
+export default StatBar;

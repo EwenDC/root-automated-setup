@@ -1,4 +1,4 @@
-import { memo, useContext } from "react";
+import { useContext } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { selectStepInvalid } from "../features/selectors";
 import { useAppSelector } from "../hooks";
@@ -14,7 +14,8 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
   const stepActive = useContext(stepActiveContext);
   const invalid = useAppSelector(selectStepInvalid(stepActive));
   // Ensure the component re-renders when the language changes
-  useTranslation();
+  const { i18n } = useTranslation();
+  const activeLanguage = i18n.resolvedLanguage ?? i18n.language;
 
   return (
     <fieldset
@@ -32,10 +33,12 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
             id={`${id}False`}
             type="radio"
             checked={!defaultValue}
-            onChange={() => { onChange(false); }}
+            onChange={() => {
+              onChange(false);
+            }}
           />
           <label htmlFor={`${id}False`}>
-            <Trans i18nKey={`label.${id}.false`} />
+            <Trans key={activeLanguage} i18nKey={`label.${id}.false`} />
           </label>
         </div>
       ) : null}
@@ -46,10 +49,12 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
             id={`${id}True`}
             type="radio"
             checked={defaultValue}
-            onChange={() => { onChange(true); }}
+            onChange={() => {
+              onChange(true);
+            }}
           />
           <label htmlFor={`${id}True`}>
-            <Trans i18nKey={`label.${id}.true`} />
+            <Trans key={activeLanguage} i18nKey={`label.${id}.true`} />
           </label>
         </div>
       ) : null}
@@ -57,4 +62,4 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
   );
 };
 
-export default memo(Radiogroup);
+export default Radiogroup;

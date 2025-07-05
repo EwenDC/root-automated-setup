@@ -1,4 +1,3 @@
-import { memo, useCallback, useMemo } from "react";
 import ComponentToggle from "../components/componentToggle";
 import NumberSelector from "../components/numberSelector";
 import Section from "../components/section";
@@ -15,30 +14,21 @@ const ChooseLandmarksStep: React.FC = () => {
   const setupMap = useAppSelector(selectSetupMap);
   const dispatch = useAppDispatch();
 
-  const translationOptions = useMemo(
-    () => ({
-      context: setupMap?.useLandmark ? "mapLandmark" : undefined,
-    }),
-    [setupMap]
-  );
-  const onLandmarkCountChange = useCallback(
-    (value: number) => dispatch(setLandmarkCount(value)),
-    [dispatch]
-  );
-
   if (!setupMap) return null;
   return (
     <Section
       titleKey="setupStep.chooseLandmarks.title"
       textKey="setupStep.chooseLandmarks.body"
-      translationOptions={translationOptions}
+      translationOptions={{
+        context: setupMap.useLandmark ? "mapLandmark" : undefined,
+      }}
     >
       <NumberSelector
         id="landmarkCount"
         value={landmarkCount}
         minVal={0}
         maxVal={2}
-        onChange={onLandmarkCountChange}
+        onChange={(value) => dispatch(setLandmarkCount(value))}
       />
       {landmarkCount > 0 ? (
         <ComponentToggle
@@ -51,4 +41,4 @@ const ChooseLandmarksStep: React.FC = () => {
   );
 };
 
-export default memo(ChooseLandmarksStep);
+export default ChooseLandmarksStep;

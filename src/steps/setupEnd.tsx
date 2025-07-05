@@ -1,4 +1,4 @@
-import { memo, useCallback, useContext, useMemo } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../components/button";
 import Section from "../components/section";
@@ -13,17 +13,14 @@ const SetupEndStep: React.FC = () => {
   const stepActive = useContext(stepActiveContext);
   const { t } = useTranslation();
 
-  const translationOptions = useMemo(() => ({ count: playerOrder[0] }), [playerOrder]);
-  const onRestartClick = useCallback(() => dispatch(resetFlow()), [dispatch]);
-
   return (
     <Section
       titleKey="setupStep.setupEnd.title"
       textKey="setupStep.setupEnd.body"
-      translationOptions={translationOptions}
+      translationOptions={{ count: playerOrder[0] }}
     >
       {stepActive ? (
-        <Button Icon={RestartIcon} iconLeft={true} onClick={onRestartClick}>
+        <Button Icon={RestartIcon} iconLeft={true} onClick={() => dispatch(resetFlow())}>
           {t("label.restartSetup")}
         </Button>
       ) : null}
@@ -31,4 +28,4 @@ const SetupEndStep: React.FC = () => {
   );
 };
 
-export default memo(SetupEndStep);
+export default SetupEndStep;

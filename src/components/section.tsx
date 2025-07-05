@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { TOptions } from "i18next";
-import { memo, PropsWithChildren, useContext, useEffect, useRef } from "react";
+import { PropsWithChildren, useContext, useEffect, useRef } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import iconComponents from "../iconComponents";
 import { stepActiveContext } from "./stepList";
@@ -25,8 +25,10 @@ const Section: React.FC<SectionProps> = ({
   children,
 }) => {
   const active = useContext(stepActiveContext);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const sectionElement = useRef<HTMLElement>(null);
+  // Ensure the component re-renders when the language changes
+  const activeLanguage = i18n.resolvedLanguage ?? i18n.language;
 
   // Trigger a scroll-to effect when we become active
   useEffect(() => {
@@ -56,6 +58,7 @@ const Section: React.FC<SectionProps> = ({
       {textBelowChildren ? children : null}
       {textKey && (
         <Trans
+          key={activeLanguage}
           i18nKey={textKey}
           // For Trans component count cannot be passed in with options
           count={translationOptions?.count}
@@ -70,4 +73,4 @@ const Section: React.FC<SectionProps> = ({
   );
 };
 
-export default memo(Section);
+export default Section;

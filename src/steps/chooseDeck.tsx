@@ -1,4 +1,3 @@
-import { memo } from "react";
 import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
 import { toggleDeck } from "../features/componentsSlice";
@@ -17,4 +16,4 @@ const ChooseDeckStep: React.FC = () => (
   </Section>
 );
 
-export default memo(ChooseDeckStep);
+export default ChooseDeckStep;

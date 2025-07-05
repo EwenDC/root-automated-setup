@@ -1,4 +1,3 @@
-import { memo, useCallback } from "react";
 import Checkbox from "../components/checkbox";
 import ComponentToggle from "../components/componentToggle";
 import Section from "../components/section";
@@ -15,30 +14,25 @@ const ChooseHirelingsStep: React.FC = () => {
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   const dispatch = useAppDispatch();
 
-  const onIncludeHirelingsChange = useCallback(
-    (checked: boolean) => {
-      dispatch(
-        skipSteps(
-          [
-            SetupStep.setUpHireling1,
-            SetupStep.setUpHireling2,
-            SetupStep.setUpHireling3,
-            SetupStep.postHirelingSetup,
-          ],
-          !checked
-        )
-      );
-      savePersistedSetting("includeHirelings", checked);
-    },
-    [dispatch]
-  );
-
   return (
     <Section titleKey="setupStep.chooseHirelings.title" textKey="setupStep.chooseHirelings.body">
       <Checkbox
         id="includeHirelings"
         defaultValue={!skippedSteps[SetupStep.setUpHireling1]}
-        onChange={onIncludeHirelingsChange}
+        onChange={(checked) => {
+          dispatch(
+            skipSteps(
+              [
+                SetupStep.setUpHireling1,
+                SetupStep.setUpHireling2,
+                SetupStep.setUpHireling3,
+                SetupStep.postHirelingSetup,
+              ],
+              !checked,
+            ),
+          );
+          savePersistedSetting("includeHirelings", checked);
+        }}
       />
       {!skippedSteps[SetupStep.setUpHireling1] ? (
         <ComponentToggle
@@ -51,4 +45,4 @@ const ChooseHirelingsStep: React.FC = () => {
   );
 };
 
-export default memo(ChooseHirelingsStep);
+export default ChooseHirelingsStep;

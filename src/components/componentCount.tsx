@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { memo, useContext } from "react";
+import { useContext } from "react";
 import { selectedFactionContext } from "./factionSelect";
 
 const imageSource = {
@@ -35,4 +35,4 @@ const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
   return null;
 };
 
-export default memo(ComponentCount);
+export default ComponentCount;

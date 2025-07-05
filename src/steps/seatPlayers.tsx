@@ -1,4 +1,3 @@
-import { memo, useCallback } from "react";
 import NumberSelector from "../components/numberSelector";
 import Radiogroup from "../components/radiogroup";
 import Section from "../components/section";
@@ -14,15 +13,6 @@ const SeatPlayersStep: React.FC = () => {
   const factions = useAppSelector(selectFactionArray);
   const dispatch = useAppDispatch();
 
-  const onPlayerCountChange = useCallback(
-    (value: number) => dispatch(setPlayerCount(value)),
-    [dispatch]
-  );
-  const onFixedFirstPlayerChange = useCallback(
-    (value: boolean) => dispatch(fixFirstPlayer(value)),
-    [dispatch]
-  );
-
   return (
     <Section titleKey="setupStep.seatPlayers.title" textKey="setupStep.seatPlayers.body">
       <NumberSelector
@@ -30,15 +20,15 @@ const SeatPlayersStep: React.FC = () => {
         value={playerCount}
         minVal={skippedSteps[SetupStep.setUpBots] ? 2 : 1}
         maxVal={factions.length}
-        onChange={onPlayerCountChange}
+        onChange={(value) => dispatch(setPlayerCount(value))}
       />
       <Radiogroup
         id="fixedFirstPlayer"
         defaultValue={fixedFirstPlayer}
-        onChange={onFixedFirstPlayerChange}
+        onChange={(value) => dispatch(fixFirstPlayer(value))}
       />
     </Section>
   );
 };
 
-export default memo(SeatPlayersStep);
+export default SeatPlayersStep;

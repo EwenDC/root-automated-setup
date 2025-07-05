@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { forwardRef, memo } from "react";
 
 interface ButtonProps
   extends React.DetailedHTMLProps<
@@ -10,10 +9,16 @@ interface ButtonProps
   iconLeft?: boolean;
 }
 
-const Button = (
-  { className, disabled, onClick, Icon, iconLeft = false, children, ...props }: ButtonProps,
-  ref: React.ForwardedRef<HTMLButtonElement>
-) => {
+const Button: React.FC<ButtonProps> = ({
+  className,
+  disabled,
+  onClick,
+  Icon,
+  iconLeft = false,
+  children,
+  ref,
+  ...props
+}) => {
   const renderIconLeft = Icon && iconLeft;
   const renderIconRight = Icon && !iconLeft;
   const buttonIcon = Icon && <Icon className="label-icon" />;
@@ -42,4 +47,4 @@ const Button = (
   );
 };
 
-export default memo(forwardRef(Button));
+export default Button;

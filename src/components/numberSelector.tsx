@@ -1,4 +1,4 @@
-import { memo, useContext } from "react";
+import { useContext } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { selectStepInvalid } from "../features/selectors";
 import { useAppSelector } from "../hooks";
@@ -19,7 +19,8 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
   const stepActive = useContext(stepActiveContext);
   const invalid = useAppSelector(selectStepInvalid(stepActive));
   // Ensure the component re-renders when the language changes
-  useTranslation();
+  const { i18n } = useTranslation();
+  const activeLanguage = i18n.resolvedLanguage ?? i18n.language;
 
   const buttonHandler = (amount: number) => {
     const newValue = value + amount;
@@ -48,11 +49,17 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
   return (
     <div className="number">
       <label htmlFor={id}>
-        <Trans i18nKey={`label.${id}`} />
+        <Trans key={activeLanguage} i18nKey={`label.${id}`} />
       </label>
       {stepActive ? (
         <>
-          <button onClick={() => { buttonHandler(-1); }}>-</button>
+          <button
+            onClick={() => {
+              buttonHandler(-1);
+            }}
+          >
+            -
+          </button>
           <input
             id={id}
             inputMode="numeric"
@@ -62,7 +69,13 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
             aria-invalid={invalid ? true : undefined}
             aria-errormessage={invalid ? "appError" : undefined}
           />
-          <button onClick={() => { buttonHandler(+1); }}>+</button>
+          <button
+            onClick={() => {
+              buttonHandler(+1);
+            }}
+          >
+            +
+          </button>
         </>
       ) : (
         <span id={id} className="value">
@@ -73,4 +86,4 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
   );
 };
 
-export default memo(NumberSelector);
+export default NumberSelector;

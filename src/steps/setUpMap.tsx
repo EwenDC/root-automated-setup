@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import MapChart from "../components/mapChart";
 import Section from "../components/section";
@@ -11,7 +10,8 @@ const SetUpMapStep: React.FC = () => {
   const setupMap = useAppSelector(selectSetupMap);
   const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
   // Ensure the component re-renders when the language changes
-  useTranslation();
+  const { i18n } = useTranslation();
+  const activeLanguage = i18n.resolvedLanguage ?? i18n.language;
 
   if (!setupMap) return null;
 
@@ -25,14 +25,22 @@ const SetUpMapStep: React.FC = () => {
   return (
     <Section subtitleKey={`map.${setupMap.code}.setupTitle`}>
       <ol>
-        <Trans i18nKey={`map.${setupMap.code}.setup`} />
-        {setupMap.useLandmark ? <Trans i18nKey={`map.${setupMap.code}.landmarkSetup`} /> : null}
-        {markerKey && <Trans i18nKey={`label.placeMarkers.${markerKey}`} />}
-        <Trans i18nKey="setupStep.setUpMap.body" components={iconComponents} />
+        <Trans key={`${activeLanguage}0`} i18nKey={`map.${setupMap.code}.setup`} />
+        {setupMap.useLandmark ? (
+          <Trans key={`${activeLanguage}1`} i18nKey={`map.${setupMap.code}.landmarkSetup`} />
+        ) : null}
+        {markerKey && (
+          <Trans key={`${activeLanguage}2`} i18nKey={`label.placeMarkers.${markerKey}`} />
+        )}
+        <Trans
+          key={`${activeLanguage}3`}
+          i18nKey="setupStep.setUpMap.body"
+          components={iconComponents}
+        />
       </ol>
       <MapChart />
     </Section>
   );
 };
 
-export default memo(SetUpMapStep);
+export default SetUpMapStep;

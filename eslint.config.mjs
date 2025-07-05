@@ -15,7 +15,7 @@ export default tseslint.config([
       ...tseslint.configs.stylisticTypeChecked,
       react.configs.flat["recommended"],
       react.configs.flat["jsx-runtime"],
-      reactHooks.configs["recommended-latest"],
+      reactHooks.configs.recommended,
     ],
     languageOptions: {
       parserOptions: {
@@ -54,6 +54,8 @@ export default tseslint.config([
           allowRegExp: true,
         },
       ],
+      // Enable React compiler checks
+      "react-hooks/react-compiler": "error",
     },
   },
   {

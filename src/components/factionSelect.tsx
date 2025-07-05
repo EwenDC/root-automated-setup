@@ -3,7 +3,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { setCurrentFactionIndex } from "../features/flowSlice";
 import { setErrorMessage } from "../features/setupSlice";
 import { useAppDispatch, useAppSelector, useSelectFactionPool } from "../hooks";
-import { createContext, memo, useContext, useMemo, useState } from "react";
+import { createContext, useContext } from "react";
 import MilitantIcon from "../images/icons/militant.svg?react";
 import StatBar from "./statBar";
 import iconComponents from "../iconComponents";
@@ -26,31 +26,23 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const invalid = useAppSelector(selectStepInvalid(stepActive));
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const [largeLabels, setLargeLabels] = useState(false);
 
-  const labelledFactionPool = useMemo(() => {
-    // Reset our large label flag
-    setLargeLabels(false);
+  // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
+  const labelledFactionPool = factionPool.map(({ code, key, image, militant, vagabond }) => {
+    let factionName = t(`faction.${key}.name`);
+    if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`;
 
-    return factionPool.map(({ code, key, image, militant, vagabond }) => {
-      // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
-      let factionName = t(`faction.${key}.name`);
-      if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`;
+    // Swap out the faction image for the vagabond image (if we have one)
+    const factionImage = vagabond ? vagabond.image : image;
 
-      // If any label in our list is longer than 23 characters then we give more room for the labels
-      if (factionName.length > 23) setLargeLabels(true);
-
-      // Swap out the faction image for the vagabond image (if we have one)
-      const factionImage = vagabond ? vagabond.image : image;
-
-      return {
-        code,
-        factionImage,
-        factionName,
-        militant,
-      };
-    });
-  }, [factionPool, t]);
+    return {
+      code,
+      factionImage,
+      factionName,
+      militant,
+    };
+  });
+  const largeLabels = labelledFactionPool.some((faction) => faction.factionName.length > 23);
 
   // We use this event handler to simulate the keyboard behaviour of a real radio group, to comply with accessibility requirements
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
@@ -192,4 +184,4 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   );
 };
 
-export default memo(FactionSelect);
+export default FactionSelect;

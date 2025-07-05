@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { FlowSlice, SetupStep } from "../types";
 import { useTranslation } from "react-i18next";
 
@@ -96,4 +95,4 @@ const StepSwitch: React.FC<StepSwitchProps> = ({ flowSlice }) => {
   }
 };
 
-export default memo(StepSwitch);
+export default StepSwitch;

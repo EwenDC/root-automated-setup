@@ -1,4 +1,4 @@
-import { memo, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { ClearingSuit, Item } from "../types";
 
@@ -77,4 +77,4 @@ const Icon: React.FC<ItemProps> = ({ icon, children }) => {
   );
 };
 
-export default memo(Icon);
+export default Icon;

@@ -1,6 +1,5 @@
 import rootLogo from "../images/logo.png";
 import { useTranslation } from "react-i18next";
-import { memo } from "react";
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -12,4 +11,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default memo(Header);
+export default Header;

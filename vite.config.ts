@@ -23,7 +23,11 @@ export default defineConfig({
     legacy({
       targets: [">0.2%", "not dead", "not op_mini all"],
     }),
-    react(),
+    react({
+      babel: {
+        plugins: [["babel-plugin-react-compiler", {}]],
+      },
+    }),
     // Allow importing SVG as react components
     svgrPlugin({
       svgrOptions: {
