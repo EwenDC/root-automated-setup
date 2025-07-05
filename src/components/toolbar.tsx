@@ -9,10 +9,14 @@ import NextIcon from "../images/icons/next.svg?react";
 import { memo, useCallback, useRef, useState } from "react";
 import Button from "./button";
 
+type ButtonIndex = 0 | 1 | 2;
+const MIN_BUTTON_INDEX = 0;
+const MAX_BUTTON_INDEX = 2;
+
 const Toolbar: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const [focusedIndex, setFocusedIndex] = useState(0);
+  const [focusedIndex, setFocusedIndex] = useState<ButtonIndex>(0);
   const undoDisabled = useAppSelector((state) => state.flow.pastSteps.length === 0);
   const redoDisabled = useAppSelector((state) => state.flow.futureSteps.length === 0);
   const nextStepDisabled = useAppSelector((state) => state.flow.currentStep >= SetupStep.setupEnd);
@@ -23,22 +27,21 @@ const Toolbar: React.FC = () => {
 
   const onKeyDownHandler = (
     event: React.KeyboardEvent<HTMLButtonElement>,
-    focusedIndex: number
+    focusedIndex: ButtonIndex,
   ) => {
-    const buttonRefs = [undoButtonRef, redoButtonRef, nextButtonRef];
-    const maxIndex = buttonRefs.length - 1;
-    let newIndex: number | undefined;
+    const buttonRefs = [undoButtonRef, redoButtonRef, nextButtonRef] as const;
+    let newIndex: ButtonIndex | undefined;
 
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
       newIndex = focusedIndex + 1;
-      if (newIndex > maxIndex) newIndex = 0;
+      if (newIndex > MAX_BUTTON_INDEX) newIndex = MIN_BUTTON_INDEX;
     } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
       newIndex = focusedIndex - 1;
-      if (newIndex < 0) newIndex = maxIndex;
+      if (newIndex < MIN_BUTTON_INDEX) newIndex = MAX_BUTTON_INDEX;
     } else if (event.key === "Home") {
-      newIndex = 0;
+      newIndex = MIN_BUTTON_INDEX;
     } else if (event.key === "End") {
-      newIndex = maxIndex;
+      newIndex = MAX_BUTTON_INDEX;
     }
 
     if (newIndex != null) {
@@ -52,26 +55,25 @@ const Toolbar: React.FC = () => {
     dispatch(undoStep());
     setFocusedIndex(0);
   }, [dispatch]);
-  const onUndoKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLButtonElement>) => onKeyDownHandler(event, 0),
-    []
-  );
+  const onUndoKeyDown = useCallback((event: React.KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDownHandler(event, 0);
+  }, []);
+
   const onRedoClick = useCallback(() => {
     dispatch(redoStep());
     setFocusedIndex(1);
   }, [dispatch]);
-  const onRedoKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLButtonElement>) => onKeyDownHandler(event, 1),
-    []
-  );
+  const onRedoKeyDown = useCallback((event: React.KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDownHandler(event, 1);
+  }, []);
+
   const onNextClick = useCallback(() => {
     dispatch(nextStep());
     setFocusedIndex(2);
   }, [dispatch]);
-  const onNextKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLButtonElement>) => onKeyDownHandler(event, 2),
-    []
-  );
+  const onNextKeyDown = useCallback((event: React.KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDownHandler(event, 2);
+  }, []);
 
   return (
     <footer>

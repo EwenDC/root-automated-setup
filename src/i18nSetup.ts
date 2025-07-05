@@ -1,4 +1,4 @@
-import i18n, { BackendModule } from "i18next";
+import i18n, { BackendModule, CallbackError, ResourceKey } from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
@@ -14,17 +14,19 @@ export const languages = [
   { name: "Italiano", locale: "it", image: ItalianFlag },
 ];
 
-i18n
+void i18n
   .use<BackendModule>({
     type: "backend",
-    init() {},
+    init() {
+      /* No-op as this is a required field */
+    },
     read(language, _namespace, callback) {
       import(`./locales/${language}.ts`)
-        .then((module) => {
+        .then((module: { default: ResourceKey }) => {
           callback(null, module.default);
         })
-        .catch((error) => {
-          callback(error, null);
+        .catch((error: unknown) => {
+          callback(error as CallbackError, null);
         });
     },
   })

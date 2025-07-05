@@ -2,25 +2,22 @@ import { useTranslation } from "react-i18next";
 import { memo, useContext } from "react";
 import { selectedFactionContext } from "./factionSelect";
 
-const imageSource: Record<string, "image" | "buildingImage" | "tokenImage"> = {
+const imageSource = {
   warriors: "image",
   buildings: "buildingImage",
   tokens: "tokenImage",
-};
+} as const;
 
 interface ComponentCountProps {
-  component: "warriors" | "buildings" | "tokens";
+  component: keyof typeof imageSource;
 }
 
 const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
   const selectedFaction = useContext(selectedFactionContext);
   const { t } = useTranslation();
 
-  const componentCount = selectedFaction != null ? selectedFaction[component] : 0;
-
-  if (componentCount > 0) {
-    // We know currentFactionIndex is not null because if it was componentCount defaults to 0
-    const componentImage = selectedFaction![imageSource[component]];
+  if (selectedFaction && selectedFaction[component] > 0) {
+    const componentImage = selectedFaction[imageSource[component]];
     return (
       <div className="count">
         <img
@@ -30,7 +27,7 @@ const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
         />{" "}
         &#215;
         {t(`component.${component}`, {
-          count: componentCount,
+          count: selectedFaction[component],
         })}
       </div>
     );

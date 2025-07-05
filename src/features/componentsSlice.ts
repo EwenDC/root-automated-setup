@@ -10,39 +10,51 @@ import {
 } from "../types";
 import { loadPersistedSetting, savePersistedSetting, typedEntries } from "./utils";
 
-const fixedSuitKey = ".fixedSuits";
-const useLandmarkKey = ".useLandmark";
+const COMPONENT_TYPES = [
+  "decks",
+  "factions",
+  "hirelings",
+  "landmarks",
+  "maps",
+  "vagabonds",
+] satisfies (keyof Expansion)[];
+
+const FIXED_SUIT_KEY = ".fixedSuits";
+const USE_LANDMARK_KEY = ".useLandmark";
 
 const addExpansionComponents = (
   state: ComponentsState,
   expansionCode: string,
-  { base, image, ...components }: Expansion
+  expansionContent: Expansion,
 ) => {
-  for (const [componentType, componentList] of typedEntries(components)) {
-    for (const [componentCode, componentData] of typedEntries(componentList!)) {
-      const componentInfo: MapInfo = {
-        enabled: loadPersistedSetting(`${componentType}.${componentCode}`, true),
-        locked: false,
-        expansionCode,
-      };
-      if ("defaultSuits" in componentData)
-        componentInfo.fixedSuits = loadPersistedSetting(
-          `${componentType}.${componentCode}${fixedSuitKey}`,
-          false
-        );
-      if ("landmark" in componentData)
-        componentInfo.useLandmark = loadPersistedSetting(
-          `${componentType}.${componentCode}${useLandmarkKey}`,
-          true
-        );
+  for (const componentType of COMPONENT_TYPES) {
+    const componentList = expansionContent[componentType];
+    if (componentList) {
+      for (const [componentCode, componentData] of typedEntries(componentList)) {
+        const componentInfo: MapInfo = {
+          enabled: loadPersistedSetting<boolean>(`${componentType}.${componentCode}`, true),
+          locked: false,
+          expansionCode,
+        };
+        if ("defaultSuits" in componentData)
+          componentInfo.fixedSuits = loadPersistedSetting<boolean>(
+            `${componentType}.${componentCode}${FIXED_SUIT_KEY}`,
+            false,
+          );
+        if ("landmark" in componentData)
+          componentInfo.useLandmark = loadPersistedSetting<boolean>(
+            `${componentType}.${componentCode}${USE_LANDMARK_KEY}`,
+            true,
+          );
 
-      state[componentType][componentCode] = componentInfo;
+        state[componentType][componentCode] = componentInfo;
+      }
     }
   }
 };
 
 const setupInitialState = () => {
-  let initialState: ComponentsState = {
+  const initialState: ComponentsState = {
     expansions: {},
     decks: {},
     factions: {},
@@ -53,7 +65,8 @@ const setupInitialState = () => {
   };
 
   for (const [expansionCode, expansion] of typedEntries(content)) {
-    const enabled = expansion.base || loadPersistedSetting(`expansions.${expansionCode}`, false);
+    const enabled =
+      expansion.base || loadPersistedSetting<boolean>(`expansions.${expansionCode}`, false);
 
     initialState.expansions[expansionCode] = {
       enabled,
@@ -69,9 +82,16 @@ const setupInitialState = () => {
 const toggleComponent =
   (componentType: keyof ComponentsState) =>
   (state: ComponentsState, { payload: componentCode }: PayloadAction<string>) => {
-    const newState = !state[componentType][componentCode].enabled;
-    state[componentType][componentCode].enabled = newState;
-    savePersistedSetting(`${componentType}.${componentCode}`, newState);
+    const component = state[componentType][componentCode];
+    if (component) {
+      const newState = !component.enabled;
+      component.enabled = newState;
+      savePersistedSetting(`${componentType}.${componentCode}`, newState);
+    } else {
+      console.warn(
+        `Invalid payload for toggle${componentType.charAt(0).toUpperCase()}${componentType.slice(1)} action: ${componentCode} (No component exists with provided code)`,
+      );
+    }
   };
 
 const lockComponent = (componentType: keyof ComponentsState) => ({
@@ -80,13 +100,17 @@ const lockComponent = (componentType: keyof ComponentsState) => ({
   }),
   reducer(state: ComponentsState, { payload }: PayloadAction<LockComponentPayload>) {
     const { componentCode, locked } = payload;
-    state[componentType][componentCode].locked = locked;
-    if (locked) {
-      state[componentType][componentCode].enabled = false;
+    const component = state[componentType][componentCode];
+    if (component) {
+      component.locked = locked;
+      component.enabled = locked
+        ? false
+        : loadPersistedSetting<boolean>(`${componentType}.${componentCode}`, true);
     } else {
-      state[componentType][componentCode].enabled = loadPersistedSetting(
-        `${componentType}.${componentCode}`,
-        true
+      console.warn(
+        `Invalid payload for lock${componentType.charAt(0).toUpperCase()}${componentType.slice(1)} action:`,
+        payload,
+        "(No component exists with provided code)",
       );
     }
   },
@@ -105,12 +129,13 @@ export const componentsSlice = createSlice({
         savePersistedSetting(`expansions.${expansionCode}`, expansion.enabled);
 
         if (expansion.enabled) {
-          // The expansion was just enabled, add it's components to our component list
-          addExpansionComponents(state, expansionCode, content[expansionCode]);
+          // The expansion was just enabled, add it's components to our component list. We know the
+          // expansion content will exist because we used `content` to create the expansion state.
+          addExpansionComponents(state, expansionCode, content[expansionCode]!);
         } else {
           // The expansion was just disabled, delete any components that came from it
-          const { expansions, ...components } = state;
-          for (const [componentType, componentList] of typedEntries(components)) {
+          for (const componentType of COMPONENT_TYPES) {
+            const componentList = state[componentType];
             for (const [componentCode, component] of typedEntries(componentList)) {
               if (component.expansionCode === expansionCode) {
                 delete state[componentType][componentCode];
@@ -120,11 +145,11 @@ export const componentsSlice = createSlice({
         }
       } else if (expansion) {
         console.warn(
-          `Invalid payload for toggleExpansion action: ${expansionCode} (Cannot disable expansion flagged as base)`
+          `Invalid payload for toggleExpansion action: ${expansionCode} (Cannot disable expansion flagged as base)`,
         );
       } else {
         console.warn(
-          `Invalid payload for toggleExpansion action: ${expansionCode} (No expansion exists with provided code)`
+          `Invalid payload for toggleExpansion action: ${expansionCode} (No expansion exists with provided code)`,
         );
       }
     },
@@ -142,8 +167,17 @@ export const componentsSlice = createSlice({
       }),
       reducer(state, { payload }: PayloadAction<EnableMapLandmarkPayload>) {
         const { mapCode, enableLandmark } = payload;
-        state.maps[mapCode].useLandmark = enableLandmark;
-        savePersistedSetting(`maps.${mapCode}${useLandmarkKey}`, enableLandmark);
+        const map = state.maps[mapCode];
+        if (map) {
+          map.useLandmark = enableLandmark;
+          savePersistedSetting(`maps.${mapCode}${USE_LANDMARK_KEY}`, enableLandmark);
+        } else {
+          console.warn(
+            "Invalid payload for enableMapLandmark action:",
+            payload,
+            "(No map exists with provided code)",
+          );
+        }
       },
     },
     mapFixedSuits: {
@@ -152,8 +186,17 @@ export const componentsSlice = createSlice({
       }),
       reducer(state, { payload }: PayloadAction<MapFixedSuitsPayload>) {
         const { mapCode, fixedSuits } = payload;
-        state.maps[mapCode].fixedSuits = fixedSuits;
-        savePersistedSetting(`maps.${mapCode}${fixedSuitKey}`, fixedSuits);
+        const map = state.maps[mapCode];
+        if (map) {
+          map.fixedSuits = fixedSuits;
+          savePersistedSetting(`maps.${mapCode}${FIXED_SUIT_KEY}`, fixedSuits);
+        } else {
+          console.warn(
+            "Invalid payload for mapFixedSuits action:",
+            payload,
+            "(No map exists with provided code)",
+          );
+        }
       },
     },
     toggleVagabond: toggleComponent("vagabonds"),

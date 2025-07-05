@@ -68,10 +68,10 @@ type ItemProps = PropsWithChildren<{
 
 const Icon: React.FC<ItemProps> = ({ icon, children }) => {
   const { t } = useTranslation();
-  const iconAlt = t(iconDict[icon]?.key);
+  const iconAlt = t(iconDict[icon].key);
   return (
     <>
-      <img className="icon" src={iconDict[icon]?.image} alt={iconAlt} title={iconAlt} />
+      <img className="icon" src={iconDict[icon].image} alt={iconAlt} title={iconAlt} />
       {children}
     </>
   );

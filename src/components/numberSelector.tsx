@@ -52,7 +52,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
       </label>
       {stepActive ? (
         <>
-          <button onClick={() => buttonHandler(-1)}>-</button>
+          <button onClick={() => { buttonHandler(-1); }}>-</button>
           <input
             id={id}
             inputMode="numeric"
@@ -62,7 +62,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
             aria-invalid={invalid ? true : undefined}
             aria-errormessage={invalid ? "appError" : undefined}
           />
-          <button onClick={() => buttonHandler(+1)}>+</button>
+          <button onClick={() => { buttonHandler(+1); }}>+</button>
         </>
       ) : (
         <span id={id} className="value">

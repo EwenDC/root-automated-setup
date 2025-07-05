@@ -19,7 +19,7 @@ const Toast: React.FC = () => {
   return (
     <div
       className="toast"
-      inert={errorMessage ? undefined : ""}
+      inert={!errorMessage}
       // For older browsers that don't understand inert, flag this as hidden
       aria-hidden={!errorMessage}
       aria-live="assertive"

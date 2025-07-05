@@ -10,7 +10,7 @@ const SetUpFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
   const { factionIndex, factionPool, vagabondSetUp } = flowSlice;
   const useDraft = useAppSelector((state) => state.flow.useDraft);
   const selectFactionPool = useSelectFactionPool(factionPool);
-  const factionPoolEntry = useAppSelector((state) => selectFactionPool(state)[factionIndex ?? 0]);
+  const factionPoolEntry = useAppSelector((state) => selectFactionPool(state)[factionIndex ?? 0]!);
   const { t } = useTranslation();
 
   const translationOptions = useMemo(
@@ -18,7 +18,7 @@ const SetUpFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
       context: vagabondSetUp ? "vagabondSetUp" : undefined,
       vagabond: factionPoolEntry.vagabond && t(`vagabond.${factionPoolEntry.vagabond.code}.name`),
     }),
-    [factionPoolEntry.vagabond, t, vagabondSetUp]
+    [factionPoolEntry.vagabond, t, vagabondSetUp],
   );
   const components = useMemo(
     () =>
@@ -31,12 +31,12 @@ const SetUpFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
             icon={
               factionPoolEntry.vagabond.startingItems[
                 factionPoolEntry.vagabond.startingItems.length - 1
-              ]
+              ]!
             }
           />
         ),
       },
-    [factionPoolEntry.vagabond]
+    [factionPoolEntry.vagabond],
   );
 
   return (

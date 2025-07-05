@@ -27,61 +27,62 @@ const StepSwitch: React.FC<StepSwitchProps> = ({ flowSlice }) => {
   const { i18n } = useTranslation();
 
   switch (flowSlice.step) {
-    case SetupStep.chooseExpansions:
+    case SetupStep.chooseExpansions: {
       return <ChooseExpansions />;
-
-    case SetupStep.seatPlayers:
+    }
+    case SetupStep.seatPlayers: {
       return <SeatPlayers />;
-
-    case SetupStep.chooseMap:
+    }
+    case SetupStep.chooseMap: {
       return <ChooseMap />;
-
-    case SetupStep.setUpMap:
+    }
+    case SetupStep.setUpMap: {
       return <SetUpMap />;
-
-    case SetupStep.chooseDeck:
+    }
+    case SetupStep.chooseDeck: {
       return <ChooseDeck />;
-
-    case SetupStep.setUpDeck:
+    }
+    case SetupStep.setUpDeck: {
       return <SetUpDeck />;
-
-    case SetupStep.chooseLandmarks:
+    }
+    case SetupStep.chooseLandmarks: {
       return <ChooseLandmarks />;
-
-    case SetupStep.setUpLandmark1:
+    }
+    case SetupStep.setUpLandmark1: {
       return <SetUpLandmark number={1} />;
-
-    case SetupStep.setUpLandmark2:
+    }
+    case SetupStep.setUpLandmark2: {
       return <SetUpLandmark number={2} />;
-
-    case SetupStep.chooseHirelings:
+    }
+    case SetupStep.chooseHirelings: {
       return <ChooseHirelings />;
-
-    case SetupStep.setUpHireling1:
+    }
+    case SetupStep.setUpHireling1: {
       return <SetUpHireling number={1} />;
-
-    case SetupStep.setUpHireling2:
+    }
+    case SetupStep.setUpHireling2: {
       return <SetUpHireling number={2} />;
-
-    case SetupStep.setUpHireling3:
+    }
+    case SetupStep.setUpHireling3: {
       return <SetUpHireling number={3} />;
-
-    case SetupStep.chooseFactions:
+    }
+    case SetupStep.chooseFactions: {
       return <ChooseFactions />;
-
-    case SetupStep.selectFaction:
+    }
+    case SetupStep.selectFaction: {
       return <SelectFaction flowSlice={flowSlice} />;
-
-    case SetupStep.setUpFaction:
+    }
+    case SetupStep.setUpFaction: {
       return <SetUpFaction flowSlice={flowSlice} />;
-
-    case SetupStep.placeScoreMarkers:
+    }
+    case SetupStep.placeScoreMarkers: {
       return <PlaceScoreMarkers flowSlice={flowSlice} />;
-
-    case SetupStep.setupEnd:
+    }
+    case SetupStep.setupEnd: {
       return <SetupEnd />;
+    }
 
-    default:
+    default: {
       const defaultTitleKey = `setupStep.${SetupStep[flowSlice.step]}.title`;
       const defaultSubtitleKey = `setupStep.${SetupStep[flowSlice.step]}.subtitle`;
       return (
@@ -91,6 +92,7 @@ const StepSwitch: React.FC<StepSwitchProps> = ({ flowSlice }) => {
           textKey={`setupStep.${SetupStep[flowSlice.step]}.body`}
         />
       );
+    }
   }
 };
 

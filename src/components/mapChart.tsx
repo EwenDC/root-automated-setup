@@ -18,7 +18,8 @@ const MapChart: React.FC = () => {
       <desc>{t("label.mapChart")}</desc>
       <image width="100" height="100" href={map.backImage} />
       {map.clearings.map(({ no, x, y }) => {
-        const suit = clearingSuits[no];
+        // We know suit is defined because clearingSuits is set from `map.clearings`
+        const suit = clearingSuits[no]!;
         return (
           <g key={no}>
             <title>{t(`label.clearing.${suit}`)}</title>

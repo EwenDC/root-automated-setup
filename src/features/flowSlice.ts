@@ -21,16 +21,16 @@ const initialState: FlowState = {
   currentPlayerIndex: 0,
   currentFactionIndex: null,
   vagabondPool: [],
-  useDraft: loadPersistedSetting("useDraft", true),
+  useDraft: loadPersistedSetting<boolean>("useDraft", true),
   // Create an array with as many elements as there are setup steps
-  skippedSteps: Array(SetupStep.setupEnd + 1).fill(false),
+  skippedSteps: Array<boolean>(SetupStep.setupEnd + 1).fill(false),
   futureSteps: [],
 };
 // Skip bot & hireling setup steps as required
-if (!loadPersistedSetting("includeBotStep", false)) {
+if (!loadPersistedSetting<boolean>("includeBotStep", false)) {
   initialState.skippedSteps[SetupStep.setUpBots] = true;
 }
-if (!loadPersistedSetting("includeHirelings", false)) {
+if (!loadPersistedSetting<boolean>("includeHirelings", false)) {
   initialState.skippedSteps[SetupStep.setUpHireling1] = true;
   initialState.skippedSteps[SetupStep.setUpHireling2] = true;
   initialState.skippedSteps[SetupStep.setUpHireling3] = true;
@@ -69,9 +69,10 @@ export const flowSlice = createSlice({
         if (
           state.currentStep === SetupStep.setUpFaction &&
           !state.vagabondSetUp &&
-          state.factionPool[state.currentFactionIndex ?? 0].vagabond
-        )
+          state.factionPool[state.currentFactionIndex ?? 0]?.vagabond
+        ) {
           state.vagabondSetUp = true;
+        }
 
         // Handle special cases for faction setup
         if (
@@ -85,7 +86,7 @@ export const flowSlice = createSlice({
           const [removedFaction] = state.factionPool.splice(state.currentFactionIndex ?? 0, 1);
           state.currentFactionIndex = null;
           // Clear the last faction lock if the removed faction was militant
-          if (state.lastFactionLocked && removedFaction.militant) state.lastFactionLocked = false;
+          if (state.lastFactionLocked && removedFaction?.militant) state.lastFactionLocked = false;
           // Return to the faction selection step
           state.currentStep = SetupStep.selectFaction;
         } else if (
@@ -97,7 +98,7 @@ export const flowSlice = createSlice({
           state.factionPool.shift();
         } else {
           // Go to the next non-skipped step
-          let skipStep = false;
+          let skipStep: boolean | undefined;
           do {
             state.currentStep++;
             skipStep = state.skippedSteps[state.currentStep];
@@ -105,7 +106,7 @@ export const flowSlice = createSlice({
         }
       } else {
         console.warn(
-          `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`
+          `Invalid incrementStep action: Current step must be smaller than ${SetupStep.setupEnd}`,
         );
       }
     },
@@ -121,7 +122,7 @@ export const flowSlice = createSlice({
         applySlice(state, previousStep);
       } else {
         console.warn(
-          `Invalid undoStep action: pastSteps array returned empty value (${previousStep})`
+          `Invalid undoStep action: pastSteps array returned empty value (${previousStep})`,
         );
       }
     },
@@ -137,7 +138,7 @@ export const flowSlice = createSlice({
         applySlice(state, nextStep);
       } else {
         console.warn(
-          `Invalid redoStep action: futureSteps array returned empty value (${nextStep})`
+          `Invalid redoStep action: futureSteps array returned empty value (${nextStep})`,
         );
       }
     },
@@ -176,8 +177,9 @@ export const flowSlice = createSlice({
         order: faction.order,
         militant: faction.militant,
       };
-      if (faction.isVagabond)
+      if (faction.isVagabond) {
         factionEntry.vagabond = state.useDraft ? takeRandom(state.vagabondPool) : true;
+      }
 
       state.factionPool.push(factionEntry);
 
@@ -192,7 +194,7 @@ export const flowSlice = createSlice({
         state.currentPlayerIndex = currentPlayerIndex;
       } else {
         console.warn(
-          `Invalid payload for setCurrentPlayerIndex action: ${currentPlayerIndex} (Payload must be a number larger than or equal to 0)`
+          `Invalid payload for setCurrentPlayerIndex action: ${currentPlayerIndex} (Payload must be a number larger than or equal to 0)`,
         );
       }
     },
@@ -206,7 +208,7 @@ export const flowSlice = createSlice({
         if (state.useDraft) state.futureSteps = [];
       } else {
         console.warn(
-          `Invalid payload for setCurrentFactionIndex action: ${currentFactionIndex} (Payload must be a number larger than or equal to 0 but smaller than the faction pool length [${state.factionPool.length}])`
+          `Invalid payload for setCurrentFactionIndex action: ${currentFactionIndex} (Payload must be a number larger than or equal to 0 but smaller than the faction pool length [${state.factionPool.length}])`,
         );
       }
     },
@@ -219,8 +221,9 @@ export const flowSlice = createSlice({
   extraReducers(builder) {
     // This allows us to always reset the redo queue if the setup state changes
     builder
-      // Don't wipe redo queue when the only thing that happened was displaying an error
-      .addCase(setErrorMessage, () => {})
+      .addCase(setErrorMessage, () => {
+        // No-op so we don't wipe redo queue when displaying an error
+      })
       .addDefaultCase((state) => {
         state.futureSteps = [];
       });

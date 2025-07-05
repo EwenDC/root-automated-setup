@@ -13,7 +13,7 @@ const SelectFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
       count: playerOrder[flowSlice.playerIndex],
       context: useDraft ? "useDraft" : undefined,
     }),
-    [flowSlice.playerIndex, playerOrder, useDraft]
+    [flowSlice.playerIndex, playerOrder, useDraft],
   );
 
   return (

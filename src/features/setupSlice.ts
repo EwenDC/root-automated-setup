@@ -14,18 +14,18 @@ import { toggleExpansion } from "./componentsSlice";
 import { loadPersistedSetting, savePersistedSetting, takeRandom } from "./utils";
 
 const initialState: SetupState = {
-  playerCount: loadPersistedSetting("playerCount", 4),
-  fixedFirstPlayer: loadPersistedSetting("fixedFirstPlayer", false),
+  playerCount: loadPersistedSetting<number>("playerCount", 4),
+  fixedFirstPlayer: loadPersistedSetting<boolean>("fixedFirstPlayer", false),
   playerOrder: [],
   errorMessage: null,
   // Map
   map: null,
-  balancedSuits: loadPersistedSetting("balancedSuits", false),
+  balancedSuits: loadPersistedSetting<boolean>("balancedSuits", false),
   clearingSuits: {},
   // Deck
   deck: null,
   // Landmarks
-  landmarkCount: loadPersistedSetting("landmarkCount", 0),
+  landmarkCount: loadPersistedSetting<0 | 1 | 2>("landmarkCount", 0),
   landmark1: null,
   landmark2: null,
   // Hirelings
@@ -48,7 +48,7 @@ export const setupSlice = createSlice({
         savePersistedSetting("playerCount", playerCount);
       } else {
         console.warn(
-          `Invalid payload for setPlayerCount action: ${playerCount} (Payload must be a number above 0)`
+          `Invalid payload for setPlayerCount action: ${playerCount} (Payload must be a number above 0)`,
         );
       }
     },
@@ -70,7 +70,7 @@ export const setupSlice = createSlice({
         }
       } else {
         console.warn(
-          `Invalid payload for setFirstPlayer action: ${firstPlayer} (Payload must be a number between 1 and playerCount [${state.playerCount}])`
+          `Invalid payload for setFirstPlayer action: ${firstPlayer} (Payload must be a number between 1 and playerCount [${state.playerCount}])`,
         );
       }
     },
@@ -97,7 +97,7 @@ export const setupSlice = createSlice({
             }, []),
             options: ["fox", "mouse", "rabbit"],
           }));
-          let suitCounts: Record<ClearingSuit, number> = {
+          const suitCounts: Record<ClearingSuit, number> = {
             fox: 0,
             mouse: 0,
             rabbit: 0,
@@ -106,7 +106,7 @@ export const setupSlice = createSlice({
           // Assign each clearing one-by-one, favouring clearings with the least amount of valid options
           while (unassignedClearings.length > 0) {
             let lowestEntropy = Infinity;
-            let candidates = unassignedClearings.reduce((list: number[], { options }, index) => {
+            const candidates = unassignedClearings.reduce((list: number[], { options }, index) => {
               // If our entropy is higher don't include as candidate
               if (options.length > lowestEntropy) return list;
               // If our entropy is the same add as a candidate
@@ -124,7 +124,7 @@ export const setupSlice = createSlice({
               console.info(
                 "Failed to solve for balanced suits. Fail state:",
                 { ...state.clearingSuits },
-                unassignedClearings
+                unassignedClearings,
               );
               state.clearingSuits = {};
               break;
@@ -132,7 +132,7 @@ export const setupSlice = createSlice({
 
             // Randomly pick a candidate and remove it from the remaining clearings
             const nextClearingIndex = takeRandom(candidates);
-            let nextClearing = unassignedClearings[nextClearingIndex];
+            const nextClearing = unassignedClearings[nextClearingIndex]!;
             unassignedClearings.splice(nextClearingIndex, 1);
 
             // Assign a suit based off the valid options for the chosen clearing, and keep track of how many of each we've assigned
@@ -146,7 +146,7 @@ export const setupSlice = createSlice({
               links,
               options: options.filter(
                 (suit) =>
-                  suitCounts[suit] < 4 && (suit !== nextSuit || !links.includes(nextClearing.no))
+                  suitCounts[suit] < 4 && (suit !== nextSuit || !links.includes(nextClearing.no)),
               ),
             }));
           }
@@ -188,7 +188,7 @@ export const setupSlice = createSlice({
         savePersistedSetting("landmarkCount", landmarkCount);
       } else {
         console.warn(
-          `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and 2)`
+          `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and 2)`,
         );
       }
     },
@@ -199,7 +199,7 @@ export const setupSlice = createSlice({
         state.landmark1 = landmarkCode;
       } else {
         console.warn(
-          "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1"
+          "Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1",
         );
       }
     },
@@ -210,7 +210,7 @@ export const setupSlice = createSlice({
         state.landmark2 = landmarkCode;
       } else {
         console.warn(
-          "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2"
+          "Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2",
         );
       }
     },
@@ -237,7 +237,7 @@ export const setupSlice = createSlice({
           console.warn(
             "Invalid payload for setHireling action:",
             payload,
-            '("number" must be a number between 1 and 3)'
+            '("number" must be a number between 1 and 3)',
           );
         }
       },

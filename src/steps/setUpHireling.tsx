@@ -15,7 +15,7 @@ const SetUpHirelingStep: React.FC<SetUpHirelingStepProps> = ({ number }) => {
       context: hireling?.demoted ? "demoted" : undefined,
       count: nthLastPlayer(number),
     }),
-    [hireling, nthLastPlayer, number]
+    [hireling, nthLastPlayer, number],
   );
 
   if (!hireling) return null;

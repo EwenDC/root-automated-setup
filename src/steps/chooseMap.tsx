@@ -23,7 +23,7 @@ const ChooseMapStep: React.FC = () => {
       mapArray
         .filter(
           ({ enabled, fixedSuits, useLandmark }) =>
-            enabled && (fixedSuits != null || useLandmark != null)
+            enabled && (fixedSuits != null || useLandmark != null),
         )
         .map(({ code, fixedSuits, useLandmark }) => ({
           code,
@@ -32,11 +32,11 @@ const ChooseMapStep: React.FC = () => {
           useLandmark,
         }))
         .sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage)),
-    [mapArray, t, i18n.resolvedLanguage]
+    [mapArray, t, i18n.resolvedLanguage],
   );
   const onBalancedSuitsChange = useCallback(
     (value: boolean) => dispatch(balanceMapSuits(value)),
-    [dispatch]
+    [dispatch],
   );
 
   return (

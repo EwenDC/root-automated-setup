@@ -5,14 +5,14 @@ import { CodeObject, GameComponent, Togglable } from "../types";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { AppThunk, RootState } from "../store";
 import { setErrorMessage } from "../features/setupSlice";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { UnknownAction } from "@reduxjs/toolkit";
 import { stepActiveContext } from "./stepList";
 import { selectStepInvalid } from "../features/selectors";
 import { massComponentToggle } from "../features/thunks";
 
 interface ComponentListProps<T> {
   selector: (state: RootState) => T[];
-  toggleComponent: (code: string) => PayloadAction<any> | AppThunk;
+  toggleComponent: (code: string) => UnknownAction | AppThunk;
   getLabelKey: (component: T) => string;
   unsorted?: boolean;
 }
@@ -64,7 +64,9 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
       {stepActive ? (
         <button
           className="toggle"
-          onClick={() => dispatch(massComponentToggle(selector, !allEnabled, toggleComponent))}
+          onClick={() => {
+            dispatch(massComponentToggle(selector, !allEnabled, toggleComponent));
+          }}
         >
           {t(allEnabled ? "label.disableAll" : "label.enableAll")}
         </button>
@@ -97,7 +99,7 @@ const ComponentToggle = <T extends CodeObject & Togglable & GameComponent>({
               <span>{label}</span>
             </div>
           </button>
-        ) : null
+        ) : null,
       )}
     </div>
   );

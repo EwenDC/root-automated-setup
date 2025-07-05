@@ -1,4 +1,4 @@
-import { defineConfig, splitVendorChunkPlugin } from "vite";
+import { defineConfig } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import legacy from "@vitejs/plugin-legacy";
 import react from "@vitejs/plugin-react";
@@ -24,7 +24,6 @@ export default defineConfig({
       targets: [">0.2%", "not dead", "not op_mini all"],
     }),
     react(),
-    splitVendorChunkPlugin(),
     // Allow importing SVG as react components
     svgrPlugin({
       svgrOptions: {
@@ -117,5 +116,15 @@ export default defineConfig({
       },
     },
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+          return null;
+        },
+      },
+    },
   },
 });

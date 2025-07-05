@@ -19,16 +19,16 @@ export const countMatches = <T>(array: T[], matcher: (value: T) => boolean) =>
  */
 export const generateArraySelector = <
   D extends GameComponent,
-  I extends ComponentInfo = ComponentInfo
+  I extends ComponentInfo = ComponentInfo,
 >(
-  componentType: keyof Omit<ComponentsState, "expansions">
+  componentType: keyof Omit<ComponentsState, "expansions">,
 ) =>
   createSelector(
     (state: RootState) => state.components[componentType],
     (componentList) => {
       const array = [];
       for (const [code, componentInfo] of typedEntries(componentList)) {
-        const componentData = content[componentInfo.expansionCode][componentType]![code];
+        const componentData = content[componentInfo.expansionCode]![componentType]![code];
         array.push({
           ...(componentData as D),
           ...(componentInfo as I),
@@ -36,7 +36,7 @@ export const generateArraySelector = <
         });
       }
       return array;
-    }
+    },
   );
 
 /**
@@ -46,23 +46,23 @@ export const generateArraySelector = <
  */
 export const loadPersistedSetting = <T>(settingKey: string, defaultValue: T) => {
   // Load the current enable state from localStorage so we remember user settings
-  let storedVal = localStorage.getItem(settingKey);
+  const storedVal = localStorage.getItem(settingKey);
 
   // Was there a value stored in localStorage?
   if (storedVal != null) {
     try {
       // Parse the string stored in localStorage
-      const parsedValue = JSON.parse(storedVal);
+      const parsedValue = JSON.parse(storedVal) as unknown;
 
       // Only use it if it matches the expected type
       if (typeof parsedValue === typeof defaultValue) {
         return parsedValue as T;
       } else {
         console.warn(
-          `Saved state of ${storedVal} for setting ${settingKey} is of incorrect type (expected ${typeof defaultValue} got ${typeof parsedValue})`
+          `Saved state of ${storedVal} for setting ${settingKey} is of incorrect type (expected ${typeof defaultValue} got ${typeof parsedValue})`,
         );
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.warn(`Failed to parse saved state of ${storedVal} for setting ${settingKey}`, error);
     }
   }
@@ -77,13 +77,13 @@ export const loadPersistedSetting = <T>(settingKey: string, defaultValue: T) => 
  * @param settingKey The key of the setting to save, as stored in localStorage
  * @param value the value to save
  */
-export const savePersistedSetting = <T>(settingKey: string, value: T) => {
+export const savePersistedSetting = (settingKey: string, value: unknown) => {
   try {
     localStorage.setItem(settingKey, JSON.stringify(value));
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.warn(
       `Failed to persist state of ${JSON.stringify(value)} for setting ${settingKey}`,
-      error
+      error,
     );
   }
 };
@@ -100,7 +100,7 @@ export const takeRandom = <T>(list: T[]): T => {
   // Get a random index in the given list (i.e. between 0 inclusive and list.length exclusive)
   const i = Math.floor(Math.random() * list.length);
   // Save value at given index so we can return it
-  const returnVal = list[i];
+  const returnVal = list[i]!;
   // Delete 1 element starting at chosen index
   list.splice(i, 1);
   return returnVal;
@@ -110,6 +110,6 @@ export const takeRandom = <T>(list: T[]): T => {
  * Returns a typed array of key/values of the enumerable properties of an object
  * @param o Object that contains the properties and methods. This can be an object that you created or an existing Document Object Model (DOM) object.
  */
-export const typedEntries = Object.entries as <T extends { [s: string]: any } | ArrayLike<any>>(
-  o: T
-) => [keyof T, T[keyof T]][];
+export const typedEntries = Object.entries as <T, K = keyof T>(
+  o: T,
+) => (K extends keyof T ? [K, T[K]] : [K, T[keyof T]])[];

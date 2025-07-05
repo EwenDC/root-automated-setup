@@ -12,7 +12,7 @@ const SetUpDeckStep: React.FC = () => {
     () => ({
       context: playerCount < 3 ? "twoPlayer" : undefined,
     }),
-    [playerCount]
+    [playerCount],
   );
 
   return (

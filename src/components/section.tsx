@@ -10,9 +10,9 @@ type SectionProps = PropsWithChildren<{
   titleKey?: string;
   subtitleKey?: string;
   textKey?: string;
-  textBelowChildren?: boolean;
+  textBelowChildren?: boolean | undefined;
   translationOptions?: TOptions;
-  components?: readonly React.ReactElement[] | { readonly [tagName: string]: React.ReactElement };
+  components?: Readonly<Record<string, React.ReactElement>>;
 }>;
 
 const Section: React.FC<SectionProps> = ({
@@ -57,8 +57,11 @@ const Section: React.FC<SectionProps> = ({
       {textKey && (
         <Trans
           i18nKey={textKey}
-          count={translationOptions?.count} // For Trans component count cannot be passed in with options
-          tOptions={translationOptions}
+          // For Trans component count cannot be passed in with options
+          count={translationOptions?.count}
+          /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+          -- Bad react-i18next types force our hand here */
+          tOptions={translationOptions as any}
           components={{ ...iconComponents, ...components }}
         />
       )}

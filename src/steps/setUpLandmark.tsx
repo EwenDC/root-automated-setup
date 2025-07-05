@@ -16,7 +16,7 @@ const SetUpLandmarkStep: React.FC<SetUpLandmarkStepProps> = ({ number }) => {
       context: map,
       count: nthLastPlayer(number),
     }),
-    [map, nthLastPlayer, number]
+    [map, nthLastPlayer, number],
   );
 
   return (
