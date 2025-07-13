@@ -24,11 +24,12 @@ const MapChart: React.FC = () => {
         height="100"
         href={map.backImage}
       />
-      {map.clearings.map(({ no, x, y }) => {
+      {map.clearings.map((clearing, index) => {
+        const { x, y } = clearing
         // We know suit is defined because clearingSuits is set from `map.clearings`
-        const suit = clearingSuits[no]!
+        const suit = clearingSuits[index]!
         return (
-          <g key={no}>
+          <g key={index}>
             <title>{t(`label.clearing.${suit}`)}</title>
             <circle
               cx={x}
@@ -45,9 +46,9 @@ const MapChart: React.FC = () => {
               height="8"
               href={iconDict[suit].image}
             />
-            {!skippedSteps[SetupStep.setUpBots] ? (
+            {!skippedSteps[SetupStep.setUpBots] && 'no' in clearing ? (
               <g>
-                <title>{t('label.priority', { count: no })}</title>
+                <title>{t('label.priority', { count: clearing.no })}</title>
                 <image
                   x={x}
                   y={y}
@@ -62,11 +63,11 @@ const MapChart: React.FC = () => {
                   textAnchor="middle"
                   fill="#fff"
                 >
-                  {no}
+                  {clearing.no}
                 </text>
               </g>
             ) : null}
-            {map.useLandmark && map.landmark?.clearing === no ? (
+            {map.useLandmark && map.landmark?.clearing === index ? (
               <image
                 x={map.landmark.x}
                 y={map.landmark.y}

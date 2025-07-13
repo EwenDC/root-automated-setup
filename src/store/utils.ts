@@ -9,7 +9,7 @@ import type {
   WithCode,
 } from '../types'
 
-import content from '../content'
+import definitions from '../componentDefinitions'
 
 /**
  * Function for counting how many elements in an array match a condition.
@@ -116,7 +116,7 @@ export const selectComponentArray = <C extends keyof ComponentsState & keyof Exp
     componentList => {
       const array: unknown[] = []
       for (const [code, componentInfo] of Object.entries(componentList)) {
-        const componentData = content[componentInfo.expansionCode]?.[componentType]?.[code]
+        const componentData = definitions[componentInfo.expansionCode]?.[componentType]?.[code]
         array.push({ ...componentData, ...componentInfo, code })
       }
       return array as WithCode<ValueOf<ComponentsState[C]> & ValueOf<Expansion[C]>>[]

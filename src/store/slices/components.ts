@@ -10,7 +10,7 @@ import type {
   MapInfo,
 } from '../../types'
 
-import content from '../../content'
+import definitions from '../../componentDefinitions'
 import {
   loadPersistedSetting,
   lockComponent,
@@ -74,13 +74,14 @@ const setupInitialState = () => {
     vagabonds: {},
   }
 
-  for (const [expansionCode, expansion] of typedEntries(content)) {
-    const enabled =
-      expansion.base || loadPersistedSetting<boolean>(`expansions.${expansionCode}`, false)
+  for (const [expansionCode, expansion] of typedEntries(definitions)) {
+    const enabled = expansion.base
+      ? true
+      : loadPersistedSetting<boolean>(`expansions.${expansionCode}`, false)
 
     initialState.expansions[expansionCode] = {
       enabled,
-      locked: expansion.base && 'error.baseExpansionRequired',
+      locked: expansion.base ? 'error.baseExpansionRequired' : false,
       image: expansion.image,
     }
     // Add expansion components to state if the expansion is enabled
@@ -105,7 +106,7 @@ export const componentsSlice = createSlice({
         if (expansion.enabled) {
           // The expansion was just enabled, add it's components to our component list. We know the
           // expansion content will exist because we used `content` to create the expansion state.
-          addExpansionComponents(state, expansionCode, content[expansionCode]!)
+          addExpansionComponents(state, expansionCode, definitions[expansionCode]!)
         } else {
           // The expansion was just disabled, delete any components that came from it
           for (const componentType of COMPONENT_TYPES) {

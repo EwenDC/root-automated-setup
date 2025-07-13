@@ -25,7 +25,7 @@ const initialState: SetupState = {
   // Map
   map: null,
   balancedSuits: loadPersistedSetting<boolean>('balancedSuits', false),
-  clearingSuits: {},
+  clearingSuits: [],
   // Deck
   deck: null,
   // Landmarks
@@ -93,11 +93,11 @@ export const setupSlice = createSlice({
         // Do this in a loop as there is a chance the solver fails
         do {
           // First, keep track of all clearings, the clearings they connect to, and a list of valid suits for each clearing
-          let unassignedClearings: ClearingSolveState[] = clearings.map(({ no }) => ({
-            no,
+          const unassignedClearings: ClearingSolveState[] = clearings.map((_clearing, index) => ({
+            index,
             links: paths.reduce((list: number[], [a, b]) => {
-              if (a === no) list.push(b)
-              if (b === no) list.push(a)
+              if (a === index) list.push(b)
+              if (b === index) list.push(a)
               return list
             }, []),
             options: ['fox', 'mouse', 'rabbit'],
@@ -128,10 +128,10 @@ export const setupSlice = createSlice({
             if (lowestEntropy === 0) {
               console.info(
                 'Failed to solve for balanced suits. Fail state:',
-                { ...state.clearingSuits },
+                [...state.clearingSuits],
                 unassignedClearings,
               )
-              state.clearingSuits = {}
+              state.clearingSuits = []
               break
             }
 
@@ -142,18 +142,17 @@ export const setupSlice = createSlice({
 
             // Assign a suit based off the valid options for the chosen clearing, and keep track of how many of each we've assigned
             const nextSuit = takeRandom(nextClearing.options)
-            state.clearingSuits[nextClearing.no] = nextSuit
+            state.clearingSuits[nextClearing.index] = nextSuit
             suitCounts[nextSuit]++
 
             // Remove the assigned suit from all neighbouring clearings, or all clearings if we've hit the maximum amount for one suit
-            unassignedClearings = unassignedClearings.map(({ no, links, options }) => ({
-              no,
-              links,
-              options: options.filter(
+            for (const clearing of unassignedClearings) {
+              clearing.options = clearing.options.filter(
                 suit =>
-                  suitCounts[suit] < 4 && (suit !== nextSuit || !links.includes(nextClearing.no)),
-              ),
-            }))
+                  suitCounts[suit] < 4 &&
+                  (suit !== nextSuit || !clearing.links.includes(nextClearing.index)),
+              )
+            }
           }
         } while (Object.keys(state.clearingSuits).length === 0)
       } else {
@@ -171,9 +170,9 @@ export const setupSlice = createSlice({
           'rabbit',
           'rabbit',
         ]
-        clearings.forEach(({ no }) => {
-          state.clearingSuits[no] = takeRandom(suitPool)
-        })
+        for (let index = 0; index < clearings.length; index++) {
+          state.clearingSuits[index] = takeRandom(suitPool)
+        }
       }
     },
     balanceMapSuits(state, { payload: balancedSuits }: PayloadAction<boolean>) {

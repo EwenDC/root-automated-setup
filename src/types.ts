@@ -37,7 +37,7 @@ export type ExpansionCode = string
 
 /** An object representing an Expansion or Base Box for the Root board game. */
 export interface Expansion extends GameComponent {
-  base: boolean
+  base?: boolean
   decks?: Record<DeckCode, GameComponent>
   factions?: Record<FactionCode, Faction>
   hirelings?: Record<HirelingCode, Hireling>
@@ -61,9 +61,9 @@ export type FactionCode = FactionKey | string
 export interface Faction extends GameComponent {
   key: FactionKey
   order: number
-  cornerSetup: boolean
-  militant: boolean
-  isVagabond: boolean
+  cornerSetup?: boolean
+  militant?: boolean
+  isVagabond?: boolean
   warriors: number
   buildings: number
   buildingImage?: string
@@ -94,23 +94,36 @@ export interface Landmark extends GameComponent {
   minPlayers: number
 }
 
-/** A number used to identify a clearing on a map. */
-export type ClearingNumber = number
+/** The index of a clearing in it's map's clearing list. */
+export type ClearingIndex = number
 
 /** An object representing a Map Clearing and it's position in the Map Chart. */
 export interface Clearing {
-  no: ClearingNumber
   x: number
   y: number
 }
 
-/** A tuple representing a path connecting two clearings, as referenced by their priority numbers. */
-export type Path = [ClearingNumber, ClearingNumber]
+/** A number used to rank the priority of a clearing for bot actions. */
+export type ClearingPriority = number
+
+/**
+ * An object representing a Map Clearing and it's position in the Map Chart, as well as it's
+ * priority for bot actions.
+ */
+export interface ClearingWithPriority extends Clearing {
+  no: ClearingPriority
+}
+
+/**
+ * A tuple representing a path connecting two clearings, as referenced by their index in the
+ * clearing list.
+ */
+export type Path = [ClearingIndex, ClearingIndex]
 
 /** An object representing details for a Landmark as it appears on a specific map. */
 export interface MapLandmark {
   code: LandmarkCode
-  clearing: ClearingNumber
+  clearing: ClearingIndex
   x: number
   y: number
   angle?: number
@@ -121,12 +134,12 @@ export type MapCode = string
 
 /** An object representing a Map from the Root board game. */
 export interface Map extends GameComponent {
-  clearings: Clearing[]
+  clearings: Clearing[] | ClearingWithPriority[]
   paths: Path[]
   backImage: string
-  printedSuits: boolean
+  printedSuits?: boolean
   landmark?: MapLandmark
-  defaultSuits?: Record<ClearingNumber, ClearingSuit>
+  defaultSuits?: ClearingSuit[]
 }
 
 /** A unique identifier for a Vagabond character. */
@@ -191,8 +204,8 @@ export interface ComponentsState {
 
 /** Object storing information pertinent to solving map clearing suit distribution. */
 export interface ClearingSolveState {
-  no: ClearingNumber
-  links: ClearingNumber[]
+  index: ClearingIndex
+  links: number[]
   options: ClearingSuit[]
 }
 
@@ -218,7 +231,7 @@ export interface SetupState {
   // Map
   map: MapCode | null
   balancedSuits: boolean
-  clearingSuits: Record<ClearingNumber, ClearingSuit>
+  clearingSuits: ClearingSuit[]
   // Deck
   deck: DeckCode | null
   // Landmarks
