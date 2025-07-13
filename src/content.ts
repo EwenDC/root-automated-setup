@@ -1,93 +1,86 @@
-import { Expansion } from "./types";
+import type { Expansion, ExpansionCode } from './types'
 
 // Box Images
-import exilesDeckBox from "./images/boxes/exilesDeck.png";
-import landmarkPackBox from "./images/boxes/landmarkPack.png";
-import marauderBox from "./images/boxes/marauder.png";
-import marauderHirelingsBox from "./images/boxes/marauderHirelings.png";
-import riverfolkBox from "./images/boxes/riverfolk.png";
-import riverfolkHirelingsBox from "./images/boxes/riverfolkHirelings.png";
-import rootBox from "./images/boxes/root.png";
-import underworldBox from "./images/boxes/underworld.png";
-import underworldHirelingsBox from "./images/boxes/underworldHirelings.png";
-import vagabondPackBox from "./images/boxes/vagabondPack.png";
-
+import exilesDeckBox from './images/boxes/exilesDeck.png'
+import landmarkPackBox from './images/boxes/landmarkPack.png'
+import marauderBox from './images/boxes/marauder.png'
+import marauderHirelingsBox from './images/boxes/marauderHirelings.png'
+import riverfolkBox from './images/boxes/riverfolk.png'
+import riverfolkHirelingsBox from './images/boxes/riverfolkHirelings.png'
+import rootBox from './images/boxes/root.png'
+import underworldBox from './images/boxes/underworld.png'
+import underworldHirelingsBox from './images/boxes/underworldHirelings.png'
+import vagabondPackBox from './images/boxes/vagabondPack.png'
 // Building Images
-import baseBuildings from "./images/buildings/bases.png";
-import duchyBuildings from "./images/buildings/duchy.png";
-import gardenBuildings from "./images/buildings/gardens.png";
-import marquiseBuildings from "./images/buildings/marquise.png";
-import roostBuilding from "./images/buildings/roost.png";
-import strongholdBuilding from "./images/buildings/stronghold.png";
-import waystationBuildings from "./images/buildings/waystations.png";
-
+import baseBuildings from './images/buildings/bases.png'
+import duchyBuildings from './images/buildings/duchy.png'
+import gardenBuildings from './images/buildings/gardens.png'
+import marquiseBuildings from './images/buildings/marquise.png'
+import roostBuilding from './images/buildings/roost.png'
+import strongholdBuilding from './images/buildings/stronghold.png'
+import waystationBuildings from './images/buildings/waystations.png'
 // Card Images
-import exilesCard from "./images/cards/exiles.png";
-import standardCard from "./images/cards/standard.png";
-
+import exilesCard from './images/cards/exiles.png'
+import standardCard from './images/cards/standard.png'
 // Landmark Images
-import cityLandmark from "./images/landmarks/city.png";
-import ferryLandmark from "./images/landmarks/ferry.png";
-import forgeLandmark from "./images/landmarks/forge.png";
-import marketLandmark from "./images/landmarks/market.png";
-import towerLandmark from "./images/landmarks/tower.png";
-import treetopLandmark from "./images/landmarks/treetop.png";
-
+import cityLandmark from './images/landmarks/city.png'
+import ferryLandmark from './images/landmarks/ferry.png'
+import forgeLandmark from './images/landmarks/forge.png'
+import marketLandmark from './images/landmarks/market.png'
+import towerLandmark from './images/landmarks/tower.png'
+import treetopLandmark from './images/landmarks/treetop.png'
 // Map Images
-import autumnMap from "./images/maps/autumn.png";
-import lakeMap from "./images/maps/lake.png";
-import mountainMap from "./images/maps/mountain.png";
-import winterMap from "./images/maps/winter.png";
-
+import autumnMap from './images/maps/autumn.png'
+import lakeMap from './images/maps/lake.png'
+import mountainMap from './images/maps/mountain.png'
+import winterMap from './images/maps/winter.png'
 // Meeple Images
-import adventurerMeeple from "./images/meeples/adventurer.png";
-import allianceMeeple from "./images/meeples/alliance.png";
-import arbiterMeeple from "./images/meeples/arbiter.png";
-import bandMeeple from "./images/meeples/band.png";
-import banditsMeeple from "./images/meeples/bandits.png";
-import corvidMeeple from "./images/meeples/corvid.png";
-import cultMeeple from "./images/meeples/cult.png";
-import duchyMeeple from "./images/meeples/duchy.png";
-import dynastyMeeple from "./images/meeples/dynasty.png";
-import exileMeeple from "./images/meeples/exile.png";
-import expeditionMeeple from "./images/meeples/expedition.png";
-import eyrieMeeple from "./images/meeples/eyrie.png";
-import flamebearersMeeple from "./images/meeples/flamebearers.png";
-import flotillaMeeple from "./images/meeples/flotilla.png";
-import harrierMeeple from "./images/meeples/harrier.png";
-import keepersMeeple from "./images/meeples/keepers.png";
-import marquiseMeeple from "./images/meeples/marquise.png";
-import patrolMeeple from "./images/meeples/patrol.png";
-import prophetsMeeple from "./images/meeples/prophets.png";
-import protectorMeeple from "./images/meeples/protector.png";
-import rangerMeeple from "./images/meeples/ranger.png";
-import roninMeeple from "./images/meeples/ronin.png";
-import riverfolkMeeple from "./images/meeples/riverfolk.png";
-import scoundrelMeeple from "./images/meeples/scoundrel.png";
-import spiesMeeple from "./images/meeples/spies.png";
-import thiefMeeple from "./images/meeples/thief.png";
-import tinkerMeeple from "./images/meeples/tinker.png";
-import uprisingMeeple from "./images/meeples/uprising.png";
-import vagrantMeeple from "./images/meeples/vagrant.png";
-import vaultkeepersMeeple from "./images/meeples/vaultkeepers.png";
-import warlordMeeple from "./images/meeples/warlord.png";
-
+import adventurerMeeple from './images/meeples/adventurer.png'
+import allianceMeeple from './images/meeples/alliance.png'
+import arbiterMeeple from './images/meeples/arbiter.png'
+import bandMeeple from './images/meeples/band.png'
+import banditsMeeple from './images/meeples/bandits.png'
+import corvidMeeple from './images/meeples/corvid.png'
+import cultMeeple from './images/meeples/cult.png'
+import duchyMeeple from './images/meeples/duchy.png'
+import dynastyMeeple from './images/meeples/dynasty.png'
+import exileMeeple from './images/meeples/exile.png'
+import expeditionMeeple from './images/meeples/expedition.png'
+import eyrieMeeple from './images/meeples/eyrie.png'
+import flamebearersMeeple from './images/meeples/flamebearers.png'
+import flotillaMeeple from './images/meeples/flotilla.png'
+import harrierMeeple from './images/meeples/harrier.png'
+import keepersMeeple from './images/meeples/keepers.png'
+import marquiseMeeple from './images/meeples/marquise.png'
+import patrolMeeple from './images/meeples/patrol.png'
+import prophetsMeeple from './images/meeples/prophets.png'
+import protectorMeeple from './images/meeples/protector.png'
+import rangerMeeple from './images/meeples/ranger.png'
+import riverfolkMeeple from './images/meeples/riverfolk.png'
+import roninMeeple from './images/meeples/ronin.png'
+import scoundrelMeeple from './images/meeples/scoundrel.png'
+import spiesMeeple from './images/meeples/spies.png'
+import thiefMeeple from './images/meeples/thief.png'
+import tinkerMeeple from './images/meeples/tinker.png'
+import uprisingMeeple from './images/meeples/uprising.png'
+import vagrantMeeple from './images/meeples/vagrant.png'
+import vaultkeepersMeeple from './images/meeples/vaultkeepers.png'
+import warlordMeeple from './images/meeples/warlord.png'
 // Path Images
-import autumnPaths from "./images/paths/autumn.png";
-import lakePaths from "./images/paths/lake.png";
-import mountainPaths from "./images/paths/mountain.png";
-import winterPaths from "./images/paths/winter.png";
-
+import autumnPaths from './images/paths/autumn.png'
+import lakePaths from './images/paths/lake.png'
+import mountainPaths from './images/paths/mountain.png'
+import winterPaths from './images/paths/winter.png'
 // Token Images
-import marquiseTokens from "./images/tokens/marquise.png";
-import mobToken from "./images/tokens/mob.png";
-import plotToken from "./images/tokens/plot.png";
-import relicTokens from "./images/tokens/relics.png";
-import sympathyToken from "./images/tokens/sympathy.png";
-import tradePostTokens from "./images/tokens/tradePosts.png";
-import tunnelToken from "./images/tokens/tunnel.png";
+import marquiseTokens from './images/tokens/marquise.png'
+import mobToken from './images/tokens/mob.png'
+import plotToken from './images/tokens/plot.png'
+import relicTokens from './images/tokens/relics.png'
+import sympathyToken from './images/tokens/sympathy.png'
+import tradePostTokens from './images/tokens/tradePosts.png'
+import tunnelToken from './images/tokens/tunnel.png'
 
-const content: Record<string, Expansion> = {
+const content: Record<ExpansionCode, Expansion> = {
   root: {
     base: true,
     image: rootBox,
@@ -98,7 +91,7 @@ const content: Record<string, Expansion> = {
     },
     factions: {
       marquise: {
-        key: "marquise",
+        key: 'marquise',
         order: 1,
         cornerSetup: true,
         image: marquiseMeeple,
@@ -115,7 +108,7 @@ const content: Record<string, Expansion> = {
         crafting: 1,
       },
       eyrie: {
-        key: "eyrie",
+        key: 'eyrie',
         order: 2,
         cornerSetup: true,
         image: eyrieMeeple,
@@ -131,7 +124,7 @@ const content: Record<string, Expansion> = {
         crafting: 1,
       },
       alliance: {
-        key: "alliance",
+        key: 'alliance',
         order: 3,
         cornerSetup: false,
         image: allianceMeeple,
@@ -148,7 +141,7 @@ const content: Record<string, Expansion> = {
         crafting: 2,
       },
       vagabond: {
-        key: "vagabond",
+        key: 'vagabond',
         order: 4,
         cornerSetup: false,
         image: thiefMeeple,
@@ -203,18 +196,18 @@ const content: Record<string, Expansion> = {
         backImage: autumnPaths,
         printedSuits: true,
         defaultSuits: {
-          1: "fox",
-          5: "rabbit",
-          10: "rabbit",
-          2: "mouse",
-          9: "mouse",
-          12: "fox",
-          11: "mouse",
-          6: "fox",
-          4: "rabbit",
-          8: "fox",
-          7: "mouse",
-          3: "rabbit",
+          1: 'fox',
+          5: 'rabbit',
+          10: 'rabbit',
+          2: 'mouse',
+          9: 'mouse',
+          12: 'fox',
+          11: 'mouse',
+          6: 'fox',
+          4: 'rabbit',
+          8: 'fox',
+          7: 'mouse',
+          3: 'rabbit',
         },
       },
       winter: {
@@ -257,15 +250,15 @@ const content: Record<string, Expansion> = {
     },
     vagabonds: {
       thief: {
-        startingItems: ["boot", "torch", "tea", "sword"],
+        startingItems: ['boot', 'torch', 'tea', 'sword'],
         image: thiefMeeple,
       },
       tinker: {
-        startingItems: ["boot", "torch", "bag", "hammer"],
+        startingItems: ['boot', 'torch', 'bag', 'hammer'],
         image: tinkerMeeple,
       },
       ranger: {
-        startingItems: ["boot", "torch", "crossbow", "sword"],
+        startingItems: ['boot', 'torch', 'crossbow', 'sword'],
         image: rangerMeeple,
       },
     },
@@ -275,7 +268,7 @@ const content: Record<string, Expansion> = {
     image: riverfolkBox,
     factions: {
       vagabond2: {
-        key: "vagabond",
+        key: 'vagabond',
         order: 5,
         cornerSetup: false,
         image: roninMeeple,
@@ -290,7 +283,7 @@ const content: Record<string, Expansion> = {
         crafting: 0,
       },
       cult: {
-        key: "cult",
+        key: 'cult',
         order: 6,
         cornerSetup: true,
         image: cultMeeple,
@@ -306,7 +299,7 @@ const content: Record<string, Expansion> = {
         crafting: 2,
       },
       riverfolk: {
-        key: "riverfolk",
+        key: 'riverfolk',
         order: 7,
         cornerSetup: false,
         image: riverfolkMeeple,
@@ -324,15 +317,15 @@ const content: Record<string, Expansion> = {
     },
     vagabonds: {
       vagrant: {
-        startingItems: ["coin", "torch", "boot"],
+        startingItems: ['coin', 'torch', 'boot'],
         image: vagrantMeeple,
       },
       arbiter: {
-        startingItems: ["boot", "torch", "sword", "sword"],
+        startingItems: ['boot', 'torch', 'sword', 'sword'],
         image: arbiterMeeple,
       },
       scoundrel: {
-        startingItems: ["boot", "boot", "torch", "crossbow"],
+        startingItems: ['boot', 'boot', 'torch', 'crossbow'],
         image: scoundrelMeeple,
       },
     },
@@ -342,7 +335,7 @@ const content: Record<string, Expansion> = {
     image: underworldBox,
     factions: {
       duchy: {
-        key: "duchy",
+        key: 'duchy',
         order: 8,
         cornerSetup: true,
         image: duchyMeeple,
@@ -359,7 +352,7 @@ const content: Record<string, Expansion> = {
         crafting: 1,
       },
       corvid: {
-        key: "corvid",
+        key: 'corvid',
         order: 9,
         cornerSetup: false,
         image: corvidMeeple,
@@ -424,25 +417,25 @@ const content: Record<string, Expansion> = {
         backImage: lakePaths,
         printedSuits: false,
         landmark: {
-          code: "ferry",
+          code: 'ferry',
           clearing: 1,
           x: 71.5,
           y: 67.5,
           angle: 42,
         },
         defaultSuits: {
-          2: "fox",
-          7: "mouse",
-          6: "fox",
-          4: "rabbit",
-          8: "rabbit",
-          10: "mouse",
-          11: "rabbit",
-          5: "mouse",
-          12: "rabbit",
-          3: "mouse",
-          9: "fox",
-          1: "fox",
+          2: 'fox',
+          7: 'mouse',
+          6: 'fox',
+          4: 'rabbit',
+          8: 'rabbit',
+          10: 'mouse',
+          11: 'rabbit',
+          5: 'mouse',
+          12: 'rabbit',
+          3: 'mouse',
+          9: 'fox',
+          1: 'fox',
         },
       },
       mountain: {
@@ -487,24 +480,24 @@ const content: Record<string, Expansion> = {
         backImage: mountainPaths,
         printedSuits: false,
         landmark: {
-          code: "tower",
+          code: 'tower',
           clearing: 10,
           x: 43,
           y: 36,
         },
         defaultSuits: {
-          1: "fox",
-          5: "mouse",
-          2: "rabbit",
-          8: "rabbit",
-          9: "rabbit",
-          10: "fox",
-          12: "fox",
-          11: "mouse",
-          6: "mouse",
-          4: "mouse",
-          7: "rabbit",
-          3: "fox",
+          1: 'fox',
+          5: 'mouse',
+          2: 'rabbit',
+          8: 'rabbit',
+          9: 'rabbit',
+          10: 'fox',
+          12: 'fox',
+          11: 'mouse',
+          6: 'mouse',
+          4: 'mouse',
+          7: 'rabbit',
+          3: 'fox',
         },
       },
     },
@@ -514,7 +507,7 @@ const content: Record<string, Expansion> = {
     image: marauderBox,
     factions: {
       warlord: {
-        key: "warlord",
+        key: 'warlord',
         order: 10,
         cornerSetup: true,
         image: warlordMeeple,
@@ -531,7 +524,7 @@ const content: Record<string, Expansion> = {
         crafting: 0,
       },
       keepers: {
-        key: "keepers",
+        key: 'keepers',
         order: 11,
         cornerSetup: true,
         image: keepersMeeple,
@@ -551,19 +544,19 @@ const content: Record<string, Expansion> = {
     hirelings: {
       patrol: {
         image: patrolMeeple,
-        factions: ["marquise"],
+        factions: ['marquise'],
       },
       dynasty: {
         image: dynastyMeeple,
-        factions: ["eyrie"],
+        factions: ['eyrie'],
       },
       uprising: {
         image: uprisingMeeple,
-        factions: ["alliance"],
+        factions: ['alliance'],
       },
       exile: {
         image: exileMeeple,
-        factions: ["vagabond", "vagabond2"],
+        factions: ['vagabond', 'vagabond2'],
       },
     },
   },
@@ -603,15 +596,15 @@ const content: Record<string, Expansion> = {
     image: vagabondPackBox,
     vagabonds: {
       adventurer: {
-        startingItems: ["boot", "torch", "hammer"],
+        startingItems: ['boot', 'torch', 'hammer'],
         image: adventurerMeeple,
       },
       ronin: {
-        startingItems: ["boot", "boot", "torch", "sword"],
+        startingItems: ['boot', 'boot', 'torch', 'sword'],
         image: roninMeeple,
       },
       harrier: {
-        startingItems: ["coin", "torch", "sword", "crossbow"],
+        startingItems: ['coin', 'torch', 'sword', 'crossbow'],
         image: harrierMeeple,
       },
     },
@@ -622,11 +615,11 @@ const content: Record<string, Expansion> = {
     hirelings: {
       prophets: {
         image: prophetsMeeple,
-        factions: ["cult"],
+        factions: ['cult'],
       },
       flotilla: {
         image: flotillaMeeple,
-        factions: ["riverfolk"],
+        factions: ['riverfolk'],
       },
       bandits: {
         image: banditsMeeple,
@@ -640,11 +633,11 @@ const content: Record<string, Expansion> = {
     hirelings: {
       expedition: {
         image: expeditionMeeple,
-        factions: ["duchy"],
+        factions: ['duchy'],
       },
       spies: {
         image: spiesMeeple,
-        factions: ["corvid"],
+        factions: ['corvid'],
       },
       protector: {
         image: protectorMeeple,
@@ -658,11 +651,11 @@ const content: Record<string, Expansion> = {
     hirelings: {
       flamebearers: {
         image: flamebearersMeeple,
-        factions: ["warlord"],
+        factions: ['warlord'],
       },
       vaultkeepers: {
         image: vaultkeepersMeeple,
-        factions: ["keepers"],
+        factions: ['keepers'],
       },
       band: {
         image: bandMeeple,
@@ -670,6 +663,6 @@ const content: Record<string, Expansion> = {
       },
     },
   },
-};
+} as const
 
-export default Object.freeze(content);
+export default content

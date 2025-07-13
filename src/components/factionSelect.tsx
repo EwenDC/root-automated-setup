@@ -1,89 +1,82 @@
-import classNames from "classnames";
-import { Trans, useTranslation } from "react-i18next";
-import { setCurrentFactionIndex } from "../features/flowSlice";
-import { setErrorMessage } from "../features/setupSlice";
-import { useAppDispatch, useAppSelector, useSelectFactionPool } from "../hooks";
-import { createContext, useContext } from "react";
-import MilitantIcon from "../images/icons/militant.svg?react";
-import StatBar from "./statBar";
-import iconComponents from "../iconComponents";
-import IconList from "./iconList";
-import ComponentCount from "./componentCount";
-import { Faction, FlowSlice } from "../types";
-import { stepActiveContext } from "./stepList";
-import { selectStepInvalid } from "../features/selectors";
+import classNames from 'classnames'
+import { createContext, useContext } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
-export const selectedFactionContext = createContext<Faction | null>(null);
+import type { Faction, FlowSlice } from '../types'
+
+import { useAppDispatch, useAppSelector, useInvalid, useSelectFactionPool } from '../hooks'
+import iconComponents from '../iconComponents'
+import MilitantIcon from '../images/icons/militant.svg?react'
+import { setCurrentFactionIndex, setErrorMessage } from '../store'
+import ComponentCount from './componentCount'
+import IconList from './iconList'
+import StatBar from './statBar'
+import { stepActiveContext } from './stepList'
+
+export const selectedFactionContext = createContext<Faction | null>(null)
 
 interface FactionSelectProps {
-  flowSlice: FlowSlice;
+  flowSlice: FlowSlice
 }
 
 const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
-  const selectFactionPool = useSelectFactionPool(flowSlice.factionPool);
-  const factionPool = useAppSelector(selectFactionPool);
-  const stepActive = useContext(stepActiveContext);
-  const invalid = useAppSelector(selectStepInvalid(stepActive));
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const selectFactionPool = useSelectFactionPool(flowSlice.factionPool)
+  const factionPool = useAppSelector(selectFactionPool)
+  const stepActive = useContext(stepActiveContext)
+  const invalid = useInvalid(stepActive)
+  const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
   // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
   const labelledFactionPool = factionPool.map(({ code, key, image, militant, vagabond }) => {
-    let factionName = t(`faction.${key}.name`);
-    if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`;
+    let factionName = t(`faction.${key}.name`)
+    if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`
 
     // Swap out the faction image for the vagabond image (if we have one)
-    const factionImage = vagabond ? vagabond.image : image;
+    const factionImage = vagabond ? vagabond.image : image
 
-    return {
-      code,
-      factionImage,
-      factionName,
-      militant,
-    };
-  });
-  const largeLabels = labelledFactionPool.some((faction) => faction.factionName.length > 23);
+    return { code, factionImage, factionName, militant }
+  })
+  const largeLabels = labelledFactionPool.some(faction => faction.factionName.length > 23)
 
   // We use this event handler to simulate the keyboard behaviour of a real radio group, to comply with accessibility requirements
-  const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    const focusedIndex = flowSlice.factionIndex ?? 0;
-    const maxIndex = factionPool.length - (flowSlice.lastFactionLocked ? 2 : 1);
-    let newIndex: number | undefined;
+  const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = event => {
+    const focusedIndex = flowSlice.factionIndex ?? 0
+    const maxIndex = factionPool.length - (flowSlice.lastFactionLocked ? 2 : 1)
+    let newIndex: number | undefined
 
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      newIndex = focusedIndex + 1;
-      if (newIndex > maxIndex) newIndex = 0;
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      newIndex = focusedIndex - 1;
-      if (newIndex < 0) newIndex = maxIndex;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      newIndex = focusedIndex + 1
+      if (newIndex > maxIndex) newIndex = 0
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      newIndex = focusedIndex - 1
+      if (newIndex < 0) newIndex = maxIndex
     }
 
     if (newIndex != null) {
-      event.preventDefault();
-      dispatch(setCurrentFactionIndex(newIndex));
+      event.preventDefault()
+      dispatch(setCurrentFactionIndex(newIndex))
 
       if (event.currentTarget.parentNode) {
         // TypeScript types incorrectly types this as just "Element" instead of "HTMLElement"
-        const selectedHTMLElement = event.currentTarget.parentNode.children[
-          newIndex
-        ] as HTMLElement;
-        selectedHTMLElement.focus();
+        const selectedHTMLElement = event.currentTarget.parentNode.children[newIndex] as HTMLElement
+        selectedHTMLElement.focus()
       }
     }
-  };
+  }
 
-  const lastIndex = factionPool.length - 1;
+  const lastIndex = factionPool.length - 1
   const selectedFaction =
-    flowSlice.factionIndex != null ? factionPool[flowSlice.factionIndex] : null;
+    flowSlice.factionIndex != null ? factionPool[flowSlice.factionIndex] : null
   return (
     <>
       <div
-        className={classNames("faction-select", { "large-labels": largeLabels })}
+        className={classNames('faction-select', { 'large-labels': largeLabels })}
         role="radiogroup"
-        aria-label={t("setupStep.selectFaction.subtitle")}
+        aria-label={t('setupStep.selectFaction.subtitle')}
         aria-required="true"
         aria-invalid={invalid ? true : undefined}
-        aria-errormessage={invalid ? "appError" : undefined}
+        aria-errormessage={invalid ? 'appError' : undefined}
         aria-disabled={!stepActive}
       >
         {labelledFactionPool.map(({ code, factionImage, factionName, militant }, index) => (
@@ -97,16 +90,16 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
             onClick={() => {
               if (index !== flowSlice.factionIndex) {
                 if (!flowSlice.lastFactionLocked || index < lastIndex) {
-                  dispatch(setCurrentFactionIndex(index));
+                  dispatch(setCurrentFactionIndex(index))
                 } else {
-                  dispatch(setErrorMessage("error.lockedFaction"));
+                  dispatch(setErrorMessage('error.lockedFaction'))
                 }
               }
             }}
             disabled={!stepActive}
             title={
               stepActive && flowSlice.lastFactionLocked && index === lastIndex
-                ? t("error.lockedFaction")
+                ? t('error.lockedFaction')
                 : undefined
             }
             role="radio"
@@ -116,7 +109,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
             }
             aria-label={
               stepActive
-                ? `${factionName}${militant ? ` (${t("label.militant")})` : ""}`
+                ? `${factionName}${militant ? ` (${t('label.militant')})` : ''}`
                 : undefined
             }
             // We have to override the tabbing logic to meet the standard of role "radio"
@@ -132,7 +125,10 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
               <span className="label">
                 {militant ? (
                   <>
-                    <MilitantIcon className="militant-icon" title={t("label.militant")} />{" "}
+                    <MilitantIcon
+                      className="militant-icon"
+                      title={t('label.militant')}
+                    />{' '}
                   </>
                 ) : null}
                 {factionName}
@@ -159,14 +155,14 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
               {selectedFaction.vagabond && (
                 <>
                   <p>
-                    <strong>{t("label.startingItems")}.</strong>{" "}
+                    <strong>{t('label.startingItems')}.</strong>{' '}
                     <IconList list={selectedFaction.vagabond.startingItems} />.
                   </p>
                   <p>
                     <strong>
-                      {t("label.specialAction")}:{" "}
+                      {t('label.specialAction')}:{' '}
                       {t(`vagabond.${selectedFaction.vagabond.code}.action`)}.
-                    </strong>{" "}
+                    </strong>{' '}
                     <Trans
                       i18nKey={`vagabond.${selectedFaction.vagabond.code}.effect`}
                       components={iconComponents}
@@ -181,7 +177,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default FactionSelect;
+export default FactionSelect

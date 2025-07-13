@@ -1,25 +1,27 @@
-import Checkbox from "../components/checkbox";
-import ComponentToggle from "../components/componentToggle";
-import Section from "../components/section";
-import { toggleHireling } from "../features/componentsSlice";
-import { skipSteps } from "../features/flowSlice";
-import { selectHirelingArray } from "../features/selectors";
-import { savePersistedSetting } from "../features/utils";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { CodeObject, SetupStep } from "../types";
+import type { CodeObject } from '../types'
 
-const getHirelingLabelKey = (hireling: CodeObject) => `hireling.${hireling.code}.name`;
+import Checkbox from '../components/checkbox'
+import ComponentToggle from '../components/componentToggle'
+import Section from '../components/section'
+import { useAppDispatch, useAppSelector } from '../hooks'
+import { savePersistedSetting, selectHirelingArray, skipSteps, toggleHireling } from '../store'
+import { SetupStep } from '../types'
+
+const getHirelingLabelKey = (hireling: CodeObject) => `hireling.${hireling.code}.name`
 
 const ChooseHirelingsStep: React.FC = () => {
-  const skippedSteps = useAppSelector((state) => state.flow.skippedSteps);
-  const dispatch = useAppDispatch();
+  const skippedSteps = useAppSelector(state => state.flow.skippedSteps)
+  const dispatch = useAppDispatch()
 
   return (
-    <Section titleKey="setupStep.chooseHirelings.title" textKey="setupStep.chooseHirelings.body">
+    <Section
+      titleKey="setupStep.chooseHirelings.title"
+      textKey="setupStep.chooseHirelings.body"
+    >
       <Checkbox
         id="includeHirelings"
         defaultValue={!skippedSteps[SetupStep.setUpHireling1]}
-        onChange={(checked) => {
+        onChange={checked => {
           dispatch(
             skipSteps(
               [
@@ -30,8 +32,8 @@ const ChooseHirelingsStep: React.FC = () => {
               ],
               !checked,
             ),
-          );
-          savePersistedSetting("includeHirelings", checked);
+          )
+          savePersistedSetting('includeHirelings', checked)
         }}
       />
       {!skippedSteps[SetupStep.setUpHireling1] ? (
@@ -42,7 +44,7 @@ const ChooseHirelingsStep: React.FC = () => {
         />
       ) : null}
     </Section>
-  );
-};
+  )
+}
 
-export default ChooseHirelingsStep;
+export default ChooseHirelingsStep

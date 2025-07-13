@@ -1,0 +1,91 @@
+import { createSelector } from '@reduxjs/toolkit'
+
+import {
+  selectDeckArray,
+  selectHirelingArray,
+  selectLandmarkArray,
+  selectMapArray,
+} from './slices/components'
+import {
+  selectSetupDeckCode,
+  selectSetupHireling1Entry,
+  selectSetupHireling2Entry,
+  selectSetupHireling3Entry,
+  selectSetupLandmark1Code,
+  selectSetupLandmark2Code,
+  selectSetupMapCode,
+} from './slices/setup'
+
+/** Returns the object for the map selected in setup. */
+export const selectSetupMap = createSelector(
+  selectSetupMapCode,
+  selectMapArray,
+  selectLandmarkArray,
+  (mapCode, mapArray, landmarkArray) => {
+    const setupMap = mapArray.find(({ code }) => code === mapCode)
+    // Inject the landmark data too
+    return (
+      setupMap && {
+        ...setupMap,
+        landmark: setupMap.landmark && {
+          ...landmarkArray.find(({ code }) => code === setupMap.landmark!.code)!,
+          ...setupMap.landmark,
+        },
+      }
+    )
+  },
+)
+
+/** Returns the object for the deck selected in setup. */
+export const selectSetupDeck = createSelector(
+  selectSetupDeckCode,
+  selectDeckArray,
+  (deckCode, deckArray) => deckArray.find(({ code }) => code === deckCode),
+)
+
+/** Returns the object for the first landmark selected in setup. */
+export const selectSetupLandmark1 = createSelector(
+  selectSetupLandmark1Code,
+  selectLandmarkArray,
+  (landmarkCode, landmarkArray) => landmarkArray.find(({ code }) => code === landmarkCode),
+)
+
+/** Returns the object for the second landmark selected in setup. */
+export const selectSetupLandmark2 = createSelector(
+  selectSetupLandmark2Code,
+  selectLandmarkArray,
+  (landmarkCode, landmarkArray) => landmarkArray.find(({ code }) => code === landmarkCode),
+)
+
+/** Returns the object for the first hireling selected in setup. */
+export const selectSetupHireling1 = createSelector(
+  selectSetupHireling1Entry,
+  selectHirelingArray,
+  (hirelingEntry, hirelingArray) =>
+    hirelingEntry && {
+      ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,
+      ...hirelingEntry,
+    },
+)
+
+/** Returns the object for the second hireling selected in setup. */
+export const selectSetupHireling2 = createSelector(
+  selectSetupHireling2Entry,
+  selectHirelingArray,
+  (hirelingEntry, hirelingArray) =>
+    hirelingEntry && {
+      ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,
+      ...hirelingEntry,
+    },
+)
+
+/** Returns the object for the third hireling selected in setup. */
+export const selectSetupHireling3 = createSelector(
+  selectSetupHireling3Entry,
+  selectHirelingArray,
+  (hirelingEntry, hirelingArray) =>
+    hirelingEntry && {
+      ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,
+      ...hirelingEntry,
+    },
+)

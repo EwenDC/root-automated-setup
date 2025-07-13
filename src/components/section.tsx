@@ -1,19 +1,22 @@
-import classNames from "classnames";
-import { TOptions } from "i18next";
-import { PropsWithChildren, useContext, useEffect, useRef } from "react";
-import { Trans, useTranslation } from "react-i18next";
-import iconComponents from "../iconComponents";
-import { stepActiveContext } from "./stepList";
+import type { TOptions } from 'i18next'
+import type { PropsWithChildren } from 'react'
+
+import classNames from 'classnames'
+import { useContext, useEffect, useRef } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
+
+import iconComponents from '../iconComponents'
+import { stepActiveContext } from './stepList'
 
 type SectionProps = PropsWithChildren<{
-  active?: boolean;
-  titleKey?: string;
-  subtitleKey?: string;
-  textKey?: string;
-  textBelowChildren?: boolean | undefined;
-  translationOptions?: TOptions;
-  components?: Readonly<Record<string, React.ReactElement>>;
-}>;
+  active?: boolean
+  titleKey?: string
+  subtitleKey?: string
+  textKey?: string
+  textBelowChildren?: boolean | undefined
+  translationOptions?: TOptions
+  components?: Readonly<Record<string, React.ReactElement>>
+}>
 
 const Section: React.FC<SectionProps> = ({
   titleKey,
@@ -24,35 +27,38 @@ const Section: React.FC<SectionProps> = ({
   components,
   children,
 }) => {
-  const active = useContext(stepActiveContext);
-  const { t, i18n } = useTranslation();
-  const sectionElement = useRef<HTMLElement>(null);
+  const active = useContext(stepActiveContext)
+  const { t, i18n } = useTranslation()
+  const sectionElement = useRef<HTMLElement>(null)
   // Ensure the component re-renders when the language changes
-  const activeLanguage = i18n.resolvedLanguage ?? i18n.language;
+  const activeLanguage = i18n.resolvedLanguage ?? i18n.language
 
   // Trigger a scroll-to effect when we become active
   useEffect(() => {
     if (active && sectionElement.current)
       sectionElement.current.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion)").matches ? "auto" : "smooth",
-      });
-  });
+        behavior: window.matchMedia('(prefers-reduced-motion)').matches ? 'auto' : 'smooth',
+      })
+  })
 
   // Generate the (sub)title text in advance so we can use it to rename the window (if required)
-  const titleText = titleKey && t(titleKey, translationOptions);
-  const subtitleText = subtitleKey && t(subtitleKey, translationOptions);
+  const titleText = titleKey && t(titleKey, translationOptions)
+  const subtitleText = subtitleKey && t(subtitleKey, translationOptions)
 
   // Rename the window to match our step (if we are the active step)
   useEffect(() => {
     if (active) {
-      const stepTitle = titleText || subtitleText;
+      const stepTitle = titleText || subtitleText
       // Prepend the step title or subtitle if our step has one
-      document.title = `${stepTitle ? `${stepTitle} - ` : ""}${t("label.pageTitle")}`;
+      document.title = `${stepTitle ? `${stepTitle} - ` : ''}${t('label.pageTitle')}`
     }
-  }, [active, titleText, subtitleText, t]);
+  }, [active, titleText, subtitleText, t])
 
   return (
-    <section className={classNames({ inactive: !active })} ref={sectionElement}>
+    <section
+      className={classNames({ inactive: !active })}
+      ref={sectionElement}
+    >
       {titleText && <h2>{titleText}</h2>}
       {subtitleText && <h3>{subtitleText}.</h3>}
       {textBelowChildren ? children : null}
@@ -70,7 +76,7 @@ const Section: React.FC<SectionProps> = ({
       )}
       {!textBelowChildren ? children : null}
     </section>
-  );
-};
+  )
+}
 
-export default Section;
+export default Section

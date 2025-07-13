@@ -1,24 +1,24 @@
-@use "css/button";
-@use "css/checkbox";
-@use "css/componentCount";
-@use "css/componentToggle";
-@use "css/factionSelect";
-@use "css/header";
-@use "css/icon";
-@use "css/languageSelect";
-@use "css/mapChart";
-@use "css/numberSelector";
-@use "css/radiogroup";
-@use "css/section";
-@use "css/statBar";
-@use "css/stepList";
-@use "css/toast";
-@use "css/toolbar";
+@use 'css/button';
+@use 'css/checkbox';
+@use 'css/componentCount';
+@use 'css/componentToggle';
+@use 'css/factionSelect';
+@use 'css/header';
+@use 'css/icon';
+@use 'css/languageSelect';
+@use 'css/mapChart';
+@use 'css/numberSelector';
+@use 'css/radiogroup';
+@use 'css/section';
+@use 'css/statBar';
+@use 'css/stepList';
+@use 'css/toast';
+@use 'css/toolbar';
 
-@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
 * {
-  font-family: "Libre Baskerville", serif;
+  font-family: 'Libre Baskerville', serif;
 
   &::selection {
     color: black;
@@ -28,7 +28,7 @@
 
 body {
   margin: 0;
-  background: ivory url("./images/background.jpg") top;
+  background: ivory url('./images/background.jpg') top;
   background-size: 80rem;
 }
 

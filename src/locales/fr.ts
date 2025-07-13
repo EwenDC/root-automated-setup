@@ -484,4 +484,4 @@ export default {
       effect: `Épuisez une <Torch/> pour initier un combat dans votre clairière. Vous choisissez l’attaquant et le défenseur, ainsi que l’ordre dans lequel chacun retire des bâtiments et des jetons. Vous retirez également les pièces. <i>(Marquez 1 point de victoire par bâtiment ou jeton de chaque joueur retiré, ainsi que par pièce hostile des joueurs retirée.)</i>`,
     },
   },
-};
+}

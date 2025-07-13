@@ -1,16 +1,15 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
 
-import Header from "./components/header";
-import StepList from "./components/stepList";
-import Toolbar from "./components/toolbar";
-import Toast from "./components/toast";
-import { store } from "./store";
+import Header from './components/header'
+import StepList from './components/stepList'
+import Toast from './components/toast'
+import Toolbar from './components/toolbar'
+import { store } from './store'
+import './i18nSetup'
 
-import "./i18nSetup";
-
-const root = createRoot(document.getElementById("root")!);
+const root = createRoot(document.getElementById('root')!)
 root.render(
   <React.StrictMode>
     <React.Suspense fallback={<div className="loading" />}>
@@ -21,5 +20,5 @@ root.render(
         <Toast />
       </Provider>
     </React.Suspense>
-  </React.StrictMode>
-);
+  </React.StrictMode>,
+)

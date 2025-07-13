@@ -465,4 +465,4 @@ export default {
       effect: `Exhaust a <Torch/> to initiate a battle in your clearing. You choose the attacker and defender, you choose the order in which they each remove their own buildings and tokens, and you remove pieces for each. <i>(Score a victory point per building or token of either player removed, and per Hostile piece of either player removed.)</i>`,
     },
   },
-};
+}

@@ -465,4 +465,4 @@ export default {
       effect: `Esaurite una <Torch/> per dare inizio a una battaglia nella vostra radura. Scegliete voi l'attaccante, il difensore e l’ordine nel quale entrambi rimuovono edifici e segnalini. Siete voi a rimuovere i pezzi di entrambi <i>(ottenete un punto vittoria per ogni edificio, segnalino o pezzo Ostile rimosso da qualsiasi giocatore).</i>`,
     },
   },
-};
+}

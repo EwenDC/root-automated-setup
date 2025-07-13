@@ -1,17 +1,18 @@
-import { useTranslation } from "react-i18next";
-import classNames from "classnames";
-import { useContext } from "react";
-import { selectedFactionContext } from "./factionSelect";
+import classNames from 'classnames'
+import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { selectedFactionContext } from './factionSelect'
 
 interface StatBarProps {
-  stat: "complexity" | "wealth" | "aggression" | "crafting";
+  stat: 'aggression' | 'complexity' | 'crafting' | 'wealth'
 }
 
 const StatBar: React.FC<StatBarProps> = ({ stat }) => {
-  const selectedFaction = useContext(selectedFactionContext);
-  const { t } = useTranslation();
+  const selectedFaction = useContext(selectedFactionContext)
+  const { t } = useTranslation()
 
-  const statValue = selectedFaction != null ? selectedFaction[stat] : 0;
+  const statValue = selectedFaction != null ? selectedFaction[stat] : 0
   return (
     <div className="stat">
       <span className="label">{t(`label.${stat}`)}</span>
@@ -25,7 +26,7 @@ const StatBar: React.FC<StatBarProps> = ({ stat }) => {
         {t(`label.factionRating.${statValue}`)}
       </span>
     </div>
-  );
-};
+  )
+}
 
-export default StatBar;
+export default StatBar

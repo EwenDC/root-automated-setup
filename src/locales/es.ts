@@ -465,4 +465,4 @@ export default {
       effect: `Agota una <Torch/> para iniciar una batalla en tu claro. Tú escoges tanto al atacante como al defensor y el orden en el que retiran edificios y fichas, y retiras las piezas para ambos. <i>(Obtén un punto de victoria por cada edificio o ficha de cualquiera de los jugadores que sea retirada, y por cada pieza hostil que se retire de cualquier jugador.)</i>`,
     },
   },
-};
+}

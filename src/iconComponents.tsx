@@ -1,4 +1,4 @@
-import Icon from "./components/icon";
+import Icon from './components/icon'
 
 const iconComponents = {
   Bag: <Icon icon="bag" />,
@@ -12,6 +12,6 @@ const iconComponents = {
   Sword: <Icon icon="sword" />,
   Tea: <Icon icon="tea" />,
   Torch: <Icon icon="torch" />,
-};
+}
 
-export default iconComponents;
+export default iconComponents

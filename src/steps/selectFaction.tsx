@@ -1,11 +1,12 @@
-import FactionSelect from "../components/factionSelect";
-import Section from "../components/section";
-import { StepSwitchProps } from "../components/stepSwitch";
-import { useAppSelector } from "../hooks";
+import type { StepSwitchProps } from '../components/stepSwitch'
+
+import FactionSelect from '../components/factionSelect'
+import Section from '../components/section'
+import { useAppSelector } from '../hooks'
 
 const SelectFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
-  const playerOrder = useAppSelector((state) => state.setup.playerOrder);
-  const useDraft = useAppSelector((state) => state.flow.useDraft);
+  const playerOrder = useAppSelector(state => state.setup.playerOrder)
+  const useDraft = useAppSelector(state => state.flow.useDraft)
 
   return (
     <Section
@@ -13,12 +14,12 @@ const SelectFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
       textKey="setupStep.selectFaction.body"
       translationOptions={{
         count: playerOrder[flowSlice.playerIndex],
-        context: useDraft ? "useDraft" : undefined,
+        context: useDraft ? 'useDraft' : undefined,
       }}
     >
       <FactionSelect flowSlice={flowSlice} />
     </Section>
-  );
-};
+  )
+}
 
-export default SelectFactionStep;
+export default SelectFactionStep
