@@ -13,7 +13,7 @@ interface NumberSelectorProps {
 }
 
 // This used to be dynamic but we've effectively constrained this via CSS
-const size = 2
+const INPUT_SIZE = 2
 
 const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxVal, onChange }) => {
   const stepActive = useContext(stepActiveContext)
@@ -34,7 +34,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
     if (!isNaN(newValue)) {
       // Trim off any extra numbers at the start of the input to allow numbers to be freely typed in
       // We do this in a loop so we keep cutting off leading digits until we get a valid value
-      for (let digits = size; digits > 0; digits--) {
+      for (let digits = INPUT_SIZE; digits > 0; digits--) {
         newValue = Number(rawValue.substring(rawValue.length - digits))
         // Stop the loop once the value is small enough
         if (newValue <= maxVal) {
@@ -67,7 +67,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
             id={id}
             inputMode="numeric"
             value={value}
-            size={size}
+            size={INPUT_SIZE}
             onChange={typingHandler}
             aria-invalid={invalid ? true : undefined}
             aria-errormessage={invalid ? 'appError' : undefined}

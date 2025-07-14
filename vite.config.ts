@@ -4,6 +4,7 @@ import legacy from '@vitejs/plugin-legacy'
 import react from '@vitejs/plugin-react'
 import svgrPlugin from 'vite-plugin-svgr'
 import { VitePWA } from 'vite-plugin-pwa'
+import million from 'million/compiler'
 
 const staticAssetCacheSettings = {
   cacheableResponse: {
@@ -23,6 +24,7 @@ export default defineConfig({
     legacy({
       targets: ['>0.2%', 'not dead', 'not op_mini all'],
     }),
+    million.vite({ auto: true }),
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler', {}]],

@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next'
 
-import type { CodeObject } from '../types'
-
 import Checkbox from '../components/checkbox'
 import ComponentToggle from '../components/componentToggle'
 import Radiogroup from '../components/radiogroup'
@@ -14,8 +12,6 @@ import {
   selectMapArray,
   toggleMap,
 } from '../store'
-
-const getMapLabelKey = (map: CodeObject) => `map.${map.code}.name`
 
 const ChooseMapStep: React.FC = () => {
   const mapArray = useAppSelector(selectMapArray)
@@ -44,7 +40,7 @@ const ChooseMapStep: React.FC = () => {
       <ComponentToggle
         selector={selectMapArray}
         toggleComponent={toggleMap}
-        getLabelKey={getMapLabelKey}
+        getLabelKey={map => `map.${map.code}.name`}
       />
       <Radiogroup
         id="balancedSuits"

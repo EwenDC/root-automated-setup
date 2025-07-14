@@ -1,13 +1,9 @@
-import type { CodeObject } from '../types'
-
 import Checkbox from '../components/checkbox'
 import ComponentToggle from '../components/componentToggle'
 import Section from '../components/section'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { savePersistedSetting, selectExpansionArray, skipSteps, toggleExpansion } from '../store'
 import { SetupStep } from '../types'
-
-const getExpansionLabelKey = (expansion: CodeObject) => `expansion.${expansion.code}`
 
 const ChooseExpansionsStep: React.FC = () => {
   const skippedSteps = useAppSelector(state => state.flow.skippedSteps)
@@ -18,7 +14,7 @@ const ChooseExpansionsStep: React.FC = () => {
       <ComponentToggle
         selector={selectExpansionArray}
         toggleComponent={toggleExpansion}
-        getLabelKey={getExpansionLabelKey}
+        getLabelKey={expansion => `expansion.${expansion.code}`}
         unsorted={true}
       />
       <Checkbox

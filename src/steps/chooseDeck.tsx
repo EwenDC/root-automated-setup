@@ -1,10 +1,6 @@
-import type { CodeObject } from '../types'
-
 import ComponentToggle from '../components/componentToggle'
 import Section from '../components/section'
 import { selectDeckArray, toggleDeck } from '../store'
-
-const getDeckLabelKey = (deck: CodeObject) => `deck.${deck.code}.name`
 
 const ChooseDeckStep: React.FC = () => (
   <Section
@@ -14,7 +10,7 @@ const ChooseDeckStep: React.FC = () => (
     <ComponentToggle
       selector={selectDeckArray}
       toggleComponent={toggleDeck}
-      getLabelKey={getDeckLabelKey}
+      getLabelKey={deck => `deck.${deck.code}.name`}
     />
   </Section>
 )

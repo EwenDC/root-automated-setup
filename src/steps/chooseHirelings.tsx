@@ -1,13 +1,9 @@
-import type { CodeObject } from '../types'
-
 import Checkbox from '../components/checkbox'
 import ComponentToggle from '../components/componentToggle'
 import Section from '../components/section'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { savePersistedSetting, selectHirelingArray, skipSteps, toggleHireling } from '../store'
 import { SetupStep } from '../types'
-
-const getHirelingLabelKey = (hireling: CodeObject) => `hireling.${hireling.code}.name`
 
 const ChooseHirelingsStep: React.FC = () => {
   const skippedSteps = useAppSelector(state => state.flow.skippedSteps)
@@ -40,7 +36,7 @@ const ChooseHirelingsStep: React.FC = () => {
         <ComponentToggle
           selector={selectHirelingArray}
           toggleComponent={toggleHireling}
-          getLabelKey={getHirelingLabelKey}
+          getLabelKey={hireling => `hireling.${hireling.code}.name`}
         />
       ) : null}
     </Section>

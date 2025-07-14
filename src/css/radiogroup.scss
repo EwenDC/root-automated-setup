@@ -5,13 +5,10 @@
   flex-direction: column;
   border: none;
   padding: 0;
+  gap: 0.5rem;
 
-  > .option {
+  .option {
     display: flex;
-
-    &:not(:first-child) {
-      margin-top: 0.5rem;
-    }
 
     > input {
       cursor: pointer;
@@ -85,27 +82,18 @@
 @mixin large-screen {
   .radio {
     flex-direction: row;
-
-    > .option {
-      &:not(:first-child) {
-        margin-top: 0;
-      }
-
-      &:not(:last-child) > label {
-        padding-right: 1rem;
-      }
-    }
+    gap: 1rem;
   }
 }
 
 @mixin reduced-motion {
-  .radio > .option > input {
+  .radio .option > input {
     transition: none;
   }
 }
 
 @mixin forced-colors {
-  .radio > .option > input::before {
+  .radio .option > input::before {
     background-color: CanvasText;
   }
 }

@@ -32,7 +32,7 @@
     border-radius: 1rem;
   }
 
-  > button {
+  button {
     font-size: 1rem;
     flex: 0 0;
     display: flex;
@@ -139,7 +139,7 @@
     }
   }
 
-  &.large-labels > button > img {
+  &.large-labels button > img {
     width: 4rem;
     height: 4rem;
   }
@@ -173,7 +173,7 @@
 
 @mixin large-screen {
   .faction-select {
-    > button {
+    button {
       height: 10.5rem;
       min-width: 10.5rem;
 
@@ -191,7 +191,7 @@
       }
     }
 
-    &.large-labels > button > img {
+    &.large-labels button > img {
       width: 5.5rem;
       height: 5.5rem;
     }
@@ -208,7 +208,7 @@
 }
 
 @mixin reduced-motion {
-  .faction-select > button {
+  .faction-select button {
     transition: none;
   }
 }

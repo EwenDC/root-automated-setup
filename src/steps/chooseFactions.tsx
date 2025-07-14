@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next'
 
-import type { CodeObject, Faction } from '../types'
-
 import Checkbox from '../components/checkbox'
 import ComponentToggle from '../components/componentToggle'
 import Section from '../components/section'
@@ -13,9 +11,6 @@ import {
   toggleFaction,
   toggleVagabond,
 } from '../store'
-
-const getFactionLabelKey = (faction: Faction) => `faction.${faction.key}.name`
-const getVagabondLabelKey = (vagabond: CodeObject) => `vagabond.${vagabond.code}.name`
 
 const ChooseFactionsStep: React.FC = () => {
   const playerCount = useAppSelector(state => state.setup.playerCount)
@@ -39,7 +34,7 @@ const ChooseFactionsStep: React.FC = () => {
       <ComponentToggle
         selector={selectFactionArray}
         toggleComponent={toggleFaction}
-        getLabelKey={getFactionLabelKey}
+        getLabelKey={faction => `faction.${faction.key}.name`}
       />
       {useDraft && factions.some(faction => faction.isVagabond && faction.enabled) ? (
         <>
@@ -47,7 +42,7 @@ const ChooseFactionsStep: React.FC = () => {
           <ComponentToggle
             selector={selectVagabondArray}
             toggleComponent={toggleVagabond}
-            getLabelKey={getVagabondLabelKey}
+            getLabelKey={vagabond => `vagabond.${vagabond.code}.name`}
           />
         </>
       ) : null}

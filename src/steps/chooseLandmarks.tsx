@@ -1,12 +1,8 @@
-import type { CodeObject } from '../types'
-
 import ComponentToggle from '../components/componentToggle'
 import NumberSelector from '../components/numberSelector'
 import Section from '../components/section'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { selectLandmarkArray, selectSetupMap, setLandmarkCount, toggleLandmark } from '../store'
-
-const getLandmarkLabelKey = (landmark: CodeObject) => `landmark.${landmark.code}.name`
 
 const ChooseLandmarksStep: React.FC = () => {
   const landmarkCount = useAppSelector(state => state.setup.landmarkCount)
@@ -31,7 +27,7 @@ const ChooseLandmarksStep: React.FC = () => {
         <ComponentToggle
           selector={selectLandmarkArray}
           toggleComponent={toggleLandmark}
-          getLabelKey={getLandmarkLabelKey}
+          getLabelKey={landmark => `landmark.${landmark.code}.name`}
         />
       ) : null}
     </Section>
