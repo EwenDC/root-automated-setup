@@ -790,7 +790,7 @@ const definitions: Record<ExpansionCode, Expansion> = {
   squiresDeck: {
     image: squiresDeckBox,
     decks: {
-      exiles: {
+      squires: {
         image: squiresCard,
       },
     },

@@ -157,6 +157,12 @@ export default {
       setup: `Grab the Exiles and Partisans deck from the game box and place it next to the map. Shuffle the deck.`,
       setup_twoPlayer: `Grab the Exiles and Partisans deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck.`,
     },
+    squires: {
+      name: `Squires and Disciples`,
+      setupTitle: `Set up the Squires and Disciples Deck`,
+      setup: `Grab the Squires and Disciples deck from the game box and place it next to the map. Shuffle the deck.`,
+      setup_twoPlayer: `Grab the Squires and Disciples deck from the game box and place it next to the map. Remove all four dominance cards from the deck. Shuffle the deck.`,
+    },
     standard: {
       name: `Standard`,
       setupTitle: `Set up the Standard Deck`,
@@ -166,12 +172,15 @@ export default {
   },
   expansion: {
     exilesDeck: `Exiles and Partisans Deck`,
+    homeland: `Homeland Expansion`,
+    homelandHirelings: `Homeland Hireling Pack`,
     landmarkPack: `Landmarks Pack`,
     marauder: `Marauder Expansion`,
     marauderHirelings: `Marauder Hireling Pack`,
     riverfolk: `Riverfolk Expansion`,
     riverfolkHirelings: `Riverfolk Hireling Pack`,
     root: `Root`,
+    squiresDeck: `Squires and Disciples Deck`,
     underworld: `Underworld Expansion`,
     underworldHirelings: `Underworld Hireling Pack`,
     vagabondPack: `Vagabond Pack`,
@@ -427,12 +436,27 @@ export default {
     arbiter: {
       name: `Arbiter`,
       action: `Protector`,
-      effect: `Before dice are rolled in a battle, the defender may enlist the Arbiter in the clearing of battle. The Arbiter scores one victory point and adds all of his undamaged <Sword/> to the maximum rolled hits of the defender. The Arbiter cannot enlist himself or be enlisted against himself.`,
+      effect: `When defending in battle, before the roll, a faction may enlist the Arbiter if he's in the clearing of battle. If so, the Arbiter scores one victory point and adds all of his undamaged <Sword/> to the defender's maximum rolled hits. The Arbiter cannot enlist himself or be enlisted against himself.`,
+    },
+    cheat: {
+      name: `Cheat`,
+      action: `Con`,
+      effect: `Exhaust any two items to Quest. Resolve the quest, draw a new quest card, and then shuffle the resolved quest into the quest deck. <i>(Do not add to completed quests.)</i>`,
+    },
+    gladiator: {
+      name: `Gladiator`,
+      action: `Duel`,
+      effect: `Exhaust any item, damage it, and remove 1 enemy warrior from the Gladiator's clearing to draw 1 card. Do not go Hostile.`,
     },
     harrier: {
       name: `Harrier`,
       action: `Glide`,
-      effect: `Exhaust a <Torch/> to move only your Vagabond pawn <i>(not other pieces)</i> to any clearing <i>(even Hostile)</i> on the map without exhausting any <Boot/>.`,
+      effect: `Exhaust a <Torch/> to move only your Vagabond pawn <i>(not other pieces)</i> to any clearing <i>(even Hostile)</i> on the map, ignoring adjacency and paths, without exhausting any <Boot/>.`,
+    },
+    jailor: {
+      name: `Jailor`,
+      action: `Coerce`,
+      effect: `Once per turn, you may spend a card matching the Jailor's clearing to treat it as exhausting any item. After the action that it prompts or adds to, you lose 1 victory point. This action may interrupt actions on your turn. <i>(You may use it to repair, craft, aid, quest, and pay for Riverfolk Services.)</i>`,
     },
     ranger: {
       name: `Ranger`,
@@ -447,12 +471,12 @@ export default {
     scoundrel: {
       name: `Scoundrel`,
       action: `Scorched Earth`,
-      effect: `Exhaust a <Torch/> and place it in your clearing. Remove all enemy pieces from that clearing. Pieces cannot be placed in or moved into the clearing with the <Torch/>. <i>(You remain in this clearing. Once you move out, you cannot move back in. The <Torch/> cannot be removed with a "Favor of the..." card because it is not an enemy piece.)</i>`,
+      effect: `Exhaust a <Torch/> and place it in your clearing to remove all enemy pieces there. Pieces cannot be placed in or moved into the clearing with the <Torch/>. <i>(You remain in this clearing. Once you move out, you cannot move back in. The <Torch/> cannot be removed with a "Favor of the..." card because it is not an enemy piece.)</i>`,
     },
     thief: {
       name: `Thief`,
       action: `Steal`,
-      effect: `Exhaust one <Torch/> to take a random card from any player in your clearing.`,
+      effect: `Exhaust one <Torch/> to take a random card from a player with faction pieces in your clearing.`,
     },
     tinker: {
       name: `Tinker`,
@@ -462,7 +486,7 @@ export default {
     vagrant: {
       name: `Vagrant`,
       action: `Instigate`,
-      effect: `Exhaust a <Torch/> to initiate a battle in your clearing. You choose the attacker and defender, you choose the order in which they each remove their own buildings and tokens, and you remove pieces for each. <i>(Score a victory point per building or token of either player removed, and per Hostile piece of either player removed.)</i>`,
+      effect: `Exhaust a <Torch/> to force a player <i>(even you)</i> in your clearing to battle another player. You score for removed buildings and tokens instead of the removing player. <i>(Score a victory point per building or token of either player removed.)</i>`,
     },
   },
 }
