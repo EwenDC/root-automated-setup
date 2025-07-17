@@ -23,7 +23,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChang
       <input
         id={id}
         type="checkbox"
-        defaultChecked={defaultValue ?? false}
+        checked={defaultValue ?? false}
         disabled={!stepActive}
         onChange={e => {
           onChange(e.target.checked)

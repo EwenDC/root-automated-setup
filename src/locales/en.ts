@@ -272,6 +272,13 @@ export default {
     },
   },
   hireling: {
+    advocates: {
+      name: `Sunny Advocates`,
+      setupTitle: `Set up the Sunny Advocates`,
+      setupTitle_demoted: `Set up the Bat Messengers`,
+      setup: `Player {{count}}, grab the hireling card and 8 warriors for the Sunny Advocates from the game box. Place 2 Advocate warriors each in a fox, mouse, and rabbit clearing. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.`,
+      setup_demoted: `Player {{count}}, grab the Sunny Advocates hireling card from the game box. Place it next to the map with its demoted "Bat Messengers" side up.`,
+    },
     band: {
       name: `Popular Band`,
       setupTitle: `Set up the Popular Band`,
@@ -307,6 +314,13 @@ export default {
       setup: `Player {{count}}, grab the hireling card, 8 warriors, and 3 foothold tokens for the Sunward Expedition from the game box. Place a foothold token and 3 Expedition warriors in any clearing. Place the remaining warriors, tokens, and card next to the map <i>(non-demoted side up)</i>.`,
       setup_demoted: `Player {{count}}, grab the Sunward Expedition hireling card from the game box. Place it next to the map with its demoted "Mole Artisans" side up.`,
     },
+    farmers: {
+      name: `Prosperous Farmers`,
+      setupTitle: `Set up the Prosperous Farmers`,
+      setupTitle_demoted: `Set up the Struggling Farmers`,
+      setup: `Player {{count}}, grab the hireling card, 9 warriors, and 4 farm buildings for the Prosperous Farmers from the game box. Place 1 farm and 1 Farmer warrior each in two clearings. Place the remaining warriors, buildings, and card next to the map <i>(non-demoted side up)</i>.`,
+      setup_demoted: `Player {{count}}, grab the hireling card, 9 warriors, and 4 farm buildings for the Prosperous Farmers from the game box. Place them next to the map <i>(with the card's demoted "Struggling Farmers" side up)</i>.`,
+    },
     flamebearers: {
       name: `Flame Bearers`,
       setupTitle: `Set up the Flame Bearers`,
@@ -341,6 +355,13 @@ export default {
       setupTitle_demoted: `Set up the Stoic Protector`,
       setup: `Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place the Protector pawn in any clearing. Place the card next to the map <i>(non-demoted side up)</i>.`,
       setup_demoted: `Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place them next to the map <i>(with the card's demoted "Stoic Protector" side up)</i>.`,
+    },
+    roamers: {
+      name: `River Roamers`,
+      setupTitle: `Set up the River Roamers`,
+      setupTitle_demoted: `Set up the Frog Tinkers`,
+      setup: `Player {{count}}, grab the hireling card, 10 warriors, and 4 lilypad tokens for the River Roamers from the game box. Place 2 Roamer warriors and 1 lilypad in a river clearing. Place the remaining warriors, tokens, and card next to the map <i>(non-demoted side up)</i>.`,
+      setup_demoted: `Player {{count}}, grab the River Roamers hireling card from the game box. Place it next to the map with its demoted "Frog Tinkers" side up.`,
     },
     spies: {
       name: `Corvid Spies`,

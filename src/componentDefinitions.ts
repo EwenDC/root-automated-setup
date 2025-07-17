@@ -553,7 +553,7 @@ const definitions: Record<ExpansionCode, Expansion> = {
       },
       exile: {
         image: exileMeeple,
-        factions: ['vagabond', 'vagabond2'],
+        factions: ['vagabond', 'vagabond2', 'knaves'],
       },
     },
   },
