@@ -403,10 +403,25 @@ export default {
       setupTitle: `Set up the Legendary Forge`,
       setup: `Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the "Legendary Forge" landmark card from the game box and place it next to the board on its non-setup side.<br/>Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>`,
     },
+    foxburrow: {
+      name: `Foxburrow`,
+      setupTitle: `Set up Foxburrow`,
+      setup: `Player {{count}}, place the Foxburrow landmark in a fox clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you're feeling adventurous.)</i>`,
+    },
     market: {
       name: `Black Market`,
       setupTitle: `Set up the Black Market`,
       setup: `Player {{count}}, place the Black Market landmark in a clearing that has exactly one building slot and no ruin. It cannot have a landmark or be adjacent to one. Grab the "Black Market" landmark card from the game box and place it next to the board on its non-setup side.<br/>Draw three cards but do not look at them. Place them face down next to the Black Market card.`,
+    },
+    mousehold: {
+      name: `Mousehold`,
+      setupTitle: `Set up Mousehold`,
+      setup: `Player {{count}}, place the Mousehold landmark in a mouse clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you're feeling adventurous.)</i>`,
+    },
+    rabbittown: {
+      name: `Rabbittown`,
+      setupTitle: `Set up Rabbittown`,
+      setup: `Player {{count}}, place the Rabbittown landmark in a rabbit clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you're feeling adventurous.)</i>`,
     },
     tower: {
       name: `Tower`,
