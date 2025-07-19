@@ -66,7 +66,6 @@ export default {
     warriors_other: `{{count}} Guerriers`,
   },
   error: {
-    baseExpansionRequired: `Un exemplaire du jeu de base de Root est requis pour la mise en place`,
     factionHirelingExcluded: `La faction associée à ce nomade est requise pour la mise en place`,
     hirelingSelected: `Un nomade équivalent à cette faction est déjà en jeu`,
     landmarkNotEnoughPlayers: `Pas assez de joueurs pour jouer avec ce monument`,

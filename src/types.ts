@@ -9,27 +9,13 @@ export interface CodeObject {
 /** Adds the field "code" to an existing type. */
 export type WithCode<T> = CodeObject & T
 
-/** The name of a vagabond item. */
-export type Item = 'bag' | 'boot' | 'coin' | 'crossbow' | 'hammer' | 'sword' | 'tea' | 'torch'
-
-/** The name of a map clearing suit. */
-export type ClearingSuit = 'fox' | 'mouse' | 'rabbit'
-
-/** An identifier for a component, which is unique within it's component type. */
-/* eslint-disable @typescript-eslint/no-duplicate-type-constituents 
--- This type definition is semantic, so the redundant union is used to convey intent */
-export type ComponentCode =
-  | DeckCode
-  | FactionCode
-  | HirelingCode
-  | LandmarkCode
-  | MapCode
-  | VagabondCode
-/* eslint-enable @typescript-eslint/no-duplicate-type-constituents */
+// ---------------------------------------------------------------------------------------------- //
+//#region Game Components
 
 /** A basic game component, with an associated image. */
 export interface GameComponent {
   image: string
+  defaultDisabled?: boolean
 }
 
 /** A unique identifier for an Expansion. */
@@ -37,42 +23,51 @@ export type ExpansionCode = string
 
 /** An object representing an Expansion or Base Box for the Root board game. */
 export interface Expansion extends GameComponent {
-  base?: boolean
   decks?: Record<DeckCode, GameComponent>
   factions?: Record<FactionCode, Faction>
   hirelings?: Record<HirelingCode, Hireling>
   landmarks?: Record<LandmarkCode, Landmark>
-  maps?: Record<MapCode, Map>
+  maps?: Record<MapCode, LargeMap | StandardMap>
   vagabonds?: Record<VagabondCode, Vagabond>
 }
 
 /** A unique identifier for a Deck. */
 export type DeckCode = string
 
-/** An identifier for a faction that is used to group multiple instances of the same faction. */
-export type FactionKey = string
+/** Information for an individual game piece (e.g. a token, a meeple). */
+export interface GamePiece {
+  count: number
+  image: string
+}
+
+/** The index of an entry in a 3 entry list. */
+export type ThreeIndex = 0 | 1 | 2
 
 /** A unique identifier for a Faction. */
-/* eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents 
--- This type definition is semantic, so the redundant union is used to convey intent */
-export type FactionCode = FactionKey | string
+export type FactionCode = string
 
 /** An object representing a Faction from the Root board game. */
 export interface Faction extends GameComponent {
-  key: FactionKey
-  order: number
-  cornerSetup?: boolean
+  /** An identifier for a faction that is used to group multiple instances of the same faction. */
+  key: string
   militant?: boolean
-  isVagabond?: boolean
-  warriors: number
-  buildings: number
-  buildingImage?: string
-  tokens: number
-  tokenImage?: string
-  complexity: number
-  wealth: number
-  aggression: number
-  crafting: number
+  dealVagabond?: boolean
+  dealCaptains?: boolean
+  standardSetup: {
+    order: number
+    cornerSetup?: boolean
+  }
+  pieces: {
+    warriors: number
+    buildings?: GamePiece
+    tokens?: GamePiece
+  }
+  stats: {
+    complexity: ThreeIndex
+    wealth: ThreeIndex
+    aggression: ThreeIndex
+    crafting: ThreeIndex
+  }
 }
 
 /** A unique identifier for a Hireling. */
@@ -94,34 +89,35 @@ export interface Landmark extends GameComponent {
   minPlayers: number
 }
 
-/** The index of a clearing in it's map's clearing list. */
-export type ClearingIndex = number
-
-/** An object representing a Map Clearing and it's position in the Map Chart. */
+/** An object representing a Map's Clearing and it's position in the Map Chart. */
 export interface Clearing {
   x: number
   y: number
 }
 
-/** A number used to rank the priority of a clearing for bot actions. */
-export type ClearingPriority = number
+/** The name of a map clearing suit. */
+export type ClearingSuit = 'fox' | 'mouse' | 'rabbit'
 
-/**
- * An object representing a Map Clearing and it's position in the Map Chart, as well as it's
- * priority for bot actions.
- */
-export interface ClearingWithPriority extends Clearing {
-  no: ClearingPriority
-}
+/** A number used to rank the priority of a clearing for bot actions. */
+export type ClearingPriority = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 
 /**
  * A tuple representing a path connecting two clearings, as referenced by their index in the
  * clearing list.
  */
-export type Path = [ClearingIndex, ClearingIndex]
+export type Path<ClearingIndex extends number = number> = [from: ClearingIndex, to: ClearingIndex]
+
+/**
+ * A tuple representing a path connecting two clearings, as referenced by their index in the
+ * clearing list. Also indicates if the path floods alongside any clearings it connects.
+ */
+export type FloodablePath<ClearingIndex extends number = number> = [
+  ...Path<ClearingIndex>,
+  floods?: boolean,
+]
 
 /** An object representing details for a Landmark as it appears on a specific map. */
-export interface MapLandmark {
+export interface MapLandmark<ClearingIndex extends number = number> {
   code: LandmarkCode
   clearing: ClearingIndex
   x: number
@@ -132,15 +128,63 @@ export interface MapLandmark {
 /** A unique identifier for a Map. */
 export type MapCode = string
 
-/** An object representing a Map from the Root board game. */
+/** An object representing a Map of any size from the Root board game. */
 export interface Map extends GameComponent {
-  clearings: Clearing[] | ClearingWithPriority[]
-  paths: Path[]
-  backImage: string
-  printedSuits?: boolean
-  landmark?: MapLandmark
+  clearings: Clearing[]
+  botPriorities?: ClearingPriority[]
   defaultSuits?: ClearingSuit[]
+  printedSuits?: boolean
+  paths: FloodablePath[]
+  backImage: string
+  landmark?: MapLandmark
+  suitLandmarks?: Record<ClearingSuit, LandmarkCode>
 }
+
+/** A list with exactly 12 entries. */
+export type TwelveList<T> = [T, T, T, T, T, T, T, T, T, T, T, T]
+
+/** The index of an entry in a 12 entry list. */
+export type TwelveIndex = 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | ThreeIndex
+
+/** An object representing a standard size Map from the Root board game. */
+export interface StandardMap extends Map {
+  clearings: TwelveList<Clearing>
+  botPriorities?: TwelveList<ClearingPriority>
+  defaultSuits?: TwelveList<ClearingSuit>
+  paths: Path<TwelveIndex>[]
+  landmark?: MapLandmark<TwelveIndex>
+  suitLandmarks?: never
+}
+
+/** A shape that groups floodable clearings. */
+export type FloodGroup = 'circle' | 'square' | 'triangle'
+
+/**
+ * An object representing a Large Map's Clearing. Includes it's position in the Map Chart, as well
+ * as what group it belongs to (if it is a floodable clearing).
+ */
+export interface LargeClearing extends Clearing {
+  group?: FloodGroup
+}
+
+/** A list with exactly 15 entries. */
+export type FifteenList<T> = [...TwelveList<T>, T, T, T]
+
+/** The index of an entry in a 15 entry list. */
+export type FifteenIndex = 12 | 13 | 14 | TwelveIndex
+
+/** An object representing a large size Map from the Root board game. */
+export interface LargeMap extends Map {
+  clearings: FifteenList<LargeClearing>
+  botPriorities?: never
+  defaultSuits?: never
+  paths: FloodablePath<FifteenIndex>[]
+  landmark?: never
+  suitLandmarks: Record<ClearingSuit, LandmarkCode>
+}
+
+/** The name of a vagabond item. */
+export type Item = 'bag' | 'boot' | 'coin' | 'crossbow' | 'hammer' | 'sword' | 'tea' | 'torch'
 
 /** A unique identifier for a Vagabond character. */
 export type VagabondCode = string
@@ -150,23 +194,9 @@ export interface Vagabond extends GameComponent {
   startingItems: Item[]
 }
 
-/** Payload for Lock Component redux action. */
-export interface LockComponentPayload {
-  componentCode: ComponentCode
-  locked: false | string
-}
-
-/** Payload for Map Fixed Suits redux action. */
-export interface MapFixedSuitsPayload {
-  mapCode: MapCode
-  fixedSuits: boolean
-}
-
-/** Payload for Enable Map Landmark redux action. */
-export interface EnableMapLandmarkPayload {
-  mapCode: MapCode
-  enableLandmark: boolean
-}
+//#endregion
+// ---------------------------------------------------------------------------------------------- //
+//#region Setup State
 
 /** An object with an associated enable/disable state. */
 export interface Togglable {
@@ -189,61 +219,6 @@ export interface ComponentInfo extends Togglable {
 export interface MapInfo extends ComponentInfo {
   fixedSuits?: boolean
   useLandmark?: boolean
-}
-
-/** Object tracking which components are available for selection. */
-export interface ComponentsState {
-  expansions: Record<ExpansionCode, GameComponent & Togglable>
-  decks: Record<DeckCode, ComponentInfo>
-  factions: Record<FactionCode, ComponentInfo>
-  hirelings: Record<HirelingCode, ComponentInfo>
-  landmarks: Record<LandmarkCode, ComponentInfo>
-  maps: Record<MapCode, MapInfo>
-  vagabonds: Record<VagabondCode, ComponentInfo>
-}
-
-/** Object storing information pertinent to solving map clearing suit distribution. */
-export interface ClearingSolveState {
-  index: ClearingIndex
-  links: number[]
-  options: ClearingSuit[]
-}
-
-/** An object representing an promoted or demoted Hireling. */
-export interface HirelingEntry {
-  code: HirelingCode
-  demoted: boolean
-}
-
-/** Payload for Set Hireling redux action. */
-export interface SetHirelingPayload {
-  number: number
-  hirelingEntry: HirelingEntry
-  factions: FactionCode[]
-}
-
-/** An object containing all variables used during the setup process. */
-export interface SetupState {
-  playerCount: number
-  fixedFirstPlayer: boolean
-  playerOrder: number[]
-  errorMessage: string | null
-  // Map
-  map: MapCode | null
-  balancedSuits: boolean
-  clearingSuits: ClearingSuit[]
-  // Deck
-  deck: DeckCode | null
-  // Landmarks
-  landmarkCount: 0 | 1 | 2
-  landmark1: LandmarkCode | null
-  landmark2: LandmarkCode | null
-  // Hirelings
-  hireling1: HirelingEntry | null
-  hireling2: HirelingEntry | null
-  hireling3: HirelingEntry | null
-  // Factions
-  excludedFactions: FactionCode[]
 }
 
 /**
@@ -275,12 +250,6 @@ export enum SetupStep {
   setupEnd,
 }
 
-/** Payload for Skip Steps redux action. */
-export interface SkipStepsPayload {
-  steps: SetupStep[]
-  skip: boolean
-}
-
 /**
  * An object representing a faction in the faction pool, along with it's assigned vagabond character
  * (if it has one)
@@ -302,20 +271,5 @@ export interface FlowSlice {
   factionIndex: number | null
 }
 
-/**
- * An object representing the current flow state, including the current step, past and future steps,
- * and what steps should be skipped.
- */
-export interface FlowState {
-  pastSteps: FlowSlice[]
-  currentStep: SetupStep
-  factionPool: FactionEntry[]
-  lastFactionLocked: boolean
-  vagabondSetUp: boolean
-  currentPlayerIndex: number
-  currentFactionIndex: number | null
-  vagabondPool: string[]
-  useDraft: boolean
-  skippedSteps: boolean[]
-  futureSteps: FlowSlice[]
-}
+//#endregion
+// ---------------------------------------------------------------------------------------------- //

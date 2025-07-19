@@ -46,9 +46,9 @@ const MapChart: React.FC = () => {
               height="8"
               href={iconDict[suit].image}
             />
-            {!skippedSteps[SetupStep.setUpBots] && 'no' in clearing ? (
+            {!skippedSteps[SetupStep.setUpBots] && map.botPriorities ? (
               <g>
-                <title>{t('label.priority', { count: clearing.no })}</title>
+                <title>{t('label.priority', { count: map.botPriorities[index] })}</title>
                 <image
                   x={x}
                   y={y}
@@ -63,7 +63,7 @@ const MapChart: React.FC = () => {
                   textAnchor="middle"
                   fill="#fff"
                 >
-                  {clearing.no}
+                  {map.botPriorities[index]}
                 </text>
               </g>
             ) : null}

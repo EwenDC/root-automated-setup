@@ -64,7 +64,6 @@ export default {
     warriors_other: `{{count}} Guerreros`,
   },
   error: {
-    baseExpansionRequired: `Se requiere una copia del juego base de Root para la preparación`,
     factionHirelingExcluded: `La Facción coincidente con este Secuaz se requiere en la preparación`,
     hirelingSelected: `Un Secuaz coincidente con esta Facción está ya en juego`,
     landmarkNotEnoughPlayers: `No hay suficientes jugadores para jugar con este Lugar Mítico`,

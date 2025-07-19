@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 import svgrPlugin from 'vite-plugin-svgr'
 import { VitePWA } from 'vite-plugin-pwa'
 import million from 'million/compiler'
+import checker from 'vite-plugin-checker'
 
 const staticAssetCacheSettings = {
   cacheableResponse: {
@@ -99,6 +100,9 @@ export default defineConfig({
           client_mode: 'focus-existing',
         },
       },
+    }),
+    checker({
+      typescript: true,
     }),
   ],
   base: '/root-automated-setup/',

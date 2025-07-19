@@ -37,7 +37,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
 
     return { code, factionImage, factionName, militant }
   })
-  const largeLabels = labelledFactionPool.some(faction => faction.factionName.length > 23)
+  const largeLabels = labelledFactionPool.some(faction => faction.factionName.length > 22)
 
   // We use this event handler to simulate the keyboard behaviour of a real radio group, to comply with accessibility requirements
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = event => {

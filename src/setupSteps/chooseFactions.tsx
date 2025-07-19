@@ -36,7 +36,7 @@ const ChooseFactionsStep: React.FC = () => {
         toggleComponent={toggleFaction}
         getLabelKey={faction => `faction.${faction.key}.name`}
       />
-      {useDraft && factions.some(faction => faction.isVagabond && faction.enabled) ? (
+      {useDraft && factions.some(faction => faction.dealVagabond && faction.enabled) ? (
         <>
           {t('label.selectVagabonds')}
           <ComponentToggle

@@ -3,11 +3,18 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 
 import type {
-  ComponentsState,
-  EnableMapLandmarkPayload,
+  ComponentInfo,
+  DeckCode,
   Expansion,
-  MapFixedSuitsPayload,
+  ExpansionCode,
+  FactionCode,
+  GameComponent,
+  HirelingCode,
+  LandmarkCode,
+  MapCode,
   MapInfo,
+  Togglable,
+  VagabondCode,
 } from '../../types'
 
 import definitions from '../../componentDefinitions'
@@ -19,6 +26,17 @@ import {
   toggleComponent,
   typedEntries,
 } from '../utils'
+
+/** Object tracking which components are available for selection. */
+export interface ComponentsState {
+  expansions: Record<ExpansionCode, GameComponent & Togglable>
+  decks: Record<DeckCode, ComponentInfo>
+  factions: Record<FactionCode, ComponentInfo>
+  hirelings: Record<HirelingCode, ComponentInfo>
+  landmarks: Record<LandmarkCode, ComponentInfo>
+  maps: Record<MapCode, MapInfo>
+  vagabonds: Record<VagabondCode, ComponentInfo>
+}
 
 const COMPONENT_TYPES = [
   'decks',
@@ -42,7 +60,10 @@ const addExpansionComponents = (
     if (componentList) {
       for (const [componentCode, componentData] of typedEntries(componentList)) {
         const componentInfo: MapInfo = {
-          enabled: loadPersistedSetting<boolean>(`${componentType}.${componentCode}`, true),
+          enabled: loadPersistedSetting(
+            `${componentType}.${componentCode}`,
+            !componentData.defaultDisabled,
+          ),
           locked: false,
           expansionCode,
         }
@@ -63,36 +84,34 @@ const addExpansionComponents = (
   }
 }
 
-const setupInitialState = () => {
-  const initialState: ComponentsState = {
-    expansions: {},
-    decks: {},
-    factions: {},
-    hirelings: {},
-    landmarks: {},
-    maps: {},
-    vagabonds: {},
-  }
-
-  for (const [expansionCode, expansion] of typedEntries(definitions)) {
-    const enabled = expansion.base
-      ? true
-      : loadPersistedSetting<boolean>(`expansions.${expansionCode}`, false)
-
-    initialState.expansions[expansionCode] = {
-      enabled,
-      locked: expansion.base ? 'error.baseExpansionRequired' : false,
-      image: expansion.image,
-    }
-    // Add expansion components to state if the expansion is enabled
-    if (enabled) addExpansionComponents(initialState, expansionCode, expansion)
-  }
-  return initialState
-}
-
 export const componentsSlice = createSlice({
   name: 'components',
-  initialState: setupInitialState,
+
+  initialState: () => {
+    const initialState: ComponentsState = {
+      expansions: {},
+      decks: {},
+      factions: {},
+      hirelings: {},
+      landmarks: {},
+      maps: {},
+      vagabonds: {},
+    }
+    for (const [expansionCode, expansion] of typedEntries(definitions)) {
+      const enabled = loadPersistedSetting(
+        `expansions.${expansionCode}`,
+        !expansion.defaultDisabled,
+      )
+      initialState.expansions[expansionCode] = {
+        enabled,
+        locked: false,
+        image: expansion.image,
+      }
+      // Add expansion components to state if the expansion is enabled
+      if (enabled) addExpansionComponents(initialState, expansionCode, expansion)
+    }
+    return initialState
+  },
 
   reducers: {
     toggleExpansion(state, { payload: expansionCode }: PayloadAction<string>) {
@@ -128,19 +147,28 @@ export const componentsSlice = createSlice({
         )
       }
     },
+
     toggleDeck: toggleComponent('decks'),
+
     toggleFaction: toggleComponent('factions'),
+
     lockFaction: lockComponent('factions'),
+
     toggleHireling: toggleComponent('hirelings'),
+
     lockHireling: lockComponent('hirelings'),
+
     toggleLandmark: toggleComponent('landmarks'),
+
     lockLandmark: lockComponent('landmarks'),
+
     toggleMap: toggleComponent('maps'),
+
     enableMapLandmark: {
-      prepare: (mapCode: string, enableLandmark: boolean) => ({
+      prepare: (mapCode: MapCode, enableLandmark: boolean) => ({
         payload: { mapCode, enableLandmark },
       }),
-      reducer(state, { payload }: PayloadAction<EnableMapLandmarkPayload>) {
+      reducer(state, { payload }: PayloadAction<{ mapCode: MapCode; enableLandmark: boolean }>) {
         const { mapCode, enableLandmark } = payload
         const map = state.maps[mapCode]
         if (map) {
@@ -155,11 +183,12 @@ export const componentsSlice = createSlice({
         }
       },
     },
+
     mapFixedSuits: {
-      prepare: (mapCode: string, fixedSuits: boolean) => ({
+      prepare: (mapCode: MapCode, fixedSuits: boolean) => ({
         payload: { mapCode, fixedSuits },
       }),
-      reducer(state, { payload }: PayloadAction<MapFixedSuitsPayload>) {
+      reducer(state, { payload }: PayloadAction<{ mapCode: MapCode; fixedSuits: boolean }>) {
         const { mapCode, fixedSuits } = payload
         const map = state.maps[mapCode]
         if (map) {
@@ -174,6 +203,7 @@ export const componentsSlice = createSlice({
         }
       },
     },
+
     toggleVagabond: toggleComponent('vagabonds'),
   },
 
@@ -183,15 +213,22 @@ export const componentsSlice = createSlice({
       expansions =>
         Object.entries(expansions).map(([code, expansionInfo]) => ({ ...expansionInfo, code })),
     ),
+
     selectDeckArray: selectComponentArray('decks'),
+
     selectFactionArray: selectComponentArray('factions'),
+
     selectFactionCodes: createSelector(
       (state: ComponentsState) => state.factions,
       factions => Object.keys(factions),
     ),
+
     selectHirelingArray: selectComponentArray('hirelings'),
+
     selectLandmarkArray: selectComponentArray('landmarks'),
+
     selectMapArray: selectComponentArray('maps'),
+
     selectVagabondArray: selectComponentArray('vagabonds'),
   },
 })

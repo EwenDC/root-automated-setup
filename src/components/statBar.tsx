@@ -12,7 +12,7 @@ const StatBar: React.FC<StatBarProps> = ({ stat }) => {
   const selectedFaction = useContext(selectedFactionContext)
   const { t } = useTranslation()
 
-  const statValue = selectedFaction != null ? selectedFaction[stat] : 0
+  const statValue = selectedFaction != null ? selectedFaction.stats[stat] : 0
   return (
     <div className="stat">
       <span className="label">{t(`label.${stat}`)}</span>

@@ -64,7 +64,6 @@ export default {
     warriors_other: `{{count}} Guerrieri`,
   },
   error: {
-    baseExpansionRequired: `Una copia del gioco base di Root è necessaria per la preparazione`,
     factionHirelingExcluded: `La fazione associata a questo combattente è necessaria per la preparazione`,
     hirelingSelected: `Un combattente associato a questa fazione è già in gioco`,
     landmarkNotEnoughPlayers: `Non ci sono abbastanza giocatori per poter utilizzare questa meraviglia`,

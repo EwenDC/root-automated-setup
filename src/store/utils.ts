@@ -1,13 +1,7 @@
 import { createSelector, type PayloadAction } from '@reduxjs/toolkit'
 
-import type {
-  ComponentsState,
-  Expansion,
-  LockComponentPayload,
-  Togglable,
-  ValueOf,
-  WithCode,
-} from '../types'
+import type { Expansion, Togglable, ValueOf, WithCode } from '../types'
+import type { ComponentsState } from './slices/components'
 
 import definitions from '../componentDefinitions'
 
@@ -66,7 +60,10 @@ export const lockComponent = (componentType: keyof ComponentsState) => ({
   prepare: (componentCode: string, locked: false | string) => ({
     payload: { componentCode, locked },
   }),
-  reducer(state: ComponentsState, { payload }: PayloadAction<LockComponentPayload>) {
+  reducer(
+    state: ComponentsState,
+    { payload }: PayloadAction<{ componentCode: string; locked: false | string }>,
+  ) {
     const { componentCode, locked } = payload
     const component = state[componentType][componentCode]
     if (component) {

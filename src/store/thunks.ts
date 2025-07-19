@@ -112,10 +112,27 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     // CHOOSE EXPANSIONS //
     ///////////////////////
     case SetupStep.chooseExpansions: {
-      // After locking in the chosen expansions, we need to calculate which steps can be skipped
+      // We need to validate if we have enough components for setup, since it's *technically*
+      // possible to play without the base game (using the Homeland expansion)
+
+      // Is there at least one faction?
+      if (selectFactionArray(state).length < 1) {
+        validationError = 'error.missingFaction'
+        break
+      }
+
+      // Is there at least one map?
+      if (selectMapArray(state).length < 1) {
+        validationError = 'error.missingMap'
+        break
+      }
+
       // Do we need to choose a deck?
       const decks = selectDeckArray(state)
-      if (decks.length === 1) {
+      if (decks.length < 1) {
+        validationError = 'error.missingDeck'
+        break
+      } else if (decks.length === 1) {
         // Auto select the only deck
         dispatch(setDeck(decks[0]!))
         dispatch(skipSteps(SetupStep.chooseDeck, true))
@@ -390,7 +407,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       if (factionPool.length > 0) dispatch(clearFactionPool())
 
       // Get our list of militant and insurgent factions which are available for selection
-      let workingFactionPool = selectFactionArray(state).filter(
+      const workingFactionPool = selectFactionArray(state).filter(
         ({ enabled, militant }) => enabled && militant,
       )
       const insurgentFactions = selectFactionArray(state).filter(
@@ -403,7 +420,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         // Get our vagabond faction count to validate our vagabondPool against
         const vagabondFactionCount = countMatches(
           workingFactionPool.concat(insurgentFactions),
-          ({ isVagabond }) => isVagabond,
+          ({ dealVagabond: isVagabond }) => isVagabond ?? false,
         )
 
         if (vagabondPool.length >= vagabondFactionCount) {
@@ -428,30 +445,33 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
             ? 0
             : countMatches(
                 workingFactionPool.concat(insurgentFactions),
-                ({ cornerSetup }) => cornerSetup,
+                ({ standardSetup }) => standardSetup.cornerSetup ?? false,
               )
 
         // Start by adding a random militant faction
         const firstFaction = takeRandom(workingFactionPool)
         dispatch(addToFactionPool(firstFaction))
         // Add the insurgent factions to the mix
-        workingFactionPool = workingFactionPool.concat(insurgentFactions)
+        workingFactionPool.push(...insurgentFactions)
 
         // Handle corner setups if we're in standard setup and we have enough players and corner factions for it to matter
         if (cornerSetupFactions > MAX_CORNER_SETUPS) {
           let factionsSetUp = 1
           // Keep track of if we've already used a corner in standard setup
-          let cornerSetupCount = firstFaction.cornerSetup ? 1 : 0
+          let cornerSetupCount = firstFaction.standardSetup.cornerSetup ? 1 : 0
 
           // Add enough factions to make the total pool equal factionCount
           while (factionsSetUp < factionCount && workingFactionPool.length > 0) {
             const candidateFaction = takeRandom(workingFactionPool)
 
             // Make sure we don't include more than 4 corner clearing factions in standard setup
-            if (!candidateFaction.cornerSetup || cornerSetupCount < MAX_CORNER_SETUPS) {
+            if (
+              !candidateFaction.standardSetup.cornerSetup ||
+              cornerSetupCount < MAX_CORNER_SETUPS
+            ) {
               dispatch(addToFactionPool(candidateFaction))
               factionsSetUp++
-              if (candidateFaction.cornerSetup) cornerSetupCount++
+              if (candidateFaction.standardSetup.cornerSetup) cornerSetupCount++
             }
           }
           // Check if we weren't able to set up due to too many corner clearing setups required

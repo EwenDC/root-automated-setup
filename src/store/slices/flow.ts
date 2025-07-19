@@ -2,43 +2,28 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 
-import type {
-  CodeObject,
-  Faction,
-  FactionEntry,
-  FlowSlice,
-  FlowState,
-  SkipStepsPayload,
-  WithCode,
-} from '../../types'
+import type { CodeObject, Faction, FactionEntry, FlowSlice, WithCode } from '../../types'
 
 import { SetupStep } from '../../types'
 import { loadPersistedSetting, savePersistedSetting, takeRandom } from '../utils'
 import { setErrorMessage } from './setup'
 
-const initialState: FlowState = {
-  pastSteps: [],
-  currentStep: SetupStep.chooseExpansions,
-  factionPool: [],
-  lastFactionLocked: false,
-  vagabondSetUp: false,
-  currentPlayerIndex: 0,
-  currentFactionIndex: null,
-  vagabondPool: [],
-  useDraft: loadPersistedSetting<boolean>('useDraft', true),
-  // Create an array with as many elements as there are setup steps
-  skippedSteps: Array<boolean>(SetupStep.setupEnd + 1).fill(false),
-  futureSteps: [],
-}
-// Skip bot & hireling setup steps as required
-if (!loadPersistedSetting<boolean>('includeBotStep', false)) {
-  initialState.skippedSteps[SetupStep.setUpBots] = true
-}
-if (!loadPersistedSetting<boolean>('includeHirelings', false)) {
-  initialState.skippedSteps[SetupStep.setUpHireling1] = true
-  initialState.skippedSteps[SetupStep.setUpHireling2] = true
-  initialState.skippedSteps[SetupStep.setUpHireling3] = true
-  initialState.skippedSteps[SetupStep.postHirelingSetup] = true
+/**
+ * An object representing the current flow state, including the current step, past and future steps,
+ * and what steps should be skipped.
+ */
+export interface FlowState {
+  pastSteps: FlowSlice[]
+  currentStep: SetupStep
+  factionPool: FactionEntry[]
+  lastFactionLocked: boolean
+  vagabondSetUp: boolean
+  currentPlayerIndex: number
+  currentFactionIndex: number | null
+  vagabondPool: string[]
+  useDraft: boolean
+  skippedSteps: boolean[]
+  futureSteps: FlowSlice[]
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
@@ -50,6 +35,7 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   playerIndex: flowState.currentPlayerIndex,
   factionIndex: flowState.currentFactionIndex,
 })
+
 const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentStep = slice.step
   state.factionPool = slice.factionPool
@@ -61,7 +47,34 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
 
 export const flowSlice = createSlice({
   name: 'flow',
-  initialState,
+
+  initialState: () => {
+    const initialState: FlowState = {
+      pastSteps: [],
+      currentStep: SetupStep.chooseExpansions,
+      factionPool: [],
+      lastFactionLocked: false,
+      vagabondSetUp: false,
+      currentPlayerIndex: 0,
+      currentFactionIndex: null,
+      vagabondPool: [],
+      useDraft: loadPersistedSetting<boolean>('useDraft', true),
+      // Create an array with as many elements as there are setup steps
+      skippedSteps: Array<boolean>(SetupStep.setupEnd + 1).fill(false),
+      futureSteps: [],
+    }
+    // Skip bot & hireling setup steps as required
+    if (!loadPersistedSetting<boolean>('includeBotStep', false)) {
+      initialState.skippedSteps[SetupStep.setUpBots] = true
+    }
+    if (!loadPersistedSetting<boolean>('includeHirelings', false)) {
+      initialState.skippedSteps[SetupStep.setUpHireling1] = true
+      initialState.skippedSteps[SetupStep.setUpHireling2] = true
+      initialState.skippedSteps[SetupStep.setUpHireling3] = true
+      initialState.skippedSteps[SetupStep.postHirelingSetup] = true
+    }
+    return initialState
+  },
 
   reducers: {
     incrementStep(state) {
@@ -115,6 +128,7 @@ export const flowSlice = createSlice({
         )
       }
     },
+
     undoStep(state) {
       // Get the previous step from the undo queue
       const previousStep = state.pastSteps.pop()
@@ -131,6 +145,7 @@ export const flowSlice = createSlice({
         )
       }
     },
+
     redoStep(state) {
       // Get the next step from the redo queue
       const nextStep = state.futureSteps.shift()
@@ -147,11 +162,13 @@ export const flowSlice = createSlice({
         )
       }
     },
+
     setUseDraft(state, { payload: useDraft }: PayloadAction<boolean>) {
       state.useDraft = useDraft
       state.futureSteps = []
       savePersistedSetting('useDraft', useDraft)
     },
+
     skipSteps: {
       prepare: (steps: SetupStep | SetupStep[], skip: boolean) => ({
         payload: {
@@ -159,7 +176,7 @@ export const flowSlice = createSlice({
           skip,
         },
       }),
-      reducer(state, { payload }: PayloadAction<SkipStepsPayload>) {
+      reducer(state, { payload }: PayloadAction<{ steps: SetupStep[]; skip: boolean }>) {
         const { steps, skip } = payload
         steps.forEach(step => {
           state.skippedSteps[step] = skip
@@ -167,22 +184,25 @@ export const flowSlice = createSlice({
         state.futureSteps = []
       },
     },
+
     setVagabondPool(state, { payload: vagabondPool }: PayloadAction<CodeObject[]>) {
       state.vagabondPool = vagabondPool.map(({ code }) => code)
     },
+
     clearFactionPool(state) {
       state.vagabondPool = []
       state.factionPool = []
       state.lastFactionLocked = false
       state.currentFactionIndex = null
     },
+
     addToFactionPool(state, { payload: faction }: PayloadAction<WithCode<Faction>>) {
       const factionEntry: FactionEntry = {
         code: faction.code,
-        order: faction.order,
-        militant: faction.militant,
+        order: faction.standardSetup.order,
+        militant: faction.militant ?? false,
       }
-      if (faction.isVagabond) {
+      if (faction.dealVagabond) {
         factionEntry.vagabond = state.useDraft ? takeRandom(state.vagabondPool) : true
       }
 
@@ -194,6 +214,7 @@ export const flowSlice = createSlice({
         state.factionPool.sort(({ order: a }, { order: b }) => a - b)
       }
     },
+
     setCurrentPlayerIndex(state, { payload: currentPlayerIndex }: PayloadAction<number>) {
       if (currentPlayerIndex >= 0) {
         state.currentPlayerIndex = currentPlayerIndex
@@ -203,6 +224,7 @@ export const flowSlice = createSlice({
         )
       }
     },
+
     setCurrentFactionIndex(state, { payload: currentFactionIndex }: PayloadAction<number | null>) {
       if (
         currentFactionIndex == null ||
@@ -217,12 +239,14 @@ export const flowSlice = createSlice({
         )
       }
     },
+
     resetFlow(state) {
       state.pastSteps = []
       state.currentStep = SetupStep.chooseExpansions
       state.futureSteps = []
     },
   },
+
   extraReducers(builder) {
     // This allows us to always reset the redo queue if the setup state changes
     builder

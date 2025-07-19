@@ -3,46 +3,77 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 import type {
-  ClearingSolveState,
   ClearingSuit,
   CodeObject,
+  DeckCode,
+  FactionCode,
   Hireling,
+  HirelingCode,
+  LandmarkCode,
   Map,
+  MapCode,
   MapInfo,
-  SetHirelingPayload,
-  SetupState,
   WithCode,
 } from '../../types'
 
 import { loadPersistedSetting, savePersistedSetting, takeRandom } from '../utils'
 import { toggleExpansion } from './components'
 
-const initialState: SetupState = {
-  playerCount: loadPersistedSetting<number>('playerCount', 4),
-  fixedFirstPlayer: loadPersistedSetting<boolean>('fixedFirstPlayer', false),
-  playerOrder: [],
-  errorMessage: null,
+/** An object representing an promoted or demoted Hireling. */
+export interface HirelingEntry {
+  code: HirelingCode
+  demoted: boolean
+}
+
+/** An object containing all variables used during the setup process. */
+export interface SetupState {
+  playerCount: number
+  fixedFirstPlayer: boolean
+  playerOrder: number[]
+  errorMessage: string | null
   // Map
-  map: null,
-  balancedSuits: loadPersistedSetting<boolean>('balancedSuits', false),
-  clearingSuits: [],
+  map: MapCode | null
+  balancedSuits: boolean
+  clearingSuits: ClearingSuit[]
   // Deck
-  deck: null,
+  deck: DeckCode | null
   // Landmarks
-  landmarkCount: loadPersistedSetting<0 | 1 | 2>('landmarkCount', 0),
-  landmark1: null,
-  landmark2: null,
+  landmarkCount: 0 | 1 | 2
+  landmark1: LandmarkCode | null
+  landmark2: LandmarkCode | null
   // Hirelings
-  hireling1: null,
-  hireling2: null,
-  hireling3: null,
+  hireling1: HirelingEntry | null
+  hireling2: HirelingEntry | null
+  hireling3: HirelingEntry | null
   // Factions
-  excludedFactions: [],
+  excludedFactions: FactionCode[]
 }
 
 export const setupSlice = createSlice({
   name: 'setup',
-  initialState,
+
+  initialState: {
+    playerCount: loadPersistedSetting<number>('playerCount', 4),
+    fixedFirstPlayer: loadPersistedSetting<boolean>('fixedFirstPlayer', false),
+    playerOrder: [],
+    errorMessage: null,
+    // Map
+    map: null,
+    balancedSuits: loadPersistedSetting<boolean>('balancedSuits', false),
+    clearingSuits: [],
+    // Deck
+    deck: null,
+    // Landmarks
+    landmarkCount: loadPersistedSetting<number>('landmarkCount', 0),
+    landmark1: null,
+    landmark2: null,
+    // Hirelings
+    hireling1: null,
+    hireling2: null,
+    hireling3: null,
+    // Factions
+    excludedFactions: [],
+  } as SetupState,
 
   reducers: {
     setPlayerCount(state, { payload: playerCount }: PayloadAction<number>) {
@@ -93,14 +124,14 @@ export const setupSlice = createSlice({
         // Do this in a loop as there is a chance the solver fails
         do {
           // First, keep track of all clearings, the clearings they connect to, and a list of valid suits for each clearing
-          const unassignedClearings: ClearingSolveState[] = clearings.map((_clearing, index) => ({
+          const unassignedClearings = clearings.map((_clearing, index) => ({
             index,
             links: paths.reduce((list: number[], [a, b]) => {
               if (a === index) list.push(b)
               if (b === index) list.push(a)
               return list
             }, []),
-            options: ['fox', 'mouse', 'rabbit'],
+            options: ['fox', 'mouse', 'rabbit'] as ClearingSuit[],
           }))
           const suitCounts: Record<ClearingSuit, number> = {
             fox: 0,
@@ -229,7 +260,12 @@ export const setupSlice = createSlice({
           factions: hireling.factions,
         },
       }),
-      reducer(state, { payload }: PayloadAction<SetHirelingPayload>) {
+      reducer(
+        state,
+        {
+          payload,
+        }: PayloadAction<{ number: number; hirelingEntry: HirelingEntry; factions: FactionCode[] }>,
+      ) {
         const { number, hirelingEntry, factions } = payload
 
         if (number >= 1 && number <= 3) {
