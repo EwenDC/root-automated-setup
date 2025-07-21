@@ -337,7 +337,7 @@ export default {
       setup: `Giocatore {{count}}, prendi la carta combattente, 8 guerrieri e 3 segnalini accampamento dei Cercatori di Luce dalla scatola di gioco. Posiziona un segnalino accampamento e 3 guerrieri dei Cercatori in una radura qualsiasi. Posiziona i rimanenti guerrieri, segnalini e la carta vicino alla mappa <i>(lato non declassato a faccia in su)</i>.`,
       setup_demoted: `Giocatore {{count}}, prendi la carta combattente dei Cercatori di Luce dalla scatola di gioco e posizionala vicino alla mappa con il lato declassato "Talpe Artigiane" a faccia in su.`,
     },
-    flamebearers: {
+    flameBearers: {
       name: `Detentori della Fiamma`,
       setupTitle: `Preparare i Detentori della Fiamma`,
       setupTitle_demoted: `Preparare i Ratti Contrabbandieri`,
@@ -386,7 +386,7 @@ export default {
       setup: `Giocatore {{count}}, prendi la carta combattente, i 4 guerrieri e il dado della Brigata Primavera dalla scatola di gioco. Tira due volte il dado brigata e posiziona un guerriero della Brigata nelle radure corrispondenti. Posiziona i rimanenti guerrieri, il dado e la carta vicino alla mappa <i>(lato non declassato a faccia in su)</i>.`,
       setup_demoted: `Giocatore {{count}}, prendi la carta combattente della Brigata Primavera dalla scatola di gioco e posizionala vicino alla mappa con il lato declassato "Conigli Esploratori" a faccia in su.`,
     },
-    vaultkeepers: {
+    vaultKeepers: {
       name: `Custodi del Caveau`,
       setupTitle: `Preparare i Custodi del Caveau`,
       setupTitle_demoted: `Preparare i Tassi Guardie del Corpo`,

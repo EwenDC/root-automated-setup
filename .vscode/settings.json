@@ -7,5 +7,25 @@
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
   "editor.wordWrap": "on",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.language": "en-US",
+  "cSpell.words": [
+    "chokepoints",
+    "Corvid",
+    "Corvids",
+    "Deepwood",
+    "Ewen",
+    "Foxburrow",
+    "Leder",
+    "Lilypad",
+    "Mousehold",
+    "Rabbittown",
+    "Riverfolk",
+    "Ronin",
+    "Rootbotics",
+    "unexhausted",
+    "waystation",
+    "Waystations",
+    "Woodfolk"
+  ]
 }

@@ -62,7 +62,7 @@ import exileMeeple from './images/meeples/exile.png'
 import expeditionMeeple from './images/meeples/expedition.png'
 import eyrieMeeple from './images/meeples/eyrie.png'
 import farmersMeeple from './images/meeples/farmers.png'
-import flamebearersMeeple from './images/meeples/flamebearers.png'
+import flameBearersMeeple from './images/meeples/flameBearers.png'
 import flotillaMeeple from './images/meeples/flotilla.png'
 import gladiatorMeeple from './images/meeples/gladiator.png'
 import harrierMeeple from './images/meeples/harrier.png'
@@ -83,7 +83,7 @@ import thiefMeeple from './images/meeples/thief.png'
 import tinkerMeeple from './images/meeples/tinker.png'
 import uprisingMeeple from './images/meeples/uprising.png'
 import vagrantMeeple from './images/meeples/vagrant.png'
-import vaultkeepersMeeple from './images/meeples/vaultkeepers.png'
+import vaultKeepersMeeple from './images/meeples/vaultKeepers.png'
 import warlordMeeple from './images/meeples/warlord.png'
 // Path Images
 import autumnPaths from './images/paths/autumn.png'
@@ -867,12 +867,12 @@ const definitions: Record<ExpansionCode, Expansion> = {
     image: marauderHirelingsBox,
     defaultDisabled: true,
     hirelings: {
-      flamebearers: {
-        image: flamebearersMeeple,
+      flameBearers: {
+        image: flameBearersMeeple,
         factions: ['warlord'],
       },
-      vaultkeepers: {
-        image: vaultkeepersMeeple,
+      vaultKeepers: {
+        image: vaultKeepersMeeple,
         factions: ['keepers'],
       },
       band: {

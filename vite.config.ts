@@ -103,6 +103,10 @@ export default defineConfig({
     }),
     checker({
       typescript: true,
+      eslint: {
+        lintCommand: 'eslint .',
+        useFlatConfig: true,
+      },
     }),
   ],
   base: '/root-automated-setup/',

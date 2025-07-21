@@ -10,10 +10,10 @@ import ItalianFlag from './images/languages/italian.png'
 import SpanishFlag from './images/languages/spanish.png'
 
 export const languages = [
-  { name: 'English', locale: 'en', image: EnglishFlag },
-  { name: 'Español', locale: 'es', image: SpanishFlag },
-  { name: 'Français', locale: 'fr', image: FrenchFlag },
-  { name: 'Italiano', locale: 'it', image: ItalianFlag },
+  { name: 'English', locale: 'en-US', image: EnglishFlag },
+  { name: 'Español', locale: 'es-ES', image: SpanishFlag },
+  { name: 'Français', locale: 'fr-FR', image: FrenchFlag },
+  { name: 'Italiano', locale: 'it-IT', image: ItalianFlag },
 ]
 
 // Skip reinitialization on hot reload
@@ -41,13 +41,10 @@ if (!import.meta.hot || !i18n.isInitialized) {
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-      // Since the fallback language is always loaded, just inline the english translations
-      fallbackLng: 'en',
+      fallbackLng: 'en-US',
       debug: import.meta.env.DEV,
       supportedLngs: languages.map(({ locale }) => locale),
-      // Support language locales by just always loading the base language. Can be removed in the future to support explicit locales
-      nonExplicitSupportedLngs: true,
-      load: 'languageOnly',
+      load: 'currentOnly',
       interpolation: {
         escapeValue: false, // not needed for react as it escapes by default
       },

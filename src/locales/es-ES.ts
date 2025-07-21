@@ -337,7 +337,7 @@ export default {
       setup: `El Jugador {{count}} coge la carta, los 8 guerreros y las 3 fichas de puesto seguro de la Expedición Hacia el Sol de la caja del juego. Coloca una ficha de puesto seguro y 3 guerreros Expedicionarios en un claro cualquiera. Coloca el resto de guerreros, fichas y la carta al lado del tablero <i>(lado Degradado bocabajo)</i>.`,
       setup_demoted: `El Jugador {{count}} coge la carta de la Expedición Hacia el Sol de la caja del juego. Colócala al lado del tablero con su lado Degradado "Topos Artesanos" bocarriba.`,
     },
-    flamebearers: {
+    flameBearers: {
       name: `Portadores de Llamas`,
       setupTitle: `Prepara los Portadores de Llamas`,
       setupTitle_demoted: `Prepara las Ratas Contrabandistas`,
@@ -386,7 +386,7 @@ export default {
       setup: `El Jugador {{count}} coge la carta, los 4 guerreros y el dado del alzamiento del Alzamiento Primaveral de la caja del juego. Lanza dos veces el dado del alzamiento y coloca un guerrero del Alzamiento en los claros correspondientes. Coloca los guerreros restantes, el dado y la carta al lado del tablero <i>(lado Degradado bocabajo)</i>.`,
       setup_demoted: `El Jugador {{count}} coge la carta del Alzamiento Primaveral de la caja del juego. Colócala al lado del tablero con su lado Degradado "Conejos Exploradores" bocarriba.`,
     },
-    vaultkeepers: {
+    vaultKeepers: {
       name: `Guardianes de las Cámaras`,
       setupTitle: `Prepara los Guardianes de las Cámaras`,
       setupTitle_demoted: `Prepara los Tejones Guardaespaldas`,

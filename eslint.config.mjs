@@ -5,6 +5,7 @@ import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import perfectionist from 'eslint-plugin-perfectionist'
 import comments from '@eslint-community/eslint-plugin-eslint-comments/configs'
+import cspellConfigs from '@cspell/eslint-plugin/configs'
 
 export default defineConfig(
   globalIgnores(['node_modules', 'dist', 'examples'], 'Global Ignores'),
@@ -83,6 +84,40 @@ export default defineConfig(
     rules: {
       // Use of irregular whitespace for other languages is intentional
       'no-irregular-whitespace': 'off',
+    },
+  },
+  {
+    name: 'English Spellcheck',
+    extends: [cspellConfigs.recommended],
+    files: ['src/locales/en-US.ts'],
+    rules: {
+      '@cspell/spellchecker': [
+        'warn',
+        {
+          cspell: {
+            language: 'en-US',
+            words: [
+              'Rootbotics',
+              'Ewen',
+              'Leder',
+              'Riverfolk',
+              'chokepoints',
+              'Corvid',
+              'Corvids',
+              'Woodfolk',
+              'Lilypad',
+              'waystation',
+              'Waystations',
+              'Deepwood',
+              'unexhausted',
+              'Foxburrow',
+              'Mousehold',
+              'Rabbittown',
+              'Ronin',
+            ],
+          },
+        },
+      ],
     },
   },
 )

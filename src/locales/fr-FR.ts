@@ -347,7 +347,7 @@ export default {
       setup: `Joueur {{count}}, prenez la carte Nomade de l’Expédition de Lumière, les 8 guerriers Expédition et les 3 jetons Caverne dans la boite de jeu. Placez 1 jeton Caverne et 3 guerriers Expédition dans une clairière au choix. Placez les guerriers et jetons restants et la carte Nomade <i>(face promue « Expédition de Lumière » visible)</i> à côté du plateau.`,
       setup_demoted: `Joueur {{count}}, prenez la carte Nomade de l’Expédition de Lumière dans la boite de jeu. Placez-la à côté du plateau <i>(face rétrogradée « Taupes Artisanes » visible)</i>.`,
     },
-    flamebearers: {
+    flameBearers: {
       name: `Porteurs de Flamme`,
       setupTitle: `Mise en place des Porteurs de Flamme`,
       setupTitle_demoted: `Mise en place des Rats Contrebandiers`,
@@ -396,7 +396,7 @@ export default {
       setup: `Joueur {{count}}, prenez la carte Nomade de la Révolte Printanière, les 4 guerriers Révolte et le dé de révolte dans la boite de jeu. Lancez le dé de révolte 2 fois, et placez un guerrier Révolte dans des clairières de la même couleur. Placez les guerriers restants, le dé et la carte Nomade <i>(face promue « Révolte Printanière » visible)</i> à côté du plateau.`,
       setup_demoted: `Joueur {{count}}, prenez la carte Nomade de la Révolte Printanière dans la boite de jeu. Placez-la à côté du plateau <i>(face rétrogradée « Lapins Éclaireurs » visible)</i>.`,
     },
-    vaultkeepers: {
+    vaultKeepers: {
       name: `Gardiens du Coffre`,
       setupTitle: `Mise en place des Gardiens du Coffre`,
       setupTitle_demoted: `Mise en place des Blaireaux Gardes du corps`,

@@ -18,7 +18,7 @@ export default {
     enableAll: `Enable All`,
     factionRating: [`Low`, `Moderate`, `High`],
     fixedFirstPlayer: {
-      false: `Randomise first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>`,
+      false: `Randomize first player <i>(Player 1 is the person operating this app, Player 2 is the person sitting clockwise from them, etc.)</i>`,
       true: `Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>`,
     },
     fox: `Fox`,
@@ -401,7 +401,7 @@ export default {
       setup: `Player {{count}}, grab the hireling card, 9 warriors, and 4 farm buildings for the Prosperous Farmers from the game box. Place 1 farm and 1 Farmer warrior each in two clearings. Place the remaining warriors, buildings, and card next to the map <i>(non-demoted side up)</i>.`,
       setup_demoted: `Player {{count}}, grab the hireling card, 9 warriors, and 4 farm buildings for the Prosperous Farmers from the game box. Place them next to the map <i>(with the card’s demoted "Struggling Farmers" side up)</i>.`,
     },
-    flamebearers: {
+    flameBearers: {
       name: `Flame Bearers`,
       setupTitle: `Set up the Flame Bearers`,
       setupTitle_demoted: `Set up the Rat Smugglers`,
@@ -457,7 +457,7 @@ export default {
       setup: `Player {{count}}, grab the hireling card, 4 warriors, and uprising die for the Spring Uprising from the game box. Roll the uprising die twice and place an Uprising warrior in matching clearings. Place the remaining warriors, die, and card next to the map <i>(non-demoted side up)</i>.`,
       setup_demoted: `Player {{count}}, grab the Spring Uprising hireling card from the game box. Place it next to the map with its demoted "Rabbit Scouts" side up.`,
     },
-    vaultkeepers: {
+    vaultKeepers: {
       name: `Vault Keepers`,
       setupTitle: `Set up the Vault Keepers`,
       setupTitle_demoted: `Set up the Badger Bodyguards`,
@@ -542,7 +542,7 @@ export default {
     mountain: {
       name: `Mountain`,
       setupTitle: `Set up the Mountain Map`,
-      setup: `<li>Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.</li><li>Place the 6 closed path markers to cover the 6 paths of darker colour with excavated ground.</li>`,
+      setup: `<li>Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.</li><li>Place the 6 closed path markers to cover the 6 paths of darker color with excavated ground.</li>`,
       fixedSuits: `Use the suggested clearing suits for the Mountain Map`,
       useLandmark: `Use the map-specific setup for the Tower landmark on the Mountain map`,
       landmarkSetup: `<li>Place the Tower piece as shown in the chart below. If you have "The Tower" landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
