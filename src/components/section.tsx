@@ -3,19 +3,19 @@ import type { PropsWithChildren } from 'react'
 
 import classNames from 'classnames'
 import { useContext, useEffect, useRef } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
-import iconComponents from '../iconComponents'
+import LocaleText from './localeText'
 import { stepActiveContext } from './stepList'
 
 type SectionProps = PropsWithChildren<{
   active?: boolean
-  titleKey?: string
-  subtitleKey?: string
-  textKey?: string
+  titleKey?: string | string[]
+  subtitleKey?: string | string[]
+  textKey?: string | string[]
   textBelowChildren?: boolean | undefined
   translationOptions?: TOptions
-  components?: Readonly<Record<string, React.ReactElement>>
+  components?: Record<string, React.ReactElement>
 }>
 
 const Section: React.FC<SectionProps> = ({
@@ -28,10 +28,8 @@ const Section: React.FC<SectionProps> = ({
   children,
 }) => {
   const active = useContext(stepActiveContext)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const sectionElement = useRef<HTMLElement>(null)
-  // Ensure the component re-renders when the language changes
-  const activeLanguage = i18n.resolvedLanguage ?? i18n.language
 
   // Trigger a scroll-to effect when we become active
   useEffect(() => {
@@ -63,15 +61,10 @@ const Section: React.FC<SectionProps> = ({
       {subtitleText && <h3>{subtitleText}.</h3>}
       {textBelowChildren ? children : null}
       {textKey && (
-        <Trans
-          key={activeLanguage}
+        <LocaleText
           i18nKey={textKey}
-          // For Trans component count cannot be passed in with options
-          count={translationOptions?.count}
-          /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-          -- Bad react-i18next types force our hand here */
-          tOptions={translationOptions as any}
-          components={{ ...iconComponents, ...components }}
+          tOptions={translationOptions}
+          components={components}
         />
       )}
       {!textBelowChildren ? children : null}

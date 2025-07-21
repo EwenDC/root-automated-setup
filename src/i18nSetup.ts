@@ -16,36 +16,51 @@ export const languages = [
   { name: 'Italiano', locale: 'it', image: ItalianFlag },
 ]
 
-void i18n
-  .use<BackendModule>({
-    type: 'backend',
-    init() {
-      /* No-op as this is a required field */
-    },
-    read(language, _namespace, callback) {
-      import(`./locales/${language}.ts`)
-        .then((module: { default: ResourceKey }) => {
-          callback(null, module.default)
-        })
-        .catch((error: unknown) => {
-          callback(error as CallbackError, null)
-        })
-    },
+// Skip reinitialization on hot reload
+if (!import.meta.hot || !i18n.isInitialized) {
+  void i18n
+    .use<BackendModule>({
+      type: 'backend',
+      init() {
+        /* No-op as this is a required field */
+      },
+      read(language, _namespace, callback) {
+        const promise = import.meta.hot
+          ? // This is required for HMR to ensure that the latest file is always loaded
+            import(/* @vite-ignore */ `./locales/${language}.ts?t=${Date.now()}`)
+          : import(`./locales/${language}.ts`)
+        promise
+          .then((module: { default: ResourceKey }) => {
+            callback(null, module.default)
+          })
+          .catch((error: unknown) => {
+            callback(error as CallbackError, null)
+          })
+      },
+    })
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      // Since the fallback language is always loaded, just inline the english translations
+      fallbackLng: 'en',
+      debug: import.meta.env.DEV,
+      supportedLngs: languages.map(({ locale }) => locale),
+      // Support language locales by just always loading the base language. Can be removed in the future to support explicit locales
+      nonExplicitSupportedLngs: true,
+      load: 'languageOnly',
+      interpolation: {
+        escapeValue: false, // not needed for react as it escapes by default
+      },
+      react: {
+        bindI18nStore: !!import.meta.hot && 'added',
+        transKeepBasicHtmlNodesFor: ['br', 'i', 'p', 'b', 'ol', 'li'],
+      },
+    })
+}
+
+// On hot reload force i18next to reload the language files
+if (import.meta.hot) {
+  import.meta.hot.accept(() => {
+    void i18n.reloadResources()
   })
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    // Since the fallback language is always loaded, just inline the english translations
-    fallbackLng: 'en',
-    debug: import.meta.env.DEV,
-    supportedLngs: languages.map(({ locale }) => locale),
-    // Support language locales by just always loading the base language. Can be removed in the future to support explicit locales
-    nonExplicitSupportedLngs: true,
-    load: 'languageOnly',
-    interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
-    },
-    react: {
-      transKeepBasicHtmlNodesFor: ['br', 'i', 'p', 'b', 'ol', 'li'],
-    },
-  })
+}

@@ -8,6 +8,7 @@ import UndoIcon from '../images/icons/undo.svg?react'
 import { nextStep, redoStep, undoStep } from '../store'
 import { SetupStep } from '../types'
 import Button from './button'
+import LocaleText from './localeText'
 
 type ButtonIndex = 0 | 1 | 2
 const MIN_BUTTON_INDEX = 0
@@ -96,7 +97,7 @@ const Toolbar: React.FC = () => {
           tabIndex={focusedIndex === 2 ? 0 : -1}
           onKeyDown={onKeyDownHandler(2)}
         >
-          {t('label.nextStep')}
+          <LocaleText i18nKey="label.nextStep" />
         </Button>
       </div>
     </footer>

@@ -1,8 +1,8 @@
 import classNames from 'classnames'
 import { useContext } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { selectedFactionContext } from './factionSelect'
+import LocaleText from './localeText'
 
 interface StatBarProps {
   stat: 'aggression' | 'complexity' | 'crafting' | 'wealth'
@@ -10,12 +10,13 @@ interface StatBarProps {
 
 const StatBar: React.FC<StatBarProps> = ({ stat }) => {
   const selectedFaction = useContext(selectedFactionContext)
-  const { t } = useTranslation()
 
   const statValue = selectedFaction != null ? selectedFaction.stats[stat] : 0
   return (
     <div className="stat">
-      <span className="label">{t(`label.${stat}`)}</span>
+      <span className="label">
+        <LocaleText i18nKey={`label.${stat}`} />
+      </span>
       <span
         className={classNames({
           low: statValue < 1,
@@ -23,7 +24,7 @@ const StatBar: React.FC<StatBarProps> = ({ stat }) => {
           high: statValue > 1,
         })}
       >
-        {t(`label.factionRating.${statValue}`)}
+        <LocaleText i18nKey={`label.factionRating.${statValue}`} />
       </span>
     </div>
   )

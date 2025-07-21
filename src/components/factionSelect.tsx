@@ -1,15 +1,15 @@
 import classNames from 'classnames'
 import { createContext, useContext } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 import type { Faction, FlowSlice } from '../types'
 
 import { useAppDispatch, useAppSelector, useInvalid, useSelectFactionPool } from '../hooks'
-import iconComponents from '../iconComponents'
 import MilitantIcon from '../images/icons/militant.svg?react'
 import { setCurrentFactionIndex, setErrorMessage } from '../store'
 import ComponentCount from './componentCount'
 import IconList from './iconList'
+import LocaleText from './localeText'
 import StatBar from './statBar'
 import { stepActiveContext } from './stepList'
 
@@ -155,23 +155,24 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
               {selectedFaction.vagabond && (
                 <>
                   <p>
-                    <strong>{t('label.startingItems')}.</strong>{' '}
+                    <strong>
+                      <LocaleText i18nKey="label.startingItems" />.
+                    </strong>{' '}
                     <IconList list={selectedFaction.vagabond.startingItems} />.
                   </p>
                   <p>
                     <strong>
-                      {t('label.specialAction')}:{' '}
-                      {t(`vagabond.${selectedFaction.vagabond.code}.action`)}.
+                      <LocaleText i18nKey="label.specialAction" />:{' '}
+                      <LocaleText i18nKey={`vagabond.${selectedFaction.vagabond.code}.action`} />.
                     </strong>{' '}
-                    <Trans
-                      i18nKey={`vagabond.${selectedFaction.vagabond.code}.effect`}
-                      components={iconComponents}
-                    />
+                    <LocaleText i18nKey={`vagabond.${selectedFaction.vagabond.code}.effect`} />
                   </p>
                 </>
               )}
-              <h4 className="summary-title">{t(`faction.${selectedFaction.key}.summaryTitle`)}</h4>
-              <Trans i18nKey={`faction.${selectedFaction.key}.summary`} />
+              <h4 className="summary-title">
+                <LocaleText i18nKey={`faction.${selectedFaction.key}.summaryTitle`} />
+              </h4>
+              <LocaleText i18nKey={`faction.${selectedFaction.key}.summary`} />
             </div>
           </selectedFactionContext.Provider>
         </div>

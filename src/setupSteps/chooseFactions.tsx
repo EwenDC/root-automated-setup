@@ -1,7 +1,6 @@
-import { useTranslation } from 'react-i18next'
-
 import Checkbox from '../components/checkbox'
 import ComponentToggle from '../components/componentToggle'
+import LocaleText from '../components/localeText'
 import Section from '../components/section'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import {
@@ -17,7 +16,6 @@ const ChooseFactionsStep: React.FC = () => {
   const useDraft = useAppSelector(state => state.flow.useDraft)
   const factions = useAppSelector(selectFactionArray)
   const dispatch = useAppDispatch()
-  const { t } = useTranslation()
 
   return (
     <Section
@@ -38,7 +36,7 @@ const ChooseFactionsStep: React.FC = () => {
       />
       {useDraft && factions.some(faction => faction.dealVagabond && faction.enabled) ? (
         <>
-          {t('label.selectVagabonds')}
+          <LocaleText i18nKey="label.selectVagabonds" />
           <ComponentToggle
             selector={selectVagabondArray}
             toggleComponent={toggleVagabond}

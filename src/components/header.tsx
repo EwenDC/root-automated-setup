@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import rootLogo from '../images/logo.png'
+import LocaleText from './localeText'
 
 const Header: React.FC = () => {
   const { t } = useTranslation()
@@ -10,7 +11,9 @@ const Header: React.FC = () => {
         src={rootLogo}
         alt={t('label.logoAlt')}
       />
-      <h1>{t('label.logoText')}</h1>
+      <h1>
+        <LocaleText i18nKey="label.logoText" />
+      </h1>
     </header>
   )
 }

@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { selectedFactionContext } from './factionSelect'
+import LocaleText from './localeText'
 
 interface ComponentCountProps {
   component: 'buildings' | 'tokens' | 'warriors'
@@ -9,7 +9,6 @@ interface ComponentCountProps {
 
 const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
   const selectedFaction = useContext(selectedFactionContext)
-  const { t } = useTranslation()
 
   if (selectedFaction) {
     const count =
@@ -28,7 +27,11 @@ const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
             alt="" // Image is just decoration, so hide from screen readers
             aria-hidden="true"
           />{' '}
-          &#215;{t(`component.${component}`, { count })}
+          &#215;
+          <LocaleText
+            i18nKey={`component.${component}`}
+            count={count}
+          />
         </div>
       )
     }

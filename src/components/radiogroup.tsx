@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
 
 import { useInvalid } from '../hooks'
+import LocaleText from './localeText'
 import { stepActiveContext } from './stepList'
 
 interface RadiogroupProps {
@@ -13,9 +13,6 @@ interface RadiogroupProps {
 const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onChange }) => {
   const stepActive = useContext(stepActiveContext)
   const invalid = useInvalid(stepActive)
-  // Ensure the component re-renders when the language changes
-  const { i18n } = useTranslation()
-  const activeLanguage = i18n.resolvedLanguage ?? i18n.language
 
   return (
     <fieldset
@@ -38,10 +35,7 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
             }}
           />
           <label htmlFor={`${id}False`}>
-            <Trans
-              key={activeLanguage}
-              i18nKey={`label.${id}.false`}
-            />
+            <LocaleText i18nKey={`label.${id}.false`} />
           </label>
         </div>
       ) : null}
@@ -57,10 +51,7 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
             }}
           />
           <label htmlFor={`${id}True`}>
-            <Trans
-              key={activeLanguage}
-              i18nKey={`label.${id}.true`}
-            />
+            <LocaleText i18nKey={`label.${id}.true`} />
           </label>
         </div>
       ) : null}

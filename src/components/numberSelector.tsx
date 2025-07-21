@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
 
 import { useInvalid } from '../hooks'
+import LocaleText from './localeText'
 import { stepActiveContext } from './stepList'
 
 interface NumberSelectorProps {
@@ -18,9 +18,6 @@ const INPUT_SIZE = 2
 const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxVal, onChange }) => {
   const stepActive = useContext(stepActiveContext)
   const invalid = useInvalid(stepActive)
-  // Ensure the component re-renders when the language changes
-  const { i18n } = useTranslation()
-  const activeLanguage = i18n.resolvedLanguage ?? i18n.language
 
   const buttonHandler = (amount: number) => {
     const newValue = value + amount
@@ -49,10 +46,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
   return (
     <div className="number">
       <label htmlFor={id}>
-        <Trans
-          key={activeLanguage}
-          i18nKey={`label.${id}`}
-        />
+        <LocaleText i18nKey={`label.${id}`} />
       </label>
       {stepActive ? (
         <>

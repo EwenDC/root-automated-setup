@@ -140,8 +140,8 @@ export default {
     placeScoreMarkers: {
       title: `Place Score Markers`,
       title_vagabondSetUp: `Place Score and Relationship Markers`,
-      body: `Each player place their chosen faction's score marker on the "0" space of the score track.`,
-      body_vagabondSetUp: `Each player place their chosen faction's score marker on the "0" space of the score track. Each Vagabond player place a relationship marker for every non-Vagabond faction in play on the Indifferent space of your Relationships chart.`,
+      body: `Each player place their chosen faction’s score marker on the "0" space of the score track.`,
+      body_vagabondSetUp: `Each player place their chosen faction’s score marker on the "0" space of the score track. Each Vagabond player place a relationship marker for every non-Vagabond faction in play on the Indifferent space of your Relationships chart.`,
     },
     chooseHand: {
       title: `Choose Starting Hands`,
@@ -191,86 +191,164 @@ export default {
     alliance: {
       name: `Woodland Alliance`,
       summaryTitle: `Playing the Alliance`,
-      summary: `<p>As the Woodland Alliance, you work to gain more sympathy of the oppressed forest creatures. Each time you place a <b>sympathy token</b> on the map, you score points. The more sympathy tokens on the map, the more points you score.</p><p>To gain sympathy, though, you will need <b>supporters</b> - cards placed on your faction board - matching the clearings where you want sympathy. While you can add your own cards to your supporters, you can goad your enemies into doing the same by provoking <b>Outrage</b>: whenever another faction removes sympathy or moves warriors into a sympathetic clearing, they must add one of their own cards to your supporters.</p><p>Don't be afraid to set up chokepoints, as you are experts in <b>Guerrilla War</b>: when defending in battle, you use the higher die. Place your sympathy in clearings where conflict is likely, and force your opponent to face you!</p><p>Supporters can also be put toward violent <b>revolt</b>, which destroys <i>all</i> of your enemies' pieces in a clearing and places warriors and a new <b>base</b> there. Bases not only increase your card draw, but also let you train <b>officers</b>, which give you free actions each turn. Protect your bases well! If you lose a base, you'll lose many supporters and officers too.</p>`,
+      summary: `<p>As the Woodland Alliance, you work to gain more sympathy of the oppressed forest creatures. Each time you place a <b>sympathy token</b> on the map, you score points. The more sympathy tokens on the map, the more points you score.</p><p>To gain sympathy, though, you will need <b>supporters</b> - cards placed on your faction board - matching the clearings where you want sympathy. While you can add your own cards to your supporters, you can goad your enemies into doing the same by provoking <b>Outrage</b>: whenever another faction removes sympathy or moves warriors into a sympathetic clearing, they must add one of their own cards to your supporters.</p><p>Don’t be afraid to set up chokepoints, as you are experts in <b>Guerrilla War</b>: when defending in battle, you use the higher die. Place your sympathy in clearings where conflict is likely, and force your opponent to face you!</p><p>Supporters can also be put toward violent <b>revolt</b>, which destroys <i>all</i> of your enemies’ pieces in a clearing and places warriors and a new <b>base</b> there. Bases not only increase your card draw, but also let you train <b>officers</b>, which give you free actions each turn. Protect your bases well! If you lose a base, you’ll lose many supporters and officers too.</p>`,
       setupTitle: `Set up the Woodland Alliance`,
-      setup: `<ol><li><b>Gather Warriors.</b> Form a supply of 10 warriors.</li><li><b>Place Bases.</b> Place 3 bases on the matching spaces in your Bases box.</li><li><b>Fill Sympathy Track.</b> Place 10 sympathy tokens on your Sympathy track.</li><li><b>Gain Supporters.</b> Draw 3 cards and place them face down on your Supporters stack.</li></ol>`,
-      advancedSetup: `<ol><li>Draw 3 <b>cards</b> and add them face down to your Supporters stack.</li><li>Fill your Sympathy track with <b>sympathy tokens</b>.</li><li>Put your 3 <b>bases</b> on your matching Bases spaces.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Gather Warriors.</b> Form a supply of 10 warriors.</li><li><b>Place Bases.</b> Place 3 bases on the matching spaces in your Bases box.</li><li><b>Fill Sympathy Track.</b> Place 10 sympathy tokens on your Sympathy track.</li><li><b>Gain Supporters.</b> Draw 3 cards and place them face down on your Supporters stack.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Draw 3 <b>cards</b> and add them face down to your Supporters stack.</li><li>Fill your Sympathy track with <b>sympathy tokens</b>.</li><li>Put your 3 <b>bases</b> on your matching Bases spaces.</li></ol>`,
+      },
     },
     corvid: {
       name: `Corvid Conspiracy`,
       summaryTitle: `Playing the Corvids`,
-      summary: `<p>As the Corvid Conspiracy, you want to show that you are the true power behind the scenes, controlling the tides of the Woodland war. each time you flip a <b>plot</b> token you've placed on the map, you score points. The more face-up plots on the map when you do, the more points you score.</p><p>To place and flip plots, you must recruit and position your warriors wisely. Your faction is among the best at recruiting warriors to your cause, but they'll be spread thin, as you'll be hard pressed to move too often. Even more, you can't afford to battle too much, as placing a plot requires you to remove one or more Corvid warriors, and you cannot flip a plot unless its clearing has a Corvid warrior.</p><p>Thankfully, your warriors are exceedingly <b>Nimble</b>, letting them move regardless of rule. Additionally, your <b>Embedded Agents</b> make your plots dangerous to quash with brute force - when defending in battle with a facedown plot token, you deal an extra hit.</p><p>However, take care in leaving your plots open to <b>Exposure</b>. Any enemy faction in a clearing with a facedown plot can show you a matching card to guess which plot it is. If they're right, they've infiltrated you and foiled your plot! They remove the plot and ignore its effect. If they're wrong, though, you catch their spy red-handed. Your plot remains, and they give you the card they showed you. Bluff well.</p>`,
+      summary: `<p>As the Corvid Conspiracy, you want to show that you are the true power behind the scenes, controlling the tides of the Woodland war. each time you flip a <b>plot</b> token you’ve placed on the map, you score points. The more face-up plots on the map when you do, the more points you score.</p><p>To place and flip plots, you must recruit and position your warriors wisely. Your faction is among the best at recruiting warriors to your cause, but they’ll be spread thin, as you’ll be hard pressed to move too often. Even more, you can’t afford to battle too much, as placing a plot requires you to remove one or more Corvid warriors, and you cannot flip a plot unless its clearing has a Corvid warrior.</p><p>Thankfully, your warriors are exceedingly <b>Nimble</b>, letting them move regardless of rule. Additionally, your <b>Embedded Agents</b> make your plots dangerous to quash with brute force - when defending in battle with a facedown plot token, you deal an extra hit.</p><p>However, take care in leaving your plots open to <b>Exposure</b>. Any enemy faction in a clearing with a facedown plot can show you a matching card to guess which plot it is. If they’re right, they’ve infiltrated you and foiled your plot! They remove the plot and ignore its effect. If they’re wrong, though, you catch their spy red-handed. Your plot remains, and they give you the card they showed you. Bluff well.</p>`,
       setupTitle: `Set up the Corvid Conspiracy`,
-      setup: `<ol><li><b>Gather Warriors and Plots.</b> Form supplies of 15 warriors and 8 plot tokens face down.</li><li><b>Scatter.</b> Place 1 warrior in any clearing of each suit <i>(total of 3)</i>.</li></ol>`,
-      advancedSetup: `<ol><li>Choose a homeland clearing. Put 1 <b>warrior</b> and 1 <b>plot token</b> of your choice face down there.</li><li>Put 1 <b>warrior</b> in a clearing of each suit. <i>(Counting the previous step, place 4 warriors in total.)</i></li></ol>`,
+      setup: {
+        default: `<ol><li><b>Gather Warriors and Plots.</b> Form supplies of 15 warriors and 8 plot tokens face down.</li><li><b>Scatter.</b> Place 1 warrior in any clearing of each suit <i>(total of 3)</i>.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Choose a homeland clearing. Put 1 <b>warrior</b> and 1 <b>plot token</b> of your choice face down there.</li><li>Put 1 <b>warrior</b> in a clearing of each suit. <i>(Counting the previous step, place 4 warriors in total.)</i></li></ol>`,
+      },
+    },
+    council: {
+      name: `Twilight Council`,
+      summaryTitle: `Playing the Twilight Council`,
+      summary: `<p>As the Twilight Council, you work to suppress violence by bringing together the Woodfolk in <b>assemblies</b>, hoping to draw the civil war to an end. Assemblies let you score victory points, banish enemy warriors away from them, and gain <b>Loyalists</b>, warriors on your player board that you can later place at assemblies. You act as <b>Peacekeepers</b> at your assemblies, defending enemy factions when they’re attacked.</p><p>By ruling assemblies, you can flip your assemblies to their <b>Governing</b> side. In Evening, you score points based on the number of Governing assemblies with any enemy buildings or tokens at them.</p><p>Your <b>Governors</b> limit the actions that enemies can take at Governing assemblies, unless those enemies <b>Entreat</b> you to close the assembly for a time.</p>`,
+      setupTitle: `Set up the Twilight Council`,
+      setup: {
+        default: `<ol><li>Place <b>4 warriors</b> in one clearing. This is your starting clearing. Place <b>2 warriors</b> in a different clearing. <i>(Place six total.)</i></li><li><i>Fill your Assemblies track with assembly tokens on their Closed side <i>(matching the player board graphic)</i>.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Choose a homeland clearing. Place <b>4 warriors</b> and <b>1 assembly</b> on its Governing side there.</li><li>Place <b>2 warriors</b> in a different clearing.</li><li>Fill your Assemblies track with <b>assemblies</b> on their Closed side.</li></ol>`,
+      },
     },
     cult: {
       name: `Lizard Cult`,
       summaryTitle: `Playing the Lizard Cult`,
       summary: `<p>As the Lizard Cult, you cater to those creatures who have been discarded by the other factions. You score victory points by performing the proper <b>rituals</b>, revealing cards from your hand matching clearings where you have <b>gardens</b>, and discarding cards to complete the rite. The more gardens you have in clearings matching the revealed card, the more points you score.</p><p>Your gentler approach means you cannot battle your foes at first; to do so, you must radicalize your followers into <b>acolytes</b>. By doing so, you can perform <b>conspiracies</b> in clearings of the <b>Outcast</b>, the suit discarded the most over the prior round.</p><p>Your <b>Hatred of Birds</b> means your bird cards are not wild in your rituals. Your gardens spread the news of your dragon lord, drawing throngs of <b>Pilgrims</b>, so you rule a clearing if you have even a single garden there. Finally, your acolytes always get <b>Revenge</b> on the wicked: whenever one of your warriors is removed while defending, you gain another acolyte.</p>`,
       setupTitle: `Set up the Lizard Cult`,
-      setup: `<ol><li><b>Gather Warriors.</b> Form a supply of 25 warriors.</li><li><b>Place Warriors.</b> Place 4 warriors and 1 garden of matching printed suit in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing. Then place 1 warrior in each adjacent clearing.</li><li><b>Choose Outcast.</b> Place the outcast marker on any suit space in the Outcast box. The suit of this space is called the <i>Outcast</i>.</li><li><b>Fill Gardens Tracks.</b> Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li></ol>`,
-      advancedSetup: `<ol><li>Choose a homeland clearing that is not adjacent to enemy homelands.</li><li>Put 4 <b>warriors</b> and 1 matching <b>garden</b> in your homeland. Put 3 <b>warriors</b> in clearings adjacent to it as evenly as possible.</li><li>Put 2 <b>warriors</b> in your Acolytes box.</li><li>Fill your Gardens tracks with <b>gardens</b>, except the leftmost space of the garden on the map.</li><li>Put your <b>outcast marker</b> on its Outcast side on any space of the Outcast box.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Gather Warriors.</b> Form a supply of 25 warriors.</li><li><b>Place Warriors.</b> Place 4 warriors and 1 garden of matching printed suit in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing. Then place 1 warrior in each adjacent clearing.</li><li><b>Choose Outcast.</b> Place the outcast marker on any suit space in the Outcast box. The suit of this space is called the <i>Outcast</i>.</li><li><b>Fill Gardens Tracks.</b> Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Choose a homeland clearing that is not adjacent to enemy homelands.</li><li>Put 4 <b>warriors</b> and 1 matching <b>garden</b> in your homeland. Put 3 <b>warriors</b> in clearings adjacent to it as evenly as possible.</li><li>Put 2 <b>warriors</b> in your Acolytes box.</li><li>Fill your Gardens tracks with <b>gardens</b>, except the leftmost space of the garden on the map.</li><li>Put your <b>outcast marker</b> on its Outcast side on any space of the Outcast box.</li></ol>`,
+      },
+    },
+    diaspora: {
+      name: `Lilypad Diaspora`,
+      summaryTitle: `Playing the Lilypad Diaspora`,
+      summary: `<p>As the Lilypad Diaspora, you wish to establish <b>enclaves</b> as safe havens in the Woodland, and you score points by spending cards matching enclaves on their <b>Peaceful side</b>. These enclaves introduce your culture to the Woodland, adding the new frog suit to their clearing. You also add <b>frog cards</b> to the deck and a new discard pile for frog cards called <b>The Pond</b>.</p><p>However, your Peaceful enclaves cannot protect you. To gain warriors, you need enclaves on their <b>Militant side</b>. But these enclaves cover their clearing’s suit as the Diaspora expels threats real or imagined, making you lose essential Woodland support. They also prompt you to <b>Retaliate</b>, making you battle at them every turn.</p><p>To prevent this, you can <b>Reconcile</b> to flip Militant enclaves to Peaceful, and your enemies can do the same through <b>Negotiations</b>. However, your enemies may battle you to flip your Peaceful enclaves to Militant, as your people’s <b>Fears Come to Pass</b>.</p>`,
+      setupTitle: `Set up the Lilypad Diaspora`,
+      setup: {
+        default: `<ol><li>Place <b>5 warriors</b> and <b>1 enclave token</b> on its <b>Peaceful side</b> in a clearing on the river. This is your starting clearing.</li><li>Shuffle the <b>frog cards</b> into the shared deck. Place the <b>Pond placard</b> near it.</li></ol>`,
+        default_twoPlayer: `<ol><li>Place <b>5 warriors</b> and <b>1 enclave token</b> on its <b>Peaceful side</b> in a clearing on the river. This is your starting clearing.</li><li>Remove the <b>Frog Dominance frog card</b>.</li><li>Shuffle the remaining <b>frog cards</b> into the shared deck. Place the <b>Pond placard</b> near it.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Place <b>5 warriors</b> and <b>1 Peaceful enclave</b> in a clearing, or one adjacent to the river if you cannot. This is your homeland.</li><li>Shuffle the <b>frog cards</b> into the shared deck. Put the <b>Pond placard</b> near it.</li></ol>`,
+        default_twoPlayer: `<ol><li>Place <b>5 warriors</b> and <b>1 Peaceful enclave</b> in a clearing, or one adjacent to the river if you cannot. This is your homeland.</li><li>Remove the <b>Frog dominance card</b>.</li><li>Shuffle the remaining <b>frog cards</b> into the shared deck. Put the <b>Pond placard</b> near it.</li></ol>`,
+      },
     },
     duchy: {
       name: `Underground Duchy`,
       summaryTitle: `Playing the Duchy`,
-      summary: `<p>As the Underground Duchy, you want to show the foreign creatures of the Woodland that they would be better off as subjects. Each time you sway one of your <b>ministers</b> to the cause of pacifying and unifying the land above, you score points. The higher the rank of the minister you sway, the more points you score.</p><p>To sway a minister you must reveal cards, representing your support among Woodland separatists. The higher the minister's rank, the more cards you must reveal. However, you can only reveal cards that match clearings with any number of Duchy pieces, showing your foothold in the swirling chaos. Each swayed minister gives you an extra action every turn. Some ministers even let you score victory points by touting your investments in the Woodland.</p><p>Your moles are well protected in <b>the Burrow</b>, a clearing only you can enter and which you always rule. From the Burrow, you can move to any <b>tunnel</b> you dig throughout the Woodland. Once you've pacified clearings and established rule, you can build <b>citadels</b> and <b>markets</b> to draw more creatures to your cause. However, whenever you lose buildings, you must pay the <b>Price of Failure</b> by losing sway with a minister of highest rank and discarding a random card.</p>`,
+      summary: `<p>As the Underground Duchy, you want to show the foreign creatures of the Woodland that they would be better off as subjects. Each time you sway one of your <b>ministers</b> to the cause of pacifying and unifying the land above, you score points. The higher the rank of the minister you sway, the more points you score.</p><p>To sway a minister you must reveal cards, representing your support among Woodland separatists. The higher the minister’s rank, the more cards you must reveal. However, you can only reveal cards that match clearings with any number of Duchy pieces, showing your foothold in the swirling chaos. Each swayed minister gives you an extra action every turn. Some ministers even let you score victory points by touting your investments in the Woodland.</p><p>Your moles are well protected in <b>the Burrow</b>, a clearing only you can enter and which you always rule. From the Burrow, you can move to any <b>tunnel</b> you dig throughout the Woodland. Once you’ve pacified clearings and established rule, you can build <b>citadels</b> and <b>markets</b> to draw more creatures to your cause. However, whenever you lose buildings, you must pay the <b>Price of Failure</b> by losing sway with a minister of highest rank and discarding a random card.</p>`,
       setupTitle: `Set up the Underground Duchy`,
-      setup: `<ol><li><b>Gather Warriors and Tunnels.</b> Form supplies of 20 warriors and 3 tunnel tokens.</li><li><b>Prepare the Burrow.</b> Place the Burrow board near the map.</li><li><b>Surface.</b> Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li><b>Fill Buildings Tracks.</b> Place 3 citadels and 3 markets on your matching Buildings spaces.</li><li><b>Collect Ministers.</b> Place 9 minister cards face up on your Unswayed Ministers pile.</li><li><b>Fill Crown Spaces.</b> Place 9 crowns on the spaces with victory points on your faction board.</li></ol>`,
-      advancedSetup: `<ol><li>Choose a homeland clearing that is not adjacent to enemy homelands.</li><li>Put 2 <b>warriors</b> and 1 <b>tunnel</b> in your homeland. Put 5 <b>warriors</b> among clearings adjacent to it as evenly as possible.</li><li>Put your <b>Burrow board</b> near the map. Fill your Buildings tracks with your <b>citadels</b> and <b>markets</b>. Put your 9 <b>minister cards</b> on your Unswayed Ministers pile. Put your 9 <b>crowns</b> on the square spaces showing victory points.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Gather Warriors and Tunnels.</b> Form supplies of 20 warriors and 3 tunnel tokens.</li><li><b>Prepare the Burrow.</b> Place the Burrow board near the map.</li><li><b>Surface.</b> Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li><b>Fill Buildings Tracks.</b> Place 3 citadels and 3 markets on your matching Buildings spaces.</li><li><b>Collect Ministers.</b> Place 9 minister cards face up on your Unswayed Ministers pile.</li><li><b>Fill Crown Spaces.</b> Place 9 crowns on the spaces with victory points on your faction board.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Choose a homeland clearing that is not adjacent to enemy homelands.</li><li>Put 2 <b>warriors</b> and 1 <b>tunnel</b> in your homeland. Put 5 <b>warriors</b> among clearings adjacent to it as evenly as possible.</li><li>Put your <b>Burrow board</b> near the map. Fill your Buildings tracks with your <b>citadels</b> and <b>markets</b>. Put your 9 <b>minister cards</b> on your Unswayed Ministers pile. Put your 9 <b>crowns</b> on the square spaces showing victory points.</li></ol>`,
+      },
     },
     eyrie: {
       name: `Eyrie Dynasties`,
       summaryTitle: `Playing the Eyrie`,
-      summary: `<p>As the Eyrie Dynasties, you wish to restore your once-dignified kind to your former glory by retaking control of the Woodland. Each turn, you score points for your <b>roosts</b> on the map. The more roosts, the more points you score.</p><p>However, you are bound by the <b>Decree</b>, a mandate from the Eyrie <b>leader</b>. Each turn, you must add cards to the Decree, and then take an action for each card in it. Each action must happen in the clearing matching its card, so plan wisely. At first this is simple, but as the Decree grows to 10 or 12 cards, you'll find yourself scrambling to complete every action. If you can't complete one, you'll fall into <b>turmoil</b>, losing you points, replacing your leader, and discarding the Decree.</p><p>Above all, remember: the ground creatures tremble and scatter upon your arrival. You are the <b>Lords of the Forest</b> - you rule a clearing even when tied for presence. However, your people feel <b>Disdain for Trade</b>, so you'll often score fewer points for crafting items.</p>`,
+      summary: `<p>As the Eyrie Dynasties, you wish to restore your once-dignified kind to your former glory by retaking control of the Woodland. Each turn, you score points for your <b>roosts</b> on the map. The more roosts, the more points you score.</p><p>However, you are bound by the <b>Decree</b>, a mandate from the Eyrie <b>leader</b>. Each turn, you must add cards to the Decree, and then take an action for each card in it. Each action must happen in the clearing matching its card, so plan wisely. At first this is simple, but as the Decree grows to 10 or 12 cards, you’ll find yourself scrambling to complete every action. If you can’t complete one, you’ll fall into <b>turmoil</b>, losing you points, replacing your leader, and discarding the Decree.</p><p>Above all, remember: the ground creatures tremble and scatter upon your arrival. You are the <b>Lords of the Forest</b> - you rule a clearing even when tied for presence. However, your people feel <b>Disdain for Trade</b>, so you’ll often score fewer points for crafting items.</p>`,
       setupTitle: `Set up the Eyrie Dynasties`,
-      setup: `<ol><li><b>Gather Warriors.</b> Form a supply of 20 warriors.</li><li><b>Place Roost and Starting Warriors.</b> Place 1 roost and 6 warriors in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Choose Leader.</b> Choose 1 of the 4 Eyrie leader cards and place it in your Leader Card slot. Gather the remaining leaders face up near you.</li><li><b>Tuck Viziers.</b> Tuck your 2 Loyal Vizier cards, showing their suit, into the Decree columns above your faction board as listed on your leader.</li><li><b>Fill Roosts Track.</b> Place your 6 remaining roosts on your Roosts track from right to left.</li></ol>`,
-      advancedSetup: `<ol><li>Choose a homeland clearing on the map edge clearing that has 2+ clearings between it and enemy homelands.</li><li>Put 6 <b>warriors</b> and 1 <b>roost</b> in your homeland.</li><li>Put any <b>leader card</b> on your Leader Card slot. Keep the other 3 leaders face up nearby.</li><li>Tuck your 2 <b>Loyal Viziers</b> under the Decree column slots as listed on your current leader.</li><li>Fill your Roosts spaces with <b>roosts</b>, except the leftmost.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Gather Warriors.</b> Form a supply of 20 warriors.</li><li><b>Place Roost and Starting Warriors.</b> Place 1 roost and 6 warriors in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Choose Leader.</b> Choose 1 of the 4 Eyrie leader cards and place it in your Leader Card slot. Gather the remaining leaders face up near you.</li><li><b>Tuck Viziers.</b> Tuck your 2 Loyal Vizier cards, showing their suit, into the Decree columns above your faction board as listed on your leader.</li><li><b>Fill Roosts Track.</b> Place your 6 remaining roosts on your Roosts track from right to left.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Choose a homeland clearing on the map edge clearing that has 2+ clearings between it and enemy homelands.</li><li>Put 6 <b>warriors</b> and 1 <b>roost</b> in your homeland.</li><li>Put any <b>leader card</b> on your Leader Card slot. Keep the other 3 leaders face up nearby.</li><li>Tuck your 2 <b>Loyal Viziers</b> under the Decree column slots as listed on your current leader.</li><li>Fill your Roosts spaces with <b>roosts</b>, except the leftmost.</li></ol>`,
+      },
     },
     keepers: {
       name: `Keepers in Iron`,
       summaryTitle: `Playing the Keepers`,
       summary: `<p>As the Keepers in Iron, you score points by recovering <b>relics</b> lost in past conflicts. You will need to <b>delve</b> relics out of the forests, move them to a <b>waystation</b> of the same type, and then <b>recover</b> them. Whether these relics belong to you or the Woodland, though, is another question.</p><p>As <b>Devout Knights</b> of an exiled order, you ignore the first hit you take in battle if you have both a warrior and a relic in it, whether attacking or defending. You can also move relics with your warriors.</p><p>Your relics are <b>Prized Trophies</b>, so keep them safe. Whenever an enemy removes a relic in any way, they score two points in-stead of one, and put it back in any forest.</p><p>Over time, you will grow your <b>Retinue</b>, three columns of cards that let you take actions. Delving and recovering relics will put your Retinue at risk, though, so you will need to plan ahead and take prudent risks in order to succeed.</p>`,
       setupTitle: `Set up the Keepers in Iron`,
-      setup: `<ol><li><b>Place Starting Relics.</b> Collect all twelve relic tokens and shuffle them face down <i>(without the value showing)</i>. Place one randomly in each forest. <i>(We recommend that you just slide the relics around face down, then place relics as fast as possible as a group. Otherwise, you can use this more random but fiddly method: the Keepers stack the randomized relics, then any other player cuts the stack, picks it up, and drops relics one by one from the bottom onto the forests.)</i></li><li><b>Place Warriors.</b> Place four warriors in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing. Then, place four warriors in a clearing on the map edge that is adjacent to the chosen clearing.</li><li><b>Place Remaining Relics.</b> Place all remaining relics randomly, as evenly as possible, among forests not adjacent to clearings with your warriors.</li><li><b>Tuck Faithful Retainers.</b> Tuck one Faithful Retainer card into each Retinue slot of your faction board.</li><li><b>Collect Waystations.</b> Place your three waystation buildings on the matching Waystations spaces of your faction board.</li></ol>`,
-      advancedSetup: `<ol><li>Shuffle all 12 <b>relic tokens</b> face down. Place one face down randomly in each forest.</li><li>Choose 2 adjacent homeland clearings on the map edge that have 2+ clearings between them and enemy homelands. Put 4 <b>warriors</b> in each homeland.</li><li>Put any remaining <b>relics</b> randomly, as evenly as possible, among any forests that are not adjacent to your homelands.</li><li>Tuck a <b>Faithful Retainer</b> card into each of your Retinue column slots. Put your 3 <b>waystations</b> on your matching Waystations spaces.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Place Starting Relics.</b> Collect all twelve relic tokens and shuffle them face down <i>(without the value showing)</i>. Place one randomly in each forest. <i>(We recommend that you just slide the relics around face down, then place relics as fast as possible as a group. Otherwise, you can use this more random but fiddly method: the Keepers stack the randomized relics, then any other player cuts the stack, picks it up, and drops relics one by one from the bottom onto the forests.)</i></li><li><b>Place Warriors.</b> Place four warriors in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing. Then, place four warriors in a clearing on the map edge that is adjacent to the chosen clearing.</li><li><b>Place Remaining Relics.</b> Place all remaining relics randomly, as evenly as possible, among forests not adjacent to clearings with your warriors.</li><li><b>Tuck Faithful Retainers.</b> Tuck one Faithful Retainer card into each Retinue slot of your faction board.</li><li><b>Collect Waystations.</b> Place your three waystation buildings on the matching Waystations spaces of your faction board.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Shuffle all 12 <b>relic tokens</b> face down. Place one face down randomly in each forest.</li><li>Choose 2 adjacent homeland clearings on the map edge that have 2+ clearings between them and enemy homelands. Put 4 <b>warriors</b> in each homeland.</li><li>Put any remaining <b>relics</b> randomly, as evenly as possible, among any forests that are not adjacent to your homelands.</li><li>Tuck a <b>Faithful Retainer</b> card into each of your Retinue column slots. Put your 3 <b>waystations</b> on your matching Waystations spaces.</li></ol>`,
+      },
+    },
+    knaves: {
+      name: `Knaves of the Deepwood`,
+      summaryTitle: `Playing the Knaves of the Deepwood`,
+      summary: `<p>As the Knaves of the Deepwood, you endeavor to mock the powerful and protect the needy. Each turn, you score victory points from your <b>acclaim</b> throughout the Woodland and from warriors you take as <b>Prisoners</b> by battling the enemy factions.</p><p>Each turn, you act with one of your three <b>Captains</b>, backed up by a crew of rowdy <b>Skunks</b> that can move along with them. However, once a Captain has acted, it cannot act again until after you act with all three Captains, letting you <b>Take It Easy</b>.</p><p>You have a <b>Stash</b> of items that you can flip face down to take special actions at your Captain. Like your Captains, your items only flip face up again once you Take It Easy. Use them wisely!</p>`,
+      setupTitle: `Set up the Knaves of the Deepwood`,
+      setup: {
+        default: `<ol><li>Choose <b>3 Captain cards</b>. <i>(For your first game, we suggest Jailor, Cheat, & Gladiator)</i> Collect their <b>Captain warriors</b>.</li><li>Place <b>1 Captain warrior</b> and <b>1 Skunk warrior</b> each in three different forests.</li><li>Place the <b>6 items</b> as shown on your chosen Captain cards into your Stash face up, and fill each Acclaim slot with <b>2 acclaim tokens</b>.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Choose <b>3 Captain cards</b> and return the fourth one to the box. Collect their <b>Captain warriors</b>. Put the <b>items</b> shown on their Captain cards in your Stash.</li><li>Put <b>1 Captain</b> and <b>1 Skunk</b> each in three different forests.</li></ol>`,
+      },
     },
     marquise: {
       name: `Marquise de Cat`,
       summaryTitle: `Playing the Marquise`,
-      summary: `<p>As the Marquise de Cat, you want to turn the Woodland into an industrial and military powerhouse. Each time you place a <b>building</b> on the map, you score points. The more of that building type there is on the map, the more points you score.</p><p>To fuel this construction, you must grow and protect an interconnected economy of <b>wood</b>. Building up infrastructure makes your turns more efficient and helps you draw more cards, so strike out to secure your right to expansion. Your military is legion, letting you enforce your rule with an iron fist, if necessary.</p><p>The seat of your power is the <b>Keep of Marquise de Cat</b>, a structure so imposing that no other faction can place pieces in its clearing. Even more, your <b>Field Hospitals</b> will help keep you in the fight. Whenever any of your warriors are removed, you can spend a card matching the warriors' clearing to place them back at your keep - as long as it stands. Protect it well!</p>`,
+      summary: `<p>As the Marquise de Cat, you want to turn the Woodland into an industrial and military powerhouse. Each time you place a <b>building</b> on the map, you score points. The more of that building type there is on the map, the more points you score.</p><p>To fuel this construction, you must grow and protect an interconnected economy of <b>wood</b>. Building up infrastructure makes your turns more efficient and helps you draw more cards, so strike out to secure your right to expansion. Your military is legion, letting you enforce your rule with an iron fist, if necessary.</p><p>The seat of your power is the <b>Keep of Marquise de Cat</b>, a structure so imposing that no other faction can place pieces in its clearing. Even more, your <b>Field Hospitals</b> will help keep you in the fight. Whenever any of your warriors are removed, you can spend a card matching the warriors’ clearing to place them back at your keep - as long as it stands. Protect it well!</p>`,
       setupTitle: `Set up the Marquise de Cat`,
-      setup: `<ol><li><b>Gather Warriors and Wood.</b> Form supplies of 25 warriors and 8 wood tokens.</li><li><b>Place Keep.</b> Place the keep token in any corner clearing.</li><li><b>Garrison.</b> Place a warrior in each clearing except the clearing in the diagonally opposite corner from the clearing with the keep token.</li><li><b>Place Starting Buildings.</b> Place 1 sawmill, 1 workshop, and 1 recruiter. You may place them among the clearing with the keep token and any adjacent clearings, in any combination.</li><li><b>Fill Buildings Tracks.</b> Place your remaining 5 sawmills, 5 workshops, and 5 recruiters on your matching Buildings tracks from right to left. <i>(Leave the leftmost space of each track empty.)</i></li></ol>`,
-      advancedSetup: `<ol><li>Choose 3 homeland clearings, each adjacent to one other.</li><li>Put 2 <b>warriors</b> in each of your homelands. Put 1 <b>warrior</b> in each other clearing.</li><li>Put the <b>keep token</b> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <b>sawmill</b>, <b>workshop</b>, and <b>recruiter</b> on the map, each in a different homeland of yours.</li><li>Fill your Buildings track with your <b>buildings</b>, except the leftmost spaces.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Gather Warriors and Wood.</b> Form supplies of 25 warriors and 8 wood tokens.</li><li><b>Place Keep.</b> Place the keep token in any corner clearing.</li><li><b>Garrison.</b> Place a warrior in each clearing except the clearing in the diagonally opposite corner from the clearing with the keep token.</li><li><b>Place Starting Buildings.</b> Place 1 sawmill, 1 workshop, and 1 recruiter. You may place them among the clearing with the keep token and any adjacent clearings, in any combination.</li><li><b>Fill Buildings Tracks.</b> Place your remaining 5 sawmills, 5 workshops, and 5 recruiters on your matching Buildings tracks from right to left. <i>(Leave the leftmost space of each track empty.)</i></li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Choose 3 homeland clearings, each adjacent to one other.</li><li>Put 2 <b>warriors</b> in each of your homelands. Put 1 <b>warrior</b> in each other clearing.</li><li>Put the <b>keep token</b> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <b>sawmill</b>, <b>workshop</b>, and <b>recruiter</b> on the map, each in a different homeland of yours.</li><li>Fill your Buildings track with your <b>buildings</b>, except the leftmost spaces.</li></ol>`,
+      },
     },
     riverfolk: {
       name: `Riverfolk Company`,
       summaryTitle: `Playing the Riverfolk Company`,
-      summary: `<p>As the Riverfolk Company, you ply the rivers winding through the great Woodland, offering your services to any faction who can pay. You score victory points by establishing <b>trade posts</b> throughout the clearings.</p><p>Though the construction of trade posts is a viable way to score points, so too is the raw accumulation of wealth. Each Birdsong, you score points depending on how many <b>funds</b> you've saved up and earned over the last round. However, you'll also need to commit and spend your funds to expand and guard your trade network, striking a balance between dividends and growth.</p><p>You'll earn funds as other factions buy your <b>services</b>, whether the use of your riverboats or mercenary warriors, or even one of the cards in your public hand, which is all <b>For Sale</b>. You can set the prices of your services each turn, so try to predict which services the other factions will need.</p><p>Building trade posts helps you expand your clientele and sell more services, as a faction can buy more services from you as they expand into more clearings where you have trade posts. But be careful, when your trade posts are destroyed they cannot be rebuilt! While you may not rule many clearings, you can always move along river paths since you're a faction of <b>Swimmers</b>.</p>`,
+      summary: `<p>As the Riverfolk Company, you ply the rivers winding through the great Woodland, offering your services to any faction who can pay. You score victory points by establishing <b>trade posts</b> throughout the clearings.</p><p>Though the construction of trade posts is a viable way to score points, so too is the raw accumulation of wealth. Each Birdsong, you score points depending on how many <b>funds</b> you’ve saved up and earned over the last round. However, you’ll also need to commit and spend your funds to expand and guard your trade network, striking a balance between dividends and growth.</p><p>You’ll earn funds as other factions buy your <b>services</b>, whether the use of your riverboats or mercenary warriors, or even one of the cards in your public hand, which is all <b>For Sale</b>. You can set the prices of your services each turn, so try to predict which services the other factions will need.</p><p>Building trade posts helps you expand your clientele and sell more services, as a faction can buy more services from you as they expand into more clearings where you have trade posts. But be careful, when your trade posts are destroyed they cannot be rebuilt! While you may not rule many clearings, you can always move along river paths since you’re a faction of <b>Swimmers</b>.</p>`,
       setupTitle: `Set up the Riverfolk Company`,
-      setup: `<ol><li><b>Gather Warriors.</b> Form a supply of 15 warriors.</li><li><b>Place Warriors.</b> Place 4 warriors in any clearings touching the river.</li><li><b>Fill Trade Posts Tracks.</b> Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li><b>Gain Starting Funds.</b> Place 3 warriors in your Payments box.</li><li><b>Set Starting Prices.</b> Place 1 service marker on any space of each of your Services tracks.</li></ol>`,
-      advancedSetup: `<ol><li>Put 4 <b>warriors</b> among any clearings along the river.</li><li>Put 3 <b>warriors</b> in your Payments box.</li><li>Fill your Trade Posts tracks with matching <b>trade posts</b>.</li><li>Put your 3 <b>service markers</b> on your Services track, setting a price for each service.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Gather Warriors.</b> Form a supply of 15 warriors.</li><li><b>Place Warriors.</b> Place 4 warriors in any clearings touching the river.</li><li><b>Fill Trade Posts Tracks.</b> Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li><b>Gain Starting Funds.</b> Place 3 warriors in your Payments box.</li><li><b>Set Starting Prices.</b> Place 1 service marker on any space of each of your Services tracks.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Put 4 <b>warriors</b> among any clearings along the river.</li><li>Put 3 <b>warriors</b> in your Payments box.</li><li>Fill your Trade Posts tracks with matching <b>trade posts</b>.</li><li>Put your 3 <b>service markers</b> on your Services track, setting a price for each service.</li></ol>`,
+      },
     },
     vagabond: {
       name: `Vagabond`,
       summaryTitle: `Playing the Vagabond`,
-      summary: `<p>As the Vagabond, you will play all sides of the conflict, making friends and foes as it suits you. You score points through your <b>relationships</b>, as you aid friendly factions by giving them cards, and as you grow your infamy with hostile factions by removing their pieces in battle. You'll also score points as you go on <b>quests</b> to spread your good name amongst the creatures of the Woodland.</p><p>To move and act effectively, you'll need to manage your satchel of <b>items</b>, expanding your selection by exploring ancient <b>ruins</b> and providing aid to other factions. Being a <b>Lone Wanderer</b>, you cannot rule a clearing or stop another faction from ruling one, but you are <b>Nimble</b>, so you can move regardless of who rules your clearing.</p>`,
+      summary: `<p>As the Vagabond, you will play all sides of the conflict, making friends and foes as it suits you. You score points through your <b>relationships</b>, as you aid friendly factions by giving them cards, and as you grow your infamy with hostile factions by removing their pieces in battle. You’ll also score points as you go on <b>quests</b> to spread your good name amongst the creatures of the Woodland.</p><p>To move and act effectively, you’ll need to manage your satchel of <b>items</b>, expanding your selection by exploring ancient <b>ruins</b> and providing aid to other factions. Being a <b>Lone Wanderer</b>, you cannot rule a clearing or stop another faction from ruling one, but you are <b>Nimble</b>, so you can move regardless of who rules your clearing.</p>`,
       setupTitle: `Set up the Vagabond`,
-      setup: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Get Quests.</b> Shuffle your quest deck, draw 3 quest cards, and place them face up near you.</li><li><b>Populate Ruins.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an "R" under the ruins randomly, unless this has already been done.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
-      setup_vagabondSetUp: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Populate Ruins.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an "R" under the ruins randomly <i>(with the existing items)</i>.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
-      advancedSetup: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Shuffle the quest deck. Draw 3 <b>quests</b> to deal out nearby.</li><li>Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with "R")</i> under the ruins randomly, unless this has already been done.</li><li>Put the "{{vagabond}}" <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with "S")</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
-      advancedSetup_vagabondSetUp: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Put the additional <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with "R")</i> under the ruins randomly <i>(with the existing items)</i>.</li><li>Put the "{{vagabond}}" <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with "S")</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Get Quests.</b> Shuffle your quest deck, draw 3 quest cards, and place them face up near you.</li><li><b>Populate Ruins.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an "R" under the ruins randomly, unless this has already been done.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
+        vagabondSetUp: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Populate Ruins.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an "R" under the ruins randomly <i>(with the existing items)</i>.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Shuffle the quest deck. Draw 3 <b>quests</b> to deal out nearby.</li><li>Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with "R")</i> under the ruins randomly, unless this has already been done.</li><li>Put the "{{vagabond}}" <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with "S")</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
+        vagabondSetUp: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Put the additional <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with "R")</i> under the ruins randomly <i>(with the existing items)</i>.</li><li>Put the "{{vagabond}}" <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with "S")</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
+      },
     },
     warlord: {
       name: `Lord of the Hundreds`,
       summaryTitle: `Playing the Hundreds`,
       summary: `<p>As the Lord of the Hundreds, you score points as you <b>oppress</b> your foes. At the end of your turn, the more clearings you rule that have <i>no</i> enemy pieces - no warriors, no buildings, nothing - the more points you score.</p><p>To grow in power and attract warriors, you must gain items and add them to your towering <b>Hoard</b>. Boots, bags, and coins increase your <b>Command</b>, while hammers, tea, swords, and the crossbow increase your <b>Prowess</b>. Your <b>Contempt for Trade</b> means you rarely score from crafting item, but you can steal items from enemies with your <b>Looters</b>!</p><p>Leading the Hundreds is your warlord, a warrior-demagogue whose fickle <b>mood</b> gives you an ability for the turn. Your warlord is obsessed with hoarding, so as you gain more items, you will have fewer moods to choose from.</p><p>Declaring yourself to be the true voice of the Woodland, you can incite <b>mobs</b>, which destroy enemy buildings and tokens, and raid ruins for their items.</p>`,
       setupTitle: `Set up the Lord of the Hundreds`,
-      setup: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an "R" under the ruins randomly, unless this has already been done.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
-      setup_vagabondSetUp: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
-      advancedSetup: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li><li>Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with "R")</i> under the ruins randomly, unless this has already been done.</li></ol>`,
-      advancedSetup_vagabondSetUp: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li></ol>`,
+      setup: {
+        default: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an "R" under the ruins randomly, unless this has already been done.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
+        vagabondSetUp: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li><li>Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with "R")</i> under the ruins randomly, unless this has already been done.</li></ol>`,
+        vagabondSetUp: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li></ol>`,
+      },
     },
   },
   hireling: {
@@ -286,14 +364,14 @@ export default {
       setupTitle: `Set up the Popular Band`,
       setupTitle_demoted: `Set up the Street Band`,
       setup: `Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place 2 Band warriors, each in a different clearing. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.`,
-      setup_demoted: `Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place them next to the map <i>(with the card's demoted "Street Band" side up)</i>.`,
+      setup_demoted: `Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place them next to the map <i>(with the card’s demoted "Street Band" side up)</i>.`,
     },
     bandits: {
       name: `Highway Bandits`,
       setupTitle: `Set up the Highway Bandits`,
       setupTitle_demoted: `Set up the Bandit Gangs`,
       setup: `Player {{count}}, grab the hireling card and 4 warriors for the Highway Bandits from the game box. Place 2 bandits, one each on a path without one. Place the remaining bandits and card next to the map <i>(non-demoted side up)</i>.`,
-      setup_demoted: `Player {{count}}, grab the hireling card and 4 warriors for the Highway Bandits from the game box. Place them next to the map <i>(with the card's demoted "Bandit Gangs" side up)</i>.`,
+      setup_demoted: `Player {{count}}, grab the hireling card and 4 warriors for the Highway Bandits from the game box. Place them next to the map <i>(with the card’s demoted "Bandit Gangs" side up)</i>.`,
     },
     dynasty: {
       name: `Last Dynasty`,
@@ -321,7 +399,7 @@ export default {
       setupTitle: `Set up the Prosperous Farmers`,
       setupTitle_demoted: `Set up the Struggling Farmers`,
       setup: `Player {{count}}, grab the hireling card, 9 warriors, and 4 farm buildings for the Prosperous Farmers from the game box. Place 1 farm and 1 Farmer warrior each in two clearings. Place the remaining warriors, buildings, and card next to the map <i>(non-demoted side up)</i>.`,
-      setup_demoted: `Player {{count}}, grab the hireling card, 9 warriors, and 4 farm buildings for the Prosperous Farmers from the game box. Place them next to the map <i>(with the card's demoted "Struggling Farmers" side up)</i>.`,
+      setup_demoted: `Player {{count}}, grab the hireling card, 9 warriors, and 4 farm buildings for the Prosperous Farmers from the game box. Place them next to the map <i>(with the card’s demoted "Struggling Farmers" side up)</i>.`,
     },
     flamebearers: {
       name: `Flame Bearers`,
@@ -356,7 +434,7 @@ export default {
       setupTitle: `Set up the Furious Protector`,
       setupTitle_demoted: `Set up the Stoic Protector`,
       setup: `Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place the Protector pawn in any clearing. Place the card next to the map <i>(non-demoted side up)</i>.`,
-      setup_demoted: `Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place them next to the map <i>(with the card's demoted "Stoic Protector" side up)</i>.`,
+      setup_demoted: `Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place them next to the map <i>(with the card’s demoted "Stoic Protector" side up)</i>.`,
     },
     roamers: {
       name: `River Roamers`,
@@ -397,18 +475,18 @@ export default {
     ferry: {
       name: `Ferry`,
       setupTitle: `Set up the Ferry`,
-      setup: `Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>"Once per turn, a player taking a move from the Ferry's clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card."</p>`,
-      setup_lake: `Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>"Once per turn, a player taking a move from the Ferry's clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card."</p>`,
+      setup: `Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>"Once per turn, a player taking a move from the Ferry’s clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card."</p>`,
+      setup_lake: `Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>"Once per turn, a player taking a move from the Ferry’s clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card."</p>`,
     },
     forge: {
       name: `Legendary Forge`,
       setupTitle: `Set up the Legendary Forge`,
-      setup: `Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the "Legendary Forge" landmark card from the game box and place it next to the board on its non-setup side.<br/>Based on the suit of the Legendary Forge's clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>`,
+      setup: `Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the "Legendary Forge" landmark card from the game box and place it next to the board on its non-setup side.<br/>Based on the suit of the Legendary Forge’s clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>`,
     },
     foxburrow: {
       name: `Foxburrow`,
       setupTitle: `Set up Foxburrow`,
-      setup: `Player {{count}}, place the Foxburrow landmark in a fox clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you're feeling adventurous.)</i>`,
+      setup: `Player {{count}}, place the Foxburrow landmark in a fox clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you’re feeling adventurous.)</i>`,
     },
     market: {
       name: `Black Market`,
@@ -418,17 +496,17 @@ export default {
     mousehold: {
       name: `Mousehold`,
       setupTitle: `Set up Mousehold`,
-      setup: `Player {{count}}, place the Mousehold landmark in a mouse clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you're feeling adventurous.)</i>`,
+      setup: `Player {{count}}, place the Mousehold landmark in a mouse clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you’re feeling adventurous.)</i>`,
     },
     rabbittown: {
       name: `Rabbittown`,
       setupTitle: `Set up Rabbittown`,
-      setup: `Player {{count}}, place the Rabbittown landmark in a rabbit clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you're feeling adventurous.)</i>`,
+      setup: `Player {{count}}, place the Rabbittown landmark in a rabbit clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you’re feeling adventurous.)</i>`,
     },
     tower: {
       name: `Tower`,
       setupTitle: `Set up the Tower`,
-      setup: `Player {{count}}, place the Tower landmark in a clearing that has a ruin. It cannot have a landmark. If you have "The Tower" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Tower has the following rule during play:<p>"At the end of a player's Evening, if they rule the Tower's clearing, they score one point."</p>`,
+      setup: `Player {{count}}, place the Tower landmark in a clearing that has a ruin. It cannot have a landmark. If you have "The Tower" landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Tower has the following rule during play:<p>"At the end of a player’s Evening, if they rule the Tower’s clearing, they score one point."</p>`,
     },
     treetop: {
       name: `Elder Treetop`,
@@ -443,6 +521,11 @@ export default {
       setup: `<li>Grab the Autumn/Winter map board from the game box and place it down with the Autumn side facing up.</li>`,
       fixedSuits: `Use the printed clearing suits for the Autumn Map`,
     },
+    gorge: {
+      name: `Gorge`,
+      setupTitle: `Set up the Gorge Map`,
+      setup: `<li>Grab the Marsh/Gorge map board from the game box and place it down with the Gorge side facing up.</li>`,
+    },
     lake: {
       name: `Lake`,
       setupTitle: `Set up the Lake Map`,
@@ -450,6 +533,11 @@ export default {
       fixedSuits: `Use the suggested clearing suits for the Lake Map`,
       useLandmark: `Use the map-specific setup for the Ferry landmark on the Lake map`,
       landmarkSetup: `<li>Place the Ferry piece as shown in the chart below. If you have "The Ferry" landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+    },
+    marsh: {
+      name: `Marsh`,
+      setupTitle: `Set up the Marsh Map`,
+      setup: `<li>Grab the Marsh/Gorge map board from the game box and place it down with the Marsh side facing up.</li>`,
     },
     mountain: {
       name: `Mountain`,
@@ -474,7 +562,7 @@ export default {
     arbiter: {
       name: `Arbiter`,
       action: `Protector`,
-      effect: `When defending in battle, before the roll, a faction may enlist the Arbiter if he's in the clearing of battle. If so, the Arbiter scores one victory point and adds all of his undamaged <Sword/> to the defender's maximum rolled hits. The Arbiter cannot enlist himself or be enlisted against himself.`,
+      effect: `When defending in battle, before the roll, a faction may enlist the Arbiter if he’s in the clearing of battle. If so, the Arbiter scores one victory point and adds all of his undamaged <Sword/> to the defender’s maximum rolled hits. The Arbiter cannot enlist himself or be enlisted against himself.`,
     },
     cheat: {
       name: `Cheat`,
@@ -484,7 +572,7 @@ export default {
     gladiator: {
       name: `Gladiator`,
       action: `Duel`,
-      effect: `Exhaust any item, damage it, and remove 1 enemy warrior from the Gladiator's clearing to draw 1 card. Do not go Hostile.`,
+      effect: `Exhaust any item, damage it, and remove 1 enemy warrior from the Gladiator’s clearing to draw 1 card. Do not go Hostile.`,
     },
     harrier: {
       name: `Harrier`,
@@ -494,7 +582,7 @@ export default {
     jailor: {
       name: `Jailor`,
       action: `Coerce`,
-      effect: `Once per turn, you may spend a card matching the Jailor's clearing to treat it as exhausting any item. After the action that it prompts or adds to, you lose 1 victory point. This action may interrupt actions on your turn. <i>(You may use it to repair, craft, aid, quest, and pay for Riverfolk Services.)</i>`,
+      effect: `Once per turn, you may spend a card matching the Jailor’s clearing to treat it as exhausting any item. After the action that it prompts or adds to, you lose 1 victory point. This action may interrupt actions on your turn. <i>(You may use it to repair, craft, aid, quest, and pay for Riverfolk Services.)</i>`,
     },
     ranger: {
       name: `Ranger`,

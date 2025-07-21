@@ -9,6 +9,7 @@ import type { CodeObject, GameComponent, Togglable } from '../types'
 
 import { useAppDispatch, useAppSelector, useInvalid } from '../hooks'
 import { massComponentToggle, setErrorMessage } from '../store'
+import LocaleText from './localeText'
 import { stepActiveContext } from './stepList'
 
 interface ComponentListProps<T> {
@@ -50,7 +51,7 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
             dispatch(massComponentToggle(selector, !allEnabled, toggleComponent))
           }}
         >
-          {t(allEnabled ? 'label.disableAll' : 'label.enableAll')}
+          <LocaleText i18nKey={allEnabled ? 'label.disableAll' : 'label.enableAll'} />
         </button>
       ) : null}
       {sortedComponents.map(({ code, enabled, image, label, locked }) =>

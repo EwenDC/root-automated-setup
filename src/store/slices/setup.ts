@@ -306,12 +306,20 @@ export const setupSlice = createSlice({
   },
 
   selectors: {
+    selectTwoPlayer: state => state.playerCount < 3,
+
     selectSetupDeckCode: state => state.deck,
+
     selectSetupHireling1Entry: state => state.hireling1,
+
     selectSetupHireling2Entry: state => state.hireling2,
+
     selectSetupHireling3Entry: state => state.hireling3,
+
     selectSetupLandmark1Code: state => state.landmark1,
+
     selectSetupLandmark2Code: state => state.landmark2,
+
     selectSetupMapCode: state => state.map,
   },
 })
@@ -332,6 +340,7 @@ export const {
 } = setupSlice.actions
 
 export const {
+  selectTwoPlayer,
   selectSetupDeckCode,
   selectSetupHireling1Entry,
   selectSetupHireling2Entry,

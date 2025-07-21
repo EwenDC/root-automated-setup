@@ -1,16 +1,14 @@
-import { useTranslation } from 'react-i18next'
-
 import { useAppSelector } from '../hooks'
 import hexIcon from '../images/tokens/priority.png'
 import { selectSetupMap } from '../store'
 import { SetupStep } from '../types'
 import { iconDict } from './icon'
+import LocaleText from './localeText'
 
 const MapChart: React.FC = () => {
   const map = useAppSelector(selectSetupMap)
   const clearingSuits = useAppSelector(state => state.setup.clearingSuits)
   const skippedSteps = useAppSelector(state => state.flow.skippedSteps)
-  const { t } = useTranslation()
 
   if (!map) return null
   return (
@@ -18,7 +16,9 @@ const MapChart: React.FC = () => {
       className="map"
       viewBox="-1 -1 102 102"
     >
-      <desc>{t('label.mapChart')}</desc>
+      <desc>
+        <LocaleText i18nKey="label.mapChart" />
+      </desc>
       <image
         width="100"
         height="100"
@@ -30,7 +30,9 @@ const MapChart: React.FC = () => {
         const suit = clearingSuits[index]!
         return (
           <g key={index}>
-            <title>{t(`label.clearing.${suit}`)}</title>
+            <title>
+              <LocaleText i18nKey={`label.clearing.${suit}`} />
+            </title>
             <circle
               cx={x}
               cy={y}
@@ -48,7 +50,12 @@ const MapChart: React.FC = () => {
             />
             {!skippedSteps[SetupStep.setUpBots] && map.botPriorities ? (
               <g>
-                <title>{t('label.priority', { count: map.botPriorities[index] })}</title>
+                <title>
+                  <LocaleText
+                    i18nKey="label.priority"
+                    count={map.botPriorities[index]}
+                  />
+                </title>
                 <image
                   x={x}
                   y={y}
@@ -80,7 +87,9 @@ const MapChart: React.FC = () => {
                 }
                 href={map.landmark.image}
               >
-                <title>{t(`landmark.${map.landmark.code}.name`)}</title>
+                <title>
+                  <LocaleText i18nKey={`landmark.${map.landmark.code}.name`} />
+                </title>
               </image>
             ) : null}
           </g>
