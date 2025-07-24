@@ -12,9 +12,9 @@ import hammerImage from '../images/items/hammer.png'
 import swordImage from '../images/items/sword.png'
 import teaImage from '../images/items/tea.png'
 import torchImage from '../images/items/torch.png'
-import foxIcon from '../images/suits/fox.png'
-import mouseIcon from '../images/suits/mouse.png'
-import rabbitIcon from '../images/suits/rabbit.png'
+import foxIcon from '../images/suits/fox.svg'
+import mouseIcon from '../images/suits/mouse.svg'
+import rabbitIcon from '../images/suits/rabbit.svg'
 
 export const iconDict: Record<ClearingSuit | Item, { key: string; image: string }> = {
   fox: {

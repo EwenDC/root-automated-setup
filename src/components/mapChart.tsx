@@ -1,5 +1,5 @@
 import { useAppSelector } from '../hooks'
-import hexIcon from '../images/tokens/priority.png'
+import priorityToken from '../images/tokens/priority.svg'
 import { selectSetupMap } from '../store'
 import { SetupStep } from '../types'
 import { iconDict } from './icon'
@@ -61,7 +61,7 @@ const MapChart: React.FC = () => {
                   y={y}
                   width="6"
                   height="6"
-                  href={hexIcon}
+                  href={priorityToken}
                 />
                 <text
                   x={x + 3}
