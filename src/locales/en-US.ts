@@ -152,6 +152,56 @@ export default {
       body: `The set up is now complete. Play will begin with Player {{count}}. If you wish to restart the setup process, use the button below.<p><i>"Root Automated Setup" Developed By Ewen Cameron</i><br/><i>Based on the board game "Root" published by Leder Games</i><br/><i>Application Licensed under CC BY-NC-SA 4.0</i></p>`,
     },
   },
+  captain: {
+    adventurer: {
+      name: `Adventurer`,
+      effect: `After you place acclaim at a ruin, draw 1 card.`,
+    },
+    arbiter: {
+      name: `Arbiter`,
+      effect: `In Assault battles, you may take 1 extra hit to deal 1 extra hit.`,
+    },
+    cheat: {
+      name: `Cheat`,
+      effect: `As an action, you may flip two items down to take <b>any</b> item action.`,
+    },
+    gladiator: {
+      name: `Gladiator`,
+      effect: `When you Assault, draw 1 card at the start of battle.`,
+    },
+    harrier: {
+      name: `Harrier`,
+      effect: `When you Dash, you may move the Harrier up to <b>three</b> times, ignoring rule.`,
+    },
+    jailor: {
+      name: `Jailor`,
+      effect: `In Nab battles, you may deal 1 less hit to ignore 1 rolled hit you take.`,
+    },
+    ranger: {
+      name: `Ranger`,
+      effect: `Once per turn, as an action, you may flip any item down to Assault, Skirmish, or Nab.`,
+    },
+    ronin: {
+      name: `Ronin`,
+      effect: `When you Assault, the Ronin may move before the battle`,
+    },
+    scoundrel: {
+      name: `Scoundrel`,
+      effect: `When you Skirmish, you may instead move from a <b>clearing</b> before the battle. If you do, do not ignore 1 hit.`,
+    },
+    thief: {
+      name: `Thief`,
+      effect: `After you Filch, you may move the Thief.`,
+    },
+    tinker: {
+      name: `Tinker`,
+      effect: `After you Serve, draw 1 card.`,
+    },
+    vagrant: {
+      name: `Vagrant`,
+      effect: `Once per turn, as an action, you may flip any item down to Revel, Gift, or Serve.`,
+    },
+  },
   deck: {
     exiles: {
       name: `Exiles and Partisans`,

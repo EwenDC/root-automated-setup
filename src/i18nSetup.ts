@@ -4,10 +4,10 @@ import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 
-import EnglishFlag from './images/languages/english.png'
-import FrenchFlag from './images/languages/french.png'
-import ItalianFlag from './images/languages/italian.png'
-import SpanishFlag from './images/languages/spanish.png'
+import EnglishFlag from './images/languages/en-US.svg'
+import SpanishFlag from './images/languages/es-ES.svg'
+import FrenchFlag from './images/languages/fr-FR.svg'
+import ItalianFlag from './images/languages/it-IT.svg'
 
 export const languages = [
   { name: 'English', locale: 'en-US', image: EnglishFlag },

@@ -654,6 +654,56 @@ const definitions: Record<ExpansionCode, Expansion> = {
   homeland: {
     image: homelandBox,
     defaultDisabled: true,
+    captains: {
+      adventurer: {
+        startingItems: ['hammer', 'coin'],
+        image: adventurerMeeple,
+      },
+      arbiter: {
+        startingItems: ['sword', 'coin'],
+        image: arbiterMeeple,
+      },
+      cheat: {
+        startingItems: ['boot', 'tea'],
+        image: cheatMeeple,
+      },
+      gladiator: {
+        startingItems: ['sword', 'hammer'],
+        image: gladiatorMeeple,
+      },
+      harrier: {
+        startingItems: ['boot', 'crossbow'],
+        image: harrierMeeple,
+      },
+      jailor: {
+        startingItems: ['crossbow', 'bag'],
+        image: jailorMeeple,
+      },
+      ranger: {
+        startingItems: ['sword', 'crossbow'],
+        image: rangerMeeple,
+      },
+      ronin: {
+        startingItems: ['boot', 'sword'],
+        image: roninMeeple,
+      },
+      scoundrel: {
+        startingItems: ['crossbow', 'tea'],
+        image: scoundrelMeeple,
+      },
+      thief: {
+        startingItems: ['boot', 'bag'],
+        image: thiefMeeple,
+      },
+      tinker: {
+        startingItems: ['bag', 'hammer'],
+        image: tinkerMeeple,
+      },
+      vagrant: {
+        startingItems: ['tea', 'coin'],
+        image: vagrantMeeple,
+      },
+    },
     factions: {
       council: {
         key: 'council',

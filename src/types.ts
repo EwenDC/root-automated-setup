@@ -23,6 +23,7 @@ export type ExpansionCode = string
 
 /** An object representing an Expansion or Base Box for the Root board game. */
 export interface Expansion extends GameComponent {
+  captains?: Record<VagabondCode, Vagabond>
   decks?: Record<DeckCode, GameComponent>
   factions?: Record<FactionCode, Faction>
   hirelings?: Record<HirelingCode, Hireling>
