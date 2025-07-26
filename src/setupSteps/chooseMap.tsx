@@ -55,7 +55,7 @@ const ChooseMapStep: React.FC = () => {
             id={`${code}FixedSuits`}
             labelKey={`map.${code}.fixedSuits`}
             defaultValue={fixedSuits}
-            onChange={checked => dispatch(mapFixedSuits(code, checked))}
+            onChange={checked => dispatch(mapFixedSuits([code, checked]))}
           />
         ))}
       {sortedMaps
@@ -66,7 +66,7 @@ const ChooseMapStep: React.FC = () => {
             id={`${code}UseLandmark`}
             labelKey={`map.${code}.useLandmark`}
             defaultValue={useLandmark}
-            onChange={checked => dispatch(enableMapLandmark(code, checked))}
+            onChange={checked => dispatch(enableMapLandmark([code, checked]))}
           />
         ))}
     </Section>

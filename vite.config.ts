@@ -23,7 +23,9 @@ export default defineConfig({
     // Only need this so the HTML is minified since Vite doesn't minify it by default :(
     createHtmlPlugin(),
     legacy({
+      // Support browsers that used to be supported by CRA
       targets: ['>0.2%', 'not dead', 'not op_mini all'],
+      modernPolyfills: true,
     }),
     million.vite({ auto: true }),
     react({

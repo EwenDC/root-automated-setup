@@ -8,6 +8,7 @@ import {
   lockFaction,
   lockHireling,
   lockLandmark,
+  selectCaptainArray,
   selectDeckArray,
   selectFactionArray,
   selectFactionCodes,
@@ -15,11 +16,14 @@ import {
   selectLandmarkArray,
   selectMapArray,
   selectVagabondArray,
+  toggleCaptain,
+  toggleVagabond,
 } from './slices/components'
 import {
   addToFactionPool,
   clearFactionPool,
   incrementStep,
+  setCaptainPool,
   setCurrentFactionIndex,
   setCurrentPlayerIndex,
   setUseDraft,
@@ -34,11 +38,14 @@ import {
   setHireling,
   setLandmark1,
   setLandmark2,
+  setLimitCaptains,
+  setLimitVagabonds,
   setMap,
   setPlayerCount,
 } from './slices/setup'
 import { countMatches, selectEnabled, takeRandom } from './utils'
 
+const CAPTAIN_DEAL_COUNT = 4
 // Duh.
 const MAX_CORNER_SETUPS = 4
 
@@ -101,8 +108,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
   // Retrieve our setup state
   const state = getState()
   const { currentFactionIndex, currentStep, factionPool, skippedSteps, useDraft } = state.flow
-  const { landmarkCount, fixedFirstPlayer, playerCount } = state.setup
-  let { excludedFactions } = state.setup
+  let { excludedFactions, landmarkCount, fixedFirstPlayer, playerCount } = state.setup
   let doIncrementStep = true
   let validationError: string | null = null
 
@@ -181,6 +187,12 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         // By default we still skip the actual hireling setup, as per other optional components
         dispatch(skipSteps(SetupStep.chooseHirelings, false))
       }
+
+      // Set limitVagabonds based on whether we previously limited the vagabond selection
+      dispatch(setLimitVagabonds(selectVagabondArray(state).some(vagabond => !vagabond.enabled)))
+
+      // Set limitCaptains based on whether we previously limited the captain selection
+      dispatch(setLimitCaptains(selectCaptainArray(state).some(captain => !captain.enabled)))
       break
     }
 
@@ -190,7 +202,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     case SetupStep.seatPlayers: {
       let firstPlayer: number
 
-      // Do we need to randomise the first player
+      // Do we need to randomize the first player
       if (fixedFirstPlayer) {
         // First player is always "1" as the player number represents turn order
         firstPlayer = 1
@@ -201,17 +213,17 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
       dispatch(setFirstPlayer(firstPlayer))
 
       const factionCodes = selectFactionCodes(state)
-      const noSpareFactions = playerCount >= factionCodes.length
+      const noSpareFactions = playerCount >= factionCodes.size
 
       // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
       dispatch(
         massComponentLock(
           selectHirelingArray,
-          ({ factions }) =>
+          ({ excludeFactions }) =>
             // Are we at the max player count (i.e. there are no factions to spare for an equivalent hireling)?
             noSpareFactions &&
             // Is this hireling one of the faction equivalents?
-            factions.some(faction => factionCodes.includes(faction))
+            excludeFactions?.some(faction => factionCodes.has(faction))
               ? 'error.factionHirelingExcluded'
               : false,
           lockHireling,
@@ -323,21 +335,19 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         const factionCodes = selectFactionCodes(state)
 
         // Get our lists of independent & faction hirelings which are available for selection
-        let hirelingPool = selectHirelingArray(state).filter(
-          ({ enabled, factions }) =>
-            enabled &&
-            // Only include a hireling if none of it's faction codes matches an included faction
-            factions.every(factionCode => !factionCodes.includes(factionCode)),
-        )
-        const factionHirelings = selectHirelingArray(state).filter(
-          ({ enabled, factions }) =>
-            enabled &&
-            // Only include a hireling if at least one of it's faction codes matches an included faction
-            factions.some(factionCode => factionCodes.includes(factionCode)),
+        const { hirelingPool = [], factionHirelings = [] } = Object.groupBy(
+          // Preprocess the list to drop references to factions that are not in play
+          selectHirelingArray(state).map(hireling => ({
+            ...hireling,
+            excludeFactions:
+              hireling.excludeFactions?.filter(factionCode => factionCodes.has(factionCode)) ?? [],
+          })),
+          ({ excludeFactions }) =>
+            excludeFactions.length > 0 ? 'factionHirelings' : 'hirelingPool',
         )
 
         // Calculate how many factions we can spare for hirelings (i.e. total factions minus setup faction count)
-        let spareFactionCount = factionCodes.length - playerCount
+        let spareFactionCount = factionCodes.size - playerCount
 
         // If we can only spare 3 or less factions then limit the amount of faction hirelings
         if (spareFactionCount <= 3) {
@@ -345,12 +355,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           while (spareFactionCount > 0 && factionHirelings.length > 0) {
             // Grab a random faction hireling
             const hireling = takeRandom(factionHirelings)
-            // Calculate how many factions we will exclude by including it (based on what factions are actually in play)
-            const excludeCount =
-              hireling.factions.length > 1
-                ? // Make sure we only count the factions that are actually in play
-                  hireling.factions.filter(factionCode => factionCodes.includes(factionCode)).length
-                : 1
+            const excludeCount = hireling.excludeFactions.length
             // Ensure that we don't exclude too many factions by adding this hireling (The Exile can cause this edge case)
             if (spareFactionCount - excludeCount >= 0) {
               hirelingPool.push(hireling)
@@ -359,7 +364,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           }
         } else {
           // There are enough spare factions that we can throw all faction hirelings into the mix
-          hirelingPool = hirelingPool.concat(factionHirelings)
+          hirelingPool.push(...factionHirelings)
         }
 
         // Check that there are enough hirelings selected
@@ -414,19 +419,43 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         ({ enabled, militant }) => enabled && !militant,
       )
 
-      // Validate and set up the vagabond pool for draft setup
+      // Validate and set up the vagabond/captain pool for draft setup
       if (useDraft) {
-        const vagabondPool = selectEnabled(selectVagabondArray(state))
+        // Make sure to enable all vagabonds if limitVagabonds is false to prevent confusion
+        if (!state.setup.limitVagabonds) {
+          dispatch(massComponentToggle(selectVagabondArray, true, toggleVagabond))
+        }
+        const vagabondPool = selectEnabled(selectVagabondArray(getState()))
+
         // Get our vagabond faction count to validate our vagabondPool against
         const vagabondFactionCount = countMatches(
           workingFactionPool.concat(insurgentFactions),
-          ({ dealVagabond: isVagabond }) => isVagabond ?? false,
+          ({ dealVagabond }) => dealVagabond ?? false,
         )
 
         if (vagabondPool.length >= vagabondFactionCount) {
           dispatch(setVagabondPool(vagabondPool))
         } else {
           validationError = 'error.tooFewVagabond'
+          break
+        }
+
+        // Make sure to enable all captains if limitCaptains is false to prevent confusion
+        if (!state.setup.limitCaptains) {
+          dispatch(massComponentToggle(selectCaptainArray, true, toggleCaptain))
+        }
+        const captainPool = selectEnabled(selectCaptainArray(getState()))
+
+        // Get our knave faction count to validate our captainPool against
+        const captainFactionCount = countMatches(
+          workingFactionPool.concat(insurgentFactions),
+          ({ dealCaptains }) => dealCaptains ?? false,
+        )
+
+        if (captainPool.length >= captainFactionCount * CAPTAIN_DEAL_COUNT) {
+          dispatch(setCaptainPool(captainPool))
+        } else {
+          validationError = 'error.tooFewCaptains'
           break
         }
       }

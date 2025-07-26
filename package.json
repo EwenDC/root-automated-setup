@@ -41,6 +41,7 @@
     "react-dom": "^19.1.0",
     "react-i18next": "^15.6.0",
     "react-redux": "^9.2.0",
+    "reselect": "^5.1.1",
     "sass": "^1.89.2",
     "terser": "^5.43.1",
     "typescript": "~5.8.3",

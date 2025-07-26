@@ -8,7 +8,7 @@ import comments from '@eslint-community/eslint-plugin-eslint-comments/configs'
 import cspellConfigs from '@cspell/eslint-plugin/configs'
 
 export default defineConfig(
-  globalIgnores(['node_modules', 'dist', 'examples'], 'Global Ignores'),
+  globalIgnores(['node_modules', 'dist', 'example'], 'Global Ignores'),
   {
     name: 'Base Configuration',
     files: ['src/**/*.ts', 'src/**/*.tsx'],
@@ -32,6 +32,8 @@ export default defineConfig(
       perfectionist: { type: 'natural', ignoreCase: true },
     },
     rules: {
+      // It's silly to enforce separate destructuring just to have some variables be const
+      'prefer-const': ['error', { destructuring: 'all' }],
       // Too much existing code relies on non-null assertions
       '@typescript-eslint/no-non-null-assertion': 'off',
       // Allow use of `delete` for record objects to support existing code
@@ -79,15 +81,7 @@ export default defineConfig(
     },
   },
   {
-    name: 'Translations',
-    files: ['src/locales/*.ts'],
-    rules: {
-      // Use of irregular whitespace for other languages is intentional
-      'no-irregular-whitespace': 'off',
-    },
-  },
-  {
-    name: 'English Spellcheck',
+    name: 'English Translation',
     extends: [cspellConfigs.recommended],
     files: ['src/locales/en-US.ts'],
     rules: {
@@ -118,6 +112,15 @@ export default defineConfig(
           },
         },
       ],
+    },
+  },
+  {
+    name: 'Other Translations',
+    files: ['src/locales/*.ts'],
+    ignores: ['src/locales/en-US.ts'],
+    rules: {
+      // Use of irregular whitespace for other languages is intentional
+      'no-irregular-whitespace': 'off',
     },
   },
 )

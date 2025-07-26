@@ -29,6 +29,7 @@ import {
 
 /** Object tracking which components are available for selection. */
 export interface ComponentsState {
+  captains: Record<VagabondCode, ComponentInfo>
   expansions: Record<ExpansionCode, GameComponent & Togglable>
   decks: Record<DeckCode, ComponentInfo>
   factions: Record<FactionCode, ComponentInfo>
@@ -39,6 +40,7 @@ export interface ComponentsState {
 }
 
 const COMPONENT_TYPES = [
+  'captains',
   'decks',
   'factions',
   'hirelings',
@@ -89,6 +91,7 @@ export const componentsSlice = createSlice({
 
   initialState: () => {
     const initialState: ComponentsState = {
+      captains: {},
       expansions: {},
       decks: {},
       factions: {},
@@ -114,10 +117,11 @@ export const componentsSlice = createSlice({
   },
 
   reducers: {
+    toggleCaptain: toggleComponent('captains'),
+
     toggleExpansion(state, { payload: expansionCode }: PayloadAction<string>) {
       const expansion = state.expansions[expansionCode]
-      // Do not allow changing the enabled state of base game
-      if (expansion && !expansion.locked) {
+      if (expansion) {
         // Toggle enable state and persist change
         expansion.enabled = !expansion.enabled
         savePersistedSetting(`expansions.${expansionCode}`, expansion.enabled)
@@ -137,10 +141,6 @@ export const componentsSlice = createSlice({
             }
           }
         }
-      } else if (expansion) {
-        console.warn(
-          `Invalid payload for toggleExpansion action: ${expansionCode} (Cannot disable expansion flagged as base)`,
-        )
       } else {
         console.warn(
           `Invalid payload for toggleExpansion action: ${expansionCode} (No expansion exists with provided code)`,
@@ -164,50 +164,45 @@ export const componentsSlice = createSlice({
 
     toggleMap: toggleComponent('maps'),
 
-    enableMapLandmark: {
-      prepare: (mapCode: MapCode, enableLandmark: boolean) => ({
-        payload: { mapCode, enableLandmark },
-      }),
-      reducer(state, { payload }: PayloadAction<{ mapCode: MapCode; enableLandmark: boolean }>) {
-        const { mapCode, enableLandmark } = payload
-        const map = state.maps[mapCode]
-        if (map) {
-          map.useLandmark = enableLandmark
-          savePersistedSetting(`maps.${mapCode}${USE_LANDMARK_KEY}`, enableLandmark)
-        } else {
-          console.warn(
-            'Invalid payload for enableMapLandmark action:',
-            payload,
-            '(No map exists with provided code)',
-          )
-        }
-      },
+    enableMapLandmark(
+      state,
+      { payload }: PayloadAction<[mapCode: MapCode, enableLandmark: boolean]>,
+    ) {
+      const [mapCode, enableLandmark] = payload
+      const map = state.maps[mapCode]
+      if (map) {
+        map.useLandmark = enableLandmark
+        savePersistedSetting(`maps.${mapCode}${USE_LANDMARK_KEY}`, enableLandmark)
+      } else {
+        console.warn(
+          'Invalid payload for enableMapLandmark action:',
+          payload,
+          '(No map exists with provided code)',
+        )
+      }
     },
 
-    mapFixedSuits: {
-      prepare: (mapCode: MapCode, fixedSuits: boolean) => ({
-        payload: { mapCode, fixedSuits },
-      }),
-      reducer(state, { payload }: PayloadAction<{ mapCode: MapCode; fixedSuits: boolean }>) {
-        const { mapCode, fixedSuits } = payload
-        const map = state.maps[mapCode]
-        if (map) {
-          map.fixedSuits = fixedSuits
-          savePersistedSetting(`maps.${mapCode}${FIXED_SUIT_KEY}`, fixedSuits)
-        } else {
-          console.warn(
-            'Invalid payload for mapFixedSuits action:',
-            payload,
-            '(No map exists with provided code)',
-          )
-        }
-      },
+    mapFixedSuits(state, { payload }: PayloadAction<[mapCode: MapCode, fixedSuits: boolean]>) {
+      const [mapCode, fixedSuits] = payload
+      const map = state.maps[mapCode]
+      if (map) {
+        map.fixedSuits = fixedSuits
+        savePersistedSetting(`maps.${mapCode}${FIXED_SUIT_KEY}`, fixedSuits)
+      } else {
+        console.warn(
+          'Invalid payload for mapFixedSuits action:',
+          payload,
+          '(No map exists with provided code)',
+        )
+      }
     },
 
     toggleVagabond: toggleComponent('vagabonds'),
   },
 
   selectors: {
+    selectCaptainArray: selectComponentArray('captains'),
+
     selectExpansionArray: createSelector(
       (state: ComponentsState) => state.expansions,
       expansions =>
@@ -220,7 +215,7 @@ export const componentsSlice = createSlice({
 
     selectFactionCodes: createSelector(
       (state: ComponentsState) => state.factions,
-      factions => Object.keys(factions),
+      factions => new Set(Object.keys(factions)),
     ),
 
     selectHirelingArray: selectComponentArray('hirelings'),
@@ -239,6 +234,7 @@ export const {
   lockHireling,
   lockLandmark,
   mapFixedSuits,
+  toggleCaptain,
   toggleExpansion,
   toggleDeck,
   toggleFaction,
@@ -249,6 +245,7 @@ export const {
 } = componentsSlice.actions
 
 export const {
+  selectCaptainArray,
   selectExpansionArray,
   selectDeckArray,
   selectFactionArray,

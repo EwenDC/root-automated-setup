@@ -186,6 +186,7 @@ const definitions: Record<ExpansionCode, Expansion> = {
       vagabond: {
         key: 'vagabond',
         image: thiefMeeple,
+        excludeFactions: ['knaves'],
         dealVagabond: true,
         standardSetup: {
           order: 4,
@@ -318,6 +319,7 @@ const definitions: Record<ExpansionCode, Expansion> = {
         defaultDisabled: true,
         key: 'vagabond',
         image: roninMeeple,
+        excludeFactions: ['knaves'],
         dealVagabond: true,
         standardSetup: {
           order: 5,
@@ -635,19 +637,19 @@ const definitions: Record<ExpansionCode, Expansion> = {
     hirelings: {
       patrol: {
         image: patrolMeeple,
-        factions: ['marquise'],
+        excludeFactions: ['marquise'],
       },
       dynasty: {
         image: dynastyMeeple,
-        factions: ['eyrie'],
+        excludeFactions: ['eyrie'],
       },
       uprising: {
         image: uprisingMeeple,
-        factions: ['alliance'],
+        excludeFactions: ['alliance'],
       },
       exile: {
         image: exileMeeple,
-        factions: ['vagabond', 'vagabond2', 'knaves'],
+        excludeFactions: ['vagabond', 'vagabond2', 'knaves'],
       },
     },
   },
@@ -731,7 +733,6 @@ const definitions: Record<ExpansionCode, Expansion> = {
         militant: true,
         standardSetup: {
           order: 13,
-          cornerSetup: true,
         },
         pieces: {
           warriors: 20,
@@ -750,6 +751,8 @@ const definitions: Record<ExpansionCode, Expansion> = {
       knaves: {
         key: 'knaves',
         image: knavesMeeple,
+        excludeFactions: ['vagabond', 'vagabond2'],
+        dealCaptains: true,
         standardSetup: {
           order: 14,
         },
@@ -883,15 +886,14 @@ const definitions: Record<ExpansionCode, Expansion> = {
     hirelings: {
       prophets: {
         image: prophetsMeeple,
-        factions: ['cult'],
+        excludeFactions: ['cult'],
       },
       flotilla: {
         image: flotillaMeeple,
-        factions: ['riverfolk'],
+        excludeFactions: ['riverfolk'],
       },
       bandits: {
         image: banditsMeeple,
-        factions: [],
       },
     },
   },
@@ -901,15 +903,14 @@ const definitions: Record<ExpansionCode, Expansion> = {
     hirelings: {
       expedition: {
         image: expeditionMeeple,
-        factions: ['duchy'],
+        excludeFactions: ['duchy'],
       },
       spies: {
         image: spiesMeeple,
-        factions: ['corvid'],
+        excludeFactions: ['corvid'],
       },
       protector: {
         image: protectorMeeple,
-        factions: [],
       },
     },
   },
@@ -919,15 +920,14 @@ const definitions: Record<ExpansionCode, Expansion> = {
     hirelings: {
       flameBearers: {
         image: flameBearersMeeple,
-        factions: ['warlord'],
+        excludeFactions: ['warlord'],
       },
       vaultKeepers: {
         image: vaultKeepersMeeple,
-        factions: ['keepers'],
+        excludeFactions: ['keepers'],
       },
       band: {
         image: bandMeeple,
-        factions: [],
       },
     },
   },
@@ -937,15 +937,14 @@ const definitions: Record<ExpansionCode, Expansion> = {
     hirelings: {
       advocates: {
         image: advocatesMeeple,
-        factions: ['council'],
+        excludeFactions: ['council'],
       },
       roamers: {
         image: roamersMeeple,
-        factions: ['diaspora'],
+        excludeFactions: ['diaspora'],
       },
       farmers: {
         image: farmersMeeple,
-        factions: [],
       },
     },
   },

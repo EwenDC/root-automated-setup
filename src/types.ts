@@ -18,15 +18,23 @@ export interface GameComponent {
   defaultDisabled?: boolean
 }
 
+/** An object representing a game component that precludes the use of certain factions in setup. */
+export interface FactionExcludingComponent extends GameComponent {
+  excludeFactions?: FactionCode[]
+}
+
+/** A unique identifier for a Captain character. */
+export type CaptainCode = string
+
 /** A unique identifier for an Expansion. */
 export type ExpansionCode = string
 
 /** An object representing an Expansion or Base Box for the Root board game. */
 export interface Expansion extends GameComponent {
-  captains?: Record<VagabondCode, Vagabond>
+  captains?: Record<CaptainCode, Vagabond>
   decks?: Record<DeckCode, GameComponent>
   factions?: Record<FactionCode, Faction>
-  hirelings?: Record<HirelingCode, Hireling>
+  hirelings?: Record<HirelingCode, FactionExcludingComponent>
   landmarks?: Record<LandmarkCode, Landmark>
   maps?: Record<MapCode, LargeMap | StandardMap>
   vagabonds?: Record<VagabondCode, Vagabond>
@@ -48,7 +56,7 @@ export type ThreeIndex = 0 | 1 | 2
 export type FactionCode = string
 
 /** An object representing a Faction from the Root board game. */
-export interface Faction extends GameComponent {
+export interface Faction extends FactionExcludingComponent {
   /** An identifier for a faction that is used to group multiple instances of the same faction. */
   key: string
   militant?: boolean
@@ -73,14 +81,6 @@ export interface Faction extends GameComponent {
 
 /** A unique identifier for a Hireling. */
 export type HirelingCode = string
-
-/**
- * An object representing a physical Hireling card from the Root board game, which could be Promoted
- * or Demoted.
- */
-export interface Hireling extends GameComponent {
-  factions: FactionCode[]
-}
 
 /** A unique identifier for a Landmark. */
 export type LandmarkCode = string
@@ -260,6 +260,7 @@ export interface FactionEntry {
   order: number
   militant: boolean
   vagabond?: true | VagabondCode
+  captains?: [CaptainCode, CaptainCode, CaptainCode, CaptainCode]
 }
 
 /** An object representing a slice of history for the flow state. */

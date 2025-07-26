@@ -154,7 +154,7 @@ export const toggleComponent =
       savePersistedSetting(`${componentType}.${componentCode}`, newState)
     } else {
       console.warn(
-        `Invalid payload for toggle${componentType.charAt(0).toUpperCase()}${componentType.slice(1)} action: ${componentCode} (No component exists with provided code)`,
+        `Invalid payload for ${componentType} toggle action: ${componentCode} (No component exists with provided code)`,
       )
     }
   }

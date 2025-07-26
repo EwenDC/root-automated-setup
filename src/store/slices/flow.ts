@@ -1,8 +1,17 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+import { createStructuredSelector } from 'reselect'
 
-import type { CodeObject, Faction, FactionEntry, FlowSlice, WithCode } from '../../types'
+import type {
+  CaptainCode,
+  CodeObject,
+  Faction,
+  FactionEntry,
+  FlowSlice,
+  VagabondCode,
+  WithCode,
+} from '../../types'
 
 import { SetupStep } from '../../types'
 import { loadPersistedSetting, savePersistedSetting, takeRandom } from '../utils'
@@ -20,7 +29,8 @@ export interface FlowState {
   vagabondSetUp: boolean
   currentPlayerIndex: number
   currentFactionIndex: number | null
-  vagabondPool: string[]
+  vagabondPool: VagabondCode[]
+  captainPool: CaptainCode[]
   useDraft: boolean
   skippedSteps: boolean[]
   futureSteps: FlowSlice[]
@@ -58,6 +68,7 @@ export const flowSlice = createSlice({
       currentPlayerIndex: 0,
       currentFactionIndex: null,
       vagabondPool: [],
+      captainPool: [],
       useDraft: loadPersistedSetting<boolean>('useDraft', true),
       // Create an array with as many elements as there are setup steps
       skippedSteps: Array<boolean>(SetupStep.setupEnd + 1).fill(false),
@@ -171,13 +182,10 @@ export const flowSlice = createSlice({
 
     skipSteps: {
       prepare: (steps: SetupStep | SetupStep[], skip: boolean) => ({
-        payload: {
-          steps: typeof steps === 'number' ? [steps] : steps,
-          skip,
-        },
+        payload: [typeof steps === 'number' ? [steps] : steps, skip] as const,
       }),
-      reducer(state, { payload }: PayloadAction<{ steps: SetupStep[]; skip: boolean }>) {
-        const { steps, skip } = payload
+      reducer(state, { payload }: PayloadAction<readonly [SetupStep[], boolean]>) {
+        const [steps, skip] = payload
         steps.forEach(step => {
           state.skippedSteps[step] = skip
         })
@@ -189,8 +197,13 @@ export const flowSlice = createSlice({
       state.vagabondPool = vagabondPool.map(({ code }) => code)
     },
 
+    setCaptainPool(state, { payload: captainPool }: PayloadAction<CodeObject[]>) {
+      state.captainPool = captainPool.map(({ code }) => code)
+    },
+
     clearFactionPool(state) {
       state.vagabondPool = []
+      state.captainPool = []
       state.factionPool = []
       state.lastFactionLocked = false
       state.currentFactionIndex = null
@@ -203,7 +216,15 @@ export const flowSlice = createSlice({
         militant: faction.militant ?? false,
       }
       if (faction.dealVagabond) {
-        factionEntry.vagabond = state.useDraft ? takeRandom(state.vagabondPool) : true
+        factionEntry.vagabond = !state.useDraft || takeRandom(state.vagabondPool)
+      }
+      if (faction.dealCaptains && state.useDraft) {
+        factionEntry.captains = [
+          takeRandom(state.captainPool),
+          takeRandom(state.captainPool),
+          takeRandom(state.captainPool),
+          takeRandom(state.captainPool),
+        ]
       }
 
       state.factionPool.push(factionEntry)
@@ -259,29 +280,14 @@ export const flowSlice = createSlice({
   },
 
   selectors: {
-    selectFlowSlice: createSelector(
-      (state: FlowState) => state.currentStep,
-      (state: FlowState) => state.factionPool,
-      (state: FlowState) => state.lastFactionLocked,
-      (state: FlowState) => state.vagabondSetUp,
-      (state: FlowState) => state.currentPlayerIndex,
-      (state: FlowState) => state.currentFactionIndex,
-      (
-        step,
-        factionPool,
-        lastFactionLocked,
-        vagabondSetUp,
-        playerIndex,
-        factionIndex,
-      ): FlowSlice => ({
-        step,
-        factionPool,
-        lastFactionLocked,
-        vagabondSetUp,
-        playerIndex,
-        factionIndex,
-      }),
-    ),
+    selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
+      step: state => state.currentStep,
+      factionPool: state => state.factionPool,
+      lastFactionLocked: state => state.lastFactionLocked,
+      vagabondSetUp: state => state.vagabondSetUp,
+      playerIndex: state => state.currentPlayerIndex,
+      factionIndex: state => state.currentFactionIndex,
+    }),
   },
 })
 
@@ -291,6 +297,7 @@ export const {
   redoStep,
   setUseDraft,
   skipSteps,
+  setCaptainPool,
   setVagabondPool,
   clearFactionPool,
   addToFactionPool,
