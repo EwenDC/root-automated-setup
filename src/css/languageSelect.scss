@@ -21,7 +21,7 @@
       height: 1rem;
       text-decoration: underline;
       border-radius: 0.1rem;
-      filter: grayscale(50%);
+      filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(50%);
       outline: 0.15rem solid transparent;
       transition: outline 80ms ease-out;
 
@@ -39,7 +39,7 @@
       cursor: default;
 
       > img {
-        filter: none;
+        filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
         outline-color: transparent;
       }
     }

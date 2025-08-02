@@ -1,5 +1,6 @@
 import Checkbox from '../components/checkbox'
 import ComponentToggle from '../components/componentToggle'
+import Radiogroup from '../components/radiogroup'
 import Section from '../components/section'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import {
@@ -16,10 +17,10 @@ import {
 
 const ChooseFactionsStep: React.FC = () => {
   const playerCount = useAppSelector(state => state.setup.playerCount)
+  const factions = useAppSelector(selectFactionArray)
+  const useDraft = useAppSelector(state => state.flow.useDraft)
   const limitVagabonds = useAppSelector(state => state.setup.limitVagabonds)
   const limitCaptains = useAppSelector(state => state.setup.limitCaptains)
-  const useDraft = useAppSelector(state => state.flow.useDraft)
-  const factions = useAppSelector(selectFactionArray)
   const dispatch = useAppDispatch()
 
   return (
@@ -42,7 +43,7 @@ const ChooseFactionsStep: React.FC = () => {
       {useDraft ? (
         <>
           {factions.some(faction => faction.dealVagabond && faction.enabled) ? (
-            <Checkbox
+            <Radiogroup
               id="chooseVagabonds"
               defaultValue={limitVagabonds}
               onChange={checked => dispatch(setLimitVagabonds(checked))}
@@ -56,7 +57,7 @@ const ChooseFactionsStep: React.FC = () => {
             />
           ) : null}
           {factions.some(faction => faction.dealCaptains && faction.enabled) ? (
-            <Checkbox
+            <Radiogroup
               id="chooseCaptains"
               defaultValue={limitCaptains}
               onChange={checked => dispatch(setLimitCaptains(checked))}

@@ -1,5 +1,6 @@
 import type { StepSwitchProps } from '../components/stepSwitch'
 
+import FactionInfo from '../components/factionInfo'
 import FactionSelect from '../components/factionSelect'
 import Section from '../components/section'
 import { useAppSelector } from '../hooks'
@@ -18,6 +19,7 @@ const SelectFactionStep: React.FC<StepSwitchProps> = ({ flowSlice }) => {
       }}
     >
       <FactionSelect flowSlice={flowSlice} />
+      <FactionInfo flowSlice={flowSlice} />
     </Section>
   )
 }

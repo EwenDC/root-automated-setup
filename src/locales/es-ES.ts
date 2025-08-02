@@ -42,7 +42,6 @@ export default {
     rabbit: `conejo`,
     redo: `Rehacer`,
     restartSetup: `Reinicia la preparación`,
-    selectVagabonds: `Selecciona qué personajes para el Vagabundo te gustaría incluir en la selección de facciones.`,
     specialAction: `Acción especial`,
     startingItems: `Objetos iniciales`,
     useDraft: `Usa la selección de facciones en modo draft`,

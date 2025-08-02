@@ -1,0 +1,28 @@
+.captain-info {
+  min-width: 10rem;
+  flex: 1 0;
+
+  > .name {
+    max-width: 16rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > img {
+      width: 3rem;
+      height: 3rem;
+      filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
+
+      section.inactive & {
+        filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
+      }
+    }
+  }
+}
+
+@mixin large-screen {
+  .captain-info > .name > img {
+    width: 5rem;
+    height: 5rem;
+  }
+}

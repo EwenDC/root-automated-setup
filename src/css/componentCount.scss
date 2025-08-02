@@ -21,9 +21,10 @@
   > img {
     width: 3rem;
     height: 3rem;
+    filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
 
     section.inactive & {
-      filter: grayscale(100%);
+      filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
     }
   }
 }

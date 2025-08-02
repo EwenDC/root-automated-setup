@@ -67,7 +67,7 @@
       height: 3rem;
       mix-blend-mode: multiply;
       /* Transitioned properties */
-      filter: grayscale(100%);
+      filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
       transition-property: filter;
       transition-duration: inherit;
       transition-timing-function: inherit;
@@ -114,7 +114,7 @@
         }
 
         > img {
-          filter: none;
+          filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
         }
       }
 

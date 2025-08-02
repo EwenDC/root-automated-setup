@@ -43,7 +43,6 @@ export default {
     rabbit: `Lapin`,
     redo: `Refaire`,
     restartSetup: `Recommencer la mise en place`,
-    selectVagabonds: `Sélectionnez les personnages Vagabond que vous souhaitez inclure dans le draft de factions.`,
     specialAction: `Action spéciale `,
     startingItems: `Objets de départ`,
     useDraft: `Drafter les factions`,

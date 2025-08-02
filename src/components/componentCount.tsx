@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { selectedFactionContext } from './factionSelect'
+import { selectedFactionContext } from '../hooks'
 import LocaleText from './localeText'
 
 interface ComponentCountProps {

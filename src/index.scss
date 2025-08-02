@@ -1,7 +1,9 @@
 @use 'css/button';
+@use 'css/captainInfo';
 @use 'css/checkbox';
 @use 'css/componentCount';
 @use 'css/componentToggle';
+@use 'css/factionInfo';
 @use 'css/factionSelect';
 @use 'css/header';
 @use 'css/icon';
@@ -64,8 +66,10 @@ noscript {
 
 @media (min-width: 62rem) {
   @include button.large-screen;
+  @include captainInfo.large-screen;
   @include componentCount.large-screen;
   @include componentToggle.large-screen;
+  @include factionInfo.large-screen;
   @include factionSelect.large-screen;
   @include languageSelect.large-screen;
   @include radiogroup.large-screen;

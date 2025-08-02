@@ -17,6 +17,19 @@ export const countMatches = <T>(array: T[], matcher: (value: T) => boolean) =>
   array.reduce((count, value) => count + (matcher(value) ? 1 : 0), 0)
 
 /**
+ * Helper for converting a selector to a curried function (i.e. a function returning another
+ * function). Allows passing other selector parameters separately from the state parameter.
+ *
+ * @param selector The selector to be converted to a curried function.
+ * @returns A function that takes arguments and returns a selector.
+ */
+export const currySelector =
+  <S, A extends unknown[], R>(selector: (state: S, ...args: A) => R) =>
+  (...args: A) =>
+  (state: S) =>
+    selector(state, ...args)
+
+/**
  * Function to return the state of a given setup setting from localStorage, for the purpose of
  * setting up the initial redux state.
  *

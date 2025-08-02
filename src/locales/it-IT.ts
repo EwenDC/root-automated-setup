@@ -42,7 +42,6 @@ export default {
     rabbit: `Coniglio`,
     redo: `Ripeti`,
     restartSetup: `Ricomincia la preparazione`,
-    selectVagabonds: `Seleziona quali personaggi del vagabondo vuoi includere durante la scelta delle fazioni.`,
     specialAction: `Azione Speciale`,
     startingItems: `Oggetti di partenza`,
     useDraft: `Usa il draft per scegliere le fazioni`,

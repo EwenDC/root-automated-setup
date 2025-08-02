@@ -76,8 +76,8 @@
     &.locked {
       background-color: gainsboro;
 
-      > img {
-        filter: grayscale(50%);
+      > .image-frame > img {
+        filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(50%);
       }
     }
 
@@ -94,8 +94,8 @@
         border-color: darkgray;
       }
 
-      > img {
-        filter: grayscale(100%);
+      > .image-frame > img {
+        filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
       }
     }
 
@@ -110,15 +110,47 @@
       }
     }
 
-    > img {
+    > .image-frame {
+      // Position relatively to allow positioning captain images relative to the frame
+      position: relative;
       width: 5rem;
       height: 5rem;
       flex: 0 0;
       margin: 0.25rem auto;
-      /* Transitioned properties */
-      transition-property: filter;
-      transition-duration: inherit;
-      transition-timing-function: inherit;
+
+      > img {
+        /* Transitioned properties */
+        transition-property: filter;
+        transition-duration: inherit;
+        transition-timing-function: inherit;
+        filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
+
+        &.warrior {
+          width: 100%;
+          height: 100%;
+        }
+
+        &.captain {
+          position: absolute;
+          width: 33.33%;
+          height: 33.33%;
+
+          &:nth-last-child(4),
+          &:nth-last-child(3) {
+            top: 30%;
+          }
+          &:nth-last-child(2),
+          &:nth-last-child(1) {
+            bottom: 0;
+          }
+          &:nth-last-of-type(even) {
+            left: -30%;
+          }
+          &:nth-last-of-type(odd) {
+            right: -30%;
+          }
+        }
+      }
     }
 
     > .title {
@@ -139,35 +171,9 @@
     }
   }
 
-  &.large-labels button > img {
+  &.large-labels button > .image-frame {
     width: 4rem;
     height: 4rem;
-  }
-}
-
-.faction-info {
-  display: flex;
-  flex-direction: column;
-
-  .stat-list {
-    margin: 0.75rem 0 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .stat-list,
-  .count-list {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .count-list {
-    max-width: 100%;
-    overflow: auto;
-  }
-
-  .summary-title {
-    font-size: 1.17rem;
-    margin: 0.5rem 0;
   }
 }
 
@@ -177,7 +183,7 @@
       height: 10.5rem;
       min-width: 10.5rem;
 
-      > img {
+      > .image-frame {
         width: 6rem;
         height: 6rem;
       }
@@ -191,18 +197,9 @@
       }
     }
 
-    &.large-labels button > img {
+    &.large-labels button > .image-frame {
       width: 5.5rem;
       height: 5.5rem;
-    }
-  }
-
-  .faction-info {
-    flex-direction: row;
-
-    .stat-list {
-      flex-direction: column;
-      flex-wrap: nowrap;
     }
   }
 }

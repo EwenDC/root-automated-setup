@@ -421,8 +421,13 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
       // Validate and set up the vagabond/captain pool for draft setup
       if (useDraft) {
-        // Make sure to enable all vagabonds if limitVagabonds is false to prevent confusion
-        if (!state.setup.limitVagabonds) {
+        if (state.setup.limitVagabonds) {
+          // To keep the previous steps clean, disable if no vagabonds were actually deselected
+          if (selectVagabondArray(state).every(vagabond => vagabond.enabled)) {
+            dispatch(setLimitVagabonds(false))
+          }
+        } else {
+          // Make sure to enable all vagabonds if limitVagabonds is false to prevent confusion
           dispatch(massComponentToggle(selectVagabondArray, true, toggleVagabond))
         }
         const vagabondPool = selectEnabled(selectVagabondArray(getState()))
@@ -441,7 +446,13 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         }
 
         // Make sure to enable all captains if limitCaptains is false to prevent confusion
-        if (!state.setup.limitCaptains) {
+        if (state.setup.limitCaptains) {
+          // To keep the previous steps clean, disable if no captains were actually deselected
+          if (selectCaptainArray(state).every(captain => captain.enabled)) {
+            dispatch(setLimitCaptains(false))
+          }
+        } else {
+          // Make sure to enable all captains if limitCaptains is false to prevent confusion
           dispatch(massComponentToggle(selectCaptainArray, true, toggleCaptain))
         }
         const captainPool = selectEnabled(selectCaptainArray(getState()))
