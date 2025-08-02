@@ -1,7 +1,7 @@
 import type { UnknownAction } from '@reduxjs/toolkit'
 
 import type { AppThunk, RootState } from '../store'
-import type { Togglable, WithCode } from '../types'
+import type { FactionCode, Togglable, WithCode } from '../types'
 
 import { SetupStep } from '../types'
 import {
@@ -479,52 +479,47 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
         workingFactionPool.length > 0 &&
         workingFactionPool.length + insurgentFactions.length >= factionCount
       ) {
-        // Don't bother accounting for corner setups if we have too few players or aren't using them
-        const cornerSetupFactions =
-          playerCount <= MAX_CORNER_SETUPS || useDraft
-            ? 0
-            : countMatches(
-                workingFactionPool.concat(insurgentFactions),
-                ({ standardSetup }) => standardSetup.cornerSetup ?? false,
-              )
-
         // Start by adding a random militant faction
         const firstFaction = takeRandom(workingFactionPool)
         dispatch(addToFactionPool(firstFaction))
         // Add the insurgent factions to the mix
         workingFactionPool.push(...insurgentFactions)
 
-        // Handle corner setups if we're in standard setup and we have enough players and corner factions for it to matter
-        if (cornerSetupFactions > MAX_CORNER_SETUPS) {
-          let factionsSetUp = 1
-          // Keep track of if we've already used a corner in standard setup
-          let cornerSetupCount = firstFaction.standardSetup.cornerSetup ? 1 : 0
+        let factionsSetUp = 1
+        // Keep track of if we've already used a corner in standard setup
+        let cornerSetupCount = !useDraft && firstFaction.standardSetup.cornerSetup ? 1 : 0
+        const incompatibleFactions = new Set<FactionCode>()
 
-          // Add enough factions to make the total pool equal factionCount
-          while (factionsSetUp < factionCount && workingFactionPool.length > 0) {
-            const candidateFaction = takeRandom(workingFactionPool)
+        // Add enough factions to make the total pool equal factionCount
+        while (factionsSetUp < factionCount && workingFactionPool.length > 0) {
+          const candidateFaction = takeRandom(workingFactionPool)
 
+          if (
             // Make sure we don't include more than 4 corner clearing factions in standard setup
-            if (
+            (useDraft ||
               !candidateFaction.standardSetup.cornerSetup ||
-              cornerSetupCount < MAX_CORNER_SETUPS
-            ) {
-              dispatch(addToFactionPool(candidateFaction))
-              factionsSetUp++
-              if (candidateFaction.standardSetup.cornerSetup) cornerSetupCount++
+              cornerSetupCount < MAX_CORNER_SETUPS) &&
+            // Don't include any factions that are incompatible with ones already chosen
+            !incompatibleFactions.has(candidateFaction.code)
+          ) {
+            dispatch(addToFactionPool(candidateFaction))
+            factionsSetUp++
+            if (!useDraft && candidateFaction.standardSetup.cornerSetup) cornerSetupCount++
+            if (candidateFaction.excludeFactions) {
+              candidateFaction.excludeFactions.forEach(faction => incompatibleFactions.add(faction))
             }
           }
-          // Check if we weren't able to set up due to too many corner clearing setups required
-          if (factionsSetUp < factionCount) {
-            validationError = 'error.tooManyCornerSetup'
-          }
-        } else {
-          // Use the much lazier and faster method since we know there won't be any issues
-          for (let i = 1; i < factionCount; i++) {
-            dispatch(addToFactionPool(takeRandom(workingFactionPool)))
-          }
+        }
+        // Check if we were able to set up
+        if (factionsSetUp < factionCount) {
+          // Show appropriate error message
+          validationError =
+            cornerSetupCount >= MAX_CORNER_SETUPS
+              ? 'error.tooManyCornerSetup'
+              : 'error.tooFewFaction'
+        } else if (useDraft) {
           // For draft setup, begin the setup at the bottom of player order
-          if (useDraft) dispatch(setCurrentPlayerIndex(playerCount - 1))
+          dispatch(setCurrentPlayerIndex(playerCount - 1))
         }
       } else {
         // Set the correct error message

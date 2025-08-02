@@ -14,16 +14,16 @@ const CaptainInfo: React.FC<CaptainInfoProps> = ({ index }) => {
 
   if (!captain) return null
   return (
-    <div className="captain-info">
+    <section className="captain-info">
       <div className="name">
         <img
           src={captain.image}
           alt=""
           aria-hidden="true"
         />
-        <strong>
+        <h5>
           <LocaleText i18nKey={`captain.${captain.code}.name`} />
-        </strong>
+        </h5>
       </div>
       <p>
         <strong>
@@ -43,7 +43,7 @@ const CaptainInfo: React.FC<CaptainInfoProps> = ({ index }) => {
         <br />
         <LocaleText i18nKey={`captain.${captain.code}.effect`} />
       </p>
-    </div>
+    </section>
   )
 }
 
