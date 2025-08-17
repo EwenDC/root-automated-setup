@@ -78,6 +78,7 @@ export default {
     hirelingSelected: `An equivalent Hireling for this faction is already in play`,
     landmarkNotEnoughPlayers: `Not enough players to play with this landmark`,
     lockedFaction: `Cannot select last faction until a Militant faction has been selected`,
+    mapBotsUnsupported: `This map does not support playing with bots`,
     mapLandmarkUsed: `Landmark already included in map set up`,
     missingDeck: `A deck is required for set up! Please select a game box that includes one`,
     missingFaction: `At least one faction is required for set up! Please select a game box that includes one`,

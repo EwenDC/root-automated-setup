@@ -164,6 +164,8 @@ export const componentsSlice = createSlice({
 
     toggleMap: toggleComponent('maps'),
 
+    lockMap: lockComponent('maps'),
+
     enableMapLandmark(
       state,
       { payload }: PayloadAction<[mapCode: MapCode, enableLandmark: boolean]>,
@@ -233,6 +235,7 @@ export const {
   lockFaction,
   lockHireling,
   lockLandmark,
+  lockMap,
   mapFixedSuits,
   toggleCaptain,
   toggleExpansion,

@@ -8,6 +8,7 @@ import {
   lockFaction,
   lockHireling,
   lockLandmark,
+  lockMap,
   selectCaptainArray,
   selectDeckArray,
   selectFactionArray,
@@ -156,6 +157,16 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           dispatch(setPlayerCount(maxPlayerCount))
         }
       }
+
+      // Exclude maps that don't support bots (if we wish to do bot setup)
+      dispatch(
+        massComponentLock(
+          selectMapArray,
+          ({ botPriorities }) =>
+            !skippedSteps[SetupStep.setUpBots] && !botPriorities && 'error.mapBotsUnsupported',
+          lockMap,
+        ),
+      )
 
       // Are there any landmarks that can be set up?
       dispatch(
