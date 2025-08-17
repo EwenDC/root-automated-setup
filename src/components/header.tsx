@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import rootLogo from '../images/logo.png'
+import rootLogo from '../images/logo.svg'
 import LocaleText from './localeText'
 
 const Header: React.FC = () => {

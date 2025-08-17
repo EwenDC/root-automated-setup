@@ -356,7 +356,7 @@ export default {
         default: `<ol><li>Choose <b>3 Captain cards</b>. <i>(For your first game, we suggest Jailor, Cheat, & Gladiator)</i> Collect their <b>Captain warriors</b>.</li><li>Place <b>1 Captain warrior</b> and <b>1 Skunk warrior</b> each in three different forests.</li><li>Place the <b>6 items</b> as shown on your chosen Captain cards into your Stash face up, and fill each Acclaim slot with <b>2 acclaim tokens</b>.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Deal out the "{{captain.0}}", "{{captain.1}}", "{{captain.2}}", and "{{captain.3}}" <b>Captain cards</b>.</li><li>Choose <b>3</b> of them and return the fourth one to the box. Collect their <b>Captain warriors</b>. Put the <b>items</b> shown on their Captain cards in your Stash.</li><li>Put <b>1 Captain</b> and <b>1 Skunk</b> each in three different forests.</li></ol>`,
+        default: `<ol><li>Deal out the "{{captain.0}}," "{{captain.1}}," "{{captain.2}}," and "{{captain.3}}" <b>Captain cards</b>.</li><li>Choose <b>3</b> of them and return the fourth one to the box. Collect their <b>Captain warriors</b>. Put the <b>items</b> shown on their Captain cards in your Stash.</li><li>Put <b>1 Captain</b> and <b>1 Skunk</b> each in three different forests.</li></ol>`,
       },
     },
     marquise: {
