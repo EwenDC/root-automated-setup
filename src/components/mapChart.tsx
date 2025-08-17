@@ -14,7 +14,7 @@ const MapChart: React.FC = () => {
   return (
     <svg
       className="map"
-      viewBox="-1 -1 102 102"
+      viewBox="0 0 100 100"
     >
       <desc>
         <LocaleText i18nKey="label.mapChart" />
@@ -22,6 +22,7 @@ const MapChart: React.FC = () => {
       <image
         width="100"
         height="100"
+        className="back"
         href={map.backImage}
       />
       {map.clearings.map((clearing, index) => {
@@ -33,14 +34,6 @@ const MapChart: React.FC = () => {
             <title>
               <LocaleText i18nKey={`label.clearing.${suit}`} />
             </title>
-            <circle
-              cx={x}
-              cy={y}
-              r="8.25"
-              fill="none"
-              stroke="#7E7C74"
-              strokeWidth="0.3"
-            />
             <image
               x={x - 4}
               y={y - 12}

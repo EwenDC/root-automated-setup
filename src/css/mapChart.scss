@@ -2,6 +2,11 @@
   display: block;
   max-width: 50rem;
 
+  .back {
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+  }
+
   section.inactive & image {
     filter: grayscale(100%);
   }

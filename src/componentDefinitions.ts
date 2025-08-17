@@ -27,6 +27,11 @@ import waystationBuildings from './images/buildings/waystations.png'
 import exilesCard from './images/cards/exiles.png'
 import squiresCard from './images/cards/squires.png'
 import standardCard from './images/cards/standard.png'
+// Chart Images
+import autumnChart from './images/charts/autumn.svg'
+import lakeChart from './images/charts/lake.svg'
+import mountainChart from './images/charts/mountain.svg'
+import winterChart from './images/charts/winter.svg'
 // Landmark Images
 import cityLandmark from './images/landmarks/city.svg'
 import ferryLandmark from './images/landmarks/ferry.svg'
@@ -85,11 +90,6 @@ import uprisingMeeple from './images/meeples/uprising.svg'
 import vagrantMeeple from './images/meeples/vagrant.svg'
 import vaultKeepersMeeple from './images/meeples/vaultKeepers.svg'
 import warlordMeeple from './images/meeples/warlord.svg'
-// Path Images
-import autumnPaths from './images/paths/autumn.svg'
-import lakePaths from './images/paths/lake.svg'
-import mountainPaths from './images/paths/mountain.svg'
-import winterPaths from './images/paths/winter.svg'
 // Token Images
 import acclaimToken from './images/tokens/acclaim.png'
 import assemblyToken from './images/tokens/assembly.png'
@@ -206,18 +206,18 @@ const definitions: Record<ExpansionCode, Expansion> = {
       autumn: {
         image: autumnMap,
         clearings: [
-          { x: 11.75, y: 14.25 },
-          { x: 59.45, y: 14.25 },
-          { x: 42.75, y: 28.75 },
-          { x: 87.1, y: 28.2 },
-          { x: 12.1, y: 39.7 },
-          { x: 35.83, y: 59.55 },
-          { x: 66.6, y: 51.2 },
-          { x: 89.6, y: 53.6 },
-          { x: 12.1, y: 80.7 },
-          { x: 39.67, y: 89.46 },
-          { x: 63.3, y: 79.1 },
-          { x: 88.05, y: 88.4 },
+          { x: 10.123, y: 11.569 },
+          { x: 58.882, y: 11.518 },
+          { x: 41.858, y: 26.447 },
+          { x: 10.458, y: 37.594 },
+          { x: 87.198, y: 25.808 },
+          { x: 34.743, y: 57.927 },
+          { x: 66.245, y: 49.38 },
+          { x: 89.788, y: 51.853 },
+          { x: 10.428, y: 79.616 },
+          { x: 38.672, y: 88.571 },
+          { x: 62.84, y: 77.929 },
+          { x: 88.173, y: 87.524 },
         ],
         botPriorities: [1, 5, 10, 2, 9, 12, 11, 6, 4, 8, 7, 3],
         defaultSuits: [
@@ -255,23 +255,23 @@ const definitions: Record<ExpansionCode, Expansion> = {
           [9, 10],
           [10, 11],
         ],
-        backImage: autumnPaths,
+        backImage: autumnChart,
       },
       winter: {
         image: winterMap,
         clearings: [
-          { x: 10.85, y: 11.3 },
-          { x: 38.6, y: 13.5 },
-          { x: 62.75, y: 18.6 },
-          { x: 90.35, y: 11.55 },
-          { x: 9.1, y: 46.3 },
-          { x: 40.35, y: 47.75 },
-          { x: 67.3, y: 49.3 },
-          { x: 90.95, y: 51.8 },
-          { x: 11.15, y: 79.7 },
-          { x: 39.55, y: 88.7 },
-          { x: 63.85, y: 78 },
-          { x: 89.3, y: 87.65 },
+          { x: 11.001, y: 11.499 },
+          { x: 38.586, y: 13.759 },
+          { x: 62.602, y: 18.773 },
+          { x: 90.09, y: 11.776 },
+          { x: 9.267, y: 46.303 },
+          { x: 40.35, y: 47.758 },
+          { x: 67.124, y: 49.311 },
+          { x: 90.667, y: 51.783 },
+          { x: 11.306, y: 79.547 },
+          { x: 39.551, y: 88.502 },
+          { x: 63.72, y: 77.86 },
+          { x: 89.052, y: 87.455 },
         ],
         botPriorities: [1, 5, 6, 2, 10, 11, 12, 7, 4, 9, 8, 3],
         paths: [
@@ -292,7 +292,7 @@ const definitions: Record<ExpansionCode, Expansion> = {
           [9, 10],
           [10, 11],
         ],
-        backImage: winterPaths,
+        backImage: winterChart,
       },
     },
     vagabonds: {
@@ -456,18 +456,18 @@ const definitions: Record<ExpansionCode, Expansion> = {
       lake: {
         image: lakeMap,
         clearings: [
-          { x: 11.2, y: 11.65 },
-          { x: 43.15, y: 13.85 },
-          { x: 67.1, y: 18.9 },
-          { x: 90.15, y: 11.9 },
-          { x: 9.5, y: 46.4 },
-          { x: 36.75, y: 40.95 },
-          { x: 67.25, y: 49.4 },
-          { x: 90.7, y: 51.85 },
-          { x: 40.6, y: 69.65 },
-          { x: 11.5, y: 79.6 },
-          { x: 58.5, y: 88.45 },
-          { x: 86.7, y: 83.55 },
+          { x: 11.001, y: 11.525 },
+          { x: 42.975, y: 13.785 },
+          { x: 66.99, y: 18.799 },
+          { x: 90.088, y: 11.801 },
+          { x: 9.266, y: 46.329 },
+          { x: 36.586, y: 40.886 },
+          { x: 67.122, y: 49.337 },
+          { x: 90.663, y: 51.81 },
+          { x: 40.452, y: 69.624 },
+          { x: 11.306, y: 79.571 },
+          { x: 58.376, y: 88.454 },
+          { x: 86.61, y: 83.576 },
         ],
         botPriorities: [2, 7, 6, 4, 8, 10, 11, 5, 12, 3, 9, 1],
         defaultSuits: [
@@ -503,7 +503,7 @@ const definitions: Record<ExpansionCode, Expansion> = {
           [9, 10],
           [10, 11],
         ],
-        backImage: lakePaths,
+        backImage: lakeChart,
         landmark: {
           code: 'ferry',
           clearing: 11,
@@ -515,18 +515,18 @@ const definitions: Record<ExpansionCode, Expansion> = {
       mountain: {
         image: mountainMap,
         clearings: [
-          { x: 11.5, y: 12.2 },
-          { x: 58.8, y: 14.65 },
-          { x: 89.8, y: 12.45 },
-          { x: 9.8, y: 46.65 },
-          { x: 33.3, y: 37.7 },
-          { x: 53.25, y: 41.15 },
-          { x: 34.75, y: 60.75 },
-          { x: 64.1, y: 61.47 },
-          { x: 90.37, y: 52.07 },
-          { x: 11.82, y: 79.57 },
-          { x: 48.95, y: 87.5 },
-          { x: 88.77, y: 87.4 },
+          { x: 11.001, y: 11.971 },
+          { x: 58.79, y: 14.464 },
+          { x: 90.088, y: 12.248 },
+          { x: 9.266, y: 46.776 },
+          { x: 33.004, y: 37.71 },
+          { x: 53.161, y: 41.2 },
+          { x: 34.476, y: 61.02 },
+          { x: 64.122, y: 61.741 },
+          { x: 90.663, y: 52.254 },
+          { x: 11.306, y: 80.02 },
+          { x: 48.829, y: 88.029 },
+          { x: 89.049, y: 87.927 },
         ],
         botPriorities: [1, 5, 2, 8, 9, 10, 12, 11, 6, 4, 7, 3],
         defaultSuits: [
@@ -567,7 +567,7 @@ const definitions: Record<ExpansionCode, Expansion> = {
           [8, 11],
           [10, 11],
         ],
-        backImage: mountainPaths,
+        backImage: mountainChart,
         landmark: {
           code: 'tower',
           clearing: 5,
