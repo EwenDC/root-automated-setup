@@ -53,6 +53,7 @@ export default {
     rabbit: `Rabbit`,
     redo: `Redo`,
     restartSetup: `Restart Setup`,
+    ruin: `Ruin`,
     specialAction: `Special Action`,
     startingItems: `Starting Items`,
     startWith: `Start with <StartingItems>, </StartingItems>`,
