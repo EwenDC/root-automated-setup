@@ -18,14 +18,10 @@ import type {
 } from '../../types'
 
 import definitions from '../../componentDefinitions'
-import {
-  loadPersistedSetting,
-  lockComponent,
-  savePersistedSetting,
-  selectComponentArray,
-  toggleComponent,
-  typedEntries,
-} from '../utils'
+import { COMPONENT_TYPES, FIXED_SUIT_KEY, USE_LANDMARK_KEY } from '../../constants'
+import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
+import { typedEntries } from '../../functions/typed'
+import { lockComponent, selectComponentArray, toggleComponent } from '../utils'
 
 /** Object tracking which components are available for selection. */
 export interface ComponentsState {
@@ -38,19 +34,6 @@ export interface ComponentsState {
   maps: Record<MapCode, MapInfo>
   vagabonds: Record<VagabondCode, ComponentInfo>
 }
-
-const COMPONENT_TYPES = [
-  'captains',
-  'decks',
-  'factions',
-  'hirelings',
-  'landmarks',
-  'maps',
-  'vagabonds',
-] satisfies (keyof Expansion)[]
-
-const FIXED_SUIT_KEY = '.fixedSuits'
-const USE_LANDMARK_KEY = '.useLandmark'
 
 const addExpansionComponents = (
   state: ComponentsState,
@@ -71,12 +54,12 @@ const addExpansionComponents = (
         }
         if ('defaultSuits' in componentData)
           componentInfo.fixedSuits = loadPersistedSetting<boolean>(
-            `${componentType}.${componentCode}${FIXED_SUIT_KEY}`,
+            `${componentType}.${componentCode}.${FIXED_SUIT_KEY}`,
             false,
           )
         if ('landmark' in componentData)
           componentInfo.useLandmark = loadPersistedSetting<boolean>(
-            `${componentType}.${componentCode}${USE_LANDMARK_KEY}`,
+            `${componentType}.${componentCode}.${USE_LANDMARK_KEY}`,
             true,
           )
 
@@ -174,7 +157,7 @@ export const componentsSlice = createSlice({
       const map = state.maps[mapCode]
       if (map) {
         map.useLandmark = enableLandmark
-        savePersistedSetting(`maps.${mapCode}${USE_LANDMARK_KEY}`, enableLandmark)
+        savePersistedSetting(`maps.${mapCode}.${USE_LANDMARK_KEY}`, enableLandmark)
       } else {
         console.warn(
           'Invalid payload for enableMapLandmark action:',
@@ -189,7 +172,7 @@ export const componentsSlice = createSlice({
       const map = state.maps[mapCode]
       if (map) {
         map.fixedSuits = fixedSuits
-        savePersistedSetting(`maps.${mapCode}${FIXED_SUIT_KEY}`, fixedSuits)
+        savePersistedSetting(`maps.${mapCode}.${FIXED_SUIT_KEY}`, fixedSuits)
       } else {
         console.warn(
           'Invalid payload for mapFixedSuits action:',

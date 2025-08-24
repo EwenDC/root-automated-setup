@@ -13,6 +13,7 @@ import {
   selectVagabondArray,
 } from './slices/components'
 import {
+  selectSetupClearings,
   selectSetupDeckCode,
   selectSetupHireling1Entry,
   selectSetupHireling2Entry,
@@ -26,14 +27,26 @@ import { currySelector } from './utils'
 /** Returns the object for the map selected in setup. */
 export const selectSetupMap = createSelector(
   selectSetupMapCode,
+  selectSetupClearings,
   selectMapArray,
   selectLandmarkArray,
-  (mapCode, mapArray, landmarkArray) => {
+  (mapCode, setupClearings, mapArray, landmarkArray) => {
     const setupMap = mapArray.find(({ code }) => code === mapCode)
     // Inject the landmark data too
     return (
       setupMap && {
         ...setupMap,
+        clearings: setupMap.clearings.map(({ x, y }, index) => {
+          const setupClearing = setupClearings[index]!
+          return {
+            x,
+            y,
+            ...setupClearing,
+            suitLandmark:
+              setupClearing.suitLandmark &&
+              landmarkArray.find(({ code }) => code === setupClearing.suitLandmark),
+          }
+        }),
         landmark: setupMap.landmark && {
           ...landmarkArray.find(({ code }) => code === setupMap.landmark!.code)!,
           ...setupMap.landmark,

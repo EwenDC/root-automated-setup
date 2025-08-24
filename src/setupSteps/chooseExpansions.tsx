@@ -1,8 +1,9 @@
 import Checkbox from '../components/checkbox'
 import ComponentToggle from '../components/componentToggle'
 import Section from '../components/section'
+import { savePersistedSetting } from '../functions/persistedSettings'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import { savePersistedSetting, selectExpansionArray, skipSteps, toggleExpansion } from '../store'
+import { selectExpansionArray, skipSteps, toggleExpansion } from '../store'
 import { SetupStep } from '../types'
 
 const ChooseExpansionsStep: React.FC = () => {

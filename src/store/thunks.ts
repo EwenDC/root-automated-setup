@@ -3,6 +3,10 @@ import type { UnknownAction } from '@reduxjs/toolkit'
 import type { AppThunk, RootState } from '../store'
 import type { FactionCode, Togglable, WithCode } from '../types'
 
+import { CAPTAIN_DEAL_COUNT, MAX_CORNER_SETUPS, MIN_PLAYERS_NO_FLOOD } from '../constants'
+import { countMatches, getEnabled } from '../functions/filtering'
+import { type SetupClearing, solveMapBalanced } from '../functions/mapSolvers'
+import { takeRandom } from '../functions/random'
 import { SetupStep } from '../types'
 import {
   lockFaction,
@@ -33,6 +37,7 @@ import {
 } from './slices/flow'
 import {
   clearExcludedFactions,
+  setClearings,
   setDeck,
   setErrorMessage,
   setFirstPlayer,
@@ -44,11 +49,6 @@ import {
   setMap,
   setPlayerCount,
 } from './slices/setup'
-import { countMatches, selectEnabled, takeRandom } from './utils'
-
-const CAPTAIN_DEAL_COUNT = 4
-// Duh.
-const MAX_CORNER_SETUPS = 4
 
 /**
  * Thunk action for toggling all unlocked components of a type, ensuring they match the desired
@@ -251,13 +251,19 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     ////////////////
     case SetupStep.chooseMap: {
       // Get our list of maps which are available for selection
-      const mapPool = selectEnabled(selectMapArray(state))
+      const mapPool = getEnabled(selectMapArray(state))
 
       // Check that there is even a map to be selected...
       if (mapPool.length > 0) {
         // Choose a random map
         const map = takeRandom(mapPool)
         dispatch(setMap(map))
+
+        // Assign the map suits based on player preferences
+        const floodClearings = playerCount < MIN_PLAYERS_NO_FLOOD
+        // TODO: Support other setup options
+        const clearings: SetupClearing[] = solveMapBalanced(map, floodClearings)
+        dispatch(setClearings(clearings))
 
         // Ensure that any landmarks not supported at this player count or used by map setup are disabled
         dispatch(
@@ -267,7 +273,14 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
               // Lock this landmark if it requires more players to include
               if (minPlayers > playerCount) return 'error.landmarkNotEnoughPlayers'
               // Lock this landmark if it will be used in map setup
-              if (map.useLandmark && code === map.landmark?.code) return 'error.mapLandmarkUsed'
+              if (
+                (map.useLandmark && code === map.landmark?.code) ||
+                (map.suitLandmarks &&
+                  !floodClearings &&
+                  Object.values(map.suitLandmarks).includes(code))
+              ) {
+                return 'error.mapLandmarkUsed'
+              }
               return false
             },
             lockLandmark,
@@ -285,7 +298,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     /////////////////
     case SetupStep.chooseDeck: {
       // Get our list of decks which are available for selection
-      const deckPool = selectEnabled(selectDeckArray(state))
+      const deckPool = getEnabled(selectDeckArray(state))
 
       // Check that there is even a deck to be selected...
       if (deckPool.length > 0) {
@@ -303,7 +316,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
     //////////////////////
     case SetupStep.chooseLandmarks: {
       // Get our list of landmarks which are available for selection
-      const landmarkPool = selectEnabled(selectLandmarkArray(state))
+      const landmarkPool = getEnabled(selectLandmarkArray(state))
 
       // Check that there are enough enabled landmarks for how many we want to set up
       if (landmarkPool.length >= landmarkCount) {
@@ -441,7 +454,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           // Make sure to enable all vagabonds if limitVagabonds is false to prevent confusion
           dispatch(massComponentToggle(selectVagabondArray, true, toggleVagabond))
         }
-        const vagabondPool = selectEnabled(selectVagabondArray(getState()))
+        const vagabondPool = getEnabled(selectVagabondArray(getState()))
 
         // Get our vagabond faction count to validate our vagabondPool against
         const vagabondFactionCount = countMatches(
@@ -466,7 +479,7 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
           // Make sure to enable all captains if limitCaptains is false to prevent confusion
           dispatch(massComponentToggle(selectCaptainArray, true, toggleCaptain))
         }
-        const captainPool = selectEnabled(selectCaptainArray(getState()))
+        const captainPool = getEnabled(selectCaptainArray(getState()))
 
         // Get our knave faction count to validate our captainPool against
         const captainFactionCount = countMatches(

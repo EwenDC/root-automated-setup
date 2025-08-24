@@ -7,7 +7,6 @@ import homelandHirelingsBox from './images/boxes/homelandHirelings.png'
 import landmarkPackBox from './images/boxes/landmarkPack.png'
 import marauderBox from './images/boxes/marauder.png'
 import marauderHirelingsBox from './images/boxes/marauderHirelings.png'
-import placeholderBox from './images/boxes/placeholder.png'
 import riverfolkBox from './images/boxes/riverfolk.png'
 import riverfolkHirelingsBox from './images/boxes/riverfolkHirelings.png'
 import rootBox from './images/boxes/root.png'
@@ -29,8 +28,15 @@ import squiresCard from './images/cards/squires.png'
 import standardCard from './images/cards/standard.png'
 // Chart Images
 import autumnChart from './images/charts/autumn.svg'
+import marsh2Flooded from './images/charts/floodedClearings/marsh2.svg'
+import marsh4Flooded from './images/charts/floodedClearings/marsh4.svg'
+import marsh6Flooded from './images/charts/floodedClearings/marsh6.svg'
+import marsh7Flooded from './images/charts/floodedClearings/marsh7.svg'
+import marsh9Flooded from './images/charts/floodedClearings/marsh9.svg'
+import marsh13Flooded from './images/charts/floodedClearings/marsh13.svg'
 import gorgeChart from './images/charts/gorge.svg'
 import lakeChart from './images/charts/lake.svg'
+import marshChart from './images/charts/marsh.svg'
 import mountainChart from './images/charts/mountain.svg'
 import winterChart from './images/charts/winter.svg'
 // Landmark Images
@@ -790,39 +796,51 @@ const definitions: Record<ExpansionCode, Expansion> = {
       marsh: {
         image: marshMap,
         clearings: [
-          { x: 11.2, y: 11.65 },
-          { x: 43.15, y: 13.85 },
-          { x: 67.1, y: 18.9 },
-          { x: 90.15, y: 11.9 },
-          { x: 9.5, y: 46.4 },
-          { x: 36.75, y: 40.95 },
-          { x: 67.25, y: 49.4 },
-          { x: 90.7, y: 51.85 },
-          { x: 40.6, y: 69.65 },
-          { x: 11.5, y: 79.6 },
-          { x: 58.5, y: 88.45 },
-          { x: 86.7, y: 83.55 },
+          { x: 12.947, y: 15.205 },
+          { x: 40.404, y: 14.732 },
+          { x: 64.702, y: 17.017, flood: { group: 'circle', image: marsh2Flooded }, ruin: 3 },
+          { x: 91.376, y: 22.214 },
+          { x: 27.102, y: 35.269, flood: { group: 'square', image: marsh4Flooded } },
+          { x: 54.746, y: 37.469, ruin: true },
+          { x: 80.937, y: 42.12, flood: { group: 'triangle', image: marsh6Flooded }, ruin: 1 },
+          { x: 8.788, y: 54.868, flood: { group: 'square', image: marsh7Flooded } },
+          { x: 40.889, y: 53.966, ruin: true },
+          { x: 65.083, y: 65.078, flood: { group: 'triangle', image: marsh9Flooded }, ruin: 2 },
+          { x: 91.215, y: 63.268 },
+          { x: 9.211, y: 83.166 },
+          { x: 34.041, y: 75.654 },
+          { x: 56.122, y: 84.717, flood: { group: 'circle', image: marsh13Flooded }, ruin: 4 },
+          { x: 83.127, y: 85.268 },
         ],
         paths: [
           [0, 1],
           [0, 4],
-          [0, 5],
+          [0, 7],
           [1, 2],
           [1, 5],
-          [1, 6],
           [2, 3],
-          [2, 6],
-          [3, 7],
-          [4, 5],
-          [4, 9],
-          [6, 7],
+          [3, 6],
+          [3, 10],
+          [4, 5, true],
+          [4, 8],
+          [5, 6],
+          [6, 9],
+          [7, 8, true],
           [7, 11],
           [8, 9],
-          [8, 10],
-          [9, 10],
-          [10, 11],
+          [8, 12],
+          [9, 14],
+          [10, 14],
+          [11, 12],
+          [12, 13],
+          [13, 14],
         ],
-        backImage: placeholderBox,
+        suitLandmarks: {
+          fox: 'foxburrow',
+          mouse: 'mousehold',
+          rabbit: 'rabbittown',
+        },
+        backImage: marshChart,
       },
       gorge: {
         image: gorgeMap,

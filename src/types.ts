@@ -90,10 +90,24 @@ export interface Landmark extends GameComponent {
   minPlayers: number
 }
 
-/** An object representing a Map's Clearing and it's position in the Map Chart. */
+/** A shape that groups floodable clearings. */
+export type FloodGroup = 'circle' | 'square' | 'triangle'
+
+/** Data related to flooding a clearing in setup. */
+export interface FloodData {
+  group: FloodGroup
+  image: string
+}
+
+/**
+ * An object representing a Map's Clearing and it's position in the Map Chart, alongside extra data
+ * that may be relevant for setup.
+ */
 export interface Clearing {
   x: number
   y: number
+  ruin?: true | number
+  flood?: FloodData
 }
 
 /** The name of a map clearing suit. */
@@ -147,9 +161,18 @@ export type TwelveList<T> = [T, T, T, T, T, T, T, T, T, T, T, T]
 /** The index of an entry in a 12 entry list. */
 export type TwelveIndex = 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | ThreeIndex
 
+/**
+ * An object representing a Clearing that can appear on a standard sized map. Such clearings cannot
+ * flood so lack data related to flooding.
+ */
+export interface StandardClearing extends Clearing {
+  ruin?: true
+  flood?: never
+}
+
 /** An object representing a standard size Map from the Root board game. */
 export interface StandardMap extends Map {
-  clearings: TwelveList<Clearing>
+  clearings: TwelveList<StandardClearing>
   botPriorities?: TwelveList<ClearingPriority>
   defaultSuits?: TwelveList<ClearingSuit>
   paths: Path<TwelveIndex>[]
@@ -157,16 +180,16 @@ export interface StandardMap extends Map {
   suitLandmarks?: never
 }
 
-/** A shape that groups floodable clearings. */
-export type FloodGroup = 'circle' | 'square' | 'triangle'
-
 /**
- * An object representing a Large Map's Clearing. Includes it's position in the Map Chart, as well
- * as what group it belongs to (if it is a floodable clearing).
+ * An object representing a Clearing that can appear on a large sized map. Such clearings can either
+ * match standard clearings, or have extra data related to flooding.
  */
-export interface LargeClearing extends Clearing {
-  group?: FloodGroup
-}
+export type LargeClearing =
+  | (Clearing & {
+      ruin?: number
+      flood: FloodData
+    })
+  | StandardClearing
 
 /** A list with exactly 15 entries. */
 export type FifteenList<T> = [...TwelveList<T>, T, T, T]

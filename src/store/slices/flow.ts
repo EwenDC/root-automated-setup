@@ -13,8 +13,9 @@ import type {
   WithCode,
 } from '../../types'
 
+import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
+import { takeRandom } from '../../functions/random'
 import { SetupStep } from '../../types'
-import { loadPersistedSetting, savePersistedSetting, takeRandom } from '../utils'
 import { setErrorMessage } from './setup'
 
 /**

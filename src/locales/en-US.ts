@@ -17,6 +17,7 @@ export default {
       true: `Select which Vagabond characters can appear in the faction draft`,
     },
     clearing: {
+      flooded: `Flooded clearing`,
       fox: `Fox clearing`,
       mouse: `Mouse clearing`,
       rabbit: `Rabbit clearing`,

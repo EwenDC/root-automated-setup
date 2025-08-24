@@ -2,21 +2,19 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { createSlice } from '@reduxjs/toolkit'
 
+import type { SetupClearing } from '../../functions/mapSolvers'
 import type {
-  ClearingSuit,
   CodeObject,
   DeckCode,
   FactionCode,
   FactionExcludingComponent,
   HirelingCode,
   LandmarkCode,
-  Map,
   MapCode,
-  MapInfo,
   WithCode,
 } from '../../types'
 
-import { loadPersistedSetting, savePersistedSetting, takeRandom } from '../utils'
+import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
 import { toggleExpansion } from './components'
 
 /** An object representing an promoted or demoted Hireling. */
@@ -34,7 +32,7 @@ export interface SetupState {
   // Map
   map: MapCode | null
   balancedSuits: boolean
-  clearingSuits: ClearingSuit[]
+  clearings: SetupClearing[]
   // Deck
   deck: DeckCode | null
   // Landmarks
@@ -62,7 +60,7 @@ export const setupSlice = createSlice({
     // Map
     map: null,
     balancedSuits: loadPersistedSetting<boolean>('balancedSuits', false),
-    clearingSuits: [],
+    clearings: [],
     // Deck
     deck: null,
     // Landmarks
@@ -121,98 +119,13 @@ export const setupSlice = createSlice({
       state.errorMessage = errorMessage
     },
 
-    setMap(state, { payload }: PayloadAction<CodeObject & Map & MapInfo>) {
-      const { code: mapCode, defaultSuits, clearings, paths, fixedSuits } = payload
+    setMap(state, { payload }: PayloadAction<CodeObject>) {
+      const { code: mapCode } = payload
       state.map = mapCode
+    },
 
-      // Also assign the clearing suits
-      if (fixedSuits && defaultSuits) {
-        state.clearingSuits = defaultSuits
-      } else if (state.balancedSuits) {
-        // Do this in a loop as there is a chance the solver fails
-        do {
-          // First, keep track of all clearings, the clearings they connect to, and a list of valid suits for each clearing
-          const unassignedClearings = clearings.map((_clearing, index) => ({
-            index,
-            links: paths.reduce((list: number[], [a, b]) => {
-              if (a === index) list.push(b)
-              if (b === index) list.push(a)
-              return list
-            }, []),
-            options: ['fox', 'mouse', 'rabbit'] as ClearingSuit[],
-          }))
-          const suitCounts: Record<ClearingSuit, number> = {
-            fox: 0,
-            mouse: 0,
-            rabbit: 0,
-          }
-
-          // Assign each clearing one-by-one, favouring clearings with the least amount of valid options
-          while (unassignedClearings.length > 0) {
-            let lowestEntropy = Infinity
-            const candidates = unassignedClearings.reduce((list: number[], { options }, index) => {
-              // If our entropy is higher don't include as candidate
-              if (options.length > lowestEntropy) return list
-              // If our entropy is the same add as a candidate
-              if (options.length === lowestEntropy) {
-                list.push(index)
-                return list
-              }
-              // Our entropy is lower, throw out the current candidate list and start again with just us
-              lowestEntropy = options.length
-              return [index]
-            }, [])
-
-            // If we've hit 0 entropy then the solver failed
-            if (lowestEntropy === 0) {
-              console.info(
-                'Failed to solve for balanced suits. Fail state:',
-                [...state.clearingSuits],
-                unassignedClearings,
-              )
-              state.clearingSuits = []
-              break
-            }
-
-            // Randomly pick a candidate and remove it from the remaining clearings
-            const nextClearingIndex = takeRandom(candidates)
-            const nextClearing = unassignedClearings[nextClearingIndex]!
-            unassignedClearings.splice(nextClearingIndex, 1)
-
-            // Assign a suit based off the valid options for the chosen clearing, and keep track of how many of each we've assigned
-            const nextSuit = takeRandom(nextClearing.options)
-            state.clearingSuits[nextClearing.index] = nextSuit
-            suitCounts[nextSuit]++
-
-            // Remove the assigned suit from all neighbouring clearings, or all clearings if we've hit the maximum amount for one suit
-            for (const clearing of unassignedClearings) {
-              clearing.options = clearing.options.filter(
-                suit =>
-                  suitCounts[suit] < 4 &&
-                  (suit !== nextSuit || !clearing.links.includes(nextClearing.index)),
-              )
-            }
-          }
-        } while (Object.keys(state.clearingSuits).length === 0)
-      } else {
-        const suitPool: ClearingSuit[] = [
-          'fox',
-          'fox',
-          'fox',
-          'fox',
-          'mouse',
-          'mouse',
-          'mouse',
-          'mouse',
-          'rabbit',
-          'rabbit',
-          'rabbit',
-          'rabbit',
-        ]
-        for (let index = 0; index < clearings.length; index++) {
-          state.clearingSuits[index] = takeRandom(suitPool)
-        }
-      }
+    setClearings(state, { payload: clearings }: PayloadAction<SetupClearing[]>) {
+      state.clearings = clearings
     },
 
     balanceMapSuits(state, { payload: balancedSuits }: PayloadAction<boolean>) {
@@ -313,12 +226,14 @@ export const setupSlice = createSlice({
       // Ensure we don't reference codes for components that may have been removed with the toggled expansion
       .addCase(toggleExpansion, state => {
         state.map = null
+        state.clearings = []
         state.deck = null
         state.landmark1 = null
         state.landmark2 = null
         state.hireling1 = null
         state.hireling2 = null
         state.hireling3 = null
+        state.errorMessage = null
       })
       // This allows us to always reset the displayed error if the user makes a separate input
       .addDefaultCase(state => {
@@ -328,6 +243,8 @@ export const setupSlice = createSlice({
 
   selectors: {
     selectTwoPlayer: state => state.playerCount < 3,
+
+    selectSetupClearings: state => state.clearings,
 
     selectSetupDeckCode: state => state.deck,
 
@@ -351,6 +268,7 @@ export const {
   setFirstPlayer,
   setErrorMessage,
   setMap,
+  setClearings,
   balanceMapSuits,
   setDeck,
   setLandmarkCount,
@@ -364,6 +282,7 @@ export const {
 
 export const {
   selectTwoPlayer,
+  selectSetupClearings,
   selectSetupDeckCode,
   selectSetupHireling1Entry,
   selectSetupHireling2Entry,
