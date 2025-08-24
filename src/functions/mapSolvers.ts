@@ -5,9 +5,9 @@ import { shuffleList, takeRandom } from './random'
 import { typedEntries } from './typed'
 
 export type SetupClearing =
-  | { floodImage: string; ruin: false; suit?: never; suitLandmark?: never }
+  | { flooded: true; ruin: false; suit?: never; suitLandmark?: never }
   | {
-      floodImage?: never
+      flooded?: false
       ruin: boolean
       suit: ClearingSuit
       suitLandmark?: LandmarkCode
@@ -22,8 +22,8 @@ const pickFloodedClearings = (
 ): [floodedIndexes: Set<number>, ruinIndexes: Set<number>] => {
   // Iterate through the clearings once to collect the data we need
   const { floodGroups, fixedRuinCount } = map.clearings.reduce(
-    (out, { flood, ruin }, index) => {
-      if (flood) out.floodGroups[flood.group].push({ index, ruin })
+    (out, { floodGroup, ruin }, index) => {
+      if (floodGroup) out.floodGroups[floodGroup].push({ index, ruin })
       else if (ruin) out.fixedRuinCount++
       return out
     },
@@ -90,15 +90,18 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
   // Do this in a loop as there is a chance the solver fails. I have never seen this solver take
   // more than 5 attempts, so exceeding 1000 indicates a high probability of an infinite loop.
   solveAttempts: for (attempts = 0; attempts < maxAttempts; attempts++) {
+    // Clear old result if we're logging failed attempts
+    if (import.meta.env.DEV) result.length = 0
+
     // First, keep track of all clearings, the clearings they connect to, and a list of valid suits for each clearing
-    let unassignedClearings = map.clearings.map(({ ruin, flood }, index) => ({
+    let unassignedClearings = map.clearings.map(({ ruin, floodGroup }, index) => ({
       index,
       // Exclude optional ruins as we calculate which ones are in play later
       ruin: ruin === true,
-      floodImage: flood?.image,
+      floodGroup,
       links: map.paths.reduce((list, [a, b, floods]) => {
-        if (a === index) list.set(b, floods ?? false)
-        if (b === index) list.set(a, floods ?? false)
+        if (a === index) list.set(b, !floods)
+        if (b === index) list.set(a, !floods)
         return list
       }, new Map<number, boolean>()),
       options: ['fox', 'mouse', 'rabbit'] as ClearingSuit[],
@@ -117,13 +120,13 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
             if (floodedIndexes.has(clearing.index)) {
               // Add flooded clearing to final result
               result[clearing.index] = {
-                floodImage: clearing.floodImage ?? '',
+                flooded: true,
                 ruin: false,
               }
               // Save it's connections so we can remap them later
               const links = Array.from(clearing.links.keys()).filter(
                 // Do not remap flooding connections, as they get disconnected
-                link => !clearing.links.get(link),
+                link => clearing.links.get(link),
               )
               remappedLinks.set(clearing.index, links)
             } else {
@@ -136,20 +139,20 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
         )
 
         // Remap connections that originally linked to flooded clearings
-        for (const clearing of unassignedClearings) {
+        for (const dryClearing of unassignedClearings) {
           for (const [floodedIndex, newLinks] of remappedLinks) {
-            if (clearing.links.has(floodedIndex)) {
+            if (dryClearing.links.has(floodedIndex)) {
               // Skip remapping step if the connection is flooded
-              if (!clearing.links.get(floodedIndex)) {
+              if (dryClearing.links.get(floodedIndex)) {
                 for (const link of newLinks) {
-                  if (clearing.index !== link) clearing.links.set(link, false)
+                  if (dryClearing.index !== link) dryClearing.links.set(link, true)
                 }
               }
-              clearing.links.delete(floodedIndex)
+              dryClearing.links.delete(floodedIndex)
             }
           }
-          // Assign ruins to the unflooded clearings with the highest ruin priority
-          if (!clearing.ruin && ruinIndexes.has(clearing.index)) clearing.ruin = true
+          // Assign ruins to the clearings with the highest ruin priority
+          if (!dryClearing.ruin && ruinIndexes.has(dryClearing.index)) dryClearing.ruin = true
         }
       } else {
         const ruinIndexes = getRuinIndexes(map)

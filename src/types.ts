@@ -93,12 +93,6 @@ export interface Landmark extends GameComponent {
 /** A shape that groups floodable clearings. */
 export type FloodGroup = 'circle' | 'square' | 'triangle'
 
-/** Data related to flooding a clearing in setup. */
-export interface FloodData {
-  group: FloodGroup
-  image: string
-}
-
 /**
  * An object representing a Map's Clearing and it's position in the Map Chart, alongside extra data
  * that may be relevant for setup.
@@ -107,7 +101,7 @@ export interface Clearing {
   x: number
   y: number
   ruin?: true | number
-  flood?: FloodData
+  floodGroup?: FloodGroup
 }
 
 /** The name of a map clearing suit. */
@@ -152,6 +146,7 @@ export interface Map extends GameComponent {
   paths: FloodablePath[]
   backImage: string
   landmark?: MapLandmark
+  floodImage?: string
   suitLandmarks?: Record<ClearingSuit, LandmarkCode>
 }
 
@@ -167,7 +162,7 @@ export type TwelveIndex = 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | ThreeIndex
  */
 export interface StandardClearing extends Clearing {
   ruin?: true
-  flood?: never
+  floodGroup?: never
 }
 
 /** An object representing a standard size Map from the Root board game. */
@@ -177,6 +172,7 @@ export interface StandardMap extends Map {
   defaultSuits?: TwelveList<ClearingSuit>
   paths: Path<TwelveIndex>[]
   landmark?: MapLandmark<TwelveIndex>
+  floodImage?: never
   suitLandmarks?: never
 }
 
@@ -187,7 +183,7 @@ export interface StandardMap extends Map {
 export type LargeClearing =
   | (Clearing & {
       ruin?: number
-      flood: FloodData
+      floodGroup: FloodGroup
     })
   | StandardClearing
 
@@ -204,6 +200,7 @@ export interface LargeMap extends Map {
   defaultSuits?: never
   paths: FloodablePath<FifteenIndex>[]
   landmark?: never
+  floodImage: string
   suitLandmarks: Record<ClearingSuit, LandmarkCode>
 }
 

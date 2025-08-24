@@ -62,8 +62,9 @@ if (options.help || !options.name) {
 
 const clearingRegex = /<circle[^>]+?cx="(?<x>[^"]+)"[^>]+?cy="(?<y>[^"]+)"/g
 
-const viewBoxScale = options.viewbox / 100
-const rescale = match => Math.round(Number(match) / (viewBoxScale / 1000)) / 1000
+const viewBoxScale = options.viewbox / 1000
+// Round to 2 decimal places
+const rescale = match => Math.round(Number(match) / (viewBoxScale / 100)) / 100
 
 const filePath = join(import.meta.dirname, '../src/images/charts/', `${options.name}.svg`)
 const file = readFileSync(filePath, 'utf-8')

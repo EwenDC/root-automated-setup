@@ -10,53 +10,83 @@ const MapChart: React.FC = () => {
   const skippedSteps = useAppSelector(state => state.flow.skippedSteps)
 
   if (!map) return null
+
+  const floodedClearings = map.clearings.filter(clearing => clearing.flooded)
   return (
     <svg
       className="map"
-      viewBox="0 0 100 100"
+      viewBox="0 0 1000 1000"
     >
       <desc>
         <LocaleText i18nKey="label.mapChart" />
       </desc>
+
       <image
-        width="100"
-        height="100"
         className="background"
         href={map.backImage}
       />
-      {map.clearings.map(({ x, y, suit, suitLandmark, floodImage }, index) => (
+      {floodedClearings.length > 0 ? (
+        <>
+          <mask id="flooded-mask">
+            {floodedClearings.map((clearing, index) => (
+              <circle
+                key={index}
+                cx={clearing.x}
+                cy={clearing.y}
+                r="90"
+              />
+            ))}
+          </mask>
+          <image
+            className="background"
+            href={map.floodImage}
+            mask="url(#flooded-mask)"
+          />
+        </>
+      ) : null}
+
+      {map.clearings.map(({ x, y, suit, suitLandmark, flooded }, index) => (
         <g key={index}>
           <title>
-            <LocaleText
-              i18nKey={floodImage ? `label.clearing.flooded` : `label.clearing.${suit}`}
-            />
+            <LocaleText i18nKey={flooded ? `label.clearing.flooded` : `label.clearing.${suit}`} />
           </title>
-          {floodImage ? (
+
+          {/* Bounding circle for the clearing, allowing browser tooltips to display the title more easily */}
+          <circle
+            key={index}
+            cx={x}
+            cy={y}
+            r="90"
+            fill="transparent"
+          />
+
+          {suitLandmark ? (
             <image
-              x={x - 8.5}
-              y={y - 8.5}
-              width="17"
-              height="17"
-              className="background"
-              href={floodImage}
-            />
-          ) : suitLandmark ? (
-            <image
-              x={x - 6}
-              y={y - 15}
-              width="12"
-              height="12"
+              className="landmark"
+              x={x - 60}
+              y={y - 150}
+              width="120"
+              height="120"
               href={suitLandmark.image}
-            />
-          ) : (
+            >
+              <title>
+                <LocaleText i18nKey={`landmark.${suitLandmark.code}.name`} />
+              </title>
+            </image>
+          ) : !flooded ? (
             <image
-              x={x - 4}
-              y={y - 12}
-              width="8"
-              height="8"
-              href={iconDict[suit!].image}
-            />
-          )}
+              x={x - 40}
+              y={y - 120}
+              width="80"
+              height="80"
+              href={iconDict[suit].image}
+            >
+              <title>
+                <LocaleText i18nKey={`label.suitMarker.${suit}`} />
+              </title>
+            </image>
+          ) : null}
+
           {!skippedSteps[SetupStep.setUpBots] && map.botPriorities ? (
             <g>
               <title>
@@ -68,14 +98,14 @@ const MapChart: React.FC = () => {
               <image
                 x={x}
                 y={y}
-                width="6"
-                height="6"
+                width="60"
+                height="60"
                 href={priorityToken}
               />
               <text
-                x={x + 3}
-                y={y + 4}
-                fontSize="3"
+                x={x + 30}
+                y={y + 40}
+                fontSize="30"
                 textAnchor="middle"
                 fill="#fff"
               >
@@ -83,15 +113,17 @@ const MapChart: React.FC = () => {
               </text>
             </g>
           ) : null}
+
           {map.useLandmark && map.landmark?.clearing === index ? (
             <image
+              className="landmark"
               x={map.landmark.x}
               y={map.landmark.y}
-              width="10"
-              height="10"
+              width="100"
+              height="100"
               transform={
                 map.landmark.angle != null
-                  ? `rotate(${map.landmark.angle} ${map.landmark.x + 5} ${map.landmark.y + 5})`
+                  ? `rotate(${map.landmark.angle} ${map.landmark.x + 50} ${map.landmark.y + 50})`
                   : undefined
               }
               href={map.landmark.image}

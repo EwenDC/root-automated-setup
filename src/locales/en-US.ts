@@ -56,6 +56,11 @@ export default {
     specialAction: `Special Action`,
     startingItems: `Starting Items`,
     startWith: `Start with <StartingItems>, </StartingItems>`,
+    suitMarker: {
+      fox: `Fox suit marker`,
+      mouse: `Mouse suit marker`,
+      rabbit: `Rabbit suit marker`,
+    },
     useDraft: `Use draft faction selection`,
     undo: `Undo`,
     wealth: `Card Wealth`,
