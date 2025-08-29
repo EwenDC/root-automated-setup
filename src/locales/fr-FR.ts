@@ -96,10 +96,6 @@ export default {
       title: `Choix et installation du plateau`,
       body: `Choisissez ensemble le plateau de jeu que vous souhaitez utiliser. Si vous sélectionnez plusieurs plateaux, un plateau sera choisi aléatoirement parmi ceux sélectionnés.`,
     },
-    setUpMap: {
-      // Loi de Root v2023.08.03@5.1.4 + 5.1.5 + 5.1.6
-      body: `<li>Placez une ruine sur chaque emplacement du plateau marqué d’un « R » <i>(4 au total)</i>.</li><li>Placez ces objets sur leurs emplacements correspondants dans la réserve d’objets de la partie supérieure du plateau : 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.</li><li>Posez les deux dés près du plateau.</li>`,
-    },
     chooseDeck: {
       // Loi de Root v2023.08.03@A.2
       title: `Choix et installation du paquet de cartes`,

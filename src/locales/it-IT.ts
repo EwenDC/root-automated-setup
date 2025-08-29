@@ -92,9 +92,6 @@ export default {
       title: `Scegliere e Preparare la Mappa`,
       body: `Decidete insieme quale mappa utilizzare. Se scegliete più mappe, ne verrà scelta una casualmente tra quelle selezionate.`,
     },
-    setUpMap: {
-      body: `<li>Posizionate un indicatore rovina in ogni spazio della mappa contrassegnato da una "R" <i>(quattro in totale)</i>.</li><li>Posizionate i seguenti oggetti negli spazi corrispondenti della riserva degli oggetti <i>(parte alta della mappa)</i>: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.</li><li>Posizionate i due dadi vicino alla mappa.</li>`,
-    },
     chooseDeck: {
       title: `Scegliere e Preparare il Mazzo`,
       body: `Decidete insieme quale mazzo utilizzare. Se scegliete più mazzi, ne verrà scelto uno casualmente tra quelli selezionati.`,

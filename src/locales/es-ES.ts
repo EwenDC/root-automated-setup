@@ -92,9 +92,6 @@ export default {
       title: `Escoge y Prepara el Mapa`,
       body: `En conjunto, decidid en qué mapa os gustaría jugar. Si seleccionas múltiples mapas, se elegirá un mapa aleatoriamente de entre los escogidos.`,
     },
-    setUpMap: {
-      body: `<li>Coloca una ficha de ruina en cada espacio del mapa marcado con una "R" <i>(cuatro en total)</i>.</li><li>Coloca estos objetos en los espacios correspondientes de la reserva de objetos en la parte superior del mapa: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.</li><li>Coloca los dos dados cerca del mapa.</li>`,
-    },
     chooseDeck: {
       title: `Escoge y Prepara el Mazo`,
       body: `Como grupo, decidid qué mazo os gustaría utilizar. Si seleccionas varios mazos, se elegirá un mazo aleatoriamente de entre los escogidos.`,
