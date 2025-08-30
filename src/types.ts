@@ -100,8 +100,9 @@ export type FloodGroup = 'circle' | 'square' | 'triangle'
 export interface Clearing {
   x: number
   y: number
-  ruin?: true | number
   floodGroup?: FloodGroup
+  ruin?: boolean
+  fallbackRuin?: boolean
 }
 
 /** The name of a map clearing suit. */
@@ -161,8 +162,9 @@ export type TwelveIndex = 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | ThreeIndex
  * flood so lack data related to flooding.
  */
 export interface StandardClearing extends Clearing {
-  ruin?: true
   floodGroup?: never
+  ruin?: boolean
+  fallbackRuin?: false
 }
 
 /** An object representing a standard size Map from the Root board game. */
@@ -182,9 +184,17 @@ export interface StandardMap extends Map {
  */
 export type LargeClearing =
   | (Clearing & {
-      ruin?: number
       floodGroup: FloodGroup
-    })
+    } & (
+        | {
+            ruin?: boolean
+            fallbackRuin?: false
+          }
+        | {
+            ruin?: false
+            fallbackRuin?: boolean
+          }
+      ))
   | StandardClearing
 
 /** A list with exactly 15 entries. */

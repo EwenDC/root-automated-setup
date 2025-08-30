@@ -44,7 +44,7 @@ export default defineConfig(
       // Allow logical OR for empty strings
       '@typescript-eslint/prefer-nullish-coalescing': [
         'warn',
-        { ignorePrimitives: { string: true } },
+        { ignorePrimitives: { boolean: true, string: true } },
       ],
       // Sort imports and exports to improve readability
       'perfectionist/sort-imports': ['warn', { tsconfig: { rootDir: import.meta.dirname } }],

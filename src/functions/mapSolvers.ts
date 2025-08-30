@@ -1,82 +1,36 @@
 import type { ClearingSuit, FloodGroup, LandmarkCode, LargeMap, StandardMap } from '../types'
 
-import { MAX_RUINS, STANDARD_MAP_SIZE, SUIT_CLEARING_COUNT } from '../constants'
+import { STANDARD_MAP_SIZE, SUIT_CLEARING_COUNT } from '../constants'
 import { shuffleList, takeRandom } from './random'
 import { typedEntries } from './typed'
 
-export type SetupClearing =
-  | { flooded: true; ruin?: false; suit?: never; suitLandmark?: never }
-  | {
-      flooded?: false
-      ruin?: boolean
-      suit: ClearingSuit
-      suitLandmark?: LandmarkCode
-    }
-
-/**
- * Picks what clearings to flood when shrinking a large map. Also returns which non-flooded
- * clearings get ruins.
- */
-const pickFloodedClearings = (
-  map: LargeMap,
-): [floodedIndexes: Set<number>, ruinIndexes: Set<number>] => {
-  // Iterate through the clearings once to collect the data we need
-  const { floodGroups, fixedRuinCount } = map.clearings.reduce(
-    (out, { floodGroup, ruin }, index) => {
-      if (floodGroup) out.floodGroups[floodGroup].push({ index, ruin })
-      else if (ruin) out.fixedRuinCount++
-      return out
-    },
-    {
-      floodGroups: { circle: [], square: [], triangle: [] } as Record<
-        FloodGroup,
-        { index: number; ruin?: number }[]
-      >,
-      fixedRuinCount: 0,
-    },
-  )
-  const floodedIndexes = new Set<number>()
-  const ruinClearings: { index: number; ruin: number }[] = []
-
-  // Pick one clearing to be flooded from each group
-  for (const floodGroup of Object.values(floodGroups)) {
-    const floodedClearing = takeRandom(floodGroup)
-    floodedIndexes.add(floodedClearing.index)
-
-    // Add any remaining clearings to the ruin clearings pool (if they are a candidate for a ruin)
-    for (const { index, ruin } of floodGroup) {
-      if (ruin != null) {
-        ruinClearings.push({ index, ruin })
-      }
-    }
-  }
-
-  // Determine which clearings get ruins, based on their ruin priority
-  ruinClearings.sort((a, b) => a.ruin - b.ruin)
-  ruinClearings.length = Math.max(MAX_RUINS - fixedRuinCount, 0)
-  const ruinIndexes = new Set(ruinClearings.map(({ index }) => index))
-
-  return [floodedIndexes, ruinIndexes]
+interface SetupSuitClearing {
+  flooded?: false
+  ruin?: boolean
+  suit: ClearingSuit
+  suitLandmark?: LandmarkCode
 }
 
-/** Gets the indexes of clearings with ruins when playing a large map at full size. */
-const getRuinIndexes = (map: LargeMap): Set<number> => {
-  // Find all clearings with ruins
-  const ruinClearings = map.clearings.reduce((list, { ruin }, index) => {
-    if (ruin) list.push({ index, ruin })
-    return list
-  }, new Array<{ index: number; ruin: true | number }>())
+export type SetupClearing =
+  | SetupSuitClearing
+  | { flooded: true; ruin?: false; suit?: never; suitLandmark?: never }
 
-  // Determine which clearings get ruins, based on their ruin priority
-  ruinClearings.sort((a, b) => {
-    // Always prefer clearings with a fixed ruin
-    if (a.ruin === true) return -1
-    if (b.ruin === true) return 1
-    return a.ruin - b.ruin
-  })
-  ruinClearings.length = MAX_RUINS
-
-  return new Set(ruinClearings.map(({ index }) => index))
+/** Picks what clearings to flood when shrinking a large map. */
+const pickFloodedClearings = (map: LargeMap): Set<number> => {
+  // Collect the flood groups and their associated clearings
+  const floodGroups = map.clearings.reduce<Record<FloodGroup, number[]>>(
+    (floodGroups, { floodGroup }, index) => {
+      if (floodGroup) floodGroups[floodGroup].push(index)
+      return floodGroups
+    },
+    { circle: [], square: [], triangle: [] },
+  )
+  // Pick one clearing to be flooded from each group
+  const floodedIndexes = new Set<number>()
+  for (const floodGroup of Object.values(floodGroups)) {
+    floodedIndexes.add(takeRandom(floodGroup))
+  }
+  return floodedIndexes
 }
 
 export const isLargeMap = <T extends LargeMap | StandardMap>(map: T): map is LargeMap & T =>
@@ -88,17 +42,17 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
   const result: SetupClearing[] = []
 
   // Do this in a loop as there is a chance the solver fails. I have never seen this solver take
-  // more than 5 attempts, so exceeding 1000 indicates a high probability of an infinite loop.
+  // more than 5 attempts, so exceeding 1000 indicates almost 100% probability of an infinite loop.
   solveAttempts: for (attempts = 0; attempts < maxAttempts; attempts++) {
     // Clear old result if we're logging failed attempts
     if (import.meta.env.DEV) result.length = 0
 
     // First, keep track of all clearings, the clearings they connect to, and a list of valid suits for each clearing
-    let unassignedClearings = map.clearings.map(({ ruin, floodGroup }, index) => ({
+    let unassignedClearings = map.clearings.map(({ floodGroup, ruin, fallbackRuin }, index) => ({
       index,
-      // Exclude optional ruins as we calculate which ones are in play later
-      ruin: ruin === true,
       floodGroup,
+      ruin,
+      fallbackRuin,
       links: map.paths.reduce((list, [a, b, floods]) => {
         if (a === index) list.set(b, !floods)
         if (b === index) list.set(a, !floods)
@@ -111,7 +65,7 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
     if (isLargeMap(map)) {
       // Assign flooded clearings if player count is too low
       if (floodClearings) {
-        const [floodedIndexes, ruinIndexes] = pickFloodedClearings(map)
+        const floodedIndexes = pickFloodedClearings(map)
         const remappedLinks = new Map<number, number[]>()
 
         // Remove flooded clearings from the pool and add them to the result
@@ -149,11 +103,8 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
             // Delete the old connection in case it was there
             dryClearing.links.delete(floodedIndex)
           }
-          // Assign ruins to the clearings with the highest ruin priority
-          if (!dryClearing.ruin && ruinIndexes.has(dryClearing.index)) dryClearing.ruin = true
         }
       } else {
-        const ruinIndexes = getRuinIndexes(map)
         // Assign the clearings that will use a suit landmark
         const landmarks = typedEntries(map.suitLandmarks)
         // Ensure landmarks don't get placed next to each other
@@ -163,9 +114,6 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
         shuffleList(unassignedClearings)
         unassignedClearings = unassignedClearings.reduce<typeof unassignedClearings>(
           (list, clearing) => {
-            // Assign ruins to the clearings with the highest ruin priority
-            if (!clearing.ruin && ruinIndexes.has(clearing.index)) clearing.ruin = true
-
             // Assign landmark if any are left and clearing doesn't neighbor existing landmark
             // Don't bother checking suit, as there is only one landmark per suit
             if (landmarks.length > 0 && !landmarkNeighbors.has(clearing.index)) {
@@ -255,7 +203,8 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
       const nextSuit = takeRandom(nextClearing.options)
       result[nextClearing.index] = {
         suit: nextSuit,
-        ruin: nextClearing.ruin,
+        // Use fallback ruins when flooding clearings
+        ruin: floodClearings ? nextClearing.ruin || nextClearing.fallbackRuin : nextClearing.ruin,
       }
       suitCounts[nextSuit]++
 
@@ -284,52 +233,48 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
 
 export const solveMapRandom = (map: LargeMap | StandardMap, floodClearings: boolean) => {
   const result: SetupClearing[] = []
-  const suitPool: ClearingSuit[] = [
-    'fox',
-    'fox',
-    'fox',
-    'fox',
-    'mouse',
-    'mouse',
-    'mouse',
-    'mouse',
-    'rabbit',
-    'rabbit',
-    'rabbit',
-    'rabbit',
+  const clearingPool: SetupSuitClearing[] = [
+    { suit: 'fox' },
+    { suit: 'fox' },
+    { suit: 'fox' },
+    { suit: 'fox' },
+    { suit: 'mouse' },
+    { suit: 'mouse' },
+    { suit: 'mouse' },
+    { suit: 'mouse' },
+    { suit: 'rabbit' },
+    { suit: 'rabbit' },
+    { suit: 'rabbit' },
+    { suit: 'rabbit' },
   ]
 
   if (isLargeMap(map)) {
+    // Use special setup for flooded clearing assignment if required
     if (floodClearings) {
-      // Assign flooded clearings if player count is too low
-      const [floodedIndexes, ruinIndexes] = pickFloodedClearings(map)
+      const floodedIndexes = pickFloodedClearings(map)
       for (let index = 0; index < map.clearings.length; index++) {
+        const clearing = map.clearings[index]!
         result[index] = floodedIndexes.has(index)
           ? { flooded: true }
           : {
-              suit: takeRandom(suitPool),
-              ruin: map.clearings[index]?.ruin === true || ruinIndexes.has(index),
+              ...takeRandom(clearingPool),
+              ruin: clearing.ruin || clearing.fallbackRuin,
             }
       }
-    } else {
-      // Add suit landmarks to random pool
-      const ruinIndexes = getRuinIndexes(map)
-      const clearingPool = [
-        { suit: 'fox', suitLandmark: map.suitLandmarks.fox } as const,
-        { suit: 'mouse', suitLandmark: map.suitLandmarks.mouse } as const,
-        { suit: 'rabbit', suitLandmark: map.suitLandmarks.rabbit } as const,
-        ...suitPool.map(suit => ({ suit })),
-      ]
-      for (let index = 0; index < map.clearings.length; index++) {
-        result[index] = { ...takeRandom(clearingPool), ruin: ruinIndexes.has(index) }
-      }
+      return result
     }
-  } else {
-    // Do straightforward random assignment
-    for (let index = 0; index < map.clearings.length; index++) {
-      result[index] = { suit: takeRandom(suitPool), ruin: map.clearings[index]?.ruin }
-    }
+
+    // Add suit landmarks to random pool since we're playing with all 15 clearings
+    clearingPool.push(
+      { suit: 'fox', suitLandmark: map.suitLandmarks.fox },
+      { suit: 'mouse', suitLandmark: map.suitLandmarks.mouse },
+      { suit: 'rabbit', suitLandmark: map.suitLandmarks.rabbit },
+    )
   }
 
+  // Do straightforward random assignment
+  for (let index = 0; index < map.clearings.length; index++) {
+    result[index] = { ...takeRandom(clearingPool), ruin: map.clearings[index]?.ruin }
+  }
   return result
 }

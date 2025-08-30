@@ -12,9 +12,6 @@ export const LARGE_MAP_SIZE = 15
 /** The maximum amount of corner setups allowed for standard setup. */
 export const MAX_CORNER_SETUPS = 4 // Duh.
 
-/** The maximum amount of ruins that can be on a map. */
-export const MAX_RUINS = 4
-
 /** The minimum number of players required to skip flooding a map. */
 export const MIN_PLAYERS_NO_FLOOD = 5
 
