@@ -5,10 +5,10 @@ import { shuffleList, takeRandom } from './random'
 import { typedEntries } from './typed'
 
 export type SetupClearing =
-  | { flooded: true; ruin: false; suit?: never; suitLandmark?: never }
+  | { flooded: true; ruin?: false; suit?: never; suitLandmark?: never }
   | {
       flooded?: false
-      ruin: boolean
+      ruin?: boolean
       suit: ClearingSuit
       suitLandmark?: LandmarkCode
     }
@@ -79,7 +79,7 @@ const getRuinIndexes = (map: LargeMap): Set<number> => {
   return new Set(ruinClearings.map(({ index }) => index))
 }
 
-const isLargeMap = (map: LargeMap | StandardMap): map is LargeMap =>
+export const isLargeMap = <T extends LargeMap | StandardMap>(map: T): map is LargeMap & T =>
   map.clearings.length > STANDARD_MAP_SIZE
 
 export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: boolean) => {
@@ -121,7 +121,6 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
               // Add flooded clearing to final result
               result[clearing.index] = {
                 flooded: true,
-                ruin: false,
               }
               // Save it's connections so we can remap them later
               const links = Array.from(clearing.links.keys()).filter(
@@ -141,15 +140,14 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
         // Remap connections that originally linked to flooded clearings
         for (const dryClearing of unassignedClearings) {
           for (const [floodedIndex, newLinks] of remappedLinks) {
-            if (dryClearing.links.has(floodedIndex)) {
-              // Skip remapping step if the connection is flooded
-              if (dryClearing.links.get(floodedIndex)) {
-                for (const link of newLinks) {
-                  if (dryClearing.index !== link) dryClearing.links.set(link, true)
-                }
+            // Skip remapping step if there's no connection or it's flooded
+            if (dryClearing.links.get(floodedIndex)) {
+              for (const link of newLinks) {
+                if (dryClearing.index !== link) dryClearing.links.set(link, true)
               }
-              dryClearing.links.delete(floodedIndex)
             }
+            // Delete the old connection in case it was there
+            dryClearing.links.delete(floodedIndex)
           }
           // Assign ruins to the clearings with the highest ruin priority
           if (!dryClearing.ruin && ruinIndexes.has(dryClearing.index)) dryClearing.ruin = true
@@ -284,25 +282,54 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
   return result
 }
 
-// TODO:
-// export const solveMapRandom = (map: LargeMap | StandardMap, floodClearings: boolean) => {
-//   const result: SetupClearing[] = []
-//   const suitPool: ClearingSuit[] = [
-//     'fox',
-//     'fox',
-//     'fox',
-//     'fox',
-//     'mouse',
-//     'mouse',
-//     'mouse',
-//     'mouse',
-//     'rabbit',
-//     'rabbit',
-//     'rabbit',
-//     'rabbit',
-//   ]
-//   for (let index = 0; index < map.clearings.length; index++) {
-//     result[index] = takeRandom(suitPool)
-//   }
-//   return result
-// }
+export const solveMapRandom = (map: LargeMap | StandardMap, floodClearings: boolean) => {
+  const result: SetupClearing[] = []
+  const suitPool: ClearingSuit[] = [
+    'fox',
+    'fox',
+    'fox',
+    'fox',
+    'mouse',
+    'mouse',
+    'mouse',
+    'mouse',
+    'rabbit',
+    'rabbit',
+    'rabbit',
+    'rabbit',
+  ]
+
+  if (isLargeMap(map)) {
+    if (floodClearings) {
+      // Assign flooded clearings if player count is too low
+      const [floodedIndexes, ruinIndexes] = pickFloodedClearings(map)
+      for (let index = 0; index < map.clearings.length; index++) {
+        result[index] = floodedIndexes.has(index)
+          ? { flooded: true }
+          : {
+              suit: takeRandom(suitPool),
+              ruin: map.clearings[index]?.ruin === true || ruinIndexes.has(index),
+            }
+      }
+    } else {
+      // Add suit landmarks to random pool
+      const ruinIndexes = getRuinIndexes(map)
+      const clearingPool = [
+        { suit: 'fox', suitLandmark: map.suitLandmarks.fox } as const,
+        { suit: 'mouse', suitLandmark: map.suitLandmarks.mouse } as const,
+        { suit: 'rabbit', suitLandmark: map.suitLandmarks.rabbit } as const,
+        ...suitPool.map(suit => ({ suit })),
+      ]
+      for (let index = 0; index < map.clearings.length; index++) {
+        result[index] = { ...takeRandom(clearingPool), ruin: ruinIndexes.has(index) }
+      }
+    }
+  } else {
+    // Do straightforward random assignment
+    for (let index = 0; index < map.clearings.length; index++) {
+      result[index] = { suit: takeRandom(suitPool), ruin: map.clearings[index]?.ruin }
+    }
+  }
+
+  return result
+}

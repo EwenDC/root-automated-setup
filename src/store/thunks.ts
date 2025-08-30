@@ -5,7 +5,7 @@ import type { FactionCode, Togglable, WithCode } from '../types'
 
 import { CAPTAIN_DEAL_COUNT, MAX_CORNER_SETUPS, MIN_PLAYERS_NO_FLOOD } from '../constants'
 import { countMatches, getEnabled } from '../functions/filtering'
-import { type SetupClearing, solveMapBalanced } from '../functions/mapSolvers'
+import { type SetupClearing, solveMapBalanced, solveMapRandom } from '../functions/mapSolvers'
 import { takeRandom } from '../functions/random'
 import { SetupStep } from '../types'
 import {
@@ -261,8 +261,17 @@ export const nextStep = (): AppThunk => (dispatch, getState) => {
 
         // Assign the map suits based on player preferences
         const floodClearings = playerCount < MIN_PLAYERS_NO_FLOOD
-        // TODO: Support other setup options
-        const clearings: SetupClearing[] = solveMapBalanced(map, floodClearings)
+        let clearings: SetupClearing[]
+        if (map.fixedSuits && map.defaultSuits) {
+          clearings = map.clearings.map((clearing, index) => ({
+            ...clearing,
+            suit: map.defaultSuits![index]!,
+          }))
+        } else if (state.setup.balancedSuits) {
+          clearings = solveMapBalanced(map, floodClearings)
+        } else {
+          clearings = solveMapRandom(map, floodClearings)
+        }
         dispatch(setClearings(clearings))
 
         // Ensure that any landmarks not supported at this player count or used by map setup are disabled

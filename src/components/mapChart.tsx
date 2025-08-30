@@ -76,26 +76,6 @@ const MapChart: React.FC = () => {
             </image>
           ) : null}
 
-          {map.useLandmark && map.landmark?.clearing === index ? (
-            <image
-              className="landmark"
-              x={map.landmark.x}
-              y={map.landmark.y}
-              width="100"
-              height="100"
-              transform={
-                map.landmark.angle != null
-                  ? `rotate(${map.landmark.angle} ${map.landmark.x + 50} ${map.landmark.y + 50})`
-                  : undefined
-              }
-              href={map.landmark.image}
-            >
-              <title>
-                <LocaleText i18nKey={`landmark.${map.landmark.code}.name`} />
-              </title>
-            </image>
-          ) : null}
-
           {!skippedSteps[SetupStep.setUpBots] && map.botPriorities ? (
             <g>
               <title>
@@ -146,6 +126,26 @@ const MapChart: React.FC = () => {
             >
               <title>
                 <LocaleText i18nKey={`label.suitMarker.${suit}`} />
+              </title>
+            </image>
+          ) : null}
+
+          {map.useLandmark && map.landmark?.clearing === index ? (
+            <image
+              className="landmark"
+              x={map.landmark.x}
+              y={map.landmark.y}
+              width="100"
+              height="100"
+              transform={
+                map.landmark.angle != null
+                  ? `rotate(${map.landmark.angle} ${map.landmark.x + 50} ${map.landmark.y + 50})`
+                  : undefined
+              }
+              href={map.landmark.image}
+            >
+              <title>
+                <LocaleText i18nKey={`landmark.${map.landmark.code}.name`} />
               </title>
             </image>
           ) : null}
