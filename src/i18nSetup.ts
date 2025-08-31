@@ -15,7 +15,7 @@ export const languages = [
   { name: 'Español', locale: 'es-ES', image: SpanishFlag },
   { name: 'Français', locale: 'fr-FR', image: FrenchFlag },
   { name: 'Italiano', locale: 'it-IT', image: ItalianFlag },
-  { name: "Polski", locale: "pl", image: PolishFlag },
+  { name: 'Polski', locale: 'pl-PL', image: PolishFlag },
 ]
 
 // Skip reinitialization on hot reload
