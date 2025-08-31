@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import commandLineArgs from 'command-line-args'
@@ -12,18 +12,16 @@ const optionDefinitions = [
     defaultOption: true,
   },
   {
-    name: 'viewbox',
-    alias: 'v',
-    type: Number,
-    description: 'The SVG viewBox width and height used by the loaded map chart [default: 2050].',
-    typeLabel: '<number>',
-    defaultValue: 2050,
-  },
-  {
     name: 'help',
     alias: 'h',
     type: Boolean,
     description: 'Display this usage guide.',
+  },
+  {
+    name: 'dry-run',
+    alias: 'd',
+    type: Boolean,
+    description: 'Perform a dry run of the shrinkage, without saving any changes.',
   },
 ]
 
@@ -35,11 +33,11 @@ if (options.help || !options.name) {
       {
         header: '{underline Summary}',
         content:
-          'Outputs the clearing coordinates for the specified SVG map chart, for use in the "componentDefinitions.ts" file.',
+          'Shrinks the file size of the specified SVG map chart further by rounding coordinates that the SVG optimizer Scour misses.',
       },
       {
         header: '{underline Usage}',
-        content: ['extract-clearings <name> {gray [--viewbox <number>]}'],
+        content: ['shrink-map <name> {gray [--dry-run]}'],
       },
       {
         header: '{underline Arguments}',
@@ -61,25 +59,28 @@ if (options.help || !options.name) {
   process.exit(options.help ? 0 : 1)
 }
 
-const clearingRegex = /<circle[^>]+?cx="(?<x>[^"]+)"[^>]+?cy="(?<y>[^"]+)"/g
-
-const viewBoxScale = options.viewbox / 1000
-const rescale = match => Math.round(Number(match) / viewBoxScale)
+const coordinateRegex = /(?<attribute> c?[xy][12]?=")(?<value>[^"]+)"/g
 
 const filePath = resolve(import.meta.dirname, '../src/images/charts/', `${options.name}.svg`)
-const file = readFileSync(filePath, 'utf-8')
+let fileText = readFileSync(filePath, 'utf-8')
 
-const clearings = [...file.matchAll(clearingRegex)].map(match => ({
-  x: rescale(match.groups.x),
-  y: rescale(match.groups.y),
-}))
+let replaceCount = 0
+fileText = fileText.replace(coordinateRegex, (match, attribute, value) => {
+  const roundedValue = Math.round(Number(value))
+  if (Number.isNaN(roundedValue) || roundedValue.toString() === value) return match
 
-// Manually set a value to merge it into the output
-const mergeData = null
-if (mergeData) {
-  for (let index = 0; index < clearings.length; index++) {
-    clearings[index] = { ...mergeData[index], ...clearings[index] }
+  const replacement = `${attribute}${roundedValue}"`
+  console.log(`${match}  -> ${replacement}`)
+  replaceCount++
+  return replacement
+})
+
+if (!options['dry-run']) {
+  if (replaceCount > 0) {
+    // Save the changes back to the file
+    writeFileSync(filePath, fileText, { encoding: 'utf-8' })
+    console.log(`Changes saved to ${filePath}.`)
+  } else {
+    console.log('No changes made.')
   }
 }
-
-console.log(JSON.stringify(clearings, ['x', 'y', 'floodGroup', 'ruin', 'fallbackRuin']))

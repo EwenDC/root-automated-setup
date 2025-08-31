@@ -12,7 +12,8 @@
     "lint": "eslint",
     "build": "vite build",
     "preview": "vite preview",
-    "extract-clearings": "node scripts/extractClearings.mjs"
+    "extract-clearings": "node scripts/extractClearings.mjs",
+    "shrink-map": "node scripts/shrinkMap.mjs"
   },
   "dependencies": {
     "@csstools/normalize.css": "^12.1.1",
