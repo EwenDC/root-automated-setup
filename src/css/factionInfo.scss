@@ -1,0 +1,62 @@
+.faction-info {
+  display: flex;
+  flex-direction: column;
+  margin-inline-start: 1.2rem;
+
+  > .stat-list,
+  .count-list,
+  .captain-list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  > .stat-list {
+    margin-block: 0.75rem 0.5rem;
+    flex-wrap: wrap;
+
+    > .group {
+      flex: 0 0;
+      display: flex;
+    }
+  }
+
+  .count-list {
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  .captain-list {
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    > .group {
+      flex: 1 0;
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  .section-title {
+    font-size: 1.17rem;
+    margin-block: 0.5rem;
+  }
+}
+
+@mixin large-screen {
+  .faction-info {
+    flex-direction: row;
+
+    > .stat-list {
+      flex-direction: column;
+      flex-wrap: nowrap;
+
+      > .group {
+        flex-direction: column;
+      }
+    }
+
+    p {
+      padding-inline-start: 0;
+    }
+  }
+}

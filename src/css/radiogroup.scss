@@ -1,27 +1,25 @@
 .radio {
-  margin-top: 0.75rem;
+  margin-block-start: 0.75rem;
+  margin-inline-start: 1.2rem;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   border: none;
   padding: 0;
+  gap: 0.5rem;
 
-  > .option {
+  .option {
     display: flex;
-
-    &:not(:first-child) {
-      margin-top: 0.5rem;
-    }
 
     > input {
       cursor: pointer;
       flex: none;
       /* Override the default radio appearance */
       appearance: none;
-      width: 1.15rem;
-      height: 1.15rem;
-      border: 0.15rem solid black;
-      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      border: 2px solid black;
+      border-radius: calc(infinity * 1px);
       transform: translateY(0.16rem);
       display: grid;
       place-content: center;
@@ -50,15 +48,15 @@
       }
 
       &:focus-visible {
-        outline: 0.15rem dotted black;
-        outline-offset: 0.05rem;
+        outline: 2px dotted black;
+        outline-offset: 1px;
       }
 
       &::before {
-        content: "";
-        width: 0.65rem;
-        height: 0.65rem;
-        border-radius: 50%;
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: calc(infinity * 1px);
         clip-path: polygon(14% 44%, 0% 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
         box-shadow: inset 1rem 1rem transparent;
         transition-property: box-shadow;
@@ -73,7 +71,8 @@
 
     > label {
       cursor: pointer;
-      padding-left: 0.5rem;
+      max-width: 65ch;
+      padding-inline-start: 0.5rem;
 
       section.inactive & {
         cursor: auto;
@@ -85,27 +84,26 @@
 @mixin large-screen {
   .radio {
     flex-direction: row;
+    gap: 1rem;
 
-    > .option {
-      &:not(:first-child) {
-        margin-top: 0;
-      }
+    .option > label {
+      max-width: 25rem;
 
-      &:not(:last-child) > label {
-        padding-right: 1rem;
+      section.inactive & {
+        max-width: 65ch;
       }
     }
   }
 }
 
 @mixin reduced-motion {
-  .radio > .option > input {
+  .radio .option > input {
     transition: none;
   }
 }
 
 @mixin forced-colors {
-  .radio > .option > input::before {
+  .radio .option > input::before {
     background-color: CanvasText;
   }
 }

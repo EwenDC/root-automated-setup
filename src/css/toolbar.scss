@@ -19,13 +19,13 @@ footer {
     }
 
     > :not(:last-child) {
-      margin-right: 0.5rem;
+      margin-inline-end: 0.5rem;
     }
   }
 }
 
 @mixin large-screen {
   footer > .toolbar > :not(:last-child) {
-    margin-right: 1rem;
+    margin-inline-end: 1rem;
   }
 }

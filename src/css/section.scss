@@ -1,5 +1,5 @@
 section {
-  line-height: 1.5rem;
+  line-height: 1.5;
   margin: 1rem;
 
   &.inactive {
@@ -7,28 +7,47 @@ section {
   }
 
   > h2 {
-    line-height: 2.2rem;
+    line-height: 1.1;
     font-size: 2rem;
     font-weight: 400;
     font-variant: small-caps;
-    margin: 0 0 0.5rem;
+    margin-block: 0 0.5rem;
   }
 
   > h3 {
     font-size: 1rem;
-    margin: 0 0 0.5rem;
+    margin-block: 0 0.5rem;
   }
 
   > ol {
-    margin: 0.5rem 0;
-    padding-left: 1.2rem;
+    margin-inline-start: 1.2rem;
+  }
 
-    > li::marker {
-      font-style: italic;
+  ol {
+    max-width: 65ch;
+    margin-block: 0.5rem;
+    padding-inline-start: 1.2rem;
+
+    > li {
+      margin-block: 0.5rem;
+
+      &::marker {
+        font-style: italic;
+      }
+    }
+  }
+
+  .text {
+    max-width: 65ch;
+    margin-inline-start: 1.2rem;
+
+    &.centered {
+      margin-inline: auto;
     }
   }
 
   p {
-    margin: 0.5rem 0;
+    max-width: 65ch;
+    margin-block: 0.5rem;
   }
 }

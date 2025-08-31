@@ -5,6 +5,8 @@
     "@tsconfig/strictest/tsconfig.json"
   ],
   "compilerOptions": {
+    // Enforce type import syntax
+    "verbatimModuleSyntax": true,
     // react-i18next's types haven't been configured with this rule in mind
     "exactOptionalPropertyTypes": false,
     // Don't allow JavaScript files in the project

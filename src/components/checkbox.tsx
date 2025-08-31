@@ -1,41 +1,38 @@
-import { useContext } from "react";
-import { Trans, useTranslation } from "react-i18next";
-import { selectStepInvalid } from "../features/selectors";
-import { useAppSelector } from "../hooks";
-import { stepActiveContext } from "./stepList";
+import { useContext } from 'react'
+
+import { useInvalid } from '../hooks'
+import LocaleText from './localeText'
+import { stepActiveContext } from './stepList'
 
 interface CheckboxProps {
-  id: string;
-  labelKey?: string;
-  defaultValue?: boolean;
-  onChange: (checked: boolean) => void;
+  id: string
+  labelKey?: string
+  defaultValue?: boolean
+  onChange: (checked: boolean) => void
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChange }) => {
-  const stepActive = useContext(stepActiveContext);
-  const invalid = useAppSelector(selectStepInvalid(stepActive));
-  // Ensure the component re-renders when the language changes
-  const { i18n } = useTranslation();
-  const activeLanguage = i18n.resolvedLanguage ?? i18n.language;
+  const stepActive = useContext(stepActiveContext)
+  const invalid = useInvalid(stepActive)
 
   return defaultValue || stepActive ? (
     <div className="checkbox">
       <input
         id={id}
         type="checkbox"
-        defaultChecked={defaultValue ?? false}
+        checked={defaultValue ?? false}
         disabled={!stepActive}
-        onChange={(e) => {
-          onChange(e.target.checked);
+        onChange={e => {
+          onChange(e.target.checked)
         }}
         aria-invalid={invalid ? true : undefined}
-        aria-errormessage={invalid ? "appError" : undefined}
+        aria-errormessage={invalid ? 'appError' : undefined}
       />
       <label htmlFor={id}>
-        <Trans key={activeLanguage} i18nKey={labelKey ?? `label.${id}`} />
+        <LocaleText i18nKey={labelKey ?? `label.${id}`} />
       </label>
     </div>
-  ) : null;
-};
+  ) : null
+}
 
-export default Checkbox;
+export default Checkbox

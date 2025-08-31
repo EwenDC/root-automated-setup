@@ -1,21 +1,18 @@
-import { useContext } from "react";
-import { Trans, useTranslation } from "react-i18next";
-import { selectStepInvalid } from "../features/selectors";
-import { useAppSelector } from "../hooks";
-import { stepActiveContext } from "./stepList";
+import { useContext } from 'react'
+
+import { useInvalid } from '../hooks'
+import LocaleText from './localeText'
+import { stepActiveContext } from './stepList'
 
 interface RadiogroupProps {
-  id: string;
-  defaultValue?: boolean;
-  onChange: (value: boolean) => void;
+  id: string
+  defaultValue?: boolean
+  onChange: (value: boolean) => void
 }
 
 const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onChange }) => {
-  const stepActive = useContext(stepActiveContext);
-  const invalid = useAppSelector(selectStepInvalid(stepActive));
-  // Ensure the component re-renders when the language changes
-  const { i18n } = useTranslation();
-  const activeLanguage = i18n.resolvedLanguage ?? i18n.language;
+  const stepActive = useContext(stepActiveContext)
+  const invalid = useInvalid(stepActive)
 
   return (
     <fieldset
@@ -24,7 +21,7 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
       disabled={!stepActive}
       aria-required="true"
       aria-invalid={invalid ? true : undefined}
-      aria-errormessage={invalid ? "appError" : undefined}
+      aria-errormessage={invalid ? 'appError' : undefined}
     >
       {!defaultValue || stepActive ? (
         <div className="option">
@@ -34,11 +31,11 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
             type="radio"
             checked={!defaultValue}
             onChange={() => {
-              onChange(false);
+              onChange(false)
             }}
           />
           <label htmlFor={`${id}False`}>
-            <Trans key={activeLanguage} i18nKey={`label.${id}.false`} />
+            <LocaleText i18nKey={`label.${id}.false`} />
           </label>
         </div>
       ) : null}
@@ -50,16 +47,16 @@ const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onCha
             type="radio"
             checked={defaultValue}
             onChange={() => {
-              onChange(true);
+              onChange(true)
             }}
           />
           <label htmlFor={`${id}True`}>
-            <Trans key={activeLanguage} i18nKey={`label.${id}.true`} />
+            <LocaleText i18nKey={`label.${id}.true`} />
           </label>
         </div>
       ) : null}
     </fieldset>
-  );
-};
+  )
+}
 
-export default Radiogroup;
+export default Radiogroup

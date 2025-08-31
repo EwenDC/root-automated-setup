@@ -1,18 +1,18 @@
 .stat {
   min-width: 10rem;
   flex: 1 0;
-  border-left: 0.15rem solid black;
-  padding-bottom: 0.5rem;
+  border-inline-start: 2px solid black;
+  padding-block-end: 0.5rem;
   display: flex;
   flex-direction: column;
 
   section.inactive & {
-    border-left-color: darkgray;
+    border-inline-start-color: darkgray;
   }
 
   > .label {
     font-style: italic;
-    margin-left: 0.25rem;
+    margin-inline-start: 0.25rem;
   }
 
   > .low,
@@ -21,7 +21,8 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     overflow: visible;
-    padding: 0.1rem 0 0 0.25rem;
+    padding-block: 0.1rem 0;
+    padding-inline: 0.25rem 0;
     background-color: lightgray;
     transition: width 0.25s ease-in-out;
     width: 3rem;
@@ -44,18 +45,20 @@
   .stat {
     min-width: 14rem;
     flex: 0 0;
-    padding-bottom: 0.66rem;
+    padding-block-end: 0.66rem;
 
     > .label {
       font-size: 1.2rem;
-      margin: 0 0 0.2rem 0.33rem;
+      margin-block: 0 0.2rem;
+      margin-inline: 0.33rem 0;
     }
 
     > .low,
     > .moderate,
     > .high {
       font-size: 1rem;
-      padding: 0.25rem 0 0.2rem 0.33rem;
+      padding-block: 0.25rem 0.2rem;
+      padding-inline: 0.33rem 0;
       width: 4rem;
     }
 

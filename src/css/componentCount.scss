@@ -1,29 +1,30 @@
 .count {
   display: flex;
   align-items: center;
-  margin: 0.5rem 0;
+  margin-block: 0.5rem;
   flex-direction: column;
   text-align: center;
 
   &:not(:first-child) {
-    border-left: 0.15rem solid black;
-    padding-left: 1rem;
+    border-inline-start: 2px solid black;
+    padding-inline-start: 1rem;
 
     section.inactive & {
-      border-left-color: darkgray;
+      border-inline-start-color: darkgray;
     }
   }
 
   &:not(:last-child) {
-    padding-right: 1rem;
+    padding-inline-end: 1rem;
   }
 
   > img {
-    width: 3rem;
-    height: 3rem;
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
 
     section.inactive & {
-      filter: grayscale(100%);
+      filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
     }
   }
 }
@@ -33,9 +34,9 @@
     flex-direction: row;
 
     > img {
-      width: 5rem;
-      height: 5rem;
-      margin-right: 0.5rem;
+      width: 80px;
+      height: 80px;
+      margin-inline-end: 0.5rem;
     }
   }
 }

@@ -1,38 +1,42 @@
-import { useTranslation } from "react-i18next";
-import { useContext } from "react";
-import { selectedFactionContext } from "./factionSelect";
+import { useContext } from 'react'
 
-const imageSource = {
-  warriors: "image",
-  buildings: "buildingImage",
-  tokens: "tokenImage",
-} as const;
+import { selectedFactionContext } from '../hooks'
+import LocaleText from './localeText'
 
 interface ComponentCountProps {
-  component: keyof typeof imageSource;
+  component: 'buildings' | 'tokens' | 'warriors'
 }
 
 const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
-  const selectedFaction = useContext(selectedFactionContext);
-  const { t } = useTranslation();
+  const selectedFaction = useContext(selectedFactionContext)
 
-  if (selectedFaction && selectedFaction[component] > 0) {
-    const componentImage = selectedFaction[imageSource[component]];
-    return (
-      <div className="count">
-        <img
-          src={componentImage}
-          alt="" // Image is just decoration, so hide from screen readers
-          aria-hidden="true"
-        />{" "}
-        &#215;
-        {t(`component.${component}`, {
-          count: selectedFaction[component],
-        })}
-      </div>
-    );
+  if (selectedFaction) {
+    const count =
+      component === 'warriors'
+        ? selectedFaction.pieces.warriors
+        : (selectedFaction.pieces[component]?.count ?? 0)
+
+    if (count > 0) {
+      const image =
+        component === 'warriors' ? selectedFaction.image : selectedFaction.pieces[component]?.image
+
+      return (
+        <div className="count">
+          <img
+            src={image}
+            alt="" // Image is just decoration, so hide from screen readers
+            aria-hidden="true"
+          />{' '}
+          &#215;
+          <LocaleText
+            i18nKey={`component.${component}`}
+            count={count}
+          />
+        </div>
+      )
+    }
   }
-  return null;
-};
+  return null
+}
 
-export default ComponentCount;
+export default ComponentCount
