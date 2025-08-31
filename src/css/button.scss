@@ -5,12 +5,12 @@
   font-style: italic;
   cursor: pointer;
   pointer-events: auto;
-  border-radius: 0.5rem;
-  outline-offset: -0.15rem;
+  border-radius: 8px;
+  outline-offset: -2px;
   /* Transitioned properties */
   color: black;
-  border-bottom: 0.15rem black solid;
-  outline: 0.15rem dotted transparent;
+  border-block-end: 2px black solid;
+  outline: 2px dotted transparent;
   transition-property: background-color, color, border, outline;
   transition-duration: 80ms;
   transition-timing-function: ease-out;
@@ -26,7 +26,7 @@
   &.disabled {
     cursor: auto;
     color: darkgray;
-    border-bottom-color: transparent;
+    border-block-end-color: transparent;
     background-color: ivory;
   }
 
@@ -40,21 +40,21 @@
 
   > .label {
     &.left {
-      margin-right: 0.3rem;
+      margin-inline-end: 0.3rem;
     }
 
     &.right {
-      margin-left: 0.3rem;
+      margin-inline-start: 0.3rem;
     }
   }
 }
 
 @mixin large-screen {
   .button {
-    border-radius: 0.66rem;
+    border-radius: 11px;
     font-size: 2rem;
-    border-bottom: 0.2rem black solid;
-    outline: 0.2rem dotted transparent;
+    border-block-end: 3px black solid;
+    outline: 3px dotted transparent;
 
     > .label-icon {
       height: 1.5rem;
@@ -62,11 +62,11 @@
 
     > .label {
       &.left {
-        margin-right: 0.5rem;
+        margin-inline-end: 0.5rem;
       }
 
       &.right {
-        margin-left: 0.5rem;
+        margin-inline-start: 0.5rem;
       }
     }
   }

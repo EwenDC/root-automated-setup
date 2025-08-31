@@ -2,13 +2,13 @@ main {
   max-width: 100%;
   margin: 0 auto 4rem;
 
-  @media (min-width: 80rem) {
-    max-width: 80rem;
+  @media (min-width: calc(65ch * 1.5)) {
+    max-width: calc(65ch * 1.5);
   }
 }
 
 @mixin large-screen {
   main {
-    margin-bottom: 5rem;
+    margin-block-end: 5rem;
   }
 }

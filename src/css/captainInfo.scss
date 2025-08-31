@@ -1,0 +1,34 @@
+.captain-info {
+  min-width: 10rem;
+  flex: 1 0;
+  margin: 0;
+
+  > .name {
+    max-width: 16rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > img {
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
+
+      section.inactive & {
+        filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
+      }
+    }
+
+    > h5 {
+      font-size: 1rem;
+      margin-block: 0.5rem 0;
+    }
+  }
+}
+
+@mixin large-screen {
+  .captain-info > .name > img {
+    width: 80px;
+    height: 80px;
+  }
+}

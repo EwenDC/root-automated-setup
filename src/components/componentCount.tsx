@@ -1,41 +1,42 @@
-import { useTranslation } from "react-i18next";
-import { memo, useContext } from "react";
-import { selectedFactionContext } from "./factionSelect";
+import { useContext } from 'react'
 
-const imageSource: Record<string, "image" | "buildingImage" | "tokenImage"> = {
-  warriors: "image",
-  buildings: "buildingImage",
-  tokens: "tokenImage",
-};
+import { selectedFactionContext } from '../hooks'
+import LocaleText from './localeText'
 
 interface ComponentCountProps {
-  component: "warriors" | "buildings" | "tokens";
+  component: 'buildings' | 'tokens' | 'warriors'
 }
 
 const ComponentCount: React.FC<ComponentCountProps> = ({ component }) => {
-  const selectedFaction = useContext(selectedFactionContext);
-  const { t } = useTranslation();
+  const selectedFaction = useContext(selectedFactionContext)
 
-  const componentCount = selectedFaction != null ? selectedFaction[component] : 0;
+  if (selectedFaction) {
+    const count =
+      component === 'warriors'
+        ? selectedFaction.pieces.warriors
+        : (selectedFaction.pieces[component]?.count ?? 0)
 
-  if (componentCount > 0) {
-    // We know currentFactionIndex is not null because if it was componentCount defaults to 0
-    const componentImage = selectedFaction![imageSource[component]];
-    return (
-      <div className="count">
-        <img
-          src={componentImage}
-          alt="" // Image is just decoration, so hide from screen readers
-          aria-hidden="true"
-        />{" "}
-        &#215;
-        {t(`component.${component}`, {
-          count: componentCount,
-        })}
-      </div>
-    );
+    if (count > 0) {
+      const image =
+        component === 'warriors' ? selectedFaction.image : selectedFaction.pieces[component]?.image
+
+      return (
+        <div className="count">
+          <img
+            src={image}
+            alt="" // Image is just decoration, so hide from screen readers
+            aria-hidden="true"
+          />{' '}
+          &#215;
+          <LocaleText
+            i18nKey={`component.${component}`}
+            count={count}
+          />
+        </div>
+      )
+    }
   }
-  return null;
-};
+  return null
+}
 
-export default memo(ComponentCount);
+export default ComponentCount

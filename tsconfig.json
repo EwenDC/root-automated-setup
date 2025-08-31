@@ -1,20 +1,17 @@
 {
+  "extends": [
+    "@tsconfig/recommended/tsconfig.json",
+    "@tsconfig/create-react-app/tsconfig.json",
+    "@tsconfig/strictest/tsconfig.json"
+  ],
   "compilerOptions": {
-    "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    // Enforce type import syntax
+    "verbatimModuleSyntax": true,
+    // react-i18next's types haven't been configured with this rule in mind
+    "exactOptionalPropertyTypes": false,
+    // Don't allow JavaScript files in the project
+    "checkJs": false,
+    "allowJs": false
   },
-  "include": ["src"]
+  "include": ["src", "vite.config.ts"]
 }

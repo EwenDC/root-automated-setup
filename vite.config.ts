@@ -1,9 +1,11 @@
-import { defineConfig, splitVendorChunkPlugin } from "vite";
-import { createHtmlPlugin } from "vite-plugin-html";
-import legacy from "@vitejs/plugin-legacy";
-import react from "@vitejs/plugin-react";
-import svgrPlugin from "vite-plugin-svgr";
-import { VitePWA } from "vite-plugin-pwa";
+import { defineConfig } from 'vite'
+import { createHtmlPlugin } from 'vite-plugin-html'
+import legacy from '@vitejs/plugin-legacy'
+import react from '@vitejs/plugin-react'
+import svgrPlugin from 'vite-plugin-svgr'
+import { VitePWA } from 'vite-plugin-pwa'
+import million from 'million/compiler'
+import checker from 'vite-plugin-checker'
 
 const staticAssetCacheSettings = {
   cacheableResponse: {
@@ -13,7 +15,7 @@ const staticAssetCacheSettings = {
     maxAgeSeconds: 60 * 60 * 24 * 365,
     maxEntries: 30,
   },
-};
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,10 +23,16 @@ export default defineConfig({
     // Only need this so the HTML is minified since Vite doesn't minify it by default :(
     createHtmlPlugin(),
     legacy({
-      targets: [">0.2%", "not dead", "not op_mini all"],
+      // Support browsers that used to be supported by CRA
+      targets: ['>0.2%', 'not dead', 'not op_mini all'],
+      modernPolyfills: true,
     }),
-    react(),
-    splitVendorChunkPlugin(),
+    million.vite({ auto: true }),
+    react({
+      babel: {
+        plugins: [['babel-plugin-react-compiler', {}]],
+      },
+    }),
     // Allow importing SVG as react components
     svgrPlugin({
       svgrOptions: {
@@ -32,78 +40,85 @@ export default defineConfig({
         memo: true,
       },
       esbuildOptions: {
-        jsx: "automatic",
-        jsxImportSource: "react",
+        jsx: 'automatic',
+        jsxImportSource: 'react',
       },
     }),
     VitePWA({
-      injectRegister: "inline",
+      injectRegister: 'inline',
       // Maintain compatibility with the old CRA web worker by having the same output filename
-      filename: "service-worker.js",
+      filename: 'service-worker.js',
       workbox: {
-        globPatterns: ["**/*.{js,css,html,png,ico,svg}"],
+        globPatterns: ['**/*.{js,css,html,png,ico,svg}'],
         // Don't automatically precache the legacy bundles, as only a small amount of web-worker enabled browsers can't handle ESM
-        globIgnores: ["**/node_modules/**/*", "**/*-legacy-*.js"],
+        globIgnores: ['**/node_modules/**/*', '**/*-legacy-*.js'],
         runtimeCaching: [
           // Google fonts cache based on https://developer.chrome.com/docs/workbox/modules/workbox-recipes/#google-fonts-cache
           {
-            urlPattern: ({ url }) => url.origin === "https://fonts.googleapis.com",
-            handler: "StaleWhileRevalidate",
+            urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
+            handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: "google-fonts-stylesheets",
+              cacheName: 'google-fonts-stylesheets',
             },
           },
           {
-            urlPattern: ({ url }) => url.origin === "https://fonts.gstatic.com",
-            handler: "CacheFirst",
+            urlPattern: ({ url }) => url.origin === 'https://fonts.gstatic.com',
+            handler: 'CacheFirst',
             options: {
-              cacheName: "google-fonts-webfonts",
+              cacheName: 'google-fonts-webfonts',
               ...staticAssetCacheSettings,
             },
           },
           // Cache any JS we need that wasn't precached. This is specifically for those legacy bundles we excluded from precaching
           {
-            urlPattern: ({ sameOrigin, request }) => sameOrigin && request.destination === "script",
-            handler: "CacheFirst",
+            urlPattern: ({ sameOrigin, request }) => sameOrigin && request.destination === 'script',
+            handler: 'CacheFirst',
             options: {
-              cacheName: "legacy-js",
+              cacheName: 'legacy-js',
               ...staticAssetCacheSettings,
             },
           },
         ],
       },
       manifest: {
-        name: "Root Automated Setup",
-        short_name: "Root Auset",
-        description: "Automate the Advanced Setup process for Leder Games popular board game Root",
-        theme_color: "#2C2E35",
-        background_color: "#FFFFF0",
+        name: 'Root Automated Setup',
+        short_name: 'Root Auset',
+        description: 'Automate the Advanced Setup process for Leder Games popular board game Root',
+        theme_color: '#2C2E35',
+        background_color: '#FFFFF0',
         icons: [
           {
-            src: "logo192.png",
-            sizes: "192x192",
-            type: "image/png",
+            src: 'logo192.png',
+            sizes: '192x192',
+            type: 'image/png',
           },
           {
-            src: "logo512.png",
-            sizes: "512x512",
-            type: "image/png",
+            src: 'logo512.png',
+            sizes: '512x512',
+            type: 'image/png',
           },
         ],
         launch_handler: {
-          client_mode: "focus-existing",
+          client_mode: 'focus-existing',
         },
       },
     }),
+    checker({
+      typescript: true,
+      eslint: {
+        lintCommand: 'eslint .',
+        useFlatConfig: true,
+      },
+    }),
   ],
-  base: "/root-automated-setup/",
+  base: '/root-automated-setup/',
   server: {
     open: true,
   },
   build: {
     assetsInlineLimit: 0,
     // Since createHtmlPlugin is already using terser may as well use it for the rest of the project too
-    minify: "terser",
+    minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
@@ -117,5 +132,15 @@ export default defineConfig({
       },
     },
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules') && !id.endsWith('.css')) {
+            return 'vendor'
+          }
+          return null
+        },
+      },
+    },
   },
-});
+})

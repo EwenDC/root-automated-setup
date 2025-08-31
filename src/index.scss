@@ -1,24 +1,26 @@
-@use "css/button";
-@use "css/checkbox";
-@use "css/componentCount";
-@use "css/componentToggle";
-@use "css/factionSelect";
-@use "css/header";
-@use "css/icon";
-@use "css/languageSelect";
-@use "css/mapChart";
-@use "css/numberSelector";
-@use "css/radiogroup";
-@use "css/section";
-@use "css/statBar";
-@use "css/stepList";
-@use "css/toast";
-@use "css/toolbar";
+@use 'css/button';
+@use 'css/captainInfo';
+@use 'css/checkbox';
+@use 'css/componentCount';
+@use 'css/componentToggle';
+@use 'css/factionInfo';
+@use 'css/factionSelect';
+@use 'css/header';
+@use 'css/icon';
+@use 'css/languageSelect';
+@use 'css/mapChart';
+@use 'css/numberSelector';
+@use 'css/radiogroup';
+@use 'css/section';
+@use 'css/statBar';
+@use 'css/stepList';
+@use 'css/toast';
+@use 'css/toolbar';
 
-@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
 * {
-  font-family: "Libre Baskerville", serif;
+  font-family: 'Libre Baskerville', serif;
 
   &::selection {
     color: black;
@@ -28,7 +30,7 @@
 
 body {
   margin: 0;
-  background: ivory url("./images/background.jpg") top;
+  background: ivory url('./images/background.jpg') top;
   background-size: 80rem;
 }
 
@@ -38,10 +40,10 @@ body {
   position: fixed;
   top: 50%;
   right: 50%;
-  margin: -5.375rem -5.375rem 0 0;
-  border: 0.75rem solid transparent;
+  margin: calc(-1 * (10rem / 2 + 12px)) calc(-1 * (10rem / 2 + 12px)) 0 0;
+  border: 12px solid transparent;
   border-radius: 50%;
-  border-right-color: black;
+  border-inline-end-color: black;
   animation: rotate 1s infinite linear;
 }
 
@@ -50,7 +52,7 @@ noscript {
   position: fixed;
   top: 50%;
   width: 100%;
-  margin-top: 10rem;
+  margin-block-start: 10rem;
 }
 
 @keyframes rotate {
@@ -64,8 +66,10 @@ noscript {
 
 @media (min-width: 62rem) {
   @include button.large-screen;
+  @include captainInfo.large-screen;
   @include componentCount.large-screen;
   @include componentToggle.large-screen;
+  @include factionInfo.large-screen;
   @include factionSelect.large-screen;
   @include languageSelect.large-screen;
   @include radiogroup.large-screen;

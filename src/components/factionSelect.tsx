@@ -1,195 +1,145 @@
-import classNames from "classnames";
-import { Trans, useTranslation } from "react-i18next";
-import { setCurrentFactionIndex } from "../features/flowSlice";
-import { setErrorMessage } from "../features/setupSlice";
-import { useAppDispatch, useAppSelector, useSelectFactionPool } from "../hooks";
-import { createContext, memo, useContext, useMemo, useState } from "react";
-import MilitantIcon from "../images/icons/militant.svg?react";
-import StatBar from "./statBar";
-import iconComponents from "../iconComponents";
-import IconList from "./iconList";
-import ComponentCount from "./componentCount";
-import { Faction, FlowSlice } from "../types";
-import { stepActiveContext } from "./stepList";
-import { selectStepInvalid } from "../features/selectors";
+import classNames from 'classnames'
+import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 
-export const selectedFactionContext = createContext<Faction | null>(null);
+import type { FlowSlice } from '../types'
+
+import { useAppDispatch, useAppSelector, useInvalid } from '../hooks'
+import MilitantIcon from '../images/icons/militant.svg?react'
+import { selectFactionPoolFull, setCurrentFactionIndex, setErrorMessage } from '../store'
+import { stepActiveContext } from './stepList'
 
 interface FactionSelectProps {
-  flowSlice: FlowSlice;
+  flowSlice: FlowSlice
 }
 
 const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
-  const selectFactionPool = useSelectFactionPool(flowSlice.factionPool);
-  const factionPool = useAppSelector(selectFactionPool);
-  const stepActive = useContext(stepActiveContext);
-  const invalid = useAppSelector(selectStepInvalid(stepActive));
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation();
-  const [largeLabels, setLargeLabels] = useState(false);
+  const { factionPool, factionIndex, lastFactionLocked } = flowSlice
+  const factionPoolFull = useAppSelector(selectFactionPoolFull(factionPool))
+  const stepActive = useContext(stepActiveContext)
+  const invalid = useInvalid(stepActive)
+  const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
-  const labelledFactionPool = useMemo(() => {
-    // Reset our large label flag
-    setLargeLabels(false);
-
-    return factionPool.map(({ code, key, image, militant, vagabond }) => {
-      // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
-      let factionName = t(`faction.${key}.name`);
-      if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`;
-
-      // If any label in our list is longer than 23 characters then we give more room for the labels
-      if (factionName.length > 23) setLargeLabels(true);
+  // Prepare the faction name in advance as we need to incorporate the vagabond character name (if there is one)
+  const labelledFactionPool = factionPoolFull.map(
+    ({ code, key, image, militant, vagabond, captains }) => {
+      let factionName = t(`faction.${key}.name`)
+      if (vagabond) factionName = `${t(`vagabond.${vagabond.code}.name`)} (${factionName})`
 
       // Swap out the faction image for the vagabond image (if we have one)
-      const factionImage = vagabond ? vagabond.image : image;
+      const factionImage = vagabond ? vagabond.image : image
 
-      return {
-        code,
-        factionImage,
-        factionName,
-        militant,
-      };
-    });
-  }, [factionPool, t]);
+      return { code, factionImage, factionName, militant, captains }
+    },
+  )
+  const largeLabels = labelledFactionPool.some(faction => faction.factionName.length > 22)
 
-  // We use this event handler to simulate the keyboard behaviour of a real radio group, to comply with accessibility requirements
-  const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    const focusedIndex = flowSlice.factionIndex ?? 0;
-    const maxIndex = factionPool.length - (flowSlice.lastFactionLocked ? 2 : 1);
-    let newIndex: number | undefined;
+  // We use this event handler to simulate the keyboard behavior of a real radio group, to comply with accessibility requirements
+  const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = event => {
+    const focusedIndex = factionIndex ?? 0
+    const maxIndex = factionPoolFull.length - (lastFactionLocked ? 2 : 1)
+    let newIndex: number | undefined
 
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      newIndex = focusedIndex + 1;
-      if (newIndex > maxIndex) newIndex = 0;
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      newIndex = focusedIndex - 1;
-      if (newIndex < 0) newIndex = maxIndex;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      newIndex = focusedIndex + 1
+      if (newIndex > maxIndex) newIndex = 0
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      newIndex = focusedIndex - 1
+      if (newIndex < 0) newIndex = maxIndex
     }
 
     if (newIndex != null) {
-      event.preventDefault();
-      dispatch(setCurrentFactionIndex(newIndex));
+      event.preventDefault()
+      dispatch(setCurrentFactionIndex(newIndex))
 
       if (event.currentTarget.parentNode) {
         // TypeScript types incorrectly types this as just "Element" instead of "HTMLElement"
-        const selectedHTMLElement = event.currentTarget.parentNode.children[
-          newIndex
-        ] as HTMLElement;
-        selectedHTMLElement.focus();
+        const selectedHTMLElement = event.currentTarget.parentNode.children[newIndex] as HTMLElement
+        selectedHTMLElement.focus()
       }
     }
-  };
+  }
 
-  const lastIndex = factionPool.length - 1;
-  const selectedFaction =
-    flowSlice.factionIndex != null ? factionPool[flowSlice.factionIndex] : null;
+  const lastIndex = factionPoolFull.length - 1
   return (
-    <>
-      <div
-        className={classNames("faction-select", { "large-labels": largeLabels })}
-        role="radiogroup"
-        aria-label={t("setupStep.selectFaction.subtitle")}
-        aria-required="true"
-        aria-invalid={invalid ? true : undefined}
-        aria-errormessage={invalid ? "appError" : undefined}
-        aria-disabled={!stepActive}
-      >
-        {labelledFactionPool.map(({ code, factionImage, factionName, militant }, index) => (
-          <button
-            key={code}
-            className={classNames({
-              militant: militant,
-              selected: index === flowSlice.factionIndex,
-              locked: flowSlice.lastFactionLocked && index === lastIndex,
-            })}
-            onClick={() => {
-              if (index !== flowSlice.factionIndex) {
-                if (!flowSlice.lastFactionLocked || index < lastIndex) {
-                  dispatch(setCurrentFactionIndex(index));
-                } else {
-                  dispatch(setErrorMessage("error.lockedFaction"));
-                }
+    <div
+      className={classNames('faction-select', { 'large-labels': largeLabels })}
+      role="radiogroup"
+      aria-label={t('setupStep.selectFaction.subtitle')}
+      aria-required="true"
+      aria-invalid={invalid ? true : undefined}
+      aria-errormessage={invalid ? 'appError' : undefined}
+      aria-disabled={!stepActive}
+    >
+      {labelledFactionPool.map(({ code, factionImage, factionName, militant, captains }, index) => (
+        <button
+          key={code}
+          className={classNames({
+            militant: militant,
+            selected: index === factionIndex,
+            locked: lastFactionLocked && index === lastIndex,
+          })}
+          onClick={() => {
+            if (index !== factionIndex) {
+              if (!lastFactionLocked || index < lastIndex) {
+                dispatch(setCurrentFactionIndex(index))
+              } else {
+                dispatch(setErrorMessage('error.lockedFaction'))
               }
-            }}
-            disabled={!stepActive}
-            title={
-              stepActive && flowSlice.lastFactionLocked && index === lastIndex
-                ? t("error.lockedFaction")
-                : undefined
             }
-            role="radio"
-            aria-checked={index === flowSlice.factionIndex}
-            aria-disabled={
-              stepActive ? flowSlice.lastFactionLocked && index === lastIndex : undefined
-            }
-            aria-label={
-              stepActive
-                ? `${factionName}${militant ? ` (${t("label.militant")})` : ""}`
-                : undefined
-            }
-            // We have to override the tabbing logic to meet the standard of role "radio"
-            tabIndex={stepActive ? (index === (flowSlice.factionIndex ?? 0) ? 0 : -1) : undefined}
-            onKeyDown={onKeyDownHandler}
-          >
+          }}
+          disabled={!stepActive}
+          title={
+            stepActive && lastFactionLocked && index === lastIndex
+              ? t('error.lockedFaction')
+              : undefined
+          }
+          role="radio"
+          aria-checked={index === factionIndex}
+          aria-disabled={stepActive ? lastFactionLocked && index === lastIndex : undefined}
+          aria-label={
+            stepActive ? `${factionName}${militant ? ` (${t('label.militant')})` : ''}` : undefined
+          }
+          // We have to override the tabbing logic to meet the standard of role "radio"
+          tabIndex={stepActive ? (index === (factionIndex ?? 0) ? 0 : -1) : undefined}
+          onKeyDown={onKeyDownHandler}
+        >
+          <div className="image-frame">
             <img
+              className="warrior"
               src={factionImage}
               alt="" // We're including the alt text in the button itself so don't bother reading out the image
               aria-hidden="true"
             />
-            <div className="title">
-              <span className="label">
-                {militant ? (
-                  <>
-                    <MilitantIcon className="militant-icon" title={t("label.militant")} />{" "}
-                  </>
-                ) : null}
-                {factionName}
-              </span>
-            </div>
-          </button>
-        ))}
-      </div>
-      {selectedFaction && (
-        <div className="faction-info">
-          <selectedFactionContext.Provider value={selectedFaction}>
-            <div className="stat-list">
-              <StatBar stat="complexity" />
-              <StatBar stat="wealth" />
-              <StatBar stat="aggression" />
-              <StatBar stat="crafting" />
-            </div>
-            <div>
-              <div className="count-list">
-                <ComponentCount component="warriors" />
-                <ComponentCount component="buildings" />
-                <ComponentCount component="tokens" />
-              </div>
-              {selectedFaction.vagabond && (
+            {captains.map(({ code: captainCode, image }) => (
+              // Give a preview of the captain options (accessible users will need to select the faction to see this info)
+              <img
+                className="captain"
+                key={captainCode}
+                src={image}
+                alt=""
+                aria-hidden="true"
+              />
+            ))}
+          </div>
+          <div className="title">
+            <span className="label">
+              {militant ? (
                 <>
-                  <p>
-                    <strong>{t("label.startingItems")}.</strong>{" "}
-                    <IconList list={selectedFaction.vagabond.startingItems} />.
-                  </p>
-                  <p>
-                    <strong>
-                      {t("label.specialAction")}:{" "}
-                      {t(`vagabond.${selectedFaction.vagabond.code}.action`)}.
-                    </strong>{" "}
-                    <Trans
-                      i18nKey={`vagabond.${selectedFaction.vagabond.code}.effect`}
-                      components={iconComponents}
-                    />
-                  </p>
+                  <MilitantIcon
+                    className="militant-icon"
+                    title={t('label.militant')}
+                  />{' '}
                 </>
-              )}
-              <h4 className="summary-title">{t(`faction.${selectedFaction.key}.summaryTitle`)}</h4>
-              <Trans i18nKey={`faction.${selectedFaction.key}.summary`} />
-            </div>
-          </selectedFactionContext.Provider>
-        </div>
-      )}
-    </>
-  );
-};
+              ) : null}
+              {factionName}
+            </span>
+          </div>
+        </button>
+      ))}
+    </div>
+  )
+}
 
-export default memo(FactionSelect);
+export default FactionSelect
