@@ -1,6 +1,7 @@
 .checkbox {
   display: flex;
-  margin: 0.5rem 0 0 0.2rem;
+  margin-block: 0.5rem 0;
+  margin-inline-start: 1.2rem;
   align-items: flex-start;
 
   > input {
@@ -9,10 +10,10 @@
     appearance: none;
     display: grid;
     place-content: center;
-    width: 1rem;
-    height: 1rem;
-    border: 0.15rem solid black;
-    border-radius: 0.15rem;
+    width: 16px;
+    height: 16px;
+    border: 2px solid black;
+    border-radius: 3px;
     transform: translateY(0.2rem);
     background-color: transparent;
     transition: 80ms background-color ease-out;
@@ -40,14 +41,14 @@
     }
 
     &:focus-visible {
-      outline: 0.15rem dotted black;
-      outline-offset: 0.05rem;
+      outline: 2px dotted black;
+      outline-offset: 1px;
     }
 
     &::before {
       content: '';
-      width: 0.65rem;
-      height: 0.65rem;
+      width: 10px;
+      height: 10px;
       clip-path: polygon(
         20% 0%,
         0% 20%,
@@ -70,7 +71,8 @@
   }
 
   > label {
-    padding-left: 0.55rem;
+    max-width: 65ch;
+    padding-inline-start: 0.55rem;
     cursor: pointer;
   }
 }

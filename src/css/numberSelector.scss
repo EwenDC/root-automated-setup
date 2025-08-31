@@ -1,9 +1,10 @@
 .number {
-  margin-top: 0.75rem;
+  margin-block-start: 0.75rem;
+  margin-inline-start: 1.2rem;
   display: flex;
 
   > label {
-    padding-right: 0.5rem;
+    padding-inline-end: 0.5rem;
   }
 
   > button {
@@ -12,7 +13,7 @@
     padding: 0;
     cursor: pointer;
     width: 1rem;
-    border-radius: 0.25rem;
+    border-radius: 4px;
     background-color: transparent;
     transition: background-color 80ms ease-out;
 
@@ -32,19 +33,19 @@
     background: none;
     border: none;
     padding: 0;
-    border-radius: 0.25rem;
+    border-radius: 4px;
   }
 
   > button:focus-visible,
   > input:focus-visible {
-    outline: 0.15rem dotted black;
+    outline: 2px dotted black;
   }
 
   > .value {
     font-size: 1.25rem;
     text-align: center;
     width: 2rem;
-    padding: 0 1rem;
+    padding-inline: 1rem;
   }
 }
 

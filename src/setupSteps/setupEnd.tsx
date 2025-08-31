@@ -22,7 +22,7 @@ const SetupEndStep: React.FC = () => {
       {stepActive ? (
         <Button
           Icon={RestartIcon}
-          iconLeft={true}
+          iconLeft
           onClick={() => dispatch(resetFlow())}
         >
           <LocaleText i18nKey="label.restartSetup" />

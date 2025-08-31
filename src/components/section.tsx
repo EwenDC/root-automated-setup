@@ -61,11 +61,13 @@ const Section: React.FC<SectionProps> = ({
       {subtitleText && <h3>{subtitleText}.</h3>}
       {textBelowChildren ? children : null}
       {textKey && (
-        <LocaleText
-          i18nKey={textKey}
-          tOptions={translationOptions}
-          components={components}
-        />
+        <div className="text">
+          <LocaleText
+            i18nKey={textKey}
+            tOptions={translationOptions}
+            components={components}
+          />
+        </div>
       )}
       {!textBelowChildren ? children : null}
     </section>

@@ -5,8 +5,8 @@
   max-width: 100%;
   flex-wrap: nowrap;
   overflow: auto;
-  margin: 0.6rem 0rem;
-  border-radius: 1rem;
+  margin-block: 0.6rem;
+  border-radius: 16px;
   /* Scroll Shadow */
   background:
     linear-gradient(90deg, ivory 30%, rgba(255, 255, 255, 0)),
@@ -21,29 +21,24 @@
     top left,
     top right;
   background-size:
-    2.5rem 100%,
-    2.5rem 100%,
-    1.25rem 100%,
-    1.25rem 100%;
+    40px 100%,
+    40px 100%,
+    20px 100%,
+    20px 100%;
   background-attachment: local, local, scroll, scroll;
 
   &:focus-visible {
-    outline: 0.15rem dotted black;
-    border-radius: 1rem;
-  }
-
-  section.inactive & {
-    margin: 0;
+    outline: 2px dotted black;
   }
 
   > button {
     font-size: 1rem;
     flex: 0 0;
     background-color: transparent;
-    border-radius: 1rem;
+    border-radius: 16px;
     cursor: pointer;
-    height: 8rem;
-    margin: 0.4rem;
+    height: calc(5rem + 48px);
+    margin: 6px;
     /* Transitioned properties */
     transition-property: background-color, color, outline, outline-offset, border;
     transition-duration: 80ms;
@@ -63,8 +58,8 @@
     }
 
     > img {
-      width: 3rem;
-      height: 3rem;
+      width: 48px;
+      height: 48px;
       mix-blend-mode: multiply;
       /* Transitioned properties */
       filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
@@ -76,17 +71,17 @@
     /* Enable/Disable All Button */
     &.toggle {
       min-width: 5rem;
-      padding: 0rem 0.25rem;
+      padding-inline: 0.25rem;
       overflow-wrap: break-word;
       color: black;
-      outline: 0.15rem dotted transparent;
-      outline-offset: -0.2rem;
-      border: 0.15rem solid black;
-      border-top: none;
-      border-bottom: none;
+      outline: 2px dotted transparent;
+      outline-offset: -3px;
+      border: 2px solid black;
+      border-block-start: none;
+      border-block-end: none;
 
       &:focus-visible {
-        outline-offset: -0.35rem;
+        outline-offset: -5px;
         outline-color: black;
       }
     }
@@ -94,14 +89,15 @@
     /* Toggle Component Button */
     &:not(.toggle) {
       min-width: 8rem;
-      padding: 0.1rem;
+      padding-block: calc(0.1 * 16px) 0.1rem;
+      padding-inline: 0.1rem;
       color: darkgray;
-      outline: 0.2rem dashed transparent;
+      outline: 3px dashed transparent;
       outline-offset: 0;
-      border: 0.15rem dotted transparent;
+      border: 2px dotted transparent;
 
       &:focus-visible {
-        outline-offset: 0.15rem;
+        outline-offset: 2px;
         border-color: black;
       }
 
@@ -120,14 +116,18 @@
 
       &.locked {
         cursor: auto;
-        outline: 0.15rem solid darkgray;
+        outline: 2px solid darkgray;
       }
     }
   }
 
-  &.large-labels > button > img {
-    width: 2.5rem;
-    height: 2.5rem;
+  &.large-labels > button {
+    height: calc(5.5rem + 40px);
+
+    > img {
+      width: 40px;
+      height: 40px;
+    }
   }
 }
 
@@ -135,20 +135,24 @@
   .component-toggle {
     flex-wrap: wrap;
     overflow: hidden;
-    margin: 0.1rem 0rem;
+    margin-block: 0.1rem;
     background: none;
 
+    section.inactive & {
+      margin-block: 0;
+    }
+
     > button {
-      height: 10rem;
-      margin: 0.9rem;
+      height: calc(4rem + 96px);
+      margin: 14px;
 
       &:hover:not(.locked):not(:disabled) {
         background-color: ivory;
       }
 
       > img {
-        width: 6rem;
-        height: 6rem;
+        width: 96px;
+        height: 96px;
         flex: 0 0;
         margin: 0.5rem auto;
         mix-blend-mode: normal;
@@ -175,9 +179,13 @@
       }
     }
 
-    &.large-labels > button > img {
-      width: 5rem;
-      height: 5rem;
+    &.large-labels > button {
+      height: calc(5rem + 80px);
+
+      > img {
+        width: 80px;
+        height: 80px;
+      }
     }
   }
 }

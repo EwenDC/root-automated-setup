@@ -5,8 +5,9 @@
   max-width: 100%;
   flex-wrap: nowrap;
   overflow: auto;
-  padding: 0.3rem 0;
-  border-radius: 1rem;
+  margin-block-start: 0.6rem;
+  padding-block: 5px;
+  border-radius: 8px;
   /* Scroll Shadow */
   background:
     linear-gradient(90deg, white 30%, rgba(255, 255, 255, 0)),
@@ -28,8 +29,7 @@
   background-attachment: local, local, scroll, scroll;
 
   &:focus-visible {
-    outline: 0.15rem dotted black;
-    border-radius: 1rem;
+    outline: 2px dotted black;
   }
 
   button {
@@ -38,19 +38,19 @@
     display: flex;
     flex-direction: column;
     background: none;
-    border-radius: 1rem;
-    padding: 0.2rem;
+    border-radius: 8px;
+    padding: 3px;
     cursor: pointer;
-    height: 9rem;
+    height: calc(4rem + 80px);
     min-width: 9rem;
     color: black;
-    margin: 0 0.3rem;
+    margin-inline: 5px;
     mix-blend-mode: multiply;
     will-change: opacity;
     /* Transitioned properties */
-    outline: 0.15rem dotted transparent;
-    outline-offset: -0.15rem;
-    border: 0.15rem solid transparent;
+    outline: 2px dotted transparent;
+    outline-offset: -2px;
+    border: 2px solid transparent;
     background-color: white;
     transition-property: outline, outline-offset, border, background-color;
     transition-duration: 80ms;
@@ -58,7 +58,7 @@
 
     &:focus-visible {
       outline-color: black;
-      outline-offset: -0.35rem;
+      outline-offset: -5px;
     }
 
     &.selected {
@@ -113,10 +113,10 @@
     > .image-frame {
       // Position relatively to allow positioning captain images relative to the frame
       position: relative;
-      width: 5rem;
-      height: 5rem;
+      width: 80px;
+      height: 80px;
       flex: 0 0;
-      margin: 0.25rem auto;
+      margin: 4px auto;
 
       > img {
         /* Transitioned properties */
@@ -155,14 +155,14 @@
 
     > .title {
       flex: 1 0;
-      border-radius: 0.5rem;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
 
       > .label {
-        margin: 0 0.1rem;
+        margin-inline: 0.1rem;
 
         > .militant-icon {
           height: 0.75rem;
@@ -171,35 +171,46 @@
     }
   }
 
-  &.large-labels button > .image-frame {
-    width: 4rem;
-    height: 4rem;
+  &.large-labels button {
+    height: calc(5rem + 64px);
+
+    > .image-frame {
+      width: 64px;
+      height: 64px;
+    }
   }
 }
 
 @mixin large-screen {
   .faction-select {
+    border-radius: 16px;
+
     button {
-      height: 10.5rem;
+      height: calc(4.5rem + 96px);
       min-width: 10.5rem;
+      border-radius: 16px;
 
       > .image-frame {
-        width: 6rem;
-        height: 6rem;
+        width: 96px;
+        height: 96px;
       }
 
       > .title {
-        border-radius: 1rem;
+        border-radius: 16px;
 
         > .label {
-          margin: 0 0.25rem;
+          margin-inline: 0.25rem;
         }
       }
     }
 
-    &.large-labels button > .image-frame {
-      width: 5.5rem;
-      height: 5.5rem;
+    &.large-labels button {
+      height: calc(5rem + 88px);
+
+      > .image-frame {
+        width: 88px;
+        height: 88px;
+      }
     }
   }
 }

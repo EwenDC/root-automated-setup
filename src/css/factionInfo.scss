@@ -1,6 +1,7 @@
 .faction-info {
   display: flex;
   flex-direction: column;
+  margin-inline-start: 1.2rem;
 
   > .stat-list,
   .count-list,
@@ -10,7 +11,7 @@
   }
 
   > .stat-list {
-    margin: 0.75rem 0 0.5rem;
+    margin-block: 0.75rem 0.5rem;
     flex-wrap: wrap;
 
     > .group {
@@ -37,7 +38,7 @@
 
   .section-title {
     font-size: 1.17rem;
-    margin: 0.5rem 0;
+    margin-block: 0.5rem;
   }
 }
 
@@ -52,6 +53,10 @@
       > .group {
         flex-direction: column;
       }
+    }
+
+    p {
+      padding-inline-start: 0;
     }
   }
 }

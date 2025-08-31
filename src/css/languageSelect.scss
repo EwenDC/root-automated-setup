@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
-  margin: 0.5rem 0;
+  margin-block: 0.5rem;
 
   > .label {
     display: inline-block;
@@ -13,16 +13,20 @@
     background: none;
     border: 0;
     padding: 0;
-    margin: 0 0.33rem;
+    margin: 0 calc(0.33 * 16px);
     cursor: pointer;
 
+    &:first-of-type {
+      margin-inline-start: 0.33rem;
+    }
+
     > img {
-      margin-top: 0.25rem;
-      height: 1rem;
+      margin-block-start: 0.25rem;
+      height: 16px;
       text-decoration: underline;
-      border-radius: 0.1rem;
+      border-radius: 2px;
       filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(50%);
-      outline: 0.15rem solid transparent;
+      outline: 2px solid transparent;
       transition: outline 80ms ease-out;
 
       &:hover {
@@ -48,19 +52,15 @@
 
 @mixin large-screen {
   .language-select {
-    justify-content: flex-end;
-    margin: -0.5rem 0;
     font-size: 1rem;
 
     > button {
-      margin: 0 0 0 1rem;
-
-      &:last-child {
-        margin-right: 1rem;
+      &:first-of-type {
+        margin-inline-start: 1rem;
       }
 
       > img {
-        height: 1.4rem;
+        height: 22px;
       }
     }
   }

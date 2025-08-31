@@ -16,7 +16,7 @@ const ChooseExpansionsStep: React.FC = () => {
         selector={selectExpansionArray}
         toggleComponent={toggleExpansion}
         getLabelKey={expansion => `expansion.${expansion.code}`}
-        unsorted={true}
+        unsorted
       />
       <Checkbox
         id="includeBotStep"
