@@ -7,6 +7,10 @@ export default {
       true: `Zrównoważone rozmieszczenie symboli polan`,
     },
     changeLanguage: `Zmień język`,
+    chooseVagabonds: {
+      false: `Wszystkie postacie Włóczęgi do wyboru`,
+      true: `Wybierz dostępne postacie Włóczęgi`
+    },
     clearing: {
       fox: `Polana Lisów`,
       mouse: `Polana Myszy`,
@@ -47,6 +51,11 @@ export default {
     specialAction: `Akcja Specjalna`,
     startingItems: `Przedmioty Startowe`,
     startWith: `Zacznij z <StartingItems>, </StartingItems>`,
+    suitMarker: {
+      fox: `Lisia polana`,
+      mouse: `Mysia polana`,
+      rabbit: `Królicza polana`,
+    },
     useDraft: `Użyj wyboru frakcji przez draft`,
     undo: `Cofnij`,
     wealth: `Zasobność w karty`,
@@ -75,6 +84,9 @@ export default {
     landmarkNotEnoughPlayers: `Za mało graczy, aby grać z tym punktem terenu`,
     lockedFaction: `Nie można wybrać ostatniej frakcji, dopóki nie zostanie wybrana frakcja Militarna`,
     mapLandmarkUsed: `Punkt terenu mapy już został uwzględniony w konfiguracji mapy`,
+    missingDeck: `Do przygotowania gry potrzebna jest talia kart! Proszę wybrać pudełko, które ją zawiera`,
+    missingFaction: `Do przygotowania gry potrzebna jest co najmniej jedna frakcja! Proszę wybrać pudełko, które ją zawiera`,
+    missingMap: `Do przygotowania gry potrzebna jest mapa! Proszę wybrać pudełko, które ją zawiera`,
     noDeck: `Nie wybrano żadnej talii! Proszę wybrać przynajmniej jedną talię`,
     noFaction: `Nie wybrano żadnej Frakcji! Proszę wybrać frakcję do gry`,
     noLandmark: `Nie wybrano żadnych punktów terenu! Proszę wybrać przynajmniej jeden punkt terenowy lub ustawić ich liczbę na zero`,
