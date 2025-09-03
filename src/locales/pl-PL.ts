@@ -100,7 +100,7 @@ export default {
       body: `W grupie zdecydujcie, na której mapie chcecie grać. Jeśli wybierzecie wiele map, zostanie wybrana losowa mapa.`,
     },
     setUpMap: {
-      body: `<li>Umieść ruinę w każdym slocie na mapie oznaczonym literą „R” <i>(łącznie cztery)</i>.</li><li>Umieść następujące przedmioty na pasujących polach puli przedmiotów w górnej części mapy: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.</li><li>Umieść dwie kości obok mapy.</li>`,
+      body: `<li>Umieść ruinę w czterech oznaczonych polanach, zakrywając pola oznaczone literą „R”.</li><li>Umieść następujące przedmioty na odpowiednich polach w zasobach przedmiotów w górnej części mapy: 2 <Boot/>, 2 <Bag/>, 1 <Crossbow/>, 1 <Hammer/>, 2 <Sword/>, 2 <Tea/>, 2 <Coin/>.</li><li>Połóż dwie kości bitwy w pobliżu mapy.</li>`,
     },
     chooseDeck: {
       title: `Wybierz i Skonfiguruj Talię`,
