@@ -404,7 +404,7 @@ export default {
       setup: `Gracz {{count}}, weź kartę Zaciężnych, 4 wojowników i kość powstania dla Wiosennego Powstania z pudełka gry. Rzuć kością powstania dwa razy i rozmieść wojownika Powstania w pasujących polanach. Umieść pozostałych wojowników, kość i kartę obok mapy <i>(stroną niezdegradowaną do góry)</i>.`,
       setup_demoted: `Gracz {{count}}, weź kartę Zaciężnych Wiosennego Powstania z pudełka gry. Umieść ją obok mapy stroną zdegradowaną „Króliczy Zwiadowcy” do góry.`,
     },
-    vaultkeepers: {
+    vaultKeepers: {
       name: `Strażnicy Krypty`,
       setupTitle: `Skonfiguruj Strażników Krypty`,
       setupTitle_demoted: `Skonfiguruj Borsuczych Ochroniarzy`,
