@@ -83,6 +83,7 @@ export default {
     hirelingSelected: `Równoważny Zaciężny dla tej frakcji jest już w grze`,
     landmarkNotEnoughPlayers: `Za mało graczy, aby grać z tym punktem terenu`,
     lockedFaction: `Nie można wybrać ostatniej frakcji, dopóki nie zostanie wybrana frakcja Militarna`,
+    mapBotsUnsupported: `Ta mapa nie obsługuje gry z botami.`,
     mapLandmarkUsed: `Punkt terenu mapy już został uwzględniony w konfiguracji mapy`,
     missingDeck: `Do przygotowania gry potrzebna jest talia kart! Proszę wybrać pudełko, które ją zawiera`,
     missingFaction: `Do przygotowania gry potrzebna jest co najmniej jedna frakcja! Proszę wybrać pudełko, które ją zawiera`,
