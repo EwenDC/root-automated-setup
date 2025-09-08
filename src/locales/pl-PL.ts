@@ -355,7 +355,7 @@ export default {
       setup: `Gracz {{count}}, weź kartę Zaciężnych, 8 wojowników i 3 żetony przyczółków dla Słonecznej Ekspedycji z pudełka gry. Rozmieść żeton przyczółka i 3 wojowników Ekspedycji w dowolnej polanie. Umieść pozostałych wojowników, żetony i kartę obok mapy <i>(stroną niezdegradowaną do góry)</i>.`,
       setup_demoted: `Gracz {{count}}, weź kartę Zaciężnych Słonecznej Ekspedycji z pudełka gry. Umieść ją obok mapy stroną zdegradowaną „Kreci Rzemieślnicy” do góry.`,
     },
-    flamebearers: {
+    flameBearers: {
       name: `Powiernicy Ognia`,
       setupTitle: `Skonfiguruj Powierników Ognia`,
       setupTitle_demoted: `Skonfiguruj Szczurzych Szmuglerów`,
