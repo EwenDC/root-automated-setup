@@ -1,17 +1,17 @@
 .captain-info {
-  min-width: 10rem;
+  min-inline-size: 10rem;
   flex: 1 0;
   margin: 0;
 
   > .name {
-    max-width: 16rem;
+    max-inline-size: 16rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     > img {
-      width: 48px;
-      height: 48px;
+      inline-size: 48px;
+      block-size: 48px;
       filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
 
       section.inactive & {
@@ -28,7 +28,7 @@
 
 @mixin large-screen {
   .captain-info > .name > img {
-    width: 80px;
-    height: 80px;
+    inline-size: 80px;
+    block-size: 80px;
   }
 }

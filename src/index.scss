@@ -35,11 +35,11 @@ body {
 }
 
 .loading {
-  width: 10rem;
-  height: 10rem;
+  inline-size: 10rem;
+  block-size: 10rem;
   position: fixed;
-  top: 50%;
-  right: 50%;
+  inset-block-start: 50%;
+  inset-inline-end: 50%;
   margin: calc(-1 * (10rem / 2 + 12px)) calc(-1 * (10rem / 2 + 12px)) 0 0;
   border: 12px solid transparent;
   border-radius: 50%;
@@ -50,8 +50,8 @@ body {
 noscript {
   text-align: center;
   position: fixed;
-  top: 50%;
-  width: 100%;
+  inset-block-start: 50%;
+  inline-size: 100%;
   margin-block-start: 10rem;
 }
 

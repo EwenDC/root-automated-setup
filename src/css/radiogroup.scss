@@ -16,8 +16,8 @@
       flex: none;
       /* Override the default radio appearance */
       appearance: none;
-      width: 18px;
-      height: 18px;
+      inline-size: 18px;
+      block-size: 18px;
       border: 2px solid black;
       border-radius: calc(infinity * 1px);
       transform: translateY(0.16rem);
@@ -54,8 +54,8 @@
 
       &::before {
         content: '';
-        width: 10px;
-        height: 10px;
+        inline-size: 10px;
+        block-size: 10px;
         border-radius: calc(infinity * 1px);
         clip-path: polygon(14% 44%, 0% 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
         box-shadow: inset 1rem 1rem transparent;
@@ -71,7 +71,7 @@
 
     > label {
       cursor: pointer;
-      max-width: 65ch;
+      max-inline-size: 65ch;
       padding-inline-start: 0.5rem;
 
       section.inactive & {
@@ -87,10 +87,10 @@
     gap: 1rem;
 
     .option > label {
-      max-width: 25rem;
+      max-inline-size: 25rem;
 
       section.inactive & {
-        max-width: 65ch;
+        max-inline-size: 65ch;
       }
     }
   }

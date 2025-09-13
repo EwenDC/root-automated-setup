@@ -1,9 +1,10 @@
 main {
-  max-width: 100%;
-  margin: 0 auto 4rem;
+  max-inline-size: 100%;
+  margin-block: 0 4rem;
+  margin-inline: auto;
 
   @media (min-width: calc(65ch * 1.5)) {
-    max-width: calc(65ch * 1.5);
+    max-inline-size: calc(65ch * 1.5);
   }
 }
 

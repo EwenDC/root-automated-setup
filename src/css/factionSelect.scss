@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  max-width: 100%;
+  max-inline-size: 100%;
   flex-wrap: nowrap;
   overflow: auto;
   margin-block-start: 0.6rem;
@@ -41,8 +41,8 @@
     border-radius: 8px;
     padding: 3px;
     cursor: pointer;
-    height: calc(4rem + 80px);
-    min-width: 9rem;
+    block-size: calc(4rem + 80px);
+    min-inline-size: 9rem;
     color: black;
     margin-inline: 5px;
     mix-blend-mode: multiply;
@@ -113,10 +113,11 @@
     > .image-frame {
       // Position relatively to allow positioning captain images relative to the frame
       position: relative;
-      width: 80px;
-      height: 80px;
+      inline-size: 80px;
+      block-size: 80px;
       flex: 0 0;
-      margin: 4px auto;
+      margin-block: 4px;
+      margin-inline: auto;
 
       > img {
         /* Transitioned properties */
@@ -126,28 +127,28 @@
         filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
 
         &.warrior {
-          width: 100%;
-          height: 100%;
+          inline-size: 100%;
+          block-size: 100%;
         }
 
         &.captain {
           position: absolute;
-          width: 33.33%;
-          height: 33.33%;
+          inline-size: 33.33%;
+          block-size: 33.33%;
 
           &:nth-last-child(4),
           &:nth-last-child(3) {
-            top: 30%;
+            inset-block-start: 30%;
           }
           &:nth-last-child(2),
           &:nth-last-child(1) {
-            bottom: 0;
+            inset-block-end: 0;
           }
           &:nth-last-of-type(even) {
-            left: -30%;
+            inset-inline-start: -30%;
           }
           &:nth-last-of-type(odd) {
-            right: -30%;
+            inset-inline-end: -30%;
           }
         }
       }
@@ -159,24 +160,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      inline-size: 100%;
 
       > .label {
         margin-inline: 0.1rem;
 
         > .militant-icon {
-          height: 0.75rem;
+          block-size: 0.75rem;
         }
       }
     }
   }
 
   &.large-labels button {
-    height: calc(5rem + 64px);
+    block-size: calc(5rem + 64px);
 
     > .image-frame {
-      width: 64px;
-      height: 64px;
+      inline-size: 64px;
+      block-size: 64px;
     }
   }
 }
@@ -186,13 +187,13 @@
     border-radius: 16px;
 
     button {
-      height: calc(4.5rem + 96px);
-      min-width: 10.5rem;
+      block-size: calc(4.5rem + 96px);
+      min-inline-size: 10.5rem;
       border-radius: 16px;
 
       > .image-frame {
-        width: 96px;
-        height: 96px;
+        inline-size: 96px;
+        block-size: 96px;
       }
 
       > .title {
@@ -205,11 +206,11 @@
     }
 
     &.large-labels button {
-      height: calc(5rem + 88px);
+      block-size: calc(5rem + 88px);
 
       > .image-frame {
-        width: 88px;
-        height: 88px;
+        inline-size: 88px;
+        block-size: 88px;
       }
     }
   }

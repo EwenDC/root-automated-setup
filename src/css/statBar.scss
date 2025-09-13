@@ -1,5 +1,5 @@
 .stat {
-  min-width: 10rem;
+  min-inline-size: 10rem;
   flex: 1 0;
   border-inline-start: 2px solid black;
   padding-block-end: 0.5rem;
@@ -25,7 +25,7 @@
     padding-inline: 0.25rem 0;
     background-color: lightgray;
     transition: width 0.25s ease-in-out;
-    width: 3rem;
+    inline-size: 3rem;
 
     section.inactive & {
       background-color: whitesmoke;
@@ -33,17 +33,17 @@
   }
 
   > .moderate {
-    width: 6rem;
+    inline-size: 6rem;
   }
 
   > .high {
-    width: 9rem;
+    inline-size: 9rem;
   }
 }
 
 @mixin large-screen {
   .stat {
-    min-width: 14rem;
+    min-inline-size: 14rem;
     flex: 0 0;
     padding-block-end: 0.66rem;
 
@@ -59,15 +59,15 @@
       font-size: 1rem;
       padding-block: 0.25rem 0.2rem;
       padding-inline: 0.33rem 0;
-      width: 4rem;
+      inline-size: 4rem;
     }
 
     > .moderate {
-      width: 8rem;
+      inline-size: 8rem;
     }
 
     > .high {
-      width: 12rem;
+      inline-size: 12rem;
     }
   }
 }

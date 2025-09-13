@@ -10,8 +10,8 @@
     appearance: none;
     display: grid;
     place-content: center;
-    width: 16px;
-    height: 16px;
+    inline-size: 16px;
+    block-size: 16px;
     border: 2px solid black;
     border-radius: 3px;
     transform: translateY(0.2rem);
@@ -47,8 +47,8 @@
 
     &::before {
       content: '';
-      width: 10px;
-      height: 10px;
+      inline-size: 10px;
+      block-size: 10px;
       clip-path: polygon(
         20% 0%,
         0% 20%,
@@ -71,7 +71,7 @@
   }
 
   > label {
-    max-width: 65ch;
+    max-inline-size: 65ch;
     padding-inline-start: 0.55rem;
     cursor: pointer;
   }
