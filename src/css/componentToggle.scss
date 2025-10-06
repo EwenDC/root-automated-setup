@@ -119,19 +119,22 @@
       }
     }
   }
+}
 
-  &.large-labels > button {
-    block-size: calc(5.5rem + 40px);
+@mixin resize-labels($label-size, $icon-size) {
+  > button {
+    block-size: calc($label-size + $icon-size);
 
     > img {
-      inline-size: 40px;
-      block-size: 40px;
+      inline-size: $icon-size;
+      block-size: $icon-size;
     }
   }
 }
 
 @mixin large-screen {
   .component-toggle {
+    @include resize-labels(4rem, 96px);
     flex-wrap: wrap;
     overflow: hidden;
     margin-block: 0.1rem;
@@ -142,7 +145,6 @@
     }
 
     > button {
-      block-size: calc(4rem + 96px);
       margin: 14px;
 
       &:hover:not(.locked):not(:disabled) {
@@ -150,8 +152,6 @@
       }
 
       > img {
-        inline-size: 96px;
-        block-size: 96px;
         flex: 0 0;
         margin-block: 8px 0.5rem;
         margin-inline: auto;
@@ -176,15 +176,6 @@
         min-inline-size: 10rem;
         display: flex;
         flex-direction: column;
-      }
-    }
-
-    &.large-labels > button {
-      block-size: calc(5rem + 80px);
-
-      > img {
-        inline-size: 80px;
-        block-size: 80px;
       }
     }
   }

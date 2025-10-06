@@ -13,6 +13,7 @@ const ChooseExpansionsStep: React.FC = () => {
   return (
     <Section textKey="setupStep.chooseExpansions.body">
       <ComponentToggle
+        className="expansion-toggle"
         selector={selectExpansionArray}
         toggleComponent={toggleExpansion}
         getLabelKey={expansion => `expansion.${expansion.code}`}

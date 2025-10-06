@@ -38,6 +38,7 @@ const ChooseMapStep: React.FC = () => {
       textKey="setupStep.chooseMap.body"
     >
       <ComponentToggle
+        className="map-toggle"
         selector={selectMapArray}
         toggleComponent={toggleMap}
         getLabelKey={map => `map.${map.code}.name`}

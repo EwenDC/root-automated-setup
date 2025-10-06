@@ -16,6 +16,9 @@
 @use 'css/stepList';
 @use 'css/toast';
 @use 'css/toolbar';
+@use 'locales/es-ES';
+@use 'locales/fr-FR';
+@use 'locales/it-IT';
 
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
@@ -77,6 +80,9 @@ noscript {
   @include stepList.large-screen;
   @include toast.large-screen;
   @include toolbar.large-screen;
+  @include es-ES.large-screen;
+  @include fr-FR.large-screen;
+  @include it-IT.large-screen;
 }
 
 @media (prefers-reduced-motion) {

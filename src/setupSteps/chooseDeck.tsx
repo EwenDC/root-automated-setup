@@ -8,6 +8,7 @@ const ChooseDeckStep: React.FC = () => (
     textKey="setupStep.chooseDeck.body"
   >
     <ComponentToggle
+      className="deck-toggle"
       selector={selectDeckArray}
       toggleComponent={toggleDeck}
       getLabelKey={deck => `deck.${deck.code}.name`}

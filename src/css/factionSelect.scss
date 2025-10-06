@@ -171,30 +171,28 @@
       }
     }
   }
+}
 
-  &.large-labels button {
-    block-size: calc(5rem + 64px);
+@mixin with-resized-labels($label-size, $icon-size) {
+  .faction-select button {
+    block-size: calc($label-size + $icon-size);
 
     > .image-frame {
-      inline-size: 64px;
-      block-size: 64px;
+      inline-size: $icon-size;
+      block-size: $icon-size;
     }
   }
 }
 
 @mixin large-screen {
+  @include with-resized-labels(4.5rem, 96px);
+
   .faction-select {
     border-radius: 16px;
 
     button {
-      block-size: calc(4.5rem + 96px);
       min-inline-size: 10.5rem;
       border-radius: 16px;
-
-      > .image-frame {
-        inline-size: 96px;
-        block-size: 96px;
-      }
 
       > .title {
         border-radius: 16px;
@@ -202,15 +200,6 @@
         > .label {
           margin-inline: 0.25rem;
         }
-      }
-    }
-
-    &.large-labels button {
-      block-size: calc(5rem + 88px);
-
-      > .image-frame {
-        inline-size: 88px;
-        block-size: 88px;
       }
     }
   }

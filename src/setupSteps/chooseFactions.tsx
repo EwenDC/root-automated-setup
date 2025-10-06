@@ -36,6 +36,7 @@ const ChooseFactionsStep: React.FC = () => {
         />
       ) : null}
       <ComponentToggle
+        className="faction-toggle"
         selector={selectFactionArray}
         toggleComponent={toggleFaction}
         getLabelKey={faction => `faction.${faction.key}.name`}
@@ -49,6 +50,7 @@ const ChooseFactionsStep: React.FC = () => {
           />
           {limitVagabonds ? (
             <ComponentToggle
+              className="vagabond-toggle"
               selector={selectVagabondArray}
               toggleComponent={toggleVagabond}
               getLabelKey={vagabond => `vagabond.${vagabond.code}.name`}
@@ -65,6 +67,7 @@ const ChooseFactionsStep: React.FC = () => {
           />
           {limitCaptains ? (
             <ComponentToggle
+              className="captain-toggle"
               selector={selectCaptainArray}
               toggleComponent={toggleCaptain}
               getLabelKey={captain => `captain.${captain.code}.name`}
