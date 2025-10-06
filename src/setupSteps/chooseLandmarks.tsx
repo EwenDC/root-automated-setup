@@ -25,6 +25,7 @@ const ChooseLandmarksStep: React.FC = () => {
       />
       {landmarkCount > 0 ? (
         <ComponentToggle
+          className="landmark-toggle"
           selector={selectLandmarkArray}
           toggleComponent={toggleLandmark}
           getLabelKey={landmark => `landmark.${landmark.code}.name`}

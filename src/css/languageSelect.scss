@@ -13,7 +13,8 @@
     background: none;
     border: 0;
     padding: 0;
-    margin: 0 calc(0.33 * 16px);
+    margin-block: 0;
+    margin-inline: calc(0.33 * 16px);
     cursor: pointer;
 
     &:first-of-type {
@@ -22,7 +23,7 @@
 
     > img {
       margin-block-start: 0.25rem;
-      height: 16px;
+      block-size: 16px;
       text-decoration: underline;
       border-radius: 2px;
       filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(50%);
@@ -60,7 +61,7 @@
       }
 
       > img {
-        height: 22px;
+        block-size: 22px;
       }
     }
   }

@@ -1,32 +1,16 @@
 import { defineConfig } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import legacy from '@vitejs/plugin-legacy'
 import react from '@vitejs/plugin-react'
 import svgrPlugin from 'vite-plugin-svgr'
 import { VitePWA } from 'vite-plugin-pwa'
 import million from 'million/compiler'
 import checker from 'vite-plugin-checker'
 
-const staticAssetCacheSettings = {
-  cacheableResponse: {
-    statuses: [0, 200],
-  },
-  expiration: {
-    maxAgeSeconds: 60 * 60 * 24 * 365,
-    maxEntries: 30,
-  },
-}
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     // Only need this so the HTML is minified since Vite doesn't minify it by default :(
     createHtmlPlugin(),
-    legacy({
-      // Support browsers that used to be supported by CRA
-      targets: ['>0.2%', 'not dead', 'not op_mini all'],
-      modernPolyfills: true,
-    }),
     million.vite({ auto: true }),
     react({
       babel: {
@@ -50,8 +34,7 @@ export default defineConfig({
       filename: 'service-worker.js',
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,ico,svg}'],
-        // Don't automatically precache the legacy bundles, as only a small amount of web-worker enabled browsers can't handle ESM
-        globIgnores: ['**/node_modules/**/*', '**/*-legacy-*.js'],
+        globIgnores: ['**/node_modules/**/*'],
         runtimeCaching: [
           // Google fonts cache based on https://developer.chrome.com/docs/workbox/modules/workbox-recipes/#google-fonts-cache
           {
@@ -66,16 +49,13 @@ export default defineConfig({
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-webfonts',
-              ...staticAssetCacheSettings,
-            },
-          },
-          // Cache any JS we need that wasn't precached. This is specifically for those legacy bundles we excluded from precaching
-          {
-            urlPattern: ({ sameOrigin, request }) => sameOrigin && request.destination === 'script',
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'legacy-js',
-              ...staticAssetCacheSettings,
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+              expiration: {
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 30,
+              },
             },
           },
         ],

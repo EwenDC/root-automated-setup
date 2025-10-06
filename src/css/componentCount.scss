@@ -19,8 +19,8 @@
   }
 
   > img {
-    width: 48px;
-    height: 48px;
+    inline-size: 48px;
+    block-size: 48px;
     filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
 
     section.inactive & {
@@ -34,8 +34,8 @@
     flex-direction: row;
 
     > img {
-      width: 80px;
-      height: 80px;
+      inline-size: 80px;
+      block-size: 80px;
       margin-inline-end: 0.5rem;
     }
   }

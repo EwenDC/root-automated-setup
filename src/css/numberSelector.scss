@@ -12,7 +12,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    width: 1rem;
+    inline-size: 1rem;
     border-radius: 4px;
     background-color: transparent;
     transition: background-color 80ms ease-out;
@@ -29,7 +29,7 @@
   > input {
     font-size: 1.25rem;
     text-align: center;
-    width: 2rem;
+    inline-size: 2rem;
     background: none;
     border: none;
     padding: 0;
@@ -44,7 +44,7 @@
   > .value {
     font-size: 1.25rem;
     text-align: center;
-    width: 2rem;
+    inline-size: 2rem;
     padding-inline: 1rem;
   }
 }

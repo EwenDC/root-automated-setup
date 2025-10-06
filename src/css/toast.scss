@@ -1,8 +1,8 @@
 .toast {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,12 +20,13 @@
     justify-content: center;
     align-items: center;
     flex: 1 0;
-    max-width: 80rem;
+    max-inline-size: 80rem;
     padding: 0.33rem;
 
     > .message {
       font-size: 1.5rem;
-      margin: 0.25rem auto;
+      margin-block: 0.25rem;
+      margin-inline: auto;
       padding-inline: 1.35rem;
     }
 
@@ -35,8 +36,8 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      height: 1.35rem;
-      width: 1.35rem;
+      block-size: 1.35rem;
+      inline-size: 1.35rem;
       margin-inline-start: -1.35rem;
       padding: 0.25rem;
       color: black;
@@ -56,7 +57,7 @@
       }
 
       .close-icon {
-        width: 100%;
+        inline-size: 100%;
       }
     }
   }
@@ -66,13 +67,14 @@
   .toast > .container {
     > .message {
       font-size: 2rem;
-      margin: 0.5rem auto;
+      margin-block: 0.5rem;
+      margin-inline: auto;
       padding-inline: 2.25rem;
     }
 
     > button {
-      height: 2.25rem;
-      width: 2.25rem;
+      block-size: 2.25rem;
+      inline-size: 2.25rem;
       margin-inline-start: -2.25rem;
       padding: 0.5rem;
     }

@@ -1,6 +1,6 @@
 import type { UnknownAction } from '@reduxjs/toolkit'
 
-import classNames from 'classnames'
+import classNames, { type Argument } from 'classnames'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -13,6 +13,7 @@ import LocaleText from './localeText'
 import { stepActiveContext } from './stepList'
 
 interface ComponentListProps<T> {
+  className?: Argument
   selector: (state: RootState) => T[]
   toggleComponent: (code: string) => AppThunk | UnknownAction
   getLabelKey: (component: T) => string
@@ -20,6 +21,7 @@ interface ComponentListProps<T> {
 }
 
 const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
+  className,
   selector,
   toggleComponent,
   getLabelKey,
@@ -39,11 +41,10 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
   if (!unsorted) {
     sortedComponents.sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage))
   }
-  const largeLabels = sortedComponents.some(component => component.label.length > 30)
   const allEnabled = sortedComponents.every(component => component.enabled || component.locked)
 
   return (
-    <div className={classNames('component-toggle', { 'large-labels': largeLabels })}>
+    <div className={classNames('component-toggle', className)}>
       {stepActive ? (
         <button
           className="toggle"

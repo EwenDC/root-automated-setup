@@ -1,0 +1,25 @@
+@use '../css/componentToggle';
+@use '../css/factionSelect';
+
+html[lang='pl-PL'] {
+  .expansion-toggle {
+    @include componentToggle.resize-labels(5.5rem, 40px);
+  }
+
+  @include factionSelect.with-resized-labels(5rem, 64px);
+}
+
+@mixin large-screen {
+  html[lang='pl-PL'] {
+    .expansion-toggle {
+      @include componentToggle.resize-labels(6.5rem, 64px);
+    }
+
+    .landmark-toggle,
+    .faction-toggle {
+      @include componentToggle.resize-labels(5rem, 80px);
+    }
+
+    @include factionSelect.with-resized-labels(5rem, 88px);
+  }
+}

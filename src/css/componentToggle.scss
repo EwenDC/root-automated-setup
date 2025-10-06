@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  max-width: 100%;
+  max-inline-size: 100%;
   flex-wrap: nowrap;
   overflow: auto;
   margin-block: 0.6rem;
@@ -37,7 +37,7 @@
     background-color: transparent;
     border-radius: 16px;
     cursor: pointer;
-    height: calc(5rem + 48px);
+    block-size: calc(5rem + 48px);
     margin: 6px;
     /* Transitioned properties */
     transition-property: background-color, color, outline, outline-offset, border;
@@ -58,8 +58,8 @@
     }
 
     > img {
-      width: 48px;
-      height: 48px;
+      inline-size: 48px;
+      block-size: 48px;
       mix-blend-mode: multiply;
       /* Transitioned properties */
       filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
@@ -70,15 +70,14 @@
 
     /* Enable/Disable All Button */
     &.toggle {
-      min-width: 5rem;
+      min-inline-size: 5rem;
       padding-inline: 0.25rem;
       overflow-wrap: break-word;
       color: black;
       outline: 2px dotted transparent;
       outline-offset: -3px;
       border: 2px solid black;
-      border-block-start: none;
-      border-block-end: none;
+      border-block: none;
 
       &:focus-visible {
         outline-offset: -5px;
@@ -88,7 +87,7 @@
 
     /* Toggle Component Button */
     &:not(.toggle) {
-      min-width: 8rem;
+      min-inline-size: 8rem;
       padding-block: calc(0.1 * 16px) 0.1rem;
       padding-inline: 0.1rem;
       color: darkgray;
@@ -120,19 +119,22 @@
       }
     }
   }
+}
 
-  &.large-labels > button {
-    height: calc(5.5rem + 40px);
+@mixin resize-labels($label-size, $icon-size) {
+  > button {
+    block-size: calc($label-size + $icon-size);
 
     > img {
-      width: 40px;
-      height: 40px;
+      inline-size: $icon-size;
+      block-size: $icon-size;
     }
   }
 }
 
 @mixin large-screen {
   .component-toggle {
+    @include resize-labels(4rem, 96px);
     flex-wrap: wrap;
     overflow: hidden;
     margin-block: 0.1rem;
@@ -143,7 +145,6 @@
     }
 
     > button {
-      height: calc(4rem + 96px);
       margin: 14px;
 
       &:hover:not(.locked):not(:disabled) {
@@ -151,10 +152,9 @@
       }
 
       > img {
-        width: 96px;
-        height: 96px;
         flex: 0 0;
-        margin: 0.5rem auto;
+        margin-block: 8px 0.5rem;
+        margin-inline: auto;
         mix-blend-mode: normal;
       }
 
@@ -163,28 +163,19 @@
         display: flex;
         align-items: flex-start;
         justify-content: center;
-        width: 100%;
+        inline-size: 100%;
       }
 
       /* Enable/Disable All Button */
       &.toggle {
-        min-width: 10rem;
+        min-inline-size: 10rem;
       }
 
       /* Toggle Component Button */
       &:not(.toggle) {
-        min-width: 10rem;
+        min-inline-size: 10rem;
         display: flex;
         flex-direction: column;
-      }
-    }
-
-    &.large-labels > button {
-      height: calc(5rem + 80px);
-
-      > img {
-        width: 80px;
-        height: 80px;
       }
     }
   }

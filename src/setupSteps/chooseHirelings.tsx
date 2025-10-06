@@ -35,6 +35,7 @@ const ChooseHirelingsStep: React.FC = () => {
       />
       {!skippedSteps[SetupStep.setUpHireling1] ? (
         <ComponentToggle
+          className="hireling-toggle"
           selector={selectHirelingArray}
           toggleComponent={toggleHireling}
           getLabelKey={hireling => `hireling.${hireling.code}.name`}

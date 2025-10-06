@@ -33,7 +33,6 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
       return { code, factionImage, factionName, militant, captains }
     },
   )
-  const largeLabels = labelledFactionPool.some(faction => faction.factionName.length > 22)
 
   // We use this event handler to simulate the keyboard behavior of a real radio group, to comply with accessibility requirements
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = event => {
@@ -54,9 +53,8 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
       dispatch(setCurrentFactionIndex(newIndex))
 
       if (event.currentTarget.parentNode) {
-        // TypeScript types incorrectly types this as just "Element" instead of "HTMLElement"
-        const selectedHTMLElement = event.currentTarget.parentNode.children[newIndex] as HTMLElement
-        selectedHTMLElement.focus()
+        const selectedElement = event.currentTarget.parentNode.children[newIndex]
+        if (selectedElement instanceof HTMLElement) selectedElement.focus()
       }
     }
   }
@@ -64,7 +62,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
   const lastIndex = factionPoolFull.length - 1
   return (
     <div
-      className={classNames('faction-select', { 'large-labels': largeLabels })}
+      className="faction-select"
       role="radiogroup"
       aria-label={t('setupStep.selectFaction.subtitle')}
       aria-required="true"

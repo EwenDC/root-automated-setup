@@ -36,35 +36,38 @@ const ChooseFactionsStep: React.FC = () => {
         />
       ) : null}
       <ComponentToggle
+        className="faction-toggle"
         selector={selectFactionArray}
         toggleComponent={toggleFaction}
         getLabelKey={faction => `faction.${faction.key}.name`}
       />
-      {useDraft ? (
+      {useDraft && factions.some(faction => faction.dealVagabond && faction.enabled) ? (
         <>
-          {factions.some(faction => faction.dealVagabond && faction.enabled) ? (
-            <Radiogroup
-              id="chooseVagabonds"
-              defaultValue={limitVagabonds}
-              onChange={checked => dispatch(setLimitVagabonds(checked))}
-            />
-          ) : null}
+          <Radiogroup
+            id="chooseVagabonds"
+            defaultValue={limitVagabonds}
+            onChange={checked => dispatch(setLimitVagabonds(checked))}
+          />
           {limitVagabonds ? (
             <ComponentToggle
+              className="vagabond-toggle"
               selector={selectVagabondArray}
               toggleComponent={toggleVagabond}
               getLabelKey={vagabond => `vagabond.${vagabond.code}.name`}
             />
           ) : null}
-          {factions.some(faction => faction.dealCaptains && faction.enabled) ? (
-            <Radiogroup
-              id="chooseCaptains"
-              defaultValue={limitCaptains}
-              onChange={checked => dispatch(setLimitCaptains(checked))}
-            />
-          ) : null}
+        </>
+      ) : null}
+      {useDraft && factions.some(faction => faction.dealCaptains && faction.enabled) ? (
+        <>
+          <Radiogroup
+            id="chooseCaptains"
+            defaultValue={limitCaptains}
+            onChange={checked => dispatch(setLimitCaptains(checked))}
+          />
           {limitCaptains ? (
             <ComponentToggle
+              className="captain-toggle"
               selector={selectCaptainArray}
               toggleComponent={toggleCaptain}
               getLabelKey={captain => `captain.${captain.code}.name`}

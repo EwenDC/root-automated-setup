@@ -24,7 +24,7 @@ section {
   }
 
   ol {
-    max-width: 65ch;
+    max-inline-size: 65ch;
     margin-block: 0.5rem;
     padding-inline-start: 1.2rem;
 
@@ -38,7 +38,7 @@ section {
   }
 
   .text {
-    max-width: 65ch;
+    max-inline-size: 65ch;
     margin-inline-start: 1.2rem;
 
     &.centered {
@@ -47,7 +47,7 @@ section {
   }
 
   p {
-    max-width: 65ch;
+    max-inline-size: 65ch;
     margin-block: 0.5rem;
   }
 }

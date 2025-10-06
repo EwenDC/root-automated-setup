@@ -16,6 +16,10 @@
 @use 'css/stepList';
 @use 'css/toast';
 @use 'css/toolbar';
+@use 'locales/es-ES';
+@use 'locales/fr-FR';
+@use 'locales/it-IT';
+@use 'locales/pl-PL';
 
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
@@ -35,11 +39,11 @@ body {
 }
 
 .loading {
-  width: 10rem;
-  height: 10rem;
+  inline-size: 10rem;
+  block-size: 10rem;
   position: fixed;
-  top: 50%;
-  right: 50%;
+  inset-block-start: 50%;
+  inset-inline-end: 50%;
   margin: calc(-1 * (10rem / 2 + 12px)) calc(-1 * (10rem / 2 + 12px)) 0 0;
   border: 12px solid transparent;
   border-radius: 50%;
@@ -50,8 +54,8 @@ body {
 noscript {
   text-align: center;
   position: fixed;
-  top: 50%;
-  width: 100%;
+  inset-block-start: 50%;
+  inline-size: 100%;
   margin-block-start: 10rem;
 }
 
@@ -77,6 +81,10 @@ noscript {
   @include stepList.large-screen;
   @include toast.large-screen;
   @include toolbar.large-screen;
+  @include es-ES.large-screen;
+  @include fr-FR.large-screen;
+  @include it-IT.large-screen;
+  @include pl-PL.large-screen;
 }
 
 @media (prefers-reduced-motion) {

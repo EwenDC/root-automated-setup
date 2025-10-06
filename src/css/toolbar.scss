@@ -2,20 +2,20 @@ footer {
   display: flex;
   justify-content: center;
   position: fixed;
-  bottom: 0;
-  width: 100%;
+  inset-block-end: 0;
+  inline-size: 100%;
   pointer-events: none;
 
   > .toolbar {
-    width: 80rem;
+    inline-size: 80rem;
     padding: 1rem;
 
     > .left {
-      float: left;
+      float: inline-start;
     }
 
     > .right {
-      float: right;
+      float: inline-end;
     }
 
     > :not(:last-child) {
