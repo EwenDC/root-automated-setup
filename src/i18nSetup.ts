@@ -8,12 +8,14 @@ import EnglishFlag from './images/languages/en-US.svg'
 import SpanishFlag from './images/languages/es-ES.svg'
 import FrenchFlag from './images/languages/fr-FR.svg'
 import ItalianFlag from './images/languages/it-IT.svg'
+import PolishFlag from "./images/languages/pl-PL.svg";
 
 export const languages = [
   { name: 'English', locale: 'en-US', image: EnglishFlag },
   { name: 'Español', locale: 'es-ES', image: SpanishFlag },
   { name: 'Français', locale: 'fr-FR', image: FrenchFlag },
   { name: 'Italiano', locale: 'it-IT', image: ItalianFlag },
+  { name: 'Polski', locale: 'pl-PL', image: PolishFlag },
 ]
 
 // Skip reinitialization on hot reload
