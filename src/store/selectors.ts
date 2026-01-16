@@ -7,7 +7,6 @@ import {
   selectCaptainArray,
   selectDeckArray,
   selectFactionArray,
-  selectHirelingArray,
   selectLandmarkArray,
   selectMapArray,
   selectVagabondArray,
@@ -15,11 +14,6 @@ import {
 import {
   selectSetupClearings,
   selectSetupDeckCode,
-  selectSetupHireling1Entry,
-  selectSetupHireling2Entry,
-  selectSetupHireling3Entry,
-  selectSetupLandmark1Code,
-  selectSetupLandmark2Code,
   selectSetupMapCode,
 } from './slices/setup'
 import { currySelector } from './utils'
@@ -61,53 +55,6 @@ export const selectSetupDeck = createSelector(
   selectSetupDeckCode,
   selectDeckArray,
   (deckCode, deckArray) => deckArray.find(({ code }) => code === deckCode),
-)
-
-/** Returns the object for the first landmark selected in setup. */
-export const selectSetupLandmark1 = createSelector(
-  selectSetupLandmark1Code,
-  selectLandmarkArray,
-  (landmarkCode, landmarkArray) => landmarkArray.find(({ code }) => code === landmarkCode),
-)
-
-/** Returns the object for the second landmark selected in setup. */
-export const selectSetupLandmark2 = createSelector(
-  selectSetupLandmark2Code,
-  selectLandmarkArray,
-  (landmarkCode, landmarkArray) => landmarkArray.find(({ code }) => code === landmarkCode),
-)
-
-/** Returns the object for the first hireling selected in setup. */
-export const selectSetupHireling1 = createSelector(
-  selectSetupHireling1Entry,
-  selectHirelingArray,
-  (hirelingEntry, hirelingArray) =>
-    hirelingEntry && {
-      ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,
-      ...hirelingEntry,
-    },
-)
-
-/** Returns the object for the second hireling selected in setup. */
-export const selectSetupHireling2 = createSelector(
-  selectSetupHireling2Entry,
-  selectHirelingArray,
-  (hirelingEntry, hirelingArray) =>
-    hirelingEntry && {
-      ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,
-      ...hirelingEntry,
-    },
-)
-
-/** Returns the object for the third hireling selected in setup. */
-export const selectSetupHireling3 = createSelector(
-  selectSetupHireling3Entry,
-  selectHirelingArray,
-  (hirelingEntry, hirelingArray) =>
-    hirelingEntry && {
-      ...hirelingArray.find(({ code }) => code === hirelingEntry.code)!,
-      ...hirelingEntry,
-    },
 )
 
 /** Returns the faction pool, with all faction, vagabond, and captain information included. */

@@ -14,7 +14,10 @@ export default defineConfig({
     million.vite({ auto: true }),
     react({
       babel: {
-        plugins: [['babel-plugin-react-compiler', {}]],
+        plugins: [
+          ['@babel/plugin-transform-typescript', { isTSX: true, optimizeConstEnums: true }],
+          ['babel-plugin-react-compiler', {}],
+        ],
       },
     }),
     // Allow importing SVG as react components
@@ -63,7 +66,7 @@ export default defineConfig({
       manifest: {
         name: 'Root Automated Setup',
         short_name: 'Root Auset',
-        description: 'Automate the Advanced Setup process for Leder Games popular board game Root',
+        description: "Automate the Advanced Setup process for Leder Games' popular board game Root",
         theme_color: '#2C2E35',
         background_color: '#FFFFF0',
         icons: [

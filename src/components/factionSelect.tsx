@@ -6,7 +6,7 @@ import type { FlowSlice } from '../types'
 
 import { useAppDispatch, useAppSelector, useInvalid } from '../hooks'
 import MilitantIcon from '../images/icons/militant.svg?react'
-import { selectFactionPoolFull, setCurrentFactionIndex, setErrorMessage } from '../store'
+import { selectFactionPoolFull, setCurrentIndex, setErrorMessage } from '../store'
 import { stepActiveContext } from './stepList'
 
 interface FactionSelectProps {
@@ -14,7 +14,7 @@ interface FactionSelectProps {
 }
 
 const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
-  const { factionPool, factionIndex, lastFactionLocked } = flowSlice
+  const { factionPool, index, lastFactionLocked } = flowSlice
   const factionPoolFull = useAppSelector(selectFactionPoolFull(factionPool))
   const stepActive = useContext(stepActiveContext)
   const invalid = useInvalid(stepActive)
@@ -36,7 +36,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
 
   // We use this event handler to simulate the keyboard behavior of a real radio group, to comply with accessibility requirements
   const onKeyDownHandler: React.KeyboardEventHandler<HTMLButtonElement> = event => {
-    const focusedIndex = factionIndex ?? 0
+    const focusedIndex = index ?? 0
     const maxIndex = factionPoolFull.length - (lastFactionLocked ? 2 : 1)
     let newIndex: number | undefined
 
@@ -50,7 +50,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
 
     if (newIndex != null) {
       event.preventDefault()
-      dispatch(setCurrentFactionIndex(newIndex))
+      dispatch(setCurrentIndex(newIndex))
 
       if (event.currentTarget.parentNode) {
         const selectedElement = event.currentTarget.parentNode.children[newIndex]
@@ -70,72 +70,76 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
       aria-errormessage={invalid ? 'appError' : undefined}
       aria-disabled={!stepActive}
     >
-      {labelledFactionPool.map(({ code, factionImage, factionName, militant, captains }, index) => (
-        <button
-          key={code}
-          className={classNames({
-            militant: militant,
-            selected: index === factionIndex,
-            locked: lastFactionLocked && index === lastIndex,
-          })}
-          onClick={() => {
-            if (index !== factionIndex) {
-              if (!lastFactionLocked || index < lastIndex) {
-                dispatch(setCurrentFactionIndex(index))
-              } else {
-                dispatch(setErrorMessage('error.lockedFaction'))
+      {labelledFactionPool.map(
+        ({ code, factionImage, factionName, militant, captains }, factionIndex) => (
+          <button
+            key={code}
+            className={classNames({
+              militant: militant,
+              selected: factionIndex === index,
+              locked: lastFactionLocked && factionIndex === lastIndex,
+            })}
+            onClick={() => {
+              if (factionIndex !== index) {
+                if (!lastFactionLocked || factionIndex < lastIndex) {
+                  dispatch(setCurrentIndex(factionIndex))
+                } else {
+                  dispatch(setErrorMessage('error.lockedFaction'))
+                }
               }
+            }}
+            disabled={!stepActive}
+            title={
+              stepActive && lastFactionLocked && factionIndex === lastIndex
+                ? t('error.lockedFaction')
+                : undefined
             }
-          }}
-          disabled={!stepActive}
-          title={
-            stepActive && lastFactionLocked && index === lastIndex
-              ? t('error.lockedFaction')
-              : undefined
-          }
-          role="radio"
-          aria-checked={index === factionIndex}
-          aria-disabled={stepActive ? lastFactionLocked && index === lastIndex : undefined}
-          aria-label={
-            stepActive ? `${factionName}${militant ? ` (${t('label.militant')})` : ''}` : undefined
-          }
-          // We have to override the tabbing logic to meet the standard of role "radio"
-          tabIndex={stepActive ? (index === (factionIndex ?? 0) ? 0 : -1) : undefined}
-          onKeyDown={onKeyDownHandler}
-        >
-          <div className="image-frame">
-            <img
-              className="warrior"
-              src={factionImage}
-              alt="" // We're including the alt text in the button itself so don't bother reading out the image
-              aria-hidden="true"
-            />
-            {captains.map(({ code: captainCode, image }) => (
-              // Give a preview of the captain options (accessible users will need to select the faction to see this info)
+            role="radio"
+            aria-checked={factionIndex === index}
+            aria-disabled={stepActive ? lastFactionLocked && factionIndex === lastIndex : undefined}
+            aria-label={
+              stepActive
+                ? `${factionName}${militant ? ` (${t('label.militant')})` : ''}`
+                : undefined
+            }
+            // We have to override the tabbing logic to meet the standard of role "radio"
+            tabIndex={stepActive ? (factionIndex === (index ?? 0) ? 0 : -1) : undefined}
+            onKeyDown={onKeyDownHandler}
+          >
+            <div className="image-frame">
               <img
-                className="captain"
-                key={captainCode}
-                src={image}
-                alt=""
+                className="warrior"
+                src={factionImage}
+                alt="" // We're including the alt text in the button itself so don't bother reading out the image
                 aria-hidden="true"
               />
-            ))}
-          </div>
-          <div className="title">
-            <span className="label">
-              {militant ? (
-                <>
-                  <MilitantIcon
-                    className="militant-icon"
-                    title={t('label.militant')}
-                  />{' '}
-                </>
-              ) : null}
-              {factionName}
-            </span>
-          </div>
-        </button>
-      ))}
+              {captains.map(({ code: captainCode, image }) => (
+                // Give a preview of the captain options (accessible users will need to select the faction to see this info)
+                <img
+                  className="captain"
+                  key={captainCode}
+                  src={image}
+                  alt=""
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+            <div className="title">
+              <span className="label">
+                {militant ? (
+                  <>
+                    <MilitantIcon
+                      className="militant-icon"
+                      title={t('label.militant')}
+                    />{' '}
+                  </>
+                ) : null}
+                {factionName}
+              </span>
+            </div>
+          </button>
+        ),
+      )}
     </div>
   )
 }

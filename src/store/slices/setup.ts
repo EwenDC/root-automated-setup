@@ -14,6 +14,17 @@ import type {
   WithCode,
 } from '../../types'
 
+import {
+  HIRELING_SETUP_COUNT,
+  LEGACY_SETTING_INCLUDE_HIRELINGS,
+  MAX_LANDMARKS,
+  SETTING_BALANCED_SUITS,
+  SETTING_FIXED_FIRST_PLAYER,
+  SETTING_HIRELING_COUNT,
+  SETTING_INCLUDE_BOTS,
+  SETTING_LANDMARK_COUNT,
+  SETTING_PLAYER_COUNT,
+} from '../../constants'
 import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
 import { toggleExpansion } from './components'
 
@@ -28,6 +39,7 @@ export interface SetupState {
   playerCount: number
   fixedFirstPlayer: boolean
   playerOrder: number[]
+  includeBots: boolean
   errorMessage: string | null
   // Map
   map: MapCode | null
@@ -36,13 +48,11 @@ export interface SetupState {
   // Deck
   deck: DeckCode | null
   // Landmarks
-  landmarkCount: 0 | 1 | 2
-  landmark1: LandmarkCode | null
-  landmark2: LandmarkCode | null
+  landmarkCount: number
+  landmarks: LandmarkCode[]
   // Hirelings
-  hireling1: HirelingEntry | null
-  hireling2: HirelingEntry | null
-  hireling3: HirelingEntry | null
+  hirelingCount: number
+  hirelings: HirelingEntry[]
   // Factions
   excludedFactions: FactionCode[]
   limitVagabonds: boolean
@@ -52,30 +62,39 @@ export interface SetupState {
 export const setupSlice = createSlice({
   name: 'setup',
 
-  initialState: (): SetupState => ({
-    playerCount: loadPersistedSetting<number>('playerCount', 4),
-    fixedFirstPlayer: loadPersistedSetting<boolean>('fixedFirstPlayer', false),
-    playerOrder: [],
-    errorMessage: null,
-    // Map
-    map: null,
-    balancedSuits: loadPersistedSetting<boolean>('balancedSuits', false),
-    clearings: [],
-    // Deck
-    deck: null,
-    // Landmarks
-    landmarkCount: loadPersistedSetting<0 | 1 | 2>('landmarkCount', 0),
-    landmark1: null,
-    landmark2: null,
-    // Hirelings
-    hireling1: null,
-    hireling2: null,
-    hireling3: null,
-    // Factions
-    excludedFactions: [],
-    limitVagabonds: false,
-    limitCaptains: false,
-  }),
+  initialState: (): SetupState => {
+    // Migrate old "include hirelings" setting to "hireling count" setting
+    let defaultHirelingCount = 0
+    const includeHirelings = localStorage.getItem(LEGACY_SETTING_INCLUDE_HIRELINGS)
+    if (includeHirelings != null) {
+      if (includeHirelings === JSON.stringify(true)) defaultHirelingCount = HIRELING_SETUP_COUNT
+      localStorage.removeItem(LEGACY_SETTING_INCLUDE_HIRELINGS)
+    }
+
+    return {
+      playerCount: loadPersistedSetting<number>(SETTING_PLAYER_COUNT, 4),
+      fixedFirstPlayer: loadPersistedSetting<boolean>(SETTING_FIXED_FIRST_PLAYER, false),
+      playerOrder: [],
+      includeBots: loadPersistedSetting<boolean>(SETTING_INCLUDE_BOTS, false),
+      errorMessage: null,
+      // Map
+      map: null,
+      balancedSuits: loadPersistedSetting<boolean>(SETTING_BALANCED_SUITS, false),
+      clearings: [],
+      // Deck
+      deck: null,
+      // Landmarks
+      landmarkCount: loadPersistedSetting<number>(SETTING_LANDMARK_COUNT, 0),
+      landmarks: [],
+      // Hirelings
+      hirelingCount: loadPersistedSetting(SETTING_HIRELING_COUNT, defaultHirelingCount),
+      hirelings: [],
+      // Factions
+      excludedFactions: [],
+      limitVagabonds: false,
+      limitCaptains: false,
+    }
+  },
 
   reducers: {
     setPlayerCount(state, { payload: playerCount }: PayloadAction<number>) {
@@ -83,7 +102,7 @@ export const setupSlice = createSlice({
       if (playerCount >= 1) {
         state.playerCount = playerCount
         state.errorMessage = null
-        savePersistedSetting('playerCount', playerCount)
+        savePersistedSetting(SETTING_PLAYER_COUNT, playerCount)
       } else {
         console.warn(
           `Invalid payload for setPlayerCount action: ${playerCount} (Payload must be a number above 0)`,
@@ -94,7 +113,7 @@ export const setupSlice = createSlice({
     fixFirstPlayer(state, { payload: fixedFirstPlayer }: PayloadAction<boolean>) {
       state.fixedFirstPlayer = fixedFirstPlayer
       state.errorMessage = null
-      savePersistedSetting('fixedFirstPlayer', fixedFirstPlayer)
+      savePersistedSetting(SETTING_FIXED_FIRST_PLAYER, fixedFirstPlayer)
     },
 
     setFirstPlayer(state, { payload: firstPlayer }: PayloadAction<number>) {
@@ -115,6 +134,12 @@ export const setupSlice = createSlice({
       }
     },
 
+    setIncludeBots(state, { payload: includeBots }: PayloadAction<boolean>) {
+      state.includeBots = includeBots
+      state.errorMessage = null
+      savePersistedSetting(SETTING_INCLUDE_BOTS, includeBots)
+    },
+
     setErrorMessage(state, { payload: errorMessage }: PayloadAction<string | null>) {
       state.errorMessage = errorMessage
     },
@@ -131,7 +156,7 @@ export const setupSlice = createSlice({
     balanceMapSuits(state, { payload: balancedSuits }: PayloadAction<boolean>) {
       state.balancedSuits = balancedSuits
       state.errorMessage = null
-      savePersistedSetting('balancedSuits', balancedSuits)
+      savePersistedSetting(SETTING_BALANCED_SUITS, balancedSuits)
     },
 
     setDeck(state, { payload }: PayloadAction<CodeObject>) {
@@ -140,74 +165,59 @@ export const setupSlice = createSlice({
     },
 
     setLandmarkCount(state, { payload: landmarkCount }: PayloadAction<number>) {
-      // We use === instead of >= or <= to ensure typescript can infer the correct payload type
-      if (landmarkCount === 0 || landmarkCount === 1 || landmarkCount === 2) {
+      if (landmarkCount >= 0 && landmarkCount <= MAX_LANDMARKS) {
         state.landmarkCount = landmarkCount
         state.errorMessage = null
-        savePersistedSetting('landmarkCount', landmarkCount)
+        savePersistedSetting(SETTING_LANDMARK_COUNT, landmarkCount)
       } else {
         console.warn(
-          `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and 2)`,
+          `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and ${MAX_LANDMARKS})`,
         )
       }
     },
 
-    setLandmark1(state, { payload }: PayloadAction<CodeObject>) {
-      const { code: landmarkCode } = payload
+    setLandmarks(state, { payload: landmarks }: PayloadAction<LandmarkCode[]>) {
+      state.landmarks = landmarks
+    },
 
-      if (state.landmarkCount >= 1) {
-        state.landmark1 = landmarkCode
+    setHirelingCount(state, { payload: hirelingCount }: PayloadAction<number>) {
+      if (hirelingCount === 0 || hirelingCount === HIRELING_SETUP_COUNT) {
+        state.hirelingCount = hirelingCount
+        state.errorMessage = null
+        savePersistedSetting(SETTING_HIRELING_COUNT, hirelingCount)
       } else {
         console.warn(
-          'Invalid setLandmark1 action: Cannot set landmark 1 when landmark count less than 1',
+          `Invalid payload for setHirelingCount action: ${hirelingCount} (Payload must either be 0 or ${HIRELING_SETUP_COUNT})`,
         )
       }
     },
 
-    setLandmark2(state, { payload }: PayloadAction<CodeObject>) {
-      const { code: landmarkCode } = payload
-
-      if (state.landmarkCount >= 2) {
-        state.landmark2 = landmarkCode
-      } else {
-        console.warn(
-          'Invalid setLandmark2 action: Cannot set landmark 2 when landmark count less than 2',
-        )
-      }
-    },
-
-    setHireling: {
-      prepare: (
-        number: number,
-        hireling: WithCode<FactionExcludingComponent>,
-        demoted: boolean,
-      ) => ({
-        payload: [
-          number,
-          { code: hireling.code, demoted },
-          hireling.excludeFactions ?? [],
-        ] as const,
-      }),
-      reducer(state, { payload }: PayloadAction<readonly [number, HirelingEntry, FactionCode[]]>) {
-        const [number, hirelingEntry, excludeFactions] = payload
-
-        if (number >= 1 && number <= 3) {
-          if (number === 1) state.hireling1 = hirelingEntry
-          if (number === 2) state.hireling2 = hirelingEntry
-          if (number === 3) state.hireling3 = hirelingEntry
-          state.excludedFactions.push(...excludeFactions)
-        } else {
-          console.warn(
-            'Invalid payload for setHireling action:',
-            payload,
-            '("number" must be a number between 1 and 3)',
-          )
-        }
-      },
-    },
-
-    clearExcludedFactions(state) {
+    clearHirelingState(state) {
+      state.hirelings = []
       state.excludedFactions = []
+    },
+
+    addHireling: {
+      prepare: (hireling: WithCode<FactionExcludingComponent>) => ({
+        payload: [hireling.code, hireling.excludeFactions] as const,
+      }),
+      reducer(
+        state,
+        { payload }: PayloadAction<readonly [HirelingCode, FactionCode[] | undefined]>,
+      ) {
+        const [hirelingCode, excludeFactions] = payload
+        const existingHirelingCount = state.hirelings.length
+
+        state.hirelings.push({
+          code: hirelingCode,
+          // 2 players - 0 demoted
+          // 3 players - 1 demoted
+          // 4 players - 2 demoted
+          // 5+ players - 3 demoted
+          demoted: state.playerCount + existingHirelingCount > 4,
+        })
+        if (excludeFactions) state.excludedFactions.push(...excludeFactions)
+      },
     },
 
     setLimitVagabonds(state, { payload: limitVagabonds }: PayloadAction<boolean>) {
@@ -228,11 +238,8 @@ export const setupSlice = createSlice({
         state.map = null
         state.clearings = []
         state.deck = null
-        state.landmark1 = null
-        state.landmark2 = null
-        state.hireling1 = null
-        state.hireling2 = null
-        state.hireling3 = null
+        state.landmarks = []
+        state.hirelings = []
         state.errorMessage = null
       })
       // This allows us to always reset the displayed error if the user makes a separate input
@@ -248,15 +255,9 @@ export const setupSlice = createSlice({
 
     selectSetupDeckCode: state => state.deck,
 
-    selectSetupHireling1Entry: state => state.hireling1,
+    selectSetupHirelings: state => state.hirelings,
 
-    selectSetupHireling2Entry: state => state.hireling2,
-
-    selectSetupHireling3Entry: state => state.hireling3,
-
-    selectSetupLandmark1Code: state => state.landmark1,
-
-    selectSetupLandmark2Code: state => state.landmark2,
+    selectSetupLandmarks: state => state.landmarks,
 
     selectSetupMapCode: state => state.map,
   },
@@ -271,24 +272,22 @@ export const {
   setClearings,
   balanceMapSuits,
   setDeck,
+  setIncludeBots,
   setLandmarkCount,
-  setLandmark1,
-  setLandmark2,
+  setLandmarks,
   setLimitCaptains,
   setLimitVagabonds,
-  setHireling,
-  clearExcludedFactions,
+  setHirelingCount,
+  clearHirelingState,
+  addHireling,
 } = setupSlice.actions
 
 export const {
   selectTwoPlayer,
   selectSetupClearings,
   selectSetupDeckCode,
-  selectSetupHireling1Entry,
-  selectSetupHireling2Entry,
-  selectSetupHireling3Entry,
-  selectSetupLandmark1Code,
-  selectSetupLandmark2Code,
+  selectSetupHirelings,
+  selectSetupLandmarks,
   selectSetupMapCode,
 } = setupSlice.selectors
 

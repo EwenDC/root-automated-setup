@@ -252,11 +252,8 @@ export interface MapInfo extends ComponentInfo {
   useLandmark?: boolean
 }
 
-/**
- * An ordered enum of the individual steps in the setup process. The setup process will step through
- * this list during execution.
- */
-export enum SetupStep {
+/** An enum of the individual steps in the setup process. */
+export const enum SetupStep {
   chooseExpansions,
   seatPlayers,
   chooseMap,
@@ -265,12 +262,9 @@ export enum SetupStep {
   setUpDeck,
   setUpBots,
   chooseLandmarks,
-  setUpLandmark1,
-  setUpLandmark2,
+  setUpLandmark,
   chooseHirelings,
-  setUpHireling1,
-  setUpHireling2,
-  setUpHireling3,
+  setUpHireling,
   postHirelingSetup,
   drawCards,
   chooseFactions,
@@ -299,8 +293,8 @@ export interface FlowSlice {
   factionPool: FactionEntry[]
   lastFactionLocked: boolean
   vagabondSetUp: boolean
-  playerIndex: number
-  factionIndex: number | null
+  playerIndex: number | null
+  index: number | null
 }
 
 //#endregion

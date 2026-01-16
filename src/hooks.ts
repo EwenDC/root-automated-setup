@@ -4,7 +4,7 @@ import { createContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import type { AppDispatch, RootState } from './store'
-import type { Faction, Vagabond, WithCode } from './types'
+import type { Faction, FlowSlice, Vagabond, WithCode } from './types'
 
 export const selectedFactionContext = createContext<
   (Faction & { vagabond: WithCode<Vagabond> | undefined; captains: WithCode<Vagabond>[] }) | null
@@ -13,19 +13,11 @@ export const selectedFactionContext = createContext<
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
-/** Returns a function for returning the player number for a specified point in turn order. */
-export const useNthLastPlayer = () => {
+/** Returns the number for the player that is current for the given flow slice. */
+export const usePlayerNumber = ({ playerIndex }: FlowSlice) => {
   const playerOrder = useAppSelector(state => state.setup.playerOrder)
-  return (position: number) => {
-    if (playerOrder.length > 0) {
-      let index = -position
-      do {
-        index += playerOrder.length
-      } while (index < 0)
-      return playerOrder[index]
-    }
-    return 0
-  }
+  if (playerIndex == null) return 0
+  return playerOrder[playerIndex] ?? 0
 }
 
 /**

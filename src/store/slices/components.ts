@@ -42,29 +42,29 @@ const addExpansionComponents = (
 ) => {
   for (const componentType of COMPONENT_TYPES) {
     const componentList = expansionContent[componentType]
-    if (componentList) {
-      for (const [componentCode, componentData] of typedEntries(componentList)) {
-        const componentInfo: MapInfo = {
-          enabled: loadPersistedSetting(
-            `${componentType}.${componentCode}`,
-            !componentData.defaultDisabled,
-          ),
-          locked: false,
-          expansionCode,
-        }
-        if ('defaultSuits' in componentData)
-          componentInfo.fixedSuits = loadPersistedSetting<boolean>(
-            `${componentType}.${componentCode}.${FIXED_SUIT_KEY}`,
-            false,
-          )
-        if ('landmark' in componentData)
-          componentInfo.useLandmark = loadPersistedSetting<boolean>(
-            `${componentType}.${componentCode}.${USE_LANDMARK_KEY}`,
-            true,
-          )
+    if (!componentList) continue
 
-        state[componentType][componentCode] = componentInfo
+    for (const [componentCode, componentData] of typedEntries(componentList)) {
+      const componentInfo: MapInfo = {
+        enabled: loadPersistedSetting(
+          `${componentType}.${componentCode}`,
+          !componentData.defaultDisabled,
+        ),
+        locked: false,
+        expansionCode,
       }
+      if ('defaultSuits' in componentData)
+        componentInfo.fixedSuits = loadPersistedSetting<boolean>(
+          `${componentType}.${componentCode}.${FIXED_SUIT_KEY}`,
+          false,
+        )
+      if ('landmark' in componentData)
+        componentInfo.useLandmark = loadPersistedSetting<boolean>(
+          `${componentType}.${componentCode}.${USE_LANDMARK_KEY}`,
+          true,
+        )
+
+      state[componentType][componentCode] = componentInfo
     }
   }
 }
@@ -111,7 +111,8 @@ export const componentsSlice = createSlice({
 
         if (expansion.enabled) {
           // The expansion was just enabled, add it's components to our component list. We know the
-          // expansion content will exist because we used `content` to create the expansion state.
+          // expansion content will exist because we used componentDefinitions to create the
+          // expansion state.
           addExpansionComponents(state, expansionCode, definitions[expansionCode]!)
         } else {
           // The expansion was just disabled, delete any components that came from it

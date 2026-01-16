@@ -68,7 +68,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({ id, value, minVal, maxV
           />
           <button
             onClick={() => {
-              buttonHandler(+1)
+              buttonHandler(1)
             }}
           >
             +

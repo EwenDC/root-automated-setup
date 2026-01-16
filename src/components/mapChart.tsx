@@ -2,13 +2,12 @@ import { useAppSelector } from '../hooks'
 import priorityToken from '../images/charts/markers/priority.svg'
 import ruinBuilding from '../images/charts/markers/ruin.png'
 import { selectSetupMap } from '../store'
-import { SetupStep } from '../types'
 import { iconDict } from './icon'
 import LocaleText from './localeText'
 
 const MapChart: React.FC = () => {
   const map = useAppSelector(selectSetupMap)
-  const skippedSteps = useAppSelector(state => state.flow.skippedSteps)
+  const includeBots = useAppSelector(state => state.setup.includeBots)
 
   if (!map) return null
 
@@ -76,7 +75,7 @@ const MapChart: React.FC = () => {
             </image>
           ) : null}
 
-          {!skippedSteps[SetupStep.setUpBots] && map.botPriorities ? (
+          {includeBots && map.botPriorities ? (
             <g>
               <title>
                 <LocaleText

@@ -1,17 +1,19 @@
 import { useTranslation } from 'react-i18next'
 
-import LocaleText from '../components/localeText'
-import MapChart from '../components/mapChart'
-import Section from '../components/section'
-import { STANDARD_MAP_SIZE } from '../constants'
-import { useAppSelector } from '../hooks'
-import { selectSetupMap } from '../store'
-import { SetupStep } from '../types'
+import type { SetupStepComponent, SetupStepDefinition } from '..'
 
-const SetUpMapStep: React.FC = () => {
+import LocaleText from '../../components/localeText'
+import MapChart from '../../components/mapChart'
+import Section from '../../components/section'
+import { STANDARD_MAP_SIZE } from '../../constants'
+import { useAppSelector } from '../../hooks'
+import { selectSetupMap } from '../../store'
+import { SetupStep } from '../../types'
+
+const SetUpMapStep: SetupStepComponent = () => {
   const { t } = useTranslation()
   const setupMap = useAppSelector(selectSetupMap)
-  const skippedSteps = useAppSelector(state => state.flow.skippedSteps)
+  const includeBots = useAppSelector(state => state.setup.includeBots)
 
   if (!setupMap) return null
 
@@ -19,8 +21,8 @@ const SetUpMapStep: React.FC = () => {
   if (setupMap.clearings.length > STANDARD_MAP_SIZE) {
     markerKey = setupMap.clearings.some(clearing => clearing.flooded) ? 'floodSuit' : 'landmarkSuit'
   } else if (!setupMap.fixedSuits || !setupMap.printedSuits) {
-    markerKey = skippedSteps[SetupStep.setUpBots] ? 'suit' : 'suitPriority'
-  } else if (!skippedSteps[SetupStep.setUpBots]) {
+    markerKey = includeBots ? 'suitPriority' : 'suit'
+  } else if (includeBots) {
     markerKey = 'priority'
   }
 
@@ -50,4 +52,7 @@ const SetUpMapStep: React.FC = () => {
   )
 }
 
-export default SetUpMapStep
+export const setUpMap: SetupStepDefinition = {
+  component: SetUpMapStep,
+  afterStep: () => SetupStep.chooseDeck,
+}

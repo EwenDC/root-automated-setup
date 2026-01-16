@@ -1,9 +1,9 @@
 import { createContext } from 'react'
 
 import { useAppSelector } from '../hooks'
+import { StepSwitch } from '../setupSteps'
 import { selectFlowSlice } from '../store'
 import LanguageSelect from './languageSelect'
-import StepSwitch from './stepSwitch'
 
 export const stepActiveContext = createContext(false)
 
