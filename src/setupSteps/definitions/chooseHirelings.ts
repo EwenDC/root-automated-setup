@@ -55,6 +55,11 @@ export const chooseHirelings: SetupStepDefinition = {
   afterStep(dispatch, getState) {
     const state = getState()
 
+    // Clear state of any potential stale data. Do this first so it always happens even if hireling setup is skipped
+    if (state.setup.hirelings.length > 0 || state.setup.excludedFactions.length > 0) {
+      dispatch(clearHirelingState())
+    }
+
     // Bail out if no hirelings are to be included
     if (state.setup.hirelingCount < 1) {
       return SetupStep.drawCards

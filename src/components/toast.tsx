@@ -29,6 +29,7 @@ const Toast: React.FC = () => {
           {cachedMessage && t(cachedMessage)}.
         </span>
         <button
+          type="button"
           title={t('label.closeMessage')}
           onClick={() => dispatch(setErrorMessage(null))}
         >

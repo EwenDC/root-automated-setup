@@ -30,6 +30,9 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
   const dispatch = useAppDispatch()
   const { t, i18n } = useTranslation()
 
+  const allEnabled = components.every(component => component.enabled || component.locked)
+  const showReset = components.some(component => component.defaultDisabled && !component.locked)
+
   const sortedComponents = components.map(component => ({
     ...component,
     label: t(getLabelKey(component)),
@@ -38,7 +41,6 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
   if (!unsorted) {
     sortedComponents.sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage))
   }
-  const allEnabled = sortedComponents.every(component => component.enabled || component.locked)
 
   return (
     <div className="component-toggle">
@@ -52,6 +54,22 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
           >
             <LocaleText i18nKey={allEnabled ? 'label.disableAll' : 'label.enableAll'} />
           </button>
+          {showReset ? (
+            <button
+              type="button"
+              onClick={() => {
+                dispatch(
+                  massComponentToggle(
+                    selector,
+                    component => !component.defaultDisabled,
+                    toggleComponent,
+                  ),
+                )
+              }}
+            >
+              <LocaleText i18nKey="label.reset" />
+            </button>
+          ) : null}
         </div>
       ) : null}
       <div className="components">

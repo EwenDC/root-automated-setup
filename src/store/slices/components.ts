@@ -90,9 +90,10 @@ export const componentsSlice = createSlice({
         !expansion.defaultDisabled,
       )
       initialState.expansions[expansionCode] = {
+        defaultDisabled: expansion.defaultDisabled,
         enabled,
-        locked: false,
         image: expansion.image,
+        locked: false,
       }
       // Add expansion components to state if the expansion is enabled
       if (enabled) addExpansionComponents(initialState, expansionCode, expansion)

@@ -57,6 +57,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({
       </label>
       {stepActive ? (
         <button
+          type="button"
           onClick={() => {
             buttonHandler(-1)
           }}
@@ -76,6 +77,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({
       />
       {stepActive ? (
         <button
+          type="button"
           onClick={() => {
             buttonHandler(1)
           }}

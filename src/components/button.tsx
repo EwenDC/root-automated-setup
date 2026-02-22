@@ -24,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
+      type="button"
       {...props}
       ref={ref}
       className={classNames('button', { disabled }, className)}

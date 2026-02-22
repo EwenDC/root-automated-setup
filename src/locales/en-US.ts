@@ -54,6 +54,7 @@ export default {
     priority: `Priority {{count}}`,
     rabbit: `Rabbit`,
     redo: `Redo`,
+    reset: `Reset`,
     restartSetup: `Restart Setup`,
     ruin: `Ruin`,
     specialAction: `Special Action`,

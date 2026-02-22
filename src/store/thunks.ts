@@ -18,13 +18,15 @@ import { setCurrentPlayerIndex } from './slices/flow'
 export const massComponentToggle =
   <T extends Togglable>(
     selectComponentArray: (state: RootState) => WithCode<T>[],
-    enabled: boolean,
+    enabled: ((component: WithCode<T>) => boolean) | boolean,
     toggleComponent: (code: string) => AppThunk | UnknownAction,
   ): AppThunk =>
   (dispatch, getState) => {
     selectComponentArray(getState()).forEach(component => {
+      // Determine the desired enable state for the component
+      const desiredEnabled = typeof enabled === 'function' ? enabled(component) : enabled
       // If the component is not locked and does not match the desired enable state, then toggle it
-      if (!component.locked && component.enabled !== enabled) {
+      if (!component.locked && component.enabled !== desiredEnabled) {
         dispatch(toggleComponent(component.code))
       }
     })
