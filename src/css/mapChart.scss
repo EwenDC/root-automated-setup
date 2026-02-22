@@ -1,27 +1,31 @@
+@use 'section';
+
 .map {
+  @include section.heading-width;
   display: block;
-  max-inline-size: 800px;
 
   .background {
-    inline-size: 100%;
     block-size: 100%;
-    opacity: 0.5;
+    inline-size: 100%;
     mix-blend-mode: multiply;
+    opacity: 0.5;
   }
 
   #flooded-mask {
     mask-type: alpha;
   }
 
-  image.landmark {
-    filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
-  }
-
-  section.inactive & image {
-    filter: grayscale(100%);
+  image {
+    section.inactive & {
+      filter: grayscale(100%);
+    }
 
     &.landmark {
-      filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
+      filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
+
+      section.inactive & {
+        filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
+      }
     }
   }
 }

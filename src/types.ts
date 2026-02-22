@@ -1,10 +1,16 @@
-/** A utility type for extracting the value types of a provided `Record`-like object. */
-export type ValueOf<T> = NonNullable<T>[keyof T]
-
 /** An object with an associated code. */
 export interface CodeObject {
   code: string
 }
+
+export type DeepReadonly<T> = T extends object
+  ? {
+      readonly [K in keyof T]: DeepReadonly<T[K]>
+    }
+  : T
+
+/** A utility type for extracting the value types of a provided `Record`-like object. */
+export type ValueOf<T> = NonNullable<T>[keyof T]
 
 /** Adds the field "code" to an existing type. */
 export type WithCode<T> = CodeObject & T

@@ -1,9 +1,0 @@
-@use '../css/componentToggle';
-
-@mixin large-screen {
-  html[lang='it-IT'] {
-    .expansion-toggle {
-      @include componentToggle.resize-labels(5rem, 80px);
-    }
-  }
-}

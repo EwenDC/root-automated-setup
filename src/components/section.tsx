@@ -1,12 +1,11 @@
 import type { TOptions } from 'i18next'
 import type { PropsWithChildren } from 'react'
 
-import classNames from 'classnames'
 import { useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { stepActiveContext } from '../hooks'
 import LocaleText from './localeText'
-import { stepActiveContext } from './stepList'
 
 type SectionProps = PropsWithChildren<{
   active?: boolean
@@ -54,14 +53,14 @@ const Section: React.FC<SectionProps> = ({
 
   return (
     <section
-      className={classNames({ inactive: !active })}
+      className={active ? 'active' : 'inactive'}
       ref={sectionElement}
     >
       {titleText && <h2>{titleText}</h2>}
       {subtitleText && <h3>{subtitleText}.</h3>}
       {textBelowChildren ? children : null}
       {textKey && (
-        <div className="text">
+        <div>
           <LocaleText
             i18nKey={textKey}
             tOptions={translationOptions}

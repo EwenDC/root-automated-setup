@@ -1,11 +1,6 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepDefinition } from '..'
 
-import Checkbox from '../../components/checkbox'
-import ComponentToggle from '../../components/componentToggle'
-import Section from '../../components/section'
-import { HIRELING_SETUP_COUNT } from '../../constants'
 import { takeRandom } from '../../functions/random'
-import { useAppDispatch, useAppSelector } from '../../hooks'
 import {
   addHireling,
   clearHirelingState,
@@ -16,36 +11,9 @@ import {
   setCurrentIndex,
   setCurrentPlayerIndex,
   setErrorMessage,
-  setHirelingCount,
-  toggleHireling,
 } from '../../store'
 import { SetupStep } from '../../types'
-
-const ChooseHirelingsStep: SetupStepComponent = () => {
-  const includeHirelings = useAppSelector(state => state.setup.hirelingCount > 0)
-  const dispatch = useAppDispatch()
-
-  return (
-    <Section
-      titleKey="setupStep.chooseHirelings.title"
-      textKey="setupStep.chooseHirelings.body"
-    >
-      <Checkbox
-        id="includeHirelings"
-        defaultValue={includeHirelings}
-        onChange={checked => dispatch(setHirelingCount(checked ? HIRELING_SETUP_COUNT : 0))}
-      />
-      {includeHirelings ? (
-        <ComponentToggle
-          className="hireling-toggle"
-          selector={selectHirelingArray}
-          toggleComponent={toggleHireling}
-          getLabelKey={hireling => `hireling.${hireling.code}.name`}
-        />
-      ) : null}
-    </Section>
-  )
-}
+import ChooseHirelingsStep from '../components/chooseHirelingsStep'
 
 export const chooseHirelings: SetupStepDefinition = {
   beforeStep(dispatch, getState) {

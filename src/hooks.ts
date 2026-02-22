@@ -1,4 +1,4 @@
-import type { TypedUseSelectorHook } from 'react-redux'
+import type { TypedUseSelectorHook, UseDispatch } from 'react-redux'
 
 import { createContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,8 +9,9 @@ import type { Faction, FlowSlice, Vagabond, WithCode } from './types'
 export const selectedFactionContext = createContext<
   (Faction & { vagabond: WithCode<Vagabond> | undefined; captains: WithCode<Vagabond>[] }) | null
 >(null)
+export const stepActiveContext = createContext(false)
 
-export const useAppDispatch = () => useDispatch<AppDispatch>()
+export const useAppDispatch: UseDispatch<AppDispatch> = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 /** Returns the number for the player that is current for the given flow slice. */

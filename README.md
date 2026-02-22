@@ -10,10 +10,9 @@ If you have encountered a bug or unexpected behavior when running the app, or yo
 
 If you wish to contribute code or translations to this project, you will be required to run it on your local machine. To get started:
 
-1. Download [Node.js](https://nodejs.org/). If you wish to contribute code, it is also recommended that you download [Visual Studio Code](https://code.visualstudio.com/) to take advantage of the pre-existing workplace configuration.
-2. Open the command line program for your operating system, then install [pnpm](https://pnpm.io/) by executing the command `npm install -g pnpm`.
-3. Once you have installed Node and pnpm, [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repository to your computer.
-4. In the opened command line program, navigate to the folder you cloned the repository to, and execute the `pnpm install` command.
+1. Install [pnpm](https://pnpm.io/) using the standalone script relevant to your OS.
+2. Once you have installed pnpm, [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repository to your computer.
+3. In the opened command line program, navigate to the folder you cloned the repository to, and execute the `pnpm install` command. This should automatically download external code dependencies, as well as the version of Node.js required for development.
 
 The application is now ready to be run on your computer. To run it, execute the `pnpm dev` command, then navigate to [http://localhost:5173/root-automated-setup/](http://localhost:5173/root-automated-setup/) in your web browser.
 
@@ -209,7 +208,7 @@ Runs the app in the development mode. Open [http://localhost:5173/root-automated
 
 ### `pnpm build`
 
-Builds the app for production to the `dist` folder. It correctly bundles React in production mode and optimises the build for the best performance (minifying it and adding hashes to the filenames).
+Builds the app for production to the `dist` folder. It correctly bundles React in production mode and optimizes the build for the best performance (minifying it and adding hashes to the filenames).
 
 ## License
 

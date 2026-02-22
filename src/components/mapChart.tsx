@@ -1,8 +1,8 @@
+import { ICON_DICTIONARY } from '../constants'
 import { useAppSelector } from '../hooks'
 import priorityToken from '../images/charts/markers/priority.svg'
 import ruinBuilding from '../images/charts/markers/ruin.png'
 import { selectSetupMap } from '../store'
-import { iconDict } from './icon'
 import LocaleText from './localeText'
 
 const MapChart: React.FC = () => {
@@ -121,7 +121,7 @@ const MapChart: React.FC = () => {
               y={y - 120}
               width="80"
               height="80"
-              href={iconDict[suit].image}
+              href={ICON_DICTIONARY[suit].image}
             >
               <title>
                 <LocaleText i18nKey={`label.suitMarker.${suit}`} />

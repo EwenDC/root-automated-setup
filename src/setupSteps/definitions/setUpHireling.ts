@@ -1,26 +1,8 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepDefinition } from '..'
 
-import Section from '../../components/section'
-import { useAppSelector, usePlayerNumber } from '../../hooks'
 import { goBackInPlayerTurnOrder, setCurrentIndex } from '../../store'
 import { SetupStep } from '../../types'
-
-const SetUpHirelingStep: SetupStepComponent = ({ flowSlice }) => {
-  const hireling = useAppSelector(state => state.setup.hirelings[flowSlice.index ?? 0])
-  const playerNumber = usePlayerNumber(flowSlice)
-
-  if (!hireling) return null
-  return (
-    <Section
-      subtitleKey={`hireling.${hireling.code}.setupTitle`}
-      textKey={`hireling.${hireling.code}.setup`}
-      translationOptions={{
-        context: hireling.demoted ? 'demoted' : undefined,
-        count: playerNumber,
-      }}
-    />
-  )
-}
+import SetUpHirelingStep from '../components/setUpHirelingStep'
 
 export const setUpHireling: SetupStepDefinition = {
   beforeStep(dispatch, getState) {

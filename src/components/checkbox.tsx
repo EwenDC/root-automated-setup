@@ -1,24 +1,22 @@
 import { useContext } from 'react'
 
 import { useInvalid } from '../hooks'
+import { stepActiveContext } from '../hooks'
 import LocaleText from './localeText'
-import { stepActiveContext } from './stepList'
 
 interface CheckboxProps {
-  id: string
-  labelKey?: string
+  labelKey: string
   defaultValue?: boolean
   onChange: (checked: boolean) => void
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChange }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ labelKey, defaultValue, onChange }) => {
   const stepActive = useContext(stepActiveContext)
   const invalid = useInvalid(stepActive)
 
   return defaultValue || stepActive ? (
-    <div className="checkbox">
+    <label className="checkbox">
       <input
-        id={id}
         type="checkbox"
         checked={defaultValue ?? false}
         disabled={!stepActive}
@@ -28,10 +26,10 @@ const Checkbox: React.FC<CheckboxProps> = ({ id, labelKey, defaultValue, onChang
         aria-invalid={invalid ? true : undefined}
         aria-errormessage={invalid ? 'appError' : undefined}
       />
-      <label htmlFor={id}>
-        <LocaleText i18nKey={labelKey ?? `label.${id}`} />
-      </label>
-    </div>
+      <div className="text">
+        <LocaleText i18nKey={labelKey} />
+      </div>
+    </label>
   ) : null
 }
 

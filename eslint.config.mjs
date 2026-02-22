@@ -18,7 +18,7 @@ export default defineConfig(
       tseslint.configs.stylisticTypeChecked,
       react.configs.flat['recommended'],
       react.configs.flat['jsx-runtime'],
-      reactHooks.configs.recommended,
+      reactHooks.configs.flat['recommended-latest'],
       comments.recommended,
     ],
     plugins: {
@@ -76,8 +76,19 @@ export default defineConfig(
           allowRegExp: true,
         },
       ],
-      // Enable React compiler checks
-      'react-hooks/react-compiler': 'error',
+      // Allow unused variables that have been prefixed with '_'
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
     },
   },
   {

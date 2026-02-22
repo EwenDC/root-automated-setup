@@ -1,59 +1,65 @@
-import { useContext } from 'react'
+import { useContext, useId } from 'react'
 
 import { useInvalid } from '../hooks'
+import { stepActiveContext } from '../hooks'
 import LocaleText from './localeText'
-import { stepActiveContext } from './stepList'
 
 interface RadiogroupProps {
-  id: string
+  falseLabelKey: string
+  trueLabelKey: string
   defaultValue?: boolean
   onChange: (value: boolean) => void
 }
 
-const Radiogroup: React.FC<RadiogroupProps> = ({ id, defaultValue = false, onChange }) => {
+const Radiogroup: React.FC<RadiogroupProps> = ({
+  falseLabelKey,
+  trueLabelKey,
+  defaultValue = false,
+  onChange,
+}) => {
   const stepActive = useContext(stepActiveContext)
   const invalid = useInvalid(stepActive)
+  const radioName = useId()
 
   return (
     <fieldset
-      name={id}
       className="radio"
+      role="radiogroup"
+      name={radioName}
       disabled={!stepActive}
       aria-required="true"
       aria-invalid={invalid ? true : undefined}
       aria-errormessage={invalid ? 'appError' : undefined}
     >
       {!defaultValue || stepActive ? (
-        <div className="option">
+        <label>
           <input
-            name={id}
-            id={`${id}False`}
+            name={radioName}
             type="radio"
             checked={!defaultValue}
             onChange={() => {
               onChange(false)
             }}
           />
-          <label htmlFor={`${id}False`}>
-            <LocaleText i18nKey={`label.${id}.false`} />
-          </label>
-        </div>
+          <div className="text">
+            <LocaleText i18nKey={falseLabelKey} />
+          </div>
+        </label>
       ) : null}
       {defaultValue || stepActive ? (
-        <div className="option">
+        <label>
           <input
-            name={id}
-            id={`${id}True`}
+            name={radioName}
             type="radio"
             checked={defaultValue}
             onChange={() => {
               onChange(true)
             }}
           />
-          <label htmlFor={`${id}True`}>
-            <LocaleText i18nKey={`label.${id}.true`} />
-          </label>
-        </div>
+          <div className="text">
+            <LocaleText i18nKey={trueLabelKey} />
+          </div>
+        </label>
       ) : null}
     </fieldset>
   )

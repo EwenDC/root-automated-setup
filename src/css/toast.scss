@@ -1,13 +1,14 @@
+@use 'section';
+
 .toast {
-  position: fixed;
+  align-items: center;
+  background: lightgoldenrodyellow;
+  display: flex;
   inset-block-start: 0;
   inset-inline-start: 0;
   inline-size: 100%;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  background: lightgoldenrodyellow;
-  /* Transitioned properties */
+  position: fixed;
   transform: translateY(0%);
   transition: 250ms transform ease-in-out;
 
@@ -16,10 +17,10 @@
   }
 
   > .container {
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
     flex: 1 0;
+    justify-content: center;
     max-inline-size: 80rem;
     padding: 0.33rem;
 
@@ -31,21 +32,21 @@
     }
 
     > button {
+      align-items: center;
       background: none;
+      block-size: 1.35rem;
       border: none;
+      color: black;
       cursor: pointer;
       display: flex;
-      align-items: center;
-      block-size: 1.35rem;
       inline-size: 1.35rem;
       margin-inline-start: -1.35rem;
       padding: 0.25rem;
-      color: black;
       transition: color 80ms ease-out;
 
       &:focus-visible {
-        outline: 2px dotted black;
         border-radius: 4px;
+        outline: 2px dotted black;
       }
 
       &:hover {
@@ -60,33 +61,21 @@
         inline-size: 100%;
       }
     }
-  }
-}
 
-@mixin large-screen {
-  .toast > .container {
-    > .message {
-      font-size: 2rem;
-      margin-block: 0.5rem;
-      margin-inline: auto;
-      padding-inline: 2.25rem;
-    }
+    @include section.heading-width-breakpoint {
+      > .message {
+        font-size: 2rem;
+        margin-block: 0.5rem;
+        margin-inline: auto;
+        padding-inline: 2.25rem;
+      }
 
-    > button {
-      block-size: 2.25rem;
-      inline-size: 2.25rem;
-      margin-inline-start: -2.25rem;
-      padding: 0.5rem;
-    }
-  }
-}
-
-@mixin reduced-motion {
-  .toast {
-    transition: none;
-
-    > .container > button {
-      transition: none;
+      > button {
+        block-size: 2.25rem;
+        inline-size: 2.25rem;
+        margin-inline-start: -2.25rem;
+        padding: 0.5rem;
+      }
     }
   }
 }

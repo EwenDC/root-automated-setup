@@ -1,12 +1,83 @@
+$text-max-width: 65ch;
+$heading-max-width: calc($text-max-width + 4ch);
+$breakout-max-width: 82.66rem;
+$padding-inline: 16px;
+
+// Allows an element to fill the entire screen width, ignoring the inline padding
+@mixin full-width {
+  grid-column: full;
+}
+
+// Allows an element to grow to breakout width, past the heading and text widths
+@mixin breakout-width {
+  grid-column: breakout;
+}
+
+// Creates a breakpoint that triggers when a breakout width element is rendering at its max width
+@mixin breakout-width-breakpoint {
+  @container (inline-size >= calc(#{$breakout-max-width} + (#{$padding-inline} * 2))) {
+    @content;
+  }
+}
+
+// Allows an element to grow to heading width, past the text width
+@mixin heading-width {
+  grid-column: heading;
+}
+
+// Creates a breakpoint that triggers when a heading width element is rendering at its max width
+@mixin heading-width-breakpoint {
+  // Ensure the breakpoint triggers as the headings render at their max width. This is tricky to
+  // calculate as the heading columns scale up at the same time as the breakout columns, so we need
+  // to allocate twice the width of the heading columns extra.
+  @container (inline-size >= calc(#{$heading-max-width} + (#{$heading-max-width} - #{$text-max-width}) + (#{$padding-inline} * 2))) {
+    @content;
+  }
+}
+
+// Limits an element to the text width, which is the default max width for children of a section
+@mixin text-width {
+  grid-column: text;
+}
+
+// Creates a breakpoint that triggers when a text width element is rendering at its max width
+@mixin text-width-breakpoint {
+  @container (inline-size >= calc(#{$text-max-width} + (#{$padding-inline} * 2))) {
+    @content;
+  }
+}
+
 section {
+  $full-size: minmax($padding-inline, 1fr);
+  $breakout-size: minmax(0, calc(($breakout-max-width - $heading-max-width) / 2));
+  $heading-size: minmax(0, calc(($heading-max-width - $text-max-width) / 2));
+
   line-height: 1.5;
-  margin: 1rem;
+  margin-block: 1rem;
+  display: grid;
+  grid-template-columns:
+    [full-start]
+    $full-size
+    [breakout-start]
+    $breakout-size
+    [heading-start]
+    $heading-size
+    [text-start]
+    min(100% - ($padding-inline * 2), $text-max-width)
+    [text-end]
+    $heading-size
+    [heading-end]
+    $breakout-size
+    [breakout-end]
+    $full-size
+    [full-end];
 
   &.inactive {
     color: darkgray;
   }
 
   > h2 {
+    @include heading-width;
     line-height: 1.1;
     font-size: 2rem;
     font-weight: 400;
@@ -15,18 +86,19 @@ section {
   }
 
   > h3 {
+    @include heading-width;
     font-size: 1rem;
     margin-block: 0 0.5rem;
   }
 
-  > ol {
-    margin-inline-start: 1.2rem;
+  & > :not(h2):not(h3),
+  & > slot > * {
+    @include text-width;
   }
 
   ol {
-    max-inline-size: 65ch;
-    margin-block: 0.5rem;
-    padding-inline-start: 1.2rem;
+    margin-block: 0;
+    padding-inline-start: 2ch;
 
     > li {
       margin-block: 0.5rem;
@@ -37,17 +109,7 @@ section {
     }
   }
 
-  .text {
-    max-inline-size: 65ch;
-    margin-inline-start: 1.2rem;
-
-    &.centered {
-      margin-inline: auto;
-    }
-  }
-
   p {
-    max-inline-size: 65ch;
     margin-block: 0.5rem;
   }
 }

@@ -1,7 +1,6 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepComponent } from '..'
 
 import Section from '../../components/section'
-import { SetupStep } from '../../types'
 
 const PlaceScoreMarkersStep: SetupStepComponent = ({ flowSlice }) => (
   <Section
@@ -13,7 +12,4 @@ const PlaceScoreMarkersStep: SetupStepComponent = ({ flowSlice }) => (
   />
 )
 
-export const placeScoreMarkers: SetupStepDefinition = {
-  component: PlaceScoreMarkersStep,
-  afterStep: () => SetupStep.chooseHand,
-}
+export default PlaceScoreMarkersStep

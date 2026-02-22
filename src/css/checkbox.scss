@@ -1,54 +1,29 @@
 .checkbox {
+  align-items: center;
+  cursor: pointer;
   display: flex;
+  inline-size: fit-content;
   margin-block: 0.5rem 0;
-  margin-inline-start: 1.2rem;
-  align-items: flex-start;
+
+  &:has(input:disabled) {
+    cursor: auto;
+  }
 
   > input {
-    cursor: pointer;
-    /* Override the default checkbox appearance */
+    // Override the default checkbox appearance
     appearance: none;
-    display: grid;
-    place-content: center;
-    inline-size: 16px;
+    background-color: transparent;
     block-size: 16px;
     border: 2px solid black;
     border-radius: 3px;
-    transform: translateY(0.2rem);
-    background-color: transparent;
+    display: grid;
+    inline-size: 16px;
+    place-content: center;
     transition: 80ms background-color ease-out;
 
-    &:hover:not(:disabled) {
-      background-color: white;
-    }
-
-    &:checked::before {
-      box-shadow: inset 1rem 1rem black;
-    }
-
-    &:disabled {
-      border-color: darkgray;
-      cursor: auto;
-
-      &::before {
-        box-shadow: inset 1rem 1rem darkgray;
-        transition: none;
-      }
-
-      + label {
-        cursor: auto;
-      }
-    }
-
-    &:focus-visible {
-      outline: 2px dotted black;
-      outline-offset: 1px;
-    }
-
     &::before {
-      content: '';
-      inline-size: 10px;
       block-size: 10px;
+      box-shadow: inset 1rem 1rem transparent;
       clip-path: polygon(
         20% 0%,
         0% 20%,
@@ -63,28 +38,42 @@
         80% 0%,
         50% 30%
       );
-      box-shadow: inset 1rem 1rem transparent;
-      transition-property: box-shadow;
+      content: '';
+      inline-size: 10px;
       transition-duration: inherit;
+      transition-property: box-shadow;
       transition-timing-function: inherit;
+
+      @media (forced-colors: active) {
+        background-color: CanvasText;
+      }
+    }
+
+    &:checked::before {
+      box-shadow: inset 1rem 1rem black;
+    }
+
+    &:disabled {
+      border-color: darkgray;
+
+      &::before {
+        box-shadow: inset 1rem 1rem darkgray;
+        transition: none;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px dotted black;
+      outline-offset: 1px;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: white;
     }
   }
 
-  > label {
+  > .text {
     max-inline-size: 65ch;
     padding-inline-start: 0.55rem;
-    cursor: pointer;
-  }
-}
-
-@mixin reduced-motion {
-  .checkbox > input {
-    transition: none;
-  }
-}
-
-@mixin forced-colors {
-  .checkbox > input::before {
-    background-color: CanvasText;
   }
 }

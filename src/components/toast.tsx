@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAppDispatch, useAppSelector } from '../hooks'
@@ -13,16 +13,12 @@ const Toast: React.FC = () => {
   const { t } = useTranslation()
 
   // Update the cached message if a new one came through
-  useEffect(() => {
-    if (errorMessage != null) setCachedMessage(errorMessage)
-  }, [errorMessage])
+  if (errorMessage != null && cachedMessage !== errorMessage) setCachedMessage(errorMessage)
 
   return (
     <div
       className="toast"
       inert={!errorMessage}
-      // For older browsers that don't understand inert, flag this as hidden
-      aria-hidden={!errorMessage}
       aria-live="assertive"
     >
       <div className="container">
@@ -35,9 +31,6 @@ const Toast: React.FC = () => {
         <button
           title={t('label.closeMessage')}
           onClick={() => dispatch(setErrorMessage(null))}
-          // The inert attribute above already disables the button for us, but we do it manually
-          // anyway for older browsers that don't understand inert
-          disabled={!errorMessage}
         >
           <CloseIcon className="close-icon" />
         </button>

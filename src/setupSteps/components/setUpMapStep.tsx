@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepComponent } from '..'
 
 import LocaleText from '../../components/localeText'
 import MapChart from '../../components/mapChart'
@@ -8,7 +8,6 @@ import Section from '../../components/section'
 import { STANDARD_MAP_SIZE } from '../../constants'
 import { useAppSelector } from '../../hooks'
 import { selectSetupMap } from '../../store'
-import { SetupStep } from '../../types'
 
 const SetUpMapStep: SetupStepComponent = () => {
   const { t } = useTranslation()
@@ -52,7 +51,4 @@ const SetUpMapStep: SetupStepComponent = () => {
   )
 }
 
-export const setUpMap: SetupStepDefinition = {
-  component: SetUpMapStep,
-  afterStep: () => SetupStep.chooseDeck,
-}
+export default SetUpMapStep

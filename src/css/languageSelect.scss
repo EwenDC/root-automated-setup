@@ -1,37 +1,36 @@
-.language-select {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  margin-block: 0.5rem;
+@use 'section';
 
-  > .label {
+.language-select {
+  align-items: center;
+  border: none;
+  display: flex;
+  font-size: 0.8rem;
+  justify-content: center;
+  margin-block: 0.5rem;
+  margin-inline: 0;
+  padding: 0;
+
+  > .legend {
     display: inline-block;
   }
 
-  > button {
-    background: none;
-    border: 0;
-    padding: 0;
-    margin-block: 0;
+  label {
     margin-inline: calc(0.33 * 16px);
-    cursor: pointer;
 
     &:first-of-type {
       margin-inline-start: 0.33rem;
     }
 
     > img {
-      margin-block-start: 0.25rem;
       block-size: 16px;
-      text-decoration: underline;
       border-radius: 2px;
+      cursor: pointer;
       filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(50%);
+      margin-block-start: 0.25rem;
       outline: 2px solid transparent;
       transition: outline 80ms ease-out;
 
       &:hover {
-        text-decoration: none;
         outline-color: darkgray;
       }
 
@@ -40,22 +39,29 @@
       }
     }
 
-    &.active {
-      cursor: default;
+    > input {
+      appearance: none;
 
-      > img {
+      &:checked + img {
+        cursor: default;
         filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
         outline-color: transparent;
       }
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus-visible + img {
+        outline-color: darkgray;
+      }
     }
   }
-}
 
-@mixin large-screen {
-  .language-select {
+  @include section.text-width-breakpoint {
     font-size: 1rem;
 
-    > button {
+    label {
       &:first-of-type {
         margin-inline-start: 1rem;
       }
@@ -64,11 +70,5 @@
         block-size: 22px;
       }
     }
-  }
-}
-
-@mixin reduced-motion {
-  .language-select > button > img {
-    transition: none;
   }
 }

@@ -1,10 +1,12 @@
+@use 'section';
+
 .stat {
-  min-inline-size: 10rem;
-  flex: 1 0;
   border-inline-start: 2px solid black;
-  padding-block-end: 0.5rem;
   display: flex;
+  flex: 1 0;
   flex-direction: column;
+  min-inline-size: 10rem;
+  padding-block-end: 0.5rem;
 
   section.inactive & {
     border-inline-start-color: darkgray;
@@ -15,17 +17,15 @@
     margin-inline-start: 0.25rem;
   }
 
-  > .low,
-  > .moderate,
-  > .high {
+  > .low {
+    background-color: lightgray;
     font-size: 0.8rem;
-    text-transform: uppercase;
+    inline-size: 3rem;
     overflow: visible;
     padding-block: 0.1rem 0;
     padding-inline: 0.25rem 0;
-    background-color: lightgray;
+    text-transform: uppercase;
     transition: width 0.25s ease-in-out;
-    inline-size: 3rem;
 
     section.inactive & {
       background-color: whitesmoke;
@@ -33,18 +33,41 @@
   }
 
   > .moderate {
+    @extend .low;
     inline-size: 6rem;
   }
 
   > .high {
+    @extend .low;
     inline-size: 9rem;
   }
-}
 
-@mixin large-screen {
-  .stat {
-    min-inline-size: 14rem;
+  @include section.heading-width-breakpoint {
+    min-inline-size: 12rem;
+
+    > .label {
+      font-size: 1.1rem;
+    }
+
+    > .low {
+      font-size: 0.9rem;
+      inline-size: 3.5rem;
+    }
+
+    > .moderate {
+      @extend .low;
+      inline-size: 7rem;
+    }
+
+    > .high {
+      @extend .low;
+      inline-size: 10.5rem;
+    }
+  }
+
+  @include section.breakout-width-breakpoint {
     flex: 0 0;
+    min-inline-size: 14rem;
     padding-block-end: 0.66rem;
 
     > .label {
@@ -53,31 +76,21 @@
       margin-inline: 0.33rem 0;
     }
 
-    > .low,
-    > .moderate,
-    > .high {
+    > .low {
       font-size: 1rem;
+      inline-size: 4rem;
       padding-block: 0.25rem 0.2rem;
       padding-inline: 0.33rem 0;
-      inline-size: 4rem;
     }
 
     > .moderate {
+      @extend .low;
       inline-size: 8rem;
     }
 
     > .high {
+      @extend .low;
       inline-size: 12rem;
-    }
-  }
-}
-
-@mixin reduced-motion {
-  .stat {
-    > .low,
-    > .moderate,
-    > .high {
-      transition: none;
     }
   }
 }

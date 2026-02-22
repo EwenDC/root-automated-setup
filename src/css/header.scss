@@ -1,28 +1,28 @@
 header {
-  inline-size: 100%;
-  display: flex;
-  justify-content: center;
-  flex-flow: column;
   align-items: center;
+  display: flex;
+  flex-flow: column;
+  inline-size: 100%;
+  justify-content: center;
   padding-block-start: 1rem;
 
   > img {
-    /* Allow the logo to shrink if the screen is smaller than 24rem */
-    width: 100%;
+    font-size: 25vw;
     max-width: 24rem;
     max-height: 6rem;
-    /* Properties for Fallback text */
-    font-size: 25vw;
+    // Properties for Fallback text
     text-align: center;
     text-transform: uppercase;
+    // Allow the logo to shrink if the screen is smaller than 24rem
+    width: 100%;
   }
 
   > h1 {
     font-size: 8.5vw;
     font-variant: small-caps;
     font-weight: 400;
-    text-align: center;
     margin: 0;
+    text-align: center;
   }
 
   /* If the screen is large enough for the logo to be at max size, then set the logo alt and subtitle to full size */

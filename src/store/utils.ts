@@ -26,13 +26,10 @@ export const currySelector =
  */
 export const lockComponent = (componentType: keyof ComponentsState) => ({
   prepare: (componentCode: string, locked: false | string) => ({
-    payload: { componentCode, locked },
+    payload: [componentCode, locked] as const,
   }),
-  reducer(
-    state: ComponentsState,
-    { payload }: PayloadAction<{ componentCode: string; locked: false | string }>,
-  ) {
-    const { componentCode, locked } = payload
+  reducer(state: ComponentsState, { payload }: PayloadAction<readonly [string, false | string]>) {
+    const [componentCode, locked] = payload
     const component = state[componentType][componentCode]
     if (component) {
       component.locked = locked

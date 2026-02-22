@@ -5,6 +5,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import type {
   ComponentInfo,
   DeckCode,
+  DeepReadonly,
   Expansion,
   ExpansionCode,
   FactionCode,
@@ -38,7 +39,7 @@ export interface ComponentsState {
 const addExpansionComponents = (
   state: ComponentsState,
   expansionCode: string,
-  expansionContent: Expansion,
+  expansionContent: DeepReadonly<Expansion>,
 ) => {
   for (const componentType of COMPONENT_TYPES) {
     const componentList = expansionContent[componentType]

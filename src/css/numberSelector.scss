@@ -1,20 +1,15 @@
 .number {
-  margin-block-start: 0.75rem;
-  margin-inline-start: 1.2rem;
   display: flex;
+  margin-block-start: 0.75rem;
 
-  > label {
-    padding-inline-end: 0.5rem;
-  }
-
-  > button {
-    font-size: 1.25rem;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    inline-size: 1rem;
-    border-radius: 4px;
+  button {
     background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    inline-size: 1rem;
+    padding: 0;
     transition: background-color 80ms ease-out;
 
     &:hover {
@@ -26,31 +21,26 @@
     }
   }
 
-  > input {
-    font-size: 1.25rem;
-    text-align: center;
-    inline-size: 2rem;
-    background: none;
-    border: none;
-    padding: 0;
-    border-radius: 4px;
-  }
-
-  > button:focus-visible,
+  button:focus-visible,
   > input:focus-visible {
     outline: 2px dotted black;
   }
 
-  > .value {
+  > input {
+    background: none;
+    border: none;
+    border-radius: 4px;
     font-size: 1.25rem;
-    text-align: center;
     inline-size: 2rem;
-    padding-inline: 1rem;
-  }
-}
+    padding: 0;
+    text-align: center;
 
-@mixin reduced-motion {
-  .number > button {
-    transition: none;
+    &:disabled {
+      color: darkgray;
+    }
+  }
+
+  > label {
+    padding-inline-end: 0.5rem;
   }
 }

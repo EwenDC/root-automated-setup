@@ -1,12 +1,8 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepDefinition } from '..'
 
-import ComponentToggle from '../../components/componentToggle'
-import NumberSelector from '../../components/numberSelector'
-import Section from '../../components/section'
-import { MAX_LANDMARKS, MIN_PLAYERS_NO_FLOOD } from '../../constants'
+import { MIN_PLAYERS_NO_FLOOD } from '../../constants'
 import { getEnabled } from '../../functions/filtering'
 import { takeRandom } from '../../functions/random'
-import { useAppDispatch, useAppSelector } from '../../hooks'
 import {
   lockLandmark,
   massComponentLock,
@@ -15,42 +11,10 @@ import {
   setCurrentIndex,
   setCurrentPlayerIndex,
   setErrorMessage,
-  setLandmarkCount,
   setLandmarks,
-  toggleLandmark,
 } from '../../store'
 import { type LandmarkCode, SetupStep } from '../../types'
-
-const ChooseLandmarksStep: SetupStepComponent = () => {
-  const landmarkCount = useAppSelector(state => state.setup.landmarkCount)
-  const setupMap = useAppSelector(selectSetupMap)
-  const dispatch = useAppDispatch()
-
-  if (!setupMap) return null
-  return (
-    <Section
-      titleKey="setupStep.chooseLandmarks.title"
-      textKey="setupStep.chooseLandmarks.body"
-      translationOptions={{ context: setupMap.useLandmark ? 'mapLandmark' : undefined }}
-    >
-      <NumberSelector
-        id="landmarkCount"
-        value={landmarkCount}
-        minVal={0}
-        maxVal={MAX_LANDMARKS}
-        onChange={value => dispatch(setLandmarkCount(value))}
-      />
-      {landmarkCount > 0 ? (
-        <ComponentToggle
-          className="landmark-toggle"
-          selector={selectLandmarkArray}
-          toggleComponent={toggleLandmark}
-          getLabelKey={landmark => `landmark.${landmark.code}.name`}
-        />
-      ) : null}
-    </Section>
-  )
-}
+import ChooseLandmarksStep from '../components/chooseLandmarksStep'
 
 export const chooseLandmarks: SetupStepDefinition = {
   beforeStep(dispatch, getState) {

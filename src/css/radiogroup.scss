@@ -1,37 +1,63 @@
-.radio {
-  margin-block-start: 0.75rem;
-  margin-inline-start: 1.2rem;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  border: none;
-  padding: 0;
-  gap: 0.5rem;
+@use 'section';
 
-  .option {
+.radio {
+  align-items: flex-start;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-block-start: 0.75rem;
+  margin-inline-start: 0;
+  padding: 0;
+
+  label {
+    cursor: pointer;
     display: flex;
 
+    &:has(> input:disabled) {
+      cursor: auto;
+    }
+
     > input {
-      cursor: pointer;
-      flex: none;
-      /* Override the default radio appearance */
+      // Override the default radio appearance
       appearance: none;
-      inline-size: 18px;
+      background-color: transparent;
       block-size: 18px;
       border: 2px solid black;
       border-radius: calc(infinity * 1px);
-      transform: translateY(0.16rem);
       display: grid;
+      flex: none;
+      inline-size: 18px;
       place-content: center;
-      background-color: transparent;
+      transform: translateY(0.16rem);
       transition: 80ms background-color ease-out;
 
-      &:hover:not(:disabled) {
+      &:enabled:hover {
         background-color: white;
       }
 
-      &:active:not(:disabled) {
+      &:active:enabled {
         background-color: cornsilk;
+      }
+
+      &::before {
+        block-size: 10px;
+        border-radius: calc(infinity * 1px);
+        box-shadow: inset 1rem 1rem transparent;
+        clip-path: polygon(14% 44%, 0% 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        content: '';
+        inline-size: 10px;
+        transition-property: box-shadow;
+        transition-duration: inherit;
+        transition-timing-function: inherit;
+
+        section.inactive & {
+          transition: none;
+        }
+
+        @media (forced-colors: active) {
+          background-color: CanvasText;
+        }
       }
 
       &:checked::before {
@@ -40,7 +66,6 @@
 
       &:disabled {
         border-color: darkgray;
-        cursor: auto;
 
         &::before {
           box-shadow: inset 1rem 1rem darkgray;
@@ -51,59 +76,23 @@
         outline: 2px dotted black;
         outline-offset: 1px;
       }
-
-      &::before {
-        content: '';
-        inline-size: 10px;
-        block-size: 10px;
-        border-radius: calc(infinity * 1px);
-        clip-path: polygon(14% 44%, 0% 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-        box-shadow: inset 1rem 1rem transparent;
-        transition-property: box-shadow;
-        transition-duration: inherit;
-        transition-timing-function: inherit;
-
-        section.inactive & {
-          transition: none;
-        }
-      }
     }
 
-    > label {
-      cursor: pointer;
-      max-inline-size: 65ch;
+    > .text {
       padding-inline-start: 0.5rem;
-
-      section.inactive & {
-        cursor: auto;
-      }
     }
   }
-}
 
-@mixin large-screen {
-  .radio {
+  @include section.text-width-breakpoint {
     flex-direction: row;
     gap: 1rem;
 
-    .option > label {
-      max-inline-size: 25rem;
+    label > .text {
+      max-inline-size: 32ch;
 
       section.inactive & {
-        max-inline-size: 65ch;
+        max-inline-size: unset;
       }
     }
-  }
-}
-
-@mixin reduced-motion {
-  .radio .option > input {
-    transition: none;
-  }
-}
-
-@mixin forced-colors {
-  .radio .option > input::before {
-    background-color: CanvasText;
   }
 }

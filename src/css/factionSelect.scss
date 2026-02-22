@@ -1,96 +1,112 @@
+@use 'section';
+
+@mixin transition {
+  transition-duration: 80ms;
+  transition-timing-function: ease-out;
+}
+
 .faction-select {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  max-inline-size: 100%;
-  flex-wrap: nowrap;
-  overflow: auto;
-  margin-block-start: 0.6rem;
-  padding-block: 5px;
-  border-radius: 8px;
-  /* Scroll Shadow */
+  @include section.breakout-width;
+  @include transition;
+  // Scroll Shadow
   background:
     linear-gradient(90deg, white 30%, rgba(255, 255, 255, 0)),
     linear-gradient(90deg, rgba(255, 255, 255, 0), white 70%) 0 100%,
     radial-gradient(farthest-side at 0% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)),
     radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)) 0 100%;
+  background-attachment: local, local, scroll, scroll;
   background-color: white;
-  background-repeat: no-repeat;
   background-position:
     top left,
     top right,
     top left,
     top right;
+  background-repeat: no-repeat;
   background-size:
     2.5rem 100%,
     2.5rem 100%,
     1.25rem 100%,
     1.25rem 100%;
-  background-attachment: local, local, scroll, scroll;
+  // Only scale ~1/2 of the height with text size, since the images should ideally remain constantly sized
+  block-size: calc(4rem + 92px);
+  border-radius: 8px;
+  box-sizing: border-box;
+  column-gap: 5px;
+  display: grid;
+  grid-auto-columns: 9rem;
+  grid-auto-flow: column;
+  grid-template-rows: 0 minmax(0, 1fr) auto;
+  inline-size: 100%;
+  margin-block-start: 0.6rem;
+  outline: 2px dotted transparent;
+  overflow-inline: scroll;
+  overflow-block: hidden;
+  padding: 6px;
+  transition-property: outline-color;
 
   &:focus-visible {
-    outline: 2px dotted black;
+    outline-color: black;
   }
 
-  button {
-    font-size: 1rem;
-    flex: 0 0;
-    display: flex;
-    flex-direction: column;
-    background: none;
+  label {
+    @include transition;
+    background-color: white;
+    border: 2px solid transparent;
     border-radius: 8px;
-    padding: 3px;
-    cursor: pointer;
-    block-size: calc(4rem + 80px);
-    min-inline-size: 9rem;
     color: black;
-    margin-inline: 5px;
+    cursor: pointer;
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    justify-items: center;
     mix-blend-mode: multiply;
-    will-change: opacity;
-    /* Transitioned properties */
     outline: 2px dotted transparent;
     outline-offset: -2px;
-    border: 2px solid transparent;
-    background-color: white;
-    transition-property: outline, outline-offset, border, background-color;
-    transition-duration: 80ms;
-    transition-timing-function: ease-out;
+    padding: 3px;
+    transition-property: background-color, border, outline, outline-offset;
 
-    &:focus-visible {
-      outline-color: black;
-      outline-offset: -5px;
+    &:has(> input:checked) {
+      border-color: black;
     }
 
-    &.selected {
-      border-color: black;
+    &:has(> input:focus-visible) {
+      outline-color: black;
+      outline-offset: -5px;
     }
 
     &:hover {
       background-color: ivory;
     }
 
-    &:active {
-      background-color: cornsilk;
-    }
-
     &.locked {
       background-color: gainsboro;
 
-      > .image-frame > img {
+      section.active & > .image-frame > img {
         filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(50%);
       }
     }
 
     &.locked,
-    &:disabled {
-      cursor: auto;
+    section.inactive & {
       color: darkgray;
+      cursor: auto;
     }
 
-    &:disabled {
+    section.active & {
+      > .title {
+        background-color: #5a5b5f;
+        color: white;
+      }
+
+      &.militant > .title {
+        background-color: #a4153b;
+      }
+    }
+
+    section.inactive & {
       background-color: transparent;
 
-      &.selected {
+      &:has(> input:checked) {
         border-color: darkgray;
       }
 
@@ -99,68 +115,63 @@
       }
     }
 
-    &:not(:disabled) {
-      > .title {
-        color: white;
-        background-color: #5a5b5f;
-      }
-
-      &.militant > .title {
-        background-color: #a4153b;
-      }
-    }
-
+    // Faction Image
     > .image-frame {
-      // Position relatively to allow positioning captain images relative to the frame
-      position: relative;
-      inline-size: 80px;
-      block-size: 80px;
-      flex: 0 0;
+      inline-size: 100%;
       margin-block: 4px;
       margin-inline: auto;
+      // Position relatively to allow positioning captain images relative to the frame
+      position: relative;
 
       > img {
-        /* Transitioned properties */
-        transition-property: filter;
-        transition-duration: inherit;
-        transition-timing-function: inherit;
+        @include transition;
         filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
+        object-fit: contain;
+        transition-property: filter;
 
         &.warrior {
-          inline-size: 100%;
           block-size: 100%;
+          inline-size: 100%;
         }
 
         &.captain {
-          position: absolute;
-          inline-size: 33.33%;
           block-size: 33.33%;
+          position: absolute;
 
           &:nth-last-child(4),
           &:nth-last-child(3) {
-            inset-block-start: 30%;
+            inset-block-start: 25%;
           }
           &:nth-last-child(2),
           &:nth-last-child(1) {
             inset-block-end: 0;
           }
           &:nth-last-of-type(even) {
-            inset-inline-start: -30%;
+            inset-inline-start: 0;
           }
           &:nth-last-of-type(odd) {
-            inset-inline-end: -30%;
+            inset-inline-end: 0;
           }
         }
       }
     }
 
+    // Hidden Radio Input
+    > input {
+      appearance: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    // Faction Name
     > .title {
-      flex: 1 0;
       border-radius: 8px;
       display: flex;
-      align-items: center;
-      justify-content: center;
       inline-size: 100%;
+      justify-content: center;
+      text-align: center;
 
       > .label {
         margin-inline: 0.1rem;
@@ -171,27 +182,15 @@
       }
     }
   }
-}
 
-@mixin with-resized-labels($label-size, $icon-size) {
-  .faction-select button {
-    block-size: calc($label-size + $icon-size);
-
-    > .image-frame {
-      inline-size: $icon-size;
-      block-size: $icon-size;
-    }
-  }
-}
-
-@mixin large-screen {
-  @include with-resized-labels(4.5rem, 96px);
-
-  .faction-select {
+  // * Alt Layout: Scrollable list with larger buttons * //
+  @include section.heading-width-breakpoint {
+    // Only scale ~1/2 of the height with text size, since the images should ideally remain constantly sized
+    block-size: calc(4.5rem + 108px);
     border-radius: 16px;
+    grid-auto-columns: 10.5rem;
 
-    button {
-      min-inline-size: 10.5rem;
+    label {
       border-radius: 16px;
 
       > .title {
@@ -202,11 +201,5 @@
         }
       }
     }
-  }
-}
-
-@mixin reduced-motion {
-  .faction-select button {
-    transition: none;
   }
 }

@@ -1,11 +1,7 @@
-import { createContext } from 'react'
-
 import { useAppSelector } from '../hooks'
 import { StepSwitch } from '../setupSteps'
 import { selectFlowSlice } from '../store'
 import LanguageSelect from './languageSelect'
-
-export const stepActiveContext = createContext(false)
 
 const StepList: React.FC = () => {
   const pastSteps = useAppSelector(state => state.flow.pastSteps)
@@ -16,23 +12,23 @@ const StepList: React.FC = () => {
     <main>
       <LanguageSelect />
 
-      {pastSteps.map((slice, index) => (
-        // Key on index as entries are added and removed from the end
+      {...pastSteps.map((slice, index) => (
         <StepSwitch
-          flowSlice={slice}
           key={index}
+          flowSlice={slice}
         />
       ))}
 
-      <stepActiveContext.Provider value={true}>
-        <StepSwitch flowSlice={currentFlowSlice} />
-      </stepActiveContext.Provider>
+      <StepSwitch
+        key={pastSteps.length}
+        flowSlice={currentFlowSlice}
+        active
+      />
 
-      {futureSteps.map((slice, index, array) => (
-        // Key on the negative index as entries are added and removed from the start
+      {...futureSteps.map((slice, index) => (
         <StepSwitch
+          key={pastSteps.length + index + 1}
           flowSlice={slice}
-          key={array.length - index}
         />
       ))}
     </main>

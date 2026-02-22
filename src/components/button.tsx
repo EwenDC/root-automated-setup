@@ -1,10 +1,9 @@
 import classNames from 'classnames'
 
-interface ButtonProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+interface ButtonProps extends React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> {
   Icon?: React.ElementType
   iconLeft?: boolean
 }
@@ -28,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       {...props}
       ref={ref}
       className={classNames('button', { disabled }, className)}
+      // Weird hack to leave the button focusable for the bottom page toolbar
       aria-disabled={disabled}
       onClick={disabled ? undefined : onClick}
     >

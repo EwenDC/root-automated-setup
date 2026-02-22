@@ -1,25 +1,10 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepDefinition } from '..'
 
-import ComponentToggle from '../../components/componentToggle'
-import Section from '../../components/section'
 import { getEnabled } from '../../functions/filtering'
 import { takeRandom } from '../../functions/random'
-import { selectDeckArray, setDeck, setErrorMessage, toggleDeck } from '../../store'
+import { selectDeckArray, setDeck, setErrorMessage } from '../../store'
 import { SetupStep } from '../../types'
-
-const ChooseDeckStep: SetupStepComponent = () => (
-  <Section
-    titleKey="setupStep.chooseDeck.title"
-    textKey="setupStep.chooseDeck.body"
-  >
-    <ComponentToggle
-      className="deck-toggle"
-      selector={selectDeckArray}
-      toggleComponent={toggleDeck}
-      getLabelKey={deck => `deck.${deck.code}.name`}
-    />
-  </Section>
-)
+import ChooseDeckStep from '../components/chooseDeckStep'
 
 export const chooseDeck: SetupStepDefinition = {
   beforeStep(dispatch, getState) {

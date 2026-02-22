@@ -1,9 +1,5 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepDefinition } from '..'
 
-import FactionInfo from '../../components/factionInfo'
-import FactionSelect from '../../components/factionSelect'
-import Section from '../../components/section'
-import { useAppSelector, usePlayerNumber } from '../../hooks'
 import {
   goBackInPlayerTurnOrder,
   removeCurrentFactionFromPool,
@@ -11,25 +7,7 @@ import {
   setErrorMessage,
 } from '../../store'
 import { SetupStep } from '../../types'
-
-const SelectFactionStep: SetupStepComponent = ({ flowSlice }) => {
-  const useDraft = useAppSelector(state => state.flow.useDraft)
-  const playerNumber = usePlayerNumber(flowSlice)
-
-  return (
-    <Section
-      subtitleKey="setupStep.selectFaction.subtitle"
-      textKey="setupStep.selectFaction.body"
-      translationOptions={{
-        count: playerNumber,
-        context: useDraft ? 'useDraft' : undefined,
-      }}
-    >
-      <FactionSelect flowSlice={flowSlice} />
-      <FactionInfo flowSlice={flowSlice} />
-    </Section>
-  )
-}
+import SelectFactionStep from '../components/selectFactionStep'
 
 export const selectFaction: SetupStepDefinition = {
   beforeStep(dispatch, getState) {

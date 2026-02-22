@@ -1,13 +1,8 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepDefinition } from '..'
 
-import Checkbox from '../../components/checkbox'
-import ComponentToggle from '../../components/componentToggle'
-import Radiogroup from '../../components/radiogroup'
-import Section from '../../components/section'
 import { CAPTAIN_DEAL_COUNT, MAX_CORNER_SETUPS } from '../../constants'
 import { countMatches, getEnabled } from '../../functions/filtering'
 import { takeRandom } from '../../functions/random'
-import { useAppDispatch, useAppSelector } from '../../hooks'
 import {
   addToFactionPool,
   lockFaction,
@@ -27,74 +22,10 @@ import {
   setUseDraft,
   setVagabondPool,
   toggleCaptain,
-  toggleFaction,
   toggleVagabond,
 } from '../../store'
 import { type FactionCode, SetupStep } from '../../types'
-
-const ChooseFactionsStep: SetupStepComponent = () => {
-  const playerCount = useAppSelector(state => state.setup.playerCount)
-  const factions = useAppSelector(selectFactionArray)
-  const useDraft = useAppSelector(state => state.flow.useDraft)
-  const limitVagabonds = useAppSelector(state => state.setup.limitVagabonds)
-  const limitCaptains = useAppSelector(state => state.setup.limitCaptains)
-  const dispatch = useAppDispatch()
-
-  return (
-    <Section
-      titleKey="setupStep.chooseFactions.title"
-      textKey="setupStep.chooseFactions.body"
-    >
-      {playerCount < factions.length ? (
-        <Checkbox
-          id="useDraft"
-          defaultValue={useDraft}
-          onChange={checked => dispatch(setUseDraft(checked))}
-        />
-      ) : null}
-      <ComponentToggle
-        className="faction-toggle"
-        selector={selectFactionArray}
-        toggleComponent={toggleFaction}
-        getLabelKey={faction => `faction.${faction.key}.name`}
-      />
-      {useDraft && factions.some(faction => faction.dealVagabond && faction.enabled) ? (
-        <>
-          <Radiogroup
-            id="chooseVagabonds"
-            defaultValue={limitVagabonds}
-            onChange={checked => dispatch(setLimitVagabonds(checked))}
-          />
-          {limitVagabonds ? (
-            <ComponentToggle
-              className="vagabond-toggle"
-              selector={selectVagabondArray}
-              toggleComponent={toggleVagabond}
-              getLabelKey={vagabond => `vagabond.${vagabond.code}.name`}
-            />
-          ) : null}
-        </>
-      ) : null}
-      {useDraft && factions.some(faction => faction.dealCaptains && faction.enabled) ? (
-        <>
-          <Radiogroup
-            id="chooseCaptains"
-            defaultValue={limitCaptains}
-            onChange={checked => dispatch(setLimitCaptains(checked))}
-          />
-          {limitCaptains ? (
-            <ComponentToggle
-              className="captain-toggle"
-              selector={selectCaptainArray}
-              toggleComponent={toggleCaptain}
-              getLabelKey={captain => `captain.${captain.code}.name`}
-            />
-          ) : null}
-        </>
-      ) : null}
-    </Section>
-  )
-}
+import ChooseFactionsStep from '../components/chooseFactionsStep'
 
 export const chooseFactions: SetupStepDefinition = {
   beforeStep(dispatch, getState) {

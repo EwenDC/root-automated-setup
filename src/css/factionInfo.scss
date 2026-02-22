@@ -1,18 +1,49 @@
-.faction-info {
-  display: flex;
-  flex-direction: column;
-  margin-inline-start: 1.2rem;
+@use 'section';
 
-  > .stat-list,
-  .count-list,
-  .captain-list {
+.faction-info {
+  // * Default layout: Stacked regions * //
+  @include section.full-width;
+  display: grid;
+  grid-template-columns: subgrid;
+
+  > * {
+    @include section.text-width;
+  }
+
+  > .captain-list,
+  > .count-list,
+  > .stat-list {
+    @include section.heading-width;
     display: flex;
     flex-direction: row;
   }
 
-  > .stat-list {
-    margin-block: 0.75rem 0.5rem;
+  > .captain-list {
     flex-wrap: wrap;
+    gap: 1rem;
+
+    > .group {
+      display: flex;
+      flex: 1 0;
+      gap: 1rem;
+    }
+  }
+
+  > .count-list {
+    margin-block: 0.5rem;
+    max-inline-size: 100%;
+    overflow: auto;
+  }
+
+  > h4 {
+    @include section.heading-width;
+    font-size: 1.17rem;
+    margin-block: 0.5rem;
+  }
+
+  > .stat-list {
+    flex-wrap: wrap;
+    margin-block: 0.75rem 0.5rem;
 
     > .group {
       flex: 0 0;
@@ -20,43 +51,29 @@
     }
   }
 
-  .count-list {
-    max-inline-size: 100%;
-    overflow: auto;
-  }
-
-  .captain-list {
-    gap: 1rem;
-    flex-wrap: wrap;
-
-    > .group {
-      flex: 1 0;
-      display: flex;
-      gap: 1rem;
-    }
-  }
-
-  .section-title {
-    font-size: 1.17rem;
-    margin-block: 0.5rem;
-  }
-}
-
-@mixin large-screen {
-  .faction-info {
-    flex-direction: row;
-
-    > .stat-list {
+  // * Alt layout: Side-by-side regions * //
+  @include section.breakout-width-breakpoint {
+    > .count-list {
+      align-items: flex-start;
       flex-direction: column;
       flex-wrap: nowrap;
+      grid-column-end: heading-end;
+      grid-column-start: breakout-end;
+      grid-row: span 9;
+      margin-block: 0.75rem 0.5rem;
+    }
+
+    > .stat-list {
+      align-items: flex-end;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      grid-column-end: breakout-start;
+      grid-column-start: heading-start;
+      grid-row: span 9;
 
       > .group {
         flex-direction: column;
       }
-    }
-
-    p {
-      padding-inline-start: 0;
     }
   }
 }

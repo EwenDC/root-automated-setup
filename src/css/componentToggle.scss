@@ -1,188 +1,247 @@
+@use 'section';
+
+@mixin transition {
+  transition-duration: 80ms;
+  transition-timing-function: ease-out;
+}
+
 .component-toggle {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  max-inline-size: 100%;
-  flex-wrap: nowrap;
-  overflow: auto;
-  margin-block: 0.6rem;
-  border-radius: 16px;
-  /* Scroll Shadow */
+  // * Default layout: Scrollable list that takes up 1 row * //
+  @include section.breakout-width;
+  @include transition;
+  // Scroll Shadow
   background:
     linear-gradient(90deg, ivory 30%, rgba(255, 255, 255, 0)),
     linear-gradient(90deg, rgba(255, 255, 255, 0), ivory 70%) 0 100%,
     radial-gradient(farthest-side at 0% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)),
     radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)) 0 100%;
+  background-attachment: local, local, scroll, scroll;
   background-color: ivory;
-  background-repeat: no-repeat;
   background-position:
     top left,
     top right,
     top left,
     top right;
+  background-repeat: no-repeat;
   background-size:
     40px 100%,
     40px 100%,
     20px 100%,
     20px 100%;
-  background-attachment: local, local, scroll, scroll;
+  border-radius: 16px;
+  display: flex;
+  margin-block: 0.6rem;
+  outline: 2px dotted transparent;
+  overflow-inline: scroll;
+  overflow-block: hidden;
+  padding: 6px;
+  transition-property: outline-color;
 
-  &:focus-visible {
-    outline: 2px dotted black;
+  section.inactive & {
+    padding: 0;
   }
 
-  > button {
-    font-size: 1rem;
-    flex: 0 0;
-    background-color: transparent;
-    border-radius: 16px;
-    cursor: pointer;
-    block-size: calc(5rem + 48px);
-    margin: 6px;
-    /* Transitioned properties */
-    transition-property: background-color, color, outline, outline-offset, border;
-    transition-duration: 80ms;
-    transition-timing-function: ease-out;
+  &:focus-visible {
+    outline-color: black;
+  }
 
-    &:hover:not(.locked):not(:disabled) {
-      background-color: white;
-    }
+  // Enable/Disable All Components Button
+  > .controls {
+    display: flex;
+    flex: 0 0 5rem;
+    justify-content: center;
 
-    &:disabled {
-      cursor: auto;
-    }
-
-    section.inactive & {
-      margin: 0;
-      transition: none;
-    }
-
-    > img {
-      inline-size: 48px;
-      block-size: 48px;
-      mix-blend-mode: multiply;
-      /* Transitioned properties */
-      filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
-      transition-property: filter;
-      transition-duration: inherit;
-      transition-timing-function: inherit;
-    }
-
-    /* Enable/Disable All Button */
-    &.toggle {
-      min-inline-size: 5rem;
-      padding-inline: 0.25rem;
-      overflow-wrap: break-word;
-      color: black;
-      outline: 2px dotted transparent;
-      outline-offset: -3px;
+    > button {
+      @include transition;
+      background-color: transparent;
       border: 2px solid black;
       border-block: none;
+      border-radius: 16px;
+      color: black;
+      cursor: pointer;
+      inline-size: 100%;
+      font-size: 1rem;
+      outline: 2px dotted transparent;
+      outline-offset: -3px;
+      overflow-wrap: break-word;
+      padding-inline: 0.25rem;
+      transition-property: background-color, outline-color, outline-offset;
 
       &:focus-visible {
-        outline-offset: -5px;
         outline-color: black;
+        outline-offset: -5px;
+      }
+
+      &:hover {
+        background-color: white;
+      }
+
+      section.inactive & {
+        transition: none;
       }
     }
+  }
 
-    /* Toggle Component Button */
-    &:not(.toggle) {
-      min-inline-size: 8rem;
-      padding-block: calc(0.1 * 16px) 0.1rem;
-      padding-inline: 0.1rem;
+  // Component List
+  > .components {
+    // Only scale ~2/3rds of the height with text size, since the images should ideally remain constantly sized
+    block-size: calc(48px + 5rem);
+    column-gap: 3px;
+    display: grid;
+    grid-auto-columns: 8rem;
+    grid-auto-flow: column;
+    grid-template-rows: 0 minmax(0, 1fr) auto;
+    justify-content: center;
+    margin-inline-start: 3px;
+
+    section.inactive & {
+      column-gap: 0;
+      margin-inline-start: 0;
+    }
+
+    > label {
+      @include transition;
+      border: 2px dotted transparent;
+      border-radius: 16px;
       color: darkgray;
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      justify-items: center;
+      // Account for outline position while focused
+      margin: 5px;
       outline: 3px dashed transparent;
       outline-offset: 0;
-      border: 2px dotted transparent;
+      transition-property: background-color, color, outline, outline-offset, border;
 
-      &:focus-visible {
+      &:has(> input:enabled) {
+        cursor: pointer;
+        &:hover {
+          background-color: white;
+        }
+      }
+
+      &:has(> input:focus-visible) {
         outline-offset: 2px;
         border-color: black;
       }
 
-      &.enabled {
-        color: black;
-        outline-color: black;
-
-        &.locked {
-          outline-color: black;
-        }
-
-        > img {
-          filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
-        }
-      }
-
-      &.locked {
-        cursor: auto;
+      section.active &:has(> input:disabled) {
         outline: 2px solid darkgray;
       }
-    }
-  }
-}
 
-@mixin resize-labels($label-size, $icon-size) {
-  > button {
-    block-size: calc($label-size + $icon-size);
-
-    > img {
-      inline-size: $icon-size;
-      block-size: $icon-size;
-    }
-  }
-}
-
-@mixin large-screen {
-  .component-toggle {
-    @include resize-labels(4rem, 96px);
-    flex-wrap: wrap;
-    overflow: hidden;
-    margin-block: 0.1rem;
-    background: none;
-
-    section.inactive & {
-      margin-block: 0;
-    }
-
-    > button {
-      margin: 14px;
-
-      &:hover:not(.locked):not(:disabled) {
-        background-color: ivory;
+      section.active &:has(> input:checked) {
+        color: black;
+        outline-color: black;
       }
 
+      section.inactive & {
+        // Don't leave a margin for outlines if the selection is static
+        margin: 0;
+        transition: none;
+      }
+
+      // Component Image
       > img {
-        flex: 0 0;
-        margin-block: 8px 0.5rem;
-        margin-inline: auto;
-        mix-blend-mode: normal;
-      }
-
-      > .label {
-        flex: 1 0;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
+        @include transition;
+        box-sizing: border-box;
+        filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
         inline-size: 100%;
+        max-block-size: 100%;
+        mix-blend-mode: multiply;
+        object-fit: contain;
+        padding: 5px;
+        transition-property: filter;
       }
 
-      /* Enable/Disable All Button */
-      &.toggle {
-        min-inline-size: 10rem;
+      // Hidden Checkbox Input
+      > input {
+        appearance: none;
+
+        section.active &:checked + img {
+          filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
+        }
+
+        &:focus {
+          outline: none;
+        }
       }
 
-      /* Toggle Component Button */
-      &:not(.toggle) {
-        min-inline-size: 10rem;
-        display: flex;
-        flex-direction: column;
+      // Component Name
+      > .name {
+        text-align: center;
       }
     }
   }
-}
 
-@mixin reduced-motion {
-  .component-toggle > button {
-    transition: none;
+  // * Alt Layout: Scrollable list with larger buttons * //
+  @include section.heading-width-breakpoint {
+    > .controls {
+      flex-basis: 7rem;
+    }
+    > .components {
+      // Only scale ~2/3rds of the height with text size, since the images should ideally remain constantly sized
+      block-size: calc(64px + 6rem);
+      column-gap: 4px;
+      grid-auto-columns: 10rem;
+    }
+  }
+
+  // * Alt Layout: Grid of large buttons that wraps * //
+  @include section.breakout-width-breakpoint {
+    background: transparent;
+    flex-direction: column;
+    gap: 16px;
+    overflow-inline: hidden;
+    padding: 0;
+
+    > .controls {
+      flex-basis: 2rem;
+
+      > button {
+        background-color: ivory;
+        border: none;
+        border-block-end: 2px black solid;
+        border-radius: 11px;
+        inline-size: unset;
+        outline-offset: -2px;
+        padding-inline: 1rem;
+        pointer-events: auto;
+        transition-duration: 80ms;
+        transition-property: background-color, color, border, outline;
+        transition-timing-function: ease-out;
+
+        &:focus-visible {
+          outline-offset: -2px;
+        }
+      }
+    }
+
+    > .components {
+      block-size: 100%;
+      gap: 6px;
+      grid-auto-columns: unset;
+      grid-auto-flow: row;
+      // Set the image height so that the buttons are square when 1rem=16px and labels cover 2 lines
+      grid-auto-rows: 0 calc(141px - 2lh) auto;
+      grid-template-columns: repeat(auto-fit, 10rem);
+      grid-template-rows: unset;
+      margin-block: auto;
+      margin-inline-start: 0;
+
+      section.inactive & {
+        // Maintain current sizing when inactive
+        gap: 6px;
+      }
+
+      > label {
+        img {
+          mix-blend-mode: normal;
+        }
+        > .name {
+          min-block-size: 2lh;
+        }
+      }
+    }
   }
 }

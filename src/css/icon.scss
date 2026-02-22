@@ -1,10 +1,10 @@
 .icon {
-  inline-size: 1.5rem;
   block-size: 1.5rem;
-  transform: translate(0, 0.33rem);
-  margin-block-start: -1.5rem;
   display: inline;
   font-style: italic;
+  inline-size: 1.5rem;
+  margin-block-start: -1.5rem;
+  transform: translate(0, 0.33rem);
 
   section.inactive & {
     filter: grayscale(100%);

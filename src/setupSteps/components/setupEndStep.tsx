@@ -1,14 +1,13 @@
 import { useContext } from 'react'
 
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepComponent } from '..'
 
 import Button from '../../components/button'
 import LocaleText from '../../components/localeText'
 import Section from '../../components/section'
-import { stepActiveContext } from '../../components/stepList'
-import { useAppDispatch, usePlayerNumber } from '../../hooks'
+import { stepActiveContext, useAppDispatch, usePlayerNumber } from '../../hooks'
 import RestartIcon from '../../images/icons/restart.svg?react'
-import { resetFlow, setCurrentPlayerIndex } from '../../store'
+import { resetFlow } from '../../store'
 
 const SetupEndStep: SetupStepComponent = ({ flowSlice }) => {
   const dispatch = useAppDispatch()
@@ -34,15 +33,4 @@ const SetupEndStep: SetupStepComponent = ({ flowSlice }) => {
   )
 }
 
-export const setupEnd: SetupStepDefinition = {
-  beforeStep(dispatch, getState) {
-    // Make sure we select the first player in turn order
-    if (getState().flow.currentPlayerIndex !== 0) dispatch(setCurrentPlayerIndex(0))
-    return null
-  },
-
-  component: SetupEndStep,
-
-  // Do not allow proceeding past the final step
-  afterStep: () => null,
-}
+export default SetupEndStep

@@ -6,10 +6,12 @@ import { VitePWA } from 'vite-plugin-pwa'
 import million from 'million/compiler'
 import checker from 'vite-plugin-checker'
 
+const basePath = '/root-automated-setup'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    // Only need this so the HTML is minified since Vite doesn't minify it by default :(
+    // Only need this so the HTML is minified since Vite doesn't minify it by default ☹️
     createHtmlPlugin(),
     million.vite({ auto: true }),
     react({
@@ -64,11 +66,10 @@ export default defineConfig({
         ],
       },
       manifest: {
-        name: 'Root Automated Setup',
-        short_name: 'Root Auset',
-        description: "Automate the Advanced Setup process for Leder Games' popular board game Root",
-        theme_color: '#2C2E35',
         background_color: '#FFFFF0',
+        categories: ['utilities', 'games', 'entertainment'],
+        description: "Automate the Advanced Setup process for Leder Games' popular board game Root",
+        display: 'standalone',
         icons: [
           {
             src: 'logo192.png',
@@ -81,9 +82,14 @@ export default defineConfig({
             type: 'image/png',
           },
         ],
+        id: basePath,
         launch_handler: {
           client_mode: 'focus-existing',
         },
+        name: 'Root Automated Setup',
+        short_name: 'Root Auset',
+        start_url: basePath,
+        theme_color: '#2C2E35',
       },
     }),
     checker({
@@ -94,7 +100,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/root-automated-setup/',
+  base: basePath,
   server: {
     open: true,
   },

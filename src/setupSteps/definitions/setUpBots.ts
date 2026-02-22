@@ -1,14 +1,7 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepDefinition } from '..'
 
-import Section from '../../components/section'
 import { SetupStep } from '../../types'
-
-const SetUpBotsStep: SetupStepComponent = () => (
-  <Section
-    titleKey="setupStep.setUpBots.title"
-    textKey="setupStep.setUpBots.body"
-  />
-)
+import SetUpBotsStep from '../components/setUpBotsStep'
 
 export const setUpBots: SetupStepDefinition = {
   beforeStep: (_dispatch, getState) =>

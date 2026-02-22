@@ -1,1 +1,19 @@
+blockExoticSubdeps: true
+
+enablePrePostScripts: false
+
+minimumReleaseAge: 1440
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+
+savePrefix: ''
+
+shellEmulator: true
+
+strictDepBuilds: true
+
+trustPolicy: no-downgrade
+
 useNodeVersion: 22.17.0

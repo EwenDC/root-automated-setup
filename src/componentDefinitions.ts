@@ -1,4 +1,4 @@
-import type { Expansion, ExpansionCode } from './types'
+import type { DeepReadonly, Expansion, ExpansionCode } from './types'
 
 // Box Images
 import exilesDeckBox from './images/boxes/exilesDeck.png'
@@ -104,7 +104,7 @@ import sympathyToken from './images/tokens/sympathy.png'
 import tradePostTokens from './images/tokens/tradePosts.png'
 import tunnelToken from './images/tokens/tunnel.png'
 
-const definitions: Record<ExpansionCode, Expansion> = {
+const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
   root: {
     image: rootBox,
     decks: {

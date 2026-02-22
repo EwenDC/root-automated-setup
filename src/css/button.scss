@@ -1,16 +1,18 @@
+@use 'section';
+
 .button {
   background-color: ivory;
   border: none;
+  border-block-end: 2px black solid;
+  border-radius: 8px;
+  color: black;
+  cursor: pointer;
   font-size: 1.5rem;
   font-style: italic;
-  cursor: pointer;
-  pointer-events: auto;
-  border-radius: 8px;
-  outline-offset: -2px;
-  /* Transitioned properties */
-  color: black;
-  border-block-end: 2px black solid;
+  inline-size: fit-content;
   outline: 2px dotted transparent;
+  outline-offset: -2px;
+  pointer-events: auto;
   transition-property: background-color, color, border, outline;
   transition-duration: 80ms;
   transition-timing-function: ease-out;
@@ -24,10 +26,10 @@
   }
 
   &.disabled {
-    cursor: auto;
-    color: darkgray;
-    border-block-end-color: transparent;
     background-color: ivory;
+    border-block-end-color: transparent;
+    color: darkgray;
+    cursor: auto;
   }
 
   &:focus-visible {
@@ -47,13 +49,11 @@
       margin-inline-start: 0.3rem;
     }
   }
-}
 
-@mixin large-screen {
-  .button {
+  @include section.heading-width-breakpoint {
+    border-block-end: 3px black solid;
     border-radius: 11px;
     font-size: 2rem;
-    border-block-end: 3px black solid;
     outline: 3px dotted transparent;
 
     > .label-icon {
@@ -69,11 +69,5 @@
         margin-inline-start: 0.5rem;
       }
     }
-  }
-}
-
-@mixin reduced-motion {
-  .button {
-    transition: none;
   }
 }

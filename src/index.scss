@@ -16,47 +16,50 @@
 @use 'css/stepList';
 @use 'css/toast';
 @use 'css/toolbar';
-@use 'locales/es-ES';
-@use 'locales/fr-FR';
-@use 'locales/it-IT';
-@use 'locales/pl-PL';
 
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
-* {
-  font-family: 'Libre Baskerville', serif;
-
-  &::selection {
-    color: black;
-    background: lightgray;
-  }
-}
-
 body {
-  margin: 0;
   background: ivory url('./images/background.jpg') top;
-  background-size: 80rem;
+  background-size: 1280px;
+  font-family: 'Libre Baskerville', serif;
+  margin: 0;
 }
 
+button,
+input {
+  font-family: 'Libre Baskerville', serif;
+}
+
+$loading-size: 160px;
+$loading-thickness: 12px;
 .loading {
-  inline-size: 10rem;
-  block-size: 10rem;
-  position: fixed;
-  inset-block-start: 50%;
-  inset-inline-end: 50%;
-  margin: calc(-1 * (10rem / 2 + 12px)) calc(-1 * (10rem / 2 + 12px)) 0 0;
-  border: 12px solid transparent;
+  animation: rotate 1s infinite linear;
+  block-size: $loading-size;
+  border: $loading-thickness solid transparent;
   border-radius: 50%;
   border-inline-end-color: black;
-  animation: rotate 1s infinite linear;
+  inline-size: $loading-size;
+  inset-block-start: 50%;
+  inset-inline-end: 50%;
+  $margin: calc(-1 * ($loading-size / 2 + $loading-thickness));
+  margin-block-start: $margin;
+  margin-inline-end: $margin;
+  position: fixed;
 }
 
 noscript {
-  text-align: center;
-  position: fixed;
   inset-block-start: 50%;
   inline-size: 100%;
-  margin-block-start: 10rem;
+  margin-block-start: $loading-size;
+  position: fixed;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion) {
+  * {
+    transition: none !important;
+  }
 }
 
 @keyframes rotate {
@@ -68,38 +71,7 @@ noscript {
   }
 }
 
-@media (min-width: 62rem) {
-  @include button.large-screen;
-  @include captainInfo.large-screen;
-  @include componentCount.large-screen;
-  @include componentToggle.large-screen;
-  @include factionInfo.large-screen;
-  @include factionSelect.large-screen;
-  @include languageSelect.large-screen;
-  @include radiogroup.large-screen;
-  @include statBar.large-screen;
-  @include stepList.large-screen;
-  @include toast.large-screen;
-  @include toolbar.large-screen;
-  @include es-ES.large-screen;
-  @include fr-FR.large-screen;
-  @include it-IT.large-screen;
-  @include pl-PL.large-screen;
-}
-
-@media (prefers-reduced-motion) {
-  @include button.reduced-motion;
-  @include checkbox.reduced-motion;
-  @include componentToggle.reduced-motion;
-  @include factionSelect.reduced-motion;
-  @include languageSelect.reduced-motion;
-  @include numberSelector.reduced-motion;
-  @include radiogroup.reduced-motion;
-  @include statBar.reduced-motion;
-  @include toast.reduced-motion;
-}
-
-@media (forced-colors: active) {
-  @include checkbox.forced-colors;
-  @include radiogroup.forced-colors;
+::selection {
+  color: black;
+  background: lightgray;
 }

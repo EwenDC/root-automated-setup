@@ -1,4 +1,16 @@
-import type { Expansion } from './types'
+import type { ClearingSuit, DeepReadonly, Expansion, Item } from './types'
+
+import bagImage from './images/items/bag.png'
+import bootImage from './images/items/boot.png'
+import coinImage from './images/items/coin.png'
+import crossbowImage from './images/items/crossbow.png'
+import hammerImage from './images/items/hammer.png'
+import swordImage from './images/items/sword.png'
+import teaImage from './images/items/tea.png'
+import torchImage from './images/items/torch.png'
+import foxIcon from './images/suits/fox.svg'
+import mouseIcon from './images/suits/mouse.svg'
+import rabbitIcon from './images/suits/rabbit.svg'
 
 // ---------------------------------------------------------------------------------------------- //
 //#region Game Constants
@@ -44,6 +56,55 @@ export const COMPONENT_TYPES = [
 
 /** The lookup key used to save and load the "fixed suits" persisted setting for a map. */
 export const FIXED_SUIT_KEY = 'fixedSuits'
+
+export const ICON_DICTIONARY: DeepReadonly<
+  Record<ClearingSuit | Item, { key: string; image: string }>
+> = {
+  fox: {
+    key: 'label.fox',
+    image: foxIcon,
+  },
+  mouse: {
+    key: 'label.mouse',
+    image: mouseIcon,
+  },
+  rabbit: {
+    key: 'label.rabbit',
+    image: rabbitIcon,
+  },
+  bag: {
+    key: 'component.bag',
+    image: bagImage,
+  },
+  boot: {
+    key: 'component.boot',
+    image: bootImage,
+  },
+  coin: {
+    key: 'component.coin',
+    image: coinImage,
+  },
+  crossbow: {
+    key: 'component.crossbow',
+    image: crossbowImage,
+  },
+  hammer: {
+    key: 'component.hammer',
+    image: hammerImage,
+  },
+  sword: {
+    key: 'component.sword',
+    image: swordImage,
+  },
+  tea: {
+    key: 'component.tea',
+    image: teaImage,
+  },
+  torch: {
+    key: 'component.torch',
+    image: torchImage,
+  },
+}
 
 /** The lookup key used to save and load the "use landmark" persisted setting for a map. */
 export const USE_LANDMARK_KEY = 'useLandmark'

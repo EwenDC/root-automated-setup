@@ -1,6 +1,5 @@
 import type { UnknownAction } from '@reduxjs/toolkit'
 
-import classNames, { type Argument } from 'classnames'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -8,20 +7,18 @@ import type { AppThunk, RootState } from '../store'
 import type { CodeObject, GameComponent, Togglable } from '../types'
 
 import { useAppDispatch, useAppSelector, useInvalid } from '../hooks'
+import { stepActiveContext } from '../hooks'
 import { massComponentToggle, setErrorMessage } from '../store'
 import LocaleText from './localeText'
-import { stepActiveContext } from './stepList'
 
 interface ComponentListProps<T> {
-  className?: Argument
   selector: (state: RootState) => T[]
   toggleComponent: (code: string) => AppThunk | UnknownAction
   getLabelKey: (component: T) => string
-  unsorted?: boolean
+  unsorted?: boolean | undefined
 }
 
 const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
-  className,
   selector,
   toggleComponent,
   getLabelKey,
@@ -44,47 +41,47 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
   const allEnabled = sortedComponents.every(component => component.enabled || component.locked)
 
   return (
-    <div className={classNames('component-toggle', className)}>
+    <div className="component-toggle">
       {stepActive ? (
-        <button
-          className="toggle"
-          onClick={() => {
-            dispatch(massComponentToggle(selector, !allEnabled, toggleComponent))
-          }}
-        >
-          <LocaleText i18nKey={allEnabled ? 'label.disableAll' : 'label.enableAll'} />
-        </button>
-      ) : null}
-      {sortedComponents.map(({ code, enabled, image, label, locked }) =>
-        enabled || stepActive ? (
+        <div className="controls">
           <button
-            key={code}
-            className={classNames({
-              enabled: stepActive && enabled,
-              locked: stepActive && locked !== false,
-            })}
-            onClick={() => dispatch(locked ? setErrorMessage(locked) : toggleComponent(code))}
-            disabled={!stepActive}
-            title={stepActive && locked ? t(locked) : undefined}
-            tabIndex={stepActive && locked ? -1 : undefined}
-            role="switch"
-            aria-checked={enabled}
-            aria-disabled={stepActive ? locked !== false : undefined}
-            aria-label={stepActive ? label : undefined}
-            aria-invalid={invalid ? true : undefined}
-            aria-errormessage={invalid ? 'appError' : undefined}
+            type="button"
+            onClick={() => {
+              dispatch(massComponentToggle(selector, !allEnabled, toggleComponent))
+            }}
           >
-            <img
-              src={image}
-              alt="" // We're including the alt text in the button itself so don't bother reading out the image
-              aria-hidden="true"
-            />
-            <div className="label">
-              <span>{label}</span>
-            </div>
+            <LocaleText i18nKey={allEnabled ? 'label.disableAll' : 'label.enableAll'} />
           </button>
-        ) : null,
-      )}
+        </div>
+      ) : null}
+      <div className="components">
+        {sortedComponents.map(({ code, enabled, image, label, locked }) =>
+          enabled || stepActive ? (
+            <label
+              key={code}
+              title={stepActive && locked ? t(locked) : undefined}
+              onClick={locked ? () => dispatch(setErrorMessage(locked)) : undefined}
+            >
+              <input
+                type="checkbox"
+                role="switch"
+                checked={enabled}
+                disabled={stepActive ? locked !== false : true}
+                tabIndex={stepActive && locked ? -1 : undefined}
+                aria-invalid={invalid ? true : undefined}
+                aria-errormessage={invalid ? 'appError' : undefined}
+                onChange={() => dispatch(toggleComponent(code))}
+              />
+              <img
+                src={image}
+                alt="" // Not required as the input already has a label
+                aria-hidden="true"
+              />
+              <div className="name">{label}</div>
+            </label>
+          ) : null,
+        )}
+      </div>
     </div>
   )
 }) satisfies React.FC<ComponentListProps<CodeObject & GameComponent & Togglable>>

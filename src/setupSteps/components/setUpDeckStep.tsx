@@ -1,9 +1,8 @@
-import type { SetupStepComponent, SetupStepDefinition } from '..'
+import type { SetupStepComponent } from '..'
 
 import Section from '../../components/section'
 import { useAppSelector } from '../../hooks'
 import { selectDeckArray, selectSetupDeckCode, selectTwoPlayer } from '../../store'
-import { SetupStep } from '../../types'
 
 const SetUpDeckStep: SetupStepComponent = () => {
   const deck = useAppSelector(selectSetupDeckCode)
@@ -22,7 +21,4 @@ const SetUpDeckStep: SetupStepComponent = () => {
   )
 }
 
-export const setUpDeck: SetupStepDefinition = {
-  component: SetUpDeckStep,
-  afterStep: () => SetupStep.setUpBots,
-}
+export default SetUpDeckStep
