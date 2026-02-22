@@ -70,18 +70,6 @@ export default defineConfig({
         categories: ['utilities', 'games', 'entertainment'],
         description: "Automate the Advanced Setup process for Leder Games' popular board game Root",
         display: 'standalone',
-        icons: [
-          {
-            src: 'logo192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: 'logo512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ],
         id: basePath,
         launch_handler: {
           client_mode: 'focus-existing',
@@ -90,6 +78,9 @@ export default defineConfig({
         short_name: 'Root Auset',
         start_url: basePath,
         theme_color: '#2C2E35',
+      },
+      pwaAssets: {
+        disabled: false,
       },
     }),
     checker({
