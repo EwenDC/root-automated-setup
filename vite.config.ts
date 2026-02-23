@@ -66,7 +66,7 @@ export default defineConfig({
         ],
       },
       manifest: {
-        background_color: '#FFFFF0',
+        background_color: '#FBF8E5',
         categories: ['utilities', 'games', 'entertainment'],
         description: "Automate the Advanced Setup process for Leder Games' popular board game Root",
         display: 'standalone',
@@ -77,7 +77,7 @@ export default defineConfig({
         name: 'Root Automated Setup',
         short_name: 'Root Auset',
         start_url: basePath,
-        theme_color: '#2C2E35',
+        theme_color: '#2D2F36',
       },
       pwaAssets: {
         disabled: false,
