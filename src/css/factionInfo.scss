@@ -3,8 +3,7 @@
 .faction-info {
   // * Default layout: Stacked regions * //
   @include section.full-width;
-  display: grid;
-  grid-template-columns: subgrid;
+  @include section.layout;
 
   > * {
     @include section.text-width;

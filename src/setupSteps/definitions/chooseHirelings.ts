@@ -2,10 +2,12 @@ import type { SetupStepDefinition } from '..'
 
 import { takeRandom } from '../../functions/random'
 import {
-  addHireling,
-  clearHirelingState,
+  addToHirelingPool,
+  clearExcludedFactions,
   lockHireling,
   massComponentLock,
+  pushExcludedFactions,
+  resetHirelingPool,
   selectFactionCodes,
   selectHirelingArray,
   setCurrentIndex,
@@ -19,13 +21,11 @@ export const chooseHirelings: SetupStepDefinition = {
   beforeStep(dispatch, getState) {
     const state = getState()
 
-    // Clear state of any potential stale data. Do this first so it always happens even if hireling setup is skipped
-    if (state.setup.hirelings.length > 0 || state.setup.excludedFactions.length > 0) {
-      dispatch(clearHirelingState())
-    }
-
     // Are there any hirelings that can be set up?
     if (selectHirelingArray(state).length < 1) {
+      // Clear state of any potential stale data
+      if (state.setup.excludedFactions.length > 0) dispatch(clearExcludedFactions())
+      if (state.flow.hirelingPool.length > 0) dispatch(resetHirelingPool())
       return SetupStep.drawCards
     }
 
@@ -55,15 +55,12 @@ export const chooseHirelings: SetupStepDefinition = {
   afterStep(dispatch, getState) {
     const state = getState()
 
-    // Clear state of any potential stale data. Do this first so it always happens even if hireling setup is skipped
-    if (state.setup.hirelings.length > 0 || state.setup.excludedFactions.length > 0) {
-      dispatch(clearHirelingState())
-    }
+    // Clear state of any stale data
+    if (state.setup.excludedFactions.length > 0) dispatch(clearExcludedFactions())
+    if (state.flow.hirelingPool.length > 0) dispatch(resetHirelingPool())
 
     // Bail out if no hirelings are to be included
-    if (state.setup.hirelingCount < 1) {
-      return SetupStep.drawCards
-    }
+    if (state.setup.hirelingCount < 1) return SetupStep.drawCards
 
     const factionCodes = selectFactionCodes(state)
 
@@ -103,15 +100,23 @@ export const chooseHirelings: SetupStepDefinition = {
     if (hirelingPool.length >= state.setup.hirelingCount) {
       // Choose three random hirelings
       for (let index = 0; index < state.setup.hirelingCount; index++) {
-        dispatch(addHireling(takeRandom(hirelingPool)))
+        const hireling = takeRandom(hirelingPool)
+        // 2 players - 0 demoted
+        // 3 players - 1 demoted
+        // 4 players - 2 demoted
+        // 5+ players - 3 demoted
+        dispatch(addToHirelingPool(hireling.code, state.setup.playerCount + index > 4))
+        if (hireling.excludeFactions.length > 0) {
+          dispatch(pushExcludedFactions(hireling.excludeFactions))
+        }
       }
       dispatch(setCurrentPlayerIndex(null))
       dispatch(setCurrentIndex(null))
-      return SetupStep.setUpHireling
-    } else {
-      // Invalid state, do not proceed
-      dispatch(setErrorMessage('error.tooFewHireling'))
-      return null
+      return SetupStep.selectHireling
     }
+
+    // Invalid state, do not proceed
+    dispatch(setErrorMessage('error.tooFewHireling'))
+    return null
   },
 }

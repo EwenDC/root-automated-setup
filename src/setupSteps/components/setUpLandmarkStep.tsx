@@ -5,14 +5,17 @@ import { useAppSelector, usePlayerNumber } from '../../hooks'
 import { selectSetupMapCode } from '../../store'
 
 const SetUpLandmarkStep: SetupStepComponent = ({ flowSlice }) => {
-  const landmark = useAppSelector(state => state.setup.landmarks[flowSlice.index ?? 0])
   const map = useAppSelector(selectSetupMapCode)
   const playerNumber = usePlayerNumber(flowSlice)
+  const { landmarkPool, index } = flowSlice
+
+  const selectedLandmark = index != null && landmarkPool[index]
+  if (!selectedLandmark) return null
 
   return (
     <Section
-      subtitleKey={`landmark.${landmark}.setupTitle`}
-      textKey={`landmark.${landmark}.setup`}
+      subtitleKey={`landmark.${selectedLandmark}.setupTitle`}
+      textKey={`landmark.${selectedLandmark}.setup`}
       translationOptions={{
         context: map,
         count: playerNumber,

@@ -35,14 +35,21 @@
   display: grid;
   grid-auto-columns: 9rem;
   grid-auto-flow: column;
-  grid-template-rows: 0 minmax(0, 1fr) auto;
+  grid-template-rows: calc(4rem + 80px);
   inline-size: 100%;
   margin-block-start: 0.6rem;
   outline: 2px dotted transparent;
-  overflow-inline: scroll;
-  overflow-block: hidden;
+  overflow-x: scroll;
+  overflow-y: hidden;
   padding: 6px;
   transition-property: outline-color;
+
+  @supports (overflow-block: hidden) and (overflow-inline: scroll) {
+    overflow-x: unset;
+    overflow-y: unset;
+    overflow-block: hidden;
+    overflow-inline: scroll;
+  }
 
   &:focus-visible {
     outline-color: black;
@@ -56,8 +63,7 @@
     color: black;
     cursor: pointer;
     display: grid;
-    grid-row: span 3;
-    grid-template-rows: subgrid;
+    grid-template-rows: 0 minmax(0, 1fr) auto;
     justify-items: center;
     mix-blend-mode: multiply;
     outline: 2px dotted transparent;
@@ -183,12 +189,26 @@
     }
   }
 
+  @supports (grid-template-rows: subgrid) {
+    grid-template-rows: 0 minmax(0, 1fr) auto;
+
+    label {
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+    }
+  }
+
   // * Alt Layout: Scrollable list with larger buttons * //
   @include section.heading-width-breakpoint {
     // Only scale ~1/2 of the height with text size, since the images should ideally remain constantly sized
     block-size: calc(4.5rem + 108px);
     border-radius: 16px;
     grid-auto-columns: 10.5rem;
+    grid-template-rows: calc(4.5rem + 96px);
+
+    @supports (grid-template-rows: subgrid) {
+      grid-template-rows: 0 minmax(0, 1fr) auto;
+    }
 
     label {
       border-radius: 16px;

@@ -3,16 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 import type { SetupClearing } from '../../functions/mapSolvers'
-import type {
-  CodeObject,
-  DeckCode,
-  FactionCode,
-  FactionExcludingComponent,
-  HirelingCode,
-  LandmarkCode,
-  MapCode,
-  WithCode,
-} from '../../types'
+import type { CodeObject, DeckCode, FactionCode, MapCode } from '../../types'
 
 import {
   HIRELING_SETUP_COUNT,
@@ -26,13 +17,8 @@ import {
   SETTING_PLAYER_COUNT,
 } from '../../constants'
 import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
+import { resetState } from '../actions'
 import { toggleExpansion } from './components'
-
-/** An object representing an promoted or demoted Hireling. */
-export interface HirelingEntry {
-  code: HirelingCode
-  demoted: boolean
-}
 
 /** An object containing all variables used during the setup process. */
 export interface SetupState {
@@ -49,10 +35,8 @@ export interface SetupState {
   deck: DeckCode | null
   // Landmarks
   landmarkCount: number
-  landmarks: LandmarkCode[]
   // Hirelings
   hirelingCount: number
-  hirelings: HirelingEntry[]
   // Factions
   excludedFactions: FactionCode[]
   limitVagabonds: boolean
@@ -85,10 +69,8 @@ export const setupSlice = createSlice({
       deck: null,
       // Landmarks
       landmarkCount: loadPersistedSetting<number>(SETTING_LANDMARK_COUNT, 0),
-      landmarks: [],
       // Hirelings
       hirelingCount: loadPersistedSetting(SETTING_HIRELING_COUNT, defaultHirelingCount),
-      hirelings: [],
       // Factions
       excludedFactions: [],
       limitVagabonds: false,
@@ -176,10 +158,6 @@ export const setupSlice = createSlice({
       }
     },
 
-    setLandmarks(state, { payload: landmarks }: PayloadAction<LandmarkCode[]>) {
-      state.landmarks = landmarks
-    },
-
     setHirelingCount(state, { payload: hirelingCount }: PayloadAction<number>) {
       if (hirelingCount === 0 || hirelingCount === HIRELING_SETUP_COUNT) {
         state.hirelingCount = hirelingCount
@@ -192,32 +170,12 @@ export const setupSlice = createSlice({
       }
     },
 
-    clearHirelingState(state) {
-      state.hirelings = []
+    clearExcludedFactions(state) {
       state.excludedFactions = []
     },
 
-    addHireling: {
-      prepare: (hireling: WithCode<FactionExcludingComponent>) => ({
-        payload: [hireling.code, hireling.excludeFactions] as const,
-      }),
-      reducer(
-        state,
-        { payload }: PayloadAction<readonly [HirelingCode, FactionCode[] | undefined]>,
-      ) {
-        const [hirelingCode, excludeFactions] = payload
-        const existingHirelingCount = state.hirelings.length
-
-        state.hirelings.push({
-          code: hirelingCode,
-          // 2 players - 0 demoted
-          // 3 players - 1 demoted
-          // 4 players - 2 demoted
-          // 5+ players - 3 demoted
-          demoted: state.playerCount + existingHirelingCount > 4,
-        })
-        if (excludeFactions) state.excludedFactions.push(...excludeFactions)
-      },
+    pushExcludedFactions(state, { payload: excludeFactions }: PayloadAction<FactionCode[]>) {
+      state.excludedFactions.push(...excludeFactions)
     },
 
     setLimitVagabonds(state, { payload: limitVagabonds }: PayloadAction<boolean>) {
@@ -238,9 +196,18 @@ export const setupSlice = createSlice({
         state.map = null
         state.clearings = []
         state.deck = null
-        state.landmarks = []
-        state.hirelings = []
         state.errorMessage = null
+      })
+      // Clear internal variables when restarting setup
+      .addCase(resetState, state => {
+        state.playerOrder = []
+        state.errorMessage = null
+        state.map = null
+        state.clearings = []
+        state.deck = null
+        state.excludedFactions = []
+        state.limitVagabonds = false
+        state.limitCaptains = false
       })
       // This allows us to always reset the displayed error if the user makes a separate input
       .addDefaultCase(state => {
@@ -255,40 +222,29 @@ export const setupSlice = createSlice({
 
     selectSetupDeckCode: state => state.deck,
 
-    selectSetupHirelings: state => state.hirelings,
-
-    selectSetupLandmarks: state => state.landmarks,
-
     selectSetupMapCode: state => state.map,
   },
 })
 
 export const {
-  setPlayerCount,
-  fixFirstPlayer,
-  setFirstPlayer,
-  setErrorMessage,
-  setMap,
-  setClearings,
   balanceMapSuits,
+  clearExcludedFactions,
+  fixFirstPlayer,
+  pushExcludedFactions,
+  setClearings,
   setDeck,
+  setErrorMessage,
+  setFirstPlayer,
+  setHirelingCount,
   setIncludeBots,
   setLandmarkCount,
-  setLandmarks,
   setLimitCaptains,
   setLimitVagabonds,
-  setHirelingCount,
-  clearHirelingState,
-  addHireling,
+  setMap,
+  setPlayerCount,
 } = setupSlice.actions
 
-export const {
-  selectTwoPlayer,
-  selectSetupClearings,
-  selectSetupDeckCode,
-  selectSetupHirelings,
-  selectSetupLandmarks,
-  selectSetupMapCode,
-} = setupSlice.selectors
+export const { selectTwoPlayer, selectSetupClearings, selectSetupDeckCode, selectSetupMapCode } =
+  setupSlice.selectors
 
 export default setupSlice.reducer

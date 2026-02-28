@@ -13,18 +13,16 @@ import {
   selectFactionArray,
   selectFactionCodes,
   selectVagabondArray,
-  setCaptainPool,
   setCurrentIndex,
   setCurrentPlayerIndex,
   setErrorMessage,
   setLimitCaptains,
   setLimitVagabonds,
   setUseDraft,
-  setVagabondPool,
   toggleCaptain,
   toggleVagabond,
 } from '../../store'
-import { type FactionCode, SetupStep } from '../../types'
+import { type CaptainCode, type FactionCode, SetupStep, type VagabondCode } from '../../types'
 import ChooseFactionsStep from '../components/chooseFactionsStep'
 
 export const chooseFactions: SetupStepDefinition = {
@@ -33,9 +31,11 @@ export const chooseFactions: SetupStepDefinition = {
     const playerCount = state.setup.playerCount
 
     // Don't allow draft setup if we can't spare an extra faction
-    const factionCodes = selectFactionCodes(state)
-    const noSpareFactions = playerCount >= factionCodes.size
-    if (noSpareFactions) dispatch(setUseDraft(false))
+    if (state.flow.useDraft) {
+      const factionCodes = selectFactionCodes(state)
+      const noSpareFactions = playerCount >= factionCodes.size
+      if (noSpareFactions) dispatch(setUseDraft(false))
+    }
 
     // Disable the factions that are mutually exclusive with the selected hirelings
     // Also disable insurgent factions if we're only playing with 2 people and no bots or hirelings
@@ -86,6 +86,8 @@ export const chooseFactions: SetupStepDefinition = {
     const insurgentFactions = selectFactionArray(state).filter(
       ({ enabled, militant }) => enabled && !militant,
     )
+    let vagabondPool: VagabondCode[] | undefined
+    let captainPool: CaptainCode[] | undefined
 
     // Validate and set up the vagabond/captain pool for draft setup
     if (useDraft) {
@@ -98,17 +100,14 @@ export const chooseFactions: SetupStepDefinition = {
         // Make sure to enable all vagabonds if limitVagabonds is false to prevent confusion
         dispatch(massComponentToggle(selectVagabondArray, true, toggleVagabond))
       }
-      const vagabondPool = getEnabled(selectVagabondArray(getState()))
+      vagabondPool = getEnabled(selectVagabondArray(getState())).map(({ code }) => code)
 
       // Get our vagabond faction count to validate our vagabondPool against
       const vagabondFactionCount = countMatches(
         workingFactionPool.concat(insurgentFactions),
         ({ dealVagabond }) => dealVagabond ?? false,
       )
-
-      if (vagabondPool.length >= vagabondFactionCount) {
-        dispatch(setVagabondPool(vagabondPool))
-      } else {
+      if (vagabondPool.length < vagabondFactionCount) {
         dispatch(setErrorMessage('error.tooFewVagabond'))
         return null
       }
@@ -123,17 +122,14 @@ export const chooseFactions: SetupStepDefinition = {
         // Make sure to enable all captains if limitCaptains is false to prevent confusion
         dispatch(massComponentToggle(selectCaptainArray, true, toggleCaptain))
       }
-      const captainPool = getEnabled(selectCaptainArray(getState()))
+      captainPool = getEnabled(selectCaptainArray(getState())).map(({ code }) => code)
 
       // Get our knave faction count to validate our captainPool against
       const captainFactionCount = countMatches(
         workingFactionPool.concat(insurgentFactions),
         ({ dealCaptains }) => dealCaptains ?? false,
       )
-
-      if (captainPool.length >= captainFactionCount * CAPTAIN_DEAL_COUNT) {
-        dispatch(setCaptainPool(captainPool))
-      } else {
+      if (captainPool.length < captainFactionCount * CAPTAIN_DEAL_COUNT) {
         dispatch(setErrorMessage('error.tooFewCaptains'))
         return null
       }
@@ -158,7 +154,7 @@ export const chooseFactions: SetupStepDefinition = {
 
     // Start by adding a random militant faction
     const firstFaction = takeRandom(workingFactionPool)
-    dispatch(addToFactionPool(firstFaction))
+    dispatch(addToFactionPool(firstFaction, vagabondPool, captainPool))
     // Add the insurgent factions to the mix
     workingFactionPool.push(...insurgentFactions)
 
@@ -179,7 +175,7 @@ export const chooseFactions: SetupStepDefinition = {
         // Don't include any factions that are incompatible with ones already chosen
         !incompatibleFactions.has(candidateFaction.code)
       ) {
-        dispatch(addToFactionPool(candidateFaction))
+        dispatch(addToFactionPool(candidateFaction, vagabondPool, captainPool))
         factionsSetUp++
         if (!useDraft && candidateFaction.standardSetup.cornerSetup) cornerSetupCount++
         if (candidateFaction.excludeFactions) {

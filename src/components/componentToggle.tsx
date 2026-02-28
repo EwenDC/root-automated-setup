@@ -11,7 +11,7 @@ import { stepActiveContext } from '../hooks'
 import { massComponentToggle, setErrorMessage } from '../store'
 import LocaleText from './localeText'
 
-interface ComponentListProps<T> {
+interface ComponentToggleProps<T> {
   selector: (state: RootState) => T[]
   toggleComponent: (code: string) => AppThunk | UnknownAction
   getLabelKey: (component: T) => string
@@ -23,16 +23,15 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
   toggleComponent,
   getLabelKey,
   unsorted = false,
-}: ComponentListProps<T>) => {
+}: ComponentToggleProps<T>) => {
   const components = useAppSelector(selector)
   const stepActive = useContext(stepActiveContext)
   const invalid = useInvalid(stepActive)
   const dispatch = useAppDispatch()
   const { t, i18n } = useTranslation()
 
-  const allEnabled = components.every(component => component.enabled || component.locked)
-  const showReset = components.some(component => component.defaultDisabled && !component.locked)
-
+  const allEnabled =
+    stepActive && components.every(component => component.enabled || component.locked)
   const sortedComponents = components.map(component => ({
     ...component,
     label: t(getLabelKey(component)),
@@ -54,22 +53,28 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
           >
             <LocaleText i18nKey={allEnabled ? 'label.disableAll' : 'label.enableAll'} />
           </button>
-          {showReset ? (
-            <button
-              type="button"
-              onClick={() => {
-                dispatch(
-                  massComponentToggle(
-                    selector,
-                    component => !component.defaultDisabled,
-                    toggleComponent,
-                  ),
-                )
-              }}
-            >
-              <LocaleText i18nKey="label.reset" />
-            </button>
-          ) : null}
+          {
+            // Show reset button if any components are default disabled
+            components.some(component => component.defaultDisabled && !component.locked) ? (
+              <button
+                type="button"
+                disabled={components.every(
+                  component => component.enabled === !component.defaultDisabled || component.locked,
+                )}
+                onClick={() => {
+                  dispatch(
+                    massComponentToggle(
+                      selector,
+                      component => !component.defaultDisabled,
+                      toggleComponent,
+                    ),
+                  )
+                }}
+              >
+                <LocaleText i18nKey="label.reset" />
+              </button>
+            ) : null
+          }
         </div>
       ) : null}
       <div className="components">
@@ -85,7 +90,6 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
                 role="switch"
                 checked={enabled}
                 disabled={stepActive ? locked !== false : true}
-                tabIndex={stepActive && locked ? -1 : undefined}
                 aria-invalid={invalid ? true : undefined}
                 aria-errormessage={invalid ? 'appError' : undefined}
                 onChange={() => dispatch(toggleComponent(code))}
@@ -102,6 +106,6 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
       </div>
     </div>
   )
-}) satisfies React.FC<ComponentListProps<CodeObject & GameComponent & Togglable>>
+}) satisfies React.FC<ComponentToggleProps<CodeObject & GameComponent & Togglable>>
 
 export default ComponentToggle

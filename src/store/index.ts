@@ -14,6 +14,7 @@ export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action>
 
+export * from './actions'
 export * from './selectors'
 export * from './slices/components'
 export * from './slices/flow'

@@ -32,10 +32,17 @@
   display: flex;
   margin-block: 0.6rem;
   outline: 2px dotted transparent;
-  overflow-inline: scroll;
-  overflow-block: hidden;
+  overflow-x: scroll;
+  overflow-y: hidden;
   padding: 6px;
   transition-property: outline-color;
+
+  @supports (overflow-block: hidden) and (overflow-inline: scroll) {
+    overflow-x: unset;
+    overflow-y: unset;
+    overflow-block: hidden;
+    overflow-inline: scroll;
+  }
 
   section.inactive & {
     padding: 0;
@@ -49,18 +56,16 @@
   > .controls {
     display: flex;
     flex: 0 0 5rem;
-    flex-direction: column;
     gap: 6px;
     justify-content: center;
 
     > button {
       @include transition;
       background-color: transparent;
-      border: 2px solid black;
+      border: 2px solid darkgray;
       border-block: none;
       border-radius: 16px;
-      color: black;
-      cursor: pointer;
+      color: darkgray;
       inline-size: 100%;
       flex-grow: 1;
       font-size: 1rem;
@@ -68,15 +73,21 @@
       outline-offset: -3px;
       overflow-wrap: break-word;
       padding-inline: 0.25rem;
-      transition-property: background-color, outline-color, outline-offset;
+      transition-property: background-color, border-color, color, outline-color, outline-offset;
+
+      &:enabled {
+        border-color: black;
+        color: black;
+        cursor: pointer;
+
+        &:hover {
+          background-color: white;
+        }
+      }
 
       &:focus-visible {
         outline-color: black;
         outline-offset: -5px;
-      }
-
-      &:hover {
-        background-color: white;
       }
 
       section.inactive & {
@@ -93,7 +104,7 @@
     display: grid;
     grid-auto-columns: 8rem;
     grid-auto-flow: column;
-    grid-template-rows: 0 minmax(0, 1fr) auto;
+    grid-template-rows: calc(48px + 5rem);
     justify-content: center;
     margin-inline-start: 3px;
 
@@ -106,10 +117,10 @@
       @include transition;
       border: 2px dotted transparent;
       border-radius: 16px;
+      box-sizing: border-box;
       color: darkgray;
       display: grid;
-      grid-row: span 3;
-      grid-template-rows: subgrid;
+      grid-template-rows: 0 minmax(0, 1fr) auto;
       justify-items: center;
       // Account for outline position while focused
       margin: 5px;
@@ -175,12 +186,22 @@
         text-align: center;
       }
     }
+
+    @supports (grid-template-rows: subgrid) {
+      grid-template-rows: 0 minmax(0, 1fr) auto;
+
+      > label {
+        grid-row: span 3;
+        grid-template-rows: subgrid;
+      }
+    }
   }
 
   // * Alt Layout: Scrollable list with larger buttons * //
   @include section.heading-width-breakpoint {
     > .controls {
       flex-basis: 7rem;
+      flex-direction: column;
     }
 
     > .components {
@@ -188,6 +209,15 @@
       block-size: calc(64px + 6rem);
       column-gap: 4px;
       grid-auto-columns: 10rem;
+      grid-template-rows: calc(64px + 6rem);
+
+      @supports (grid-template-rows: subgrid) {
+        grid-template-rows: 0 minmax(0, 1fr) auto;
+      }
+
+      > label {
+        max-block-size: calc(54px + 6rem);
+      }
     }
   }
 
@@ -196,7 +226,7 @@
     background: transparent;
     flex-direction: column;
     gap: 16px;
-    overflow-inline: hidden;
+    overflow: hidden;
     padding: 0;
 
     > .controls {
@@ -207,7 +237,7 @@
       > button {
         background-color: ivory;
         border: none;
-        border-block-end: 2px black solid;
+        border-block-end: 2px darkgray solid;
         border-radius: 11px;
         flex-grow: 0;
         inline-size: unset;
@@ -229,12 +259,16 @@
       gap: 6px;
       grid-auto-columns: unset;
       grid-auto-flow: row;
-      // Set the image height so that the buttons are square when 1rem=16px and labels cover 2 lines
-      grid-auto-rows: 0 calc(141px - 2lh) auto;
+      grid-auto-rows: calc(64px + 6rem);
       grid-template-columns: repeat(auto-fit, 10rem);
       grid-template-rows: unset;
       margin-block: auto;
       margin-inline-start: 0;
+
+      @supports (grid-template-rows: subgrid) {
+        // Set the image height so that the buttons are square when 1rem=16px and labels cover 2 lines
+        grid-auto-rows: 0 calc(141px - 2lh) auto;
+      }
 
       section.inactive & {
         // Maintain current sizing when inactive
@@ -242,7 +276,7 @@
       }
 
       > label {
-        img {
+        > img {
           mix-blend-mode: normal;
         }
         > .name {

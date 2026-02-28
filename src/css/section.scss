@@ -47,13 +47,11 @@ $padding-inline: 16px;
   }
 }
 
-section {
+@mixin layout {
   $full-size: minmax($padding-inline, 1fr);
   $breakout-size: minmax(0, calc(($breakout-max-width - $heading-max-width) / 2));
   $heading-size: minmax(0, calc(($heading-max-width - $text-max-width) / 2));
 
-  line-height: 1.5;
-  margin-block: 1rem;
   display: grid;
   grid-template-columns:
     [full-start]
@@ -71,6 +69,12 @@ section {
     [breakout-end]
     $full-size
     [full-end];
+}
+
+section {
+  @include layout;
+  line-height: 1.5;
+  margin-block: 1rem;
 
   &.inactive {
     color: darkgray;
@@ -101,7 +105,7 @@ section {
     padding-inline-start: 2ch;
 
     > li {
-      margin-block: 0.5rem;
+      margin-block: 0.33lh;
 
       &::marker {
         font-style: italic;

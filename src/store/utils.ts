@@ -25,10 +25,8 @@ export const currySelector =
  * @param componentType The key the component type is stored under in the "components" redux slice.
  */
 export const lockComponent = (componentType: keyof ComponentsState) => ({
-  prepare: (componentCode: string, locked: false | string) => ({
-    payload: [componentCode, locked] as const,
-  }),
-  reducer(state: ComponentsState, { payload }: PayloadAction<readonly [string, false | string]>) {
+  prepare: (...payload: [componentCode: string, locked: false | string]) => ({ payload }),
+  reducer(state: ComponentsState, { payload }: PayloadAction<[string, false | string]>) {
     const [componentCode, locked] = payload
     const component = state[componentType][componentCode]
     if (component) {

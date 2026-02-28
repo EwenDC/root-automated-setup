@@ -8,7 +8,7 @@ import EnglishFlag from './images/languages/en-US.svg'
 import SpanishFlag from './images/languages/es-ES.svg'
 import FrenchFlag from './images/languages/fr-FR.svg'
 import ItalianFlag from './images/languages/it-IT.svg'
-import PolishFlag from "./images/languages/pl-PL.svg";
+import PolishFlag from './images/languages/pl-PL.svg'
 
 export const languages = [
   { name: 'English', locale: 'en-US', image: EnglishFlag },

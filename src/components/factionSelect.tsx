@@ -14,8 +14,7 @@ interface FactionSelectProps {
 }
 
 const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
-  const { factionPool, index: selectedIndex, lastFactionLocked } = flowSlice
-  const factionPoolFull = useAppSelector(selectFactionPoolFull(factionPool))
+  const factionPoolFull = useAppSelector(selectFactionPoolFull(flowSlice))
   const useDraft = useAppSelector(state => state.flow.useDraft)
   const stepActive = useContext(stepActiveContext)
   const invalid = useInvalid(stepActive)
@@ -36,6 +35,7 @@ const FactionSelect: React.FC<FactionSelectProps> = ({ flowSlice }) => {
     },
   )
 
+  const { index: selectedIndex, lastFactionLocked } = flowSlice
   const lastIndex = factionPoolFull.length - 1
   return (
     // Unfortunately we can't use fieldset as it prevents scroll shadow styling from working due to how it renders it's children
