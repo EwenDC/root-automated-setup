@@ -7,7 +7,7 @@ import LocaleText from '../../components/localeText'
 import Section from '../../components/section'
 import { stepActiveContext, useAppDispatch, usePlayerNumber } from '../../hooks'
 import RestartIcon from '../../images/icons/restart.svg?react'
-import { resetFlow } from '../../store'
+import { resetState } from '../../store'
 
 const SetupEndStep: SetupStepComponent = ({ flowSlice }) => {
   const dispatch = useAppDispatch()
@@ -24,7 +24,7 @@ const SetupEndStep: SetupStepComponent = ({ flowSlice }) => {
         <Button
           Icon={RestartIcon}
           iconLeft
-          onClick={() => dispatch(resetFlow())}
+          onClick={() => dispatch(resetState())}
         >
           <LocaleText i18nKey="label.restartSetup" />
         </Button>

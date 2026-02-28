@@ -70,7 +70,6 @@ export default {
     mapLandmarkUsed: `Lugar Mítico ya incluído en el mapa escogido`,
     noDeck: `¡No hay mazo seleccionados! Por favor, selecciona al menos un mazo`,
     noFaction: `¡No hay Facciones seleccionadas! Por favor, escoge una facción para jugar`,
-    noLandmark: `¡No hay Lugares Míticos seleccionados! Por favor, escoge al menos un Lugar Mítico, o pon 0 en el número de Lugares Míticos requeridos`,
     noMap: `¡No hay Mapas seleccionados! Por favor, elige al menos un Mapa`,
     noMilitantFaction: `¡No hay Facciones belicosas seleccionadas! Por favor, elige al menos una facción belicosa`,
     tooFewFaction: `¡No hay suficientes Facciones seleccionadas! Por favor, selecciona más facciones, desactiva el modo draft o baja el número de jugadores participantes`,

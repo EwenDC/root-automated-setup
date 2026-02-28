@@ -268,8 +268,10 @@ export const enum SetupStep {
   setUpDeck,
   setUpBots,
   chooseLandmarks,
+  selectLandmark,
   setUpLandmark,
   chooseHirelings,
+  selectHireling,
   setUpHireling,
   postHirelingSetup,
   drawCards,
@@ -293,14 +295,22 @@ export interface FactionEntry {
   captains?: [CaptainCode, CaptainCode, CaptainCode, CaptainCode]
 }
 
+/** An object representing an promoted or demoted Hireling. */
+export interface HirelingEntry {
+  code: HirelingCode
+  demoted: boolean
+}
+
 /** An object representing a slice of history for the flow state. */
 export interface FlowSlice {
-  step: SetupStep
   factionPool: FactionEntry[]
-  lastFactionLocked: boolean
-  vagabondSetUp: boolean
-  playerIndex: number | null
+  hirelingPool: HirelingEntry[]
   index: number | null
+  landmarkPool: LandmarkCode[]
+  lastFactionLocked: boolean
+  playerIndex: number | null
+  step: SetupStep
+  vagabondSetUp: boolean
 }
 
 //#endregion

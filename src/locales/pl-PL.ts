@@ -9,7 +9,7 @@ export default {
     changeLanguage: `Zmień język`,
     chooseVagabonds: {
       false: `Wszystkie postacie Włóczęgi do wyboru`,
-      true: `Wybierz dostępne postacie Włóczęgi`
+      true: `Wybierz dostępne postacie Włóczęgi`,
     },
     clearing: {
       fox: `Polana Lisów`,
@@ -90,7 +90,6 @@ export default {
     missingMap: `Do przygotowania gry potrzebna jest mapa! Proszę wybrać pudełko, które ją zawiera`,
     noDeck: `Nie wybrano żadnej talii! Proszę wybrać przynajmniej jedną talię`,
     noFaction: `Nie wybrano żadnej Frakcji! Proszę wybrać frakcję do gry`,
-    noLandmark: `Nie wybrano żadnych punktów terenu! Proszę wybrać przynajmniej jeden punkt terenowy lub ustawić ich liczbę na zero`,
     noMap: `Nie wybrano żadnych map! Proszę wybrać przynajmniej jedną mapę`,
     noMilitantFaction: `Nie wybrano żadnych frakcji Militarnych! Proszę wybrać przynajmniej jedną frakcję Militarną`,
     tooFewFaction: `Wybrano za mało Frakcji! Proszę wybrać więcej Frakcji, wyłączyć wybór frakcji przez draft, lub zmniejszyć liczbę graczy`,
@@ -480,56 +479,47 @@ export default {
     adventurer: {
       name: `Poszukiwacz Przygód`,
       action: `Improwizacja`,
-      effect:
-        `Raz na turę, podczas wykonywania akcji Misji, możesz traktować jeden niewyczerpany przedmiot jako dowolny inny przedmiot. Kiedy wyczerpiesz go, aby ukończyć misję, uszkodź również ten przedmiot.`,
+      effect: `Raz na turę, podczas wykonywania akcji Misji, możesz traktować jeden niewyczerpany przedmiot jako dowolny inny przedmiot. Kiedy wyczerpiesz go, aby ukończyć misję, uszkodź również ten przedmiot.`,
     },
     arbiter: {
       name: `Rozjemca`,
       action: `Ochrona`,
-      effect:
-        `Przed rzutem kośćmi w walce, obrońca może zaciągnąć Rozjemce w polanie walki. Rozjemca zdobywa jeden punkt zwycięstwa i dodaje wszystkie swoje nieuszkodzone <Sword/> do maksymalnej liczby obrażeń zadawanych przez obrońcę. Rozjemca nie może zaciągnąć siebie ani zostać zaciągniętym przeciwko sobie.`,
+      effect: `Przed rzutem kośćmi w walce, obrońca może zaciągnąć Rozjemce w polanie walki. Rozjemca zdobywa jeden punkt zwycięstwa i dodaje wszystkie swoje nieuszkodzone <Sword/> do maksymalnej liczby obrażeń zadawanych przez obrońcę. Rozjemca nie może zaciągnąć siebie ani zostać zaciągniętym przeciwko sobie.`,
     },
     harrier: {
       name: `Lotnik`,
       action: `Szybowanie`,
-      effect:
-        `Wyczerp <Torch/>, aby przemieścić tylko swój pionek Włóczęgi <i>(nie inne elementy)</i> do dowolnej polany <i>(nawet Wrogiej)</i> na mapie, bez wyczerpywania żadnych <Boot/>.`,
+      effect: `Wyczerp <Torch/>, aby przemieścić tylko swój pionek Włóczęgi <i>(nie inne elementy)</i> do dowolnej polany <i>(nawet Wrogiej)</i> na mapie, bez wyczerpywania żadnych <Boot/>.`,
     },
     ranger: {
       name: `Strażnik`,
       action: `Kryjówka`,
-      effect:
-        `Wyczerp jedną <Torch/>, aby naprawić trzy przedmioty. Następnie natychmiast zakończ Dzień i rozpocznij Wieczór.`,
+      effect: `Wyczerp jedną <Torch/>, aby naprawić trzy przedmioty. Następnie natychmiast zakończ Dzień i rozpocznij Wieczór.`,
     },
     ronin: {
       name: `Ronin`,
       action: `Szybki Cios`,
-      effect:
-        `Możesz wyczerpać <Sword/>, aby zadać dodatkowe obrażenie w walce <i>(po rzucie)</i>.`,
+      effect: `Możesz wyczerpać <Sword/>, aby zadać dodatkowe obrażenie w walce <i>(po rzucie)</i>.`,
     },
     scoundrel: {
       name: `Łotr`,
       action: `Spalona Ziemia`,
-      effect:
-        `Wyczerp <Torch/> i umieść ją w swojej polanie. Usuń wszystkie elementy wroga z tej polany. Elementy nie mogą być umieszczane ani przemieszczane do polany z <Torch/>. <i>(Pozostajesz w tej polanie. Gdy się z niej przemieścisz, nie możesz do niej wrócić. <Torch/> nie może zostać usunięta kartą „Przychylność...” ponieważ nie jest elementem wroga.)</i>`,
+      effect: `Wyczerp <Torch/> i umieść ją w swojej polanie. Usuń wszystkie elementy wroga z tej polany. Elementy nie mogą być umieszczane ani przemieszczane do polany z <Torch/>. <i>(Pozostajesz w tej polanie. Gdy się z niej przemieścisz, nie możesz do niej wrócić. <Torch/> nie może zostać usunięta kartą „Przychylność...” ponieważ nie jest elementem wroga.)</i>`,
     },
     thief: {
       name: `Złodziej`,
       action: `Kradzież`,
-      effect:
-        `Wyczerp jedną <Torch/>, aby wziąć losową kartę od dowolnego gracza w twojej polanie.`,
+      effect: `Wyczerp jedną <Torch/>, aby wziąć losową kartę od dowolnego gracza w twojej polanie.`,
     },
     tinker: {
       name: `Majsterkowicz`,
       action: `Dniówka`,
-      effect:
-        `Wyczerp jedną <Torch/>, aby wziąć kartę ze stosu kart odrzuconych, której symbol odpowiada twojej polanie. <i>(Zawsze możesz wziąć ptasią kartę.)</i>`,
+      effect: `Wyczerp jedną <Torch/>, aby wziąć kartę ze stosu kart odrzuconych, której symbol odpowiada twojej polanie. <i>(Zawsze możesz wziąć ptasią kartę.)</i>`,
     },
     vagrant: {
       name: `Przybłęda`,
       action: `Namowa`,
-      effect:
-        `Wyczerp <Torch/>, aby zainicjować walkę w swojej polanie. Ty wybierasz atakującego i obrońcę, ty wybierasz kolejność, w jakiej każdy z nich usuwa swoje budynki i żetony, i ty usuwasz elementy za każdego. <i>(Zdobywasz jeden punkt zwycięstwa za każdy usunięty budynek lub żeton dowolnego gracza oraz za każdy usunięty element wrogi dowolnego gracza.)</i>`,
+      effect: `Wyczerp <Torch/>, aby zainicjować walkę w swojej polanie. Ty wybierasz atakującego i obrońcę, ty wybierasz kolejność, w jakiej każdy z nich usuwa swoje budynki i żetony, i ty usuwasz elementy za każdego. <i>(Zdobywasz jeden punkt zwycięstwa za każdy usunięty budynek lub żeton dowolnego gracza oraz za każdy usunięty element wrogi dowolnego gracza.)</i>`,
     },
   },
-};
+}

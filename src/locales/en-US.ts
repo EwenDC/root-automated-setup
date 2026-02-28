@@ -95,7 +95,8 @@ export default {
     missingMap: `A map is required for set up! Please select a game box that includes one`,
     noDeck: `No Decks selected! Please select at least one Deck`,
     noFaction: `No Faction selected! Please select a faction to play`,
-    noLandmark: `No Landmarks selected! Please select at least one Landmark, or set the Landmark count to zero`,
+    noHireling: `No Hireling selected! Please select a Hireling to set up`,
+    noLandmark: `No Landmark selected! Please select a Landmark to set up`,
     noMap: `No Maps selected! Please select at least one Map`,
     noMilitantFaction: `No Militant Factions selected! Please select at least one Militant Faction`,
     tooFewCaptains: `Not enough Knave captains selected! Please include more captains in your selection`,
@@ -137,9 +138,17 @@ export default {
       body: `As a group, decide how many landmarks you want to play with, and which ones to include in the selection pool.`,
       body_mapLandmark: `As a group, decide how many landmarks you want to play with <i>(in addition to the already included map landmark)</i>, and which ones to include in the selection pool.`,
     },
+    selectLandmark: {
+      subtitle: `Choose Landmark`,
+      body: `Player {{count}}, choose which landmark you would like to set up, then confirm your selection by pressing “Next Step.”`,
+    },
     chooseHirelings: {
       title: `Set up Hirelings`,
       body: `As a group, decide if you want to play with hirelings, and which ones to include in the selection pool.`,
+    },
+    selectHireling: {
+      subtitle: `Choose Hireling`,
+      body: `Player {{count}}, choose which hireling you would like to set up, then confirm your selection by pressing “Next Step.”`,
     },
     postHirelingSetup: {
       subtitle: `Place Hireling Markers`,
@@ -426,6 +435,7 @@ export default {
   hireling: {
     advocates: {
       name: `Sunny Advocates`,
+      name_demoted: `Bat Messengers`,
       setupTitle: `Set up the Sunny Advocates`,
       setupTitle_demoted: `Set up the Bat Messengers`,
       setup: `Player {{count}}, grab the hireling card and 8 warriors for the Sunny Advocates from the game box. Place 2 Advocate warriors each in a fox, mouse, and rabbit clearing. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.`,
@@ -433,6 +443,7 @@ export default {
     },
     band: {
       name: `Popular Band`,
+      name_demoted: `Street Band`,
       setupTitle: `Set up the Popular Band`,
       setupTitle_demoted: `Set up the Street Band`,
       setup: `Player {{count}}, grab the hireling card and 5 warriors for the Popular Band from the game box. Place 2 Band warriors, each in a different clearing. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.`,
@@ -440,6 +451,7 @@ export default {
     },
     bandits: {
       name: `Highway Bandits`,
+      name_demoted: `Bandit Gangs`,
       setupTitle: `Set up the Highway Bandits`,
       setupTitle_demoted: `Set up the Bandit Gangs`,
       setup: `Player {{count}}, grab the hireling card and 4 warriors for the Highway Bandits from the game box. Place 2 bandits, one each on a path without one. Place the remaining bandits and card next to the map <i>(non-demoted side up)</i>.`,
@@ -447,6 +459,7 @@ export default {
     },
     dynasty: {
       name: `Last Dynasty`,
+      name_demoted: `Bluebird Nobles`,
       setupTitle: `Set up the Last Dynasty`,
       setupTitle_demoted: `Set up the Bluebird Nobles`,
       setup: `Player {{count}}, grab the hireling card and 5 warriors for the Last Dynasty from the game box. Place all 5 Dynasty warriors in a clearing on the map edge. Place the card next to the map <i>(non-demoted side up)</i>.`,
@@ -454,6 +467,7 @@ export default {
     },
     exile: {
       name: `The Exile`,
+      name_demoted: `Brigand`,
       setupTitle: `Set up the Exile`,
       setupTitle_demoted: `Set up the Brigand`,
       setup: `Player {{count}}, grab the hireling card, pawn, and 3 club items for the Exile from the game box. Place the Exile pawn in any forest. Place the card next to the map <i>(non-demoted side up)</i> and the 3 Club items on top of it <i>(unexhausted side up)</i>.`,
@@ -461,6 +475,7 @@ export default {
     },
     expedition: {
       name: `Sunward Expedition`,
+      name_demoted: `Mole Artisans`,
       setupTitle: `Set up the Sunward Expedition`,
       setupTitle_demoted: `Set up the Mole Artisans`,
       setup: `Player {{count}}, grab the hireling card, 8 warriors, and 3 foothold tokens for the Sunward Expedition from the game box. Place a foothold token and 3 Expedition warriors in any clearing. Place the remaining warriors, tokens, and card next to the map <i>(non-demoted side up)</i>.`,
@@ -468,6 +483,7 @@ export default {
     },
     farmers: {
       name: `Prosperous Farmers`,
+      name_demoted: `Struggling Farmers`,
       setupTitle: `Set up the Prosperous Farmers`,
       setupTitle_demoted: `Set up the Struggling Farmers`,
       setup: `Player {{count}}, grab the hireling card, 9 warriors, and 4 farm buildings for the Prosperous Farmers from the game box. Place 1 farm and 1 Farmer warrior each in two clearings. Place the remaining warriors, buildings, and card next to the map <i>(non-demoted side up)</i>.`,
@@ -475,6 +491,7 @@ export default {
     },
     flameBearers: {
       name: `Flame Bearers`,
+      name_demoted: `Rat Smugglers`,
       setupTitle: `Set up the Flame Bearers`,
       setupTitle_demoted: `Set up the Rat Smugglers`,
       setup: `Player {{count}}, grab the hireling card and 6 warriors for the Flame Bearers from the game box. Place 2 Bearer warriors among any clearings (even the same). Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.`,
@@ -482,6 +499,7 @@ export default {
     },
     flotilla: {
       name: `Riverfolk Flotilla`,
+      name_demoted: `Otter Divers`,
       setupTitle: `Set up the Riverfolk Flotilla`,
       setupTitle_demoted: `Set up the Otter Divers`,
       setup: `Player {{count}}, grab the hireling card and pawn for the Riverfolk Flotilla from the game box. Place the Flotilla pawn in a clearing on the map edge and river. Place the card next to the map <i>(non-demoted side up)</i>.`,
@@ -489,6 +507,7 @@ export default {
     },
     patrol: {
       name: `Forest Patrol`,
+      name_demoted: `Feline Physicians`,
       setupTitle: `Set up the Forest Patrol`,
       setupTitle_demoted: `Set up the Feline Physicians`,
       setup: `Player {{count}}, grab the hireling card and 12 warriors for the Forest Patrol from the game box. Place a Patrol warrior in each clearing. Place the card next to the map <i>(non-demoted side up)</i>.`,
@@ -496,6 +515,7 @@ export default {
     },
     prophets: {
       name: `Warm Sun Prophets`,
+      name_demoted: `Lizard Envoys`,
       setupTitle: `Set up the Warm Sun Prophets`,
       setupTitle_demoted: `Set up the Lizard Envoys`,
       setup: `Player {{count}}, grab the hireling card and 4 warriors for the Warm Sun Prophets from the game box. Place a Prophet warrior in each clearing with a ruin. Place the card next to the map <i>(non-demoted side up)</i>.`,
@@ -503,6 +523,7 @@ export default {
     },
     protector: {
       name: `Furious Protector`,
+      name_demoted: `Stoic Protector`,
       setupTitle: `Set up the Furious Protector`,
       setupTitle_demoted: `Set up the Stoic Protector`,
       setup: `Player {{count}}, grab the hireling card and pawn for the Furious Protector from the game box. Place the Protector pawn in any clearing. Place the card next to the map <i>(non-demoted side up)</i>.`,
@@ -510,6 +531,7 @@ export default {
     },
     roamers: {
       name: `River Roamers`,
+      name_demoted: `Frog Tinkers`,
       setupTitle: `Set up the River Roamers`,
       setupTitle_demoted: `Set up the Frog Tinkers`,
       setup: `Player {{count}}, grab the hireling card, 10 warriors, and 4 lilypad tokens for the River Roamers from the game box. Place 2 Roamer warriors and 1 lilypad in a river clearing. Place the remaining warriors, tokens, and card next to the map <i>(non-demoted side up)</i>.`,
@@ -517,6 +539,7 @@ export default {
     },
     spies: {
       name: `Corvid Spies`,
+      name_demoted: `Raven Sentinels`,
       setupTitle: `Set up the Corvid Spies`,
       setupTitle_demoted: `Set up the Raven Sentinels`,
       setup: `Player {{count}}, grab the hireling card and 6 warriors for the Corvid Spies from the game box. Place 2 Spy warriors, one each in two clearings of matching suit. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.`,
@@ -524,6 +547,7 @@ export default {
     },
     uprising: {
       name: `Spring Uprising`,
+      name_demoted: `Rabbit Scouts`,
       setupTitle: `Set up the Spring Uprising`,
       setupTitle_demoted: `Set up the Rabbit Scouts`,
       setup: `Player {{count}}, grab the hireling card, 4 warriors, and uprising die for the Spring Uprising from the game box. Roll the uprising die twice and place an Uprising warrior in matching clearings. Place the remaining warriors, die, and card next to the map <i>(non-demoted side up)</i>.`,
@@ -531,6 +555,7 @@ export default {
     },
     vaultKeepers: {
       name: `Vault Keepers`,
+      name_demoted: `Badger Bodyguards`,
       setupTitle: `Set up the Vault Keepers`,
       setupTitle_demoted: `Set up the Badger Bodyguards`,
       setup: `Player {{count}}, grab the hireling card, 6 warriors, and 6 vault buildings for the Vault Keepers from the game box. Place 2 Keeper warriors and a vault building in any clearing with an open building slot. Place the remaining warriors, buildings, and card next to the map <i>(non-demoted side up)</i>.`,

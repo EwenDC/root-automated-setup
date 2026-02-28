@@ -1,0 +1,141 @@
+@use 'section';
+
+@mixin transition {
+  transition-duration: 80ms;
+  transition-timing-function: ease-out;
+}
+
+.component-select {
+  // * Default layout: Scrollable list that takes up 1 row * //
+  @include section.breakout-width;
+  @include transition;
+  // Scroll Shadow
+  background:
+    linear-gradient(90deg, ivory 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0), ivory 70%) 0 100%,
+    radial-gradient(farthest-side at 0% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)),
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0)) 0 100%;
+  background-attachment: local, local, scroll, scroll;
+  background-color: ivory;
+  background-position:
+    top left,
+    top right,
+    top left,
+    top right;
+  background-repeat: no-repeat;
+  background-size:
+    40px 100%,
+    40px 100%,
+    20px 100%,
+    20px 100%;
+  // Only scale ~2/3rds of the height with text size, since the images should ideally remain constantly sized
+  block-size: calc(48px + 5rem);
+  border-radius: 16px;
+  column-gap: 3px;
+  display: grid;
+  grid-auto-columns: 8rem;
+  grid-auto-flow: column;
+  grid-template-rows: 0 minmax(0, 1fr) auto;
+  margin-block: 0.6rem;
+  margin-inline-start: 3px;
+  outline: 2px dotted transparent;
+  overflow-inline: scroll;
+  overflow-block: hidden;
+  padding: 6px;
+  transition-property: outline-color;
+
+  &:focus-visible {
+    outline-color: black;
+  }
+
+  > label {
+    @include transition;
+    border: 2px dotted transparent;
+    border-radius: 16px;
+    color: black;
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    justify-items: center;
+    // Account for outline position while focused
+    margin: 5px;
+    outline: 3px solid transparent;
+    outline-offset: 0;
+    transition-property: background-color, color, outline, outline-offset, border;
+
+    &:has(> input:checked) {
+      outline-color: black;
+    }
+
+    &:has(> input:focus-visible) {
+      outline-offset: 2px;
+      border-color: black;
+    }
+
+    section.active & {
+      cursor: pointer;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+
+    section.inactive & {
+      color: darkgray;
+      transition: none;
+
+      &:has(> input:checked) {
+        outline-color: darkgray;
+      }
+
+      > img {
+        filter: drop-shadow(1px 1px rgba(169, 169, 169, 0.5)) grayscale(100%);
+      }
+    }
+
+    // Component Image
+    > img {
+      @include transition;
+      box-sizing: border-box;
+      filter: drop-shadow(1px 1px rgba(0, 0, 0, 0.5)) grayscale(0%);
+      inline-size: 100%;
+      max-block-size: 100%;
+      mix-blend-mode: multiply;
+      object-fit: contain;
+      padding: 5px;
+      transition-property: filter;
+    }
+
+    // Hidden Checkbox Input
+    > input {
+      appearance: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    // Component Name
+    > .name {
+      text-align: center;
+    }
+  }
+
+  // * Alt Layout: Scrollable list with larger buttons * //
+  @include section.heading-width-breakpoint {
+    // Only scale ~2/3rds of the height with text size, since the images should ideally remain constantly sized
+    block-size: calc(64px + 6rem);
+    column-gap: 4px;
+    grid-auto-columns: 10rem;
+  }
+
+  // * Alt Layout: Single line of large buttons * //
+  @include section.breakout-width-breakpoint {
+    background: transparent;
+    justify-content: center;
+
+    > label > img {
+      mix-blend-mode: normal;
+    }
+  }
+}

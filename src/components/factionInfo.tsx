@@ -13,10 +13,9 @@ interface FactionInfoProps {
 }
 
 const FactionInfo: React.FC<FactionInfoProps> = ({ flowSlice }) => {
-  const { factionPool, index } = flowSlice
-  const factionPoolFull = useAppSelector(selectFactionPoolFull(factionPool))
+  const factionPoolFull = useAppSelector(selectFactionPoolFull(flowSlice))
 
-  const selectedFaction = index != null && factionPoolFull[index]
+  const selectedFaction = flowSlice.index != null && factionPoolFull[flowSlice.index]
   if (!selectedFaction) return null
 
   return (

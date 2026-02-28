@@ -9,12 +9,12 @@ import { useAppSelector } from '../../hooks'
 import { selectFactionPoolFull, selectTwoPlayer } from '../../store'
 
 const SetUpFactionStep: SetupStepComponent = ({ flowSlice }) => {
-  const { index, factionPool, vagabondSetUp } = flowSlice
   const useDraft = useAppSelector(state => state.flow.useDraft)
   const twoPlayer = useAppSelector(selectTwoPlayer)
-  const factionPoolFull = useAppSelector(selectFactionPoolFull(factionPool))
+  const factionPoolFull = useAppSelector(selectFactionPoolFull(flowSlice))
   const { t } = useTranslation()
 
+  const { index, vagabondSetUp } = flowSlice
   if (index == null) return null
 
   const { key, vagabond, captains } = factionPoolFull[index]!

@@ -11,7 +11,7 @@ import { stepActiveContext } from '../hooks'
 import { massComponentToggle, setErrorMessage } from '../store'
 import LocaleText from './localeText'
 
-interface ComponentListProps<T> {
+interface ComponentToggleProps<T> {
   selector: (state: RootState) => T[]
   toggleComponent: (code: string) => AppThunk | UnknownAction
   getLabelKey: (component: T) => string
@@ -23,7 +23,7 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
   toggleComponent,
   getLabelKey,
   unsorted = false,
-}: ComponentListProps<T>) => {
+}: ComponentToggleProps<T>) => {
   const components = useAppSelector(selector)
   const stepActive = useContext(stepActiveContext)
   const invalid = useInvalid(stepActive)
@@ -85,7 +85,6 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
                 role="switch"
                 checked={enabled}
                 disabled={stepActive ? locked !== false : true}
-                tabIndex={stepActive && locked ? -1 : undefined}
                 aria-invalid={invalid ? true : undefined}
                 aria-errormessage={invalid ? 'appError' : undefined}
                 onChange={() => dispatch(toggleComponent(code))}
@@ -102,6 +101,6 @@ const ComponentToggle = (<T extends CodeObject & GameComponent & Togglable>({
       </div>
     </div>
   )
-}) satisfies React.FC<ComponentListProps<CodeObject & GameComponent & Togglable>>
+}) satisfies React.FC<ComponentToggleProps<CodeObject & GameComponent & Togglable>>
 
 export default ComponentToggle

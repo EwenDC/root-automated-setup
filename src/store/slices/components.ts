@@ -27,8 +27,8 @@ import { lockComponent, selectComponentArray, toggleComponent } from '../utils'
 /** Object tracking which components are available for selection. */
 export interface ComponentsState {
   captains: Record<VagabondCode, ComponentInfo>
-  expansions: Record<ExpansionCode, GameComponent & Togglable>
   decks: Record<DeckCode, ComponentInfo>
+  expansions: Record<ExpansionCode, GameComponent & Togglable>
   factions: Record<FactionCode, ComponentInfo>
   hirelings: Record<HirelingCode, ComponentInfo>
   landmarks: Record<LandmarkCode, ComponentInfo>
@@ -76,8 +76,8 @@ export const componentsSlice = createSlice({
   initialState: () => {
     const initialState: ComponentsState = {
       captains: {},
-      expansions: {},
       decks: {},
+      expansions: {},
       factions: {},
       hirelings: {},
       landmarks: {},
@@ -104,7 +104,9 @@ export const componentsSlice = createSlice({
   reducers: {
     toggleCaptain: toggleComponent('captains'),
 
-    toggleExpansion(state, { payload: expansionCode }: PayloadAction<string>) {
+    toggleDeck: toggleComponent('decks'),
+
+    toggleExpansion(state, { payload: expansionCode }: PayloadAction<ExpansionCode>) {
       const expansion = state.expansions[expansionCode]
       if (expansion) {
         // Toggle enable state and persist change
@@ -133,8 +135,6 @@ export const componentsSlice = createSlice({
         )
       }
     },
-
-    toggleDeck: toggleComponent('decks'),
 
     toggleFaction: toggleComponent('factions'),
 
@@ -191,13 +191,13 @@ export const componentsSlice = createSlice({
   selectors: {
     selectCaptainArray: selectComponentArray('captains'),
 
+    selectDeckArray: selectComponentArray('decks'),
+
     selectExpansionArray: createSelector(
       (state: ComponentsState) => state.expansions,
       expansions =>
         Object.entries(expansions).map(([code, expansionInfo]) => ({ ...expansionInfo, code })),
     ),
-
-    selectDeckArray: selectComponentArray('decks'),
 
     selectFactionArray: selectComponentArray('factions'),
 

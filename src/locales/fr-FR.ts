@@ -72,7 +72,6 @@ export default {
     mapLandmarkUsed: `Monument déjà inclus dans la mise en place du plateau`,
     noDeck: `Aucun paquet sélectionné ! Veuillez sélectionner au moins un paquet`,
     noFaction: `Aucune faction sélectionnée ! Veuillez sélectionner une faction à jouer`,
-    noLandmark: `Aucun monument sélectionné ! Veuillez sélectionner au moins un monument ou mettre le nombre de monuments à zéro`,
     noMap: `Aucun plateau sélectionné ! Veuillez sélectionner au moins un plateau`,
     noMilitantFaction: `Aucune faction militante sélectionnée ! Veuillez sélectionner au moins une faction militante`,
     tooFewFaction: `Pas assez de factions sélectionnées ! Veuillez sélectionner plus de factions, désactiver le draft de factions ou réduire le nombre de joueurs`,

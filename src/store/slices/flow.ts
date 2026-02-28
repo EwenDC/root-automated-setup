@@ -5,10 +5,12 @@ import { createStructuredSelector } from 'reselect'
 
 import type {
   CaptainCode,
-  CodeObject,
   Faction,
   FactionEntry,
   FlowSlice,
+  HirelingCode,
+  HirelingEntry,
+  LandmarkCode,
   VagabondCode,
   WithCode,
 } from '../../types'
@@ -17,6 +19,7 @@ import { SETTING_USE_DRAFT } from '../../constants'
 import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
 import { takeRandom } from '../../functions/random'
 import { SetupStep } from '../../types'
+import { resetState } from '../actions'
 import { setErrorMessage } from './setup'
 
 /**
@@ -24,53 +27,57 @@ import { setErrorMessage } from './setup'
  * and what steps should be skipped.
  */
 export interface FlowState {
-  pastSteps: FlowSlice[]
-  currentStep: SetupStep
   factionPool: FactionEntry[]
-  lastFactionLocked: boolean
-  vagabondSetUp: boolean
-  currentPlayerIndex: number | null
+  hirelingPool: HirelingEntry[]
   currentIndex: number | null
-  vagabondPool: VagabondCode[]
-  captainPool: CaptainCode[]
-  useDraft: boolean
+  landmarkPool: LandmarkCode[]
+  lastFactionLocked: boolean
+  currentPlayerIndex: number | null
+  currentStep: SetupStep
+  vagabondSetUp: boolean
+  pastSteps: FlowSlice[]
   futureSteps: FlowSlice[]
+  useDraft: boolean
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
-  step: flowState.currentStep,
   // This prevents changes we make to the faction pool in the draft state being reflected in already generated slices
   factionPool: [...flowState.factionPool],
-  lastFactionLocked: flowState.lastFactionLocked,
-  vagabondSetUp: flowState.vagabondSetUp,
-  playerIndex: flowState.currentPlayerIndex,
+  hirelingPool: [...flowState.hirelingPool],
   index: flowState.currentIndex,
+  landmarkPool: [...flowState.landmarkPool],
+  lastFactionLocked: flowState.lastFactionLocked,
+  playerIndex: flowState.currentPlayerIndex,
+  step: flowState.currentStep,
+  vagabondSetUp: flowState.vagabondSetUp,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
-  state.currentStep = slice.step
   state.factionPool = slice.factionPool
-  state.lastFactionLocked = slice.lastFactionLocked
-  state.vagabondSetUp = slice.vagabondSetUp
-  state.currentPlayerIndex = slice.playerIndex
+  state.hirelingPool = slice.hirelingPool
   state.currentIndex = slice.index
+  state.landmarkPool = slice.landmarkPool
+  state.lastFactionLocked = slice.lastFactionLocked
+  state.currentPlayerIndex = slice.playerIndex
+  state.currentStep = slice.step
+  state.vagabondSetUp = slice.vagabondSetUp
 }
 
 export const flowSlice = createSlice({
   name: 'flow',
 
   initialState: (): FlowState => ({
-    pastSteps: [],
-    currentStep: SetupStep.chooseExpansions,
     factionPool: [],
-    lastFactionLocked: false,
-    vagabondSetUp: false,
-    currentPlayerIndex: null,
+    hirelingPool: [],
     currentIndex: null,
-    vagabondPool: [],
-    captainPool: [],
-    useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
+    landmarkPool: [],
+    lastFactionLocked: false,
+    currentPlayerIndex: null,
+    currentStep: SetupStep.chooseExpansions,
+    vagabondSetUp: false,
+    pastSteps: [],
     futureSteps: [],
+    useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
   }),
 
   reducers: {
@@ -128,48 +135,80 @@ export const flowSlice = createSlice({
       savePersistedSetting(SETTING_USE_DRAFT, useDraft)
     },
 
-    setVagabondPool(state, { payload: vagabondPool }: PayloadAction<CodeObject[]>) {
-      state.vagabondPool = vagabondPool.map(({ code }) => code)
-    },
-
-    setCaptainPool(state, { payload: captainPool }: PayloadAction<CodeObject[]>) {
-      state.captainPool = captainPool.map(({ code }) => code)
-    },
-
     resetFactionPool(state) {
       state.factionPool = []
-      state.vagabondPool = []
-      state.captainPool = []
       state.lastFactionLocked = false
       state.vagabondSetUp = false
       state.currentIndex = null
     },
 
-    addToFactionPool(state, { payload: faction }: PayloadAction<WithCode<Faction>>) {
-      const factionEntry: FactionEntry = {
-        code: faction.code,
-        order: faction.standardSetup.order,
-        militant: faction.militant ?? false,
-      }
-      if (faction.dealVagabond) {
-        factionEntry.vagabond = !state.useDraft || takeRandom(state.vagabondPool)
-      }
-      if (faction.dealCaptains && state.useDraft) {
-        factionEntry.captains = [
-          takeRandom(state.captainPool),
-          takeRandom(state.captainPool),
-          takeRandom(state.captainPool),
-          takeRandom(state.captainPool),
-        ]
-      }
+    setLandmarkPool(state, { payload: landmarks }: PayloadAction<LandmarkCode[]>) {
+      state.landmarkPool = landmarks
+    },
 
-      state.factionPool.push(factionEntry)
-
-      if (state.useDraft) {
-        state.lastFactionLocked = !faction.militant
+    removeCurrentLandmarkFromPool(state) {
+      if (state.currentIndex != null) {
+        state.landmarkPool.splice(state.currentIndex, 1)
+        state.currentIndex = null
       } else {
-        state.factionPool.sort(({ order: a }, { order: b }) => a - b)
+        console.warn(`Invalid removeCurrentLandmarkFromPool action: currentIndex must not be null`)
       }
+    },
+
+    addToHirelingPool: {
+      prepare: (...payload: [code: HirelingCode, demoted: boolean]) => ({ payload }),
+      reducer(state, { payload }: PayloadAction<[HirelingCode, boolean]>) {
+        const [code, demoted] = payload
+        state.hirelingPool.push({ code, demoted })
+      },
+    },
+
+    resetHirelingPool(state) {
+      state.hirelingPool = []
+    },
+
+    removeCurrentHirelingFromPool(state) {
+      if (state.currentIndex != null) {
+        state.hirelingPool.splice(state.currentIndex, 1)
+        state.currentIndex = null
+      } else {
+        console.warn(`Invalid removeCurrentHirelingFromPool action: currentIndex must not be null`)
+      }
+    },
+
+    addToFactionPool: {
+      prepare(
+        faction: WithCode<Faction>,
+        vagabondPool?: VagabondCode[],
+        captainPool?: CaptainCode[],
+      ) {
+        const factionEntry: FactionEntry = {
+          code: faction.code,
+          order: faction.standardSetup.order,
+          militant: faction.militant ?? false,
+        }
+        if (faction.dealVagabond) {
+          factionEntry.vagabond = vagabondPool ? takeRandom(vagabondPool) : true
+        }
+        if (faction.dealCaptains && captainPool) {
+          factionEntry.captains = [
+            takeRandom(captainPool),
+            takeRandom(captainPool),
+            takeRandom(captainPool),
+            takeRandom(captainPool),
+          ]
+        }
+        return { payload: factionEntry }
+      },
+      reducer(state, { payload: factionEntry }: PayloadAction<FactionEntry>) {
+        state.factionPool.push(factionEntry)
+
+        if (state.useDraft) {
+          state.lastFactionLocked = !factionEntry.militant
+        } else {
+          state.factionPool.sort(({ order: a }, { order: b }) => a - b)
+        }
+      },
     },
 
     removeCurrentFactionFromPool(state) {
@@ -198,19 +237,13 @@ export const flowSlice = createSlice({
     setCurrentIndex(state, { payload: currentIndex }: PayloadAction<number | null>) {
       if (currentIndex == null || currentIndex >= 0) {
         state.currentIndex = currentIndex
-        // Don't wipe redo queue during standard setup since it's just visual
-        if (state.useDraft) state.futureSteps = []
+        // Don't wipe redo queue when selecting faction during standard setup since it's just visual
+        if (state.currentStep !== SetupStep.selectFaction || state.useDraft) state.futureSteps = []
       } else {
         console.warn(
           `Invalid payload for setCurrentIndex action: ${currentIndex} (Payload must be null or a number larger than or equal to 0)`,
         )
       }
-    },
-
-    resetFlow(state) {
-      state.pastSteps = []
-      state.currentStep = SetupStep.chooseExpansions
-      state.futureSteps = []
     },
   },
 
@@ -220,6 +253,19 @@ export const flowSlice = createSlice({
       .addCase(setErrorMessage, () => {
         // No-op so we don't wipe the redo queue when displaying an error
       })
+      // Clear internal variables when restarting setup
+      .addCase(resetState, state => {
+        state.factionPool = []
+        state.hirelingPool = []
+        state.currentIndex = null
+        state.landmarkPool = []
+        state.lastFactionLocked = false
+        state.currentPlayerIndex = null
+        state.currentStep = SetupStep.chooseExpansions
+        state.vagabondSetUp = false
+        state.pastSteps = []
+        state.futureSteps = []
+      })
       .addDefaultCase(state => {
         state.futureSteps = []
       })
@@ -227,29 +273,33 @@ export const flowSlice = createSlice({
 
   selectors: {
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
-      step: state => state.currentStep,
       factionPool: state => state.factionPool,
-      lastFactionLocked: state => state.lastFactionLocked,
-      vagabondSetUp: state => state.vagabondSetUp,
-      playerIndex: state => state.currentPlayerIndex,
+      hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,
+      landmarkPool: state => state.landmarkPool,
+      lastFactionLocked: state => state.lastFactionLocked,
+      playerIndex: state => state.currentPlayerIndex,
+      step: state => state.currentStep,
+      vagabondSetUp: state => state.vagabondSetUp,
     }),
   },
 })
 
 export const {
   addToFactionPool,
+  addToHirelingPool,
   pushStateToPast,
   redoStep,
   removeCurrentFactionFromPool,
+  removeCurrentHirelingFromPool,
+  removeCurrentLandmarkFromPool,
   resetFactionPool,
-  resetFlow,
-  setCaptainPool,
-  setCurrentStep,
-  setUseDraft,
-  setVagabondPool,
+  resetHirelingPool,
   setCurrentIndex,
   setCurrentPlayerIndex,
+  setCurrentStep,
+  setLandmarkPool,
+  setUseDraft,
   undoStep,
 } = flowSlice.actions
 

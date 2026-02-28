@@ -70,7 +70,6 @@ export default {
     mapLandmarkUsed: `Meraviglia già inclusa nella preparazione della mappa`,
     noDeck: `Nessun mazzo selezionato! Per favore, seleziona almeno un mazzo da utilizzare`,
     noFaction: `Nessuna fazione selezionata! Per favore, seleziona una fazione da giocare`,
-    noLandmark: `Nessuna meraviglia selezionata! Per favore, seleziona almeno una meraviglia, oppure imposta il numero di meraviglie da utilizzare a zero`,
     noMap: `Nessuna mappa selezionata! Per favore, seleziona almeno una mappa in cui giocare`,
     noMilitantFaction: `Nessuna fazione Militante selezionata! Per favore, seleziona almeno una fazione Militante`,
     tooFewFaction: `Numero insufficiente di fazioni selezionate! Per favore, seleziona altre fazioni, disabilita il draft, oppure diminuisci il numero di giocatori`,
