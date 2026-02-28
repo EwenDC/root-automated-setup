@@ -52,7 +52,7 @@ if (!import.meta.hot || !i18n.isInitialized) {
       },
       react: {
         bindI18nStore: !!import.meta.hot && 'added',
-        transKeepBasicHtmlNodesFor: ['br', 'i', 'p', 'b', 'ol', 'li'],
+        transKeepBasicHtmlNodesFor: ['b', 'br', 'i', 'li', 'ol', 'p', 'ul'],
       },
     })
 }

@@ -7,6 +7,7 @@ import { selectHirelingPoolFull } from '../../store'
 
 const SelectHirelingStep: SetupStepComponent = ({ flowSlice }) => {
   const playerNumber = usePlayerNumber(flowSlice)
+
   return (
     <Section
       subtitleKey="setupStep.selectHireling.subtitle"

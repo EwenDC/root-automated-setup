@@ -112,4 +112,14 @@ section {
   p {
     margin-block: 0.5rem;
   }
+
+  ul {
+    list-style-type: '- ';
+    margin-block: 0;
+    padding-inline-start: 2ch;
+
+    > li {
+      margin-block: 0.2lh;
+    }
+  }
 }

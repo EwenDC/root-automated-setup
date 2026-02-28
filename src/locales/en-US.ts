@@ -140,7 +140,7 @@ export default {
     },
     selectLandmark: {
       subtitle: `Choose Landmark`,
-      body: `Player {{count}}, choose which landmark you would like to set up, then confirm your selection by pressing “Next Step.”`,
+      body: `Player {{count}}, choose which landmark you would like to set up. You may freely select landmarks from the list to see their effect, before confirming your selection by pressing “Next Step.”`,
     },
     chooseHirelings: {
       title: `Set up Hirelings`,
@@ -148,7 +148,7 @@ export default {
     },
     selectHireling: {
       subtitle: `Choose Hireling`,
-      body: `Player {{count}}, choose which hireling you would like to set up, then confirm your selection by pressing “Next Step.”`,
+      body: `Player {{count}}, choose which hireling you would like to set up. You may freely select hirelings from the list to see their stats, before confirming your selection by pressing “Next Step.”`,
     },
     postHirelingSetup: {
       subtitle: `Place Hireling Markers`,
@@ -565,48 +565,58 @@ export default {
   landmark: {
     city: {
       name: `Lost City`,
+      effect: `The Lost City’s clearing is treated as being fox, mouse, and rabbit suit.<br/><i>Examples: With two crafting pieces here, you could say one is fox and one is mouse.<ul><li>For Outrage, give any card in your hand.</li><li>The Alliance can revolt with mixed suits</li><li>The Cult can place gardens of any suits, but must craft using their printed suits.</li><li>The Duchy counts this once for sway.</li><li>You could play a mouse ambush, then the attacker could place a fox ambush.</li></ul></i>`,
       setupTitle: `Set up the Lost City`,
       setup: `Player {{count}}, place the Lost City landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. Grab the “Lost City” landmark card from the game box and place it next to the board on its non-setup side.`,
       setup_lake: `Player {{count}}, place the Lost City landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. Grab the “Lost City” landmark card from the game box and place it next to the board on its non-setup side.`,
     },
     ferry: {
       name: `Ferry`,
+      effect: `Once per turn, a player taking a move from the Ferry’s clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i><br/>After taking this move, that player draws one card.`,
+      effect_lake: `Once per turn, a player taking a move from the Ferry’s clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i><br/>After taking this move, that player draws one card.`,
       setupTitle: `Set up the Ferry`,
       setup: `Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have “The Ferry” landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>“Once per turn, a player taking a move from the Ferry’s clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card.”</p>`,
       setup_lake: `Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have “The Ferry” landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>“Once per turn, a player taking a move from the Ferry’s clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card.”</p>`,
     },
     forge: {
       name: `Legendary Forge`,
+      effect: `To craft an item on the Legendary Forge’s card, you must have a faction piece at the Legendary Forge’s clearing. <i>(You still follow normal crafting rules.)</i><br/>Whenever you craft an item on the Legendary Forge’s card, draw a card and score an extra point. <i>(Score it even if you have Disdain or Contempt for Trade.)</i>`,
       setupTitle: `Set up the Legendary Forge`,
       setup: `Player {{count}}, place the Legendary Forge landmark in a clearing. It cannot have a landmark or be adjacent to one. Grab the “Legendary Forge” landmark card from the game box and place it next to the board on its non-setup side.<br/>Based on the suit of the Legendary Forge’s clearing, remove the following items from the item supply on the map, and place them on the Legendary Forge card:<p><Fox/>: <Sword/> <Sword/> <Crossbow/> <Hammer/></p><p><Mouse/>: <Bag/> <Bag/> <Tea/> <Tea/></p><p><Rabbit/>: <Boot/> <Boot/> <Coin/> <Coin/></p>`,
     },
     foxburrow: {
       name: `Foxburrow`,
+      effect: `Foxburrow adds the fox suit to its clearing <i>(even if the printed suit is covered)</i>.<br/>While moving, you may treat fox clearings as adjacent to Foxburrow and ignore paths when moving between them.`,
       setupTitle: `Set up Foxburrow`,
       setup: `Player {{count}}, place the Foxburrow landmark in a fox clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you’re feeling adventurous.)</i>`,
     },
     market: {
       name: `Black Market`,
+      effect: `Once on their turn, a player with faction pieces at the Black Market may swap any one facedown card next to the Black Market with a card from their hand, placing it face down.`,
       setupTitle: `Set up the Black Market`,
       setup: `Player {{count}}, place the Black Market landmark in a clearing that has exactly one building slot and no ruin. It cannot have a landmark or be adjacent to one. Grab the “Black Market” landmark card from the game box and place it next to the board on its non-setup side.<br/>Draw three cards but do not look at them. Place them face down next to the Black Market card.`,
     },
     mousehold: {
       name: `Mousehold`,
+      effect: `Mousehold adds the mouse suit to its clearing <i>(even if the printed suit is covered)</i>.<br/>In battle, when warriors are removed from a <b>different</b> mouse clearing, their player may place them at Mousehold.`,
       setupTitle: `Set up Mousehold`,
       setup: `Player {{count}}, place the Mousehold landmark in a mouse clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you’re feeling adventurous.)</i>`,
     },
     rabbittown: {
       name: `Rabbittown`,
+      effect: `Rabbittown adds the rabbit suit to its clearing <i>(even if the printed suit is covered)</i>.<br/>Once in Daylight, you may spend a rabbit card to place 1 warrior in Rabbittown for each <b>other</b> rabbit clearing with your pieces, then you must battle in Rabbittown.`,
       setupTitle: `Set up Rabbittown`,
       setup: `Player {{count}}, place the Rabbittown landmark in a rabbit clearing. It cannot have a landmark or be adjacent to one.<br/><i>(You can place it in a different suit if you’re feeling adventurous.)</i>`,
     },
     tower: {
       name: `Tower`,
+      effect: `At the end of a player’s Evening, if they rule the Tower’s clearing, they score one point.`,
       setupTitle: `Set up the Tower`,
       setup: `Player {{count}}, place the Tower landmark in a clearing that has a ruin. It cannot have a landmark. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Tower has the following rule during play:<p>“At the end of a player’s Evening, if they rule the Tower’s clearing, they score one point.”</p>`,
     },
     treetop: {
       name: `Elder Treetop`,
+      effect: `The Elder Treetop adds a building slot to its clearing.<br/>Whenever a player removes an enemy building from the Elder Treetop slot, they score an extra point. <i>(Two in total, not one.)</i>`,
       setupTitle: `Set up the Elder Treetop`,
       setup: `Player {{count}}, place the Elder Treetop in a corner clearing. It cannot have a landmark or be adjacent to one. Grab the “Elder Treetop” landmark card from the game box and place it next to the board on its non-setup side.`,
     },
