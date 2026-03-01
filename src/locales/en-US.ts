@@ -539,11 +539,11 @@ export default {
     },
     spies: {
       name: `Corvid Spies`,
-      name_demoted: `Raven Sentinels`,
+      name_demoted: `Raven Sentries`,
       setupTitle: `Set up the Corvid Spies`,
-      setupTitle_demoted: `Set up the Raven Sentinels`,
+      setupTitle_demoted: `Set up the Raven Sentries`,
       setup: `Player {{count}}, grab the hireling card and 6 warriors for the Corvid Spies from the game box. Place 2 Spy warriors, one each in two clearings of matching suit. Place the remaining warriors and card next to the map <i>(non-demoted side up)</i>.`,
-      setup_demoted: `Player {{count}}, grab the Corvid Spies hireling card from the game box. Place it next to the map with its demoted “Raven Sentinels” side up.`,
+      setup_demoted: `Player {{count}}, grab the Corvid Spies hireling card from the game box. Place it next to the map with its demoted “Raven Sentries” side up.`,
     },
     uprising: {
       name: `Spring Uprising`,
