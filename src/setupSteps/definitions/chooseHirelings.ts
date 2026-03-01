@@ -1,5 +1,6 @@
 import type { SetupStepDefinition } from '..'
 
+import { getEnabled } from '../../functions/filtering'
 import { takeRandom } from '../../functions/random'
 import {
   addToHirelingPool,
@@ -67,7 +68,7 @@ export const chooseHirelings: SetupStepDefinition = {
     // Get our lists of independent & faction hirelings which are available for selection
     const { hirelingPool = [], factionHirelings = [] } = Object.groupBy(
       // Preprocess the list to drop references to factions that are not in play
-      selectHirelingArray(state).map(hireling => ({
+      getEnabled(selectHirelingArray(state)).map(hireling => ({
         ...hireling,
         excludeFactions:
           hireling.excludeFactions?.filter(factionCode => factionCodes.has(factionCode)) ?? [],
