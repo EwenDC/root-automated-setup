@@ -8,6 +8,11 @@ import { selectExpansionArray, setIncludeBots, toggleExpansion } from '../../sto
 
 const ChooseExpansionsStep: SetupStepComponent = () => {
   const includeBots = useAppSelector(state => state.setup.includeBots)
+  const expansionArray = useAppSelector(selectExpansionArray)
+  const botExpansions = ['clockwork', 'clockwork2']
+  const botExpansionsEnabled = botExpansions.some(code =>
+    expansionArray.some(expansion => expansion.code === code && expansion.enabled),
+  )
   const dispatch = useAppDispatch()
 
   return (
@@ -18,11 +23,13 @@ const ChooseExpansionsStep: SetupStepComponent = () => {
         getLabelKey={expansion => `expansion.${expansion.code}`}
         unsorted
       />
-      <Checkbox
-        labelKey="label.includeBotStep"
-        defaultValue={includeBots}
-        onChange={checked => dispatch(setIncludeBots(checked))}
-      />
+      {botExpansionsEnabled && (
+        <Checkbox
+          labelKey="label.includeBotStep"
+          defaultValue={includeBots}
+          onChange={checked => dispatch(setIncludeBots(checked))}
+        />
+      )}
     </Section>
   )
 }

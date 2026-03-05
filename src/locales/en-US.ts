@@ -267,6 +267,8 @@ export default {
     underworld: `Underworld Expansion`,
     underworldHirelings: `Underworld Hireling Pack`,
     vagabondPack: `Vagabond Pack`,
+    clockwork: `Clockwork Expansion`,
+    clockwork2: `Clockwork Expansion 2`,
   },
   faction: {
     alliance: {
@@ -279,6 +281,19 @@ export default {
       },
       advancedSetup: {
         default: `<ol><li>Draw 3 <b>cards</b> and add them face down to your Supporters stack.</li><li>Fill your Sympathy track with <b>sympathy tokens</b>.</li><li>Put your 3 <b>bases</b> on your matching Bases spaces.</li></ol>`,
+      },
+    },
+    automatedAlliance: {
+      name: `Automated Alliance`,
+      summaryTitle: `One For All`,
+      summary: `<p>The Automated Alliance infiltrates the board voraciously.</p>`,
+      setupTitle: `Set up the Automated Alliance`,
+      setup: {
+        default: `<ol>
+        <li>Form a supply of 10 warriors near you.</li>
+        <li>Collect your 3 bases and place them near you.</li>
+        <li>Collect your 10 sympathy tokens and place them near you.</li>
+        </ol>`,
       },
     },
     corvid: {
@@ -389,6 +404,21 @@ export default {
       },
       advancedSetup: {
         default: `<ol><li>Choose 3 homeland clearings, each adjacent to one other.</li><li>Put 2 <b>warriors</b> in each of your homelands. Put 1 <b>warrior</b> in each other clearing.</li><li>Put the <b>keep token</b> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <b>sawmill</b>, <b>workshop</b>, and <b>recruiter</b> on the map, each in a different homeland of yours.</li><li>Fill your Buildings track with your <b>buildings</b>, except the leftmost spaces.</li></ol>`,
+      },
+    },
+    mechanicalMarquise: {
+      name: `Mechanical Marquise`,
+      summaryTitle: `For the King`,
+      summary: `<p>The Mechanical Marquise consumes all!</p>`,
+      setupTitle: `Set up the Mechanical Marquise`,
+      setup: {
+        default: `<ol>
+        <li>Form a supply of 25 warriors near you.</li>
+        <li>Place the keep in a random corner clearing.</li>
+        <li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. <i>(12 Warriors total.)</i></li>
+        <li>Place 1 sawmill, 1 workshop, and 1 recruiter randomly among the clearings both in and surrounding the keep token with up to one building per clearing.</li>
+        <li>Collect your remaining 15 buildings and place them near you.</li>
+        </ol>`,
       },
     },
     riverfolk: {

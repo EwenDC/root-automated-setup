@@ -1,6 +1,8 @@
 import type { DeepReadonly, Expansion, ExpansionCode } from './types'
 
 // Box Images
+import clockwork2Box from './images/boxes/clockwork2.png'
+import clockworkBox from './images/boxes/clockwork.png'
 import exilesDeckBox from './images/boxes/exilesDeck.png'
 import homelandBox from './images/boxes/homeland.png'
 import homelandHirelingsBox from './images/boxes/homelandHirelings.png'
@@ -1018,6 +1020,14 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
         image: harrierMeeple,
       },
     },
+  },
+  clockwork: {
+    image: clockworkBox,
+    defaultDisabled: true,
+  },
+  clockwork2: {
+    image: clockwork2Box,
+    defaultDisabled: true,
   },
 } as const
 
