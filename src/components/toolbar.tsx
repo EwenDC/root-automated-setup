@@ -4,16 +4,17 @@ import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import NextIcon from '../images/icons/next.svg?react'
 import RedoIcon from '../images/icons/redo.svg?react'
+import ResetIcon from '../images/icons/reset.svg?react'
 import UndoIcon from '../images/icons/undo.svg?react'
 import { nextStep } from '../setupSteps'
-import { redoStep, undoStep } from '../store'
+import { redoStep, resetStep, undoStep } from '../store'
 import { SetupStep } from '../types'
 import Button from './button'
 import LocaleText from './localeText'
 
-type ButtonIndex = 0 | 1 | 2
+type ButtonIndex = 0 | 1 | 2 | 3
 const MIN_BUTTON_INDEX = 0
-const MAX_BUTTON_INDEX = 2
+const MAX_BUTTON_INDEX = 3
 
 const Toolbar: React.FC = () => {
   const { t } = useTranslation()
@@ -21,15 +22,25 @@ const Toolbar: React.FC = () => {
   const [focusedIndex, setFocusedIndex] = useState<ButtonIndex>(0)
   const undoDisabled = useAppSelector(state => state.flow.pastSteps.length === 0)
   const redoDisabled = useAppSelector(state => state.flow.futureSteps.length === 0)
+  const resetDisabled = useAppSelector(state => state.flow.pastSteps.length === 0)
   const nextStepDisabled = useAppSelector(state => state.flow.currentStep >= SetupStep.setupEnd)
 
   const undoButtonRef = useRef<HTMLButtonElement>(null)
   const redoButtonRef = useRef<HTMLButtonElement>(null)
+  const resetButtonRef = useRef<HTMLButtonElement>(null)
   const nextButtonRef = useRef<HTMLButtonElement>(null)
+
+  const handleResetClick = () => {
+    const confirmReset = window.confirm(t('label.confirmReset'))
+    if (confirmReset) {
+      dispatch(resetStep())
+      setFocusedIndex(1)
+    }
+  }
 
   const onKeyDownHandler =
     (focusedIndex: ButtonIndex) => (event: React.KeyboardEvent<HTMLButtonElement>) => {
-      const buttonRefs = [undoButtonRef, redoButtonRef, nextButtonRef] as const
+      const buttonRefs = [undoButtonRef, redoButtonRef, resetButtonRef, nextButtonRef] as const
       let newIndex: ButtonIndex | undefined
 
       if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
@@ -57,6 +68,20 @@ const Toolbar: React.FC = () => {
         className="toolbar"
         role="toolbar"
       >
+        <Button
+          Icon={ResetIcon}
+          disabled={resetDisabled}
+          className="reset"
+          ref={resetButtonRef}
+          onClick={() => {
+            {
+              handleResetClick()
+            }
+          }}
+          title={t('label.reset')}
+          tabIndex={focusedIndex === 3 ? 0 : -1}
+          onKeyDown={onKeyDownHandler(3)}
+        />
         <Button
           Icon={UndoIcon}
           disabled={undoDisabled}

@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 
 import type {
+  BotCode,
   ComponentInfo,
   DeckCode,
   DeepReadonly,
@@ -26,6 +27,7 @@ import { lockComponent, selectComponentArray, toggleComponent } from '../utils'
 
 /** Object tracking which components are available for selection. */
 export interface ComponentsState {
+  bots: Record<BotCode, ComponentInfo>
   captains: Record<VagabondCode, ComponentInfo>
   decks: Record<DeckCode, ComponentInfo>
   expansions: Record<ExpansionCode, GameComponent & Togglable>
@@ -83,6 +85,7 @@ export const componentsSlice = createSlice({
       landmarks: {},
       maps: {},
       vagabonds: {},
+      bots: {},
     }
     for (const [expansionCode, expansion] of typedEntries(definitions)) {
       const enabled = loadPersistedSetting(
@@ -152,6 +155,10 @@ export const componentsSlice = createSlice({
 
     lockMap: lockComponent('maps'),
 
+    toggleBot: toggleComponent('bots'),
+
+    lockBot: lockComponent('bots'),
+
     enableMapLandmark(
       state,
       { payload }: PayloadAction<[mapCode: MapCode, enableLandmark: boolean]>,
@@ -213,6 +220,13 @@ export const componentsSlice = createSlice({
     selectMapArray: selectComponentArray('maps'),
 
     selectVagabondArray: selectComponentArray('vagabonds'),
+
+    selectBotArray: selectComponentArray('bots'),
+
+    selectBotCodes: createSelector(
+      (state: ComponentsState) => state.bots,
+      bots => new Set(Object.keys(bots)),
+    ),
   },
 })
 
@@ -222,6 +236,7 @@ export const {
   lockHireling,
   lockLandmark,
   lockMap,
+  lockBot,
   mapFixedSuits,
   toggleCaptain,
   toggleExpansion,
@@ -231,6 +246,7 @@ export const {
   toggleLandmark,
   toggleMap,
   toggleVagabond,
+  toggleBot,
 } = componentsSlice.actions
 
 export const {
@@ -243,6 +259,8 @@ export const {
   selectLandmarkArray,
   selectMapArray,
   selectVagabondArray,
+  selectBotArray,
+  selectBotCodes,
 } = componentsSlice.selectors
 
 export default componentsSlice.reducer

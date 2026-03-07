@@ -29,6 +29,11 @@ export interface FactionExcludingComponent extends GameComponent {
   excludeFactions?: FactionCode[]
 }
 
+/** An object representing a game component that precludes the use of certain factions in setup. */
+export interface BotExcludingComponent extends GameComponent {
+  excludeBots?: BotCode[]
+}
+
 /** A unique identifier for a Captain character. */
 export type CaptainCode = string
 
@@ -44,6 +49,7 @@ export interface Expansion extends GameComponent {
   landmarks?: Record<LandmarkCode, Landmark>
   maps?: Record<MapCode, LargeMap | StandardMap>
   vagabonds?: Record<VagabondCode, Vagabond>
+  bots?: Record<BotCode, Bot>
 }
 
 /** A unique identifier for a Deck. */
@@ -60,6 +66,9 @@ export type ThreeIndex = 0 | 1 | 2
 
 /** A unique identifier for a Faction. */
 export type FactionCode = string
+
+/** A unique identified for a Bot. */
+export type BotCode = string
 
 /** An object representing a Faction from the Root board game. */
 export interface Faction extends FactionExcludingComponent {
@@ -82,6 +91,21 @@ export interface Faction extends FactionExcludingComponent {
     wealth: ThreeIndex
     aggression: ThreeIndex
     crafting: ThreeIndex
+  }
+}
+
+/** An object representing a Bot from the Root board game. */
+export interface Bot extends BotExcludingComponent {
+  key: string
+  militant?: boolean
+  standardSetup: {
+    order: number
+    cornerSetup?: boolean
+  }
+  pieces: {
+    warriors: number
+    buildings?: GamePiece
+    tokens?: GamePiece
   }
 }
 
@@ -281,6 +305,8 @@ export const enum SetupStep {
   placeScoreMarkers,
   chooseHand,
   setupEnd,
+  chooseBots,
+  selectBots,
 }
 
 /**
@@ -303,14 +329,23 @@ export interface HirelingEntry {
 
 /** An object representing a slice of history for the flow state. */
 export interface FlowSlice {
+  botPool: BotEntry[]
   factionPool: FactionEntry[]
   hirelingPool: HirelingEntry[]
   index: number | null
   landmarkPool: LandmarkCode[]
   lastFactionLocked: boolean
+  lastBotLocked: boolean
   playerIndex: number | null
   step: SetupStep
   vagabondSetUp: boolean
+}
+
+/** An object representing a bot faction in the clockwork pool. */
+export interface BotEntry {
+  code: BotCode
+  order: number
+  militant: boolean
 }
 
 //#endregion

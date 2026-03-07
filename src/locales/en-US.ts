@@ -51,10 +51,12 @@ export default {
       suitPriority: `<li>Collect the 12 suit and 12 priority markers, then place one of each in each clearing as shown in the chart below.</li>`,
     },
     playerCount: `Player Count`,
+    botCount: `Bot Count`,
     priority: `Priority {{count}}`,
     rabbit: `Rabbit`,
     redo: `Redo`,
     reset: `Reset`,
+    confirmReset: `Are you sure you want to reset the app?`,
     restartSetup: `Restart Setup`,
     ruin: `Ruin`,
     specialAction: `Special Action`,
@@ -132,6 +134,7 @@ export default {
     setUpBots: {
       title: `Set up Bots`,
       body: `As a group, decide which bots you would like to play with, following their set up instructions as described in the Law of Rootbotics.`,
+      reference: `For assistance setting up/using bots, you can use".`,
     },
     chooseLandmarks: {
       title: `Set up Landmarks`,
@@ -167,6 +170,16 @@ export default {
       subtitle_useDraft: `Choose Faction`,
       body: `Assign one of the below factions to each player in any way. The factions will be set up from left-to-right. You may freely select factions from the list to see their stats.`,
       body_useDraft: `Player {{count}}, choose which faction you would like to play from the faction pool below. You may freely select factions from the list to see their stats, before confirming your selection by pressing “Next Step.”`,
+    },
+    chooseBots: {
+      title: `Set up Bots`,
+      body: `As a group, select which bots you would like to include in set up.`,
+    },
+    selectBots: {
+      subtitle: `Assign Bots`,
+      subtitle_useDraft: `Choose Bot`,
+      body: `Assign one of the below bots for each seat you would like filled. The bots will be set up from left-to-right. You may freely select bots from the list.`,
+      body_useDraft: `Choose which bots you would like to play from the bot pool below. You may freely select bots from the list.”`,
     },
     placeScoreMarkers: {
       title: `Place Score Markers`,
@@ -270,19 +283,7 @@ export default {
     clockwork: `Clockwork Expansion`,
     clockwork2: `Clockwork Expansion 2`,
   },
-  faction: {
-    alliance: {
-      name: `Woodland Alliance`,
-      summaryTitle: `Playing the Alliance`,
-      summary: `<p>As the Woodland Alliance, you work to gain more sympathy of the oppressed forest creatures. Each time you place a <b>sympathy token</b> on the map, you score points. The more sympathy tokens on the map, the more points you score.</p><p>To gain sympathy, though, you will need <b>supporters</b>—cards placed on your faction board—matching the clearings where you want sympathy. While you can add your own cards to your supporters, you can goad your enemies into doing the same by provoking <b>Outrage</b>: whenever another faction removes sympathy or moves warriors into a sympathetic clearing, they must add one of their own cards to your supporters.</p><p>Don’t be afraid to set up chokepoints, as you are experts in <b>Guerrilla War</b>: when defending in battle, you use the higher die. Place your sympathy in clearings where conflict is likely, and force your opponent to face you!</p><p>Supporters can also be put toward violent <b>revolt</b>, which destroys <i>all</i> of your enemies’ pieces in a clearing and places warriors and a new <b>base</b> there. Bases not only increase your card draw, but also let you train <b>officers</b>, which give you free actions each turn. Protect your bases well! If you lose a base, you’ll lose many supporters and officers too.</p>`,
-      setupTitle: `Set up the Woodland Alliance`,
-      setup: {
-        default: `<ol><li><b>Gather Warriors.</b> Form a supply of 10 warriors.</li><li><b>Place Bases.</b> Place 3 bases on the matching spaces in your Bases box.</li><li><b>Fill Sympathy Track.</b> Place 10 sympathy tokens on your Sympathy track.</li><li><b>Gain Supporters.</b> Draw 3 cards and place them face down on your Supporters stack.</li></ol>`,
-      },
-      advancedSetup: {
-        default: `<ol><li>Draw 3 <b>cards</b> and add them face down to your Supporters stack.</li><li>Fill your Sympathy track with <b>sympathy tokens</b>.</li><li>Put your 3 <b>bases</b> on your matching Bases spaces.</li></ol>`,
-      },
-    },
+  bot: {
     automatedAlliance: {
       name: `Automated Alliance`,
       summaryTitle: `One For All`,
@@ -294,6 +295,35 @@ export default {
         <li>Collect your 3 bases and place them near you.</li>
         <li>Collect your 10 sympathy tokens and place them near you.</li>
         </ol>`,
+      },
+    },
+    mechanicalMarquise: {
+      name: `Mechanical Marquise`,
+      summaryTitle: `For the King`,
+      summary: `<p>The Mechanical Marquise consumes all!</p>`,
+      setupTitle: `Set up the Mechanical Marquise`,
+      setup: {
+        default: `<ol>
+        <li>Form a supply of 25 warriors near you.</li>
+        <li>Place the keep in a random corner clearing.</li>
+        <li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. <i>(12 Warriors total.)</i></li>
+        <li>Place 1 sawmill, 1 workshop, and 1 recruiter randomly among the clearings both in and surrounding the keep token with up to one building per clearing.</li>
+        <li>Collect your remaining 15 buildings and place them near you.</li>
+        </ol>`,
+      },
+    },
+  },
+  faction: {
+    alliance: {
+      name: `Woodland Alliance`,
+      summaryTitle: `Playing the Alliance`,
+      summary: `<p>As the Woodland Alliance, you work to gain more sympathy of the oppressed forest creatures. Each time you place a <b>sympathy token</b> on the map, you score points. The more sympathy tokens on the map, the more points you score.</p><p>To gain sympathy, though, you will need <b>supporters</b>—cards placed on your faction board—matching the clearings where you want sympathy. While you can add your own cards to your supporters, you can goad your enemies into doing the same by provoking <b>Outrage</b>: whenever another faction removes sympathy or moves warriors into a sympathetic clearing, they must add one of their own cards to your supporters.</p><p>Don’t be afraid to set up chokepoints, as you are experts in <b>Guerrilla War</b>: when defending in battle, you use the higher die. Place your sympathy in clearings where conflict is likely, and force your opponent to face you!</p><p>Supporters can also be put toward violent <b>revolt</b>, which destroys <i>all</i> of your enemies’ pieces in a clearing and places warriors and a new <b>base</b> there. Bases not only increase your card draw, but also let you train <b>officers</b>, which give you free actions each turn. Protect your bases well! If you lose a base, you’ll lose many supporters and officers too.</p>`,
+      setupTitle: `Set up the Woodland Alliance`,
+      setup: {
+        default: `<ol><li><b>Gather Warriors.</b> Form a supply of 10 warriors.</li><li><b>Place Bases.</b> Place 3 bases on the matching spaces in your Bases box.</li><li><b>Fill Sympathy Track.</b> Place 10 sympathy tokens on your Sympathy track.</li><li><b>Gain Supporters.</b> Draw 3 cards and place them face down on your Supporters stack.</li></ol>`,
+      },
+      advancedSetup: {
+        default: `<ol><li>Draw 3 <b>cards</b> and add them face down to your Supporters stack.</li><li>Fill your Sympathy track with <b>sympathy tokens</b>.</li><li>Put your 3 <b>bases</b> on your matching Bases spaces.</li></ol>`,
       },
     },
     corvid: {
@@ -406,21 +436,7 @@ export default {
         default: `<ol><li>Choose 3 homeland clearings, each adjacent to one other.</li><li>Put 2 <b>warriors</b> in each of your homelands. Put 1 <b>warrior</b> in each other clearing.</li><li>Put the <b>keep token</b> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <b>sawmill</b>, <b>workshop</b>, and <b>recruiter</b> on the map, each in a different homeland of yours.</li><li>Fill your Buildings track with your <b>buildings</b>, except the leftmost spaces.</li></ol>`,
       },
     },
-    mechanicalMarquise: {
-      name: `Mechanical Marquise`,
-      summaryTitle: `For the King`,
-      summary: `<p>The Mechanical Marquise consumes all!</p>`,
-      setupTitle: `Set up the Mechanical Marquise`,
-      setup: {
-        default: `<ol>
-        <li>Form a supply of 25 warriors near you.</li>
-        <li>Place the keep in a random corner clearing.</li>
-        <li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. <i>(12 Warriors total.)</i></li>
-        <li>Place 1 sawmill, 1 workshop, and 1 recruiter randomly among the clearings both in and surrounding the keep token with up to one building per clearing.</li>
-        <li>Collect your remaining 15 buildings and place them near you.</li>
-        </ol>`,
-      },
-    },
+
     riverfolk: {
       name: `Riverfolk Company`,
       summaryTitle: `Playing the Riverfolk Company`,

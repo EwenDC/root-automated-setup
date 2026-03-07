@@ -48,6 +48,10 @@
     &.right {
       margin-inline-start: 0.3rem;
     }
+
+    &.reset {
+      margin-inline-end: 0.3rem;
+    }
   }
 
   @include section.heading-width-breakpoint {
@@ -67,6 +71,10 @@
 
       &.right {
         margin-inline-start: 0.5rem;
+      }
+
+      &.reset {
+        margin-inline-end: 0.5rem;
       }
     }
   }

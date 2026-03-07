@@ -4,11 +4,12 @@ import NumberSelector from '../../components/numberSelector'
 import Radiogroup from '../../components/radiogroup'
 import Section from '../../components/section'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { fixFirstPlayer, selectFactionArray, setPlayerCount } from '../../store'
+import { fixFirstPlayer, selectFactionArray, setBotCount, setPlayerCount } from '../../store'
 
 const SeatPlayersStep: SetupStepComponent = () => {
   const fixedFirstPlayer = useAppSelector(state => state.setup.fixedFirstPlayer)
   const playerCount = useAppSelector(state => state.setup.playerCount)
+  const botCount = useAppSelector(state => state.setup.botCount)
   const includeBots = useAppSelector(state => state.setup.includeBots)
   const factions = useAppSelector(selectFactionArray)
   const dispatch = useAppDispatch()
@@ -25,6 +26,17 @@ const SeatPlayersStep: SetupStepComponent = () => {
         maxVal={factions.length}
         onChange={value => dispatch(setPlayerCount(value))}
       />
+      {includeBots ? (
+        <NumberSelector
+          labelKey="label.botCount"
+          value={botCount}
+          minVal={1}
+          maxVal={3}
+          onChange={value => dispatch(setBotCount(value))}
+        />
+      ) : (
+        ''
+      )}
       <Radiogroup
         falseLabelKey="label.fixedFirstPlayer.false"
         trueLabelKey="label.fixedFirstPlayer.true"

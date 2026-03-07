@@ -52,6 +52,7 @@ export const COMPONENT_TYPES = [
   'landmarks',
   'maps',
   'vagabonds',
+  'bots',
 ] as const satisfies (keyof Expansion)[]
 
 /** The lookup key used to save and load the "fixed suits" persisted setting for a map. */
@@ -119,6 +120,7 @@ export const SETTING_HIRELING_COUNT = 'hirelingCount'
 export const SETTING_INCLUDE_BOTS = 'includeBotStep'
 export const SETTING_LANDMARK_COUNT = 'landmarkCount'
 export const SETTING_PLAYER_COUNT = 'playerCount'
+export const SETTING_BOT_COUNT = 'botCount'
 export const SETTING_USE_DRAFT = 'useDraft'
 
 export const LEGACY_SETTING_INCLUDE_HIRELINGS = 'includeHirelings'

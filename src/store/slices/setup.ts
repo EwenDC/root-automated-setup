@@ -3,13 +3,14 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 import type { SetupClearing } from '../../functions/mapSolvers'
-import type { CodeObject, DeckCode, FactionCode, MapCode } from '../../types'
+import type { BotCode, CodeObject, DeckCode, FactionCode, MapCode } from '../../types'
 
 import {
   HIRELING_SETUP_COUNT,
   LEGACY_SETTING_INCLUDE_HIRELINGS,
   MAX_LANDMARKS,
   SETTING_BALANCED_SUITS,
+  SETTING_BOT_COUNT,
   SETTING_FIXED_FIRST_PLAYER,
   SETTING_HIRELING_COUNT,
   SETTING_INCLUDE_BOTS,
@@ -23,6 +24,7 @@ import { toggleExpansion } from './components'
 /** An object containing all variables used during the setup process. */
 export interface SetupState {
   playerCount: number
+  botCount: number
   fixedFirstPlayer: boolean
   playerOrder: number[]
   includeBots: boolean
@@ -41,6 +43,8 @@ export interface SetupState {
   excludedFactions: FactionCode[]
   limitVagabonds: boolean
   limitCaptains: boolean
+  // Bots
+  excludedBots: BotCode[]
 }
 
 export const setupSlice = createSlice({
@@ -57,6 +61,7 @@ export const setupSlice = createSlice({
 
     return {
       playerCount: loadPersistedSetting<number>(SETTING_PLAYER_COUNT, 4),
+      botCount: loadPersistedSetting<number>(SETTING_BOT_COUNT, 1),
       fixedFirstPlayer: loadPersistedSetting<boolean>(SETTING_FIXED_FIRST_PLAYER, false),
       playerOrder: [],
       includeBots: loadPersistedSetting<boolean>(SETTING_INCLUDE_BOTS, false),
@@ -75,6 +80,8 @@ export const setupSlice = createSlice({
       excludedFactions: [],
       limitVagabonds: false,
       limitCaptains: false,
+      // Bots
+      excludedBots: [],
     }
   },
 
@@ -88,6 +95,19 @@ export const setupSlice = createSlice({
       } else {
         console.warn(
           `Invalid payload for setPlayerCount action: ${playerCount} (Payload must be a number above 0)`,
+        )
+      }
+    },
+
+    setBotCount(state, { payload: botCount }: PayloadAction<number>) {
+      // Make sure the player count is valid (i.e. above 0)
+      if (botCount >= 1) {
+        state.botCount = botCount
+        state.errorMessage = null
+        savePersistedSetting(SETTING_BOT_COUNT, botCount)
+      } else {
+        console.warn(
+          `Invalid payload for setBotCount action: ${botCount} (Payload must be a number above 0)`,
         )
       }
     },
@@ -178,6 +198,14 @@ export const setupSlice = createSlice({
       state.excludedFactions.push(...excludeFactions)
     },
 
+    clearExcludedBots(state) {
+      state.excludedBots = []
+    },
+
+    pushExcludedBots(state, { payload: excludeBots }: PayloadAction<BotCode[]>) {
+      state.excludedBots.push(...excludeBots)
+    },
+
     setLimitVagabonds(state, { payload: limitVagabonds }: PayloadAction<boolean>) {
       state.limitVagabonds = limitVagabonds
       state.errorMessage = null
@@ -208,6 +236,7 @@ export const setupSlice = createSlice({
         state.excludedFactions = []
         state.limitVagabonds = false
         state.limitCaptains = false
+        state.excludedBots = []
       })
       // This allows us to always reset the displayed error if the user makes a separate input
       .addDefaultCase(state => {
@@ -242,6 +271,9 @@ export const {
   setLimitVagabonds,
   setMap,
   setPlayerCount,
+  setBotCount,
+  clearExcludedBots,
+  pushExcludedBots,
 } = setupSlice.actions
 
 export const { selectTwoPlayer, selectSetupClearings, selectSetupDeckCode, selectSetupMapCode } =

@@ -15,10 +15,15 @@ footer {
 
     > .left {
       float: inline-start;
+      margin-left: 2rem;
     }
 
     > .right {
       float: inline-end;
+    }
+
+    > .reset {
+      float: inline-start;
     }
 
     > :not(:last-child) {
