@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 import type { SetupClearing } from '../../functions/mapSolvers'
-import type { BotCode, CodeObject, DeckCode, FactionCode, MapCode } from '../../types'
+import type { CodeObject, DeckCode, FactionCode, MapCode } from '../../types'
 
 import {
   HIRELING_SETUP_COUNT,
@@ -43,8 +43,6 @@ export interface SetupState {
   excludedFactions: FactionCode[]
   limitVagabonds: boolean
   limitCaptains: boolean
-  // Bots
-  excludedBots: BotCode[]
 }
 
 export const setupSlice = createSlice({
@@ -80,8 +78,6 @@ export const setupSlice = createSlice({
       excludedFactions: [],
       limitVagabonds: false,
       limitCaptains: false,
-      // Bots
-      excludedBots: [],
     }
   },
 
@@ -198,14 +194,6 @@ export const setupSlice = createSlice({
       state.excludedFactions.push(...excludeFactions)
     },
 
-    clearExcludedBots(state) {
-      state.excludedBots = []
-    },
-
-    pushExcludedBots(state, { payload: excludeBots }: PayloadAction<BotCode[]>) {
-      state.excludedBots.push(...excludeBots)
-    },
-
     setLimitVagabonds(state, { payload: limitVagabonds }: PayloadAction<boolean>) {
       state.limitVagabonds = limitVagabonds
       state.errorMessage = null
@@ -236,7 +224,6 @@ export const setupSlice = createSlice({
         state.excludedFactions = []
         state.limitVagabonds = false
         state.limitCaptains = false
-        state.excludedBots = []
       })
       // This allows us to always reset the displayed error if the user makes a separate input
       .addDefaultCase(state => {
@@ -272,8 +259,6 @@ export const {
   setMap,
   setPlayerCount,
   setBotCount,
-  clearExcludedBots,
-  pushExcludedBots,
 } = setupSlice.actions
 
 export const { selectTwoPlayer, selectSetupClearings, selectSetupDeckCode, selectSetupMapCode } =

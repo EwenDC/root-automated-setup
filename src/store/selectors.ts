@@ -4,7 +4,6 @@ import type { RootState } from '.'
 import type { FlowSlice } from '../types'
 
 import {
-  selectBotArray,
   selectCaptainArray,
   selectDeckArray,
   selectFactionArray,
@@ -35,18 +34,6 @@ export const selectFactionPoolFull = currySelector(
               captain => captainArray.find(({ code: captainCode }) => captainCode === captain)!,
             )
           : [],
-      })),
-  ),
-)
-
-/** Returns the bot pool, with all faction information included. */
-export const selectBotPoolFull = currySelector(
-  createSelector(
-    (_state: RootState, flowSlice: FlowSlice) => flowSlice.botPool,
-    selectBotArray,
-    (botPool, botArray) =>
-      botPool.map(({ code }) => ({
-        ...botArray.find(({ code: botCode }) => botCode === code)!,
       })),
   ),
 )

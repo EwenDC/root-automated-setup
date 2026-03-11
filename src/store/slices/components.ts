@@ -27,7 +27,6 @@ import { lockComponent, selectComponentArray, toggleComponent } from '../utils'
 
 /** Object tracking which components are available for selection. */
 export interface ComponentsState {
-  bots: Record<BotCode, ComponentInfo>
   captains: Record<VagabondCode, ComponentInfo>
   decks: Record<DeckCode, ComponentInfo>
   expansions: Record<ExpansionCode, GameComponent & Togglable>
@@ -36,6 +35,7 @@ export interface ComponentsState {
   landmarks: Record<LandmarkCode, ComponentInfo>
   maps: Record<MapCode, MapInfo>
   vagabonds: Record<VagabondCode, ComponentInfo>
+  bots: Record<BotCode, ComponentInfo>
 }
 
 const addExpansionComponents = (
@@ -77,6 +77,7 @@ export const componentsSlice = createSlice({
 
   initialState: () => {
     const initialState: ComponentsState = {
+      bots: {},
       captains: {},
       decks: {},
       expansions: {},
@@ -85,7 +86,6 @@ export const componentsSlice = createSlice({
       landmarks: {},
       maps: {},
       vagabonds: {},
-      bots: {},
     }
     for (const [expansionCode, expansion] of typedEntries(definitions)) {
       const enabled = loadPersistedSetting(
@@ -105,6 +105,9 @@ export const componentsSlice = createSlice({
   },
 
   reducers: {
+    toggleBot: toggleComponent('bots'),
+    lockBot: lockComponent('bots'),
+
     toggleCaptain: toggleComponent('captains'),
 
     toggleDeck: toggleComponent('decks'),
@@ -155,10 +158,6 @@ export const componentsSlice = createSlice({
 
     lockMap: lockComponent('maps'),
 
-    toggleBot: toggleComponent('bots'),
-
-    lockBot: lockComponent('bots'),
-
     enableMapLandmark(
       state,
       { payload }: PayloadAction<[mapCode: MapCode, enableLandmark: boolean]>,
@@ -196,6 +195,8 @@ export const componentsSlice = createSlice({
   },
 
   selectors: {
+    selectBotArray: selectComponentArray('bots'),
+
     selectCaptainArray: selectComponentArray('captains'),
 
     selectDeckArray: selectComponentArray('decks'),
@@ -220,13 +221,6 @@ export const componentsSlice = createSlice({
     selectMapArray: selectComponentArray('maps'),
 
     selectVagabondArray: selectComponentArray('vagabonds'),
-
-    selectBotArray: selectComponentArray('bots'),
-
-    selectBotCodes: createSelector(
-      (state: ComponentsState) => state.bots,
-      bots => new Set(Object.keys(bots)),
-    ),
   },
 })
 
@@ -236,8 +230,8 @@ export const {
   lockHireling,
   lockLandmark,
   lockMap,
-  lockBot,
   mapFixedSuits,
+  toggleBot,
   toggleCaptain,
   toggleExpansion,
   toggleDeck,
@@ -246,10 +240,10 @@ export const {
   toggleLandmark,
   toggleMap,
   toggleVagabond,
-  toggleBot,
 } = componentsSlice.actions
 
 export const {
+  selectBotArray,
   selectCaptainArray,
   selectExpansionArray,
   selectDeckArray,
@@ -259,8 +253,6 @@ export const {
   selectLandmarkArray,
   selectMapArray,
   selectVagabondArray,
-  selectBotArray,
-  selectBotCodes,
 } = componentsSlice.selectors
 
 export default componentsSlice.reducer

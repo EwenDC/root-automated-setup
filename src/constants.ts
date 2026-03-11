@@ -45,6 +45,7 @@ export const SUIT_CLEARING_COUNT = 4
 
 /** A static list of Root game component types. */
 export const COMPONENT_TYPES = [
+  'bots',
   'captains',
   'decks',
   'factions',
@@ -52,7 +53,6 @@ export const COMPONENT_TYPES = [
   'landmarks',
   'maps',
   'vagabonds',
-  'bots',
 ] as const satisfies (keyof Expansion)[]
 
 /** The lookup key used to save and load the "fixed suits" persisted setting for a map. */

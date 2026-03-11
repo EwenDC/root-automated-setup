@@ -4,12 +4,11 @@ import { createContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import type { AppDispatch, RootState } from './store'
-import type { Bot, Faction, FlowSlice, Vagabond, WithCode } from './types'
+import type { Faction, FlowSlice, Vagabond, WithCode } from './types'
 
 export const selectedFactionContext = createContext<
   (Faction & { vagabond: WithCode<Vagabond> | undefined; captains: WithCode<Vagabond>[] }) | null
 >(null)
-export const selectedBotContext = createContext<Bot | null>(null)
 export const stepActiveContext = createContext(false)
 
 export const useAppDispatch: UseDispatch<AppDispatch> = useDispatch

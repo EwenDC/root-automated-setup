@@ -4,9 +4,10 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createStructuredSelector } from 'reselect'
 
 import type {
-  Bot,
+  BotCode,
   BotEntry,
   CaptainCode,
+  DifficultyLevel,
   Faction,
   FactionEntry,
   FlowSlice,
@@ -29,6 +30,7 @@ import { setErrorMessage } from './setup'
  * and what steps should be skipped.
  */
 export interface FlowState {
+  botPool: BotEntry[]
   factionPool: FactionEntry[]
   hirelingPool: HirelingEntry[]
   currentIndex: number | null
@@ -40,12 +42,11 @@ export interface FlowState {
   pastSteps: FlowSlice[]
   futureSteps: FlowSlice[]
   useDraft: boolean
-  botPool: BotEntry[]
-  lastBotLocked: boolean
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
   // This prevents changes we make to the faction pool in the draft state being reflected in already generated slices
+  botPool: [...flowState.botPool],
   factionPool: [...flowState.factionPool],
   hirelingPool: [...flowState.hirelingPool],
   index: flowState.currentIndex,
@@ -54,8 +55,6 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   playerIndex: flowState.currentPlayerIndex,
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
-  botPool: [...flowState.botPool],
-  lastBotLocked: flowState.lastBotLocked,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -67,14 +66,13 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentPlayerIndex = slice.playerIndex
   state.currentStep = slice.step
   state.vagabondSetUp = slice.vagabondSetUp
-  state.botPool = slice.botPool
-  state.lastBotLocked = slice.lastBotLocked
 }
 
 export const flowSlice = createSlice({
   name: 'flow',
 
   initialState: (): FlowState => ({
+    botPool: [],
     factionPool: [],
     hirelingPool: [],
     currentIndex: null,
@@ -86,8 +84,6 @@ export const flowSlice = createSlice({
     pastSteps: [],
     futureSteps: [],
     useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
-    botPool: [],
-    lastBotLocked: false,
   }),
 
   reducers: {
@@ -114,8 +110,6 @@ export const flowSlice = createSlice({
         vagabondSetUp: false,
         pastSteps: [],
         futureSteps: [],
-        botPool: [],
-        lastBotLocked: false,
       }
       Object.assign(state, initialState)
     },
@@ -126,8 +120,6 @@ export const flowSlice = createSlice({
       if (previousStep != null) {
         // Make sure that you can't use undo/redo to select a faction during standard setup
         if (state.currentStep === SetupStep.selectFaction && !state.useDraft) {
-          state.currentIndex = null
-        } else if (state.currentStep === SetupStep.selectBots && !state.useDraft) {
           state.currentIndex = null
         }
         // Add our current state to the redo queue
@@ -147,8 +139,6 @@ export const flowSlice = createSlice({
       if (nextStep != null) {
         // Make sure that you can't use undo/redo to select a faction during standard setup
         if (state.currentStep === SetupStep.selectFaction && !state.useDraft) {
-          state.currentIndex = null
-        } else if (state.currentStep === SetupStep.selectBots && !state.useDraft) {
           state.currentIndex = null
         }
         // Add our current state to the undo queue
@@ -175,12 +165,6 @@ export const flowSlice = createSlice({
       state.currentIndex = null
     },
 
-    resetBotPool(state) {
-      state.botPool = []
-      state.lastBotLocked = false
-      state.currentIndex = null
-    },
-
     setLandmarkPool(state, { payload: landmarks }: PayloadAction<LandmarkCode[]>) {
       state.landmarkPool = landmarks
     },
@@ -192,6 +176,32 @@ export const flowSlice = createSlice({
       } else {
         console.warn(`Invalid removeCurrentLandmarkFromPool action: currentIndex must not be null`)
       }
+    },
+
+    addToBotPool: {
+      prepare(code: BotCode, difficulty: DifficultyLevel, selectedTraits: string[]) {
+        return { payload: { code, difficulty, selectedTraits } }
+      },
+      reducer(state, { payload: botEntry }: PayloadAction<BotEntry>) {
+        state.botPool.push(botEntry)
+      },
+    },
+
+    removeCurrentBotFromPool(state) {
+      if (state.currentIndex != null) {
+        state.botPool.splice(state.currentIndex, 1)
+        state.currentIndex = null
+      } else {
+        console.warn(`Invalid removeCurrentBotFromPool action: currentIndex must not be null`)
+      }
+    },
+
+    resetBotPool(state) {
+      state.botPool = []
+    },
+
+    setBotPool: (state, action: PayloadAction<BotEntry[]>) => {
+      state.botPool = action.payload
     },
 
     addToHirelingPool: {
@@ -263,37 +273,6 @@ export const flowSlice = createSlice({
       }
     },
 
-    addToBotPool: {
-      prepare(bot: WithCode<Bot>) {
-        const botEntry: BotEntry = {
-          code: bot.code,
-          order: bot.standardSetup.order,
-          militant: bot.militant ?? false,
-        }
-        return { payload: botEntry }
-      },
-      reducer(state, { payload: botEntry }: PayloadAction<BotEntry>) {
-        state.botPool.push(botEntry)
-
-        if (state.useDraft) {
-          state.lastBotLocked = !botEntry.militant
-        } else {
-          state.botPool.sort(({ order: a }, { order: b }) => a - b)
-        }
-      },
-    },
-
-    removeCurrentBotFromPool(state) {
-      if (state.currentIndex != null) {
-        const [removedBot] = state.botPool.splice(state.currentIndex, 1)
-        state.currentIndex = null
-        // Clear the last bot lock if the removed bot was militant
-        if (state.lastBotLocked && removedBot?.militant) state.lastBotLocked = false
-      } else {
-        console.warn(`Invalid removeCurrentBotFromPool action: currentIndex must not be null`)
-      }
-    },
-
     setCurrentPlayerIndex(state, { payload: currentPlayerIndex }: PayloadAction<number | null>) {
       if (currentPlayerIndex == null || currentPlayerIndex >= 0) {
         state.currentPlayerIndex = currentPlayerIndex
@@ -309,7 +288,6 @@ export const flowSlice = createSlice({
         state.currentIndex = currentIndex
         // Don't wipe redo queue when selecting faction during standard setup since it's just visual
         if (state.currentStep !== SetupStep.selectFaction || state.useDraft) state.futureSteps = []
-        if (state.currentStep !== SetupStep.selectBots || state.useDraft) state.futureSteps = []
       } else {
         console.warn(
           `Invalid payload for setCurrentIndex action: ${currentIndex} (Payload must be null or a number larger than or equal to 0)`,
@@ -336,8 +314,6 @@ export const flowSlice = createSlice({
         state.vagabondSetUp = false
         state.pastSteps = []
         state.futureSteps = []
-        state.botPool = []
-        state.lastBotLocked = false
       })
       .addDefaultCase(state => {
         state.futureSteps = []
@@ -345,7 +321,9 @@ export const flowSlice = createSlice({
   },
 
   selectors: {
+    selectBotPool: state => state.botPool,
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
+      botPool: state => state.botPool,
       factionPool: state => state.factionPool,
       hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,
@@ -354,8 +332,6 @@ export const flowSlice = createSlice({
       playerIndex: state => state.currentPlayerIndex,
       step: state => state.currentStep,
       vagabondSetUp: state => state.vagabondSetUp,
-      botPool: state => state.botPool,
-      lastBotLocked: state => state.lastBotLocked,
     }),
   },
 })
@@ -363,13 +339,17 @@ export const flowSlice = createSlice({
 export const {
   addToFactionPool,
   addToHirelingPool,
+  addToBotPool,
   pushStateToPast,
   redoStep,
+  removeCurrentBotFromPool,
   removeCurrentFactionFromPool,
   removeCurrentHirelingFromPool,
   removeCurrentLandmarkFromPool,
+  resetBotPool,
   resetFactionPool,
   resetHirelingPool,
+  setBotPool,
   setCurrentIndex,
   setCurrentPlayerIndex,
   setCurrentStep,
@@ -377,11 +357,8 @@ export const {
   setUseDraft,
   undoStep,
   resetStep,
-  addToBotPool,
-  removeCurrentBotFromPool,
-  resetBotPool,
 } = flowSlice.actions
 
-export const { selectFlowSlice } = flowSlice.selectors
+export const { selectFlowSlice, selectBotPool } = flowSlice.selectors
 
 export default flowSlice.reducer
