@@ -16,6 +16,11 @@ interface ComponentSelectProps<T> {
   getSetupTitleKey: (component: T) => string
   getSetupKey: (component: T) => string
   getTranslationOptions?: (component: T) => TOptions
+  /**
+   * Optional offset to apply to the global Redux index. Useful when rendering multiple Select
+   * components on the same screen!
+   */
+  indexOffset?: number
 }
 
 const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
@@ -25,6 +30,7 @@ const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
   getSetupTitleKey,
   getSetupKey,
   getTranslationOptions,
+  indexOffset = 0, // Defaults to 0 so it doesn't break other lists!
 }: ComponentSelectProps<T>) => {
   const playerNumber = usePlayerNumber(flowSlice)
   const components = useAppSelector(selector(flowSlice))
@@ -33,7 +39,13 @@ const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
   const dispatch = useAppDispatch()
   const radioName = useId()
 
-  const setupComponent = flowSlice.index != null ? components[flowSlice.index] : undefined
+  // Apply the offset in reverse to find the local index for this specific chunk
+  const localIndex = flowSlice.index != null ? flowSlice.index - indexOffset : -1
+
+  // Only grab the component if the local index actually falls inside this chunk!
+  const setupComponent =
+    localIndex >= 0 && localIndex < components.length ? components[localIndex] : undefined
+
   const setupComponentTOptions = setupComponent && {
     ...getTranslationOptions?.(setupComponent),
     count: playerNumber,
@@ -54,9 +66,11 @@ const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
             <input
               type="radio"
               name={radioName}
-              checked={index === flowSlice.index}
+              // Add the offset to the local index to check if it's the selected one
+              checked={index + indexOffset === flowSlice.index}
               disabled={!stepActive}
-              onChange={() => dispatch(setCurrentIndex(index))}
+              // Dispatch the local index PLUS the offset to get the true global index!
+              onChange={() => dispatch(setCurrentIndex(index + indexOffset))}
             />
             <img
               src={component.image}

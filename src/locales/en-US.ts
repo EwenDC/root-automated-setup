@@ -70,6 +70,7 @@ export default {
     useDraft: `Use draft faction selection`,
     undo: `Undo`,
     wealth: `Card Wealth`,
+    selectThisBot: '',
   },
   component: {
     buildings: `{{count}} Buildings`,
@@ -329,6 +330,66 @@ export default {
     },
     vagabot: {
       name: `Vagabot`,
+      summaryTitle: `For the King`,
+      summary: `<p>The Mechanical Marquise consumes all!</p>`,
+      setupTitle: `Set up the Mechanical Marquise`,
+      setup: {
+        default: `<ol>
+        <li>Form a supply of 25 warriors near you.</li>
+        <li>Place the keep in a random corner clearing.</li>
+        <li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. <i>(12 Warriors total.)</i></li>
+        <li>Place 1 sawmill, 1 workshop, and 1 recruiter randomly among the clearings both in and surrounding the keep token with up to one building per clearing.</li>
+        <li>Collect your remaining 15 buildings and place them near you.</li>
+        </ol>`,
+      },
+    },
+    cogwheelCorvids: {
+      name: `Cogwheel Corvids`,
+      summaryTitle: `For the King`,
+      summary: `<p>The Mechanical Marquise consumes all!</p>`,
+      setupTitle: `Set up the Mechanical Marquise`,
+      setup: {
+        default: `<ol>
+        <li>Form a supply of 25 warriors near you.</li>
+        <li>Place the keep in a random corner clearing.</li>
+        <li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. <i>(12 Warriors total.)</i></li>
+        <li>Place 1 sawmill, 1 workshop, and 1 recruiter randomly among the clearings both in and surrounding the keep token with up to one building per clearing.</li>
+        <li>Collect your remaining 15 buildings and place them near you.</li>
+        </ol>`,
+      },
+    },
+    drillbitDuchy: {
+      name: `Drillbit Duchy`,
+      summaryTitle: `For the King`,
+      summary: `<p>The Mechanical Marquise consumes all!</p>`,
+      setupTitle: `Set up the Mechanical Marquise`,
+      setup: {
+        default: `<ol>
+        <li>Form a supply of 25 warriors near you.</li>
+        <li>Place the keep in a random corner clearing.</li>
+        <li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. <i>(12 Warriors total.)</i></li>
+        <li>Place 1 sawmill, 1 workshop, and 1 recruiter randomly among the clearings both in and surrounding the keep token with up to one building per clearing.</li>
+        <li>Collect your remaining 15 buildings and place them near you.</li>
+        </ol>`,
+      },
+    },
+    logicalLizards: {
+      name: `Logical Lizards`,
+      summaryTitle: `For the King`,
+      summary: `<p>The Mechanical Marquise consumes all!</p>`,
+      setupTitle: `Set up the Mechanical Marquise`,
+      setup: {
+        default: `<ol>
+        <li>Form a supply of 25 warriors near you.</li>
+        <li>Place the keep in a random corner clearing.</li>
+        <li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. <i>(12 Warriors total.)</i></li>
+        <li>Place 1 sawmill, 1 workshop, and 1 recruiter randomly among the clearings both in and surrounding the keep token with up to one building per clearing.</li>
+        <li>Collect your remaining 15 buildings and place them near you.</li>
+        </ol>`,
+      },
+    },
+    riverfolkRobots: {
+      name: `Riverfolk Robots`,
       summaryTitle: `For the King`,
       summary: `<p>The Mechanical Marquise consumes all!</p>`,
       setupTitle: `Set up the Mechanical Marquise`,
