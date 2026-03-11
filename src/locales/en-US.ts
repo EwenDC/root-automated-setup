@@ -134,8 +134,7 @@ export default {
     },
     setUpBots: {
       title: `Set up Bots`,
-      body: `As a group, decide which bots you would like to play with, following their set up instructions as described in the Law of Rootbotics.`,
-      reference: `For assistance setting up/using bots, you can use".`,
+      body: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
     },
     chooseLandmarks: {
       title: `Set up Landmarks`,
@@ -179,7 +178,7 @@ export default {
     selectBots: {
       subtitle: `Assign Bots`,
       subtitle_useDraft: `Choose Bot`,
-      body: `Assign one of the below bots for each seat you would like filled. The bots will be set up from left-to-right. You may freely select bots from the list.`,
+      body: `Assign one of the below bots. The bots will be set up from left-to-right. You may freely select bots from the list.`,
       body_useDraft: `Choose which bots you would like to play from the bot pool below. You may freely select bots from the list.”`,
     },
     placeScoreMarkers: {
@@ -283,6 +282,32 @@ export default {
     vagabondPack: `Vagabond Pack`,
     clockwork: `Clockwork Expansion`,
     clockwork2: `Clockwork Expansion 2`,
+  },
+  bot: {
+    automatedAlliance: {
+      name: `Automated Alliance`,
+    },
+    mechanicalMarquise: {
+      name: `Mechanical Marquise`,
+    },
+    electricEyrie: {
+      name: `Electric Eyrie`,
+    },
+    vagabot: {
+      name: `Vagabot`,
+    },
+    cogwheelCorvids: {
+      name: `Cogwheel Corvids`,
+    },
+    drillbitDuchy: {
+      name: `Drillbit Duchy `,
+    },
+    logicalLizards: {
+      name: `Logical Lizards`,
+    },
+    riverfolkRobots: {
+      name: `Riverfolk Robots`,
+    },
   },
   faction: {
     alliance: {

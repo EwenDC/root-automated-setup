@@ -1031,7 +1031,7 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
         setupSteps: [
           'Form a supply of 25 warriors near you.',
           'Place the keep token in a random corner clearing.',
-          'Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. _(Place 12 warriors in total.)_',
+          'Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)',
           'Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.',
           'Collect your remaining 15 buildings and place them near you.',
         ],
@@ -1062,7 +1062,7 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
           'Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.',
           'Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.',
           'Place any 1 item marked "R" beneath each ruin on the map.',
-          'Take any 4 items marked "S" and place them in your Satchel. _(The Tinker starts with 3 items instead of 4 items.)_',
+          'Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)',
         ],
       },
     },
