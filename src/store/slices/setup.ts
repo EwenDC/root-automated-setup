@@ -83,7 +83,6 @@ export const setupSlice = createSlice({
 
   reducers: {
     setPlayerCount(state, { payload: playerCount }: PayloadAction<number>) {
-      // Make sure the player count is valid (i.e. above 0)
       if (playerCount >= 1) {
         state.playerCount = playerCount
         state.errorMessage = null
@@ -96,7 +95,6 @@ export const setupSlice = createSlice({
     },
 
     setBotCount(state, { payload: botCount }: PayloadAction<number>) {
-      // Make sure the player count is valid (i.e. above 0)
       if (botCount >= 1) {
         state.botCount = botCount
         state.errorMessage = null
