@@ -93,15 +93,9 @@ export type HirelingCode = string
 export type LandmarkCode = string
 
 export type BotCode = string
-export type DifficultyLevel = 'Challenging' | 'Easy' | 'Nightmare' | 'Normal'
-export interface BotTrait {
-  name: string
-  description: string
-}
+
 export interface Bot extends GameComponent {
   baseFactionCode: FactionCode
-  difficulties: Record<DifficultyLevel, string>
-  traits: BotTrait[]
   setupSteps: string[]
 }
 
@@ -280,7 +274,6 @@ export const enum SetupStep {
   setUpMap,
   chooseDeck,
   setUpDeck,
-  chooseBots,
   setUpBots,
   selectBots,
   chooseLandmarks,
@@ -319,8 +312,6 @@ export interface HirelingEntry {
 
 export interface BotEntry {
   code: BotCode
-  difficulty: DifficultyLevel
-  selectedTraits: string[]
 }
 
 /** An object representing a slice of history for the flow state. */

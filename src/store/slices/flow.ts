@@ -4,10 +4,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createStructuredSelector } from 'reselect'
 
 import type {
-  BotCode,
   BotEntry,
   CaptainCode,
-  DifficultyLevel,
   Faction,
   FactionEntry,
   FlowSlice,
@@ -100,6 +98,7 @@ export const flowSlice = createSlice({
     resetStep(state) {
       //Reset the state to initial values
       const initialState = {
+        botPool: [],
         factionPool: [],
         hirelingPool: [],
         currentIndex: null,
@@ -178,13 +177,10 @@ export const flowSlice = createSlice({
       }
     },
 
-    addToBotPool: {
-      prepare(code: BotCode, difficulty: DifficultyLevel, selectedTraits: string[]) {
-        return { payload: { code, difficulty, selectedTraits } }
-      },
-      reducer(state, { payload: botEntry }: PayloadAction<BotEntry>) {
-        state.botPool.push(botEntry)
-      },
+    // Inside your createSlice -> reducers block:
+    addToBotPool: (state, action: PayloadAction<BotEntry>) => {
+      // It now accepts the whole BotEntry object we send it!
+      state.botPool.push(action.payload)
     },
 
     removeCurrentBotFromPool(state) {

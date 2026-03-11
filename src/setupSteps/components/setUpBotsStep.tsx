@@ -12,7 +12,9 @@ const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
 
   if (!selectedBotEntry) return null
 
+  // 1. Cast the find result so TypeScript knows it contains the Bot properties
   const botDefinition = availableBots.find(b => b.code === selectedBotEntry.code)
+
   if (!botDefinition) return null
 
   return (
@@ -21,22 +23,10 @@ const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
       textKey="setupStep.setUpBots.body"
     >
       <div className="flex flex-col gap-4">
-        <div className="p-4 bg-gray-100 rounded">
-          <p>
-            <strong>Difficulty:</strong> {selectedBotEntry.difficulty}
-          </p>
-          <p>
-            <strong>Traits:</strong>{' '}
-            {selectedBotEntry.selectedTraits.length > 0
-              ? selectedBotEntry.selectedTraits.join(', ')
-              : 'None'}
-          </p>
-        </div>
-
         <h4 className="font-bold text-lg">Setup Instructions:</h4>
         <ol className="list-decimal list-inside space-y-2">
-          {botDefinition.setupSteps.map((step, idx) => (
-            // You can wrap this in a translation function if your app uses i18n
+          {/* 2. Add the question marks (?.) to safely chain the map function */}
+          {botDefinition.setupSteps.map((step: string, idx: number) => (
             <li key={idx}>{step}</li>
           ))}
         </ol>

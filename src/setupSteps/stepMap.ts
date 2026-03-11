@@ -1,7 +1,6 @@
 import type { SetupStepDefinition } from '.'
 
 import { SetupStep } from '../types'
-import { chooseBots } from './definitions/chooseBots'
 import { chooseDeck } from './definitions/chooseDeck'
 import { chooseExpansions } from './definitions/chooseExpansions'
 import { chooseFactions } from './definitions/chooseFactions'
@@ -32,7 +31,6 @@ export const stepMap: Record<SetupStep, SetupStepDefinition> = {
   [SetupStep.setUpMap]: setUpMap,
   [SetupStep.chooseDeck]: chooseDeck,
   [SetupStep.setUpDeck]: setUpDeck,
-  [SetupStep.chooseBots]: chooseBots,
   [SetupStep.selectBots]: selectBots,
   [SetupStep.setUpBots]: setUpBots,
   [SetupStep.chooseLandmarks]: chooseLandmarks,

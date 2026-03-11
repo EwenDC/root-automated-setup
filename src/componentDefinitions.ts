@@ -1028,24 +1028,6 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       mechanicalMarquise: {
         image: marquiseMeeple,
         baseFactionCode: 'marquise',
-        difficulties: {
-          Easy: 'Skip the first step of Daylight (Battle).',
-          Normal: 'Standard rules.',
-          Challenging: 'Take 1 extra action in Daylight.',
-          Nightmare: 'Take 2 extra actions in Daylight.',
-        },
-        traits: [
-          {
-            name: 'Blitz',
-            description: 'After moving, initiate a battle in the destination clearing.',
-          },
-          {
-            name: 'Fortify',
-            description: 'Defenders deal 1 extra hit in clearings with a building.',
-          },
-          { name: 'Iron Will', description: 'Never discard order cards.' },
-          { name: 'Hospitals', description: 'When defending, save 1 warrior removed in battle.' },
-        ],
         setupSteps: [
           'Place the keep token in a random corner clearing.',
           'Place 1 warrior in each clearing, except the clearing diagonally opposite the keep.',
@@ -1056,24 +1038,6 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       electricEyrie: {
         image: eyrieMeeple,
         baseFactionCode: 'eyrie',
-        difficulties: {
-          Easy: 'Skip the first step of Daylight.',
-          Normal: 'Standard rules.',
-          Challenging: 'Take 1 extra action in Daylight.',
-          Nightmare: 'Take 2 extra actions in Daylight.',
-        },
-        traits: [
-          { name: 'Relentless', description: 'When resolving the decree, do not discard cards.' },
-          {
-            name: 'Nobility',
-            description: 'Score 1 VP whenever a bird card is added to the decree.',
-          },
-          {
-            name: 'Swoop',
-            description: 'At the start of Daylight, place 2 warriors in a clearing.',
-          },
-          { name: 'War Tax', description: 'Score 1 VP for each clearing you rule with a roost.' },
-        ],
         setupSteps: [
           'Place 1 roost and 6 warriors in a random corner clearing diagonally opposite the keep.',
           'Tuck your 2 Loyal Vizier cards into the decree.',
@@ -1083,27 +1047,6 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       automatedAlliance: {
         image: allianceMeeple,
         baseFactionCode: 'alliance',
-        difficulties: {
-          Easy: 'Skip the first step of Daylight.',
-          Normal: 'Standard rules.',
-          Challenging: 'Take 1 extra action in Daylight.',
-          Nightmare: 'Take 2 extra actions in Daylight.',
-        },
-        traits: [
-          {
-            name: 'Informants',
-            description: 'Ambush cards cannot be played against the Alliance.',
-          },
-          {
-            name: 'Popularity',
-            description: 'Enemies cannot remove sympathy in clearings with 3+ enemy warriors.',
-          },
-          { name: 'Veterans', description: 'In battle as defender, deal 1 extra hit.' },
-          {
-            name: 'Wildfire',
-            description: 'When a base is placed, place sympathy in all adjacent clearings.',
-          },
-        ],
         setupSteps: [
           'Place your 3 bases on the matching spaces of your board.',
           'Place your 10 sympathy tokens on the sympathy track.',
@@ -1113,21 +1056,6 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       vagabot: {
         image: thiefMeeple,
         baseFactionCode: 'vagabond',
-        difficulties: {
-          Easy: 'Skip the first step of Daylight.',
-          Normal: 'Standard rules.',
-          Challenging: 'Take 1 extra action in Daylight.',
-          Nightmare: 'Take 2 extra actions in Daylight.',
-        },
-        traits: [
-          {
-            name: 'Adventurer',
-            description: 'When questing, complete an additional quest if possible.',
-          },
-          { name: 'Berserker', description: 'In battle as attacker, deal 1 extra hit.' },
-          { name: 'Helper', description: 'When aiding, give 2 cards instead of 1.' },
-          { name: 'Marksman', description: 'At the start of battle, deal 1 immediate hit.' },
-        ],
         setupSteps: [
           'Choose a Vagabond character card randomly and place it on your board.',
           'Place the Vagabond pawn in the forest with the most adjacent clearings.',
