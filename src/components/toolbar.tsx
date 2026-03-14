@@ -7,7 +7,6 @@ import CopyIcon from '../images/icons/next.svg?react'
 import RedoIcon from '../images/icons/redo.svg?react'
 import ResetIcon from '../images/icons/reset.svg?react'
 import UndoIcon from '../images/icons/undo.svg?react'
-// Note: Substitute this with your preferred copy icon
 import { nextStep } from '../setupSteps'
 import { redoStep, resetStep, undoStep, selectBotArray, selectExpansionArray } from '../store'
 import { SetupStep } from '../types'
@@ -15,7 +14,6 @@ import Button from './button'
 import LocaleText from './localeText'
 import Section from './section'
 
-// Increased max index to 4 to accommodate the new 5th button
 type ButtonIndex = 0 | 1 | 2 | 3 | 4
 const MIN_BUTTON_INDEX = 0
 const MAX_BUTTON_INDEX = 4
@@ -35,7 +33,6 @@ const Toolbar: React.FC = () => {
   const botPool = useAppSelector(state => state.flow.botPool)
   const allBots = useAppSelector(selectBotArray)
 
-  // Grab state slices needed for generating the URL
   const setupState = useAppSelector(state => state.setup)
   const flowState = useAppSelector(state => state.flow)
   const expansions = useAppSelector(selectExpansionArray)
@@ -57,7 +54,6 @@ const Toolbar: React.FC = () => {
     const confirmReset = window.confirm(t('label.confirmReset'))
     if (confirmReset) {
       dispatch(resetStep())
-      // Reset defaults to moving focus to Redo
       setFocusedIndex(1)
     }
   }
@@ -65,20 +61,16 @@ const Toolbar: React.FC = () => {
   const handleCopyUrl = () => {
     const params = new URLSearchParams()
 
-    // Setup basic settings
     if (setupState.playerCount) params.set('playerCount', setupState.playerCount.toString())
     if (setupState.botCount) params.set('botCount', setupState.botCount.toString())
     if (setupState.map) params.set('map', setupState.map)
     if (setupState.deck) params.set('deck', setupState.deck)
 
-    // Setup active expansions
     const enabledExpansions = expansions.filter(ex => ex.enabled).map(ex => ex.code)
     if (enabledExpansions.length > 0) {
       params.set('expansions', enabledExpansions.join(','))
     }
 
-    // Setup active factions, bots, and hirelings
-    // ESLint fix: Arrays are guaranteed by Redux, no need for existence checks
     if (flowState.factionPool.length > 0) {
       params.set('factions', flowState.factionPool.map(f => f.code).join(','))
     }
@@ -91,8 +83,6 @@ const Toolbar: React.FC = () => {
 
     const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`
 
-    // ESLint fix: Use `void` to explicitly mark the unawaited promise, add a `.catch()`,
-    // and use curly braces inside the setTimeout callback.
     void navigator.clipboard
       .writeText(shareUrl)
       .then(() => {
@@ -108,7 +98,6 @@ const Toolbar: React.FC = () => {
 
   const onKeyDownHandler =
     (focusedIndex: ButtonIndex) => (event: React.KeyboardEvent<HTMLButtonElement>) => {
-      // Re-ordered to exactly match the index flow: Undo (0), Redo (1), Copy (2), Next (3), Reset (4)
       const buttonRefs = [
         undoButtonRef,
         redoButtonRef,
@@ -180,7 +169,6 @@ const Toolbar: React.FC = () => {
           onKeyDown={onKeyDownHandler(1)}
         />
 
-        {/* NEW COPY BUTTON (Positioned between Redo and Next) */}
         <Button
           Icon={CopyIcon}
           className="left"

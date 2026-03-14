@@ -35,15 +35,11 @@ export const selectBots: SetupStepDefinition = {
     const factionCodes = selectFactionCodes(state)
     const noSpareFactions = state.setup.playerCount >= factionCodes.size
 
-    // Ensure that we include/exclude faction bots depending on if we can spare factions for bots at our player count
     dispatch(
       massComponentLock(
         selectBotArray,
         ({ excludeFactions }) =>
-          // Are we at the max player count (i.e. there are no factions to spare for an equivalent bot)?
-          noSpareFactions &&
-          // Is this bot one of the faction equivalents?
-          excludeFactions?.some(faction => factionCodes.has(faction))
+          noSpareFactions && excludeFactions?.some(faction => factionCodes.has(faction))
             ? 'error.factionHirelingExcluded'
             : false,
         lockBot,
@@ -86,8 +82,6 @@ export const selectBots: SetupStepDefinition = {
     if (flow.botPool.length + 1 >= setup.botCount) {
       dispatch(setCurrentIndex(0))
     }
-
-    // Clear index so the UI requires a fresh click on the next screen
 
     if (flow.botPool.length + 1 >= setup.botCount) {
       dispatch(setCurrentIndex(0))
