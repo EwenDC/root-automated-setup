@@ -1073,6 +1073,17 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       },
     },
   },
+  betaClockwork: {
+    image: clockworkBox,
+    defaultDisabled: true,
+    bots: {
+      lootingLegion: {
+        image: warlordMeeple,
+        baseFactionCode: 'warlord',
+        clockroot: 'Legion',
+      },
+    },
+  },
 } as const
 
 export default definitions

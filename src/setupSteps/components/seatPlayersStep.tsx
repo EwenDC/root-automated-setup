@@ -21,7 +21,7 @@ const SeatPlayersStep: SetupStepComponent = () => {
 
   const includeBots = useAppSelector(state => state.setup.includeBots)
   const expansionArray = useAppSelector(selectExpansionArray)
-  const botExpansions = ['clockwork', 'clockwork2']
+  const botExpansions = ['clockwork', 'clockwork2', 'betaClockwork']
   const botExpansionsEnabled = botExpansions.some(code =>
     expansionArray.some(expansion => expansion.code === code && expansion.enabled),
   )

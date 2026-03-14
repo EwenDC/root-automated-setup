@@ -199,6 +199,7 @@ export default {
     vagabondPack: `Paczka Włóczęgów`,
     clockwork: `Clockwork Expansion`,
     clockwork2: `Clockwork Expansion 2`,
+    betaClockwork: `Beta Released Clockworks`,
   },
   bot: {
     automatedAlliance: {
@@ -232,6 +233,10 @@ export default {
     riverfolkRobots: {
       name: `Riverfolk Robots`,
       setup: `<ol><li>Form a supply of 15 warriors.</li><li>Place 1 warrior in each clearing on the river.</li><li>Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li>Place 1 warrior in your Payments box.</li><li>Draw 5 cards and add them to your Market.</li></ol>`,
+    },
+    lootingLegion: {
+      name: `Looting Legion`,
+      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Place the four 'R' items randomly under the ruins on the map.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
     },
   },
   faction: {
