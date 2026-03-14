@@ -64,6 +64,7 @@ export default {
     warriors_other: `{{count}} Guerrieri`,
   },
   error: {
+    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `La fazione associata a questo combattente è necessaria per la preparazione`,
     hirelingSelected: `Un combattente associato a questa fazione è già in gioco`,
     landmarkNotEnoughPlayers: `Non ci sono abbastanza giocatori per poter utilizzare questa meraviglia`,

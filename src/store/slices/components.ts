@@ -226,6 +226,7 @@ export const componentsSlice = createSlice({
 
 export const {
   enableMapLandmark,
+  lockBot,
   lockFaction,
   lockHireling,
   lockLandmark,

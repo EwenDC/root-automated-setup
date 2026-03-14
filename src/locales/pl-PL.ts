@@ -80,6 +80,7 @@ export default {
     warriors_other: `{{count}} Wojowników`,
   },
   error: {
+    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `Frakcja powiązana z tym Zaciężnym jest wymagana do konfiguracji`,
     hirelingSelected: `Równoważny Zaciężny dla tej frakcji jest już w grze`,
     landmarkNotEnoughPlayers: `Za mało graczy, aby grać z tym punktem terenu`,

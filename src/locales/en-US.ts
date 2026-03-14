@@ -87,7 +87,8 @@ export default {
   },
   error: {
     factionHirelingExcluded: `The Faction associated with this Hireling is required for set up`,
-    hirelingSelected: `An equivalent Hireling for this faction is already in play`,
+    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
+    hirelingSelected: `An equivalent Hireling or Clockwork for this faction is already in play`,
     landmarkNotEnoughPlayers: `Not enough players to play with this landmark`,
     lockedFaction: `Cannot select last faction until a Militant faction has been selected`,
     mapBotsUnsupported: `This map does not support playing with bots`,

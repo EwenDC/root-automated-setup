@@ -222,6 +222,7 @@ export const flowSlice = createSlice({
     addToFactionPool: {
       prepare(
         faction: WithCode<Faction>,
+        includeBots: boolean,
         vagabondPool?: VagabondCode[],
         captainPool?: CaptainCode[],
       ) {
@@ -241,13 +242,18 @@ export const flowSlice = createSlice({
             takeRandom(captainPool),
           ]
         }
-        return { payload: factionEntry }
+        return { payload: { factionEntry, includeBots } }
       },
-      reducer(state, { payload: factionEntry }: PayloadAction<FactionEntry>) {
+      reducer(
+        state,
+        {
+          payload: { factionEntry, includeBots },
+        }: PayloadAction<{ factionEntry: FactionEntry; includeBots: boolean }>,
+      ) {
         state.factionPool.push(factionEntry)
 
         if (state.useDraft) {
-          state.lastFactionLocked = !factionEntry.militant
+          state.lastFactionLocked = !factionEntry.militant && !includeBots
         } else {
           state.factionPool.sort(({ order: a }, { order: b }) => a - b)
         }

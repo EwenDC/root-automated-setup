@@ -154,7 +154,7 @@ export const chooseFactions: SetupStepDefinition = {
 
     // Start by adding a random militant faction
     const firstFaction = takeRandom(workingFactionPool)
-    dispatch(addToFactionPool(firstFaction, vagabondPool, captainPool))
+    dispatch(addToFactionPool(firstFaction, state.setup.includeBots, vagabondPool, captainPool))
     // Add the insurgent factions to the mix
     workingFactionPool.push(...insurgentFactions)
 
@@ -175,7 +175,9 @@ export const chooseFactions: SetupStepDefinition = {
         // Don't include any factions that are incompatible with ones already chosen
         !incompatibleFactions.has(candidateFaction.code)
       ) {
-        dispatch(addToFactionPool(candidateFaction, vagabondPool, captainPool))
+        dispatch(
+          addToFactionPool(candidateFaction, state.setup.includeBots, vagabondPool, captainPool),
+        )
         factionsSetUp++
         if (!useDraft && candidateFaction.standardSetup.cornerSetup) cornerSetupCount++
         if (candidateFaction.excludeFactions) {

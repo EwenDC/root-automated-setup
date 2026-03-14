@@ -3,10 +3,14 @@ import type { SetupStepDefinition } from '..'
 import {
   addToBotPool,
   clearExcludedFactions,
+  lockBot,
+  massComponentLock,
+  pushExcludedFactions,
   removeCurrentBotFromPool,
   resetBotPool,
   //pushStateToPast,
   selectBotArray,
+  selectFactionCodes,
   setCurrentIndex,
   setErrorMessage,
 } from '../../store'
@@ -27,6 +31,24 @@ export const selectBots: SetupStepDefinition = {
       if (state.flow.botPool.length > 0) dispatch(resetBotPool())
       return SetupStep.drawCards
     }
+
+    const factionCodes = selectFactionCodes(state)
+    const noSpareFactions = state.setup.playerCount >= factionCodes.size
+
+    // Ensure that we include/exclude faction bots depending on if we can spare factions for bots at our player count
+    dispatch(
+      massComponentLock(
+        selectBotArray,
+        ({ excludeFactions }) =>
+          // Are we at the max player count (i.e. there are no factions to spare for an equivalent bot)?
+          noSpareFactions &&
+          // Is this bot one of the faction equivalents?
+          excludeFactions?.some(faction => factionCodes.has(faction))
+            ? 'error.factionHirelingExcluded'
+            : false,
+        lockBot,
+      ),
+    )
 
     if (state.flow.botPool.length >= state.setup.botCount) {
       dispatch(setCurrentIndex(null))
@@ -57,6 +79,13 @@ export const selectBots: SetupStepDefinition = {
     dispatch(setCurrentIndex(null))
     dispatch(addToBotPool(selectedBot.code))
     dispatch(removeCurrentBotFromPool())
+    if (selectedBot.excludeFactions && selectedBot.excludeFactions.length > 0) {
+      dispatch(pushExcludedFactions(selectedBot.excludeFactions))
+    }
+
+    if (flow.botPool.length + 1 >= setup.botCount) {
+      dispatch(setCurrentIndex(0))
+    }
 
     // Clear index so the UI requires a fresh click on the next screen
 

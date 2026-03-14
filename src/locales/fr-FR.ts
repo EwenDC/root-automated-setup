@@ -66,6 +66,7 @@ export default {
     warriors_other: `{{count}} Guerriers`,
   },
   error: {
+    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `La faction associée à ce nomade est requise pour la mise en place`,
     hirelingSelected: `Un nomade équivalent à cette faction est déjà en jeu`,
     landmarkNotEnoughPlayers: `Pas assez de joueurs pour jouer avec ce monument`,

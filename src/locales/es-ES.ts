@@ -65,6 +65,7 @@ export default {
   },
   error: {
     factionHirelingExcluded: `La Facción coincidente con este Secuaz se requiere en la preparación`,
+    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     hirelingSelected: `Un Secuaz coincidente con esta Facción está ya en juego`,
     landmarkNotEnoughPlayers: `No hay suficientes jugadores para jugar con este Lugar Mítico`,
     lockedFaction: `No puede escogerse la última facción hasta que una facción belicosa haya sido escogida`,
