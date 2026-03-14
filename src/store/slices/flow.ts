@@ -177,9 +177,7 @@ export const flowSlice = createSlice({
       }
     },
 
-    // Inside your createSlice -> reducers block:
     addToBotPool: (state, action: PayloadAction<BotEntry>) => {
-      // It now accepts the whole BotEntry object we send it!
       state.botPool.push(action.payload)
     },
 

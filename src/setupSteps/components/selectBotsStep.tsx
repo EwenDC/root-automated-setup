@@ -25,7 +25,7 @@ const SelectBotsStep: SetupStepComponent = ({ flowSlice }) => {
       textKey="setupStep.selectBots.body"
       translationOptions={{ count: currentPickNumber }}
     >
-      <div className="flex flex-col gap-6 mt-4">
+      <div>
         {Array.from({ length: chunkCount }).map((_, i) => {
           // 3. Calculate the starting global index for this specific block
           const startIndex = i * 4
@@ -35,13 +35,10 @@ const SelectBotsStep: SetupStepComponent = ({ flowSlice }) => {
             <ComponentSetupSelect
               key={startIndex}
               flowSlice={flowSlice}
-              // Slice the array so this component only renders its 4 specific bots
               selector={() => () => availableBots.slice(startIndex, endIndex)}
               getLabelKey={bot => `bot.${bot.code}.name`}
               getSetupTitleKey={bot => `bot.${bot.code}.name`}
               getSetupKey={() => 'label.selectThisBot'}
-              // 4. CRITICAL: Pass the startIndex as the offset!
-              // This stops block 2 from thinking its first item is index 0.
               indexOffset={startIndex}
             />
           )

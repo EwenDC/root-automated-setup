@@ -22,7 +22,6 @@ export default {
       true: `Fixer le premier joueur <i>(Joueur 1 est la première personne, Joueur 2 est la seconde, etc.)</i>`,
     },
     fox: `Renard`,
-    includeBotStep: `Inclure la mise en place des robots`,
     includeHirelings: `Inclure les nomades`,
     landmarkCount: `Nombre de monuments`,
     logoAlt: `Root`,

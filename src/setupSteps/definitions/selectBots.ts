@@ -43,7 +43,6 @@ export const selectBots: SetupStepDefinition = {
 
     const selectedBot = availableBots[flow.currentIndex]
 
-    // 2. HARDENED CHECK: If there is no bot, or it was somehow already added by a double-click, abort immediately!
     if (!selectedBot || flow.botPool.some(b => b.code === selectedBot.code)) {
       return null
     }

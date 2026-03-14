@@ -33,7 +33,6 @@ export default {
       true: `Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>`,
     },
     fox: `Fox`,
-    includeBotStep: `Include bot set up`,
     includeHirelings: `Include Hirelings`,
     landmarkCount: `Landmark Count`,
     logoAlt: `Root`,
@@ -135,6 +134,7 @@ export default {
     setUpBots: {
       title: `Set up Bots`,
       body: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
+      instructionTitle: `Setup Instructions:`,
     },
     chooseLandmarks: {
       title: `Set up Landmarks`,
@@ -300,7 +300,7 @@ export default {
       name: `Cogwheel Corvids`,
     },
     drillbitDuchy: {
-      name: `Drillbit Duchy `,
+      name: `Drillbit Duchy`,
     },
     logicalLizards: {
       name: `Logical Lizards`,

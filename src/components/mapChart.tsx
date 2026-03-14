@@ -7,7 +7,7 @@ import LocaleText from './localeText'
 
 const MapChart: React.FC = () => {
   const map = useAppSelector(selectSetupMap)
-  const includeBots = useAppSelector(state => state.setup.includeBots)
+  const includeBots = useAppSelector(state => state.setup.botCount > 0)
 
   if (!map) return null
 

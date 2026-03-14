@@ -22,14 +22,14 @@ const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
       subtitleKey={`bot.${selectedBotEntry.code}.name`}
       textKey="setupStep.setUpBots.body"
     >
-      <div className="flex flex-col gap-4">
-        <h4 className="font-bold text-lg">Setup Instructions:</h4>
-        <ol className="list-decimal list-inside space-y-2">
-          {/* 2. Add the question marks (?.) to safely chain the map function */}
-          {botDefinition.setupSteps.map((step: string, idx: number) => (
-            <li key={idx}>{step}</li>
-          ))}
-        </ol>
+      <div>
+        <Section titleKey="setupStep.setUpBots.instructionTitle">
+          <ol>
+            {botDefinition.setupSteps.map((step: string, idx: number) => (
+              <li key={idx}>{step}</li>
+            ))}
+          </ol>
+        </Section>
       </div>
     </Section>
   )

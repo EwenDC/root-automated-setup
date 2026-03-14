@@ -4,15 +4,27 @@ import NumberSelector from '../../components/numberSelector'
 import Radiogroup from '../../components/radiogroup'
 import Section from '../../components/section'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { fixFirstPlayer, selectFactionArray, setBotCount, setPlayerCount } from '../../store'
+import {
+  fixFirstPlayer,
+  selectExpansionArray,
+  selectFactionArray,
+  setBotCount,
+  setPlayerCount,
+} from '../../store'
 
 const SeatPlayersStep: SetupStepComponent = () => {
   const fixedFirstPlayer = useAppSelector(state => state.setup.fixedFirstPlayer)
   const playerCount = useAppSelector(state => state.setup.playerCount)
   const botCount = useAppSelector(state => state.setup.botCount)
-  const includeBots = useAppSelector(state => state.setup.includeBots)
   const factions = useAppSelector(selectFactionArray)
   const dispatch = useAppDispatch()
+
+  const includeBots = useAppSelector(state => state.setup.includeBots)
+  const expansionArray = useAppSelector(selectExpansionArray)
+  const botExpansions = ['clockwork', 'clockwork2']
+  const botExpansionsEnabled = botExpansions.some(code =>
+    expansionArray.some(expansion => expansion.code === code && expansion.enabled),
+  )
 
   return (
     <Section
@@ -26,7 +38,7 @@ const SeatPlayersStep: SetupStepComponent = () => {
         maxVal={factions.length}
         onChange={value => dispatch(setPlayerCount(value))}
       />
-      {includeBots ? (
+      {botExpansionsEnabled ? (
         <NumberSelector
           labelKey="label.botCount"
           value={botCount}

@@ -22,7 +22,6 @@ export default {
       true: `Elige al jugador inicial <i>(el Jugador 1 es el jugador inicial, el Jugador 2 es el segundo en jugar, etc.)</i>`,
     },
     fox: `Zorro`,
-    includeBotStep: `Incluye preparación de bots`,
     includeHirelings: `Incluye Secuaces`,
     landmarkCount: `Número de Lugares Míticos`,
     logoAlt: `Root`,

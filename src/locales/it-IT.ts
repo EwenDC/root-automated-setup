@@ -22,7 +22,6 @@ export default {
       true: `Primo giocatore fisso <i>(Giocatore 1 è il primo giocatore in ordine di turno, Giocatore 2 è il secondo, ecc.)</i>`,
     },
     fox: `Volpe`,
-    includeBotStep: `Includi preparazione dei bot`,
     includeHirelings: `Includi Combattenti`,
     landmarkCount: `Numero di Meraviglie`,
     logoAlt: `Root`,
