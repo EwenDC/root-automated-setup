@@ -172,7 +172,7 @@ export default {
     },
     selectBots: {
       subtitle: `Assign Bots`,
-      body: `Assign one of the below bots. The bots will be set up from left-to-right. You may freely select bots from the list.`,
+      body: `Assign one of the below bots. The bots will be set up from left-to-right.`,
     },
     placeScoreMarkers: {
       title: `Place Score Markers`,
