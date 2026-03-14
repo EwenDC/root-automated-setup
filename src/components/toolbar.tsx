@@ -7,7 +7,7 @@ import RedoIcon from '../images/icons/redo.svg?react'
 import ResetIcon from '../images/icons/reset.svg?react'
 import UndoIcon from '../images/icons/undo.svg?react'
 import { nextStep } from '../setupSteps'
-import { redoStep, resetStep, undoStep } from '../store'
+import { redoStep, resetStep, undoStep, selectBotArray } from '../store'
 import { SetupStep } from '../types'
 import Button from './button'
 import LocaleText from './localeText'
@@ -25,7 +25,17 @@ const Toolbar: React.FC = () => {
   const redoDisabled = useAppSelector(state => state.flow.futureSteps.length === 0)
   const resetDisabled = useAppSelector(state => state.flow.pastSteps.length === 0)
   const nextStepDisabled = useAppSelector(state => state.flow.currentStep >= SetupStep.setupEnd)
+
   const botCount = useAppSelector(state => state.setup.botCount)
+  const botPool = useAppSelector(state => state.flow.botPool)
+  const allBots = useAppSelector(selectBotArray)
+
+  const botParams = botPool
+    .map(code => {
+      const bot = allBots.find(b => b.code === code)
+      return bot?.clockroot || code
+    })
+    .join(',')
 
   const undoButtonRef = useRef<HTMLButtonElement>(null)
   const redoButtonRef = useRef<HTMLButtonElement>(null)
@@ -127,7 +137,21 @@ const Toolbar: React.FC = () => {
         >
           <LocaleText i18nKey="label.nextStep" />
         </Button>
-        {botCount > 0 ? <Section textKey={`label.bots`}></Section> : ''}
+        {botCount > 0 && botParams ? (
+          <Section
+            textKey="label.bots"
+            components={{
+              BotLink: (
+                <a
+                  className="clockroot"
+                  href={`https://clockroot.seiyria.com/?bots=${botParams}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              ),
+            }}
+          />
+        ) : null}
       </div>
     </footer>
   )

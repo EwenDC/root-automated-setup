@@ -6,7 +6,7 @@ export default {
       false: `Random clearing suit placement`,
       true: `Balanced clearing suit placement`,
     },
-    bots: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
+    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     captainSelection: `Captain Selection`,
     changeLanguage: `Change Language`,
     chooseCaptains: {

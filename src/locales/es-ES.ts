@@ -5,7 +5,7 @@ export default {
       false: `Colocación de claros aleatorios`,
       true: `Colocación de claros equilibrada`,
     },
-    bots: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
+    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     changeLanguage: `Cambiar idioma`,
     clearing: {
       fox: `claro de zorros`,

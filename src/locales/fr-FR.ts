@@ -5,7 +5,7 @@ export default {
       false: `Placement aléatoire des marqueurs de couleur de clairière`,
       true: `Placement équilibré des marqueurs de couleur de clairière`,
     },
-    bots: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
+    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     changeLanguage: `Changer de langue `,
     clearing: {
       fox: `Clairière renard`,

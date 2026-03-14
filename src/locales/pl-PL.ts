@@ -6,7 +6,7 @@ export default {
       false: `Losowe rozmieszczenie symboli polan`,
       true: `Zrównoważone rozmieszczenie symboli polan`,
     },
-    bots: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
+    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     changeLanguage: `Zmień język`,
     chooseVagabonds: {
       false: `Wszystkie postacie Włóczęgi do wyboru`,

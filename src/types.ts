@@ -96,6 +96,7 @@ export type BotCode = string
 
 export interface Bot extends GameComponent {
   baseFactionCode: FactionCode
+  clockroot?: string
 }
 
 /** An object representing a Landmark piece from the Root board game. */

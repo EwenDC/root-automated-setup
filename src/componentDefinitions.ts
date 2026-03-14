@@ -1028,18 +1028,22 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       mechanicalMarquise: {
         image: marquiseMeeple,
         baseFactionCode: 'marquise',
+        clockroot: 'MarquiseDC',
       },
       electricEyrie: {
         image: eyrieMeeple,
         baseFactionCode: 'eyrie',
+        clockroot: 'EyrieDC',
       },
       automatedAlliance: {
         image: allianceMeeple,
         baseFactionCode: 'alliance',
+        clockroot: 'WoodlandDC',
       },
       vagabot: {
         image: thiefMeeple,
         baseFactionCode: 'vagabond',
+        clockroot: 'VagabondDC',
       },
     },
   },
@@ -1050,18 +1054,22 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       cogwheelCorvids: {
         image: corvidMeeple,
         baseFactionCode: 'corvid',
+        clockroot: 'Corvid',
       },
       drillbitDuchy: {
         image: duchyMeeple,
         baseFactionCode: 'duchy',
+        clockroot: 'Duchy',
       },
       logicalLizards: {
         image: cultMeeple,
         baseFactionCode: 'cult',
+        clockroot: 'Lizard',
       },
       riverfolkRobots: {
         image: riverfolkMeeple,
         baseFactionCode: 'riverfolk',
+        clockroot: 'Riverfolk',
       },
     },
   },

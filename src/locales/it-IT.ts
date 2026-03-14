@@ -5,7 +5,7 @@ export default {
       false: `Piazzamento simboli radura casuale`,
       true: `Piazzamento simboli radura bilanciato`,
     },
-    bots: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
+    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     changeLanguage: `Cambia Lingua`,
     clearing: {
       fox: `Radura Volpe`,
