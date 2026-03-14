@@ -2,7 +2,9 @@ import type { SetupStepDefinition } from '..'
 
 import {
   addToBotPool,
+  clearExcludedFactions,
   removeCurrentBotFromPool,
+  resetBotPool,
   //pushStateToPast,
   selectBotArray,
   setCurrentIndex,
@@ -17,6 +19,13 @@ export const selectBots: SetupStepDefinition = {
 
     if (!state.setup.includeBots || state.setup.botCount === 0) {
       return SetupStep.chooseLandmarks
+    }
+
+    if (selectBotArray(state).length < 1) {
+      // Clear state of any potential stale data
+      if (state.setup.excludedFactions.length > 0) dispatch(clearExcludedFactions())
+      if (state.flow.botPool.length > 0) dispatch(resetBotPool())
+      return SetupStep.drawCards
     }
 
     if (state.flow.botPool.length >= state.setup.botCount) {
