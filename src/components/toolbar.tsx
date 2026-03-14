@@ -11,6 +11,7 @@ import { redoStep, resetStep, undoStep } from '../store'
 import { SetupStep } from '../types'
 import Button from './button'
 import LocaleText from './localeText'
+import Section from './section'
 
 type ButtonIndex = 0 | 1 | 2 | 3
 const MIN_BUTTON_INDEX = 0
@@ -24,6 +25,7 @@ const Toolbar: React.FC = () => {
   const redoDisabled = useAppSelector(state => state.flow.futureSteps.length === 0)
   const resetDisabled = useAppSelector(state => state.flow.pastSteps.length === 0)
   const nextStepDisabled = useAppSelector(state => state.flow.currentStep >= SetupStep.setupEnd)
+  const botCount = useAppSelector(state => state.setup.botCount)
 
   const undoButtonRef = useRef<HTMLButtonElement>(null)
   const redoButtonRef = useRef<HTMLButtonElement>(null)
@@ -125,6 +127,7 @@ const Toolbar: React.FC = () => {
         >
           <LocaleText i18nKey="label.nextStep" />
         </Button>
+        {botCount > 0 ? <Section textKey={`label.bots`}></Section> : ''}
       </div>
     </footer>
   )

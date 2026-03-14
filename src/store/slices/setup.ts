@@ -59,7 +59,7 @@ export const setupSlice = createSlice({
 
     return {
       playerCount: loadPersistedSetting<number>(SETTING_PLAYER_COUNT, 4),
-      botCount: loadPersistedSetting<number>(SETTING_BOT_COUNT, 1),
+      botCount: loadPersistedSetting<number>(SETTING_BOT_COUNT, 0),
       fixedFirstPlayer: loadPersistedSetting<boolean>(SETTING_FIXED_FIRST_PLAYER, false),
       playerOrder: [],
       includeBots: loadPersistedSetting<boolean>(SETTING_INCLUDE_BOTS, false),
@@ -95,7 +95,7 @@ export const setupSlice = createSlice({
     },
 
     setBotCount(state, { payload: botCount }: PayloadAction<number>) {
-      if (botCount >= 1) {
+      if (botCount >= 0) {
         state.botCount = botCount
         state.errorMessage = null
         savePersistedSetting(SETTING_BOT_COUNT, botCount)

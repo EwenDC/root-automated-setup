@@ -42,7 +42,7 @@ const SeatPlayersStep: SetupStepComponent = () => {
         <NumberSelector
           labelKey="label.botCount"
           value={botCount}
-          minVal={1}
+          minVal={0}
           maxVal={3}
           onChange={value => dispatch(setBotCount(value))}
         />

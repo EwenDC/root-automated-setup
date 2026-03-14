@@ -14,16 +14,9 @@ const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
 
   return (
     <Section
-      subtitleKey={`bot.${botCode}.name`}
-      textKey="setupStep.setUpBots.body"
-    >
-      <div>
-        <Section
-          titleKey="setupStep.setUpBots.instructionTitle"
-          textKey={`bot.${botCode}.setup`}
-        />
-      </div>
-    </Section>
+      titleKey={`bot.${botCode}.name`}
+      textKey={`bot.${botCode}.setup`}
+    />
   )
 }
 

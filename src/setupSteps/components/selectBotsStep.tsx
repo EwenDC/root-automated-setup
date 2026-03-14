@@ -29,7 +29,7 @@ const SelectBotsStep: SetupStepComponent = ({ flowSlice }) => {
           selector={() => () => availableBots}
           getLabelKey={bot => `bot.${bot.code}.name`}
           getSetupTitleKey={bot => `bot.${bot.code}.name`}
-          getSetupKey={() => 'label.selectThisBot'}
+          getSetupKey={() => ''}
         />
       </div>
     </Section>
