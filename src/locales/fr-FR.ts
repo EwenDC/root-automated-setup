@@ -5,6 +5,7 @@ export default {
       false: `Placement aléatoire des marqueurs de couleur de clairière`,
       true: `Placement équilibré des marqueurs de couleur de clairière`,
     },
+    bots: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
     changeLanguage: `Changer de langue `,
     clearing: {
       fox: `Clairière renard`,
@@ -38,6 +39,7 @@ export default {
       suitPriority: `<li>Prenez les 12 marqueurs de couleur et les 12 marqueurs de priorité, puis placez-en un de chaque dans chaque clairière, comme indiqué dans le schéma ci-dessous.</li>`,
     },
     playerCount: `Nombre de joueurs`,
+    botCount: `Bot Count`,
     priority: `Priorité {{count}}`,
     rabbit: `Lapin`,
     redo: `Refaire`,
@@ -104,7 +106,7 @@ export default {
     },
     setUpBots: {
       title: `Installation des robots`,
-      body: `Choisissez ensemble avec quels robots vous souhaitez jouer, en suivant leurs instructions de mise en place comme décrit dans les Lois de la Rootbotique.`,
+      instructionTitle: `Setup Instructions:`,
     },
     chooseLandmarks: {
       // Loi de Root v2023.08.03@A.5
@@ -135,6 +137,10 @@ export default {
       subtitle_useDraft: `Choix des factions`, // Loi de Root v2023.08.03@A.8.2
       body: `Assignez une des factions ci-dessous à chaque joueur selon la méthode de votre choix. Les factions seront mises en place de gauche à droite. Vous pouvez sélectionner librement des factions dans la liste pour consulter leurs informations.`, // Loi de Root v2023.08.03@5.1.1
       body_useDraft: `Joueur {{count}}, choisissez la faction que vous souhaitez jouer dans la liste de factions ci-dessous. Vous pouvez sélectionner librement des factions dans la liste pour consulter leurs informations, avant de confirmer votre sélection en appuyant sur « Étape suivante ».`,
+    },
+    selectBots: {
+      subtitle: `Assign Bots`,
+      body: `Assign one of the below bots. The bots will be set up from left-to-right. You may freely select bots from the list.`,
     },
     placeScoreMarkers: {
       title: `Placement des marqueurs de score`,
@@ -177,6 +183,42 @@ export default {
     underworld: `Extension Monde Souterrain`, // Loi de Root v2023.08.03@B.3
     underworldHirelings: `Pack Nomades Souterrains`, // Loi de Root v2023.08.03@B.10
     vagabondPack: `Pack Vagabond`, // Loi de Root v2023.08.03@B.9
+    clockwork: `Clockwork Expansion`,
+    clockwork2: `Clockwork Expansion 2`,
+  },
+  bot: {
+    automatedAlliance: {
+      name: `Automated Alliance`,
+      setup: `<ol><li>Form a supply of 10 warriors near you.</li><li>Collect your 3 bases and place them near you.</li><li>Collect your 10 sympathy tokens and place them near you.</li></ol>`,
+    },
+    mechanicalMarquise: {
+      name: `Mechanical Marquise`,
+      setup: `<ol><li>Form a supply of 25 warriors near you.</li><li>Place the keep token in a random corner clearing.</li><li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)</li><li>Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.</li><li>Collect your remaining 15 buildings and place them near you.</li></ol>`,
+    },
+    electricEyrie: {
+      name: `Electric Eyrie`,
+      setup: `<ol><li>Form a supply of 20 warriors near you.</li><li>Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing.</li><li>Tuck your 2 Loyal Vizier cards, showing their suit, into the rightmost decree column.</li><li>Collect your remaining 6 roost buildings and place them near you.</li></ol>`,
+    },
+    vagabot: {
+      name: `Vagabot`,
+      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Place any 1 item marked "R" beneath each ruin on the map.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
+    },
+    cogwheelCorvids: {
+      name: `Cogwheel Corvids`,
+      setup: `<ol><li>Form supplies of 15 warriors and 8 plot tokens face down.</li><li>Place 1 Warrior in the lowest priority clearing of each suit (3 total).</li></ol>`,
+    },
+    drillbitDuchy: {
+      name: `Drillbit Duchy`,
+      setup: `<ol><li>Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns.</li><li>Place the Burrow board near the map.</li><li>Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li>Place 3 citadels and 3 markets on your matching Building spaces.</li><li>Draw 2 cards and discard them. For each, place a crown on the topmost matching unswayed minister on your faction board.</li></ol>`,
+    },
+    logicalLizards: {
+      name: `Logical Lizards`,
+      setup: `<ol><li>Form a supply of 25 warriors.</li><li>Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot (preferably diagonally opposite.) Then place 1 warrior in each adjacent clearing.</li><li>Place the outcast marker on the Sanctify space of the Conspiracy track on your faction board.</li><li>Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li><li>Draw 3 cards and place them face up in your Lost Souls in the order drawn.</li></ol>`,
+    },
+    riverfolkRobots: {
+      name: `Riverfolk Robots`,
+      setup: `<ol><li>Form a supply of 15 warriors.</li><li>Place 1 warrior in each clearing on the river.</li><li>Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li>Place 1 warrior in your Payments box.</li><li>Draw 5 cards and add them to your Market.</li></ol>`,
+    },
   },
   faction: {
     alliance: {

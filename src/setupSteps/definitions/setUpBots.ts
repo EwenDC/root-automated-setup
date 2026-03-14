@@ -12,7 +12,6 @@ export const setUpBots: SetupStepDefinition = {
     const { flow } = getState()
 
     if (flow.currentIndex != null && flow.currentIndex + 1 < flow.botPool.length) {
-      // 2. Increment the index
       dispatch(setCurrentIndex(flow.currentIndex + 1))
       return SetupStep.setUpBots
     }

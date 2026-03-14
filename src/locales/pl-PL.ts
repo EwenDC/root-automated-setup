@@ -6,6 +6,7 @@ export default {
       false: `Losowe rozmieszczenie symboli polan`,
       true: `Zrównoważone rozmieszczenie symboli polan`,
     },
+    bots: `You can use clockroot.seiyria.com for assistance using the bots after setup.`,
     changeLanguage: `Zmień język`,
     chooseVagabonds: {
       false: `Wszystkie postacie Włóczęgi do wyboru`,
@@ -42,6 +43,7 @@ export default {
       suitPriority: `<li>Zbierz 12 znaczników symboli i 12 znaczników priorytetu, a następnie umieść po jednym z każdego w każdej polanie, jak pokazano na poniższym wykresie.</li>`,
     },
     playerCount: `Liczba Graczy`,
+    botCount: `Bot Count`,
     priority: `Priorytet {{count}}`,
     rabbit: `Królik`,
     redo: `Powtórz`,
@@ -122,7 +124,7 @@ export default {
     },
     setUpBots: {
       title: `Skonfiguruj Boty`,
-      body: `W grupie zdecydujcie, z którymi botami chcecie grać, postępując zgodnie z ich instrukcjami konfiguracji, opisanymi w Księdze Praw Rootbotyki.`,
+      instructionTitle: `Setup Instructions:`,
     },
     chooseLandmarks: {
       title: `Skonfiguruj Punkty Terenu`,
@@ -150,6 +152,10 @@ export default {
       subtitle_useDraft: `Wybierz Frakcję`,
       body: `Przydziel jedną z poniższych frakcji każdemu graczowi w dowolny sposób. Frakcje zostaną skonfigurowane od lewej do prawej. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki.`,
       body_useDraft: `Gracz {{count}}, wybierz frakcję, którą chcesz zagrać z poniższej puli frakcji. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki, zanim potwierdzisz swój wybór, naciskając „Następny Krok”.`,
+    },
+    selectBots: {
+      subtitle: `Assign Bots`,
+      body: `Assign one of the below bots. The bots will be set up from left-to-right. You may freely select bots from the list.`,
     },
     placeScoreMarkers: {
       title: `Rozmieść Znaczniki Punktacji`,
@@ -191,6 +197,42 @@ export default {
     underworld: `Rozszerzenie Podziemia`,
     underworldHirelings: `Paczka Zaciężnych Podziemia`,
     vagabondPack: `Paczka Włóczęgów`,
+    clockwork: `Clockwork Expansion`,
+    clockwork2: `Clockwork Expansion 2`,
+  },
+  bot: {
+    automatedAlliance: {
+      name: `Automated Alliance`,
+      setup: `<ol><li>Form a supply of 10 warriors near you.</li><li>Collect your 3 bases and place them near you.</li><li>Collect your 10 sympathy tokens and place them near you.</li></ol>`,
+    },
+    mechanicalMarquise: {
+      name: `Mechanical Marquise`,
+      setup: `<ol><li>Form a supply of 25 warriors near you.</li><li>Place the keep token in a random corner clearing.</li><li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)</li><li>Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.</li><li>Collect your remaining 15 buildings and place them near you.</li></ol>`,
+    },
+    electricEyrie: {
+      name: `Electric Eyrie`,
+      setup: `<ol><li>Form a supply of 20 warriors near you.</li><li>Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing.</li><li>Tuck your 2 Loyal Vizier cards, showing their suit, into the rightmost decree column.</li><li>Collect your remaining 6 roost buildings and place them near you.</li></ol>`,
+    },
+    vagabot: {
+      name: `Vagabot`,
+      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Place any 1 item marked "R" beneath each ruin on the map.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
+    },
+    cogwheelCorvids: {
+      name: `Cogwheel Corvids`,
+      setup: `<ol><li>Form supplies of 15 warriors and 8 plot tokens face down.</li><li>Place 1 Warrior in the lowest priority clearing of each suit (3 total).</li></ol>`,
+    },
+    drillbitDuchy: {
+      name: `Drillbit Duchy`,
+      setup: `<ol><li>Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns.</li><li>Place the Burrow board near the map.</li><li>Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li>Place 3 citadels and 3 markets on your matching Building spaces.</li><li>Draw 2 cards and discard them. For each, place a crown on the topmost matching unswayed minister on your faction board.</li></ol>`,
+    },
+    logicalLizards: {
+      name: `Logical Lizards`,
+      setup: `<ol><li>Form a supply of 25 warriors.</li><li>Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot (preferably diagonally opposite.) Then place 1 warrior in each adjacent clearing.</li><li>Place the outcast marker on the Sanctify space of the Conspiracy track on your faction board.</li><li>Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li><li>Draw 3 cards and place them face up in your Lost Souls in the order drawn.</li></ol>`,
+    },
+    riverfolkRobots: {
+      name: `Riverfolk Robots`,
+      setup: `<ol><li>Form a supply of 15 warriors.</li><li>Place 1 warrior in each clearing on the river.</li><li>Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li>Place 1 warrior in your Payments box.</li><li>Draw 5 cards and add them to your Market.</li></ol>`,
+    },
   },
   faction: {
     alliance: {
