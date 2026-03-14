@@ -8,13 +8,9 @@ import { selectBotArray } from '../../store'
 const SelectBotsStep: SetupStepComponent = ({ flowSlice }) => {
   const currentPickNumber = flowSlice.botPool.length + 1
 
-  // 1. Get dynamic array of available bots based on chosen expansions
   const allBots = useAppSelector(selectBotArray)
 
-  // 2. Filter out bots already in the pool
-  const availableBots = allBots.filter(
-    b => !flowSlice.botPool.some(poolBot => poolBot.code === b.code),
-  )
+  const availableBots = allBots.filter(b => !flowSlice.botPool.some(poolBot => poolBot === b.code))
 
   return (
     <Section

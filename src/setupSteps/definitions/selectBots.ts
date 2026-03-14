@@ -2,6 +2,7 @@ import type { SetupStepDefinition } from '..'
 
 import {
   addToBotPool,
+  removeCurrentBotFromPool,
   //pushStateToPast,
   selectBotArray,
   setCurrentIndex,
@@ -37,19 +38,16 @@ export const selectBots: SetupStepDefinition = {
       return null
     }
 
-    const availableBots = selectBotArray(state).filter(
-      b => !flow.botPool.some(poolBot => poolBot.code === b.code),
-    )
+    const selectedBot = selectBotArray(state)[flow.currentIndex]
 
-    const selectedBot = availableBots[flow.currentIndex]
-
-    if (!selectedBot || flow.botPool.some(b => b.code === selectedBot.code)) {
+    if (!selectedBot || flow.botPool.some(b => b === selectedBot.code)) {
       return null
     }
 
     //dispatch(pushStateToPast())
     dispatch(setCurrentIndex(null))
-    dispatch(addToBotPool({ code: selectedBot.code }))
+    dispatch(addToBotPool(selectedBot.code))
+    dispatch(removeCurrentBotFromPool())
 
     // Clear index so the UI requires a fresh click on the next screen
 

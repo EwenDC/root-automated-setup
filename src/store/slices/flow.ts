@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createStructuredSelector } from 'reselect'
 
 import type {
-  BotEntry,
+  BotCode,
   CaptainCode,
   Faction,
   FactionEntry,
@@ -28,7 +28,7 @@ import { setErrorMessage } from './setup'
  * and what steps should be skipped.
  */
 export interface FlowState {
-  botPool: BotEntry[]
+  botPool: BotCode[]
   factionPool: FactionEntry[]
   hirelingPool: HirelingEntry[]
   currentIndex: number | null
@@ -177,7 +177,7 @@ export const flowSlice = createSlice({
       }
     },
 
-    addToBotPool: (state, action: PayloadAction<BotEntry>) => {
+    addToBotPool: (state, action: PayloadAction<BotCode>) => {
       state.botPool.push(action.payload)
     },
 
@@ -194,7 +194,7 @@ export const flowSlice = createSlice({
       state.botPool = []
     },
 
-    setBotPool: (state, action: PayloadAction<BotEntry[]>) => {
+    setBotPool: (state, action: PayloadAction<BotCode[]>) => {
       state.botPool = action.payload
     },
 

@@ -309,13 +309,9 @@ export interface HirelingEntry {
   demoted: boolean
 }
 
-export interface BotEntry {
-  code: BotCode
-}
-
 /** An object representing a slice of history for the flow state. */
 export interface FlowSlice {
-  botPool: BotEntry[]
+  botPool: BotCode[]
   factionPool: FactionEntry[]
   hirelingPool: HirelingEntry[]
   index: number | null

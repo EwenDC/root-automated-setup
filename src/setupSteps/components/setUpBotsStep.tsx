@@ -10,7 +10,7 @@ const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
   if (!selectedBotEntry) return null
 
   // Extract the code directly from the current pool entry
-  const botCode = selectedBotEntry.code
+  const botCode = selectedBotEntry
 
   return (
     <Section
