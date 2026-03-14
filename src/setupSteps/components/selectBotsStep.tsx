@@ -1,5 +1,4 @@
 import type { SetupStepComponent } from '..'
-//import type { RootState } from '../../store'
 
 import ComponentSetupSelect from '../../components/componentSetupSelect'
 import Section from '../../components/section'
@@ -9,14 +8,13 @@ import { selectBotArray } from '../../store'
 const SelectBotsStep: SetupStepComponent = ({ flowSlice }) => {
   const currentPickNumber = flowSlice.botPool.length + 1
 
-  // 1. Get flat array of available bots
+  // 1. Get dynamic array of available bots based on chosen expansions
   const allBots = useAppSelector(selectBotArray)
+
+  // 2. Filter out bots already in the pool
   const availableBots = allBots.filter(
     b => !flowSlice.botPool.some(poolBot => poolBot.code === b.code),
   )
-
-  // 2. Calculate how many blocks of 4 we need
-  const chunkCount = Math.ceil(availableBots.length / 4)
 
   return (
     <Section
@@ -26,23 +24,13 @@ const SelectBotsStep: SetupStepComponent = ({ flowSlice }) => {
       translationOptions={{ count: currentPickNumber }}
     >
       <div>
-        {Array.from({ length: chunkCount }).map((_, i) => {
-          // 3. Calculate the starting global index for this specific block
-          const startIndex = i * 4
-          const endIndex = startIndex + 4
-
-          return (
-            <ComponentSetupSelect
-              key={startIndex}
-              flowSlice={flowSlice}
-              selector={() => () => availableBots.slice(startIndex, endIndex)}
-              getLabelKey={bot => `bot.${bot.code}.name`}
-              getSetupTitleKey={bot => `bot.${bot.code}.name`}
-              getSetupKey={() => 'label.selectThisBot'}
-              indexOffset={startIndex}
-            />
-          )
-        })}
+        <ComponentSetupSelect
+          flowSlice={flowSlice}
+          selector={() => () => availableBots}
+          getLabelKey={bot => `bot.${bot.code}.name`}
+          getSetupTitleKey={bot => `bot.${bot.code}.name`}
+          getSetupKey={() => 'label.selectThisBot'}
+        />
       </div>
     </Section>
   )

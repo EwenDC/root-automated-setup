@@ -298,6 +298,7 @@ export const flowSlice = createSlice({
       })
       // Clear internal variables when restarting setup
       .addCase(resetState, state => {
+        state.botPool = []
         state.factionPool = []
         state.hirelingPool = []
         state.currentIndex = null

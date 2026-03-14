@@ -1028,42 +1028,18 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       mechanicalMarquise: {
         image: marquiseMeeple,
         baseFactionCode: 'marquise',
-        setupSteps: [
-          'Form a supply of 25 warriors near you.',
-          'Place the keep token in a random corner clearing.',
-          'Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)',
-          'Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.',
-          'Collect your remaining 15 buildings and place them near you.',
-        ],
       },
       electricEyrie: {
         image: eyrieMeeple,
         baseFactionCode: 'eyrie',
-        setupSteps: [
-          'Form a supply of 20 warriors near you.',
-          'Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing.',
-          'Tuck your 2 Loyal Vizier cards, showing their suit, into the rightmost decree column.',
-          'Collect your remaining 6 roost buildings and place them near you.',
-        ],
       },
       automatedAlliance: {
         image: allianceMeeple,
         baseFactionCode: 'alliance',
-        setupSteps: [
-          'Form a supply of 10 warriors near you.',
-          'Collect your 3 bases and place them near you.',
-          'Collect your 10 sympathy tokens and place them near you.',
-        ],
       },
       vagabot: {
         image: thiefMeeple,
         baseFactionCode: 'vagabond',
-        setupSteps: [
-          'Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.',
-          'Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.',
-          'Place any 1 item marked "R" beneath each ruin on the map.',
-          'Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)',
-        ],
       },
     },
   },
@@ -1074,43 +1050,18 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       cogwheelCorvids: {
         image: corvidMeeple,
         baseFactionCode: 'corvid',
-        setupSteps: [
-          'Form supplies of 15 warriors and 8 plot tokens face down.',
-          'Place 1 Warrior in the lowest priority clearing of each suit (3 total).',
-        ],
       },
       drillbitDuchy: {
         image: duchyMeeple,
         baseFactionCode: 'duchy',
-        setupSteps: [
-          'Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns. ',
-          'Place the Burrow board near the map.',
-          'Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.',
-          'Place 3 citadels and 3 markets on your matching Building spaces.',
-          'Draw 2 cards and discard them. For each, place a crown on the topmost matching unswayed minister on your faction board.',
-        ],
       },
       logicalLizards: {
         image: cultMeeple,
         baseFactionCode: 'cult',
-        setupSteps: [
-          'Form a supply of 25 warriors.',
-          'Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot (preferably diagonally opposite.) Then place 1 warrior in each adjacent clearing.',
-          'Place the outcast marker on the Sanctify space of the Conspiracy track on your faction board.',
-          'Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.',
-          'Draw 3 cards and place them face up in your Lost Souls in the order drawn.',
-        ],
       },
       riverfolkRobots: {
         image: riverfolkMeeple,
         baseFactionCode: 'riverfolk',
-        setupSteps: [
-          'Form a supply of 15 warriors..',
-          'Place 1 warrior in each clearing on the river.',
-          'Place 9 trade posts on the matching spaces of your Trade Posts tracks.',
-          'Place 1 warrior in your Payments box.',
-          'Draw 5 cards and add them to your Market.',
-        ],
       },
     },
   },
