@@ -19,6 +19,8 @@ export default {
     },
     closeMessage: `Zamknij wiadomość`,
     complexity: `Złożoność`,
+    copied: `URL Copied!`,
+    failCopy: `Failed to Copy`,
     crafting: `Zdolność Przekuwania`,
     disableAll: `Wyłącz Wszystkie`,
     enableAll: `Włącz Wszystkie`,

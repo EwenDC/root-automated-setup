@@ -43,6 +43,7 @@ export interface SetupState {
   excludedFactions: FactionCode[]
   limitVagabonds: boolean
   limitCaptains: boolean
+  expansion: string | null
 }
 
 export const setupSlice = createSlice({
@@ -78,6 +79,7 @@ export const setupSlice = createSlice({
       excludedFactions: [],
       limitVagabonds: false,
       limitCaptains: false,
+      expansion: null,
     }
   },
 
@@ -138,6 +140,11 @@ export const setupSlice = createSlice({
 
     setErrorMessage(state, { payload: errorMessage }: PayloadAction<string | null>) {
       state.errorMessage = errorMessage
+    },
+
+    setExpansions(state, { payload }: PayloadAction<CodeObject>) {
+      const { code: expansionCode } = payload
+      state.expansion = expansionCode
     },
 
     setMap(state, { payload }: PayloadAction<CodeObject>) {

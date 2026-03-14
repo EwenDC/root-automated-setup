@@ -14,6 +14,8 @@ export default {
     },
     closeMessage: `Chiudi Messaggio`,
     complexity: `Complessità`,
+    copied: `URL Copied!`,
+    failCopy: `Failed to Copy`,
     crafting: `Produttività`,
     disableAll: `Disattiva tutto`,
     enableAll: `Attiva tutto`,

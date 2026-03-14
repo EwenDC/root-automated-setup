@@ -25,6 +25,8 @@ export default {
     },
     closeMessage: `Close Message`,
     complexity: `Complexity`,
+    copied: `URL Copied!`,
+    failCopy: `Failed to Copy`,
     crafting: `Crafting Ability`,
     disableAll: `Disable All`,
     enableAll: `Enable All`,
