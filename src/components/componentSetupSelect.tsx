@@ -65,7 +65,7 @@ const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
             />
             <img
               src={component.image}
-              alt=""
+              alt="" // Not required as the input already has a label
               aria-hidden="true"
             />
             <div className="name">
