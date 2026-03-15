@@ -11,22 +11,30 @@
   "cSpell.language": "en-US",
   "cSpell.words": [
     "chokepoints",
+    "clockroot",
     "Corvid",
     "Corvids",
     "Deepwood",
+    "Drillbit",
     "Ewen",
+    "floodable",
     "Foxburrow",
     "Leder",
     "Lilypad",
+    "meeple",
+    "meeples",
     "Mousehold",
     "Rabbittown",
     "Riverfolk",
     "Ronin",
     "Rootbotics",
+    "seiyria",
     "Togglable",
     "unexhausted",
+    "Vagabot",
     "waystation",
     "Waystations",
     "Woodfolk"
-  ]
+  ],
+  "i18n-ally.localesPaths": ["src/locales", "src/images/languages"]
 }

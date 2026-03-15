@@ -8,7 +8,14 @@ import RedoIcon from '../images/icons/redo.svg?react'
 import ResetIcon from '../images/icons/reset.svg?react'
 import UndoIcon from '../images/icons/undo.svg?react'
 import { nextStep } from '../setupSteps'
-import { redoStep, resetStep, undoStep, selectBotArray, selectExpansionArray } from '../store'
+import {
+  redoStep,
+  resetStep,
+  selectBotArray,
+  selectExpansionArray,
+  selectFactionArray,
+  undoStep,
+} from '../store'
 import { SetupStep } from '../types'
 import Button from './button'
 import LocaleText from './localeText'
@@ -34,8 +41,8 @@ const Toolbar: React.FC = () => {
   const allBots = useAppSelector(selectBotArray)
 
   const setupState = useAppSelector(state => state.setup)
-  const flowState = useAppSelector(state => state.flow)
   const expansions = useAppSelector(selectExpansionArray)
+  const factions = useAppSelector(selectFactionArray)
 
   const botParams = botPool
     .map(code => {
@@ -58,42 +65,57 @@ const Toolbar: React.FC = () => {
     }
   }
 
-  const handleCopyUrl = () => {
-    const params = new URLSearchParams()
+  const handleCopyUrl = async () => {
+    const urlParams = new URLSearchParams()
 
-    if (setupState.playerCount) params.set('playerCount', setupState.playerCount.toString())
-    if (setupState.botCount) params.set('botCount', setupState.botCount.toString())
-    if (setupState.map) params.set('map', setupState.map)
-    if (setupState.deck) params.set('deck', setupState.deck)
+    // -- NUMBERS -- //
+    if (setupState.playerCount !== 4)
+      urlParams.set('playerCount', setupState.playerCount.toString())
+    if (setupState.botCount > 0) urlParams.set('botCount', setupState.botCount.toString())
+    if (setupState.landmarkCount > 0)
+      urlParams.set('landmarkCount', setupState.landmarkCount.toString())
+    if (setupState.hirelingCount > 0)
+      urlParams.set('hirelingCount', setupState.hirelingCount.toString())
 
-    const enabledExpansions = expansions.filter(ex => ex.enabled).map(ex => ex.code)
+    // -- BOOLEANS -- //
+    if (setupState.fixedFirstPlayer) urlParams.set('fixedFirstPlayer', 'true')
+    if (setupState.balancedSuits) urlParams.set('balancedSuits', 'true')
+    if (setupState.limitCaptains) urlParams.set('limitCaptains', 'true')
+    if (setupState.limitVagabonds) urlParams.set('limitVagabonds', 'true')
+
+    // -- STRINGS -- //
+    if (setupState.map) urlParams.set('map', setupState.map)
+    if (setupState.deck) urlParams.set('deck', setupState.deck)
+
+    // -- ARRAYS / CODES -- //
+    const enabledExpansions = expansions
+      .filter(e => e.enabled && e.code !== 'root')
+      .map(e => e.code)
+
     if (enabledExpansions.length > 0) {
-      params.set('expansions', enabledExpansions.join(','))
+      urlParams.set('expansions', enabledExpansions.join(','))
     }
 
-    if (flowState.factionPool.length > 0) {
-      params.set('factions', flowState.factionPool.map(f => f.code).join(','))
-    }
-    if (flowState.botPool.length > 0) {
-      params.set('botsSelected', flowState.botPool.join(','))
-    }
-    if (flowState.hirelingPool.length > 0) {
-      params.set('hirelings', flowState.hirelingPool.map(h => h.code).join(','))
+    const enabledFactions = factions.filter(f => f.enabled).map(f => f.code)
+
+    if (enabledFactions.length > 0) {
+      urlParams.set('factions', enabledFactions.join(','))
     }
 
-    const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`
+    const queryString = urlParams.toString()
+    const url = queryString
+      ? `${window.location.origin}${window.location.pathname}?${queryString}`
+      : `${window.location.origin}${window.location.pathname}`
 
-    void navigator.clipboard
-      .writeText(shareUrl)
-      .then(() => {
-        setCopied(true)
-        setTimeout(() => {
-          setCopied(false)
-        }, 3000)
-      })
-      .catch((err: unknown) => {
-        console.error('Failed to copy to clipboard:', err)
-      })
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => {
+        setCopied(false)
+      }, 2000)
+    } catch (err) {
+      console.error('Failed to copy URL to clipboard', err)
+    }
   }
 
   const onKeyDownHandler =
@@ -174,7 +196,7 @@ const Toolbar: React.FC = () => {
           className="left"
           ref={copyButtonRef}
           onClick={() => {
-            handleCopyUrl()
+            void handleCopyUrl()
             setFocusedIndex(2)
           }}
           title={copied ? t('label.copied') : t('label.failCopy')}

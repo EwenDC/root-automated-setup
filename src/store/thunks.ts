@@ -2,7 +2,15 @@ import type { UnknownAction } from '@reduxjs/toolkit'
 
 import type { Togglable, WithCode } from '../types'
 
-import { type AppThunk, type RootState, selectExpansionArray, toggleExpansion } from '../store'
+import { HIRELING_SETUP_COUNT } from '../constants'
+import {
+  type AppThunk,
+  type RootState,
+  selectExpansionArray,
+  selectFactionArray,
+  toggleExpansion,
+  toggleFaction,
+} from '../store'
 import { setCurrentPlayerIndex } from './slices/flow'
 import {
   balanceMapSuits,
@@ -11,6 +19,8 @@ import {
   setDeck,
   setHirelingCount,
   setLandmarkCount,
+  setLimitCaptains,
+  setLimitVagabonds,
   setMap,
   setPlayerCount,
 } from './slices/setup'
@@ -138,7 +148,33 @@ export const hydrateSetupFromUrlParams = (): AppThunk => dispatch => {
     paramsChanged = true
   }
 
-  // -- STRINGS (Codes) -- //
+  // If someone passes printedSuits, it's the inverse of balancedSuits
+  if (urlParams.has('printedSuits')) {
+    dispatch(balanceMapSuits(urlParams.get('printedSuits') === 'false'))
+    urlParams.delete('printedSuits')
+    paramsChanged = true
+  }
+
+  if (urlParams.has('limitCaptains')) {
+    dispatch(setLimitCaptains(urlParams.get('limitCaptains') === 'true'))
+    urlParams.delete('limitCaptains')
+    paramsChanged = true
+  }
+
+  if (urlParams.has('limitVagabonds')) {
+    dispatch(setLimitVagabonds(urlParams.get('limitVagabonds') === 'true'))
+    urlParams.delete('limitVagabonds')
+    paramsChanged = true
+  }
+
+  if (urlParams.has('includeHirelings')) {
+    const includeHirelings = urlParams.get('includeHirelings') === 'true'
+    dispatch(setHirelingCount(includeHirelings ? HIRELING_SETUP_COUNT : 0))
+    urlParams.delete('includeHirelings')
+    paramsChanged = true
+  }
+
+  // -- STRINGS / ARRAYS (Codes) -- //
 
   if (urlParams.has('expansions')) {
     const expansionParam = urlParams.get('expansions')
@@ -167,6 +203,22 @@ export const hydrateSetupFromUrlParams = (): AppThunk => dispatch => {
     const deckParam = urlParams.get('deck')
     if (deckParam) dispatch(setDeck({ code: deckParam }))
     urlParams.delete('deck')
+    paramsChanged = true
+  }
+
+  if (urlParams.has('factions')) {
+    const factionsParam = urlParams.get('factions')
+    if (factionsParam) {
+      const requestedFactions = factionsParam.split(',')
+      dispatch(
+        massComponentToggle(
+          selectFactionArray,
+          faction => requestedFactions.includes(faction.code),
+          toggleFaction,
+        ),
+      )
+    }
+    urlParams.delete('factions')
     paramsChanged = true
   }
 
