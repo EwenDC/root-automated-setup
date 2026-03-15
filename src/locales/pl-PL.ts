@@ -30,6 +30,7 @@ export default {
       true: `Ustalony pierwszy gracz <i>(Gracz 1 to pierwszy gracz w kolejności tur, Gracz 2 to drugi, itd.)</i>`,
     },
     fox: `Lis`,
+    hirelingCount: `Hireling Count: `,
     includeHirelings: `Uwzględnij Zaciężnych`,
     landmarkCount: `Liczba punktów terenu`,
     logoAlt: `Root`,

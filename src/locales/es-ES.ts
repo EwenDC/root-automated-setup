@@ -24,6 +24,7 @@ export default {
       false: `Sortea al jugador inicial <i>(el Jugador 1 es la persona que usa esta aplicación, el Jugador 2 es la persona que se sienta a su izquierda, etc.)</i>`,
       true: `Elige al jugador inicial <i>(el Jugador 1 es el jugador inicial, el Jugador 2 es el segundo en jugar, etc.)</i>`,
     },
+    hirelingCount: `Hireling Count: `,
     fox: `Zorro`,
     includeHirelings: `Incluye Secuaces`,
     landmarkCount: `Número de Lugares Míticos`,

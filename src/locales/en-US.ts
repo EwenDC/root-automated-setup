@@ -36,6 +36,7 @@ export default {
       true: `Fix first player <i>(Player 1 is the first player in turn order, Player 2 is the second, etc.)</i>`,
     },
     fox: `Fox`,
+    hirelingCount: `Hireling Count `,
     includeHirelings: `Include Hirelings`,
     landmarkCount: `Landmark Count`,
     logoAlt: `Root`,
