@@ -16,7 +16,6 @@ interface ComponentSelectProps<T> {
   getSetupTitleKey: (component: T) => string
   getSetupKey: (component: T) => string
   getTranslationOptions?: (component: T) => TOptions
-  indexOffset?: number
 }
 
 const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
@@ -26,7 +25,6 @@ const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
   getSetupTitleKey,
   getSetupKey,
   getTranslationOptions,
-  indexOffset = 0,
 }: ComponentSelectProps<T>) => {
   const playerNumber = usePlayerNumber(flowSlice)
   const components = useAppSelector(selector(flowSlice))
@@ -35,10 +33,7 @@ const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
   const dispatch = useAppDispatch()
   const radioName = useId()
 
-  const localIndex = flowSlice.index != null ? flowSlice.index - indexOffset : -1
-  const setupComponent =
-    localIndex >= 0 && localIndex < components.length ? components[localIndex] : undefined
-
+  const setupComponent = flowSlice.index != null ? components[flowSlice.index] : undefined
   const setupComponentTOptions = setupComponent && {
     ...getTranslationOptions?.(setupComponent),
     count: playerNumber,
@@ -59,9 +54,9 @@ const ComponentSetupSelect = (<T extends CodeObject & GameComponent>({
             <input
               type="radio"
               name={radioName}
-              checked={index + indexOffset === flowSlice.index}
+              checked={index === flowSlice.index}
               disabled={!stepActive}
-              onChange={() => dispatch(setCurrentIndex(index + indexOffset))}
+              onChange={() => dispatch(setCurrentIndex(index))}
             />
             <img
               src={component.image}
