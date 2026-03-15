@@ -70,6 +70,7 @@ export default {
       rabbit: `Rabbit suit marker`,
     },
     useDraft: `Use draft faction selection`,
+    useHouserules: `<b>ADVANCED:</b> <i>Use Houserules. This disables much of the logic that helps in setup.</i>`,
     undo: `Undo`,
     wealth: `Card Wealth`,
   },

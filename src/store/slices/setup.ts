@@ -16,6 +16,7 @@ import {
   SETTING_INCLUDE_BOTS,
   SETTING_LANDMARK_COUNT,
   SETTING_PLAYER_COUNT,
+  SETTING_USE_HOUSERULES,
 } from '../../constants'
 import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
 import { resetState } from '../actions'
@@ -44,6 +45,7 @@ export interface SetupState {
   limitVagabonds: boolean
   limitCaptains: boolean
   expansion: string | null
+  useHouserules: boolean
 }
 
 export const setupSlice = createSlice({
@@ -80,6 +82,7 @@ export const setupSlice = createSlice({
       limitVagabonds: false,
       limitCaptains: false,
       expansion: null,
+      useHouserules: loadPersistedSetting<boolean>(SETTING_USE_HOUSERULES, false),
     }
   },
 
@@ -138,6 +141,12 @@ export const setupSlice = createSlice({
       savePersistedSetting(SETTING_INCLUDE_BOTS, includeBots)
     },
 
+    setUseHouserules(state, { payload: useHouserules }: PayloadAction<boolean>) {
+      state.useHouserules = useHouserules
+      state.errorMessage = null
+      savePersistedSetting(SETTING_USE_HOUSERULES, useHouserules)
+    },
+
     setErrorMessage(state, { payload: errorMessage }: PayloadAction<string | null>) {
       state.errorMessage = errorMessage
     },
@@ -167,15 +176,14 @@ export const setupSlice = createSlice({
       state.deck = deckCode
     },
 
-    setLandmarkCount(state, { payload: landmarkCount }: PayloadAction<number>) {
-      if (landmarkCount >= 0 && landmarkCount <= MAX_LANDMARKS) {
-        state.landmarkCount = landmarkCount
+    setLandmarkCount(state, landmarkCount: PayloadAction<number>) {
+      if (state.useHouserules) {
+        state.landmarkCount = Math.max(0, landmarkCount.payload)
         state.errorMessage = null
         savePersistedSetting(SETTING_LANDMARK_COUNT, landmarkCount)
       } else {
-        console.warn(
-          `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and ${MAX_LANDMARKS})`,
-        )
+        console.warn(`Invalid payload for setLandmarkCount action.`)
+        state.landmarkCount = Math.max(0, Math.min(landmarkCount.payload, MAX_LANDMARKS))
       }
     },
 
@@ -264,6 +272,7 @@ export const {
   setMap,
   setPlayerCount,
   setBotCount,
+  setUseHouserules,
 } = setupSlice.actions
 
 export const { selectTwoPlayer, selectSetupClearings, selectSetupDeckCode, selectSetupMapCode } =

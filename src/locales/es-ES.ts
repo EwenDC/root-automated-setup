@@ -48,6 +48,7 @@ export default {
     specialAction: `Acción especial`,
     startingItems: `Objetos iniciales`,
     useDraft: `Usa la selección de facciones en modo draft`,
+    useHouserules: `ADVANCED: Disable logic to use houserules`,
     undo: `Deshacer`,
     wealth: `Abundancia de Cartas`,
   },

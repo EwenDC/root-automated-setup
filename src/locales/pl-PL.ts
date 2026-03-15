@@ -60,6 +60,7 @@ export default {
       rabbit: `Królicza polana`,
     },
     useDraft: `Użyj wyboru frakcji przez draft`,
+    useHouserules: `ADVANCED: Disable logic to use houserules`,
     undo: `Cofnij`,
     wealth: `Zasobność w karty`,
   },

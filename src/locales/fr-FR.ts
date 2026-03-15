@@ -49,6 +49,7 @@ export default {
     specialAction: `Action spéciale `,
     startingItems: `Objets de départ`,
     useDraft: `Drafter les factions`,
+    useHouserules: `ADVANCED: Disable logic to use houserules`,
     undo: `Annuler`,
     wealth: `Main de cartes`,
   },

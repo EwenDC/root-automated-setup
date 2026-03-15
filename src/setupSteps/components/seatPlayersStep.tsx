@@ -1,6 +1,7 @@
 import type { SetupStepComponent } from '..'
 
 import componentDefinitions from '../../componentDefinitions'
+import Checkbox from '../../components/checkbox'
 import NumberSelector from '../../components/numberSelector'
 import Radiogroup from '../../components/radiogroup'
 import Section from '../../components/section'
@@ -11,12 +12,14 @@ import {
   selectFactionArray,
   setBotCount,
   setPlayerCount,
+  setUseHouserules,
 } from '../../store'
 
 const SeatPlayersStep: SetupStepComponent = () => {
   const fixedFirstPlayer = useAppSelector(state => state.setup.fixedFirstPlayer)
   const playerCount = useAppSelector(state => state.setup.playerCount)
   const botCount = useAppSelector(state => state.setup.botCount)
+  const useHouserules = useAppSelector(state => state.setup.useHouserules)
   const factions = useAppSelector(selectFactionArray)
   const dispatch = useAppDispatch()
 
@@ -71,6 +74,12 @@ const SeatPlayersStep: SetupStepComponent = () => {
         trueLabelKey="label.fixedFirstPlayer.true"
         defaultValue={fixedFirstPlayer}
         onChange={value => dispatch(fixFirstPlayer(value))}
+      />
+
+      <Checkbox
+        labelKey="label.useHouserules"
+        defaultValue={useHouserules}
+        onChange={checked => dispatch(setUseHouserules(checked))}
       />
     </Section>
   )

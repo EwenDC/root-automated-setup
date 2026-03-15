@@ -48,6 +48,7 @@ export default {
     specialAction: `Azione Speciale`,
     startingItems: `Oggetti di partenza`,
     useDraft: `Usa il draft per scegliere le fazioni`,
+    useHouserules: `ADVANCED: Disable logic to use houserules`,
     undo: `Annulla`,
     wealth: `Utilizzo Carte`,
   },
