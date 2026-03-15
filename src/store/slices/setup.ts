@@ -187,15 +187,24 @@ export const setupSlice = createSlice({
       }
     },
 
-    setHirelingCount(state, { payload: hirelingCount }: PayloadAction<number>) {
-      if (hirelingCount === 0 || hirelingCount === HIRELING_SETUP_COUNT) {
-        state.hirelingCount = hirelingCount
+    setHirelingCount(state, action: PayloadAction<number>) {
+      const count = action.payload
+
+      if (state.useHouserules) {
+        state.hirelingCount = Math.max(0, count)
         state.errorMessage = null
-        savePersistedSetting(SETTING_HIRELING_COUNT, hirelingCount)
+        savePersistedSetting(SETTING_HIRELING_COUNT, count)
       } else {
-        console.warn(
-          `Invalid payload for setHirelingCount action: ${hirelingCount} (Payload must either be 0 or ${HIRELING_SETUP_COUNT})`,
-        )
+        if (count === 0 || count === HIRELING_SETUP_COUNT) {
+          state.hirelingCount = count
+          state.errorMessage = null
+          savePersistedSetting(SETTING_HIRELING_COUNT, count)
+        } else {
+          console.warn(
+            `Invalid payload for setHirelingCount action: ${count} (Payload must either be 0 or ${HIRELING_SETUP_COUNT})`,
+          )
+          state.hirelingCount = count > 0 ? HIRELING_SETUP_COUNT : 0
+        }
       }
     },
 
