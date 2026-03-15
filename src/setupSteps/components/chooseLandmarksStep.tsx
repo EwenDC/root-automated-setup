@@ -9,7 +9,7 @@ import { selectLandmarkArray, selectSetupMap, setLandmarkCount, toggleLandmark }
 
 const ChooseLandmarksStep: SetupStepComponent = () => {
   const landmarkCount = useAppSelector(state => state.setup.landmarkCount)
-  const setupMap = useAppSelector(selectSetupMap)
+  const setupMap = useAppSelector(selectSetupMap) as { useLandmark?: boolean } | null
   const useHouseRules = useAppSelector(state => state.setup.useHouserules)
   const landmarks = useAppSelector(selectLandmarkArray)
   const dispatch = useAppDispatch()

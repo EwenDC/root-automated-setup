@@ -46,6 +46,7 @@ export interface SetupState {
   limitCaptains: boolean
   expansion: string | null
   useHouserules: boolean
+  placedLandmarks: Record<string, number>
 }
 
 export const setupSlice = createSlice({
@@ -83,6 +84,7 @@ export const setupSlice = createSlice({
       limitCaptains: false,
       expansion: null,
       useHouserules: loadPersistedSetting<boolean>(SETTING_USE_HOUSERULES, false),
+      placedLandmarks: {},
     }
   },
 
@@ -225,6 +227,11 @@ export const setupSlice = createSlice({
       state.limitCaptains = limitCaptains
       state.errorMessage = null
     },
+
+    placeLandmark(state, action: PayloadAction<{ code: string; clearingIndex: number }>) {
+      state.placedLandmarks[action.payload.code] = action.payload.clearingIndex
+      state.errorMessage = null
+    },
   },
 
   extraReducers(builder) {
@@ -234,6 +241,7 @@ export const setupSlice = createSlice({
         state.map = null
         state.clearings = []
         state.deck = null
+        state.placedLandmarks = {}
         state.errorMessage = null
       })
       // Clear internal variables when restarting setup
@@ -246,6 +254,7 @@ export const setupSlice = createSlice({
         state.excludedFactions = []
         state.limitVagabonds = false
         state.limitCaptains = false
+        state.placedLandmarks = {}
       })
       // This allows us to always reset the displayed error if the user makes a separate input
       .addDefaultCase(state => {
@@ -268,6 +277,7 @@ export const {
   balanceMapSuits,
   clearExcludedFactions,
   fixFirstPlayer,
+  placeLandmark,
   pushExcludedFactions,
   setClearings,
   setDeck,

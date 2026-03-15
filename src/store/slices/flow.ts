@@ -109,6 +109,7 @@ export const flowSlice = createSlice({
         vagabondSetUp: false,
         pastSteps: [],
         futureSteps: [],
+        placedLandmarks: {},
       }
       Object.assign(state, initialState)
     },
