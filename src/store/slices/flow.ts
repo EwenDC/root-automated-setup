@@ -73,6 +73,7 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.selectedBots = slice.selectedBots
   state.placedLandmarks = slice.placedLandmarks
   state.placedHirelings = slice.placedHirelings
+  state.botPool = slice.botPool
 }
 
 export const flowSlice = createSlice({
