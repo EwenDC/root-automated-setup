@@ -18,7 +18,9 @@ const SetUpMapStep: SetupStepComponent = () => {
 
   let markerKey = null
   if (setupMap.clearings.length > STANDARD_MAP_SIZE) {
-    markerKey = setupMap.clearings.some(clearing => clearing.flooded) ? 'floodSuit' : 'landmarkSuit'
+    markerKey = setupMap.clearings.some(clearing => 'flooded' in clearing && clearing.flooded)
+      ? 'floodSuit'
+      : 'landmarkSuit'
   } else if (!setupMap.fixedSuits || !setupMap.printedSuits) {
     markerKey = includeBots ? 'suitPriority' : 'suit'
   } else if (includeBots) {

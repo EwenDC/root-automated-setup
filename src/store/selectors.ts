@@ -82,15 +82,15 @@ export const selectSetupMap = createSelector(
     return (
       setupMap && {
         ...setupMap,
-        clearings: setupMap.clearings.map(({ x, y }, index) => {
-          const setupClearing = setupClearings[index]!
+        clearings: setupMap.clearings.map((baseClearing, index) => {
+          const setupClearing = setupClearings[index]
+
           return {
-            x,
-            y,
+            ...baseClearing,
             ...setupClearing,
-            suitLandmark:
-              setupClearing.suitLandmark &&
-              landmarkArray.find(({ code }) => code === setupClearing.suitLandmark),
+            suitLandmark: setupClearing?.suitLandmark
+              ? landmarkArray.find(({ code }) => code === setupClearing.suitLandmark)
+              : undefined,
           }
         }),
         landmark: setupMap.landmark && {

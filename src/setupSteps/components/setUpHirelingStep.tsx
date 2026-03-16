@@ -38,10 +38,11 @@ const SetUpHirelingStep: SetupStepComponent = ({ flowSlice }) => {
 
   const validClearings: number[] = []
   if (hirelingDef) {
-    setupState.clearings.forEach((clearingData, i) => {
+    mapData.clearings.forEach((baseClearing, i) => {
+      const dynamicClearingState = setupState.clearings[i] ?? {}
       const mergedClearing = {
-        ...(mapData.clearings[i] ?? {}),
-        ...clearingData,
+        ...baseClearing,
+        ...dynamicClearingState,
       } as unknown as SetupClearing
 
       const passesTagRules = validateHirelingPlacement(i, mergedClearing, hirelingDef, [])

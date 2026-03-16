@@ -361,7 +361,7 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
           {
             x: 110,
             y: 115,
-            adjacentClearings: [1, 4],
+            adjacentClearings: [1, 5],
             mapEdge: true,
             suit: 'rabbit',
             buildingSlots: 1,
@@ -404,7 +404,7 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
           {
             x: 403,
             y: 478,
-            adjacentClearings: [0, 8],
+            adjacentClearings: [0, 9],
             suit: 'fox',
             buildingSlots: 3,
             ruin: true,
