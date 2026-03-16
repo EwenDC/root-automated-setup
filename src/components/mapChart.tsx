@@ -52,7 +52,6 @@ const MapChart: React.FC<MapChartProps> = ({
   const landmarks = useAppSelector(selectLandmarkArray)
   const hirelings = useAppSelector(selectHirelingArray)
 
-  // --- NEW: Group pieces cleanly by clearing index ---
   const piecesByClearing = React.useMemo(() => {
     const grouping: Record<number, { landmarks: typeof landmarks; hirelings: typeof hirelings }> =
       {}
@@ -155,7 +154,6 @@ const MapChart: React.FC<MapChartProps> = ({
       ) : null}
 
       {map.clearings.map(({ x, y, suit, flooded, ruin }, index) => {
-        // NEW: Grab the pieces array we mapped out above
         const clearingPieces = piecesByClearing[index] ?? { landmarks: [], hirelings: [] }
         const suitLandmarkCode = suit ? map.suitLandmarks?.[suit] : null
         const suitLandmark = suitLandmarkCode
@@ -308,8 +306,7 @@ const MapChart: React.FC<MapChartProps> = ({
 
             {/* Custom Houserule Placed Landmarks (Bottom-Left Quadrant) */}
             {clearingPieces.landmarks.map((landmark, i) => {
-              const size = 75 // Scaled down slightly from 100
-              // Anchor to bottom left, cascade left and down for multiples
+              const size = 75
               const imgX = x - size + 5 - i * 12
               const imgY = y + 5 + i * 12
 
@@ -331,8 +328,7 @@ const MapChart: React.FC<MapChartProps> = ({
 
             {/* Placed Hirelings (Bottom-Right Quadrant) */}
             {clearingPieces.hirelings.map((hireling, i) => {
-              const size = 75 // Scaled down slightly from 100
-              // Anchor to bottom right, cascade right and down for multiples
+              const size = 75
               const imgX = x - 5 + i * 22
               const imgY = y + 5 + i * 22
 
