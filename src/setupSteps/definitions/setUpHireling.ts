@@ -21,6 +21,6 @@ export const setUpHireling: SetupStepDefinition = {
     }
 
     // Set up the next hireling if the pool still has some left
-    return flow.hirelingPool.length === 1 ? SetupStep.postHirelingSetup : SetupStep.selectHireling
+    return flow.hirelingPool.length > 1 ? SetupStep.selectHireling : SetupStep.postHirelingSetup
   },
 }
