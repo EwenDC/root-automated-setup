@@ -322,6 +322,7 @@ export interface FlowSlice {
   playerIndex: number | null
   step: SetupStep
   vagabondSetUp: boolean
+  selectedBots: BotCode[]
 }
 
 //#endregion

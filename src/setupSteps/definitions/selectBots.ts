@@ -1,14 +1,14 @@
 import type { SetupStepDefinition } from '..'
 
 import {
-  addToBotPool,
+  addToSelectedBots,
   clearExcludedFactions,
   lockBot,
   massComponentLock,
   pushExcludedFactions,
-  removeCurrentBotFromPool,
+  removeFromBotPool,
   resetBotPool,
-  //pushStateToPast,
+  resetSelectedBots,
   selectBotArray,
   selectFactionCodes,
   setCurrentIndex,
@@ -25,10 +25,16 @@ export const selectBots: SetupStepDefinition = {
       return SetupStep.chooseLandmarks
     }
 
+    if (state.flow.selectedBots.length >= state.setup.botCount) {
+      dispatch(setCurrentIndex(null))
+      return SetupStep.chooseLandmarks
+    }
+
     if (selectBotArray(state).length < 1) {
       // Clear state of any potential stale data
       if (state.setup.excludedFactions.length > 0) dispatch(clearExcludedFactions())
       if (state.flow.botPool.length > 0) dispatch(resetBotPool())
+      if (state.flow.selectedBots.length > 0) dispatch(resetSelectedBots())
       return SetupStep.drawCards
     }
 
@@ -46,11 +52,6 @@ export const selectBots: SetupStepDefinition = {
       ),
     )
 
-    if (state.flow.botPool.length >= state.setup.botCount) {
-      dispatch(setCurrentIndex(null))
-      return SetupStep.setUpBots
-    }
-
     return null
   },
 
@@ -58,36 +59,29 @@ export const selectBots: SetupStepDefinition = {
 
   afterStep(dispatch, getState) {
     const state = getState()
-    const { flow, setup } = state
+    const { flow } = state
 
     if (flow.currentIndex == null) {
       dispatch(setErrorMessage('error.noBot'))
       return null
     }
 
-    const selectedBot = selectBotArray(state)[flow.currentIndex]
+    const allBots = selectBotArray(state)
+    const availableBots = allBots.filter(b => flow.botPool.includes(b.code))
+    const selectedBot = availableBots[flow.currentIndex]
 
-    if (!selectedBot || flow.botPool.some(b => b === selectedBot.code)) {
+    if (!selectedBot) {
       return null
     }
 
-    //dispatch(pushStateToPast())
-    dispatch(setCurrentIndex(null))
-    dispatch(addToBotPool(selectedBot.code))
-    dispatch(removeCurrentBotFromPool())
+    dispatch(addToSelectedBots(selectedBot.code))
+    dispatch(removeFromBotPool(selectedBot.code))
+
     if (selectedBot.excludeFactions && selectedBot.excludeFactions.length > 0) {
       dispatch(pushExcludedFactions(selectedBot.excludeFactions))
     }
 
-    if (flow.botPool.length + 1 >= setup.botCount) {
-      dispatch(setCurrentIndex(0))
-    }
-
-    if (flow.botPool.length + 1 >= setup.botCount) {
-      dispatch(setCurrentIndex(0))
-      return SetupStep.setUpBots
-    }
-
-    return SetupStep.selectBots
+    dispatch(setCurrentIndex(flow.selectedBots.length))
+    return SetupStep.setUpBots
   },
 }

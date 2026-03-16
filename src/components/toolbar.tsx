@@ -37,14 +37,14 @@ const Toolbar: React.FC = () => {
   const nextStepDisabled = useAppSelector(state => state.flow.currentStep >= SetupStep.setupEnd)
 
   const botCount = useAppSelector(state => state.setup.botCount)
-  const botPool = useAppSelector(state => state.flow.botPool)
   const allBots = useAppSelector(selectBotArray)
+  const selectedBots = useAppSelector(state => state.flow.selectedBots)
 
   const setupState = useAppSelector(state => state.setup)
   const expansions = useAppSelector(selectExpansionArray)
   const factions = useAppSelector(selectFactionArray)
 
-  const botParams = botPool
+  const botParams = selectedBots
     .map(code => {
       const bot = allBots.find(b => b.code === code)
       return bot?.clockroot || code
@@ -174,6 +174,7 @@ const Toolbar: React.FC = () => {
             setFocusedIndex(0)
           }}
           title={t('label.undo')}
+          // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 0 ? 0 : -1}
           onKeyDown={onKeyDownHandler(0)}
         />
@@ -187,6 +188,7 @@ const Toolbar: React.FC = () => {
             setFocusedIndex(1)
           }}
           title={t('label.redo')}
+          // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 1 ? 0 : -1}
           onKeyDown={onKeyDownHandler(1)}
         />
@@ -215,6 +217,7 @@ const Toolbar: React.FC = () => {
             dispatch(nextStep())
             setFocusedIndex(3)
           }}
+          // We have to override the tabbing logic to meet the standard of role "toolbar"
           tabIndex={focusedIndex === 3 ? 0 : -1}
           onKeyDown={onKeyDownHandler(3)}
         >

@@ -3,13 +3,12 @@ import type { SetupStepComponent } from '..'
 import Section from '../../components/section'
 
 const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
-  const { botPool, index } = flowSlice
+  const { selectedBots, index } = flowSlice
 
-  const selectedBotEntry = index != null ? botPool[index] : null
+  const selectedBotEntry = index != null ? selectedBots[index] : null
 
   if (!selectedBotEntry) return null
 
-  // Extract the code directly from the current pool entry
   const botCode = selectedBotEntry
 
   return (

@@ -1,6 +1,13 @@
 import type { SetupStepDefinition } from '..'
 
-import { selectDeckArray, selectFactionArray, selectMapArray, setErrorMessage } from '../../store'
+import {
+  selectBotArray,
+  selectDeckArray,
+  selectFactionArray,
+  selectMapArray,
+  setBotPool,
+  setErrorMessage,
+} from '../../store'
 import { SetupStep } from '../../types'
 import ChooseExpansionsStep from '../components/chooseExpansionsStep'
 
@@ -11,6 +18,7 @@ export const chooseExpansions: SetupStepDefinition = {
     // We need to validate if we have enough components for setup, since it's *technically*
     // possible to play without the base game (using the Homeland expansion)
     const state = getState()
+    const allAvailableBots = selectBotArray(state).map(bot => bot.code)
 
     // Is there at least one faction?
     if (selectFactionArray(state).length < 1) {
@@ -29,6 +37,8 @@ export const chooseExpansions: SetupStepDefinition = {
       dispatch(setErrorMessage('error.missingDeck'))
       return null
     }
+
+    dispatch(setBotPool(allAvailableBots))
 
     return SetupStep.seatPlayers
   },

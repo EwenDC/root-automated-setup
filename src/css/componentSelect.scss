@@ -151,14 +151,13 @@
     @include section.text-width;
   }
 
-  // * Alt Layout: Multi-row of small buttons * //
+  // * Alt Layout: 1 row of small buttons * //
   @include section.text-width-breakpoint {
     > .component-select {
       background: transparent;
       justify-content: center;
-      overflow: visible; // Avoid cutting off focus outlines on multiple rows
+      overflow: visible;
 
-      // Allow multiple rows to form
       block-size: auto;
       grid-auto-flow: row;
       grid-template-columns: repeat(auto-fit, 8rem);
@@ -166,7 +165,6 @@
       row-gap: 4px;
 
       @supports (grid-template-rows: subgrid) {
-        // Disable strict single-row subgrid on the container for multi-row
         grid-template-rows: none;
 
         label {
@@ -188,7 +186,7 @@
     }
   }
 
-  // * Alt Layout: Multi-row of larger buttons * //
+  // * Alt Layout: 1 row of larger buttons * //
   @include section.heading-width-breakpoint {
     > .component-select {
       block-size: auto;

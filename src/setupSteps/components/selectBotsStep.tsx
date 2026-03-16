@@ -6,15 +6,15 @@ import { useAppSelector } from '../../hooks'
 import { selectBotArray } from '../../store'
 
 const SelectBotsStep: SetupStepComponent = ({ flowSlice }) => {
-  const currentPickNumber = flowSlice.botPool.length + 1
+  const currentPickNumber = flowSlice.selectedBots.length + 1
 
   const allBots = useAppSelector(selectBotArray)
 
-  const availableBots = allBots.filter(b => !flowSlice.botPool.some(poolBot => poolBot === b.code))
+  const availableBots = allBots.filter(b => flowSlice.botPool.includes(b.code))
 
   return (
     <Section
-      key={flowSlice.botPool.length}
+      key={flowSlice.selectedBots.length}
       subtitleKey="setupStep.selectBots.subtitle"
       textKey="setupStep.selectBots.body"
       translationOptions={{ count: currentPickNumber }}

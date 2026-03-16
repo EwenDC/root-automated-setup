@@ -40,6 +40,7 @@ export interface FlowState {
   pastSteps: FlowSlice[]
   futureSteps: FlowSlice[]
   useDraft: boolean
+  selectedBots: BotCode[]
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
@@ -53,6 +54,7 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   playerIndex: flowState.currentPlayerIndex,
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
+  selectedBots: [...flowState.selectedBots],
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -82,6 +84,7 @@ export const flowSlice = createSlice({
     pastSteps: [],
     futureSteps: [],
     useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
+    selectedBots: [],
   }),
 
   reducers: {
@@ -178,17 +181,16 @@ export const flowSlice = createSlice({
       }
     },
 
-    addToBotPool: (state, action: PayloadAction<BotCode>) => {
-      state.botPool.push(action.payload)
+    addToSelectedBots: (state, action: PayloadAction<BotCode>) => {
+      state.selectedBots.push(action.payload)
     },
 
-    removeCurrentBotFromPool(state) {
-      if (state.currentIndex != null) {
-        state.botPool.splice(state.currentIndex, 1)
-        state.currentIndex = null
-      } else {
-        console.warn(`Invalid removeCurrentBotFromPool action: currentIndex must not be null`)
-      }
+    removeFromBotPool: (state, action: PayloadAction<BotCode>) => {
+      state.botPool = state.botPool.filter(bot => bot !== action.payload)
+    },
+
+    resetSelectedBots(state) {
+      state.selectedBots = []
     },
 
     resetBotPool(state) {
@@ -316,6 +318,7 @@ export const flowSlice = createSlice({
         state.vagabondSetUp = false
         state.pastSteps = []
         state.futureSteps = []
+        state.selectedBots = []
       })
       .addDefaultCase(state => {
         state.futureSteps = []
@@ -334,6 +337,7 @@ export const flowSlice = createSlice({
       playerIndex: state => state.currentPlayerIndex,
       step: state => state.currentStep,
       vagabondSetUp: state => state.vagabondSetUp,
+      selectedBots: state => state.selectedBots,
     }),
   },
 })
@@ -341,13 +345,14 @@ export const flowSlice = createSlice({
 export const {
   addToFactionPool,
   addToHirelingPool,
-  addToBotPool,
   pushStateToPast,
   redoStep,
-  removeCurrentBotFromPool,
   removeCurrentFactionFromPool,
   removeCurrentHirelingFromPool,
   removeCurrentLandmarkFromPool,
+  resetSelectedBots,
+  removeFromBotPool,
+  addToSelectedBots,
   resetBotPool,
   resetFactionPool,
   resetHirelingPool,
