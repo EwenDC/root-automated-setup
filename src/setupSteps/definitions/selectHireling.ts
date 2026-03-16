@@ -36,6 +36,6 @@ export const selectHireling: SetupStepDefinition = {
       return null
     }
 
-    return SetupStep.selectHireling
+    return SetupStep.setUpHireling
   },
 }

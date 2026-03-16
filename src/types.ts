@@ -1,3 +1,5 @@
+import type { SetupState } from './store'
+
 /** An object with an associated code. */
 export interface CodeObject {
   code: string
@@ -40,7 +42,7 @@ export interface Expansion extends GameComponent {
   captains?: Record<CaptainCode, Vagabond>
   decks?: Record<DeckCode, GameComponent>
   factions?: Record<FactionCode, Faction>
-  hirelings?: Record<HirelingCode, FactionExcludingComponent>
+  hirelings?: Record<HirelingCode, Hireling>
   landmarks?: Record<LandmarkCode, Landmark>
   maps?: Record<MapCode, LargeMap | StandardMap>
   vagabonds?: Record<VagabondCode, Vagabond>
@@ -103,6 +105,7 @@ export interface Bot extends GameComponent {
 /** An object representing a Landmark piece from the Root board game. */
 export interface Landmark extends GameComponent {
   minPlayers: number
+  isValidPlacement?: PlacementValidator
 }
 
 /** A shape that groups floodable clearings. */
@@ -118,10 +121,16 @@ export interface Clearing {
   floodGroup?: FloodGroup
   ruin?: boolean
   fallbackRuin?: boolean
+  corner?: boolean
+  coastal?: boolean
+  mapEdge?: boolean
+  buildingSlots?: number
+  suit?: ClearingSuit
+  adjacentClearings?: number[]
 }
 
 /** The name of a map clearing suit. */
-export type ClearingSuit = 'fox' | 'mouse' | 'rabbit'
+export type ClearingSuit = 'fox' | 'mouse' | 'none' | 'rabbit'
 
 /** A number used to rank the priority of a clearing for bot actions. */
 export type ClearingPriority = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
@@ -141,9 +150,77 @@ export type FloodablePath<ClearingIndex extends number = number> = [
   floods?: boolean,
 ]
 
+/** Clearing Data for landmark/hireling clearing validation. */
+export interface SetupClearing extends Clearing {
+  suit: ClearingSuit
+  flooded?: boolean
+}
+
+export interface SetupMapState {
+  code: MapCode
+  clearings: SetupClearing[]
+  useLandmark?: boolean
+  landmark?: {
+    clearing: number
+    x: number
+    y: number
+    angle?: number
+    image: string
+    code: string
+  }
+  useHireling?: boolean
+  hireling?: {
+    clearing: number
+    x: number
+    y: number
+    angle?: number
+    image: string
+    code: string
+  }
+}
+
+export type PlacementValidator = (
+  clearingIndex: number,
+  clearingData: SetupClearing,
+  mapData: SetupMapState,
+  setupState: SetupState,
+) => boolean
+
+export type LandmarkRule = 'corner' | 'fox' | 'mouse' | 'rabbit' | 'river' | 'ruin' | 'singleSlot'
+export interface Landmark extends GameComponent {
+  isValidPlacement?: PlacementValidator
+  placementRules?: LandmarkRule[]
+}
+export type HirelingRule =
+  | 'allClearings' // Forest Patrol: placed in every clearing
+  | 'allRuins' // Warm Sun Prophets: placed in every ruin
+  | 'forest' // (The Exile)
+  | 'mapEdge'
+  | 'matchFirstSuit' // Corvid Spies: 2nd placement must match 1st
+  | 'openBuildingSlot'
+  | 'path' // (Highway Bandits)
+  | 'randomSuit' // Spring Uprising: Restricted to a randomly rolled suit
+  | 'river'
+  | 'ruin'
+
+export interface Hireling extends FactionExcludingComponent {
+  isValidPlacement?: PlacementValidator
+  placementRules?: HirelingRule[]
+  placementCount?: number
+  allowSameClearing?: boolean
+  autoPlacement?: 'allClearings' | 'allRuins'
+}
+
 /** An object representing details for a Landmark as it appears on a specific map. */
 export interface MapLandmark<ClearingIndex extends number = number> {
   code: LandmarkCode
+  clearing: ClearingIndex
+  x: number
+  y: number
+  angle?: number
+}
+export interface MapHireling<ClearingIndex extends number = number> {
+  code: HirelingCode
   clearing: ClearingIndex
   x: number
   y: number
@@ -164,6 +241,7 @@ export interface Map extends GameComponent {
   landmark?: MapLandmark
   floodImage?: string
   suitLandmarks?: Record<ClearingSuit, LandmarkCode>
+  hireling?: MapHireling
 }
 
 /** A list with exactly 12 entries. */
@@ -191,6 +269,7 @@ export interface StandardMap extends Map {
   landmark?: MapLandmark<TwelveIndex>
   floodImage?: never
   suitLandmarks?: never
+  hireling?: MapHireling<TwelveIndex>
 }
 
 /**
@@ -227,6 +306,7 @@ export interface LargeMap extends Map {
   landmark?: never
   floodImage: string
   suitLandmarks: Record<ClearingSuit, LandmarkCode>
+  hireling?: never
 }
 
 /** The name of a vagabond item. */
@@ -265,6 +345,7 @@ export interface ComponentInfo extends Togglable {
 export interface MapInfo extends ComponentInfo {
   fixedSuits?: boolean
   useLandmark?: boolean
+  useHireling?: boolean
 }
 
 /** An enum of the individual steps in the setup process. */
@@ -323,6 +404,8 @@ export interface FlowSlice {
   step: SetupStep
   vagabondSetUp: boolean
   selectedBots: BotCode[]
+  placedLandmarks: Record<string, number>
+  placedHirelings: Record<string, number>
 }
 
 //#endregion

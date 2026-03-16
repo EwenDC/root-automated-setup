@@ -64,7 +64,7 @@ export const chooseHirelings: SetupStepDefinition = {
     const allBots = selectBotArray(state)
     const activeBotExclusions = state.flow.selectedBots.flatMap(botCode => {
       const bot = allBots.find(b => b.code === botCode)
-      return bot?.excludeFactions || []
+      return bot?.excludeFactions ?? []
     })
 
     dispatch(clearExcludedFactions())

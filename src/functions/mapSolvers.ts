@@ -157,6 +157,7 @@ export const solveMapBalanced = (map: LargeMap | StandardMap, floodClearings: bo
       fox: 0,
       mouse: 0,
       rabbit: 0,
+      none: 0,
     }
 
     // Assign each clearing one-by-one, favouring clearings with the least amount of valid options

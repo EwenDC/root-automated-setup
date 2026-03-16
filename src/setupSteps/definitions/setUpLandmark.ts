@@ -13,11 +13,11 @@ export const setUpLandmark: SetupStepDefinition = {
     if (setup.useHouserules) {
       const selectedLandmark =
         flow.currentIndex != null ? flow.landmarkPool[flow.currentIndex] : null
-      if (selectedLandmark && setup.placedLandmarks[selectedLandmark] == null) {
+      if (selectedLandmark && flow.placedLandmarks[selectedLandmark] == null) {
         dispatch(setErrorMessage('error.noLandmark'))
         return null
       }
     }
-    return flow.landmarkPool.length > 1 ? SetupStep.selectLandmark : SetupStep.chooseHirelings
+    return flow.landmarkPool.length === 1 ? SetupStep.chooseHirelings : SetupStep.selectLandmark
   },
 }

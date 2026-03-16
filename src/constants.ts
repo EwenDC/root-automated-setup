@@ -73,6 +73,10 @@ export const ICON_DICTIONARY: DeepReadonly<
     key: 'label.rabbit',
     image: rabbitIcon,
   },
+  none: {
+    key: 'label.none',
+    image: '',
+  },
   bag: {
     key: 'component.bag',
     image: bagImage,

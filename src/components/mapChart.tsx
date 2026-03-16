@@ -1,8 +1,10 @@
+import type React from 'react'
+
 import { ICON_DICTIONARY } from '../constants'
 import { useAppSelector } from '../hooks'
 import priorityToken from '../images/charts/markers/priority.svg'
 import ruinBuilding from '../images/charts/markers/ruin.png'
-import { selectLandmarkArray, selectSetupMap } from '../store'
+import { selectHirelingArray, selectLandmarkArray, selectSetupMap } from '../store'
 import LocaleText from './localeText'
 
 interface MapData {
@@ -22,7 +24,7 @@ interface MapData {
   clearings: {
     x: number
     y: number
-    suit: keyof typeof ICON_DICTIONARY
+    suit: keyof typeof ICON_DICTIONARY | null
     flooded?: boolean
     ruin?: boolean
   }[]
@@ -31,14 +33,22 @@ interface MapData {
 interface MapChartProps {
   onClearingClick?: (index: number) => void
   activeLandmark?: string
+  validClearings?: number[]
+  useHouserules?: boolean
 }
 
-const MapChart: React.FC<MapChartProps> = ({ onClearingClick }) => {
+const MapChart: React.FC<MapChartProps> = ({
+  onClearingClick,
+  validClearings = [],
+  useHouserules = false,
+}) => {
   const map = useAppSelector(selectSetupMap) as MapData | null
 
   const includeBots = useAppSelector(state => state.setup.botCount > 0)
-  const placedLandmarks = useAppSelector(state => state.setup.placedLandmarks)
+  const placedLandmarks = useAppSelector(state => state.flow.placedLandmarks)
+  const placedHirelings = useAppSelector(state => state.flow.placedHirelings)
   const landmarks = useAppSelector(selectLandmarkArray)
+  const hirelings = useAppSelector(selectHirelingArray)
 
   if (!map) return null
 
@@ -57,6 +67,50 @@ const MapChart: React.FC<MapChartProps> = ({ onClearingClick }) => {
         className="background"
         href={map.backImage}
       />
+      {/* --- DEV TOOL: 100px GRID OVERLAY --- 
+      {Array.from({ length: 11 }).map((_, i) => (
+        <g
+          key={`grid-${i}`}
+          style={{ pointerEvents: 'none' }}
+        >
+          <line
+            x1={0}
+            y1={i * 100}
+            x2={1000}
+            y2={i * 100}
+            stroke="rgba(255,255,255,0.4)"
+            strokeWidth="2"
+          />
+          <line
+            x1={i * 100}
+            y1={0}
+            x2={i * 100}
+            y2={1000}
+            stroke="rgba(255,255,255,0.4)"
+            strokeWidth="2"
+          />
+          <text
+            x={i * 100 + 5}
+            y={20}
+            fill="yellow"
+            fontSize="16"
+            fontWeight="bold"
+          >
+            {i * 100}
+          </text>
+          <text
+            x={5}
+            y={i * 100 - 5}
+            fill="yellow"
+            fontSize="16"
+            fontWeight="bold"
+          >
+            {i * 100}
+          </text>
+        </g>
+      ))}
+      {/* ------------------------------------ */}
+
       {floodedClearings.length > 0 && map.floodImage ? (
         <>
           <mask id="flooded-mask">
@@ -79,24 +133,62 @@ const MapChart: React.FC<MapChartProps> = ({ onClearingClick }) => {
       ) : null}
 
       {map.clearings.map(({ x, y, suit, flooded, ruin }, index) => {
-        const placedLandmarkCode = Object.keys(placedLandmarks).find(
-          code => placedLandmarks[code] === index,
-        )
+        const placedLandmarkCode = Object.keys(placedLandmarks).includes(String(index))
+          ? placedLandmarks[index]
+          : Object.keys(placedLandmarks).find(code => placedLandmarks[code] === index)
+
         const placedLandmarkData = placedLandmarkCode
-          ? landmarks.find(l => l.code === placedLandmarkCode)
+          ? landmarks.find(l => l.code === String(placedLandmarkCode))
           : null
 
-        const suitLandmarkCode = map.suitLandmarks?.[suit]
+        const placedHirelingCode = Object.keys(placedHirelings).includes(String(index))
+          ? placedHirelings[index]
+          : Object.keys(placedHirelings).find(code => placedHirelings[code] === index)
+
+        const placedHirelingData = placedHirelingCode
+          ? hirelings.find(h => h.code === String(placedHirelingCode))
+          : null
+
+        const suitLandmarkCode = suit ? map.suitLandmarks?.[suit] : null
         const suitLandmark = suitLandmarkCode
           ? landmarks.find(l => l.code === suitLandmarkCode)
           : null
 
+        const isTargetValid = validClearings.includes(index)
+        const isClickable = onClearingClick != null && (isTargetValid || useHouserules)
+
+        let cursorStyle = 'default'
+        if (onClearingClick != null) {
+          cursorStyle = isClickable ? 'pointer' : 'not-allowed'
+        }
+
         return (
           <g
             key={index}
-            onClick={() => onClearingClick?.(index)}
-            style={{ cursor: onClearingClick ? 'pointer' : 'default' }}
+            onClick={() => {
+              if (isClickable) {
+                onClearingClick(index)
+              }
+            }}
+            className={`clearing-group ${isClickable ? 'cursor-pointer' : ''}`}
+            style={{ cursor: cursorStyle }}
           >
+            {/* --- DEV TOOL: CLEARING DATA LABELS --- 
+            <text
+              x={x}
+              y={y + 5}
+              fontSize="24"
+              fontWeight="900"
+              fill="cyan"
+              stroke="black"
+              strokeWidth="1.5"
+              textAnchor="middle"
+              style={{ pointerEvents: 'none', zIndex: 50 }}
+            >
+              [{index}] {x},{y}
+            </text>
+            {/* -------------------------------------- */}
+
             <title>
               <LocaleText i18nKey={flooded ? `label.clearing.flooded` : `label.clearing.${suit}`} />
             </title>
@@ -108,6 +200,18 @@ const MapChart: React.FC<MapChartProps> = ({ onClearingClick }) => {
               r="90"
               fill="transparent"
             />
+            {isTargetValid && (
+              <circle
+                cx={x}
+                cy={y}
+                r="95"
+                fill="none"
+                stroke="#fbbf24"
+                strokeWidth="6"
+                strokeDasharray="10 5"
+                className="animate-[spin_4s_linear_infinite]"
+              />
+            )}
 
             {ruin ? (
               <image
@@ -164,7 +268,7 @@ const MapChart: React.FC<MapChartProps> = ({ onClearingClick }) => {
                   <LocaleText i18nKey={`landmark.${suitLandmark.code}.name`} />
                 </title>
               </image>
-            ) : !flooded ? (
+            ) : !flooded && suit && suit !== 'none' ? (
               <image
                 x={x - 40}
                 y={y - 120}
@@ -210,6 +314,20 @@ const MapChart: React.FC<MapChartProps> = ({ onClearingClick }) => {
               >
                 <title>
                   <LocaleText i18nKey={`landmark.${placedLandmarkData.code}.name`} />
+                </title>
+              </image>
+            ) : null}
+            {placedHirelingData ? (
+              <image
+                className="hireling"
+                x={x - 50}
+                y={y - 50}
+                width="100"
+                height="100"
+                href={placedHirelingData.image}
+              >
+                <title>
+                  <LocaleText i18nKey={`hireling.${placedHirelingData.code}.name`} />
                 </title>
               </image>
             ) : null}

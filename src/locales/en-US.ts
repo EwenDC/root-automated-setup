@@ -90,6 +90,7 @@ export default {
     warriors_other: `{{count}} Warriors`,
   },
   error: {
+    disablePlacement: `Placement for this hireling is under construction. Please place anywhere to continue.`,
     factionHirelingExcluded: `The Faction associated with this Hireling is required for set up`,
     factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     hirelingSelected: `An equivalent Hireling or Clockwork for this faction is already in play`,
@@ -106,6 +107,7 @@ export default {
     noLandmark: `No Landmark selected! Please select a Landmark then perform its setup`,
     noMap: `No Maps selected! Please select at least one Map`,
     noMilitantFaction: `No Militant Factions selected! Please select at least one Militant Faction`,
+    noValidPlacement: `No valid placement found. Houserules are enabled, place in any clearing.`,
     tooFewCaptains: `Not enough Knave captains selected! Please include more captains in your selection`,
     tooFewFaction: `Not enough Factions selected! Please select more Factions, disable draft faction selection, or lower the player count`,
     tooFewHireling: `Not enough Hirelings to perform Hireling set up! This could be because the current Hireling selection requires removing too many factions from set up`,

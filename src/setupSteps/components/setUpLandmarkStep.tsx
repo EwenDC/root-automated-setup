@@ -1,53 +1,107 @@
 import type { SetupStepComponent } from '..'
+import type { Expansion, Landmark, SetupClearing, SetupMapState } from '../../types'
 
+import * as componentDefinitions from '../../componentDefinitions'
 import LocaleText from '../../components/localeText'
 import MapChart from '../../components/mapChart'
 import Section from '../../components/section'
+import { validateLandmarkPlacement } from '../../functions/validation'
 import { useAppDispatch, useAppSelector, usePlayerNumber } from '../../hooks'
-import { placeLandmark, selectSetupMapCode } from '../../store'
+import { placeLandmark, selectSetupMap, selectSetupMapCode } from '../../store'
 
 const SetUpLandmarkStep: SetupStepComponent = ({ flowSlice }) => {
-  const map = useAppSelector(selectSetupMapCode)
-  const useHouserules = useAppSelector(state => state.setup.useHouserules)
+  const mapCode = useAppSelector(selectSetupMapCode)
+  const mapData = useAppSelector(selectSetupMap)
+  const setupState = useAppSelector(state => state.setup)
+  const placedLandmarks = useAppSelector(state => state.flow.placedLandmarks)
+  const useHouserules = setupState.useHouserules
   const playerNumber = usePlayerNumber(flowSlice)
   const dispatch = useAppDispatch()
-  const { landmarkPool, index } = flowSlice
+
+  const { index, landmarkPool } = flowSlice
 
   const selectedLandmark = index != null ? landmarkPool[index] : null
-  if (!selectedLandmark) return null
+  if (!selectedLandmark || !mapData) return null
+
+  let landmarkDef: Landmark | null = null
+  for (const exportValue of Object.values(componentDefinitions)) {
+    if (typeof exportValue === 'object') {
+      for (const expansion of Object.values(exportValue)) {
+        const typedExpansion = expansion as Partial<Expansion>
+
+        if (typedExpansion.landmarks && selectedLandmark in typedExpansion.landmarks) {
+          landmarkDef = typedExpansion.landmarks[selectedLandmark]!
+          break
+        }
+      }
+    }
+    if (landmarkDef) break
+  }
+
+  const validClearings: number[] = []
+  if (landmarkDef) {
+    setupState.clearings.forEach((clearingData, i) => {
+      const mergedClearing = {
+        ...(mapData.clearings[i] ?? {}),
+        ...clearingData,
+      } as unknown as SetupClearing
+
+      const passesTagRules = validateLandmarkPlacement(
+        i,
+        mergedClearing,
+        placedLandmarks,
+        landmarkDef,
+      )
+
+      const passesCustomRules = landmarkDef.isValidPlacement
+        ? landmarkDef.isValidPlacement(
+            i,
+            mergedClearing,
+            mapData as unknown as SetupMapState,
+            setupState,
+          )
+        : true
+
+      if (passesTagRules && passesCustomRules) {
+        validClearings.push(i)
+      }
+    })
+  }
 
   const handleClearingClick = (clearingIndex: number) => {
-    dispatch(placeLandmark({ code: selectedLandmark, clearingIndex }))
+    if (!useHouserules && !validClearings.includes(clearingIndex)) {
+      return
+    }
+    dispatch(placeLandmark({ clearingIndex, code: selectedLandmark }))
   }
 
-  // INTERACTIVE HOUSERULES UI
-  if (useHouserules) {
-    return (
-      <Section subtitleKey={`landmark.${selectedLandmark}.setupTitle`}>
-        <MapChart onClearingClick={handleClearingClick} />
-        <p>
-          <LocaleText
-            i18nKey={`landmark.${selectedLandmark}.setup`}
-            tOptions={{
-              context: map,
-              count: playerNumber,
-            }}
-          />
-        </p>
-      </Section>
-    )
-  }
+  const noValidClearings = validClearings.length === 0
 
-  // STANDARD RULES UI (Fallback)
   return (
-    <Section
-      subtitleKey={`landmark.${selectedLandmark}.setupTitle`}
-      textKey={`landmark.${selectedLandmark}.setup`}
-      translationOptions={{
-        context: map,
-        count: playerNumber,
-      }}
-    />
+    <Section subtitleKey={`landmark.${selectedLandmark}.setupTitle`}>
+      <MapChart
+        onClearingClick={handleClearingClick}
+        activeLandmark={selectedLandmark}
+        useHouserules={useHouserules}
+        validClearings={validClearings}
+      />
+
+      <div>
+        {noValidClearings ? (
+          <p>
+            <LocaleText i18nKey="error.noValidClearings" />
+            {useHouserules && ' (Houserules enabled: You may place it anywhere)'}
+          </p>
+        ) : (
+          <p>
+            <LocaleText
+              i18nKey={`landmark.${selectedLandmark}.setup`}
+              tOptions={{ context: mapCode, count: playerNumber }}
+            />
+          </p>
+        )}
+      </div>
+    </Section>
   )
 }
 
