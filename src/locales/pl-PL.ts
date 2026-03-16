@@ -84,6 +84,7 @@ export default {
     warriors_other: `{{count}} Wojowników`,
   },
   error: {
+    disabledPlacement: `<br><b>Placement for this hireling is under construction. Please place anywhere to continue.</b>`,
     factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `Frakcja powiązana z tym Zaciężnym jest wymagana do konfiguracji`,
     hirelingSelected: `Równoważny Zaciężny dla tej frakcji jest już w grze`,
@@ -98,6 +99,7 @@ export default {
     noFaction: `Nie wybrano żadnej Frakcji! Proszę wybrać frakcję do gry`,
     noMap: `Nie wybrano żadnych map! Proszę wybrać przynajmniej jedną mapę`,
     noMilitantFaction: `Nie wybrano żadnych frakcji Militarnych! Proszę wybrać przynajmniej jedną frakcję Militarną`,
+    noValidClearings: `No valid placement found. If Houserules are enabled, place in any clearing.`,
     tooFewFaction: `Wybrano za mało Frakcji! Proszę wybrać więcej Frakcji, wyłączyć wybór frakcji przez draft, lub zmniejszyć liczbę graczy`,
     tooFewHireling: `Za mało Zaciężnych do przeprowadzenia konfiguracji Zaciężnych! Może to być spowodowane tym, że obecny wybór Zaciężnych wymaga usunięcia zbyt wielu frakcji z konfiguracji`,
     tooFewLandmark: `Wybrano za mało punktów terenu! Proszę wybrać więcej punktów terenu lub zmniejszyć ich liczbę`,

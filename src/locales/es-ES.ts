@@ -68,6 +68,7 @@ export default {
     warriors_other: `{{count}} Guerreros`,
   },
   error: {
+    disabledPlacement: `<br><b>Placement for this hireling is under construction. Please place anywhere to continue.</b>`,
     factionHirelingExcluded: `La Facción coincidente con este Secuaz se requiere en la preparación`,
     factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     hirelingSelected: `Un Secuaz coincidente con esta Facción está ya en juego`,
@@ -78,6 +79,7 @@ export default {
     noFaction: `¡No hay Facciones seleccionadas! Por favor, escoge una facción para jugar`,
     noMap: `¡No hay Mapas seleccionados! Por favor, elige al menos un Mapa`,
     noMilitantFaction: `¡No hay Facciones belicosas seleccionadas! Por favor, elige al menos una facción belicosa`,
+    noValidClearings: `No valid placement found. If Houserules are enabled, place in any clearing.`,
     tooFewFaction: `¡No hay suficientes Facciones seleccionadas! Por favor, selecciona más facciones, desactiva el modo draft o baja el número de jugadores participantes`,
     tooFewHireling: `¡No hay suficientes Secuaces listos para la preparación! Esto podría ser porque la selección actual de Secuaces requiere eliminar demasiadas facciones de la preparación`,
     tooFewLandmark: `¡No hay suficientes Lugares Míticos seleccionados! Por favor, elige más Lugares Míticos o baja el número de Lugares Míticos requeridos`,

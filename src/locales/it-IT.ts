@@ -68,6 +68,7 @@ export default {
     warriors_other: `{{count}} Guerrieri`,
   },
   error: {
+    disabledPlacement: `<br><b>Placement for this hireling is under construction. Please place anywhere to continue.</b>`,
     factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `La fazione associata a questo combattente è necessaria per la preparazione`,
     hirelingSelected: `Un combattente associato a questa fazione è già in gioco`,
@@ -78,6 +79,7 @@ export default {
     noFaction: `Nessuna fazione selezionata! Per favore, seleziona una fazione da giocare`,
     noMap: `Nessuna mappa selezionata! Per favore, seleziona almeno una mappa in cui giocare`,
     noMilitantFaction: `Nessuna fazione Militante selezionata! Per favore, seleziona almeno una fazione Militante`,
+    noValidClearings: `No valid placement found. If Houserules are enabled, place in any clearing.`,
     tooFewFaction: `Numero insufficiente di fazioni selezionate! Per favore, seleziona altre fazioni, disabilita il draft, oppure diminuisci il numero di giocatori`,
     tooFewHireling: `Numero insufficiente di combattenti per effettuare la preparazione dei combattenti! Ciò potrebbe essere causato dal fatto che la selezione corrente risulterebbe nella rimozione di un numero eccessivo di fazioni dalla preparazione`,
     tooFewLandmark: `Numero insufficiente di meraviglie selezionate! Per favore, seleziona altre meraviglie oppure diminuisci il numero di meraviglie da utilizzare`,

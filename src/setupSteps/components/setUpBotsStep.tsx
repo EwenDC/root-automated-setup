@@ -4,12 +4,10 @@ import Section from '../../components/section'
 
 const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
   const { selectedBots, index } = flowSlice
-
   const selectedBotEntry = index != null ? selectedBots[index] : null
+  const botCode = selectedBotEntry
 
   if (!selectedBotEntry) return null
-
-  const botCode = selectedBotEntry
 
   return (
     <Section

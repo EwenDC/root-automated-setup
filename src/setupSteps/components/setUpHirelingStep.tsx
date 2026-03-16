@@ -111,7 +111,6 @@ const SetUpHirelingStep: SetupStepComponent = ({ flowSlice }) => {
         {noValidClearings ? (
           <p>
             <LocaleText i18nKey="error.noValidClearings" />
-            {useHouserules && ' (Houserules enabled: You may place it anywhere)'}
           </p>
         ) : (
           <p>

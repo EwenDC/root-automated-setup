@@ -70,6 +70,7 @@ export default {
     warriors_other: `{{count}} Guerriers`,
   },
   error: {
+    disabledPlacement: `<br><b>Placement for this hireling is under construction. Please place anywhere to continue.</b>`,
     factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `La faction associée à ce nomade est requise pour la mise en place`,
     hirelingSelected: `Un nomade équivalent à cette faction est déjà en jeu`,
@@ -80,6 +81,7 @@ export default {
     noFaction: `Aucune faction sélectionnée ! Veuillez sélectionner une faction à jouer`,
     noMap: `Aucun plateau sélectionné ! Veuillez sélectionner au moins un plateau`,
     noMilitantFaction: `Aucune faction militante sélectionnée ! Veuillez sélectionner au moins une faction militante`,
+    noValidClearings: `No valid placement found. If Houserules are enabled, place in any clearing.`,
     tooFewFaction: `Pas assez de factions sélectionnées ! Veuillez sélectionner plus de factions, désactiver le draft de factions ou réduire le nombre de joueurs`,
     tooFewHireling: `Pas assez de nomades pour mettre en place les nomades ! Cela peut être dû au fait que la sélection actuelle de nomades nécessite de supprimer trop de factions de la mise en place`,
     tooFewLandmark: `Pas assez de monuments sélectionnés ! Veuillez sélectionner plus de monuments ou réduire le nombre de monuments`,

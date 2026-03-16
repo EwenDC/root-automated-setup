@@ -7,6 +7,7 @@ import ruinBuilding from '../images/charts/markers/ruin.png'
 import { selectHirelingArray, selectLandmarkArray, selectSetupMap } from '../store'
 import LocaleText from './localeText'
 
+// Expanded the MapChart function to be able to handle clicks on the clearings for placing hirelings and landmarks, logic to display valid clearings, and adjusted maps to better handle new bot components
 interface MapData {
   backImage: string
   floodImage?: string
@@ -38,13 +39,14 @@ interface MapChartProps {
 }
 
 const MapChart: React.FC<MapChartProps> = ({
+  // Expanded to handle the additional data and interfacing with the map by the user
   onClearingClick,
   validClearings = [],
   useHouserules = false,
 }) => {
   const map = useAppSelector(selectSetupMap) as MapData | null
 
-  const includeBots = useAppSelector(state => state.setup.botCount > 0)
+  const includeBots = useAppSelector(state => state.setup.botCount > 0) // Changed includeBots to be based around the bot count rather than the bool
   const placedLandmarks = useAppSelector(state => state.flow.placedLandmarks)
   const placedHirelings = useAppSelector(state => state.flow.placedHirelings)
   const landmarks = useAppSelector(selectLandmarkArray)
@@ -67,7 +69,7 @@ const MapChart: React.FC<MapChartProps> = ({
         className="background"
         href={map.backImage}
       />
-      {/* --- DEV TOOL: 100px GRID OVERLAY --- 
+      {/* --- DEV TOOL: 100px GRID OVERLAY --- This is helpful when trying to read the map since the componentDefinitions are not necessarily intuitive
       {Array.from({ length: 11 }).map((_, i) => (
         <g
           key={`grid-${i}`}
@@ -173,7 +175,7 @@ const MapChart: React.FC<MapChartProps> = ({
             className={`clearing-group ${isClickable ? 'cursor-pointer' : ''}`}
             style={{ cursor: cursorStyle }}
           >
-            {/* --- DEV TOOL: CLEARING DATA LABELS --- 
+            {/* --- DEV TOOL: CLEARING DATA LABELS --- This is helpful when trying to read the map since the componentDefinitions are not necessarily intuitive
             <text
               x={x}
               y={y + 5}
@@ -193,7 +195,7 @@ const MapChart: React.FC<MapChartProps> = ({
               <LocaleText i18nKey={flooded ? `label.clearing.flooded` : `label.clearing.${suit}`} />
             </title>
 
-            {/* Bounding circle for the clearing, allowing browser tooltips to display the title more easily */}
+            {/* Bounding circle for the clearing */}
             <circle
               cx={x}
               cy={y}
@@ -209,13 +211,11 @@ const MapChart: React.FC<MapChartProps> = ({
                 stroke="#fbbf24"
                 strokeWidth="6"
                 strokeDasharray="10 5"
-                className="animate-[spin_4s_linear_infinite]"
               />
             )}
 
             {ruin ? (
               <image
-                className="landmark"
                 x={x - 65}
                 y={y - 40}
                 width="40"
@@ -257,7 +257,6 @@ const MapChart: React.FC<MapChartProps> = ({
 
             {suitLandmark ? (
               <image
-                className="landmark"
                 x={x - 60}
                 y={y - 150}
                 width="120"
@@ -284,7 +283,6 @@ const MapChart: React.FC<MapChartProps> = ({
 
             {map.useLandmark && map.landmark?.clearing === index ? (
               <image
-                className="landmark"
                 x={map.landmark.x}
                 y={map.landmark.y}
                 width="100"
@@ -305,7 +303,6 @@ const MapChart: React.FC<MapChartProps> = ({
             {/* Custom Houserule Placed Landmark */}
             {placedLandmarkData ? (
               <image
-                className="landmark"
                 x={x - 50}
                 y={y - 50}
                 width="100"
@@ -319,7 +316,6 @@ const MapChart: React.FC<MapChartProps> = ({
             ) : null}
             {placedHirelingData ? (
               <image
-                className="hireling"
                 x={x - 50}
                 y={y - 50}
                 width="100"
