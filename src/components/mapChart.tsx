@@ -1,4 +1,4 @@
-import type React from 'react'
+import React from 'react'
 
 import { ICON_DICTIONARY } from '../constants'
 import { useAppSelector } from '../hooks'
@@ -51,6 +51,26 @@ const MapChart: React.FC<MapChartProps> = ({
   const placedHirelings = useAppSelector(state => state.flow.placedHirelings)
   const landmarks = useAppSelector(selectLandmarkArray)
   const hirelings = useAppSelector(selectHirelingArray)
+
+  // --- NEW: Group pieces cleanly by clearing index ---
+  const piecesByClearing = React.useMemo(() => {
+    const grouping: Record<number, { landmarks: typeof landmarks; hirelings: typeof hirelings }> =
+      {}
+
+    Object.entries(placedLandmarks).forEach(([code, clearingIndex]) => {
+      grouping[clearingIndex] ??= { landmarks: [], hirelings: [] }
+      const def = landmarks.find(l => l.code === code)
+      if (def) grouping[clearingIndex].landmarks.push(def)
+    })
+
+    Object.entries(placedHirelings).forEach(([code, clearingIndex]) => {
+      grouping[clearingIndex] ??= { landmarks: [], hirelings: [] }
+      const def = hirelings.find(h => h.code === code)
+      if (def) grouping[clearingIndex].hirelings.push(def)
+    })
+
+    return grouping
+  }, [placedLandmarks, placedHirelings, landmarks, hirelings])
 
   if (!map) return null
 
@@ -135,22 +155,8 @@ const MapChart: React.FC<MapChartProps> = ({
       ) : null}
 
       {map.clearings.map(({ x, y, suit, flooded, ruin }, index) => {
-        const placedLandmarkCode = Object.keys(placedLandmarks).includes(String(index))
-          ? placedLandmarks[index]
-          : Object.keys(placedLandmarks).find(code => placedLandmarks[code] === index)
-
-        const placedLandmarkData = placedLandmarkCode
-          ? landmarks.find(l => l.code === String(placedLandmarkCode))
-          : null
-
-        const placedHirelingCode = Object.keys(placedHirelings).includes(String(index))
-          ? placedHirelings[index]
-          : Object.keys(placedHirelings).find(code => placedHirelings[code] === index)
-
-        const placedHirelingData = placedHirelingCode
-          ? hirelings.find(h => h.code === String(placedHirelingCode))
-          : null
-
+        // NEW: Grab the pieces array we mapped out above
+        const clearingPieces = piecesByClearing[index] ?? { landmarks: [], hirelings: [] }
         const suitLandmarkCode = suit ? map.suitLandmarks?.[suit] : null
         const suitLandmark = suitLandmarkCode
           ? landmarks.find(l => l.code === suitLandmarkCode)
@@ -300,33 +306,51 @@ const MapChart: React.FC<MapChartProps> = ({
               </image>
             ) : null}
 
-            {/* Custom Houserule Placed Landmark */}
-            {placedLandmarkData ? (
-              <image
-                x={x - 50}
-                y={y - 50}
-                width="100"
-                height="100"
-                href={placedLandmarkData.image}
-              >
-                <title>
-                  <LocaleText i18nKey={`landmark.${placedLandmarkData.code}.name`} />
-                </title>
-              </image>
-            ) : null}
-            {placedHirelingData ? (
-              <image
-                x={x - 50}
-                y={y - 50}
-                width="100"
-                height="100"
-                href={placedHirelingData.image}
-              >
-                <title>
-                  <LocaleText i18nKey={`hireling.${placedHirelingData.code}.name`} />
-                </title>
-              </image>
-            ) : null}
+            {/* Custom Houserule Placed Landmarks (Bottom-Left Quadrant) */}
+            {clearingPieces.landmarks.map((landmark, i) => {
+              const size = 75 // Scaled down slightly from 100
+              // Anchor to bottom left, cascade left and down for multiples
+              const imgX = x - size + 5 - i * 12
+              const imgY = y + 5 + i * 12
+
+              return (
+                <image
+                  key={`landmark-${landmark.code}`}
+                  x={imgX}
+                  y={imgY}
+                  width={size}
+                  height={size}
+                  href={landmark.image}
+                >
+                  <title>
+                    <LocaleText i18nKey={`landmark.${landmark.code}.name`} />
+                  </title>
+                </image>
+              )
+            })}
+
+            {/* Placed Hirelings (Bottom-Right Quadrant) */}
+            {clearingPieces.hirelings.map((hireling, i) => {
+              const size = 75 // Scaled down slightly from 100
+              // Anchor to bottom right, cascade right and down for multiples
+              const imgX = x - 5 + i * 22
+              const imgY = y + 5 + i * 22
+
+              return (
+                <image
+                  key={`hireling-${hireling.code}`}
+                  x={imgX}
+                  y={imgY}
+                  width={size}
+                  height={size}
+                  href={hireling.image}
+                >
+                  <title>
+                    <LocaleText i18nKey={`hireling.${hireling.code}.name`} />
+                  </title>
+                </image>
+              )
+            })}
           </g>
         )
       })}
