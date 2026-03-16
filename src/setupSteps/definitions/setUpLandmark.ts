@@ -18,6 +18,7 @@ export const setUpLandmark: SetupStepDefinition = {
         return null
       }
     }
-    return flow.landmarkPool.length === 1 ? SetupStep.chooseHirelings : SetupStep.selectLandmark
+    // Set up the next landmark if the pool still has some left
+    return flow.landmarkPool.length > 1 ? SetupStep.selectLandmark : SetupStep.chooseHirelings
   },
 }
