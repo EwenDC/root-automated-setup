@@ -41,6 +41,8 @@ export interface FlowState {
   futureSteps: FlowSlice[]
   useDraft: boolean
   selectedBots: BotCode[]
+  placedLandmarks: Record<string, number>
+  placedHirelings: Record<string, number>
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
@@ -55,6 +57,8 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
   selectedBots: [...flowState.selectedBots],
+  placedLandmarks: { ...flowState.placedLandmarks },
+  placedHirelings: { ...flowState.placedHirelings },
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -66,6 +70,9 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentPlayerIndex = slice.playerIndex
   state.currentStep = slice.step
   state.vagabondSetUp = slice.vagabondSetUp
+  state.selectedBots = slice.selectedBots
+  state.placedLandmarks = slice.placedLandmarks
+  state.placedHirelings = slice.placedHirelings
 }
 
 export const flowSlice = createSlice({
@@ -85,6 +92,8 @@ export const flowSlice = createSlice({
     futureSteps: [],
     useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
     selectedBots: [],
+    placedLandmarks: {},
+    placedHirelings: {},
   }),
 
   reducers: {
@@ -113,6 +122,7 @@ export const flowSlice = createSlice({
         pastSteps: [],
         futureSteps: [],
         placedLandmarks: {},
+        placedHirelings: {},
       }
       Object.assign(state, initialState)
     },
@@ -297,6 +307,13 @@ export const flowSlice = createSlice({
         )
       }
     },
+
+    placeLandmark: (state, action: PayloadAction<{ clearingIndex: number; code: string }>) => {
+      state.placedLandmarks[action.payload.code] = action.payload.clearingIndex
+    },
+    placeHireling: (state, action: PayloadAction<{ clearingIndex: number; code: string }>) => {
+      state.placedHirelings[action.payload.code] = action.payload.clearingIndex
+    },
   },
 
   extraReducers(builder) {
@@ -319,6 +336,8 @@ export const flowSlice = createSlice({
         state.pastSteps = []
         state.futureSteps = []
         state.selectedBots = []
+        state.placedLandmarks = {}
+        state.placedHirelings = {}
       })
       .addDefaultCase(state => {
         state.futureSteps = []
@@ -338,6 +357,8 @@ export const flowSlice = createSlice({
       step: state => state.currentStep,
       vagabondSetUp: state => state.vagabondSetUp,
       selectedBots: state => state.selectedBots,
+      placeLandmark: state => state.placedLandmarks,
+      placeHireling: state => state.placedHirelings,
     }),
   },
 })
@@ -364,6 +385,8 @@ export const {
   setUseDraft,
   undoStep,
   resetStep,
+  placeLandmark,
+  placeHireling,
 } = flowSlice.actions
 
 export const { selectFlowSlice, selectBotPool } = flowSlice.selectors
