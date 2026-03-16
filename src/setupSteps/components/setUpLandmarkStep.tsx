@@ -91,6 +91,7 @@ const SetUpLandmarkStep: SetupStepComponent = ({ flowSlice }) => {
         {noValidClearings ? (
           <p>
             <LocaleText i18nKey="error.noValidClearings" />
+            {useHouserules ? <LocaleText i18nKey="error.noValidClearingsHouserule" /> : ''}
           </p>
         ) : (
           <p>
