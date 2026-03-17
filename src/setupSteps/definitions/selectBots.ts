@@ -75,7 +75,12 @@ export const selectBots: SetupStepDefinition = {
     }
 
     dispatch(addToSelectedBots(selectedBot.code))
-    dispatch(removeFromBotPool(selectedBot.code))
+    dispatch(
+      removeFromBotPool({
+        code: selectedBot.code,
+        baseFactionCode: selectedBot.baseFactionCode,
+      }),
+    )
 
     if (selectedBot.excludeFactions && selectedBot.excludeFactions.length > 0) {
       dispatch(pushExcludedFactions(selectedBot.excludeFactions))

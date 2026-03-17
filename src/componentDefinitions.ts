@@ -1,4 +1,4 @@
-import type { Bot, BotCode, DeepReadonly, Expansion, ExpansionCode } from './types'
+import type { DeepReadonly, Expansion, ExpansionCode } from './types'
 
 // Box Images
 import clockwork2Box from './images/boxes/clockwork2.png'
@@ -1720,5 +1720,3 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
 } as const
 
 export default definitions
-
-export const botDefinitions: Record<BotCode, Bot> = {}

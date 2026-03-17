@@ -196,6 +196,12 @@ export default {
       title: `Begin Play`,
       body: `The set up is now complete. Play will begin with Player {{count}}. If you wish to restart the setup process, use the button below.<p><i>“Root Automated Setup” Developed By Ewen Cameron</i><br/><i>Based on the board game “Root” published by Leder Games</i><br/><i>Application Licensed under CC BY-NC-SA 4.0</i></p>`,
     },
+    setupRuins: {
+      title: `<li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly.</li>`,
+    },
+    skipRuins: {
+      title: `<li>This faction requires ruins to be filled, but this step was completed previously</li>`,
+    },
   },
   captain: {
     adventurer: {
@@ -300,7 +306,7 @@ export default {
     },
     vagabot: {
       name: `Vagabot`,
-      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Place any 1 item marked "R" beneath each ruin on the map.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
+      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
     },
     cogwheelCorvids: {
       name: `Cogwheel Corvids`,
@@ -320,7 +326,7 @@ export default {
     },
     lootingLegion: {
       name: `Looting Legion`,
-      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Place the four 'R' items randomly under the ruins on the map.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
+      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
     },
   },
   faction: {
@@ -465,11 +471,11 @@ export default {
       summary: `<p>As the Vagabond, you will play all sides of the conflict, making friends and foes as it suits you. You score points through your <b>relationships</b>, as you aid friendly factions by giving them cards, and as you grow your infamy with hostile factions by removing their pieces in battle. You’ll also score points as you go on <b>quests</b> to spread your good name amongst the creatures of the Woodland.</p><p>To move and act effectively, you’ll need to manage your satchel of <b>items</b>, expanding your selection by exploring ancient <b>ruins</b> and providing aid to other factions. Being a <b>Lone Wanderer</b>, you cannot rule a clearing or stop another faction from ruling one, but you are <b>Nimble</b>, so you can move regardless of who rules your clearing.</p>`,
       setupTitle: `Set up the Vagabond`,
       setup: {
-        default: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Get Quests.</b> Shuffle your quest deck, draw 3 quest cards, and place them face up near you.</li><li><b>Populate Ruins.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly, unless this has already been done.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
+        default: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Get Quests.</b> Shuffle your quest deck, draw 3 quest cards, and place them face up near you.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
         vagabondSetUp: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Populate Ruins.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly <i>(with the existing items)</i>.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Shuffle the quest deck. Draw 3 <b>quests</b> to deal out nearby.</li><li>Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with “R”)</i> under the ruins randomly, unless this has already been done.</li><li>Put the “{{vagabond}}” <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with “S”)</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
+        default: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Shuffle the quest deck. Draw 3 <b>quests</b> to deal out nearby.</li><li>Put the “{{vagabond}}” <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with “S”)</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
         vagabondSetUp: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Put the additional <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with “R”)</i> under the ruins randomly <i>(with the existing items)</i>.</li><li>Put the “{{vagabond}}” <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with “S”)</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
       },
     },
@@ -479,11 +485,11 @@ export default {
       summary: `<p>As the Lord of the Hundreds, you score points as you <b>oppress</b> your foes. At the end of your turn, the more clearings you rule that have <i>no</i> enemy pieces—no warriors, no buildings, nothing—the more points you score.</p><p>To grow in power and attract warriors, you must gain items and add them to your towering <b>Hoard</b>. Boots, bags, and coins increase your <b>Command</b>, while hammers, tea, swords, and the crossbow increase your <b>Prowess</b>. Your <b>Contempt for Trade</b> means you rarely score from crafting item, but you can steal items from enemies with your <b>Looters</b>!</p><p>Leading the Hundreds is your warlord, a warrior-demagogue whose fickle <b>mood</b> gives you an ability for the turn. Your warlord is obsessed with hoarding, so as you gain more items, you will have fewer moods to choose from.</p><p>Declaring yourself to be the true voice of the Woodland, you can incite <b>mobs</b>, which destroy enemy buildings and tokens, and raid ruins for their items.</p>`,
       setupTitle: `Set up the Lord of the Hundreds`,
       setup: {
-        default: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly, unless this has already been done.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
+        default: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
         vagabondSetUp: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li><li>Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with “R”)</i> under the ruins randomly, unless this has already been done.</li></ol>`,
+        default: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li></ol>`,
         vagabondSetUp: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li></ol>`,
       },
     },

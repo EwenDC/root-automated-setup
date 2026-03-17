@@ -406,6 +406,7 @@ export interface FlowSlice {
   selectedBots: BotCode[]
   placedLandmarks: Record<string, number>
   placedHirelings: Record<string, number>
+  ruinPlacer: string | null
 }
 
 //#endregion

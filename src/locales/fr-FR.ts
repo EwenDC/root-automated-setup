@@ -165,6 +165,12 @@ export default {
       title: `Commencer à jouer`,
       body: `La mise en place est maintenant terminée. La partie commencera avec le Joueur {{count}}. Si vous souhaitez recommencer le processus de mise en place, utilisez le bouton ci-dessous.<p><i>« Mise en place automatique de Root » développé par Ewen Cameron</i><br/><i>Traduction française par Romain Storai et Steeve Fontaine</i><br/><i>Basé sur le jeu de société « Root » publié par Leder Games</i><br/><i>Application sous licence CC BY-NC-SA 4.0</i></p>`,
     },
+    setupRuins: {
+      title: `<li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly.</li>`,
+    },
+    skipRuins: {
+      title: `<li>This faction requires ruins to be filled, but this step was completed previously</li>`,
+    },
   },
   deck: {
     exiles: {
@@ -210,7 +216,7 @@ export default {
     },
     vagabot: {
       name: `Vagabot`,
-      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Place any 1 item marked "R" beneath each ruin on the map.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
+      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
     },
     cogwheelCorvids: {
       name: `Cogwheel Corvids`,
@@ -230,7 +236,7 @@ export default {
     },
     lootingLegion: {
       name: `Looting Legion`,
-      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Place the four 'R' items randomly under the ruins on the map.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
+      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
     },
   },
   faction: {
