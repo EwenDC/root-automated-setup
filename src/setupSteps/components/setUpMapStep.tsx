@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-
 import type { SetupStepComponent } from '..'
 
 import LocaleText from '../../components/localeText'
@@ -13,6 +12,8 @@ const SetUpMapStep: SetupStepComponent = () => {
   const { t } = useTranslation()
   const setupMap = useAppSelector(selectSetupMap)
   const includeBots = useAppSelector(state => state.setup.botCount > 0)
+  const useHouserules = useAppSelector(state => state.setup.useHouserules)
+  const mountainLandmarkCode = useAppSelector(state => state.setup.mountainLandmarkCode)
 
   if (!setupMap) return null
 
@@ -27,13 +28,20 @@ const SetUpMapStep: SetupStepComponent = () => {
     markerKey = 'priority'
   }
 
+  let landmarkTextKey = null
+  if (setupMap.useLandmark) {
+    if (setupMap.code === 'mountain') {
+      landmarkTextKey = `map.mountain.${mountainLandmarkCode}`
+    } else {
+      landmarkTextKey = `map.${setupMap.code}.landmarkSetup`
+    }
+  }
+
   return (
     <Section subtitleKey={`map.${setupMap.code}.setupTitle`}>
       <ol>
         <LocaleText i18nKey={`map.${setupMap.code}.setup`} />
-        {setupMap.useLandmark ? (
-          <LocaleText i18nKey={`map.${setupMap.code}.landmarkSetup`} />
-        ) : null}
+        {landmarkTextKey && <LocaleText i18nKey={landmarkTextKey} />}
         {markerKey && (
           <LocaleText
             i18nKey={`label.placeMarkers.${markerKey}`}
@@ -48,7 +56,7 @@ const SetUpMapStep: SetupStepComponent = () => {
         )}
         <LocaleText i18nKey="setupStep.setUpMap.body" />
       </ol>
-      <MapChart />
+      <MapChart useHouserules={useHouserules} />
     </Section>
   )
 }

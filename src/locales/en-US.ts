@@ -704,7 +704,9 @@ export default {
       setup: `<li>Grab the Lake/Mountain map board from the game box and place it down with the Mountain side facing up.</li><li>Place the 6 closed path markers to cover the 6 paths of darker color with excavated ground.</li>`,
       fixedSuits: `Use the suggested clearing suits for the Mountain Map`,
       useLandmark: `Use the map-specific setup for the Tower landmark on the Mountain map`,
-      landmarkSetup: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
+      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
     },
     winter: {
       name: `Winter`,

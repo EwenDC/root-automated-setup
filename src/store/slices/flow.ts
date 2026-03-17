@@ -44,6 +44,7 @@ export interface FlowState {
   placedLandmarks: Record<string, number>
   placedHirelings: Record<string, number>
   ruinPlacer: string | null
+  mountainLandmarkCode: string
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
@@ -99,6 +100,7 @@ export const flowSlice = createSlice({
     placedLandmarks: {},
     placedHirelings: {},
     ruinPlacer: null,
+    mountainLandmarkCode: 'tower',
   }),
 
   reducers: {
@@ -130,6 +132,7 @@ export const flowSlice = createSlice({
         placedHirelings: {},
         ruinPlacer: null,
         selectedBots: [],
+        mountainLandmarkCode: 'tower',
       }
       Object.assign(state, initialState)
     },

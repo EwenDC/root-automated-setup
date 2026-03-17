@@ -504,7 +504,9 @@ export default {
       setup: `<li>Coge el tablero del mapa del Lago y de la Montaña de la caja del juego y colócalo en la mesa con el lado de la Montaña bocarriba.</li><li>Coloca los 6 marcadores de camino cerrado para cubrir los 6 caminos de un color más oscuro con terreno excavado.</li>`,
       fixedSuits: `Usa los palos de los claros sugeridos para el Mapa de la Montaña`,
       useLandmark: `Usa la preparación específica del lugar mítico de la Torre para el mapa de la Montaña`,
-      landmarkSetup: `<li>Coloca la pieza de la Torre como se enseña en la imagen de abajo. Si tienes la carta del lugar mítico de "La Torre", sácala de la caja del juego y colócala al lado del tablero con el lado opuesto a su preparación bocarriba.</li>`,
+      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
+      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
     },
     winter: {
       name: `Invierno`,

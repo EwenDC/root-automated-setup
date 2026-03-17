@@ -513,7 +513,9 @@ export default {
       setup: `<li>Prenez le plateau Lac/Montagne dans la boite de jeu et placez-le avec la face Montagne visible.</li><li>Placez les 6 marqueurs de chemin fermé sur les 6 chemins plus foncés creusés dans la terre.</li>`, // Loi de Root v2023.08.03@C.3.1
       fixedSuits: `Sur le plateau Montagne, utiliser les couleurs de clairière suggérées`,
       useLandmark: `Sur le plateau Montagne, utiliser la mise en place de la Tour spécifique à ce plateau`,
-      landmarkSetup: `<li>Placez la Tour comme indiqué dans le schéma ci-dessous. Si vous avez la carte de Monument « La Tour », sortez-la de la boite de jeu et placez-la à côté du plateau, face effet visible.</li>`,
+      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
+      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
     },
     winter: {
       name: `Hiver`,

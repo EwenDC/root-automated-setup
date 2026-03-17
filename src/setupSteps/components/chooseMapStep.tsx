@@ -13,11 +13,15 @@ import {
   mapFixedSuits,
   selectMapArray,
   toggleMap,
+  toggleMountainLandmark,
 } from '../../store'
 
 const ChooseMapStep: SetupStepComponent = () => {
   const mapArray = useAppSelector(selectMapArray)
   const balancedSuits = useAppSelector(state => state.setup.balancedSuits)
+  const useHouserules = useAppSelector(state => state.setup.useHouserules)
+  const mountainLandmarkCode = useAppSelector(state => state.setup.mountainLandmarkCode)
+
   const { t, i18n } = useTranslation()
   const dispatch = useAppDispatch()
 
@@ -33,6 +37,8 @@ const ChooseMapStep: SetupStepComponent = () => {
       useLandmark,
     }))
     .sort((a, b) => a.label.localeCompare(b.label, i18n.resolvedLanguage))
+
+  const mountainEnabled = sortedMaps.some(m => m.code === 'mountain')
 
   return (
     <Section
@@ -70,6 +76,15 @@ const ChooseMapStep: SetupStepComponent = () => {
             onChange={checked => dispatch(enableMapLandmark([code, checked]))}
           />
         ))}
+      {useHouserules && mountainEnabled ? (
+        <Checkbox
+          labelKey={`map.mountain.useHouserule`}
+          defaultValue={mountainLandmarkCode === 'city'}
+          onChange={() => dispatch(toggleMountainLandmark())}
+        />
+      ) : (
+        ''
+      )}
     </Section>
   )
 }

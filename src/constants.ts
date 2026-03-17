@@ -126,6 +126,7 @@ export const SETTING_LANDMARK_COUNT = 'landmarkCount'
 export const SETTING_PLAYER_COUNT = 'playerCount'
 export const SETTING_BOT_COUNT = 'botCount'
 export const SETTING_USE_DRAFT = 'useDraft'
+export const SETTING_MOUNTAIN_LANDMARK = 'mountainLandmarkCode'
 
 export const SETTING_USE_HOUSERULES = 'useHouserules'
 

@@ -9,6 +9,7 @@ import LocaleText from './localeText'
 
 // Expanded the MapChart function to be able to handle clicks on the clearings for placing hirelings and landmarks, logic to display valid clearings, and adjusted maps to better handle new bot components
 interface MapData {
+  code: string
   backImage: string
   floodImage?: string
   useLandmark?: boolean
@@ -51,6 +52,7 @@ const MapChart: React.FC<MapChartProps> = ({
   const placedHirelings = useAppSelector(state => state.flow.placedHirelings)
   const landmarks = useAppSelector(selectLandmarkArray)
   const hirelings = useAppSelector(selectHirelingArray)
+  const mountainLandmarkCode = useAppSelector(state => state.setup.mountainLandmarkCode)
 
   const piecesByClearing = React.useMemo(() => {
     const grouping: Record<number, { landmarks: typeof landmarks; hirelings: typeof hirelings }> =
@@ -74,7 +76,16 @@ const MapChart: React.FC<MapChartProps> = ({
   if (!map) return null
 
   const floodedClearings = map.clearings.filter(clearing => clearing.flooded)
-
+  if (map.code === 'mountain' && map.landmark) {
+    const overrideLandmark = landmarks.find(l => l.code === mountainLandmarkCode)
+    if (overrideLandmark) {
+      map.landmark = {
+        ...map.landmark,
+        code: overrideLandmark.code,
+        image: overrideLandmark.image,
+      }
+    }
+  }
   return (
     <svg
       className="map"

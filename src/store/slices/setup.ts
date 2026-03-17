@@ -15,6 +15,7 @@ import {
   SETTING_HIRELING_COUNT,
   SETTING_INCLUDE_BOTS,
   SETTING_LANDMARK_COUNT,
+  SETTING_MOUNTAIN_LANDMARK,
   SETTING_PLAYER_COUNT,
   SETTING_USE_HOUSERULES,
 } from '../../constants'
@@ -48,6 +49,7 @@ export interface SetupState {
   useHouserules: boolean
   placedLandmarks: Record<string, number>
   placedHirelings: Record<string, number>
+  mountainLandmarkCode: string
 }
 
 export const setupSlice = createSlice({
@@ -87,6 +89,7 @@ export const setupSlice = createSlice({
       useHouserules: loadPersistedSetting<boolean>(SETTING_USE_HOUSERULES, false),
       placedLandmarks: {},
       placedHirelings: {},
+      mountainLandmarkCode: loadPersistedSetting<string>(SETTING_MOUNTAIN_LANDMARK, 'tower'),
     }
   },
 
@@ -238,6 +241,12 @@ export const setupSlice = createSlice({
       state.placedHirelings[action.payload.code] = action.payload.clearingIndex
       state.errorMessage = null
     },
+
+    toggleMountainLandmark(state) {
+      // Flip the string between the two valid codes
+      state.mountainLandmarkCode = state.mountainLandmarkCode === 'tower' ? 'city' : 'tower'
+      savePersistedSetting(SETTING_MOUNTAIN_LANDMARK, state.mountainLandmarkCode)
+    },
   },
 
   extraReducers(builder) {
@@ -249,6 +258,7 @@ export const setupSlice = createSlice({
         state.deck = null
         state.placedLandmarks = {}
         state.placedHirelings = {}
+        state.mountainLandmarkCode = 'tower'
         state.errorMessage = null
       })
       // Clear internal variables when restarting setup
@@ -299,6 +309,7 @@ export const {
   setPlayerCount,
   setBotCount,
   setUseHouserules,
+  toggleMountainLandmark,
 } = setupSlice.actions
 
 export const { selectTwoPlayer, selectSetupClearings, selectSetupDeckCode, selectSetupMapCode } =

@@ -527,7 +527,9 @@ export default {
       setup: `<li>Weź planszę mapy Jezioro/Góry z pudełka gry i umieść ją stroną Góry do góry.</li><li>Umieść 6 żetonów zamkniętych ścieżek, aby zakryć 6 ścieżek o ciemniejszym kolorze z wykopaną ziemią.</li>`,
       fixedSuits: `Użyj sugerowanych symboli polan dla Mapy Góry`,
       useLandmark: `Użyj konfiguracji specyficznej dla mapy dla punktu terenu Wieża na mapie Góry`,
-      landmarkSetup: `<li>Umieść element Wieży zgodnie z poniższym wykresem. Jeśli posiadasz kartę punktu terenu „Wieża”, weź ją z pudełka gry i umieść obok mapy stroną gry do góry.</li>`,
+      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
+      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
     },
     winter: {
       name: `Zima`,

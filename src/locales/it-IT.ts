@@ -504,7 +504,9 @@ export default {
       setup: `<li>Prendete la mappa del Lago/Montagna dalla scatola di gioco e posizionatela sul tavolo col lato della Montagna a faccia in su.</li><li>Posizionate i 6 indicatori Sentiero Nascosto per coprire i sentieri più scuri, di colore arancione.</li>`,
       fixedSuits: `Usa i simboli radura suggeriti per la mappa della Montagna`,
       useLandmark: `Usa la preparazione specifica della Torre per la mappa della Montagna`,
-      landmarkSetup: `<li>Posizionate la Torre come mostrato nel grafico sottostante. Se avete la carta meraviglia "Torre", prendetela dalla scatola di gioco e posizionatela vicino alla mappa col suo lato di preparazione a faccia in giù.</li>`,
+      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
+      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
     },
     winter: {
       name: `Invernale`,
