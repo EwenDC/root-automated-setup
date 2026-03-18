@@ -17,7 +17,7 @@ import type {
 } from '../../types'
 
 import { SETTING_USE_DRAFT } from '../../constants'
-import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
+import { savePersistedSetting } from '../../functions/persistedSettings'
 import { takeRandom } from '../../functions/random'
 import { SetupStep } from '../../types'
 import { resetState } from '../actions'
@@ -41,10 +41,6 @@ export interface FlowState {
   futureSteps: FlowSlice[]
   useDraft: boolean
   selectedBots: BotCode[]
-  placedLandmarks: Record<string, number>
-  placedHirelings: Record<string, number>
-  ruinPlacer: string | null
-  mountainLandmarkCode: string
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
@@ -59,9 +55,6 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
   selectedBots: [...flowState.selectedBots],
-  placedLandmarks: { ...flowState.placedLandmarks },
-  placedHirelings: { ...flowState.placedHirelings },
-  ruinPlacer: flowState.ruinPlacer,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -74,34 +67,28 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentStep = slice.step
   state.vagabondSetUp = slice.vagabondSetUp
   state.selectedBots = slice.selectedBots
-  state.placedLandmarks = slice.placedLandmarks
-  state.placedHirelings = slice.placedHirelings
   state.botPool = slice.botPool
-  state.ruinPlacer = slice.ruinPlacer
+}
+
+const initialState: FlowState = {
+  botPool: [],
+  factionPool: [],
+  hirelingPool: [],
+  currentIndex: null,
+  landmarkPool: [],
+  lastFactionLocked: false,
+  currentPlayerIndex: null,
+  currentStep: SetupStep.chooseExpansions,
+  vagabondSetUp: false,
+  pastSteps: [],
+  futureSteps: [],
+  selectedBots: [],
+  useDraft: true,
 }
 
 export const flowSlice = createSlice({
   name: 'flow',
-
-  initialState: (): FlowState => ({
-    botPool: [],
-    factionPool: [],
-    hirelingPool: [],
-    currentIndex: null,
-    landmarkPool: [],
-    lastFactionLocked: false,
-    currentPlayerIndex: null,
-    currentStep: SetupStep.chooseExpansions,
-    vagabondSetUp: false,
-    pastSteps: [],
-    futureSteps: [],
-    useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
-    selectedBots: [],
-    placedLandmarks: {},
-    placedHirelings: {},
-    ruinPlacer: null,
-    mountainLandmarkCode: 'tower',
-  }),
+  initialState,
 
   reducers: {
     setCurrentStep(state, { payload: currentStep }: PayloadAction<SetupStep>) {
@@ -114,27 +101,9 @@ export const flowSlice = createSlice({
       state.futureSteps = []
     },
 
-    resetStep(state) {
+    resetStep() {
       //Reset the state to initial values
-      const initialState = {
-        botPool: [],
-        factionPool: [],
-        hirelingPool: [],
-        currentIndex: null,
-        landmarkPool: [],
-        lastFactionLocked: false,
-        currentPlayerIndex: null,
-        currentStep: SetupStep.chooseExpansions,
-        vagabondSetUp: false,
-        pastSteps: [],
-        futureSteps: [],
-        placedLandmarks: {},
-        placedHirelings: {},
-        ruinPlacer: null,
-        selectedBots: [],
-        mountainLandmarkCode: 'tower',
-      }
-      Object.assign(state, initialState)
+      return initialState
     },
 
     undoStep(state) {
@@ -215,13 +184,6 @@ export const flowSlice = createSlice({
 
       if (!state.vagabondSetUp && baseFactionCode === 'vagabond') {
         state.vagabondSetUp = true
-      }
-
-      if (
-        state.ruinPlacer === null &&
-        (baseFactionCode === 'warlord' || baseFactionCode === 'vagabond')
-      ) {
-        state.ruinPlacer = code
       }
     },
 
@@ -307,13 +269,6 @@ export const flowSlice = createSlice({
         if (state.lastFactionLocked && removedFaction?.militant) state.lastFactionLocked = false
         // Flag if we set up a vagabond
         if (!state.vagabondSetUp && removedFaction?.vagabond) state.vagabondSetUp = true
-        if (
-          state.ruinPlacer === null &&
-          removedFaction &&
-          (removedFaction.code.includes('warlord') || removedFaction.code.includes('vagabond'))
-        ) {
-          state.ruinPlacer = removedFaction.code
-        }
       } else {
         console.warn(`Invalid removeCurrentFactionFromPool action: currentIndex must not be null`)
       }
@@ -340,13 +295,6 @@ export const flowSlice = createSlice({
         )
       }
     },
-
-    placeLandmark: (state, action: PayloadAction<{ clearingIndex: number; code: string }>) => {
-      state.placedLandmarks[action.payload.code] = action.payload.clearingIndex
-    },
-    placeHireling: (state, action: PayloadAction<{ clearingIndex: number; code: string }>) => {
-      state.placedHirelings[action.payload.code] = action.payload.clearingIndex
-    },
   },
 
   extraReducers(builder) {
@@ -356,22 +304,8 @@ export const flowSlice = createSlice({
         // No-op so we don't wipe the redo queue when displaying an error
       })
       // Clear internal variables when restarting setup
-      .addCase(resetState, state => {
-        state.botPool = []
-        state.factionPool = []
-        state.hirelingPool = []
-        state.currentIndex = null
-        state.landmarkPool = []
-        state.lastFactionLocked = false
-        state.currentPlayerIndex = null
-        state.currentStep = SetupStep.chooseExpansions
-        state.vagabondSetUp = false
-        state.pastSteps = []
-        state.futureSteps = []
-        state.selectedBots = []
-        state.placedLandmarks = {}
-        state.placedHirelings = {}
-        state.ruinPlacer = null
+      .addCase(resetState, () => {
+        return initialState
       })
       .addDefaultCase(state => {
         state.futureSteps = []
@@ -391,8 +325,6 @@ export const flowSlice = createSlice({
       step: state => state.currentStep,
       vagabondSetUp: state => state.vagabondSetUp,
       selectedBots: state => state.selectedBots,
-      placeLandmark: state => state.placedLandmarks,
-      placeHireling: state => state.placedHirelings,
     }),
   },
 })
@@ -419,8 +351,6 @@ export const {
   setUseDraft,
   undoStep,
   resetStep,
-  placeLandmark,
-  placeHireling,
 } = flowSlice.actions
 
 export const { selectFlowSlice, selectBotPool } = flowSlice.selectors

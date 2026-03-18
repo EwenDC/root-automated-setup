@@ -36,6 +36,6 @@ export const selectLandmark: SetupStepDefinition = {
       return null
     }
 
-    return SetupStep.setUpLandmark
+    return SetupStep.selectLandmark
   },
 }

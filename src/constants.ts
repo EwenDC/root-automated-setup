@@ -73,10 +73,6 @@ export const ICON_DICTIONARY: DeepReadonly<
     key: 'label.rabbit',
     image: rabbitIcon,
   },
-  none: {
-    key: 'label.none',
-    image: '',
-  },
   bag: {
     key: 'component.bag',
     image: bagImage,
@@ -126,9 +122,6 @@ export const SETTING_LANDMARK_COUNT = 'landmarkCount'
 export const SETTING_PLAYER_COUNT = 'playerCount'
 export const SETTING_BOT_COUNT = 'botCount'
 export const SETTING_USE_DRAFT = 'useDraft'
-export const SETTING_MOUNTAIN_LANDMARK = 'mountainLandmarkCode'
-
-export const SETTING_USE_HOUSERULES = 'useHouserules'
 
 export const LEGACY_SETTING_INCLUDE_HIRELINGS = 'includeHirelings'
 

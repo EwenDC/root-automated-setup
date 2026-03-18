@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+
 import type { SetupStepComponent } from '..'
 
 import LocaleText from '../../components/localeText'
@@ -11,37 +12,26 @@ import { selectSetupMap } from '../../store'
 const SetUpMapStep: SetupStepComponent = () => {
   const { t } = useTranslation()
   const setupMap = useAppSelector(selectSetupMap)
-  const includeBots = useAppSelector(state => state.setup.botCount > 0)
-  const useHouserules = useAppSelector(state => state.setup.useHouserules)
-  const mountainLandmarkCode = useAppSelector(state => state.setup.mountainLandmarkCode)
+  const includeBots = useAppSelector(state => state.setup.includeBots)
 
   if (!setupMap) return null
 
   let markerKey = null
   if (setupMap.clearings.length > STANDARD_MAP_SIZE) {
-    markerKey = setupMap.clearings.some(clearing => 'flooded' in clearing && clearing.flooded)
-      ? 'floodSuit'
-      : 'landmarkSuit'
+    markerKey = setupMap.clearings.some(clearing => clearing.flooded) ? 'floodSuit' : 'landmarkSuit'
   } else if (!setupMap.fixedSuits || !setupMap.printedSuits) {
     markerKey = includeBots ? 'suitPriority' : 'suit'
   } else if (includeBots) {
     markerKey = 'priority'
   }
 
-  let landmarkTextKey = null
-  if (setupMap.useLandmark) {
-    if (setupMap.code === 'mountain') {
-      landmarkTextKey = `map.mountain.${mountainLandmarkCode}`
-    } else {
-      landmarkTextKey = `map.${setupMap.code}.landmarkSetup`
-    }
-  }
-
   return (
     <Section subtitleKey={`map.${setupMap.code}.setupTitle`}>
       <ol>
         <LocaleText i18nKey={`map.${setupMap.code}.setup`} />
-        {landmarkTextKey && <LocaleText i18nKey={landmarkTextKey} />}
+        {setupMap.useLandmark ? (
+          <LocaleText i18nKey={`map.${setupMap.code}.landmarkSetup`} />
+        ) : null}
         {markerKey && (
           <LocaleText
             i18nKey={`label.placeMarkers.${markerKey}`}
@@ -56,7 +46,7 @@ const SetUpMapStep: SetupStepComponent = () => {
         )}
         <LocaleText i18nKey="setupStep.setUpMap.body" />
       </ol>
-      <MapChart useHouserules={useHouserules} />
+      <MapChart />
     </Section>
   )
 }

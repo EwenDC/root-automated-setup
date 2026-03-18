@@ -15,9 +15,7 @@ import {
   SETTING_HIRELING_COUNT,
   SETTING_INCLUDE_BOTS,
   SETTING_LANDMARK_COUNT,
-  SETTING_MOUNTAIN_LANDMARK,
   SETTING_PLAYER_COUNT,
-  SETTING_USE_HOUSERULES,
 } from '../../constants'
 import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
 import { resetState } from '../actions'
@@ -45,11 +43,6 @@ export interface SetupState {
   excludedFactions: FactionCode[]
   limitVagabonds: boolean
   limitCaptains: boolean
-  expansion: string | null
-  useHouserules: boolean
-  placedLandmarks: Record<string, number>
-  placedHirelings: Record<string, number>
-  mountainLandmarkCode: string
 }
 
 export const setupSlice = createSlice({
@@ -85,11 +78,6 @@ export const setupSlice = createSlice({
       excludedFactions: [],
       limitVagabonds: false,
       limitCaptains: false,
-      expansion: null,
-      useHouserules: loadPersistedSetting<boolean>(SETTING_USE_HOUSERULES, false),
-      placedLandmarks: {},
-      placedHirelings: {},
-      mountainLandmarkCode: loadPersistedSetting<string>(SETTING_MOUNTAIN_LANDMARK, 'tower'),
     }
   },
 
@@ -148,19 +136,8 @@ export const setupSlice = createSlice({
       savePersistedSetting(SETTING_INCLUDE_BOTS, includeBots)
     },
 
-    setUseHouserules(state, { payload: useHouserules }: PayloadAction<boolean>) {
-      state.useHouserules = useHouserules
-      state.errorMessage = null
-      savePersistedSetting(SETTING_USE_HOUSERULES, useHouserules)
-    },
-
     setErrorMessage(state, { payload: errorMessage }: PayloadAction<string | null>) {
       state.errorMessage = errorMessage
-    },
-
-    setExpansions(state, { payload }: PayloadAction<CodeObject>) {
-      const { code: expansionCode } = payload
-      state.expansion = expansionCode
     },
 
     setMap(state, { payload }: PayloadAction<CodeObject>) {
@@ -183,35 +160,27 @@ export const setupSlice = createSlice({
       state.deck = deckCode
     },
 
-    setLandmarkCount(state, landmarkCount: PayloadAction<number>) {
-      if (state.useHouserules) {
-        state.landmarkCount = Math.max(0, landmarkCount.payload)
+    setLandmarkCount(state, { payload: landmarkCount }: PayloadAction<number>) {
+      if (landmarkCount >= 0 && landmarkCount <= MAX_LANDMARKS) {
+        state.landmarkCount = landmarkCount
         state.errorMessage = null
         savePersistedSetting(SETTING_LANDMARK_COUNT, landmarkCount)
       } else {
-        console.warn(`Invalid payload for setLandmarkCount action.`)
-        state.landmarkCount = Math.max(0, Math.min(landmarkCount.payload, MAX_LANDMARKS))
+        console.warn(
+          `Invalid payload for setLandmarkCount action: ${landmarkCount} (Payload must be a number between 0 and ${MAX_LANDMARKS})`,
+        )
       }
     },
 
-    setHirelingCount(state, action: PayloadAction<number>) {
-      const count = action.payload
-
-      if (state.useHouserules) {
-        state.hirelingCount = Math.max(0, count)
+    setHirelingCount(state, { payload: hirelingCount }: PayloadAction<number>) {
+      if (hirelingCount === 0 || hirelingCount === HIRELING_SETUP_COUNT) {
+        state.hirelingCount = hirelingCount
         state.errorMessage = null
-        savePersistedSetting(SETTING_HIRELING_COUNT, count)
+        savePersistedSetting(SETTING_HIRELING_COUNT, hirelingCount)
       } else {
-        if (count === 0 || count === HIRELING_SETUP_COUNT) {
-          state.hirelingCount = count
-          state.errorMessage = null
-          savePersistedSetting(SETTING_HIRELING_COUNT, count)
-        } else {
-          console.warn(
-            `Invalid payload for setHirelingCount action: ${count} (Payload must either be 0 or ${HIRELING_SETUP_COUNT})`,
-          )
-          state.hirelingCount = count > 0 ? HIRELING_SETUP_COUNT : 0
-        }
+        console.warn(
+          `Invalid payload for setHirelingCount action: ${hirelingCount} (Payload must either be 0 or ${HIRELING_SETUP_COUNT})`,
+        )
       }
     },
 
@@ -232,21 +201,6 @@ export const setupSlice = createSlice({
       state.limitCaptains = limitCaptains
       state.errorMessage = null
     },
-
-    placeLandmark(state, action: PayloadAction<{ code: string; clearingIndex: number }>) {
-      state.placedLandmarks[action.payload.code] = action.payload.clearingIndex
-      state.errorMessage = null
-    },
-    placeHireling(state, action: PayloadAction<{ code: string; clearingIndex: number }>) {
-      state.placedHirelings[action.payload.code] = action.payload.clearingIndex
-      state.errorMessage = null
-    },
-
-    toggleMountainLandmark(state) {
-      // Flip the string between the two valid codes
-      state.mountainLandmarkCode = state.mountainLandmarkCode === 'tower' ? 'city' : 'tower'
-      savePersistedSetting(SETTING_MOUNTAIN_LANDMARK, state.mountainLandmarkCode)
-    },
   },
 
   extraReducers(builder) {
@@ -256,9 +210,6 @@ export const setupSlice = createSlice({
         state.map = null
         state.clearings = []
         state.deck = null
-        state.placedLandmarks = {}
-        state.placedHirelings = {}
-        state.mountainLandmarkCode = 'tower'
         state.errorMessage = null
       })
       // Clear internal variables when restarting setup
@@ -271,8 +222,6 @@ export const setupSlice = createSlice({
         state.excludedFactions = []
         state.limitVagabonds = false
         state.limitCaptains = false
-        state.placedLandmarks = {}
-        state.placedHirelings = {}
       })
       // This allows us to always reset the displayed error if the user makes a separate input
       .addDefaultCase(state => {
@@ -308,8 +257,6 @@ export const {
   setMap,
   setPlayerCount,
   setBotCount,
-  setUseHouserules,
-  toggleMountainLandmark,
 } = setupSlice.actions
 
 export const { selectTwoPlayer, selectSetupClearings, selectSetupDeckCode, selectSetupMapCode } =
