@@ -1,10 +1,13 @@
 import type { TypedUseSelectorHook, UseDispatch } from 'react-redux'
 
 import { createContext } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import type { AppDispatch, RootState } from './store'
 import type { Faction, FlowSlice, Vagabond, WithCode } from './types'
+
+import { resetState } from './store'
 
 export const selectedFactionContext = createContext<
   (Faction & { vagabond: WithCode<Vagabond> | undefined; captains: WithCode<Vagabond>[] }) | null
@@ -29,3 +32,39 @@ export const usePlayerNumber = ({ playerIndex }: FlowSlice) => {
  */
 export const useInvalid = (stepActive: boolean) =>
   useAppSelector(state => stepActive && state.setup.errorMessage != null)
+
+// Handles the toolbar.exe buttons
+export const useToolbarActions = () => {
+  const dispatch = useAppDispatch()
+  const [confirmReset, setConfirmReset] = useState(false)
+  const resetButtonRef = useRef<HTMLButtonElement>(null)
+
+  const handleResetClick = () => {
+    if (confirmReset) {
+      dispatch(resetState())
+      setConfirmReset(false)
+      // Wipe query params when resetting so app returns to zero
+      window.history.replaceState(null, '', window.location.pathname)
+    } else {
+      setConfirmReset(true)
+    }
+  }
+  // Auto-cancel the reset confirmation after 3 seconds of inactivity
+  useEffect(() => {
+    if (confirmReset) {
+      const timer = setTimeout(() => {
+        setConfirmReset(false)
+      }, 3000)
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+    return
+  }, [confirmReset])
+
+  return {
+    confirmReset,
+    handleResetClick,
+    resetButtonRef,
+  }
+}

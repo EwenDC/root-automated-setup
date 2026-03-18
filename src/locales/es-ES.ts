@@ -13,6 +13,7 @@ export default {
     },
     closeMessage: `Cerrar mensaje`,
     complexity: `Complejidad`,
+    confirmReset: `Reset App?`,
     crafting: `Capacidad de Fabricación`,
     disableAll: `Excluye todos`,
     enableAll: `Selecciona todos`,
