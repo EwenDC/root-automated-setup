@@ -185,9 +185,10 @@ export const deserializeUrlParams = (queryString: string): ParsedUrlParams => {
   if (urlParams.has('balancedSuits'))
     parsed.balancedSuits = urlParams.get('balancedSuits') === 'true'
 
-  //- ARRAYS -//
-  if (urlParams.has('map')) parsed.map = urlParams.get('map')!
+  //- STRINGS -//
   if (urlParams.has('deck')) parsed.deck = urlParams.get('deck')!
+
+  //- ARRAYS -//
   if (urlParams.has('expansions')) parsed.expansions = urlParams.get('expansions')!.split(',')
   if (urlParams.has('factions')) parsed.factions = urlParams.get('factions')!.split(',')
 
