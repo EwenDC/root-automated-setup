@@ -144,6 +144,11 @@ export const flowSlice = createSlice({
       }
     },
 
+    resetStep() {
+      // Reset to initial state
+      return initialState
+    },
+
     setUseDraft(state, { payload: useDraft }: PayloadAction<boolean>) {
       state.useDraft = useDraft
       state.futureSteps = []
