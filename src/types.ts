@@ -319,7 +319,6 @@ export interface FlowSlice {
   landmarkPool: LandmarkCode[]
   lastFactionLocked: boolean
   playerIndex: number | null
-  ruinPlacer: string | null
   selectedBots: BotCode[]
   step: SetupStep
   vagabondSetUp: boolean

@@ -12,7 +12,6 @@ const SetUpFactionStep: SetupStepComponent = ({ flowSlice }) => {
   const useDraft = useAppSelector(state => state.flow.useDraft)
   const twoPlayer = useAppSelector(selectTwoPlayer)
   const factionPoolFull = useAppSelector(selectFactionPoolFull(flowSlice))
-  const ruinPlacer = useAppSelector(state => state.flow.ruinPlacer)
   const { t } = useTranslation()
 
   const { index, vagabondSetUp } = flowSlice
@@ -27,12 +26,6 @@ const SetUpFactionStep: SetupStepComponent = ({ flowSlice }) => {
   if (vagabondSetUp) {
     textKey.unshift(`${baseTextKey}.vagabondSetUp`)
   }
-
-  const ruinTextKey = ruinFaction
-    ? ruinPlacer === null || ruinPlacer === key
-      ? 'setupStep.setupRuins.title'
-      : 'setupStep.skipRuins.title'
-    : ''
 
   const components = vagabond && {
     InitialStartingItems: <IconList list={vagabond.startingItems.slice(0, -1)} />,
@@ -49,9 +42,7 @@ const SetUpFactionStep: SetupStepComponent = ({ flowSlice }) => {
         captain: captains.map(captain => t(`captain.${captain.code}.name`)),
       }}
       components={components}
-    >
-      <Section textKey={ruinTextKey} />
-    </Section>
+    />
   )
 }
 
