@@ -18,7 +18,6 @@ const SetUpFactionStep: SetupStepComponent = ({ flowSlice }) => {
   if (index == null) return null
 
   const { key, vagabond, captains } = factionPoolFull[index]!
-  const ruinFaction = key.includes('warlord') || key.includes('vagabond')
 
   // Use array so text can fall back to "default" if there is no "vagabondSetUp" variation
   const baseTextKey = `faction.${key}.${useDraft ? 'advancedSetup' : 'setup'}`
