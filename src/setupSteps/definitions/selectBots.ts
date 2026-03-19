@@ -1,12 +1,9 @@
 import type { SetupStepDefinition } from '..'
 
 import {
-  addToSelectedBots,
   clearExcludedFactions,
   lockBot,
   massComponentLock,
-  pushExcludedFactions,
-  removeFromBotPool,
   resetBotPool,
   resetSelectedBots,
   selectBotArray,
@@ -65,28 +62,6 @@ export const selectBots: SetupStepDefinition = {
       dispatch(setErrorMessage('error.noBot'))
       return null
     }
-
-    const allBots = selectBotArray(state)
-    const availableBots = allBots.filter(b => flow.botPool.includes(b.code))
-    const selectedBot = availableBots[flow.currentIndex]
-
-    if (!selectedBot) {
-      return null
-    }
-
-    dispatch(addToSelectedBots(selectedBot.code))
-    dispatch(
-      removeFromBotPool({
-        code: selectedBot.code,
-        baseFactionCode: selectedBot.baseFactionCode,
-      }),
-    )
-
-    if (selectedBot.excludeFactions && selectedBot.excludeFactions.length > 0) {
-      dispatch(pushExcludedFactions(selectedBot.excludeFactions))
-    }
-
-    dispatch(setCurrentIndex(flow.selectedBots.length))
     return SetupStep.setUpBots
   },
 }

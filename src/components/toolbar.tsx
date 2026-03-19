@@ -9,14 +9,7 @@ import RedoIcon from '../images/icons/redo.svg?react'
 import ResetIcon from '../images/icons/reset.svg?react'
 import UndoIcon from '../images/icons/undo.svg?react'
 import { nextStep } from '../setupSteps'
-import {
-  redoStep,
-  resetStep,
-  selectBotArray,
-  selectExpansionArray,
-  selectFactionArray,
-  undoStep,
-} from '../store'
+import { redoStep, undoStep } from '../store'
 import { SetupStep } from '../types'
 import Button from './button'
 import LocaleText from './localeText'
@@ -26,85 +19,9 @@ const Toolbar: React.FC = () => {
   const dispatch = useAppDispatch()
   const { confirmReset, handleResetClick, resetButtonRef } = useToolbarActions()
 
-  const botCount = useAppSelector(state => state.setup.botCount)
-  const allBots = useAppSelector(selectBotArray)
-  const selectedBots = useAppSelector(state => state.flow.selectedBots)
-
-  const setupState = useAppSelector(state => state.setup)
-  const expansions = useAppSelector(selectExpansionArray)
-  const factions = useAppSelector(selectFactionArray)
-
-  const botParams = selectedBots
-    .map(code => {
-      const bot = allBots.find(b => b.code === code)
-      return bot?.clockroot || code
-    })
-    .join(',')
-
   const undoButtonRef = useRef<HTMLButtonElement>(null)
   const redoButtonRef = useRef<HTMLButtonElement>(null)
   const nextButtonRef = useRef<HTMLButtonElement>(null)
-
-  const handleResetClick = () => {
-    const confirmReset = window.confirm(t('label.confirmReset'))
-    if (confirmReset) {
-      dispatch(resetStep())
-      setFocusedIndex(1)
-    }
-  }
-
-  const handleCopyUrl = async () => {
-    const urlParams = new URLSearchParams()
-
-    // -- NUMBERS -- //
-    if (setupState.playerCount !== 4)
-      urlParams.set('playerCount', setupState.playerCount.toString())
-    if (setupState.botCount > 0) urlParams.set('botCount', setupState.botCount.toString())
-    if (setupState.landmarkCount > 0)
-      urlParams.set('landmarkCount', setupState.landmarkCount.toString())
-    if (setupState.hirelingCount > 0)
-      urlParams.set('hirelingCount', setupState.hirelingCount.toString())
-
-    // -- BOOLEANS -- //
-    if (setupState.fixedFirstPlayer) urlParams.set('fixedFirstPlayer', 'true')
-    if (setupState.balancedSuits) urlParams.set('balancedSuits', 'true')
-    if (setupState.limitCaptains) urlParams.set('limitCaptains', 'true')
-    if (setupState.limitVagabonds) urlParams.set('limitVagabonds', 'true')
-
-    // -- STRINGS -- //
-    if (setupState.map) urlParams.set('map', setupState.map)
-    if (setupState.deck) urlParams.set('deck', setupState.deck)
-
-    // -- ARRAYS / CODES -- //
-    const enabledExpansions = expansions
-      .filter(e => e.enabled && e.code !== 'root')
-      .map(e => e.code)
-
-    if (enabledExpansions.length > 0) {
-      urlParams.set('expansions', enabledExpansions.join(','))
-    }
-
-    const enabledFactions = factions.filter(f => f.enabled).map(f => f.code)
-
-    if (enabledFactions.length > 0) {
-      urlParams.set('factions', enabledFactions.join(','))
-    }
-
-    const queryString = urlParams.toString()
-    const url = queryString
-      ? `${window.location.origin}${window.location.pathname}?${queryString}`
-      : `${window.location.origin}${window.location.pathname}`
-
-    try {
-      await navigator.clipboard.writeText(url)
-      setCopied(true)
-      setTimeout(() => {
-        setCopied(false)
-      }, 2000)
-    } catch (err) {
-      console.error('Failed to copy URL to clipboard', err)
-    }
-  }
 
   const buttonRefs = [resetButtonRef, undoButtonRef, redoButtonRef, nextButtonRef] // Add buttons here for the key handlers
   const [focusedIndex, setFocusedIndex] = useState(0)
@@ -192,22 +109,6 @@ const Toolbar: React.FC = () => {
         >
           <LocaleText i18nKey="label.nextStep" />
         </Button>
-
-        {botCount > 0 && botParams ? (
-          <Section
-            textKey="label.bots"
-            components={{
-              BotLink: (
-                <a
-                  className="clockroot"
-                  href={`https://clockroot.seiyria.com/?bots=${botParams}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              ),
-            }}
-          />
-        ) : null}
       </div>
     </footer>
   )

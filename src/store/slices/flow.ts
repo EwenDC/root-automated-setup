@@ -101,11 +101,6 @@ export const flowSlice = createSlice({
       state.futureSteps = []
     },
 
-    resetStep() {
-      //Reset the state to initial values
-      return initialState
-    },
-
     undoStep(state) {
       // Get the previous step from the undo queue
       const previousStep = state.pastSteps.pop()

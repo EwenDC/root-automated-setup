@@ -5,16 +5,16 @@ import { useAppSelector } from '../../hooks'
 import { selectBotArray } from '../../store'
 
 const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
-  const { selectedBots, index } = flowSlice
+  const { selectedBots } = flowSlice
   const allBots = useAppSelector(selectBotArray)
-  const selectedBotEntry = index != null ? selectedBots[index] : null
-  const botCode = selectedBotEntry
+
+  const botCode = selectedBots.length > 0 ? selectedBots[selectedBots.length - 1] : null
   const bot = allBots.find(b => b.code === botCode)
 
   console.log(bot?.baseFactionCode)
 
-  if (index == null) return null
-  if (!selectedBotEntry) return null
+  if (!botCode) return null
+
   return (
     <Section
       titleKey={`bot.${botCode}.name`}
