@@ -20,7 +20,7 @@ const SeatPlayersStep: SetupStepComponent = () => {
   const factions = useAppSelector(selectFactionArray)
   const dispatch = useAppDispatch()
 
-  const includeBots = useAppSelector(state => state.setup.includeBots)
+  const includeBots = useAppSelector(state => state.setup.botCount > 0)
   const expansionArray = useAppSelector(selectExpansionArray)
   const botExpansions = ['clockwork', 'clockwork2', 'betaClockwork']
   const botExpansionsEnabled = botExpansions.some(code =>

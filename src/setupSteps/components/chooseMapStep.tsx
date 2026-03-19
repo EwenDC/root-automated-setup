@@ -12,6 +12,7 @@ import {
   enableMapLandmark,
   mapFixedSuits,
   selectMapArray,
+  setPlayerCount,
   toggleMap,
 } from '../../store'
 
@@ -20,6 +21,12 @@ const ChooseMapStep: SetupStepComponent = () => {
   const balancedSuits = useAppSelector(state => state.setup.balancedSuits)
   const { t, i18n } = useTranslation()
   const dispatch = useAppDispatch()
+  const playerCount = useAppSelector(state => state.setup.playerCount)
+  const botCount = useAppSelector(state => state.setup.botCount)
+  // Check if somebody snuck in with 1 player and no bots (Choose 1 bot, choose 1 player, choose 0 bots, remains at 1 player)
+  if (botCount < 1 && playerCount < 2) {
+    setPlayerCount(2)
+  }
 
   const sortedMaps = mapArray
     .filter(

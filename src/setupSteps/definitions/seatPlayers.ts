@@ -8,7 +8,7 @@ export const seatPlayers: SetupStepDefinition = {
   beforeStep(dispatch, getState) {
     // Correct our current player count if it is too low or high (this can occur with undo/redo)
     const state = getState()
-    if (state.setup.playerCount < 2 && !state.setup.includeBots) {
+    if (state.setup.playerCount < 2 && !(state.setup.botCount > 0)) {
       dispatch(setPlayerCount(2))
     } else {
       const maxPlayerCount = selectFactionArray(state).length

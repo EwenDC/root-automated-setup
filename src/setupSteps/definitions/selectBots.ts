@@ -18,7 +18,7 @@ export const selectBots: SetupStepDefinition = {
   beforeStep(dispatch, getState) {
     const state = getState()
 
-    if (!state.setup.includeBots || state.setup.botCount === 0) {
+    if (state.setup.botCount <= 0) {
       return SetupStep.chooseLandmarks
     }
 

@@ -13,7 +13,6 @@ import {
   SETTING_BOT_COUNT,
   SETTING_FIXED_FIRST_PLAYER,
   SETTING_HIRELING_COUNT,
-  SETTING_INCLUDE_BOTS,
   SETTING_LANDMARK_COUNT,
   SETTING_PLAYER_COUNT,
 } from '../../constants'
@@ -27,7 +26,6 @@ export interface SetupState {
   botCount: number
   fixedFirstPlayer: boolean
   playerOrder: number[]
-  includeBots: boolean
   errorMessage: string | null
   // Map
   map: MapCode | null
@@ -62,7 +60,6 @@ export const setupSlice = createSlice({
       botCount: loadPersistedSetting<number>(SETTING_BOT_COUNT, 0),
       fixedFirstPlayer: loadPersistedSetting<boolean>(SETTING_FIXED_FIRST_PLAYER, false),
       playerOrder: [],
-      includeBots: loadPersistedSetting<boolean>(SETTING_INCLUDE_BOTS, false),
       errorMessage: null,
       // Map
       map: null,
@@ -128,12 +125,6 @@ export const setupSlice = createSlice({
           `Invalid payload for setFirstPlayer action: ${firstPlayer} (Payload must be a number between 1 and playerCount [${state.playerCount}])`,
         )
       }
-    },
-
-    setIncludeBots(state, { payload: includeBots }: PayloadAction<boolean>) {
-      state.includeBots = includeBots
-      state.errorMessage = null
-      savePersistedSetting(SETTING_INCLUDE_BOTS, includeBots)
     },
 
     setErrorMessage(state, { payload: errorMessage }: PayloadAction<string | null>) {
@@ -250,7 +241,6 @@ export const {
   setErrorMessage,
   setFirstPlayer,
   setHirelingCount,
-  setIncludeBots,
   setLandmarkCount,
   setLimitCaptains,
   setLimitVagabonds,

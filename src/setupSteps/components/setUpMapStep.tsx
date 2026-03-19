@@ -12,7 +12,7 @@ import { selectSetupMap } from '../../store'
 const SetUpMapStep: SetupStepComponent = () => {
   const { t } = useTranslation()
   const setupMap = useAppSelector(selectSetupMap)
-  const includeBots = useAppSelector(state => state.setup.includeBots)
+  const includeBots = useAppSelector(state => state.setup.botCount > 0)
 
   if (!setupMap) return null
 
