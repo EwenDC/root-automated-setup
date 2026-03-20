@@ -74,6 +74,7 @@ export default {
     landmarkNotEnoughPlayers: `No hay suficientes jugadores para jugar con este Lugar Mítico`,
     lockedFaction: `No puede escogerse la última facción hasta que una facción belicosa haya sido escogida`,
     mapLandmarkUsed: `Lugar Mítico ya incluído en el mapa escogido`,
+    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `¡No hay mazo seleccionados! Por favor, selecciona al menos un mazo`,
     noFaction: `¡No hay Facciones seleccionadas! Por favor, escoge una facción para jugar`,
     noMap: `¡No hay Mapas seleccionados! Por favor, elige al menos un Mapa`,

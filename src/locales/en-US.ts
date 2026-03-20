@@ -99,6 +99,7 @@ export default {
     missingDeck: `A deck is required for set up! Please select a game box that includes one`,
     missingFaction: `At least one faction is required for set up! Please select a game box that includes one`,
     missingMap: `A map is required for set up! Please select a game box that includes one`,
+    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `No Decks selected! Please select at least one Deck`,
     noFaction: `No Faction selected! Please select a faction to play`,
     noHireling: `No Hireling selected! Please select a Hireling then perform its setup`,

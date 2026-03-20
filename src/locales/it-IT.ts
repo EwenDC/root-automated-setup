@@ -74,6 +74,7 @@ export default {
     landmarkNotEnoughPlayers: `Non ci sono abbastanza giocatori per poter utilizzare questa meraviglia`,
     lockedFaction: `Non puoi scegliere l'ultima fazione finché una fazione Militante non è stata scelta`,
     mapLandmarkUsed: `Meraviglia già inclusa nella preparazione della mappa`,
+    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `Nessun mazzo selezionato! Per favore, seleziona almeno un mazzo da utilizzare`,
     noFaction: `Nessuna fazione selezionata! Per favore, seleziona una fazione da giocare`,
     noMap: `Nessuna mappa selezionata! Per favore, seleziona almeno una mappa in cui giocare`,

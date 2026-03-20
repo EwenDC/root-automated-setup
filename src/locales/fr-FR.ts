@@ -76,6 +76,7 @@ export default {
     landmarkNotEnoughPlayers: `Pas assez de joueurs pour jouer avec ce monument`,
     lockedFaction: `Impossible de choisir la dernière faction tant qu’une faction militante n’a pas été choisie`, // Loi de Root v2023.08.03@A.8.1.II
     mapLandmarkUsed: `Monument déjà inclus dans la mise en place du plateau`,
+    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `Aucun paquet sélectionné ! Veuillez sélectionner au moins un paquet`,
     noFaction: `Aucune faction sélectionnée ! Veuillez sélectionner une faction à jouer`,
     noMap: `Aucun plateau sélectionné ! Veuillez sélectionner au moins un plateau`,

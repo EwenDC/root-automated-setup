@@ -94,6 +94,7 @@ export default {
     missingDeck: `Do przygotowania gry potrzebna jest talia kart! Proszę wybrać pudełko, które ją zawiera`,
     missingFaction: `Do przygotowania gry potrzebna jest co najmniej jedna frakcja! Proszę wybrać pudełko, które ją zawiera`,
     missingMap: `Do przygotowania gry potrzebna jest mapa! Proszę wybrać pudełko, które ją zawiera`,
+    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `Nie wybrano żadnej talii! Proszę wybrać przynajmniej jedną talię`,
     noFaction: `Nie wybrano żadnej Frakcji! Proszę wybrać frakcję do gry`,
     noMap: `Nie wybrano żadnych map! Proszę wybrać przynajmniej jedną mapę`,
