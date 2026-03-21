@@ -99,7 +99,6 @@ export interface SyncableState {
     balancedSuits: boolean
     limitCaptains: boolean
     limitVagabonds: boolean
-    map: string | null
     deck: string | null
   }
   components: {
@@ -116,7 +115,6 @@ export interface ParsedUrlParams {
   balancedSuits?: boolean
   limitCaptains?: boolean
   limitVagabonds?: boolean
-  map?: string
   deck?: string
   expansions?: string[]
   factions?: string[]
@@ -144,7 +142,6 @@ export const serializeStateToUrlParams = (state: SyncableState): string => {
   params.set('limitVagabonds', String(setup.limitVagabonds))
 
   // -- STRINGS --
-  if (setup.map) params.set('map', setup.map)
   if (setup.deck) params.set('deck', setup.deck)
 
   // -- ARRAYS --
@@ -181,8 +178,7 @@ export const deserializeUrlParams = (queryString: string): ParsedUrlParams => {
     parsed.balancedSuits = urlParams.get('balancedSuits') === 'true'
 
   //- STRINGS -//
-  if (urlParams.has('map')) parsed.map = urlParams.get('map') || undefined
-  if (urlParams.has('deck')) parsed.deck = urlParams.get('deck') || undefined
+  if (urlParams.has('deck')) parsed.deck = urlParams.get('deck')!
 
   //- ARRAYS -//
   if (urlParams.has('expansions'))

@@ -14,7 +14,6 @@ import {
   setLandmarkCount,
   setLimitCaptains,
   setLimitVagabonds,
-  setMap,
   setPlayerCount,
   toggleExpansion,
   toggleFaction,
@@ -111,7 +110,6 @@ export const hydrateSetupFromUrlParams = () => (dispatch: AppDispatch) => {
   if (parsed.limitVagabonds !== undefined) dispatch(setLimitVagabonds(parsed.limitVagabonds))
 
   //- STRINGS -//
-  if (parsed.map) dispatch(setMap({ code: parsed.map }))
   if (parsed.deck) dispatch(setDeck({ code: parsed.deck }))
 
   //- ARRAYS -//
