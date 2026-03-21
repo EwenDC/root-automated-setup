@@ -27,13 +27,13 @@ const Toolbar: React.FC = () => {
   const buttonRefs = [resetButtonRef, undoButtonRef, redoButtonRef, nextButtonRef] // Add buttons here for the key handlers
   const [focusedIndex, setFocusedIndex] = useState(0)
 
-  const onKeyDownHandler = (index: number) => (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    let newIndex = index
+  const onKeyDownHandler = (focusedIndex: number) => (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    let newIndex = focusedIndex
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      newIndex = (index + 1) % buttonRefs.length
+      newIndex = (focusedIndex + 1) % buttonRefs.length
       event.preventDefault()
     } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      newIndex = (index - 1 + buttonRefs.length) % buttonRefs.length
+      newIndex = (focusedIndex - 1 + buttonRefs.length) % buttonRefs.length
       event.preventDefault()
     } else if (event.key === 'Home') {
       newIndex = 0
@@ -43,7 +43,8 @@ const Toolbar: React.FC = () => {
       event.preventDefault()
     }
 
-    if (newIndex !== index) {
+    if (newIndex !== focusedIndex) {
+      event.preventDefault()
       setFocusedIndex(newIndex)
       buttonRefs[newIndex]?.current?.focus()
     }
