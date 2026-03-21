@@ -41,6 +41,7 @@ export interface FlowState {
   futureSteps: FlowSlice[]
   useDraft: boolean
   selectedBots: BotCode[]
+  ruinPlacer: string | null
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
@@ -56,6 +57,7 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   vagabondSetUp: flowState.vagabondSetUp,
   selectedBots: [...flowState.selectedBots],
   useDraft: flowState.useDraft,
+  ruinPlacer: flowState.ruinPlacer,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -85,6 +87,7 @@ const getInitialState = (): FlowState => ({
   futureSteps: [],
   selectedBots: [],
   useDraft: true,
+  ruinPlacer: null,
 })
 
 const initialState = getInitialState()
@@ -183,6 +186,13 @@ export const flowSlice = createSlice({
       if (!state.vagabondSetUp && baseFactionCode === 'vagabond') {
         state.vagabondSetUp = true
       }
+
+      if (
+        state.ruinPlacer === null &&
+        (baseFactionCode === 'warlord' || baseFactionCode == 'vagabond')
+      ) {
+        state.ruinPlacer = code
+      }
     },
 
     resetSelectedBots(state) {
@@ -267,7 +277,14 @@ export const flowSlice = createSlice({
         if (state.lastFactionLocked && removedFaction?.militant) state.lastFactionLocked = false
         // Flag if we set up a vagabond
         if (!state.vagabondSetUp && removedFaction?.vagabond) state.vagabondSetUp = true
-      } else {
+        if (
+          (state.ruinPlacer === null && removedFaction?.code.includes('warlord')) ||
+          removedFaction?.code.includes('vagabond')
+        ) {
+          state.ruinPlacer = removedFaction.code
+        }
+      } 
+      else {
         console.warn(`Invalid removeCurrentFactionFromPool action: currentIndex must not be null`)
       }
     },
@@ -324,6 +341,7 @@ export const flowSlice = createSlice({
       step: state => state.currentStep,
       vagabondSetUp: state => state.vagabondSetUp,
       selectedBots: state => state.selectedBots,
+      ruinPlacer: state => state.ruinPlacer,
     }),
   },
 })
