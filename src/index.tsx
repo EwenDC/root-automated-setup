@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 
@@ -9,12 +8,14 @@ import Toast from './components/toast'
 import Toolbar from './components/toolbar'
 import { useAppDispatch } from './hooks'
 import { store } from './store'
+import { hydrateSetupFromUrlParams } from './store/thunks'
 import './i18nSetup'
-import { hydrateSetupFromUrlParams } from './store'
 
 const App = () => {
   const dispatch = useAppDispatch()
+
   useEffect(() => {
+    // This runs exactly once on startup to read the shared URL
     dispatch(hydrateSetupFromUrlParams())
   }, [dispatch])
 
@@ -27,7 +28,6 @@ const App = () => {
     </>
   )
 }
-export default App
 
 const root = createRoot(document.getElementById('root')!)
 root.render(
@@ -39,3 +39,5 @@ root.render(
     </React.Suspense>
   </React.StrictMode>,
 )
+
+export default App

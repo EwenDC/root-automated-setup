@@ -9,6 +9,7 @@
   "editor.wordWrap": "on",
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.language": "en-US",
+  "cSpell.import": ["${workspaceFolder}/cspell.json"],
   "cSpell.words": [
     "chokepoints",
     "clockroot",
@@ -31,6 +32,7 @@
     "Ronin",
     "Rootbotics",
     "seiyria",
+    "Syncable",
     "Togglable",
     "unexhausted",
     "vagabot",

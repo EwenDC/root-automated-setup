@@ -1,7 +1,7 @@
 import type { TypedUseSelectorHook, UseDispatch } from 'react-redux'
 
 import { createContext } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import type { AppDispatch, RootState } from './store'
@@ -33,11 +33,10 @@ export const usePlayerNumber = ({ playerIndex }: FlowSlice) => {
 export const useInvalid = (stepActive: boolean) =>
   useAppSelector(state => stepActive && state.setup.errorMessage != null)
 
-// Handles the toolbar.exe buttons
+// Handles toolbar reset actions.
 export const useToolbarActions = () => {
   const dispatch = useAppDispatch()
   const [confirmReset, setConfirmReset] = useState(false)
-  const resetButtonRef = useRef<HTMLButtonElement>(null)
 
   const handleResetClick = () => {
     if (confirmReset) {
@@ -65,6 +64,5 @@ export const useToolbarActions = () => {
   return {
     confirmReset,
     handleResetClick,
-    resetButtonRef,
   }
 }
