@@ -10,6 +10,7 @@ import {
   selectExpansionArray,
   selectFactionArray,
   setDeck,
+  setHirelingCount,
   setLandmarkCount,
   setLimitCaptains,
   setLimitVagabonds,
@@ -96,11 +97,12 @@ export const hydrateSetupFromUrlParams = () => (dispatch: AppDispatch) => {
   if (!queryString) return
 
   const parsed = deserializeUrlParams(queryString)
-  resetState()
+  dispatch(resetState())
 
   //- NUMBERS -//
   if (parsed.playerCount !== undefined) dispatch(setPlayerCount(parsed.playerCount))
   if (parsed.landmarkCount !== undefined) dispatch(setLandmarkCount(parsed.landmarkCount))
+  if (parsed.hirelingCount !== undefined) dispatch(setHirelingCount(parsed.hirelingCount))
 
   //- BOOLS -//
   if (parsed.fixedFirstPlayer !== undefined) dispatch(fixFirstPlayer(parsed.fixedFirstPlayer))
@@ -109,6 +111,7 @@ export const hydrateSetupFromUrlParams = () => (dispatch: AppDispatch) => {
   if (parsed.limitVagabonds !== undefined) dispatch(setLimitVagabonds(parsed.limitVagabonds))
 
   //- STRINGS -//
+  if (parsed.map) dispatch(setMap({ code: parsed.map }))
   if (parsed.deck) dispatch(setDeck({ code: parsed.deck }))
 
   //- ARRAYS -//

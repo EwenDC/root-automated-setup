@@ -1,7 +1,7 @@
 import { createSelector, type PayloadAction } from '@reduxjs/toolkit'
 
 import type { Expansion, ValueOf, WithCode } from '../types'
-import type { ComponentsState } from './'
+import type { ComponentsState } from './slices/components'
 
 import definitions from '../componentDefinitions'
 import { loadPersistedSetting, savePersistedSetting } from '../functions/persistedSettings'
@@ -92,15 +92,15 @@ export const toggleComponent =
 
 export interface SyncableState {
   setup: {
-    playerCount?: number
-    landmarkCount?: number
-    hirelingCount?: number
-    fixedFirstPlayer?: boolean
-    balancedSuits?: boolean
-    limitCaptains?: boolean
-    limitVagabonds?: boolean
-    map?: { code: string }
-    deck?: { code: string }
+    playerCount: number
+    landmarkCount: number
+    hirelingCount: number
+    fixedFirstPlayer: boolean
+    balancedSuits: boolean
+    limitCaptains: boolean
+    limitVagabonds: boolean
+    map: string | null
+    deck: string | null
   }
   components: {
     expansions: Record<string, { enabled?: boolean }>
@@ -110,10 +110,8 @@ export interface SyncableState {
 
 export interface ParsedUrlParams {
   playerCount?: number
-  botCount?: number
   landmarkCount?: number
   hirelingCount?: number
-  includeHirelings?: boolean
   fixedFirstPlayer?: boolean
   balancedSuits?: boolean
   limitCaptains?: boolean
@@ -135,30 +133,30 @@ export const serializeStateToUrlParams = (state: SyncableState): string => {
   const { setup, components } = state
 
   // -- NUMBERS --
-  if (setup.playerCount) params.set('playerCount', setup.playerCount.toString())
-  if (setup.landmarkCount) params.set('landmarkCount', setup.landmarkCount.toString())
-  if (setup.hirelingCount) params.set('hirelingCount', setup.hirelingCount.toString())
+  params.set('playerCount', setup.playerCount.toString())
+  params.set('landmarkCount', setup.landmarkCount.toString())
+  params.set('hirelingCount', setup.hirelingCount.toString())
 
   // -- BOOLEANS --
-  if (setup.fixedFirstPlayer) params.set('fixedFirstPlayer', 'true')
-  if (setup.balancedSuits) params.set('balancedSuits', 'true')
-  if (setup.limitCaptains) params.set('limitCaptains', 'true')
-  if (setup.limitVagabonds) params.set('limitVagabonds', 'true')
+  params.set('fixedFirstPlayer', String(setup.fixedFirstPlayer))
+  params.set('balancedSuits', String(setup.balancedSuits))
+  params.set('limitCaptains', String(setup.limitCaptains))
+  params.set('limitVagabonds', String(setup.limitVagabonds))
 
   // -- STRINGS --
-  if (setup.map?.code) params.set('map', setup.map.code)
-  if (setup.deck?.code) params.set('deck', setup.deck.code)
+  if (setup.map) params.set('map', setup.map)
+  if (setup.deck) params.set('deck', setup.deck)
 
-  // -- ARRAYS (Reading from Record<string, { enabled?: boolean }>) --
+  // -- ARRAYS --
   const activeExpansions = Object.entries(components.expansions)
     .filter(([_, data]) => data.enabled)
     .map(([code]) => code)
-  if (activeExpansions.length > 0) params.set('expansions', activeExpansions.join(','))
+  params.set('expansions', activeExpansions.join(','))
 
   const activeFactions = Object.entries(components.factions)
     .filter(([_, data]) => data.enabled)
     .map(([code]) => code)
-  if (activeFactions.length > 0) params.set('factions', activeFactions.join(','))
+  params.set('factions', activeFactions.join(','))
 
   return params.toString()
 }
@@ -169,7 +167,6 @@ export const deserializeUrlParams = (queryString: string): ParsedUrlParams => {
 
   //- NUMBERS -//
   parsed.playerCount = safeParseInt(urlParams.get('playerCount'))
-  parsed.botCount = safeParseInt(urlParams.get('botCount'))
   parsed.landmarkCount = safeParseInt(urlParams.get('landmarkCount'))
   parsed.hirelingCount = safeParseInt(urlParams.get('hirelingCount'))
 
@@ -180,17 +177,24 @@ export const deserializeUrlParams = (queryString: string): ParsedUrlParams => {
     parsed.limitCaptains = urlParams.get('limitCaptains') === 'true'
   if (urlParams.has('limitVagabonds'))
     parsed.limitVagabonds = urlParams.get('limitVagabonds') === 'true'
-  if (urlParams.has('includeHirelings'))
-    parsed.includeHirelings = urlParams.get('includeHirelings') === 'true'
   if (urlParams.has('balancedSuits'))
     parsed.balancedSuits = urlParams.get('balancedSuits') === 'true'
 
   //- STRINGS -//
-  if (urlParams.has('deck')) parsed.deck = urlParams.get('deck')!
+  if (urlParams.has('map')) parsed.map = urlParams.get('map') || undefined
+  if (urlParams.has('deck')) parsed.deck = urlParams.get('deck') || undefined
 
   //- ARRAYS -//
-  if (urlParams.has('expansions')) parsed.expansions = urlParams.get('expansions')!.split(',')
-  if (urlParams.has('factions')) parsed.factions = urlParams.get('factions')!.split(',')
+  if (urlParams.has('expansions'))
+    parsed.expansions = urlParams
+      .get('expansions')!
+      .split(',')
+      .filter(Boolean)
+  if (urlParams.has('factions'))
+    parsed.factions = urlParams
+      .get('factions')!
+      .split(',')
+      .filter(Boolean)
 
   return parsed
 }
