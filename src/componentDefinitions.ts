@@ -1047,7 +1047,7 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
         image: thiefMeeple,
         baseFactionCode: 'vagabond',
         clockroot: 'VagabondDC',
-        excludeFactions: ['vagabond], vagabond2, knaves'],
+        excludeFactions: ['vagabond', 'vagabond2', 'knaves'],
       },
     },
   },
