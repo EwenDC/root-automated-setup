@@ -311,6 +311,7 @@ export interface FlowSlice {
   playerIndex: number | null
   step: SetupStep
   vagabondSetUp: boolean
+  useDraft: boolean
 }
 
 //#endregion

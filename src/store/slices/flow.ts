@@ -50,6 +50,7 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   playerIndex: flowState.currentPlayerIndex,
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
+  useDraft: flowState.useDraft,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -63,7 +64,7 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.vagabondSetUp = slice.vagabondSetUp
 }
 
-const initialState: FlowState = {
+const getInitialState = (): FlowState => ({
   factionPool: [],
   hirelingPool: [],
   currentIndex: null,
@@ -75,7 +76,9 @@ const initialState: FlowState = {
   pastSteps: [],
   futureSteps: [],
   useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
-}
+})
+
+const initialState = getInitialState()
 
 export const flowSlice = createSlice({
   name: 'flow',
@@ -128,11 +131,6 @@ export const flowSlice = createSlice({
           `Invalid redoStep action: futureSteps array returned empty value (${nextStep})`,
         )
       }
-    },
-
-    resetStep() {
-      // Reset to initial state
-      return initialState
     },
 
     setUseDraft(state, { payload: useDraft }: PayloadAction<boolean>) {
@@ -261,7 +259,7 @@ export const flowSlice = createSlice({
     // Clear internal variables when restarting setup
     builder
       .addCase(resetState, () => {
-        return initialState
+        return getInitialState()
       })
       .addDefaultCase(state => {
         state.futureSteps = []
@@ -270,6 +268,7 @@ export const flowSlice = createSlice({
 
   selectors: {
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
+      useDraft: state => state.useDraft,
       factionPool: state => state.factionPool,
       hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,
@@ -292,7 +291,6 @@ export const {
   removeCurrentLandmarkFromPool,
   resetFactionPool,
   resetHirelingPool,
-  resetStep,
   setCurrentIndex,
   setCurrentPlayerIndex,
   setCurrentStep,
