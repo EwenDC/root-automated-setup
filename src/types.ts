@@ -303,6 +303,7 @@ export interface HirelingEntry {
 
 /** An object representing a slice of history for the flow state. */
 export interface FlowSlice {
+  useDraft: boolean
   factionPool: FactionEntry[]
   hirelingPool: HirelingEntry[]
   index: number | null
