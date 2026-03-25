@@ -5,7 +5,6 @@ export default {
       false: `Piazzamento simboli radura casuale`,
       true: `Piazzamento simboli radura bilanciato`,
     },
-    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     changeLanguage: `Cambia Lingua`,
     clearing: {
       fox: `Radura Volpe`,
@@ -23,7 +22,7 @@ export default {
       true: `Primo giocatore fisso <i>(Giocatore 1 è il primo giocatore in ordine di turno, Giocatore 2 è il secondo, ecc.)</i>`,
     },
     fox: `Volpe`,
-    hirelingCount: `Hireling Count: `,
+    includeBotStep: `Includi preparazione dei bot`,
     includeHirelings: `Includi Combattenti`,
     landmarkCount: `Numero di Meraviglie`,
     logoAlt: `Root`,
@@ -39,7 +38,6 @@ export default {
       suitPriority: `<li>Prendete i 12 indicatori simbolo radura e i 12 indicatori priorità, poi piazzatene uno ciascuno in ogni radura come mostrato nel grafico sottostante.</li>`,
     },
     playerCount: `Numero di giocatori`,
-    botCount: `Bot Count`,
     priority: `Priorità {{count}}`,
     rabbit: `Coniglio`,
     redo: `Ripeti`,
@@ -47,7 +45,6 @@ export default {
     specialAction: `Azione Speciale`,
     startingItems: `Oggetti di partenza`,
     useDraft: `Usa il draft per scegliere le fazioni`,
-    useHouserules: `ADVANCED: Disable logic to use houserules`,
     undo: `Annulla`,
     wealth: `Utilizzo Carte`,
   },
@@ -66,20 +63,15 @@ export default {
     warriors_other: `{{count}} Guerrieri`,
   },
   error: {
-    disabledPlacement: `<br><b>Placement for this hireling is under construction. Please place anywhere to continue.</b>`,
-    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `La fazione associata a questo combattente è necessaria per la preparazione`,
     hirelingSelected: `Un combattente associato a questa fazione è già in gioco`,
     landmarkNotEnoughPlayers: `Non ci sono abbastanza giocatori per poter utilizzare questa meraviglia`,
     lockedFaction: `Non puoi scegliere l'ultima fazione finché una fazione Militante non è stata scelta`,
     mapLandmarkUsed: `Meraviglia già inclusa nella preparazione della mappa`,
-    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `Nessun mazzo selezionato! Per favore, seleziona almeno un mazzo da utilizzare`,
     noFaction: `Nessuna fazione selezionata! Per favore, seleziona una fazione da giocare`,
     noMap: `Nessuna mappa selezionata! Per favore, seleziona almeno una mappa in cui giocare`,
     noMilitantFaction: `Nessuna fazione Militante selezionata! Per favore, seleziona almeno una fazione Militante`,
-    noValidClearings: `No valid placement found.`,
-    noValidClearingsHouserule: `If Houserules are enabled, place in any clearing.`,
     tooFewFaction: `Numero insufficiente di fazioni selezionate! Per favore, seleziona altre fazioni, disabilita il draft, oppure diminuisci il numero di giocatori`,
     tooFewHireling: `Numero insufficiente di combattenti per effettuare la preparazione dei combattenti! Ciò potrebbe essere causato dal fatto che la selezione corrente risulterebbe nella rimozione di un numero eccessivo di fazioni dalla preparazione`,
     tooFewLandmark: `Numero insufficiente di meraviglie selezionate! Per favore, seleziona altre meraviglie oppure diminuisci il numero di meraviglie da utilizzare`,
@@ -108,7 +100,7 @@ export default {
     },
     setUpBots: {
       title: `Preparare i Bot`,
-      instructionTitle: `Setup Instructions:`,
+      body: `Decidete insieme quali bot utilizzare, seguendo le loro istruzioni di preparazione come descritto nella Legge della Rootbotica.`,
     },
     chooseLandmarks: {
       title: `Preparare le Meraviglie`,
@@ -137,10 +129,6 @@ export default {
       body: `Assegnate ciascuna delle fazioni elencate qui sotto ad un giocatore in qualsiasi modo preferite. Le fazioni saranno preparate in senso orario. Potete selezionare qualsiasi fazione per leggere le sue statistiche.`,
       body_useDraft: `Giocatore {{count}}, scegli con quale fazione vuoi giocare tra quelle elencate qui sotto. Puoi selezionare qualsiasi fazione per leggere le sue statistiche, poi conferma la tua selezione premendo su "Passo Successivo".`,
     },
-    selectBots: {
-      subtitle: `Assign Bots`,
-      body: `Assign one of the below bots. The bots will be set up from left-to-right. You may freely select bots from the list.`,
-    },
     placeScoreMarkers: {
       title: `Posizionare gli Indicatori Punteggio`,
       title_vagabondSetUp: `Posizionare gli Indicatori Punteggio e Relazione`,
@@ -154,12 +142,6 @@ export default {
     setupEnd: {
       title: `Cominciare a Giocare`,
       body: `La preparazione è conclusa. La partita inizia dal Giocatore {{count}}. Se vuoi ricominciare la preparazione, usa il pulsante qua sotto.<p><i>"Root Automated Setup" Sviluppato da Ewen Cameron</i><br/><i>Traduzione italiana a cura di Valerio Lanziani</i><br/><i>Basato sul gioco da tavolo "Root" pubblicato da Leder Games</i><br/><i>Applicazione concessa in licenza sotto CC BY-NC-SA 4.0</i></p>`,
-    },
-    setupRuins: {
-      title: `<li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly.</li>`,
-    },
-    skipRuins: {
-      title: `<li>This faction requires ruins to be filled, but this step was completed previously</li>`,
     },
   },
   deck: {
@@ -187,47 +169,6 @@ export default {
     underworld: `Espansione Il Mondo Sotterraneo`,
     underworldHirelings: `Combattenti - Il Mondo Sotterraneo`,
     vagabondPack: `Kit del Vagabondo`,
-    clockwork: `Clockwork Expansion`,
-    clockwork2: `Clockwork Expansion 2`,
-    betaClockwork: `Beta Released Clockworks`,
-  },
-  bot: {
-    automatedAlliance: {
-      name: `Automated Alliance`,
-      setup: `<ol><li>Form a supply of 10 warriors near you.</li><li>Collect your 3 bases and place them near you.</li><li>Collect your 10 sympathy tokens and place them near you.</li></ol>`,
-    },
-    mechanicalMarquise: {
-      name: `Mechanical Marquise`,
-      setup: `<ol><li>Form a supply of 25 warriors near you.</li><li>Place the keep token in a random corner clearing.</li><li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)</li><li>Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.</li><li>Collect your remaining 15 buildings and place them near you.</li></ol>`,
-    },
-    electricEyrie: {
-      name: `Electric Eyrie`,
-      setup: `<ol><li>Form a supply of 20 warriors near you.</li><li>Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing.</li><li>Tuck your 2 Loyal Vizier cards, showing their suit, into the rightmost decree column.</li><li>Collect your remaining 6 roost buildings and place them near you.</li></ol>`,
-    },
-    vagabot: {
-      name: `Vagabot`,
-      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
-    },
-    cogwheelCorvids: {
-      name: `Cogwheel Corvids`,
-      setup: `<ol><li>Form supplies of 15 warriors and 8 plot tokens face down.</li><li>Place 1 Warrior in the lowest priority clearing of each suit (3 total).</li></ol>`,
-    },
-    drillbitDuchy: {
-      name: `Drillbit Duchy`,
-      setup: `<ol><li>Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns.</li><li>Place the Burrow board near the map.</li><li>Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li>Place 3 citadels and 3 markets on your matching Building spaces.</li><li>Draw 2 cards and discard them. For each, place a crown on the topmost matching unswayed minister on your faction board.</li></ol>`,
-    },
-    logicalLizards: {
-      name: `Logical Lizards`,
-      setup: `<ol><li>Form a supply of 25 warriors.</li><li>Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot (preferably diagonally opposite.) Then place 1 warrior in each adjacent clearing.</li><li>Place the outcast marker on the Sanctify space of the Conspiracy track on your faction board.</li><li>Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li><li>Draw 3 cards and place them face up in your Lost Souls in the order drawn.</li></ol>`,
-    },
-    riverfolkRobots: {
-      name: `Riverfolk Robots`,
-      setup: `<ol><li>Form a supply of 15 warriors.</li><li>Place 1 warrior in each clearing on the river.</li><li>Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li>Place 1 warrior in your Payments box.</li><li>Draw 5 cards and add them to your Market.</li></ol>`,
-    },
-    lootingLegion: {
-      name: `Looting Legion`,
-      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
-    },
   },
   faction: {
     alliance: {
@@ -332,12 +273,12 @@ export default {
       summary: `<p>Come Vagabondo, dovrete destreggiarvi tra le diverse fazioni in conflitto facendovi amici o nemici a seconda delle necessità e delle contingenze: ottenete punti tramite le vostre <b>relazioni</b>, cioè aiutando fazioni amichevoli (consegnando carte) e accrescendo l'animosità con fazioni ostili (sconfiggendo in battaglia i loro guerrieri). Ottenete punti anche completando <b>missioni</b> che vi permettono di migliorare la vostra reputazione tra le creature dei Boschi.</p><p>Per muovervi ed agire in modo efficiente dovrete gestire il vostro zaino di <b>oggetti</b>: ampliate la vostra raccolta esplorando antiche <b>rovine</b> e fornendo aiuto alle altre fazioni. Essendo un <b>Lupo Solitario</b> non potete controllare le radure nè impedire ad un'altra fazione di averne il controllo, ma siete anche <b>Agili</b>: vi muovete senza preoccuparvi di chi ha il controllo delle radure.</p>`,
       setupTitle: `Preparare il Vagabondo`,
       setup: {
-        default: `<ol><li><b>Scegliere il Personaggio.</b> Scegliete una carta personaggio e mettetela nel vostro spazio Carta Personaggio.</li><li><b>Posizionare la Pedina.</b> Posizionate la vostra pedina Vagabondo in una foresta qualsiasi.</li><li><b>Ottenere le Missioni.</b> Mescolate il vostro mazzo delle missioni, pescate 3 carte missione e posizionatele a faccia in su nella vostra area di gioco.</li><li><b>Prendere gli Oggetti Iniziali.</b> Prendete gli oggetti contrassegnati da una "I" indicati sulla vostra carta personaggio. Posizionate eventuali <Tea/>, <Coin/> e <Bag/> sui relativi tracciati della vostra plancia fazione a faccia in su. Posizionate tutti gli altri oggetti nel vostro Zaino a faccia in su. Rimettete nella scatola eventuali oggetti "I" rimanenti.</li></ol>`,
-        vagabondSetUp: `<ol><li><b>Scegliere il Personaggio.</b> Scegliete una carta personaggio e mettetela nel vostro spazio Carta Personaggio.</li><li><b>Posizionare la Pedina.</b> Posizionate la vostra pedina Vagabondo in una foresta qualsiasi.</li><li><b>Prendere gli Oggetti Iniziali.</b> Prendete gli oggetti contrassegnati da una "I" indicati sulla vostra carta personaggio. Posizionate eventuali <Tea/>, <Coin/> e <Bag/> sui relativi tracciati della vostra plancia fazione a faccia in su. Posizionate tutti gli altri oggetti nel vostro Zaino a faccia in su. Rimettete nella scatola eventuali oggetti "I" rimanenti.</li></ol>`,
+        default: `<ol><li><b>Scegliere il Personaggio.</b> Scegliete una carta personaggio e mettetela nel vostro spazio Carta Personaggio.</li><li><b>Posizionare la Pedina.</b> Posizionate la vostra pedina Vagabondo in una foresta qualsiasi.</li><li><b>Ottenere le Missioni.</b> Mescolate il vostro mazzo delle missioni, pescate 3 carte missione e posizionatele a faccia in su nella vostra area di gioco.</li><li><b>Popolare le Rovine.</b> Se non è già stato fatto, posizionate casualmente gli oggetti <Bag/>, <Boot/>, <Hammer/> e <Sword/> contrassegnati da una "R" sotto ogni rovina.</li><li><b>Prendere gli Oggetti Iniziali.</b> Prendete gli oggetti contrassegnati da una "I" indicati sulla vostra carta personaggio. Posizionate eventuali <Tea/>, <Coin/> e <Bag/> sui relativi tracciati della vostra plancia fazione a faccia in su. Posizionate tutti gli altri oggetti nel vostro Zaino a faccia in su. Rimettete nella scatola eventuali oggetti "I" rimanenti.</li></ol>`,
+        vagabondSetUp: `<ol><li><b>Scegliere il Personaggio.</b> Scegliete una carta personaggio e mettetela nel vostro spazio Carta Personaggio.</li><li><b>Posizionare la Pedina.</b> Posizionate la vostra pedina Vagabondo in una foresta qualsiasi.</li><li><b>Popolare le Rovine.</b> Posizionate casualmente gli oggetti <Bag/>, <Boot/>, <Hammer/> e <Sword/> contrassegnati da una "R" sotto ogni rovina <i>(in aggiunta agli oggetti già presenti)</i>.</li><li><b>Prendere gli Oggetti Iniziali.</b> Prendete gli oggetti contrassegnati da una "I" indicati sulla vostra carta personaggio. Posizionate eventuali <Tea/>, <Coin/> e <Bag/> sui relativi tracciati della vostra plancia fazione a faccia in su. Posizionate tutti gli altri oggetti nel vostro Zaino a faccia in su. Rimettete nella scatola eventuali oggetti "I" rimanenti.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Posizionate la vostra <b>pedina</b> in una foresta qualsiasi.</li><li>Mescolate il mazzo delle missioni, pescate 3 <b>missioni</b> e posizionatele a faccia in su nella vostra area di gioco.</li><li>Posizionate la <b>carta personaggio</b> "{{vagabond}}" nel vostro spazio Carta Personaggio. Posizionate gli <b>oggetti iniziali</b> <InitialStartingItems>, </InitialStartingItems> e <FinalStartingItem/> <i>(contrassegnati da una "I")</i> nel vostro Zaino o nei tracciati corrispondenti, come richiesto.</li></ol>`,
-        vagabondSetUp: `<ol><li>Posizionate la vostra <b>pedina</b> in una foresta qualsiasi.</li><li>Posizionate la <b>carta personaggio</b> "{{vagabond}}" nel vostro spazio Carta Personaggio. Posizionate gli <b>oggetti iniziali</b> <InitialStartingItems>, </InitialStartingItems> e <FinalStartingItem/> <i>(contrassegnati da una "I")</i> nel vostro Zaino o nei tracciati corrispondenti, come richiesto.</li></ol>`,
+        default: `<ol><li>Posizionate la vostra <b>pedina</b> in una foresta qualsiasi.</li><li>Mescolate il mazzo delle missioni, pescate 3 <b>missioni</b> e posizionatele a faccia in su nella vostra area di gioco.</li><li>Se non è già stato fatto, posizionate casualmente gli <b>oggetti rovina</b> <Bag/>, <Boot/>, <Hammer/> e <Sword/> <i>(contrassegnati da una "R")</i> sotto le rovine.</li><li>Posizionate la <b>carta personaggio</b> "{{vagabond}}" nel vostro spazio Carta Personaggio. Posizionate gli <b>oggetti iniziali</b> <InitialStartingItems>, </InitialStartingItems> e <FinalStartingItem/> <i>(contrassegnati da una "I")</i> nel vostro Zaino o nei tracciati corrispondenti, come richiesto.</li></ol>`,
+        vagabondSetUp: `<ol><li>Posizionate la vostra <b>pedina</b> in una foresta qualsiasi.</li><li>Posizionate casualmente gli <b>oggetti rovina</b> <Bag/>, <Boot/>, <Hammer/> e <Sword/> <i>(contrassegnati da una "R")</i> sotto le rovine <i>(in aggiunta agli oggetti già presenti)</i>.</li><li>Posizionate la <b>carta personaggio</b> "{{vagabond}}" nel vostro spazio Carta Personaggio. Posizionate gli <b>oggetti iniziali</b> <InitialStartingItems>, </InitialStartingItems> e <FinalStartingItem/> <i>(contrassegnati da una "I")</i> nel vostro Zaino o nei tracciati corrispondenti, come richiesto.</li></ol>`,
       },
     },
     warlord: {
@@ -346,11 +287,11 @@ export default {
       summary: `<p>Come Signore dell'Orda ottenete punti quando <b>sottomettete</b> i vostri nemici. Alla fine del vostro turno, più radure controllate <i>senza</i> pezzi nemici (nessun guerriero, nessun edificio, niente), più punti ottenete.</p><p>Per consolidare il potere e reclutare più guerrieri, dovete ottenere oggetti da aggiungere al vostro imponente <b>Tesoro</b>. Stivali, sacchi e monete aumentano il vostro <b>Comando</b>, mentre martelli, tè, spade e balestre aumentano la vostra <b>Prodezza</b>. A causa del vostro <b>Sdegno per il Commercio</b> raramente otterrete punti costruendo oggetti, ma potete rubare oggetti ai nemici grazie ai vostri <b>Saccheggiatori</b>!</p><p>L'Orda è guidata dal vostro signore della guerra, un guerriero demagogo la cui <b>indole</b> mutevole vi fornisce un abilità speciale diversa ogni turno. Il vostro signore della guerra ha un bisogno ossessivo di accumulare ricchezza, quindi più oggetti possedete e meno carte indole avrete tra cui scegliere.</p><p>Sostenendo di essere l'unica vera voce del Bosco, potete incitare la <b>folla</b>, che per voi distruggerà edifici e segnalini nemici e razzierà le rovine in cerca di oggetti.</p>`,
       setupTitle: `Preparare il Signore dell'Orda`,
       setup: {
-        default: `<ol><li><b>Guarnigione.</b> Posizionate il vostro signore della guerra, quattro guerrieri e una roccaforte in una radura ad angolo che non sia già stata scelta come radura iniziale da un altro giocatore e, se possibile, nell’angolo diagonalmente opposto a una radura ad angolo iniziale.</li><li><b>Diventa Ostinato.</b> Posizionate la vostra carta indole Ostinato nello spazio Carta Indole sulla vostra plancia fazione.</li></ol>`,
+        default: `<ol><li><b>Guarnigione.</b> Posizionate il vostro signore della guerra, quattro guerrieri e una roccaforte in una radura ad angolo che non sia già stata scelta come radura iniziale da un altro giocatore e, se possibile, nell’angolo diagonalmente opposto a una radura ad angolo iniziale.</li><li><b>Posizionare Oggetti.</b> Se non è già stato fatto, posizionate casualmente gli oggetti <Bag/>, <Boot/>, <Hammer/> e <Sword/> contrassegnati da una "R" sotto alle rovine.</li><li><b>Diventa Ostinato.</b> Posizionate la vostra carta indole Ostinato nello spazio Carta Indole sulla vostra plancia fazione.</li></ol>`,
         vagabondSetUp: `<ol><li><b>Guarnigione.</b> Posizionate il vostro signore della guerra, quattro guerrieri e una roccaforte in una radura ad angolo che non sia già stata scelta come radura iniziale da un altro giocatore e, se possibile, nell’angolo diagonalmente opposto a una radura ad angolo iniziale.</li><li><b>Diventa Ostinato.</b> Posizionate la vostra carta indole Ostinato nello spazio Carta Indole sulla vostra plancia fazione.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Scegliete una radura patria lungo il bordo della mappa che abbia 2+ radure tra essa e le radure patria nemiche.</li><li>Posizionate il vostro <b>signore della guerra</b>, 4 <b>guerrieri</b> e 1 <b>roccaforte</b> nella vostra patria.</li><li>Posizionate la <b>carta indole Ostinato</b> nello spazio Carta Indole sulla vostra plancia fazione.</li></ol>`,
+        default: `<ol><li>Scegliete una radura patria lungo il bordo della mappa che abbia 2+ radure tra essa e le radure patria nemiche.</li><li>Posizionate il vostro <b>signore della guerra</b>, 4 <b>guerrieri</b> e 1 <b>roccaforte</b> nella vostra patria.</li><li>Posizionate la <b>carta indole Ostinato</b> nello spazio Carta Indole sulla vostra plancia fazione.</li><li>Se non è già stato fatto, posizionate casualmente gli <b>oggetti rovina</b> <Bag/>, <Boot/>, <Hammer/> e <Sword/> <i>(contrassegnati da una "R")</i> sotto le rovine.</li></ol>`,
         vagabondSetUp: `<ol><li>Scegliete una radura patria lungo il bordo della mappa che abbia 2+ radure tra essa e le radure patria nemiche.</li><li>Posizionate il vostro <b>signore della guerra</b>, 4 <b>guerrieri</b> e 1 <b>roccaforte</b> nella vostra patria.</li><li>Posizionate la <b>carta indole Ostinato</b> nello spazio Carta Indole sulla vostra plancia fazione.</li></ol>`,
       },
     },
@@ -503,9 +444,7 @@ export default {
       setup: `<li>Prendete la mappa del Lago/Montagna dalla scatola di gioco e posizionatela sul tavolo col lato della Montagna a faccia in su.</li><li>Posizionate i 6 indicatori Sentiero Nascosto per coprire i sentieri più scuri, di colore arancione.</li>`,
       fixedSuits: `Usa i simboli radura suggeriti per la mappa della Montagna`,
       useLandmark: `Usa la preparazione specifica della Torre per la mappa della Montagna`,
-      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
-      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
-      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      landmarkSetup: `<li>Posizionate la Torre come mostrato nel grafico sottostante. Se avete la carta meraviglia "Torre", prendetela dalla scatola di gioco e posizionatela vicino alla mappa col suo lato di preparazione a faccia in giù.</li>`,
     },
     winter: {
       name: `Invernale`,

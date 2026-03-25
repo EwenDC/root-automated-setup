@@ -5,7 +5,6 @@ export default {
       false: `Placement aléatoire des marqueurs de couleur de clairière`,
       true: `Placement équilibré des marqueurs de couleur de clairière`,
     },
-    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     changeLanguage: `Changer de langue `,
     clearing: {
       fox: `Clairière renard`,
@@ -23,7 +22,7 @@ export default {
       true: `Fixer le premier joueur <i>(Joueur 1 est la première personne, Joueur 2 est la seconde, etc.)</i>`,
     },
     fox: `Renard`,
-    hirelingCount: `Hireling Count: `,
+    includeBotStep: `Inclure la mise en place des robots`,
     includeHirelings: `Inclure les nomades`,
     landmarkCount: `Nombre de monuments`,
     logoAlt: `Root`,
@@ -40,7 +39,6 @@ export default {
       suitPriority: `<li>Prenez les 12 marqueurs de couleur et les 12 marqueurs de priorité, puis placez-en un de chaque dans chaque clairière, comme indiqué dans le schéma ci-dessous.</li>`,
     },
     playerCount: `Nombre de joueurs`,
-    botCount: `Bot Count`,
     priority: `Priorité {{count}}`,
     rabbit: `Lapin`,
     redo: `Refaire`,
@@ -48,7 +46,6 @@ export default {
     specialAction: `Action spéciale `,
     startingItems: `Objets de départ`,
     useDraft: `Drafter les factions`,
-    useHouserules: `ADVANCED: Disable logic to use houserules`,
     undo: `Annuler`,
     wealth: `Main de cartes`,
   },
@@ -68,20 +65,15 @@ export default {
     warriors_other: `{{count}} Guerriers`,
   },
   error: {
-    disabledPlacement: `<br><b>Placement for this hireling is under construction. Please place anywhere to continue.</b>`,
-    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `La faction associée à ce nomade est requise pour la mise en place`,
     hirelingSelected: `Un nomade équivalent à cette faction est déjà en jeu`,
     landmarkNotEnoughPlayers: `Pas assez de joueurs pour jouer avec ce monument`,
     lockedFaction: `Impossible de choisir la dernière faction tant qu’une faction militante n’a pas été choisie`, // Loi de Root v2023.08.03@A.8.1.II
     mapLandmarkUsed: `Monument déjà inclus dans la mise en place du plateau`,
-    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `Aucun paquet sélectionné ! Veuillez sélectionner au moins un paquet`,
     noFaction: `Aucune faction sélectionnée ! Veuillez sélectionner une faction à jouer`,
     noMap: `Aucun plateau sélectionné ! Veuillez sélectionner au moins un plateau`,
     noMilitantFaction: `Aucune faction militante sélectionnée ! Veuillez sélectionner au moins une faction militante`,
-    noValidClearings: `No valid placement found.`,
-    noValidClearingsHouserule: `If Houserules are enabled, place in any clearing.`,
     tooFewFaction: `Pas assez de factions sélectionnées ! Veuillez sélectionner plus de factions, désactiver le draft de factions ou réduire le nombre de joueurs`,
     tooFewHireling: `Pas assez de nomades pour mettre en place les nomades ! Cela peut être dû au fait que la sélection actuelle de nomades nécessite de supprimer trop de factions de la mise en place`,
     tooFewLandmark: `Pas assez de monuments sélectionnés ! Veuillez sélectionner plus de monuments ou réduire le nombre de monuments`,
@@ -113,7 +105,7 @@ export default {
     },
     setUpBots: {
       title: `Installation des robots`,
-      instructionTitle: `Setup Instructions:`,
+      body: `Choisissez ensemble avec quels robots vous souhaitez jouer, en suivant leurs instructions de mise en place comme décrit dans les Lois de la Rootbotique.`,
     },
     chooseLandmarks: {
       // Loi de Root v2023.08.03@A.5
@@ -145,10 +137,6 @@ export default {
       body: `Assignez une des factions ci-dessous à chaque joueur selon la méthode de votre choix. Les factions seront mises en place de gauche à droite. Vous pouvez sélectionner librement des factions dans la liste pour consulter leurs informations.`, // Loi de Root v2023.08.03@5.1.1
       body_useDraft: `Joueur {{count}}, choisissez la faction que vous souhaitez jouer dans la liste de factions ci-dessous. Vous pouvez sélectionner librement des factions dans la liste pour consulter leurs informations, avant de confirmer votre sélection en appuyant sur « Étape suivante ».`,
     },
-    selectBots: {
-      subtitle: `Assign Bots`,
-      body: `Assign one of the below bots. The bots will be set up from left-to-right. You may freely select bots from the list.`,
-    },
     placeScoreMarkers: {
       title: `Placement des marqueurs de score`,
       title_vagabondSetUp: `Placement des marqueurs de score et de relation`,
@@ -163,12 +151,6 @@ export default {
     setupEnd: {
       title: `Commencer à jouer`,
       body: `La mise en place est maintenant terminée. La partie commencera avec le Joueur {{count}}. Si vous souhaitez recommencer le processus de mise en place, utilisez le bouton ci-dessous.<p><i>« Mise en place automatique de Root » développé par Ewen Cameron</i><br/><i>Traduction française par Romain Storai et Steeve Fontaine</i><br/><i>Basé sur le jeu de société « Root » publié par Leder Games</i><br/><i>Application sous licence CC BY-NC-SA 4.0</i></p>`,
-    },
-    setupRuins: {
-      title: `<li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly.</li>`,
-    },
-    skipRuins: {
-      title: `<li>This faction requires ruins to be filled, but this step was completed previously</li>`,
     },
   },
   deck: {
@@ -196,47 +178,6 @@ export default {
     underworld: `Extension Monde Souterrain`, // Loi de Root v2023.08.03@B.3
     underworldHirelings: `Pack Nomades Souterrains`, // Loi de Root v2023.08.03@B.10
     vagabondPack: `Pack Vagabond`, // Loi de Root v2023.08.03@B.9
-    clockwork: `Clockwork Expansion`,
-    clockwork2: `Clockwork Expansion 2`,
-    betaClockwork: `Beta Released Clockworks`,
-  },
-  bot: {
-    automatedAlliance: {
-      name: `Automated Alliance`,
-      setup: `<ol><li>Form a supply of 10 warriors near you.</li><li>Collect your 3 bases and place them near you.</li><li>Collect your 10 sympathy tokens and place them near you.</li></ol>`,
-    },
-    mechanicalMarquise: {
-      name: `Mechanical Marquise`,
-      setup: `<ol><li>Form a supply of 25 warriors near you.</li><li>Place the keep token in a random corner clearing.</li><li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)</li><li>Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.</li><li>Collect your remaining 15 buildings and place them near you.</li></ol>`,
-    },
-    electricEyrie: {
-      name: `Electric Eyrie`,
-      setup: `<ol><li>Form a supply of 20 warriors near you.</li><li>Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing.</li><li>Tuck your 2 Loyal Vizier cards, showing their suit, into the rightmost decree column.</li><li>Collect your remaining 6 roost buildings and place them near you.</li></ol>`,
-    },
-    vagabot: {
-      name: `Vagabot`,
-      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
-    },
-    cogwheelCorvids: {
-      name: `Cogwheel Corvids`,
-      setup: `<ol><li>Form supplies of 15 warriors and 8 plot tokens face down.</li><li>Place 1 Warrior in the lowest priority clearing of each suit (3 total).</li></ol>`,
-    },
-    drillbitDuchy: {
-      name: `Drillbit Duchy`,
-      setup: `<ol><li>Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns.</li><li>Place the Burrow board near the map.</li><li>Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li>Place 3 citadels and 3 markets on your matching Building spaces.</li><li>Draw 2 cards and discard them. For each, place a crown on the topmost matching unswayed minister on your faction board.</li></ol>`,
-    },
-    logicalLizards: {
-      name: `Logical Lizards`,
-      setup: `<ol><li>Form a supply of 25 warriors.</li><li>Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot (preferably diagonally opposite.) Then place 1 warrior in each adjacent clearing.</li><li>Place the outcast marker on the Sanctify space of the Conspiracy track on your faction board.</li><li>Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li><li>Draw 3 cards and place them face up in your Lost Souls in the order drawn.</li></ol>`,
-    },
-    riverfolkRobots: {
-      name: `Riverfolk Robots`,
-      setup: `<ol><li>Form a supply of 15 warriors.</li><li>Place 1 warrior in each clearing on the river.</li><li>Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li>Place 1 warrior in your Payments box.</li><li>Draw 5 cards and add them to your Market.</li></ol>`,
-    },
-    lootingLegion: {
-      name: `Looting Legion`,
-      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
-    },
   },
   faction: {
     alliance: {
@@ -341,12 +282,12 @@ export default {
       summary: `<p>En jouant le Vagbond, vous participez au conflit sans prendre parti, et vous faites des amis ou des ennmis selon vos intérêts. Vous marquez des points en améliorant vos <b>relations</b>, en aidant les factions amicales en leur donnant des cartes, et en retirant du jeu les pièces des factions hostiles. Vous pouvez également marquer des points en effectuant des <b>quêtes</b> afin d’accroître votre popularité auprès des créatures de la Forêt.</p><p>Pour agir efficacement, vous devez gérer vos <b>objets</b> et élargir votre collection en explorant les <b>ruines</b> de la Forêt et en apportant votre aide aux autres factions. Vous êtes un <b>Voyageur Solitaire</b>, vous ne pouvez jamais contrôler de clairière ni empêcher un joueur d’en contrôler une, mais vous êtes <b>Agile</b> et vous pouvez toujours vous déplacer, peu importe qui contrôle votre clairière.</p>`,
       setupTitle: `Mise en place du Vagabond`,
       setup: {
-        default: `<ol><li><b>Choisir un personnage.</b> Choisissez une carte de personnage et placez-la sur votre plateau de faction.</li><li><b>Placer votre pion.</b> Placez le pion du Vagabond dans n’importe quel bois.</li><li><b>Piocher des Quêtes.</b> Mélangez vos cartes Quête, piochez-en 3 et disposez-les face visible.</li>><li><b>Prendre les objets de départ.</b> Prenez les objets marqués d’un « D » indiqués sur votre carte de personnage. Placez les objets <Tea/>, <Coin/>, et <Bag/> face visible sur leurs pistes de votre plateau de faction. Placez tous les autres objets face visible dans votre Sacoche. Remettez les objets « D » restants dans la boite.</li></ol>`, // Loi de Root v2023.08.03@9.3
-        vagabondSetUp: `<ol><li><b>Choisir un personnage.</b> Choisissez une carte de personnage et placez-la sur votre plateau de faction.</li><li><b>Placer votre pion.</b> Placez le pion du Vagabond dans n’importe quel bois.</li><li><b>Prendre les objets de départ.</b> Prenez les objets marqués d’un « D » indiqués sur votre carte de personnage. Placez les objets <Tea/>, <Coin/>, et <Bag/> face visible sur leurs pistes de votre plateau de faction. Placez tous les autres objets face visible dans votre Sacoche. Remettez les objets « D » restants dans la boite.</li></ol>`, // Loi de Root v2023.08.03@9.3
+        default: `<ol><li><b>Choisir un personnage.</b> Choisissez une carte de personnage et placez-la sur votre plateau de faction.</li><li><b>Placer votre pion.</b> Placez le pion du Vagabond dans n’importe quel bois.</li><li><b>Piocher des Quêtes.</b> Mélangez vos cartes Quête, piochez-en 3 et disposez-les face visible.</li><li><b>Préparer les ruines.</b> Placez aléatoirement les 4 objets <Bag/>, <Boot/>, <Hammer/> et <Sword/> marqués d’un « R » sous les ruines, à moins que cette étape n’ait déjà été effectuée.</li><li><b>Prendre les objets de départ.</b> Prenez les objets marqués d’un « D » indiqués sur votre carte de personnage. Placez les objets <Tea/>, <Coin/>, et <Bag/> face visible sur leurs pistes de votre plateau de faction. Placez tous les autres objets face visible dans votre Sacoche. Remettez les objets « D » restants dans la boite.</li></ol>`, // Loi de Root v2023.08.03@9.3
+        vagabondSetUp: `<ol><li><b>Choisir un personnage.</b> Choisissez une carte de personnage et placez-la sur votre plateau de faction.</li><li><b>Placer votre pion.</b> Placez le pion du Vagabond dans n’importe quel bois.</li><li><b>Préparer les ruines.</b> Placez aléatoirement les 4 objets supplémentaires <Bag/>, <Boot/>, <Hammer/> et <Sword/> marqués d’un « R » sous les ruines <i>(avec les objets existants)</i>.</li><li><b>Prendre les objets de départ.</b> Prenez les objets marqués d’un « D » indiqués sur votre carte de personnage. Placez les objets <Tea/>, <Coin/>, et <Bag/> face visible sur leurs pistes de votre plateau de faction. Placez tous les autres objets face visible dans votre Sacoche. Remettez les objets « D » restants dans la boite.</li></ol>`, // Loi de Root v2023.08.03@9.3
       },
       advancedSetup: {
-        default: `<ol><li>Placez votre <b>pion</b> dans n’importe quel bois.</li><li>Mélangez le paquet de quêtes. Piochez 3 <b>quêtes</b> et placez-les à proximité.</li><li>Placez la carte <b>Personnage</b> « {{vagabond}} » sur son emplacement et les <b>objets « D »</b> <InitialStartingItems>, </InitialStartingItems> et <FinalStartingItem/> dans votre Sacoche ou sur les pistes correspondantes selon le cas.</li></ol>`,
-        vagabondSetUp: `<ol><li>Placez votre <b>pion</b> dans n’importe quel bois.</li><li>Placez la carte <b>Personnage</b> « {{vagabond}} » sur son emplacement et les <b>objets « D »</b> <InitialStartingItems>, </InitialStartingItems> et <FinalStartingItem/> dans votre Sacoche ou sur les pistes correspondantes selon le cas.</li></ol>`,
+        default: `<ol><li>Placez votre <b>pion</b> dans n’importe quel bois.</li><li>Mélangez le paquet de quêtes. Piochez 3 <b>quêtes</b> et placez-les à proximité.</li><li>Placez aléatoirement les 4 <b>objets « R »</b> <Bag/>, <Boot/>, <Hammer/> et <Sword/> sous les ruines, si ce n’est pas déjà fait.</li><li>Placez la carte <b>Personnage</b> « {{vagabond}} » sur son emplacement et les <b>objets « D »</b> <InitialStartingItems>, </InitialStartingItems> et <FinalStartingItem/> dans votre Sacoche ou sur les pistes correspondantes selon le cas.</li></ol>`,
+        vagabondSetUp: `<ol><li>Placez votre <b>pion</b> dans n’importe quel bois.</li><li>Placez aléatoirement les 4 <b>objets « R »</b> <Bag/>, <Boot/>, <Hammer/> et <Sword/> supplémentaires sous les ruines <i>(avec les objets existants)</i>.</li><li>Placez la carte <b>Personnage</b> « {{vagabond}} » sur son emplacement et les <b>objets « D »</b> <InitialStartingItems>, </InitialStartingItems> et <FinalStartingItem/> dans votre Sacoche ou sur les pistes correspondantes selon le cas.</li></ol>`,
       },
     },
     warlord: {
@@ -355,11 +296,11 @@ export default {
       summary: `<p>En jouant le Seigneur des Cents, vous marquez des points en <b>opprimant</b> vos adversaires. À la fin de votre tour, plus vous contrôlez de clairières qui n’ont aucune pièce adverse <i>(pas de guerriers, pas de bâtiments, rien !)</i>, plus vous marquez de points.</p><p>Pour gagner en puissance et attirer des guerriers, vous devez ajouter des objets à votre énorme <b>Butin</b>. Les bottes, les sacs et les pièces augmentent votre <b>Autorité</b>, tandis que les marteaux, cafés, épées et arbalètes augmentent votre <b>Bravoure</b>. Votre <b>Dédain du commerce</b> limite votre gain de points lors de la fabrication des objets, mais vous pouvez toujours envoyer vos <b>Pillards</b> en voler à vos adversaires !</p><p>Votre seigneur de guerre se trouve à latête des Cents. Ce guerrier-démagogue à l’<b>humeur</b> variable vous accorde une capacité pour le tour. Son appât du gain limite progressivement le nombre d’humeurs disponibles au fil des objets amassés.</p><p>Comme vous vous êtes autoproclamés représentants de la vraie voix des Sous-Bois, vous pouvez inciter des <b>Foules</b> à détruire des bâtiments et jetons adverses, et à raser des ruines pour obtenir des objets.</p>`,
       setupTitle: `Mise en place du Seigneur des Cents`,
       setup: {
-        default: `<ol><li><b>Garnison.</b> Placez votre seigneur de guerre, 4 guerriers et 1 Bastion dans une clairière en coin qui n’est la clairière de départ en coin d’aucun autre joueur et, si possible, qui est diagonalement opposée à une clairière de départ en coin.</li></ol>`, // Loi de Root v2023.08.03@14.3
+        default: `<ol><li><b>Garnison.</b> Placez votre seigneur de guerre, 4 guerriers et 1 Bastion dans une clairière en coin qui n’est la clairière de départ en coin d’aucun autre joueur et, si possible, qui est diagonalement opposée à une clairière de départ en coin.</li><li><b>Placer les objets.</b> Placez les 4 objets <Bag/>, <Boot/>, <Hammer/> et <Sword/> marqués d’un « R » aléatoirement sous les ruines, à moins que cette étape n’ait déjà été effectuée.</li><li><b>Devenir Tenace.</b> Placez la carte d’Humeur Tenace dans la case d’Humeur.</li></ol>`, // Loi de Root v2023.08.03@14.3
         vagabondSetUp: `<ol><li><b>Garnison.</b> Placez votre seigneur de guerre, 4 guerriers et 1 Bastion dans une clairière en coin qui n’est la clairière de départ en coin d’aucun autre joueur et, si possible, qui est diagonalement opposée à une clairière de départ en coin.</li><li><b>Devenir Tenace.</b> Placez la carte d’Humeur Tenace dans la case d’Humeur.</li></ol>`, // Loi de Root v2023.08.03@14.3
       },
       advancedSetup: {
-        default: `<ol><li>Choisissez une Patrie sur le bord du plateau avec au moins 2 clairières entre celle-ci et les Patries adverses.</li><li>Placez votre <b>seigneur de guerre</b>, 4 <b>guerriers</b>, et 1 <b>Bastion</b> dans votre Patrie.</li><li>Placez votre <b>carte d’Humeur Tenace</b> dans l’emplacement correspondant.</li></ol>`,
+        default: `<ol><li>Choisissez une Patrie sur le bord du plateau avec au moins 2 clairières entre celle-ci et les Patries adverses.</li><li>Placez votre <b>seigneur de guerre</b>, 4 <b>guerriers</b>, et 1 <b>Bastion</b> dans votre Patrie.</li><li>Placez votre <b>carte d’Humeur Tenace</b> dans l’emplacement correspondant.</li><li>Placez les 4 <b>objets « R »</b> <Bag/>, <Boot/>, <Hammer/> et <Sword/> sous les ruines au hasard, si ce n’est pas déjà fait.</li></ol>`,
         vagabondSetUp: `<ol><li>Choisissez une Patrie sur le bord du plateau avec au moins 2 clairières entre celle-ci et les Patries adverses.</li><li>Placez votre <b>seigneur de guerre</b>, 4 <b>guerriers</b>, et 1 <b>Bastion</b> dans votre Patrie.</li><li>Placez votre <b>carte d’Humeur Tenace</b> dans l’emplacement correspondant.</li></ol>`,
       },
     },
@@ -512,9 +453,7 @@ export default {
       setup: `<li>Prenez le plateau Lac/Montagne dans la boite de jeu et placez-le avec la face Montagne visible.</li><li>Placez les 6 marqueurs de chemin fermé sur les 6 chemins plus foncés creusés dans la terre.</li>`, // Loi de Root v2023.08.03@C.3.1
       fixedSuits: `Sur le plateau Montagne, utiliser les couleurs de clairière suggérées`,
       useLandmark: `Sur le plateau Montagne, utiliser la mise en place de la Tour spécifique à ce plateau`,
-      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
-      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
-      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      landmarkSetup: `<li>Placez la Tour comme indiqué dans le schéma ci-dessous. Si vous avez la carte de Monument « La Tour », sortez-la de la boite de jeu et placez-la à côté du plateau, face effet visible.</li>`,
     },
     winter: {
       name: `Hiver`,

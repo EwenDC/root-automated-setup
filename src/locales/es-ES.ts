@@ -5,7 +5,6 @@ export default {
       false: `Colocación de claros aleatorios`,
       true: `Colocación de claros equilibrada`,
     },
-    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     changeLanguage: `Cambiar idioma`,
     clearing: {
       fox: `claro de zorros`,
@@ -22,8 +21,8 @@ export default {
       false: `Sortea al jugador inicial <i>(el Jugador 1 es la persona que usa esta aplicación, el Jugador 2 es la persona que se sienta a su izquierda, etc.)</i>`,
       true: `Elige al jugador inicial <i>(el Jugador 1 es el jugador inicial, el Jugador 2 es el segundo en jugar, etc.)</i>`,
     },
-    hirelingCount: `Hireling Count: `,
     fox: `Zorro`,
+    includeBotStep: `Incluye preparación de bots`,
     includeHirelings: `Incluye Secuaces`,
     landmarkCount: `Número de Lugares Míticos`,
     logoAlt: `Root`,
@@ -39,7 +38,6 @@ export default {
       suitPriority: `<li>Coge los 12 marcadores de claros y los 12 marcadores de prioridad, luego colócalos en cada claro como se enseña en la figura de debajo.</li>`,
     },
     playerCount: `Número de jugadores`,
-    botCount: `Bot Count`,
     priority: `Prioridad {{count}}`,
     rabbit: `conejo`,
     redo: `Rehacer`,
@@ -47,7 +45,6 @@ export default {
     specialAction: `Acción especial`,
     startingItems: `Objetos iniciales`,
     useDraft: `Usa la selección de facciones en modo draft`,
-    useHouserules: `ADVANCED: Disable logic to use houserules`,
     undo: `Deshacer`,
     wealth: `Abundancia de Cartas`,
   },
@@ -66,20 +63,15 @@ export default {
     warriors_other: `{{count}} Guerreros`,
   },
   error: {
-    disabledPlacement: `<br><b>Placement for this hireling is under construction. Please place anywhere to continue.</b>`,
     factionHirelingExcluded: `La Facción coincidente con este Secuaz se requiere en la preparación`,
-    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     hirelingSelected: `Un Secuaz coincidente con esta Facción está ya en juego`,
     landmarkNotEnoughPlayers: `No hay suficientes jugadores para jugar con este Lugar Mítico`,
     lockedFaction: `No puede escogerse la última facción hasta que una facción belicosa haya sido escogida`,
     mapLandmarkUsed: `Lugar Mítico ya incluído en el mapa escogido`,
-    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `¡No hay mazo seleccionados! Por favor, selecciona al menos un mazo`,
     noFaction: `¡No hay Facciones seleccionadas! Por favor, escoge una facción para jugar`,
     noMap: `¡No hay Mapas seleccionados! Por favor, elige al menos un Mapa`,
     noMilitantFaction: `¡No hay Facciones belicosas seleccionadas! Por favor, elige al menos una facción belicosa`,
-    noValidClearings: `No valid placement found.`,
-    noValidClearingsHouserule: `If Houserules are enabled, place in any clearing.`,
     tooFewFaction: `¡No hay suficientes Facciones seleccionadas! Por favor, selecciona más facciones, desactiva el modo draft o baja el número de jugadores participantes`,
     tooFewHireling: `¡No hay suficientes Secuaces listos para la preparación! Esto podría ser porque la selección actual de Secuaces requiere eliminar demasiadas facciones de la preparación`,
     tooFewLandmark: `¡No hay suficientes Lugares Míticos seleccionados! Por favor, elige más Lugares Míticos o baja el número de Lugares Míticos requeridos`,
@@ -108,7 +100,7 @@ export default {
     },
     setUpBots: {
       title: `Prepara los Bots`,
-      instructionTitle: `Setup Instructions:`,
+      body: `Como grupo, decidid con qué bots os gustaría jugar, siguiendo sus instrucciones de preparación tal y como se describen en las Leyes de la Rootbótica.`,
     },
     chooseLandmarks: {
       title: `Prepara los Lugares Míticos`,
@@ -137,10 +129,6 @@ export default {
       body: `Asigna una de las facciones de debajo a cada jugador de la forma que quieras. El orden de preparación de las facciones será de izquierda a derecha según se enseñan. Puedes seleccionar facciones de la lista para ver sus estadísticas antes de elegir.`,
       body_useDraft: `El Jugador {{count}} elige con qué facción le gustaría jugar de la lista de debajo. Puedes seleccionar facciones de la lista para ver sus estadísticas antes de confirmar su selección pulsando "Siguiente Paso."`,
     },
-    selectBots: {
-      subtitle: `Assign Bots`,
-      body: `Assign one of the below bots. The bots will be set up from left-to-right. You may freely select bots from the list.`,
-    },
     placeScoreMarkers: {
       title: `Coloca Marcadores de Puntuación`,
       title_vagabondSetUp: `Coloca Marcadores de Puntuación y de Relación`,
@@ -154,12 +142,6 @@ export default {
     setupEnd: {
       title: `Comenzad a Jugar`,
       body: `La preparación se ha completado. El juego empezará con el Jugador {{count}}. Si deseas reiniciar el proceso de preparación, usa el botón de debajo.<p><i>"Preparación Automática de Root" desarrollada por Ewen Cameron</i><br/><i>Traducción al español por Eduardo Martín García</i><br/><i>Basada en el juego de mesa "Root" publicado por Leder Games</i><br/><i>Aplicación bajo licencia CC BY-NC-SA 4.0</i></p>`,
-    },
-    setupRuins: {
-      title: `<li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly.</li>`,
-    },
-    skipRuins: {
-      title: `<li>This faction requires ruins to be filled, but this step was completed previously</li>`,
     },
   },
   deck: {
@@ -187,47 +169,6 @@ export default {
     underworld: `Expansión Los Subterráneos`,
     underworldHirelings: `Pack de Secuaces Subterráneos`,
     vagabondPack: `Pack del Vagabundo`,
-    clockwork: `Clockwork Expansion`,
-    clockwork2: `Clockwork Expansion 2`,
-    betaClockwork: `Beta Released Clockworks`,
-  },
-  bot: {
-    automatedAlliance: {
-      name: `Automated Alliance`,
-      setup: `<ol><li>Form a supply of 10 warriors near you.</li><li>Collect your 3 bases and place them near you.</li><li>Collect your 10 sympathy tokens and place them near you.</li></ol>`,
-    },
-    mechanicalMarquise: {
-      name: `Mechanical Marquise`,
-      setup: `<ol><li>Form a supply of 25 warriors near you.</li><li>Place the keep token in a random corner clearing.</li><li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)</li><li>Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.</li><li>Collect your remaining 15 buildings and place them near you.</li></ol>`,
-    },
-    electricEyrie: {
-      name: `Electric Eyrie`,
-      setup: `<ol><li>Form a supply of 20 warriors near you.</li><li>Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing.</li><li>Tuck your 2 Loyal Vizier cards, showing their suit, into the rightmost decree column.</li><li>Collect your remaining 6 roost buildings and place them near you.</li></ol>`,
-    },
-    vagabot: {
-      name: `Vagabot`,
-      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
-    },
-    cogwheelCorvids: {
-      name: `Cogwheel Corvids`,
-      setup: `<ol><li>Form supplies of 15 warriors and 8 plot tokens face down.</li><li>Place 1 Warrior in the lowest priority clearing of each suit (3 total).</li></ol>`,
-    },
-    drillbitDuchy: {
-      name: `Drillbit Duchy`,
-      setup: `<ol><li>Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns.</li><li>Place the Burrow board near the map.</li><li>Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li>Place 3 citadels and 3 markets on your matching Building spaces.</li><li>Draw 2 cards and discard them. For each, place a crown on the topmost matching unswayed minister on your faction board.</li></ol>`,
-    },
-    logicalLizards: {
-      name: `Logical Lizards`,
-      setup: `<ol><li>Form a supply of 25 warriors.</li><li>Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot (preferably diagonally opposite.) Then place 1 warrior in each adjacent clearing.</li><li>Place the outcast marker on the Sanctify space of the Conspiracy track on your faction board.</li><li>Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li><li>Draw 3 cards and place them face up in your Lost Souls in the order drawn.</li></ol>`,
-    },
-    riverfolkRobots: {
-      name: `Riverfolk Robots`,
-      setup: `<ol><li>Form a supply of 15 warriors.</li><li>Place 1 warrior in each clearing on the river.</li><li>Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li>Place 1 warrior in your Payments box.</li><li>Draw 5 cards and add them to your Market.</li></ol>`,
-    },
-    lootingLegion: {
-      name: `Looting Legion`,
-      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
-    },
   },
   faction: {
     alliance: {
@@ -332,12 +273,12 @@ export default {
       summary: `<p>Como el Vagabundo, jugarás con todos los lados del conflicto, haciendo amigos y enemigos según te convenga. Obtienes puntos a través de tus <b>relaciones</b>, a medida que ayudas a facciones aliadas dándoles cartas y haciendo crecer tu infamia con las facciones hostiles quitando sus piezas del tablero en batalla. También obtendrás puntos a medida que completes <b>misiones</b> para mejorar tu buen nombre entre las criaturas del Bosque.</p><p>Para moverte y actuar eficientemente necesitarás gestionar tu hatillo de objetos, aumentando tu selección explorando ruinas antiguas y ayudando a otras facciones. Siendo <b>Errante y Solitario</b>, no puedes gobernar un claro o evitar que otra facción lo gobierne; pero también eres <b>Grácil</b>, por lo que puedes moverte independientemente de quién gobierne tu claro.</p>`,
       setupTitle: `Preparación del Vagabundo`,
       setup: {
-        default: `<ol><li><b>Elegir un Personaje.</b> Elige una carta de personaje y colócala en tu espacio de carta de personaje.</li><li><b>Colocar el Peón.</b> Coloca tu peón de Vagabundo en un bosque a tu elección.</li><li><b>Conseguir Misiones.</b> Baraja tu mazo de misiones, roba 3 cartas de misión y colócalas bocarriba junto a ti.</li><li><b>Obtener los Objetos Iniciales.</b> Toma los objetos marcados con una "S" que aparecen en tu carta de personaje. Coloca los objetos <Tea/>, <Coin/> y <Bag/> indicados bocarriba en los contadores correspondientes de tu tablero. Coloca bocarriba los demás objetos indicados en tu hatillo. Devuelve cualquier objeto "S" restante a la caja.</li></ol>`,
-        vagabondSetUp: `<ol><li><b>Elegir un Personaje.</b> Elige una carta de personaje y colócala en tu espacio de carta de personaje.</li><li><b>Colocar el Peón.</b> Coloca tu peón de Vagabundo en un bosque a tu elección.</li><li><b>Obtener los Objetos Iniciales.</b> Toma los objetos marcados con una "S" que aparecen en tu carta de personaje. Coloca los objetos <Tea/>, <Coin/> y <Bag/> indicados bocarriba en los contadores correspondientes de tu tablero. Coloca bocarriba los demás objetos indicados en tu hatillo. Devuelve cualquier objeto "S" restante a la caja.</li></ol>`,
+        default: `<ol><li><b>Elegir un Personaje.</b> Elige una carta de personaje y colócala en tu espacio de carta de personaje.</li><li><b>Colocar el Peón.</b> Coloca tu peón de Vagabundo en un bosque a tu elección.</li><li><b>Conseguir Misiones.</b> Baraja tu mazo de misiones, roba 3 cartas de misión y colócalas bocarriba junto a ti.</li><li><b>Llenar las Ruinas.</b> Toma las 4 ruinas del mapa, y toma los objetos <Bag/>, <Boot/>, <Hammer/> y <Sword/> marcados con una "R". Coloca uno bajo cada ruina y entonces repártelas al azar entre los espacios vacíos de ruina del mapa.</li><li><b>Obtener los Objetos Iniciales.</b> Toma los objetos marcados con una "S" que aparecen en tu carta de personaje. Coloca los objetos <Tea/>, <Coin/> y <Bag/> indicados bocarriba en los contadores correspondientes de tu tablero. Coloca bocarriba los demás objetos indicados en tu hatillo. Devuelve cualquier objeto "S" restante a la caja.</li></ol>`,
+        vagabondSetUp: `<ol><li><b>Elegir un Personaje.</b> Elige una carta de personaje y colócala en tu espacio de carta de personaje.</li><li><b>Colocar el Peón.</b> Coloca tu peón de Vagabundo en un bosque a tu elección.</li><li><b>Llenar las Ruinas.</b> Pon los objetos <Bag/>, <Boot/>, <Hammer/> y <Sword/> marcados con una "R" bajo las ruinas al azar <i>(junto a los ya colocados, tiene que haber dos objetos bajo cada ruina)</i>.</li><li><b>Obtener los Objetos Iniciales.</b> Toma los objetos marcados con una "S" que aparecen en tu carta de personaje. Coloca los objetos <Tea/>, <Coin/> y <Bag/> indicados bocarriba en los contadores correspondientes de tu tablero. Coloca bocarriba los demás objetos indicados en tu hatillo. Devuelve cualquier objeto "S" restante a la caja.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Coloca tu <b>peón</b> en cualquier bosque.</li><li>Baraja el mazo de misiones. Roba 3 <b>misiones</b> bocarriba.</li><li>Coloca la <b>carta de personaje</b> "{{vagabond}}" en tu espacio de Carta de Personaje. Coloca los <b>objetos iniciales</b> <InitialStartingItems>, </InitialStartingItems> y <FinalStartingItem/> <i>(marcados con una "S")</i> en tu Hatillo, y el resto en sus correspondientes contadores.</li><li>Coloca los <b>marcadores de relación</b> de cada facción no-Vagabundo en juego sobre el espacio de Indiferente del contador de relaciones.</li></ol>`,
-        vagabondSetUp: `<ol><li>Coloca tu <b>peón</b> en cualquier bosque.</li><<li>Coloca la <b>carta de personaje</b> "{{vagabond}}" en tu espacio de Carta de Personaje. Coloca los <b>objetos iniciales</b> <InitialStartingItems>, </InitialStartingItems> y <FinalStartingItem/> <i>(marcados con una "S")</i> en tu Hatillo, y el resto en sus correspondientes contadores.</li><li>Coloca los <b>marcadores de relación</b> de cada facción no-Vagabundo en juego sobre el espacio de Indiferente del contador de relaciones.</li></ol>`,
+        default: `<ol><li>Coloca tu <b>peón</b> en cualquier bosque.</li><li>Baraja el mazo de misiones. Roba 3 <b>misiones</b> bocarriba.</li><li>Coloca los 4 <b>objetos</b> <Bag/>, <Boot/>, <Hammer/> y <Sword/> <i>(marcados con una "R")</i> bajo las ruinas al azar, salvo que otra facción no-Vagabundo ya lo haya hecho.</li><li>Coloca la <b>carta de personaje</b> "{{vagabond}}" en tu espacio de Carta de Personaje. Coloca los <b>objetos iniciales</b> <InitialStartingItems>, </InitialStartingItems> y <FinalStartingItem/> <i>(marcados con una "S")</i> en tu Hatillo, y el resto en sus correspondientes contadores.</li><li>Coloca los <b>marcadores de relación</b> de cada facción no-Vagabundo en juego sobre el espacio de Indiferente del contador de relaciones.</li></ol>`,
+        vagabondSetUp: `<ol><li>Coloca tu <b>peón</b> en cualquier bosque.</li><li>Pon los <b>objetos</b> adicionales <Bag/>, <Boot/>, <Hammer/> y <Sword/> <i>(marcados con una "R")</i> bajo las ruinas al azar <i>(junto a los objetos ya existentes en ellas)</i>.</li><li>Coloca la <b>carta de personaje</b> "{{vagabond}}" en tu espacio de Carta de Personaje. Coloca los <b>objetos iniciales</b> <InitialStartingItems>, </InitialStartingItems> y <FinalStartingItem/> <i>(marcados con una "S")</i> en tu Hatillo, y el resto en sus correspondientes contadores.</li><li>Coloca los <b>marcadores de relación</b> de cada facción no-Vagabundo en juego sobre el espacio de Indiferente del contador de relaciones.</li></ol>`,
       },
     },
     warlord: {
@@ -346,11 +287,11 @@ export default {
       summary: `<p>Como Señor de los Cientos obtienes puntos de victoria <b>oprimiendo</b> a tus enemigos. Al final de tu turno, cuantos más claros gobiernes <i>sin</i> piezas enemigas (sin guerreros, sin edificios, sin ninguna pieza) más puntos obtendrás.</p><p> Para aumentar su poder y captar guerreros, los Cientos deben ganar objetos y añadirlos a su creciente <b>Botín</b>. Las botas, bolsas y monedas aumentan tu <b>Mando</b>, mientras que los martillos, teteras, espadas y ballestas aumentan tu <b>Arrojo</b>. Tu <b>Indiferencia por el Comercio</b> significa que raras veces obtendrás puntos por fabricar objetos, ¡pero puedes robarlos de tus enemigos con <b>Saqueadores</b>!</p><p>Liderando a los Cientos está el Señor de la Guerra, un guerrero-agitador cuyo inestable <b>estado de ánimo</b> le da una habilidad durante el turno. El Señor de la Guerra está obsesionado con el botín, así que a medida que los Cientos consiguen más objetos, él tendrá menos estados de ánimo entre los que escoger.</p><p>Autodeclarados como la verdadera voz del Bosque, pueden instigar <b>turbas</b>, que destruirán fichas y edificios enemigos, y saquearán los objetos de las ruinas.</p>`,
       setupTitle: `Preparación del Señor de los Cientos`,
       setup: {
-        default: `<ol><li><b>Guarnición.</b> Coloca tu señor de la guerra, 4 guerreros y 1 bastión en un claro de una esquina que no sea el claro inicial de otro jugador y, si es posible, que sea diagonalmente opuesto a un claro inicial.</li><li><b>Volverse Obstinado.</b> Coloca tu carta de estado de ánimo Obstinado en el espacio de Carta de Estado de Ánimo.</li></ol>`,
+        default: `<ol><li><b>Guarnición.</b> Coloca tu señor de la guerra, 4 guerreros y 1 bastión en un claro de una esquina que no sea el claro inicial de otro jugador y, si es posible, que sea diagonalmente opuesto a un claro inicial.</li><li><b>Colocar Objetos.</b> Coloca los objetos <Bag/>, <Boot/>, <Hammer/> y <Sword/> marcados con una "R" aleatoriamente bajo las ruinas, a menos que ya se haya hecho.</li><li><b>Volverse Obstinado.</b> Coloca tu carta de estado de ánimo Obstinado en el espacio de Carta de Estado de Ánimo.</li></ol>`,
         vagabondSetUp: `<ol><li><b>Guarnición.</b> Coloca tu señor de la guerra, 4 guerreros y 1 bastión en un claro de una esquina que no sea el claro inicial de otro jugador y, si es posible, que sea diagonalmente opuesto a un claro inicial.</li><li><b>Volverse Obstinado.</b> Coloca tu carta de estado de ánimo Obstinado en el espacio de Carta de Estado de Ánimo.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Escoge un claro patria en un borde del mapa que tenga al menos 2 claros entre él y cada claro patria enemigo.</li><li>Coloca tu <b>señor de la guerra</b>, 4 <b>guerreros</b> y 1 <b>bastión</b> en tu claro patria.</li><li>Coloca tu carta de <b>Obstinado</b> en el espacio de Carta de Estado de Ánimo.</li></ol>`,
+        default: `<ol><li>Escoge un claro patria en un borde del mapa que tenga al menos 2 claros entre él y cada claro patria enemigo.</li><li>Coloca tu <b>señor de la guerra</b>, 4 <b>guerreros</b> y 1 <b>bastión</b> en tu claro patria.</li><li>Coloca tu carta de <b>Obstinado</b> en el espacio de Carta de Estado de Ánimo.</li><li>Pon los <b>objetos</b> <Bag/>, <Boot/>, <Hammer/> y <Sword/> <i>(marcados con una "R")</i> bajo las ruinas al azar, salvo que otra facción ya lo haya hecho.</li></ol>`,
         vagabondSetUp: `<ol><li>Escoge un claro patria en un borde del mapa que tenga al menos 2 claros entre él y cada claro patria enemigo.</li><li>Coloca tu <b>señor de la guerra</b>, 4 <b>guerreros</b> y 1 <b>bastión</b> en tu claro patria.</li><li>Coloca tu carta de <b>Obstinado</b> en el espacio de Carta de Estado de Ánimo.</li></ol>`,
       },
     },
@@ -503,9 +444,7 @@ export default {
       setup: `<li>Coge el tablero del mapa del Lago y de la Montaña de la caja del juego y colócalo en la mesa con el lado de la Montaña bocarriba.</li><li>Coloca los 6 marcadores de camino cerrado para cubrir los 6 caminos de un color más oscuro con terreno excavado.</li>`,
       fixedSuits: `Usa los palos de los claros sugeridos para el Mapa de la Montaña`,
       useLandmark: `Usa la preparación específica del lugar mítico de la Torre para el mapa de la Montaña`,
-      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
-      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
-      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      landmarkSetup: `<li>Coloca la pieza de la Torre como se enseña en la imagen de abajo. Si tienes la carta del lugar mítico de "La Torre", sácala de la caja del juego y colócala al lado del tablero con el lado opuesto a su preparación bocarriba.</li>`,
     },
     winter: {
       name: `Invierno`,
