@@ -709,32 +709,12 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       },
     },
     factions: {
-      council: {
-        key: 'council',
-        image: councilMeeple,
-        standardSetup: {
-          order: 12,
-        },
-        pieces: {
-          warriors: 20,
-          tokens: {
-            count: 6,
-            image: assemblyToken,
-          },
-        },
-        stats: {
-          complexity: 1,
-          wealth: 1,
-          aggression: 0,
-          crafting: 0,
-        },
-      },
       diaspora: {
         key: 'diaspora',
         image: diasporaMeeple,
         militant: true,
         standardSetup: {
-          order: 13,
+          order: 12,
         },
         pieces: {
           warriors: 20,
@@ -748,6 +728,27 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
           wealth: 1,
           aggression: 1,
           crafting: 2,
+        },
+      },
+      council: {
+        key: 'council',
+        image: councilMeeple,
+        standardSetup: {
+          order: 13,
+          cornerSetup: true,
+        },
+        pieces: {
+          warriors: 20,
+          tokens: {
+            count: 6,
+            image: assemblyToken,
+          },
+        },
+        stats: {
+          complexity: 1,
+          wealth: 1,
+          aggression: 0,
+          crafting: 0,
         },
       },
       knaves: {

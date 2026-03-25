@@ -190,11 +190,11 @@ export default {
     },
     arbiter: {
       name: `Arbiter`,
-      effect: `In Assault battles, you may take 1 extra hit to deal 1 extra hit.`,
+      effect: `In Assault battles, you may take 1 extra hit to deal 1 extra hit. <i>(Do this after rolling the dice.)</i>`,
     },
     cheat: {
       name: `Cheat`,
-      effect: `As an action, you may flip two items down to take <b>any</b> item action.`,
+      effect: `As an action, you may flip two items down to take any item action.`,
     },
     gladiator: {
       name: `Gladiator`,
@@ -202,11 +202,11 @@ export default {
     },
     harrier: {
       name: `Harrier`,
-      effect: `When you Dash, you may move the Harrier up to <b>three</b> times, ignoring rule.`,
+      effect: `When you Dash, you may move the Harrier up to three times <i>(instead of two)</i>, ignoring rule.`,
     },
     jailor: {
       name: `Jailor`,
-      effect: `In Nab battles, you may deal 1 less hit to ignore 1 rolled hit you take.`,
+      effect: `In Nab battles, you may deal 1 less hit, even if you are dealing no hits, to ignore 1 rolled hit you take. <i>(Do this after rolling the dice.)</i>`,
     },
     ranger: {
       name: `Ranger`,
@@ -218,7 +218,7 @@ export default {
     },
     scoundrel: {
       name: `Scoundrel`,
-      effect: `When you Skirmish, you may instead move from a <b>clearing</b> before the battle. If you do, do not ignore 1 hit.`,
+      effect: `When you Skirmish, you may instead move from a clearing before the battle. If you do, do not ignore 1 hit.`,
     },
     thief: {
       name: `Thief`,
@@ -299,10 +299,10 @@ export default {
       summary: `<p>As the Twilight Council, you work to suppress violence by bringing together the Woodfolk in <b>assemblies</b>, hoping to draw the civil war to an end. Assemblies let you score victory points, banish enemy warriors away from them, and gain <b>Loyalists</b>, warriors on your player board that you can later place at assemblies. You act as <b>Peacekeepers</b> at your assemblies, defending enemy factions when they’re attacked.</p><p>By ruling assemblies, you can flip your assemblies to their <b>Governing</b> side. In Evening, you score points based on the number of Governing assemblies with any enemy buildings or tokens at them.</p><p>Your <b>Governors</b> limit the actions that enemies can take at Governing assemblies, unless those enemies <b>Entreat</b> you to close the assembly for a time.</p>`,
       setupTitle: `Set up the Twilight Council`,
       setup: {
-        default: `<ol><li>Place <b>4 warriors</b> in one clearing. This is your starting clearing. Place <b>2 warriors</b> in a different clearing. <i>(Place six total.)</i></li><li><i>Fill your Assemblies track with assembly tokens on their Closed side <i>(matching the player board graphic)</i>.</li></ol>`,
+        default: `<ol><li>Place <b>4 warriors</b> in a corner clearing. This is your starting clearing. Place <b>2 warriors</b> in a different clearing. <i>(Place six total.)</i></li><li><i>Fill your Assemblies track with assembly tokens on their Closed side <i>(matching the player board graphic)</i>.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Choose a homeland clearing. Place <b>4 warriors</b> and <b>1 assembly</b> on its Governing side there.</li><li>Place <b>2 warriors</b> in a different clearing.</li><li>Fill your Assemblies track with <b>assemblies</b> on their Closed side.</li></ol>`,
+        default: `<ol><li>Choose a homeland clearing. Place <b>4 warriors</b> there.</li><li>Place <b>2 warriors</b> in a different clearing.</li><li>Fill your Assemblies track with <b>assemblies</b> on their Closed side.</li></ol>`,
       },
     },
     cult: {
@@ -323,12 +323,12 @@ export default {
       summary: `<p>As the Lilypad Diaspora, you wish to establish <b>enclaves</b> as safe havens in the Woodland, and you score points by spending cards matching enclaves on their <b>Peaceful side</b>. These enclaves introduce your culture to the Woodland, adding the new frog suit to their clearing. You also add <b>frog cards</b> to the deck and a new discard pile for frog cards called <b>The Pond</b>.</p><p>However, your Peaceful enclaves cannot protect you. To gain warriors, you need enclaves on their <b>Militant side</b>. But these enclaves cover their clearing’s suit as the Diaspora expels threats real or imagined, making you lose essential Woodland support. They also prompt you to <b>Retaliate</b>, making you battle at them every turn.</p><p>To prevent this, you can <b>Reconcile</b> to flip Militant enclaves to Peaceful, and your enemies can do the same through <b>Negotiations</b>. However, your enemies may battle you to flip your Peaceful enclaves to Militant, as your people’s <b>Fears Come to Pass</b>.</p>`,
       setupTitle: `Set up the Lilypad Diaspora`,
       setup: {
-        default: `<ol><li>Place <b>5 warriors</b> and <b>1 enclave token</b> on its <b>Peaceful side</b> in a clearing on the river. This is your starting clearing.</li><li>Shuffle the <b>frog cards</b> into the shared deck. Place the <b>Pond placard</b> near it.</li></ol>`,
+        default: `<ol><li>Place <b>5 warriors</b> and <b>1 enclave token</b> on its <b>Peaceful side</b> in a clearing on the river. This is your starting clearing.</li><li>Shuffle all the <b>frog cards</b> into the shared deck. Place the <b>Pond placard</b> near it.</li></ol>`,
         default_twoPlayer: `<ol><li>Place <b>5 warriors</b> and <b>1 enclave token</b> on its <b>Peaceful side</b> in a clearing on the river. This is your starting clearing.</li><li>Remove the <b>Frog Dominance frog card</b>.</li><li>Shuffle the remaining <b>frog cards</b> into the shared deck. Place the <b>Pond placard</b> near it.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Place <b>5 warriors</b> and <b>1 Peaceful enclave</b> in a clearing, or one adjacent to the river if you cannot. This is your homeland.</li><li>Shuffle the <b>frog cards</b> into the shared deck. Put the <b>Pond placard</b> near it.</li></ol>`,
-        default_twoPlayer: `<ol><li>Place <b>5 warriors</b> and <b>1 Peaceful enclave</b> in a clearing, or one adjacent to the river if you cannot. This is your homeland.</li><li>Remove the <b>Frog dominance card</b>.</li><li>Shuffle the remaining <b>frog cards</b> into the shared deck. Put the <b>Pond placard</b> near it.</li></ol>`,
+        default: `<ol><li>Place <b>5 warriors</b> and <b>1 Peaceful enclave</b> in a river clearing, or one adjacent to the river if you cannot. This is your homeland.</li><li>Shuffle all the <b>frog cards</b> into the shared deck. Put the <b>Pond placard</b> near it.</li></ol>`,
+        default_twoPlayer: `<ol><li>Place <b>5 warriors</b> and <b>1 Peaceful enclave</b> in a river clearing, or one adjacent to the river if you cannot. This is your homeland.</li><li>Remove the <b>Frog dominance card</b>.</li><li>Shuffle the remaining <b>frog cards</b> into the shared deck. Put the <b>Pond placard</b> near it.</li></ol>`,
       },
     },
     duchy: {
@@ -373,10 +373,10 @@ export default {
       summary: `<p>As the Knaves of the Deepwood, you endeavor to mock the powerful and protect the needy. Each turn, you score victory points from your <b>acclaim</b> throughout the Woodland and from warriors you take as <b>Prisoners</b> by battling the enemy factions.</p><p>Each turn, you act with one of your three <b>Captains</b>, backed up by a crew of rowdy <b>Skunks</b> that can move along with them. However, once a Captain has acted, it cannot act again until after you act with all three Captains, letting you <b>Take It Easy</b>.</p><p>You have a <b>Stash</b> of items that you can flip face down to take special actions at your Captain. Like your Captains, your items only flip face up again once you Take It Easy. Use them wisely!</p>`,
       setupTitle: `Set up the Knaves of the Deepwood`,
       setup: {
-        default: `<ol><li>Choose <b>3 Captain cards</b>. <i>(For your first game, we suggest Jailor, Cheat, & Gladiator)</i> Collect their <b>Captain warriors</b>.</li><li>Place <b>1 Captain warrior</b> and <b>1 Skunk warrior</b> each in three different forests.</li><li>Place the <b>6 items</b> as shown on your chosen Captain cards into your Stash face up, and fill each Acclaim slot with <b>2 acclaim tokens</b>.</li></ol>`,
+        default: `<ol><li>Choose <b>3 Captain cards</b>. <i>(For your first game, we suggest Jailor, Cheat, & Gladiator)</i> Collect their <b>Captain warriors</b>.</li><li>Place <b>1 Captain warrior</b> and <b>1 Skunk warrior</b> each in three different forests.</li><li>Place the <b>6 items</b> as shown on your chosen Captain cards into your Stash face up, and fill each Acclaim slot with <b>2 acclaim tokens</b>. <i>(The “x” sides are just aids if you need to track which ones you used to craft.)</i></li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Deal out the “{{captain.0}},” “{{captain.1}},” “{{captain.2}},” and “{{captain.3}}” <b>Captain cards</b>.</li><li>Choose <b>3</b> of them and return the fourth one to the box. Collect their <b>Captain warriors</b>. Put the <b>items</b> shown on their Captain cards in your Stash.</li><li>Put <b>1 Captain</b> and <b>1 Skunk</b> each in three different forests.</li></ol>`,
+        default: `<ol><li>Deal out the “{{captain.0}},” “{{captain.1}},” “{{captain.2}},” and “{{captain.3}}” <b>Captain cards</b>.</li><li>Choose <b>3</b> of them and return the fourth one to the box. Collect their <b>Captain warriors</b>. Put the <b>items</b> shown on their Captain cards in your Stash.</li><li>Put <b>1 Captain</b> and <b>1 Skunk</b> each in three different forests.</li><li>Fill each Acclaim slot with <b>2 acclaim tokens</b>.</li></ol>`,
       },
     },
     marquise: {
@@ -572,8 +572,8 @@ export default {
     ferry: {
       name: `Ferry`,
       setupTitle: `Set up the Ferry`,
-      setup: `Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have “The Ferry” landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>“Once per turn, a player taking a move from the Ferry’s clearing can move to an adjacent clearing along the river, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card.”</p>`,
-      setup_lake: `Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have “The Ferry” landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rule during play:<p>“Once per turn, a player taking a move from the Ferry’s clearing can move to another coastal clearing, moving the Ferry as well. <i>(This follows normal movement rules.)</i> After taking this move, that player draws one card.”</p>`,
+      setup: `<p>Player {{count}}, place the Ferry landmark in a clearing on the river. It cannot have a landmark or be adjacent to one. If you have “The Ferry” landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rules during play:</p><p>“Once per turn, when moving from a clearing with the Ferry, you may move to an adjacent river clearing, ignoring paths, moving the Ferry along with the moving pieces. <i>(Follow normal move rules.)</i></p><p>“If faction pieces move, their player draws one card. <i>(If multiple factions are moved at the same time, each of their players draws one card.)</i>”</p>`,
+      setup_lake: `<p>Player {{count}}, place the Ferry landmark in a coastal clearing. It cannot have a landmark or be adjacent to one. If you have “The Ferry” landmark card, take it from the game box and place it next to the board on its non-setup side. If you do not have the card, the Ferry has the following rules during play:</p><p>“Once per turn, when moving from a clearing with the Ferry, you may move to another coastal clearing, ignoring paths, moving the Ferry along with the moving pieces. <i>(Follow normal move rules.)</i></p><p>“If faction pieces move, their player draws one card. <i>(If multiple factions are moved at the same time, each of their players draws one card.)</i>”</p>`,
     },
     forge: {
       name: `Legendary Forge`,
@@ -664,12 +664,12 @@ export default {
     cheat: {
       name: `Cheat`,
       action: `Con`,
-      effect: `Exhaust any two items to Quest. Resolve the quest, draw a new quest card, and then shuffle the resolved quest into the quest deck. <i>(Do not add to completed quests.)</i>`,
+      effect: `Once per turn, you may resolve the Quest action by exhausting any two items instead of the listed items. <i>(Score or draw as normal, and draw a new quest.)</i> Then, shuffle the completed quest into the quest deck.`,
     },
     gladiator: {
       name: `Gladiator`,
       action: `Duel`,
-      effect: `Exhaust any item, damage it, and remove 1 enemy warrior from the Gladiator’s clearing to draw 1 card. Do not go Hostile.`,
+      effect: `You may exhaust any item, damage it, and remove 1 enemy warrior from the Gladiator’s clearing to draw 1 card. Do not go Hostile.`,
     },
     harrier: {
       name: `Harrier`,
@@ -709,7 +709,7 @@ export default {
     vagrant: {
       name: `Vagrant`,
       action: `Instigate`,
-      effect: `Exhaust a <Torch/> to force a player <i>(even you)</i> in your clearing to battle another player. You score for removed buildings and tokens instead of the removing player. <i>(Score a victory point per building or token of either player removed.)</i>`,
+      effect: `Exhaust a <Torch/> to force a player <i>(even you)</i> to battle a player in your clearing. Treat removed buildings and tokens as if you removed them. <i>(Score a victory point per building or token of either player removed. Score Infamy as normal.)</i>`,
     },
   },
 }
