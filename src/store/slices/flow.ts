@@ -87,11 +87,9 @@ const getInitialState = (): FlowState => ({
   useDraft: true,
 })
 
-const initialState = getInitialState()
-
 export const flowSlice = createSlice({
   name: 'flow',
-  initialState,
+  initialState: getInitialState(),
 
   reducers: {
     setCurrentStep(state, { payload: currentStep }: PayloadAction<SetupStep>) {

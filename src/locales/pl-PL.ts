@@ -19,7 +19,6 @@ export default {
     },
     closeMessage: `Zamknij wiadomość`,
     complexity: `Złożoność`,
-    confirmReset: `Reset App?`,
     crafting: `Zdolność Przekuwania`,
     disableAll: `Wyłącz Wszystkie`,
     enableAll: `Włącz Wszystkie`,

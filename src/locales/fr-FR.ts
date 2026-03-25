@@ -14,7 +14,6 @@ export default {
     },
     closeMessage: `Fermer le message`,
     complexity: `Difficulté`,
-    confirmReset: `Reset App?`,
     crafting: `Fabrication`,
     disableAll: `Tout désélectionner`,
     enableAll: `Tout sélectionner`,
