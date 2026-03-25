@@ -19,15 +19,13 @@ const SelectBotsStep: SetupStepComponent = ({ flowSlice }) => {
       textKey="setupStep.selectBots.body"
       translationOptions={{ count: currentPickNumber }}
     >
-      <div>
-        <ComponentSetupSelect
-          flowSlice={flowSlice}
-          selector={() => () => availableBots}
-          getLabelKey={bot => `bot.${bot.code}.name`}
-          getSetupTitleKey={bot => `bot.${bot.code}.name`}
-          getSetupKey={() => ''}
-        />
-      </div>
+      <ComponentSetupSelect
+        flowSlice={flowSlice}
+        selector={() => () => availableBots}
+        getLabelKey={bot => `bot.${bot.code}.name`}
+        getSetupTitleKey={bot => `bot.${bot.code}.name`}
+        getSetupKey={() => ''}
+      />
     </Section>
   )
 }
