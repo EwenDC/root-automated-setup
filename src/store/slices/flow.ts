@@ -50,7 +50,6 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   playerIndex: flowState.currentPlayerIndex,
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
-  useDraft: flowState.useDraft,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -78,11 +77,9 @@ const getInitialState = (): FlowState => ({
   useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
 })
 
-const initialState = getInitialState()
-
 export const flowSlice = createSlice({
   name: 'flow',
-  initialState,
+  initialState: getInitialState(),
 
   reducers: {
     setCurrentStep(state, { payload: currentStep }: PayloadAction<SetupStep>) {
@@ -253,11 +250,11 @@ export const flowSlice = createSlice({
 
   extraReducers(builder) {
     // This allows us to always reset the redo queue if the setup state changes
-    builder.addCase(setErrorMessage, () => {
-      // No-op so we don't wipe the redo queue when displaying an error
-    })
     // Clear internal variables when restarting setup
     builder
+      .addCase(setErrorMessage, () => {
+        // No-op so we don't wipe the redo queue when displaying an error
+      })
       .addCase(resetState, () => {
         return getInitialState()
       })
@@ -268,7 +265,6 @@ export const flowSlice = createSlice({
 
   selectors: {
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
-      useDraft: state => state.useDraft,
       factionPool: state => state.factionPool,
       hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,
