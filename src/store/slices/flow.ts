@@ -50,7 +50,6 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   playerIndex: flowState.currentPlayerIndex,
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
-  useDraft: flowState.useDraft,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -266,7 +265,6 @@ export const flowSlice = createSlice({
 
   selectors: {
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
-      useDraft: state => state.useDraft,
       factionPool: state => state.factionPool,
       hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,
