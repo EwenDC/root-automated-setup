@@ -55,7 +55,6 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
   selectedBots: [...flowState.selectedBots],
-  useDraft: flowState.useDraft,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -312,7 +311,6 @@ export const flowSlice = createSlice({
     selectBotPool: state => state.botPool,
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
       botPool: state => state.botPool,
-      useDraft: state => state.useDraft,
       factionPool: state => state.factionPool,
       hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,
