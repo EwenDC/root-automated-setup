@@ -28,11 +28,9 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({
 
   const buttonHandler = (amount: number) => {
     const newValue = value + amount
-    const setMax = maxVal
-    const setMin = minVal
     if (newValue >= minVal && newValue <= maxVal) onChange(newValue)
-    else if (value > maxVal) onChange(setMax)
-    else if (value < minVal) onChange(setMin)
+    else if (value > maxVal) onChange(maxVal)
+    else if (value < minVal) onChange(minVal)
   }
 
   const typingHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

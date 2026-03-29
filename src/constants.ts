@@ -30,6 +30,9 @@ export const MAX_CORNER_SETUPS = 4 // Duh.
 /** The maximum amount of landmarks that can be included (when following official rules). */
 export const MAX_LANDMARKS = 2
 
+/** The maximum amount of bots that can be selected. */
+export const MAX_BOT_COUNT = 3
+
 /** The minimum number of players required to skip flooding a map. */
 export const MIN_PLAYERS_NO_FLOOD = 5
 

@@ -1,6 +1,6 @@
 import type { SetupStepDefinition } from '..'
 
-import { selectFactionArray, setFirstPlayer, setPlayerCount } from '../../store'
+import { selectFactionArray, setErrorMessage, setFirstPlayer, setPlayerCount } from '../../store'
 import { SetupStep } from '../../types'
 import SeatPlayersStep from '../components/seatPlayersStep'
 
@@ -34,6 +34,11 @@ export const seatPlayers: SetupStepDefinition = {
       firstPlayer = Math.floor(Math.random() * setup.playerCount) + 1
     }
     dispatch(setFirstPlayer(firstPlayer))
+    // Check if somebody snuck in with 1 player and no bots (Choose 1 bot, choose 1 player, choose 0 bots, remains at 1 player)
+    if (setup.botCount < 1 && setup.playerCount < 2) {
+      dispatch(setErrorMessage('error.tooFewPlayerBots'))
+      return null
+    }
 
     return SetupStep.chooseMap
   },

@@ -56,7 +56,6 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
   selectedBots: [...flowState.selectedBots],
-  useDraft: flowState.useDraft,
   ruinPlacer: flowState.ruinPlacer,
 })
 
@@ -90,11 +89,9 @@ const getInitialState = (): FlowState => ({
   ruinPlacer: null,
 })
 
-const initialState = getInitialState()
-
 export const flowSlice = createSlice({
   name: 'flow',
-  initialState,
+  initialState: getInitialState(),
 
   reducers: {
     setCurrentStep(state, { payload: currentStep }: PayloadAction<SetupStep>) {
@@ -283,8 +280,7 @@ export const flowSlice = createSlice({
         ) {
           state.ruinPlacer = removedFaction.code
         }
-      } 
-      else {
+      } else {
         console.warn(`Invalid removeCurrentFactionFromPool action: currentIndex must not be null`)
       }
     },
@@ -331,7 +327,6 @@ export const flowSlice = createSlice({
     selectBotPool: state => state.botPool,
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
       botPool: state => state.botPool,
-      useDraft: state => state.useDraft,
       factionPool: state => state.factionPool,
       hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,

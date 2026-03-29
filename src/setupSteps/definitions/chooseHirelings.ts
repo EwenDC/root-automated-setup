@@ -25,6 +25,9 @@ export const chooseHirelings: SetupStepDefinition = {
 
     // Are there any hirelings that can be set up?
     if (selectHirelingArray(state).length < 1) {
+      // Clear stale data if the bots did not already do it during their setup
+      if (state.setup.botCount > 0 && state.setup.excludedFactions.length > 0)
+        dispatch(clearExcludedFactions())
       if (state.flow.hirelingPool.length > 0) dispatch(resetHirelingPool())
       return SetupStep.drawCards
     }

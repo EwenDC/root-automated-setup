@@ -323,7 +323,6 @@ export interface FlowSlice {
   selectedBots: BotCode[]
   step: SetupStep
   vagabondSetUp: boolean
-  useDraft: boolean
 }
 
 //#endregion

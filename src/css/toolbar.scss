@@ -13,20 +13,12 @@ footer {
     inline-size: 80rem;
     padding: 1rem;
 
-    > Section {
-      pointer-events: visible;
-    }
-
     > .left {
       float: inline-start;
     }
 
     > .right {
       float: inline-end;
-    }
-
-    > .reset {
-      float: inline-start;
     }
 
     > :not(:last-child) {

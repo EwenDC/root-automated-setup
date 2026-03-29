@@ -6,7 +6,6 @@ export default {
       false: `Losowe rozmieszczenie symboli polan`,
       true: `Zrównoważone rozmieszczenie symboli polan`,
     },
-    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     changeLanguage: `Zmień język`,
     chooseVagabonds: {
       false: `Wszystkie postacie Włóczęgi do wyboru`,
@@ -19,7 +18,6 @@ export default {
     },
     closeMessage: `Zamknij wiadomość`,
     complexity: `Złożoność`,
-    confirmReset: `Reset App?`,
     crafting: `Zdolność Przekuwania`,
     disableAll: `Wyłącz Wszystkie`,
     enableAll: `Włącz Wszystkie`,
@@ -29,7 +27,7 @@ export default {
       true: `Ustalony pierwszy gracz <i>(Gracz 1 to pierwszy gracz w kolejności tur, Gracz 2 to drugi, itd.)</i>`,
     },
     fox: `Lis`,
-    hirelingCount: `Hireling Count: `,
+    includeBotStep: `Uwzględnij konfigurację botów`,
     includeHirelings: `Uwzględnij Zaciężnych`,
     landmarkCount: `Liczba punktów terenu`,
     logoAlt: `Root`,
@@ -45,7 +43,6 @@ export default {
       suitPriority: `<li>Zbierz 12 znaczników symboli i 12 znaczników priorytetu, a następnie umieść po jednym z każdego w każdej polanie, jak pokazano na poniższym wykresie.</li>`,
     },
     playerCount: `Liczba Graczy`,
-    botCount: `Bot Count`,
     priority: `Priorytet {{count}}`,
     rabbit: `Królik`,
     redo: `Powtórz`,
@@ -60,7 +57,6 @@ export default {
       rabbit: `Królicza polana`,
     },
     useDraft: `Użyj wyboru frakcji przez draft`,
-    useHouserules: `ADVANCED: Disable logic to use houserules`,
     undo: `Cofnij`,
     wealth: `Zasobność w karty`,
   },
@@ -83,8 +79,6 @@ export default {
     warriors_other: `{{count}} Wojowników`,
   },
   error: {
-    disabledPlacement: `<br><b>Placement for this hireling is under construction. Please place anywhere to continue.</b>`,
-    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     factionHirelingExcluded: `Frakcja powiązana z tym Zaciężnym jest wymagana do konfiguracji`,
     hirelingSelected: `Równoważny Zaciężny dla tej frakcji jest już w grze`,
     landmarkNotEnoughPlayers: `Za mało graczy, aby grać z tym punktem terenu`,
@@ -94,13 +88,10 @@ export default {
     missingDeck: `Do przygotowania gry potrzebna jest talia kart! Proszę wybrać pudełko, które ją zawiera`,
     missingFaction: `Do przygotowania gry potrzebna jest co najmniej jedna frakcja! Proszę wybrać pudełko, które ją zawiera`,
     missingMap: `Do przygotowania gry potrzebna jest mapa! Proszę wybrać pudełko, które ją zawiera`,
-    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `Nie wybrano żadnej talii! Proszę wybrać przynajmniej jedną talię`,
     noFaction: `Nie wybrano żadnej Frakcji! Proszę wybrać frakcję do gry`,
     noMap: `Nie wybrano żadnych map! Proszę wybrać przynajmniej jedną mapę`,
     noMilitantFaction: `Nie wybrano żadnych frakcji Militarnych! Proszę wybrać przynajmniej jedną frakcję Militarną`,
-    noValidClearings: `No valid placement found.`,
-    noValidClearingsHouserule: `If Houserules are enabled, place in any clearing.`,
     tooFewFaction: `Wybrano za mało Frakcji! Proszę wybrać więcej Frakcji, wyłączyć wybór frakcji przez draft, lub zmniejszyć liczbę graczy`,
     tooFewHireling: `Za mało Zaciężnych do przeprowadzenia konfiguracji Zaciężnych! Może to być spowodowane tym, że obecny wybór Zaciężnych wymaga usunięcia zbyt wielu frakcji z konfiguracji`,
     tooFewLandmark: `Wybrano za mało punktów terenu! Proszę wybrać więcej punktów terenu lub zmniejszyć ich liczbę`,
@@ -132,7 +123,7 @@ export default {
     },
     setUpBots: {
       title: `Skonfiguruj Boty`,
-      instructionTitle: `Setup Instructions:`,
+      body: `W grupie zdecydujcie, z którymi botami chcecie grać, postępując zgodnie z ich instrukcjami konfiguracji, opisanymi w Księdze Praw Rootbotyki.`,
     },
     chooseLandmarks: {
       title: `Skonfiguruj Punkty Terenu`,
@@ -161,10 +152,6 @@ export default {
       body: `Przydziel jedną z poniższych frakcji każdemu graczowi w dowolny sposób. Frakcje zostaną skonfigurowane od lewej do prawej. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki.`,
       body_useDraft: `Gracz {{count}}, wybierz frakcję, którą chcesz zagrać z poniższej puli frakcji. Możesz swobodnie wybierać frakcje z listy, aby zobaczyć ich statystyki, zanim potwierdzisz swój wybór, naciskając „Następny Krok”.`,
     },
-    selectBots: {
-      subtitle: `Assign Bots`,
-      body: `Assign one of the below bots. The bots will be set up from left-to-right. You may freely select bots from the list.`,
-    },
     placeScoreMarkers: {
       title: `Rozmieść Znaczniki Punktacji`,
       title_vagabondSetUp: `Rozmieść Znaczniki Punktacji i Relacji`,
@@ -178,12 +165,6 @@ export default {
     setupEnd: {
       title: `Rozpocznij Grę`,
       body: `Konfiguracja została zakończona. Gra rozpocznie się od Gracza {{count}}. Jeśli chcesz ponownie uruchomić proces konfiguracji, użyj poniższego przycisku.<p><i>„Root Automated Setup” stworzone przez Ewena Camerona</i><br/><i>Na podstawie gry planszowej „Root” wydanej przez Leder Games</i><br/><i>Aplikacja licencjonowana na CC BY-NC-SA 4.0</i></p>`,
-    },
-    setupRuins: {
-      title: `<li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly.</li>`,
-    },
-    skipRuins: {
-      title: `<li>This faction requires ruins to be filled, but this step was completed previously</li>`,
     },
   },
   deck: {
@@ -211,47 +192,6 @@ export default {
     underworld: `Rozszerzenie Podziemia`,
     underworldHirelings: `Paczka Zaciężnych Podziemia`,
     vagabondPack: `Paczka Włóczęgów`,
-    clockwork: `Clockwork Expansion`,
-    clockwork2: `Clockwork Expansion 2`,
-    betaClockwork: `Beta Released Clockworks`,
-  },
-  bot: {
-    automatedAlliance: {
-      name: `Automated Alliance`,
-      setup: `<ol><li>Form a supply of 10 warriors near you.</li><li>Collect your 3 bases and place them near you.</li><li>Collect your 10 sympathy tokens and place them near you.</li></ol>`,
-    },
-    mechanicalMarquise: {
-      name: `Mechanical Marquise`,
-      setup: `<ol><li>Form a supply of 25 warriors near you.</li><li>Place the keep token in a random corner clearing.</li><li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)</li><li>Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.</li><li>Collect your remaining 15 buildings and place them near you.</li></ol>`,
-    },
-    electricEyrie: {
-      name: `Electric Eyrie`,
-      setup: `<ol><li>Form a supply of 20 warriors near you.</li><li>Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing.</li><li>Tuck your 2 Loyal Vizier cards, showing their suit, into the rightmost decree column.</li><li>Collect your remaining 6 roost buildings and place them near you.</li></ol>`,
-    },
-    vagabot: {
-      name: `Vagabot`,
-      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
-    },
-    cogwheelCorvids: {
-      name: `Cogwheel Corvids`,
-      setup: `<ol><li>Form supplies of 15 warriors and 8 plot tokens face down.</li><li>Place 1 Warrior in the lowest priority clearing of each suit (3 total).</li></ol>`,
-    },
-    drillbitDuchy: {
-      name: `Drillbit Duchy`,
-      setup: `<ol><li>Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns.</li><li>Place the Burrow board near the map.</li><li>Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li>Place 3 citadels and 3 markets on your matching Building spaces.</li><li>Draw 2 cards and discard them. For each, place a crown on the topmost matching unswayed minister on your faction board.</li></ol>`,
-    },
-    logicalLizards: {
-      name: `Logical Lizards`,
-      setup: `<ol><li>Form a supply of 25 warriors.</li><li>Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot (preferably diagonally opposite.) Then place 1 warrior in each adjacent clearing.</li><li>Place the outcast marker on the Sanctify space of the Conspiracy track on your faction board.</li><li>Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li><li>Draw 3 cards and place them face up in your Lost Souls in the order drawn.</li></ol>`,
-    },
-    riverfolkRobots: {
-      name: `Riverfolk Robots`,
-      setup: `<ol><li>Form a supply of 15 warriors.</li><li>Place 1 warrior in each clearing on the river.</li><li>Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li>Place 1 warrior in your Payments box.</li><li>Draw 5 cards and add them to your Market.</li></ol>`,
-    },
-    lootingLegion: {
-      name: `Looting Legion`,
-      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
-    },
   },
   faction: {
     alliance: {
@@ -370,11 +310,11 @@ export default {
       summary: `<p>Jako Władca Szczurów, zdobywasz punkty, <b>nękając</b> swoich wrogów. Na koniec swojej tury, im więcej polan, którymi rządzisz, nie ma żadnych elementów wroga – żadnych wojowników, żadnych budynków, niczego – tym więcej punktów zdobywasz.</p><p>Aby rosnąć w siłę i przyciągać wojowników, musisz zdobywać przedmioty i dodawać je do swojego piętrzącego się <b>Skarbca</b>. Buty, torby i monety zwiększają twoje <b>Dowództwo</b>, podczas gdy młotki, herbaty, miecze i kusze zwiększają twoją <b>Waleczność</b>. Twoja <b>Pogarda dla Handlu</b> oznacza, że rzadko zdobywasz punkty za przekuwanie przedmiotów, ale możesz kraść przedmioty wrogom dzięki swoim <b>Szabrownikom</b>!</p><p>Szczurom przewodzi Lord, wojownik-demagog, którego kapryśny <b>Nastrój</b> daje ci zdolność na turę. Twój wódz ma obsesję na punkcie gromadzenia, więc im więcej zdobywasz przedmiotów, tym mniej Nastrojów masz do wyboru.</p><p>Deklarując się jako prawdziwy głos Leśnogrodu, możesz wzniecać <b>Szturmy</b>, które niszczą wrogie budynki i żetony oraz plądrują ruiny w poszukiwaniu przedmiotów.</p>`,
       setupTitle: `Konfiguracja Władcy Szczurów`,
       setup: {
-        default: `<ol><li><b>Garnizon.</b> Umieść swojego wodza, czterech wojowników i jedną twierdzę w narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od polany startowej.</li></ol>`,
+        default: `<ol><li><b>Garnizon.</b> Umieść swojego wodza, czterech wojowników i jedną twierdzę w narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od polany startowej.</li><li><b>Rozmieszczenie Przedmiotów.</b> Umieść przedmioty <Bag/>, <Boot/>, <Hammer/> i <Sword/> oznaczone literą „R” pod ruinami losowo, chyba że zostało to już zrobione.</li><li><b>Pozyskanie Upartego.</b> Umieść swoją kartę Nastroju „Uparty” w swoim slocie Karty Nastroju.</li></ol>`,
         vagabondSetUp: `<ol><li><b>Garnizon.</b> Umieść swojego wodza, czterech wojowników i jedną twierdzę w narożnej polanie, która nie jest polaną startową innego gracza i, jeśli to możliwe, jest po przekątnej od polany startowej.</li><li><b>Pozyskanie Upartego.</b> Umieść swoją kartę Nastroju „Uparty” w swoim slocie Karty Nastroju.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Wybierz polanę ojczystą na krawędzi mapy, która ma 2+ polan między nią a ojczystymi polanami wroga.</li><li>Umieść swojego <b>wodza</b>, 4 <b>wojowników</b> i 1 <b>twierdzę</b> w swojej polanie ojczystej.</li><li>Umieść swoją <b>kartę Nastroju „Uparty”</b> w swoim slocie Karty Nastroju.</li></ol>`,
+        default: `<ol><li>Wybierz polanę ojczystą na krawędzi mapy, która ma 2+ polan między nią a ojczystymi polanami wroga.</li><li>Umieść swojego <b>wodza</b>, 4 <b>wojowników</b> i 1 <b>twierdzę</b> w swojej polanie ojczystej.</li><li>Umieść swoją <b>kartę Nastroju „Uparty”</b> w swoim slocie Karty Nastroju.</li><li>Umieść <b>przedmioty ruin</b> <Bag/>, <Boot/>, <Hammer/> i <Sword/> <i>(oznaczone literą „R”)</i> pod ruinami losowo, chyba że zostało to już zrobione.</li></ol>`,
         vagabondSetUp: `<ol><li>Wybierz polanę ojczystą na krawędzi mapy, która ma 2+ polan między nią a ojczystymi polanami wroga.</li><li>Umieść swojego <b>wodza</b>, 4 <b>wojowników</b> i 1 <b>twierdzę</b> w swojej polanie ojczystej.</li><li>Umieść swoją <b>kartę Nastroju „Uparty”</b> w swoim slocie Karty Nastroju.</li></ol>`,
       },
     },
@@ -527,9 +467,7 @@ export default {
       setup: `<li>Weź planszę mapy Jezioro/Góry z pudełka gry i umieść ją stroną Góry do góry.</li><li>Umieść 6 żetonów zamkniętych ścieżek, aby zakryć 6 ścieżek o ciemniejszym kolorze z wykopaną ziemią.</li>`,
       fixedSuits: `Użyj sugerowanych symboli polan dla Mapy Góry`,
       useLandmark: `Użyj konfiguracji specyficznej dla mapy dla punktu terenu Wieża na mapie Góry`,
-      useHouserule: `<b>HOUSERULE:</b> switch the map-specific Tower setup with the Lost City.`,
-      tower: `<li>Place the Tower piece as shown in the chart below. If you have “The Tower” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
-      city: `<li>Place the Lost City piece as shown in the chart below. If you have “The Lost City” landmark card, take it from the game box and place it next to the board on its non-setup side.</li>`,
+      landmarkSetup: `<li>Umieść element Wieży zgodnie z poniższym wykresem. Jeśli posiadasz kartę punktu terenu „Wieża”, weź ją z pudełka gry i umieść obok mapy stroną gry do góry.</li>`,
     },
     winter: {
       name: `Zima`,

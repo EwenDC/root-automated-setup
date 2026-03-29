@@ -26,8 +26,6 @@ export default {
     closeMessage: `Close Message`,
     complexity: `Complexity`,
     confirmReset: `Reset App?`,
-    copied: `URL Copied!`,
-    failCopy: `URL Failed to Copy`,
     crafting: `Crafting Ability`,
     disableAll: `Disable All`,
     enableAll: `Enable All`,
@@ -89,6 +87,7 @@ export default {
     warriors_other: `{{count}} Warriors`,
   },
   error: {
+    tooFewPlayerBots: `Cannot play with 1 player and no bots, please select at least 1 bot or 2 players.`,
     factionHirelingExcluded: `The Faction associated with this Hireling is required for set up`,
     factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     hirelingSelected: `An equivalent Hireling for this faction is already in play`,
