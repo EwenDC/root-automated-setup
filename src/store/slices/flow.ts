@@ -70,25 +70,23 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.botPool = slice.botPool
 }
 
-const getInitialState = (): FlowState => ({
-  botPool: [],
-  factionPool: [],
-  hirelingPool: [],
-  currentIndex: null,
-  landmarkPool: [],
-  lastFactionLocked: false,
-  currentPlayerIndex: null,
-  currentStep: SetupStep.chooseExpansions,
-  vagabondSetUp: false,
-  pastSteps: [],
-  futureSteps: [],
-  selectedBots: [],
-  useDraft: true,
-})
-
 export const flowSlice = createSlice({
   name: 'flow',
-  initialState: getInitialState(),
+  initialState: (): FlowState => ({
+    botPool: [],
+    factionPool: [],
+    hirelingPool: [],
+    currentIndex: null,
+    landmarkPool: [],
+    lastFactionLocked: false,
+    currentPlayerIndex: null,
+    currentStep: SetupStep.chooseExpansions,
+    vagabondSetUp: false,
+    pastSteps: [],
+    futureSteps: [],
+    selectedBots: [],
+    useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
+  }),
 
   reducers: {
     setCurrentStep(state, { payload: currentStep }: PayloadAction<SetupStep>) {
@@ -298,9 +296,20 @@ export const flowSlice = createSlice({
       .addCase(setErrorMessage, () => {
         // No-op so we don't wipe the redo queue when displaying an error
       })
-      // Clear internal variables when restarting setup
-      .addCase(resetState, () => {
-        return getInitialState()
+      .addCase(resetState, state => {
+        state.botPool = []
+        state.selectedBots = []
+        state.factionPool = []
+        state.hirelingPool = []
+        state.currentIndex = null
+        state.landmarkPool = []
+        state.lastFactionLocked = false
+        state.currentPlayerIndex = null
+        state.currentStep = SetupStep.chooseExpansions
+        state.vagabondSetUp = false
+        state.pastSteps = []
+        state.futureSteps = []
+        state.useDraft = loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true)
       })
       .addDefaultCase(state => {
         state.futureSteps = []
