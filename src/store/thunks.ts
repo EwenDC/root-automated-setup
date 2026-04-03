@@ -1,9 +1,25 @@
 import type { UnknownAction } from '@reduxjs/toolkit'
 
-import type { AppThunk, RootState } from '../store'
+import type { AppDispatch, AppThunk, RootState } from '../store'
 import type { Togglable, WithCode } from '../types'
 
+import {
+  balanceMapSuits,
+  fixFirstPlayer,
+  resetState,
+  selectExpansionArray,
+  selectFactionArray,
+  setDeck,
+  setHirelingCount,
+  setLandmarkCount,
+  setLimitCaptains,
+  setLimitVagabonds,
+  setPlayerCount,
+  toggleExpansion,
+  toggleFaction,
+} from '../store'
 import { setCurrentPlayerIndex } from './slices/flow'
+import { deserializeUrlParams } from './utils'
 
 /**
  * Thunk action for toggling all unlocked components of a type, ensuring they match the desired
@@ -73,4 +89,50 @@ export const goBackInPlayerTurnOrder = (): AppThunk => (dispatch, getState) => {
     if (newPlayerIndex < 0) newPlayerIndex += setup.playerCount
   }
   dispatch(setCurrentPlayerIndex(newPlayerIndex))
+}
+
+export const hydrateSetupFromUrlParams = (): AppThunk => dispatch => {
+  const queryString = window.location.search
+  if (!queryString) return
+
+  const parsed = deserializeUrlParams(queryString)
+  dispatch(resetState())
+
+  //- NUMBERS -//
+  if (parsed.playerCount !== undefined) dispatch(setPlayerCount(parsed.playerCount))
+  if (parsed.landmarkCount !== undefined) dispatch(setLandmarkCount(parsed.landmarkCount))
+  if (parsed.hirelingCount !== undefined) dispatch(setHirelingCount(parsed.hirelingCount))
+
+  //- BOOLS -//
+  if (parsed.fixedFirstPlayer !== undefined) dispatch(fixFirstPlayer(parsed.fixedFirstPlayer))
+  if (parsed.balancedSuits !== undefined) dispatch(balanceMapSuits(parsed.balancedSuits))
+  if (parsed.limitCaptains !== undefined) dispatch(setLimitCaptains(parsed.limitCaptains))
+  if (parsed.limitVagabonds !== undefined) dispatch(setLimitVagabonds(parsed.limitVagabonds))
+
+  //- STRINGS -//
+  if (parsed.deck) dispatch(setDeck({ code: parsed.deck }))
+
+  //- ARRAYS -//
+  if (parsed.expansions) {
+    dispatch(
+      massComponentToggle(
+        selectExpansionArray,
+        expansion => parsed.expansions!.includes(expansion.code) || expansion.code === 'root',
+        toggleExpansion,
+      ),
+    )
+  }
+
+  if (parsed.factions) {
+    dispatch(
+      massComponentToggle(
+        selectFactionArray,
+        faction => parsed.factions!.includes(faction.code),
+        toggleFaction,
+      ),
+    )
+  }
+
+  // Optional: clear the URL parameters from the address bar after hydration if you prefer
+  // window.history.replaceState(null, '', window.location.pathname);
 }

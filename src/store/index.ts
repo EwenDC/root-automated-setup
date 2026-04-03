@@ -5,9 +5,11 @@ import { configureStore } from '@reduxjs/toolkit'
 import componentsReducer from './slices/components'
 import flowReducer from './slices/flow'
 import setupReducer from './slices/setup'
+import { urlSyncMiddleware } from './urlMiddleware'
 
 export const store = configureStore({
   reducer: { components: componentsReducer, flow: flowReducer, setup: setupReducer },
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(urlSyncMiddleware),
 })
 
 export type AppDispatch = typeof store.dispatch

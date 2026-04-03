@@ -50,6 +50,7 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   playerIndex: flowState.currentPlayerIndex,
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
+  useDraft: flowState.useDraft,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -63,22 +64,25 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.vagabondSetUp = slice.vagabondSetUp
 }
 
+const getInitialState = (): FlowState => ({
+  factionPool: [],
+  hirelingPool: [],
+  currentIndex: null,
+  landmarkPool: [],
+  lastFactionLocked: false,
+  currentPlayerIndex: null,
+  currentStep: SetupStep.chooseExpansions,
+  vagabondSetUp: false,
+  pastSteps: [],
+  futureSteps: [],
+  useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
+})
+
+const initialState = getInitialState()
+
 export const flowSlice = createSlice({
   name: 'flow',
-
-  initialState: (): FlowState => ({
-    factionPool: [],
-    hirelingPool: [],
-    currentIndex: null,
-    landmarkPool: [],
-    lastFactionLocked: false,
-    currentPlayerIndex: null,
-    currentStep: SetupStep.chooseExpansions,
-    vagabondSetUp: false,
-    pastSteps: [],
-    futureSteps: [],
-    useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
-  }),
+  initialState,
 
   reducers: {
     setCurrentStep(state, { payload: currentStep }: PayloadAction<SetupStep>) {
@@ -249,22 +253,13 @@ export const flowSlice = createSlice({
 
   extraReducers(builder) {
     // This allows us to always reset the redo queue if the setup state changes
+    builder.addCase(setErrorMessage, () => {
+      // No-op so we don't wipe the redo queue when displaying an error
+    })
+    // Clear internal variables when restarting setup
     builder
-      .addCase(setErrorMessage, () => {
-        // No-op so we don't wipe the redo queue when displaying an error
-      })
-      // Clear internal variables when restarting setup
-      .addCase(resetState, state => {
-        state.factionPool = []
-        state.hirelingPool = []
-        state.currentIndex = null
-        state.landmarkPool = []
-        state.lastFactionLocked = false
-        state.currentPlayerIndex = null
-        state.currentStep = SetupStep.chooseExpansions
-        state.vagabondSetUp = false
-        state.pastSteps = []
-        state.futureSteps = []
+      .addCase(resetState, () => {
+        return getInitialState()
       })
       .addDefaultCase(state => {
         state.futureSteps = []
@@ -273,6 +268,7 @@ export const flowSlice = createSlice({
 
   selectors: {
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
+      useDraft: state => state.useDraft,
       factionPool: state => state.factionPool,
       hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,
