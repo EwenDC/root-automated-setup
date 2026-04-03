@@ -5,5 +5,5 @@ import SetUpDeckStep from '../components/setUpDeckStep'
 
 export const setUpDeck: SetupStepDefinition = {
   component: SetUpDeckStep,
-  afterStep: () => SetupStep.setUpBots,
+  afterStep: () => SetupStep.selectBots,
 }

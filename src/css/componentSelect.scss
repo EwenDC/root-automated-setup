@@ -156,10 +156,32 @@
     > .component-select {
       background: transparent;
       justify-content: center;
-      overflow: hidden;
+      overflow: visible;
+
+      block-size: auto;
+      grid-auto-flow: row;
+      grid-template-columns: repeat(auto-fit, 8rem);
+      grid-auto-rows: calc(48px + 5rem);
+      row-gap: 4px;
+
+      @supports (grid-template-rows: subgrid) {
+        grid-template-rows: none;
+
+        label {
+          grid-row: auto;
+          size: 1rem;
+          border: 0.2rem solid black;
+          padding: 0.4rem;
+        }
+      }
 
       label > img {
         mix-blend-mode: normal;
+        padding-top: 25%;
+      }
+      label > div {
+        line-height: 1;
+        font-size: medium;
       }
     }
   }
@@ -167,15 +189,19 @@
   // * Alt Layout: 1 row of larger buttons * //
   @include section.heading-width-breakpoint {
     > .component-select {
-      // Only scale ~2/3rds of the height with text size, since the images should ideally remain constantly sized
-      block-size: calc(64px + 6rem);
+      block-size: auto;
       border-radius: 16px;
       column-gap: 4px;
-      grid-auto-columns: 10rem;
-      grid-template-rows: calc(64px + 6rem);
+      row-gap: 4px;
+      grid-template-columns: repeat(auto-fit, 10rem);
+      grid-auto-rows: calc(64px + 6rem);
 
       @supports (grid-template-rows: subgrid) {
-        grid-template-rows: 0 minmax(0, 1fr) auto;
+        grid-template-rows: none;
+
+        label {
+          grid-row: auto;
+        }
       }
 
       label {

@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 
 import type {
+  BotCode,
   ComponentInfo,
   DeckCode,
   DeepReadonly,
@@ -34,6 +35,7 @@ export interface ComponentsState {
   landmarks: Record<LandmarkCode, ComponentInfo>
   maps: Record<MapCode, MapInfo>
   vagabonds: Record<VagabondCode, ComponentInfo>
+  bots: Record<BotCode, ComponentInfo>
 }
 
 const addExpansionComponents = (
@@ -75,6 +77,7 @@ export const componentsSlice = createSlice({
 
   initialState: () => {
     const initialState: ComponentsState = {
+      bots: {},
       captains: {},
       decks: {},
       expansions: {},
@@ -102,6 +105,9 @@ export const componentsSlice = createSlice({
   },
 
   reducers: {
+    toggleBot: toggleComponent('bots'),
+    lockBot: lockComponent('bots'),
+
     toggleCaptain: toggleComponent('captains'),
 
     toggleDeck: toggleComponent('decks'),
@@ -189,6 +195,8 @@ export const componentsSlice = createSlice({
   },
 
   selectors: {
+    selectBotArray: selectComponentArray('bots'),
+
     selectCaptainArray: selectComponentArray('captains'),
 
     selectDeckArray: selectComponentArray('decks'),
@@ -218,11 +226,13 @@ export const componentsSlice = createSlice({
 
 export const {
   enableMapLandmark,
+  lockBot,
   lockFaction,
   lockHireling,
   lockLandmark,
   lockMap,
   mapFixedSuits,
+  toggleBot,
   toggleCaptain,
   toggleExpansion,
   toggleDeck,
@@ -234,6 +244,7 @@ export const {
 } = componentsSlice.actions
 
 export const {
+  selectBotArray,
   selectCaptainArray,
   selectExpansionArray,
   selectDeckArray,

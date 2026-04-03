@@ -10,9 +10,9 @@ import {
   LEGACY_SETTING_INCLUDE_HIRELINGS,
   MAX_LANDMARKS,
   SETTING_BALANCED_SUITS,
+  SETTING_BOT_COUNT,
   SETTING_FIXED_FIRST_PLAYER,
   SETTING_HIRELING_COUNT,
-  SETTING_INCLUDE_BOTS,
   SETTING_LANDMARK_COUNT,
   SETTING_PLAYER_COUNT,
 } from '../../constants'
@@ -23,9 +23,9 @@ import { toggleExpansion } from './components'
 /** An object containing all variables used during the setup process. */
 export interface SetupState {
   playerCount: number
+  botCount: number
   fixedFirstPlayer: boolean
   playerOrder: number[]
-  includeBots: boolean
   errorMessage: string | null
   // Map
   map: MapCode | null
@@ -57,9 +57,9 @@ export const setupSlice = createSlice({
 
     return {
       playerCount: loadPersistedSetting<number>(SETTING_PLAYER_COUNT, 4),
+      botCount: loadPersistedSetting<number>(SETTING_BOT_COUNT, 0),
       fixedFirstPlayer: loadPersistedSetting<boolean>(SETTING_FIXED_FIRST_PLAYER, false),
       playerOrder: [],
-      includeBots: loadPersistedSetting<boolean>(SETTING_INCLUDE_BOTS, false),
       errorMessage: null,
       // Map
       map: null,
@@ -80,7 +80,6 @@ export const setupSlice = createSlice({
 
   reducers: {
     setPlayerCount(state, { payload: playerCount }: PayloadAction<number>) {
-      // Make sure the player count is valid (i.e. above 0)
       if (playerCount >= 1) {
         state.playerCount = playerCount
         state.errorMessage = null
@@ -88,6 +87,18 @@ export const setupSlice = createSlice({
       } else {
         console.warn(
           `Invalid payload for setPlayerCount action: ${playerCount} (Payload must be a number above 0)`,
+        )
+      }
+    },
+
+    setBotCount(state, { payload: botCount }: PayloadAction<number>) {
+      if (botCount >= 0) {
+        state.botCount = botCount
+        state.errorMessage = null
+        savePersistedSetting(SETTING_BOT_COUNT, botCount)
+      } else {
+        console.warn(
+          `Invalid payload for setBotCount action: ${botCount} (Payload must be a number above 0)`,
         )
       }
     },
@@ -114,12 +125,6 @@ export const setupSlice = createSlice({
           `Invalid payload for setFirstPlayer action: ${firstPlayer} (Payload must be a number between 1 and playerCount [${state.playerCount}])`,
         )
       }
-    },
-
-    setIncludeBots(state, { payload: includeBots }: PayloadAction<boolean>) {
-      state.includeBots = includeBots
-      state.errorMessage = null
-      savePersistedSetting(SETTING_INCLUDE_BOTS, includeBots)
     },
 
     setErrorMessage(state, { payload: errorMessage }: PayloadAction<string | null>) {
@@ -236,12 +241,12 @@ export const {
   setErrorMessage,
   setFirstPlayer,
   setHirelingCount,
-  setIncludeBots,
   setLandmarkCount,
   setLimitCaptains,
   setLimitVagabonds,
   setMap,
   setPlayerCount,
+  setBotCount,
 } = setupSlice.actions
 
 export const { selectTwoPlayer, selectSetupClearings, selectSetupDeckCode, selectSetupMapCode } =

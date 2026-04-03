@@ -22,7 +22,7 @@ export const chooseMap: SetupStepDefinition = {
     dispatch(
       massComponentLock(
         selectMapArray,
-        ({ botPriorities }) => setup.includeBots && !botPriorities && 'error.mapBotsUnsupported',
+        ({ botPriorities }) => setup.botCount > 0 && !botPriorities && 'error.mapBotsUnsupported',
         lockMap,
       ),
     )

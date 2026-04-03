@@ -9,6 +9,7 @@ import {
   massComponentLock,
   pushExcludedFactions,
   resetHirelingPool,
+  selectBotArray,
   selectFactionCodes,
   selectHirelingArray,
   setCurrentIndex,
@@ -24,8 +25,9 @@ export const chooseHirelings: SetupStepDefinition = {
 
     // Are there any hirelings that can be set up?
     if (selectHirelingArray(state).length < 1) {
-      // Clear state of any potential stale data
-      if (state.setup.excludedFactions.length > 0) dispatch(clearExcludedFactions())
+      // Clear stale data if the bots did not already do it during their setup
+      if (state.setup.botCount > 0 && state.setup.excludedFactions.length > 0)
+        dispatch(clearExcludedFactions())
       if (state.flow.hirelingPool.length > 0) dispatch(resetHirelingPool())
       return SetupStep.drawCards
     }
@@ -33,17 +35,23 @@ export const chooseHirelings: SetupStepDefinition = {
     const factionCodes = selectFactionCodes(state)
     const noSpareFactions = state.setup.playerCount >= factionCodes.size
 
-    // Ensure that we include/exclude faction hirelings depending on if we can spare factions for hirelings at our player count
     dispatch(
       massComponentLock(
         selectHirelingArray,
-        ({ excludeFactions }) =>
-          // Are we at the max player count (i.e. there are no factions to spare for an equivalent hireling)?
-          noSpareFactions &&
-          // Is this hireling one of the faction equivalents?
-          excludeFactions?.some(faction => factionCodes.has(faction))
-            ? 'error.factionHirelingExcluded'
-            : false,
+        ({ excludeFactions }) => {
+          const isExcludedByBot = excludeFactions?.some(faction =>
+            state.setup.excludedFactions.includes(faction),
+          )
+
+          if (isExcludedByBot) return 'error.factionHirelingExcluded'
+
+          const isExcludedByPlayerCount =
+            noSpareFactions && excludeFactions?.some(faction => factionCodes.has(faction))
+
+          if (isExcludedByPlayerCount) return 'error.factionHirelingExcluded'
+
+          return false
+        },
         lockHireling,
       ),
     )
@@ -56,8 +64,17 @@ export const chooseHirelings: SetupStepDefinition = {
   afterStep(dispatch, getState) {
     const state = getState()
 
-    // Clear state of any stale data
-    if (state.setup.excludedFactions.length > 0) dispatch(clearExcludedFactions())
+    const allBots = selectBotArray(state)
+    const activeBotExclusions = state.flow.selectedBots.flatMap(botCode => {
+      const bot = allBots.find(b => b.code === botCode)
+      return bot?.excludeFactions ?? []
+    })
+
+    dispatch(clearExcludedFactions())
+    if (activeBotExclusions.length > 0) {
+      dispatch(pushExcludedFactions(activeBotExclusions))
+    }
+
     if (state.flow.hirelingPool.length > 0) dispatch(resetHirelingPool())
 
     // Bail out if no hirelings are to be included
@@ -77,7 +94,7 @@ export const chooseHirelings: SetupStepDefinition = {
     )
 
     // Calculate how many factions we can spare for hirelings (i.e. total factions minus setup faction count)
-    let spareFactionCount = factionCodes.size - state.setup.playerCount
+    let spareFactionCount = factionCodes.size - state.setup.playerCount - state.setup.botCount
 
     // If we can only spare as many factions as we have hirelings (or less) then limit the amount of faction hirelings
     if (spareFactionCount <= state.setup.hirelingCount) {

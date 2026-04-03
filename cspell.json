@@ -1,16 +1,7 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.detectIndentation": false,
-  "editor.tabSize": 2,
-  "files.insertFinalNewline": true,
-  "prettier.useEditorConfig": false,
-  "prettier.singleQuote": true,
-  "editor.formatOnSave": true,
-  "editor.wordWrap": "on",
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.language": "en-US",
-  "cSpell.import": ["${workspaceFolder}/cspell.json"],
-  "cSpell.words": [
+  "version": "0.2",
+  "language": "en-US",
+  "words": [
     "chokepoints",
     "clockroot",
     "Clockroot",

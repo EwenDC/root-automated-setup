@@ -12,6 +12,7 @@ import { drawCards } from './definitions/drawCards'
 import { placeScoreMarkers } from './definitions/placeScoreMarkers'
 import { postHirelingSetup } from './definitions/postHirelingSetup'
 import { seatPlayers } from './definitions/seatPlayers'
+import { selectBots } from './definitions/selectBots'
 import { selectFaction } from './definitions/selectFaction'
 import { selectHireling } from './definitions/selectHireling'
 import { selectLandmark } from './definitions/selectLandmark'
@@ -30,6 +31,7 @@ export const stepMap: Record<SetupStep, SetupStepDefinition> = {
   [SetupStep.setUpMap]: setUpMap,
   [SetupStep.chooseDeck]: chooseDeck,
   [SetupStep.setUpDeck]: setUpDeck,
+  [SetupStep.selectBots]: selectBots,
   [SetupStep.setUpBots]: setUpBots,
   [SetupStep.chooseLandmarks]: chooseLandmarks,
   [SetupStep.selectLandmark]: selectLandmark,

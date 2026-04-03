@@ -6,7 +6,7 @@ import Button from '../../components/button'
 import LocaleText from '../../components/localeText'
 import Section from '../../components/section'
 import { stepActiveContext, useAppDispatch, usePlayerNumber } from '../../hooks'
-import RestartIcon from '../../images/icons/restart.svg?react'
+import RestartIcon from '../../images/icons/reset.svg?react'
 import { resetState } from '../../store'
 
 const SetupEndStep: SetupStepComponent = ({ flowSlice }) => {

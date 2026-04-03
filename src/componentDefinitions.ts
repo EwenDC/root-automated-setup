@@ -1,6 +1,8 @@
 import type { DeepReadonly, Expansion, ExpansionCode } from './types'
 
 // Box Images
+import clockwork2Box from './images/boxes/clockwork2.png'
+import clockworkBox from './images/boxes/clockwork.png'
 import exilesDeckBox from './images/boxes/exilesDeck.png'
 import homelandBox from './images/boxes/homeland.png'
 import homelandHirelingsBox from './images/boxes/homelandHirelings.png'
@@ -1017,6 +1019,78 @@ const definitions: DeepReadonly<Record<ExpansionCode, Expansion>> = {
       harrier: {
         startingItems: ['coin', 'torch', 'sword', 'crossbow'],
         image: harrierMeeple,
+      },
+    },
+  },
+  clockwork: {
+    image: clockworkBox,
+    defaultDisabled: true,
+    bots: {
+      mechanicalMarquise: {
+        image: marquiseMeeple,
+        baseFactionCode: 'marquise',
+        clockroot: 'MarquiseDC',
+        excludeFactions: ['marquise'],
+      },
+      electricEyrie: {
+        image: eyrieMeeple,
+        baseFactionCode: 'eyrie',
+        clockroot: 'EyrieDC',
+        excludeFactions: ['eyrie'],
+      },
+      automatedAlliance: {
+        image: allianceMeeple,
+        baseFactionCode: 'alliance',
+        clockroot: 'WoodlandDC',
+        excludeFactions: ['alliance'],
+      },
+      vagabot: {
+        image: thiefMeeple,
+        baseFactionCode: 'vagabond',
+        clockroot: 'VagabondDC',
+        excludeFactions: ['vagabond', 'vagabond2', 'knaves'],
+      },
+    },
+  },
+  clockwork2: {
+    image: clockwork2Box,
+    defaultDisabled: true,
+    bots: {
+      cogwheelCorvids: {
+        image: corvidMeeple,
+        baseFactionCode: 'corvid',
+        clockroot: 'Corvid',
+        excludeFactions: ['corvid'],
+      },
+      drillbitDuchy: {
+        image: duchyMeeple,
+        baseFactionCode: 'duchy',
+        clockroot: 'Duchy',
+        excludeFactions: ['duchy'],
+      },
+      logicalLizards: {
+        image: cultMeeple,
+        baseFactionCode: 'cult',
+        clockroot: 'Lizard',
+        excludeFactions: ['cult'],
+      },
+      riverfolkRobots: {
+        image: riverfolkMeeple,
+        baseFactionCode: 'riverfolk',
+        clockroot: 'Riverfolk',
+        excludeFactions: ['riverfolk'],
+      },
+    },
+  },
+  betaClockwork: {
+    image: clockworkBox,
+    defaultDisabled: true,
+    bots: {
+      lootingLegion: {
+        image: warlordMeeple,
+        baseFactionCode: 'warlord',
+        clockroot: 'Legion',
+        excludeFactions: ['warlord'],
       },
     },
   },
