@@ -17,7 +17,7 @@ import type {
 } from '../../types'
 
 import { SETTING_USE_DRAFT } from '../../constants'
-import { savePersistedSetting } from '../../functions/persistedSettings'
+import { loadPersistedSetting, savePersistedSetting } from '../../functions/persistedSettings'
 import { takeRandom } from '../../functions/random'
 import { SetupStep } from '../../types'
 import { resetState } from '../actions'
