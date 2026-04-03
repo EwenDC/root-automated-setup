@@ -29,6 +29,7 @@ export const chooseFactions: SetupStepDefinition = {
   beforeStep(dispatch, getState) {
     const state = getState()
     const playerCount = state.setup.playerCount
+    const includeBots = state.setup.botCount > 0
 
     // Don't allow draft setup if we can't spare an extra faction
     if (state.flow.useDraft) {
@@ -44,12 +45,7 @@ export const chooseFactions: SetupStepDefinition = {
         selectFactionArray,
         ({ code, militant }) => {
           // Disable insurgent factions if we're only playing with 2 people and no bots or hirelings
-          if (
-            playerCount < 3 &&
-            !militant &&
-            state.setup.hirelingCount < 1 &&
-            !state.setup.includeBots
-          ) {
+          if (playerCount < 3 && !militant && state.setup.hirelingCount < 1 && !includeBots) {
             return 'error.tooFewPlayerInsurgent'
           }
           // Disable a faction if it was replaced by an equivalent hireling
@@ -75,6 +71,7 @@ export const chooseFactions: SetupStepDefinition = {
     const state = getState()
     const useDraft = state.flow.useDraft
     const playerCount = state.setup.playerCount
+    const includeBots = state.setup.botCount > 0
 
     // Clear the faction pool of any potential stale data from previous setups
     if (state.flow.factionPool.length > 0) dispatch(resetFactionPool())
@@ -154,7 +151,7 @@ export const chooseFactions: SetupStepDefinition = {
 
     // Start by adding a random militant faction
     const firstFaction = takeRandom(workingFactionPool)
-    dispatch(addToFactionPool(firstFaction, vagabondPool, captainPool))
+    dispatch(addToFactionPool(firstFaction, includeBots, vagabondPool, captainPool))
     // Add the insurgent factions to the mix
     workingFactionPool.push(...insurgentFactions)
 
@@ -175,7 +172,7 @@ export const chooseFactions: SetupStepDefinition = {
         // Don't include any factions that are incompatible with ones already chosen
         !incompatibleFactions.has(candidateFaction.code)
       ) {
-        dispatch(addToFactionPool(candidateFaction, vagabondPool, captainPool))
+        dispatch(addToFactionPool(candidateFaction, includeBots, vagabondPool, captainPool))
         factionsSetUp++
         if (!useDraft && candidateFaction.standardSetup.cornerSetup) cornerSetupCount++
         if (candidateFaction.excludeFactions) {

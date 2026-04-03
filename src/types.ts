@@ -37,6 +37,7 @@ export type ExpansionCode = string
 
 /** An object representing an Expansion or Base Box for the Root board game. */
 export interface Expansion extends GameComponent {
+  bots?: Record<BotCode, Bot>
   captains?: Record<CaptainCode, Vagabond>
   decks?: Record<DeckCode, GameComponent>
   factions?: Record<FactionCode, Faction>
@@ -96,6 +97,13 @@ export interface Landmark extends GameComponent {
   minPlayers: number
 }
 
+export type BotCode = string
+
+export interface Bot extends GameComponent {
+  baseFactionCode: FactionCode
+  clockroot?: string
+  excludeFactions?: FactionCode[]
+}
 /** A shape that groups floodable clearings. */
 export type FloodGroup = 'circle' | 'square' | 'triangle'
 
@@ -268,6 +276,7 @@ export const enum SetupStep {
   setUpDeck,
   setUpBots,
   chooseLandmarks,
+  selectBots,
   selectLandmark,
   setUpLandmark,
   chooseHirelings,
@@ -303,12 +312,15 @@ export interface HirelingEntry {
 
 /** An object representing a slice of history for the flow state. */
 export interface FlowSlice {
+  botPool: BotCode[]
   factionPool: FactionEntry[]
   hirelingPool: HirelingEntry[]
   index: number | null
   landmarkPool: LandmarkCode[]
   lastFactionLocked: boolean
   playerIndex: number | null
+  ruinPlacer: string | null
+  selectedBots: BotCode[]
   step: SetupStep
   vagabondSetUp: boolean
 }

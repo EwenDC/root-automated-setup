@@ -6,6 +6,7 @@ export default {
       false: `Random clearing suit placement`,
       true: `Balanced clearing suit placement`,
     },
+    bots: 'You can use <BotLink>Clockroot</BotLink> for assistance using the bots after setup.',
     captainSelection: `Captain Selection`,
     changeLanguage: `Change Language`,
     chooseCaptains: {
@@ -24,6 +25,7 @@ export default {
     },
     closeMessage: `Close Message`,
     complexity: `Complexity`,
+    confirmReset: `Are you sure you want to reset the setup? You will lose all your current setup progress. This action cannot be undone.`,
     crafting: `Crafting Ability`,
     disableAll: `Disable All`,
     enableAll: `Enable All`,
@@ -51,10 +53,11 @@ export default {
       suitPriority: `<li>Collect the 12 suit and 12 priority markers, then place one of each in each clearing as shown in the chart below.</li>`,
     },
     playerCount: `Player Count`,
+    botCount: `Bot Count`,
     priority: `Priority {{count}}`,
     rabbit: `Rabbit`,
     redo: `Redo`,
-    reset: `Reset`,
+    reset: `Reset Setup`,
     restartSetup: `Restart Setup`,
     ruin: `Ruin`,
     specialAction: `Special Action`,
@@ -84,7 +87,9 @@ export default {
     warriors_other: `{{count}} Warriors`,
   },
   error: {
+    tooFewPlayerBots: `Cannot play with 1 player and no bots, please select at least 1 bot or 2 players.`,
     factionHirelingExcluded: `The Faction associated with this Hireling is required for set up`,
+    factionBotExcluded: `The Faction associated with this Clockwork is required for set up`,
     hirelingSelected: `An equivalent Hireling for this faction is already in play`,
     landmarkNotEnoughPlayers: `Not enough players to play with this landmark`,
     lockedFaction: `Cannot select last faction until a Militant faction has been selected`,
@@ -93,6 +98,7 @@ export default {
     missingDeck: `A deck is required for set up! Please select a game box that includes one`,
     missingFaction: `At least one faction is required for set up! Please select a game box that includes one`,
     missingMap: `A map is required for set up! Please select a game box that includes one`,
+    noBot: `No Bot selected! Please select a bot to move to the next step`,
     noDeck: `No Decks selected! Please select at least one Deck`,
     noFaction: `No Faction selected! Please select a faction to play`,
     noHireling: `No Hireling selected! Please select a Hireling then perform its setup`,
@@ -131,7 +137,7 @@ export default {
     },
     setUpBots: {
       title: `Set up Bots`,
-      body: `As a group, decide which bots you would like to play with, following their set up instructions as described in the Law of Rootbotics.`,
+      instructionTitle: `Setup Instructions:`,
     },
     chooseLandmarks: {
       title: `Set up Landmarks`,
@@ -168,6 +174,10 @@ export default {
       body: `Assign one of the below factions to each player in any way. The factions will be set up from left-to-right. You may freely select factions from the list to see their stats.`,
       body_useDraft: `Player {{count}}, choose which faction you would like to play from the faction pool below. You may freely select factions from the list to see their stats, before confirming your selection by pressing “Next Step.”`,
     },
+    selectBots: {
+      subtitle: `Assign Bots`,
+      body: `Assign one of the below bots. The bots will be set up from left-to-right.`,
+    },
     placeScoreMarkers: {
       title: `Place Score Markers`,
       title_vagabondSetUp: `Place Score and Relationship Markers`,
@@ -181,6 +191,12 @@ export default {
     setupEnd: {
       title: `Begin Play`,
       body: `The set up is now complete. Play will begin with Player {{count}}. If you wish to restart the setup process, use the button below.<p><i>“Root Automated Setup” Developed By Ewen Cameron</i><br/><i>Based on the board game “Root” published by Leder Games</i><br/><i>Application Licensed under CC BY-NC-SA 4.0</i></p>`,
+    },
+    setupRuins: {
+      title: `<li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly.</li>`,
+    },
+    skipRuins: {
+      title: `<li>This faction requires ruins to be filled, but this step was completed previously</li>`,
     },
   },
   captain: {
@@ -267,6 +283,47 @@ export default {
     underworld: `Underworld Expansion`,
     underworldHirelings: `Underworld Hireling Pack`,
     vagabondPack: `Vagabond Pack`,
+    clockwork: `Clockwork Expansion`,
+    clockwork2: `Clockwork Expansion 2`,
+    betaClockwork: `Beta Released Clockworks`,
+  },
+  bot: {
+    automatedAlliance: {
+      name: `Automated Alliance`,
+      setup: `<ol><li>Form a supply of 10 warriors near you.</li><li>Collect your 3 bases and place them near you.</li><li>Collect your 10 sympathy tokens and place them near you.</li></ol>`,
+    },
+    mechanicalMarquise: {
+      name: `Mechanical Marquise`,
+      setup: `<ol><li>Form a supply of 25 warriors near you.</li><li>Place the keep token in a random corner clearing.</li><li>Place a warrior in each clearing, except the corner clearing diagonally opposite from the keep. Place an extra warrior in the clearing with the keep token. (Place 12 warriors in total.)</li><li>Place 1 sawmill, 1 workshop and 1 recruiter randomly among the clearing with the keep token and those clearings adjacent with up to one building per clearing.</li><li>Collect your remaining 15 buildings and place them near you.</li></ol>`,
+    },
+    electricEyrie: {
+      name: `Electric Eyrie`,
+      setup: `<ol><li>Form a supply of 20 warriors near you.</li><li>Place 1 roost and 6 warriors in the corner clearing diagonally opposite from the clearing with the keep token. If the Marquise is not playing, place those pieces in a random corner clearing.</li><li>Tuck your 2 Loyal Vizier cards, showing their suit, into the rightmost decree column.</li><li>Collect your remaining 6 roost buildings and place them near you.</li></ol>`,
+    },
+    vagabot: {
+      name: `Vagabot`,
+      setup: `<ol><li>Place the Vagabot pawn in the forest adjacent to the most clearings. If there are multiple such forests, decide randomly among those.</li><li>Shuffle the quest deck, draw 1 quest card, and place it face up near you. This quest can only be completed by the bot.</li><li>Take any 4 items marked "S" and place them in your Satchel. (The Tinker starts with 3 items instead of 4 items.)</li></ol>`,
+    },
+    cogwheelCorvids: {
+      name: `Cogwheel Corvids`,
+      setup: `<ol><li>Form supplies of 15 warriors and 8 plot tokens face down.</li><li>Place 1 Warrior in the lowest priority clearing of each suit (3 total).</li></ol>`,
+    },
+    drillbitDuchy: {
+      name: `Drillbit Duchy`,
+      setup: `<ol><li>Form supplies of 20 warriors, 3 tunnel tokens, and 9 crowns.</li><li>Place the Burrow board near the map.</li><li>Place 2 warriors and 1 tunnel in a corner clearing that is not the starting corner clearing. Then place 2 warriors in each clearing adjacent to the chosen corner clearing, except the Burrow.</li><li>Place 3 citadels and 3 markets on your matching Building spaces.</li><li>Draw 2 cards and discard them. For each, place a crown on the topmost matching unswayed minister on your faction board.</li></ol>`,
+    },
+    logicalLizards: {
+      name: `Logical Lizards`,
+      setup: `<ol><li>Form a supply of 25 warriors.</li><li>Place 4 warriors and 1 garden of matching printed suit in a random corner clearing that is not the starting corner clearing of another bot (preferably diagonally opposite.) Then place 1 warrior in each adjacent clearing.</li><li>Place the outcast marker on the Sanctify space of the Conspiracy track on your faction board.</li><li>Place your 14 remaining gardens on the matching spaces of your Gardens tracks from right to left.</li><li>Draw 3 cards and place them face up in your Lost Souls in the order drawn.</li></ol>`,
+    },
+    riverfolkRobots: {
+      name: `Riverfolk Robots`,
+      setup: `<ol><li>Form a supply of 15 warriors.</li><li>Place 1 warrior in each clearing on the river.</li><li>Place 9 trade posts on the matching spaces of your Trade Posts tracks.</li><li>Place 1 warrior in your Payments box.</li><li>Draw 5 cards and add them to your Market.</li></ol>`,
+    },
+    lootingLegion: {
+      name: `Looting Legion`,
+      setup: `<ol><li>Gather pieces and form supplies of 20 warriors, 1 warlord, and 6 strongholds.</li><li>Garrison: Place your starting clearing with a warlord, four warriors, and one stronghold in a random corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li></ol>`,
+    },
   },
   faction: {
     alliance: {
@@ -391,6 +448,7 @@ export default {
         default: `<ol><li>Choose 3 homeland clearings, each adjacent to one other.</li><li>Put 2 <b>warriors</b> in each of your homelands. Put 1 <b>warrior</b> in each other clearing.</li><li>Put the <b>keep token</b> in one of your homelands, not adjacent to an enemy homeland if able. Put 1 <b>sawmill</b>, <b>workshop</b>, and <b>recruiter</b> on the map, each in a different homeland of yours.</li><li>Fill your Buildings track with your <b>buildings</b>, except the leftmost spaces.</li></ol>`,
       },
     },
+
     riverfolk: {
       name: `Riverfolk Company`,
       summaryTitle: `Playing the Riverfolk Company`,
@@ -409,11 +467,11 @@ export default {
       summary: `<p>As the Vagabond, you will play all sides of the conflict, making friends and foes as it suits you. You score points through your <b>relationships</b>, as you aid friendly factions by giving them cards, and as you grow your infamy with hostile factions by removing their pieces in battle. You’ll also score points as you go on <b>quests</b> to spread your good name amongst the creatures of the Woodland.</p><p>To move and act effectively, you’ll need to manage your satchel of <b>items</b>, expanding your selection by exploring ancient <b>ruins</b> and providing aid to other factions. Being a <b>Lone Wanderer</b>, you cannot rule a clearing or stop another faction from ruling one, but you are <b>Nimble</b>, so you can move regardless of who rules your clearing.</p>`,
       setupTitle: `Set up the Vagabond`,
       setup: {
-        default: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Get Quests.</b> Shuffle your quest deck, draw 3 quest cards, and place them face up near you.</li><li><b>Populate Ruins.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly, unless this has already been done.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
-        vagabondSetUp: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Populate Ruins.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly <i>(with the existing items)</i>.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
+        default: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Get Quests.</b> Shuffle your quest deck, draw 3 quest cards, and place them face up near you.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
+        vagabondSetUp: `<ol><li><b>Choose Character.</b> Choose a character card and place it in your Character Card slot.</li><li><b>Place Pawn.</b> Place your Vagabond pawn in any forest.</li><li><b>Take Starting Items.</b> Take the items marked with an “S” listed on your character card. Place any listed <Tea/>, <Coin/>, and <Bag/> items face up on the matching tracks of your faction board. Place all other listed items face up in your Satchel. Return any remaining “S” items to the box.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Shuffle the quest deck. Draw 3 <b>quests</b> to deal out nearby.</li><li>Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with “R”)</i> under the ruins randomly, unless this has already been done.</li><li>Put the “{{vagabond}}” <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with “S”)</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
+        default: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Shuffle the quest deck. Draw 3 <b>quests</b> to deal out nearby.</li><li>Put the “{{vagabond}}” <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with “S”)</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
         vagabondSetUp: `<ol><li>Put your <b>pawn</b> in any forest.</li><li>Put the additional <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with “R”)</i> under the ruins randomly <i>(with the existing items)</i>.</li><li>Put the “{{vagabond}}” <b>character card</b> in your Character Card slot. Put the <InitialStartingItems>, </InitialStartingItems>, and <FinalStartingItem/> <b>starting items</b> <i>(marked with “S”)</i> in your Satchel and on their matching tracks, as needed.</li></ol>`,
       },
     },
@@ -423,11 +481,11 @@ export default {
       summary: `<p>As the Lord of the Hundreds, you score points as you <b>oppress</b> your foes. At the end of your turn, the more clearings you rule that have <i>no</i> enemy pieces—no warriors, no buildings, nothing—the more points you score.</p><p>To grow in power and attract warriors, you must gain items and add them to your towering <b>Hoard</b>. Boots, bags, and coins increase your <b>Command</b>, while hammers, tea, swords, and the crossbow increase your <b>Prowess</b>. Your <b>Contempt for Trade</b> means you rarely score from crafting item, but you can steal items from enemies with your <b>Looters</b>!</p><p>Leading the Hundreds is your warlord, a warrior-demagogue whose fickle <b>mood</b> gives you an ability for the turn. Your warlord is obsessed with hoarding, so as you gain more items, you will have fewer moods to choose from.</p><p>Declaring yourself to be the true voice of the Woodland, you can incite <b>mobs</b>, which destroy enemy buildings and tokens, and raid ruins for their items.</p>`,
       setupTitle: `Set up the Lord of the Hundreds`,
       setup: {
-        default: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Place Items.</b> Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> items marked with an “R” under the ruins randomly, unless this has already been done.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
+        default: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
         vagabondSetUp: `<ol><li><b>Garrison.</b> Place your warlord, four warriors, and one stronghold in a corner clearing that is not the starting corner clearing of another player and, if possible, is diagonally opposite from a starting corner clearing.</li><li><b>Get Stubborn.</b> Place your Stubborn mood card on your Mood Card slot.</li></ol>`,
       },
       advancedSetup: {
-        default: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li><li>Put the <Bag/>, <Boot/>, <Hammer/>, and <Sword/> <b>ruin items</b> <i>(marked with “R”)</i> under the ruins randomly, unless this has already been done.</li></ol>`,
+        default: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li></ol>`,
         vagabondSetUp: `<ol><li>Choose a homeland clearing on the map edge that has 2+ clearings between it and enemy homelands.</li><li>Put your <b>warlord</b>, 4 <b>warriors</b>, and 1 <b>stronghold</b> in your homeland.</li><li>Pur your <b>Stubborn mood card</b> in your Mood Card slot.</li></ol>`,
       },
     },

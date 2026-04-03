@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createStructuredSelector } from 'reselect'
 
 import type {
+  BotCode,
   CaptainCode,
   Faction,
   FactionEntry,
@@ -27,6 +28,7 @@ import { setErrorMessage } from './setup'
  * and what steps should be skipped.
  */
 export interface FlowState {
+  botPool: BotCode[]
   factionPool: FactionEntry[]
   hirelingPool: HirelingEntry[]
   currentIndex: number | null
@@ -38,10 +40,13 @@ export interface FlowState {
   pastSteps: FlowSlice[]
   futureSteps: FlowSlice[]
   useDraft: boolean
+  selectedBots: BotCode[]
+  ruinPlacer: string | null
 }
 
 const getSlice = (flowState: FlowState): FlowSlice => ({
   // This prevents changes we make to the faction pool in the draft state being reflected in already generated slices
+  botPool: [...flowState.botPool],
   factionPool: [...flowState.factionPool],
   hirelingPool: [...flowState.hirelingPool],
   index: flowState.currentIndex,
@@ -50,6 +55,8 @@ const getSlice = (flowState: FlowState): FlowSlice => ({
   playerIndex: flowState.currentPlayerIndex,
   step: flowState.currentStep,
   vagabondSetUp: flowState.vagabondSetUp,
+  selectedBots: [...flowState.selectedBots],
+  ruinPlacer: flowState.ruinPlacer,
 })
 
 const applySlice = (state: FlowState, slice: FlowSlice) => {
@@ -61,12 +68,14 @@ const applySlice = (state: FlowState, slice: FlowSlice) => {
   state.currentPlayerIndex = slice.playerIndex
   state.currentStep = slice.step
   state.vagabondSetUp = slice.vagabondSetUp
+  state.selectedBots = slice.selectedBots
+  state.botPool = slice.botPool
 }
 
 export const flowSlice = createSlice({
   name: 'flow',
-
   initialState: (): FlowState => ({
+    botPool: [],
     factionPool: [],
     hirelingPool: [],
     currentIndex: null,
@@ -77,7 +86,9 @@ export const flowSlice = createSlice({
     vagabondSetUp: false,
     pastSteps: [],
     futureSteps: [],
+    selectedBots: [],
     useDraft: loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true),
+    ruinPlacer: null,
   }),
 
   reducers: {
@@ -155,6 +166,42 @@ export const flowSlice = createSlice({
       }
     },
 
+    addToSelectedBots: (state, action: PayloadAction<BotCode>) => {
+      state.selectedBots.push(action.payload)
+    },
+
+    removeFromBotPool(state, action: PayloadAction<{ code: BotCode; baseFactionCode?: string }>) {
+      const { code, baseFactionCode } = action.payload
+
+      const index = state.botPool.indexOf(code)
+      if (index !== -1) {
+        state.botPool.splice(index, 1)
+      }
+
+      if (!state.vagabondSetUp && baseFactionCode === 'vagabond') {
+        state.vagabondSetUp = true
+      }
+
+      if (
+        state.ruinPlacer === null &&
+        (baseFactionCode === 'warlord' || baseFactionCode == 'vagabond')
+      ) {
+        state.ruinPlacer = code
+      }
+    },
+
+    resetSelectedBots(state) {
+      state.selectedBots = []
+    },
+
+    resetBotPool(state) {
+      state.botPool = []
+    },
+
+    setBotPool: (state, action: PayloadAction<BotCode[]>) => {
+      state.botPool = action.payload
+    },
+
     addToHirelingPool: {
       prepare: (...payload: [code: HirelingCode, demoted: boolean]) => ({ payload }),
       reducer(state, { payload }: PayloadAction<[HirelingCode, boolean]>) {
@@ -179,6 +226,7 @@ export const flowSlice = createSlice({
     addToFactionPool: {
       prepare(
         faction: WithCode<Faction>,
+        includeBots: boolean,
         vagabondPool?: VagabondCode[],
         captainPool?: CaptainCode[],
       ) {
@@ -198,13 +246,18 @@ export const flowSlice = createSlice({
             takeRandom(captainPool),
           ]
         }
-        return { payload: factionEntry }
+        return { payload: { factionEntry, includeBots } }
       },
-      reducer(state, { payload: factionEntry }: PayloadAction<FactionEntry>) {
+      reducer(
+        state,
+        {
+          payload: { factionEntry, includeBots },
+        }: PayloadAction<{ factionEntry: FactionEntry; includeBots: boolean }>,
+      ) {
         state.factionPool.push(factionEntry)
 
         if (state.useDraft) {
-          state.lastFactionLocked = !factionEntry.militant
+          state.lastFactionLocked = !factionEntry.militant && !includeBots
         } else {
           state.factionPool.sort(({ order: a }, { order: b }) => a - b)
         }
@@ -219,6 +272,12 @@ export const flowSlice = createSlice({
         if (state.lastFactionLocked && removedFaction?.militant) state.lastFactionLocked = false
         // Flag if we set up a vagabond
         if (!state.vagabondSetUp && removedFaction?.vagabond) state.vagabondSetUp = true
+        if (
+          (state.ruinPlacer === null && removedFaction?.code.includes('warlord')) ||
+          removedFaction?.code.includes('vagabond')
+        ) {
+          state.ruinPlacer = removedFaction.code
+        }
       } else {
         console.warn(`Invalid removeCurrentFactionFromPool action: currentIndex must not be null`)
       }
@@ -253,8 +312,9 @@ export const flowSlice = createSlice({
       .addCase(setErrorMessage, () => {
         // No-op so we don't wipe the redo queue when displaying an error
       })
-      // Clear internal variables when restarting setup
       .addCase(resetState, state => {
+        state.botPool = []
+        state.selectedBots = []
         state.factionPool = []
         state.hirelingPool = []
         state.currentIndex = null
@@ -265,6 +325,8 @@ export const flowSlice = createSlice({
         state.vagabondSetUp = false
         state.pastSteps = []
         state.futureSteps = []
+        state.useDraft = loadPersistedSetting<boolean>(SETTING_USE_DRAFT, true)
+        state.ruinPlacer = null
       })
       .addDefaultCase(state => {
         state.futureSteps = []
@@ -272,7 +334,9 @@ export const flowSlice = createSlice({
   },
 
   selectors: {
+    selectBotPool: state => state.botPool,
     selectFlowSlice: createStructuredSelector.withTypes<FlowState>()({
+      botPool: state => state.botPool,
       factionPool: state => state.factionPool,
       hirelingPool: state => state.hirelingPool,
       index: state => state.currentIndex,
@@ -281,6 +345,8 @@ export const flowSlice = createSlice({
       playerIndex: state => state.currentPlayerIndex,
       step: state => state.currentStep,
       vagabondSetUp: state => state.vagabondSetUp,
+      selectedBots: state => state.selectedBots,
+      ruinPlacer: state => state.ruinPlacer,
     }),
   },
 })
@@ -293,8 +359,13 @@ export const {
   removeCurrentFactionFromPool,
   removeCurrentHirelingFromPool,
   removeCurrentLandmarkFromPool,
+  resetSelectedBots,
+  removeFromBotPool,
+  addToSelectedBots,
+  resetBotPool,
   resetFactionPool,
   resetHirelingPool,
+  setBotPool,
   setCurrentIndex,
   setCurrentPlayerIndex,
   setCurrentStep,
@@ -303,6 +374,6 @@ export const {
   undoStep,
 } = flowSlice.actions
 
-export const { selectFlowSlice } = flowSlice.selectors
+export const { selectFlowSlice, selectBotPool } = flowSlice.selectors
 
 export default flowSlice.reducer

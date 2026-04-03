@@ -30,6 +30,9 @@ export const MAX_CORNER_SETUPS = 4 // Duh.
 /** The maximum amount of landmarks that can be included (when following official rules). */
 export const MAX_LANDMARKS = 2
 
+/** The maximum amount of bots that can be selected. */
+export const MAX_BOT_COUNT = 3
+
 /** The minimum number of players required to skip flooding a map. */
 export const MIN_PLAYERS_NO_FLOOD = 5
 
@@ -45,6 +48,7 @@ export const SUIT_CLEARING_COUNT = 4
 
 /** A static list of Root game component types. */
 export const COMPONENT_TYPES = [
+  'bots',
   'captains',
   'decks',
   'factions',
@@ -116,9 +120,9 @@ export const USE_LANDMARK_KEY = 'useLandmark'
 export const SETTING_BALANCED_SUITS = 'balancedSuits'
 export const SETTING_FIXED_FIRST_PLAYER = 'fixedFirstPlayer'
 export const SETTING_HIRELING_COUNT = 'hirelingCount'
-export const SETTING_INCLUDE_BOTS = 'includeBotStep'
 export const SETTING_LANDMARK_COUNT = 'landmarkCount'
 export const SETTING_PLAYER_COUNT = 'playerCount'
+export const SETTING_BOT_COUNT = 'botCount'
 export const SETTING_USE_DRAFT = 'useDraft'
 
 export const LEGACY_SETTING_INCLUDE_HIRELINGS = 'includeHirelings'
