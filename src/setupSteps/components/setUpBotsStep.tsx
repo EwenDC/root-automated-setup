@@ -1,12 +1,14 @@
 import type { SetupStepComponent } from '..'
 
 import Section from '../../components/section'
+import { useAppSelector } from '../../hooks'
+import { selectBotArray } from '../../store'
 
 const SetUpBotsStep: SetupStepComponent = ({ flowSlice }) => {
   const { selectedBots } = flowSlice
 
   const botCode = selectedBots.length > 0 ? selectedBots[selectedBots.length - 1] : null
-  const bot = allBots.find(b => b.code === botCode)
+  const bot = selectBotArray(useAppSelector(state => state)).find(b => b.code === botCode)
   const ruinPlacer = useAppSelector(state => state.flow.ruinPlacer)
   const ruinFaction = bot?.baseFactionCode === 'warlord' || bot?.baseFactionCode === 'vagabond'
 
