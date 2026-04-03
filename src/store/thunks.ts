@@ -91,7 +91,7 @@ export const goBackInPlayerTurnOrder = (): AppThunk => (dispatch, getState) => {
   dispatch(setCurrentPlayerIndex(newPlayerIndex))
 }
 
-export const hydrateSetupFromUrlParams = () => (dispatch: AppDispatch) => {
+export const hydrateSetupFromUrlParams = (): AppThunk => dispatch => {
   const queryString = window.location.search
   if (!queryString) return
 
