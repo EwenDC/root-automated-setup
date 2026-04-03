@@ -102,7 +102,7 @@ const Toolbar: React.FC = () => {
           className="left"
           ref={resetButtonRef}
           onClick={handleResetClick}
-          title={t('label.confirmReset')}
+          title={t('label.reset')}
           tabIndex={focusedIndex === 2 ? 0 : -1}
           onKeyDown={onKeyDownHandler(2)}
         />
