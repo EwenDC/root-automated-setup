@@ -42,16 +42,16 @@ const Toolbar: React.FC = () => {
         newIndex = buttonRefs.length - 1
         event.preventDefault()
       }
-
-      if (newIndex !== focusedIndex) {
-        event.preventDefault()
-        setFocusedIndex(newIndex)
-        buttonRefs[newIndex]?.current?.focus()
-      }
+      event.preventDefault()
+      setFocusedIndex(newIndex)
+      buttonRefs[newIndex]?.current?.focus()
     }
 
   const undoDisabled = useAppSelector(state => state.flow.pastSteps.length === 0)
   const redoDisabled = useAppSelector(state => state.flow.futureSteps.length === 0)
+  const resetDisabled = useAppSelector(
+    state => state.flow.currentStep === SetupStep.chooseExpansions,
+  )
   const nextStepDisabled = useAppSelector(state => state.flow.currentStep >= SetupStep.setupEnd)
 
   const handleResetClick = () => {
@@ -99,6 +99,7 @@ const Toolbar: React.FC = () => {
         />
         <Button
           Icon={ResetIcon}
+          disabled={resetDisabled}
           className="left"
           ref={resetButtonRef}
           onClick={handleResetClick}
